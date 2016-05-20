@@ -106,7 +106,7 @@
         %header
           %img{:alt => "", :src => "/assets/img/device.png"}
             %h3 Total Tests by Device
-        .box-content
+        .box-content#tests_run
           = react_component('SnailPieChart', data: devices_grouped, height: 250, label: 'Tests Run', colors: standard_colours)
           -#%img{:alt => "", :src => "/assets/img/charts/tests-device.png"}
 
@@ -118,7 +118,7 @@
         .box-content
           = react_component('GroupedHorizontalBarChart', data: average_tests_per_technician_chart, width: 600, chart_div: 'chart_average_tests', label: 'DAYS', colors: standard_colours)
           #chart_average_tests
-          %img{:alt => "", :src => "/assets/img/charts/tests-technician.png"}
+          -#%img{:alt => "", :src => "/assets/img/charts/tests-technician.png"}
 
       .col.col-12.box
         %header
