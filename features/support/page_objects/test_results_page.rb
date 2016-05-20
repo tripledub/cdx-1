@@ -4,7 +4,6 @@ class TestResultsPage < CdxPageBase
  element :show_filters, :button, 'Show Filters'
    
   section 'form', '#filters-form' do
-#    section :type, CdxSelect, "label", text: /Type/i
     section :status, CdxSelect, "label", text: /Status/i
   end
   

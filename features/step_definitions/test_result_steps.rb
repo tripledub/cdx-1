@@ -48,15 +48,3 @@ Then (/^the user views all test results "(.*?)"$/) do |arg1|
 end
 
 
-
-Given (/^the user selects successful tests$/) do
-  @testresult = TestResultsPage.new
-  @testresult.load
-  click_button('Show Filters')
-
-  within(@testresult.form) do |form|
-    form.status.set_exact "error"
-  end
-
-sleep 10
-end

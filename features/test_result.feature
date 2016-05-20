@@ -7,9 +7,6 @@ Feature: view test results
   Scenario: view test results
     Then the user views all test results "2"
 
-#  Scenario: view successful test results
-#    Given the user selects successful tests
-#    Then the user views all test results "2"
 
 
 
