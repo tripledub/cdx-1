@@ -120,6 +120,10 @@ class TestResult < ActiveRecord::Base
     json.name test["name"]
     json.assays test["assays"]
     json.test_id test["id"]
+    
+    json.type test["type"]
+    json.status test["status"]
+    json.error_code test["error_code"]
 
     json.sample_entity_ids test_result_query_result["sample"]["entity_id"]
 

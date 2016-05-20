@@ -17,6 +17,9 @@ var TestResultRow = React.createClass({
       { this.props.showSites ? <td>{test.site ? test.site.name : null}</td> : null }
       { this.props.showDevices ? <td>{test.device ? test.device.name : null}</td> : null }
       <td>{test.sample_entity_ids}</td>
+      <td>{test.type}</td>
+      <td>{test.status}</td>
+      <td>{test.error_code}</td>
       <td>{test.start_time}</td>
       <td>{test.end_time}</td>
     </tr>);
@@ -68,6 +71,9 @@ var TestResultsList = React.createClass({
           { this.props.showSites ? <col width="7%" /> : null }
           { this.props.showDevices ? <col width="7%" /> : null }
           <col width="7%" />
+          <col width="7%" />
+          <col width="7%" />
+          <col width="10%" />
           <col width={timeWidth} />
           <col width={timeWidth} />
         </colgroup>
@@ -90,6 +96,9 @@ var TestResultsList = React.createClass({
             { this.props.showSites ? <th>Site</th> : null }
             { this.props.showDevices ? <th>Device</th> : null }
             {sortableHeader("Sample ID", "sample.id")}
+            {sortableHeader("Type", "test.type")}
+            {sortableHeader("Status", "test.status")}
+            {sortableHeader("Error code", "test.error_code")}
             {sortableHeader("Start time", "test.start_time")}
             {sortableHeader("End time", "test.end_time")}
           </tr>

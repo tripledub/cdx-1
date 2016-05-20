@@ -47,6 +47,12 @@
               = cdx_select name: "test.type", value: params["test.type"] do |select|
                 - select.item "", "Show all"
                 - select.items @test_types
+          - if @display_as == "test"
+            .filter
+              %label.block Status
+              = cdx_select name: "test.status", value: params["test.status"] do |select|
+                - select.item "", "Show all"
+                - select.items @test_statuses
             .filter
               %label.block Sample Id
               %input{type: "text", name: "sample.id", value: params["sample.id"]}

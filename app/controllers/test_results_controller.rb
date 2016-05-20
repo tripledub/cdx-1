@@ -19,6 +19,7 @@ class TestResultsController < ApplicationController
       end
     end
     @test_types = Cdx::Fields.test.core_fields.find { |field| field.name == 'type' }.options
+    @test_statuses = ['success','error']
     @conditions = Condition.all.map &:name
     @date_options = date_options_for_filter
 
@@ -86,6 +87,8 @@ class TestResultsController < ApplicationController
     filter["test.type"] = params["test.type"] if params["test.type"].present?
     filter["sample.id"] = params["sample.id"] if params["sample.id"].present?
     filter["since"] = params["since"] if params["since"].present?
+    filter["test.status"] = params["test.status"] if params["test.status"].present?
+      
     filter
   end
 
