@@ -1,4 +1,4 @@
-var PieChart = React.createClass({
+var SnailPieChart = React.createClass({
   getInitialState: function() {
     if (this.props.data.length==0) {
       shouldHide=true;
@@ -60,18 +60,21 @@ var PieChart = React.createClass({
     };
 
     // source: http://stackoverflow.com/a/32129715/30948
-    function wrapWithEllipsis( d ) {
+    function wrapWithEllipsis( d ) 
+    {
         var self = d3.select(this),
             textLength = self.node().getComputedTextLength(),
             text = self.text();
-        while ( ( textLength > self.attr('width') )&& text.length > 0) {
+        while ( ( textLength > self.attr('width') )&& text.length > 0) 
+        {
             text = text.slice(0, -1);
             self.text(text + '...');
             textLength = self.node().getComputedTextLength();
         }
     }
 
-    var showItemPercentage = function (hoverItem) {
+    var showItemPercentage = function (hoverItem) 
+    {
       stopOngoingAnimations();
       var color = this.buildColorScale();
 
@@ -79,7 +82,8 @@ var PieChart = React.createClass({
       details_total_legend_l.text(hoverItem.label).each(wrapWithEllipsis);
       details_total_legend_r.text(_.round(hoverItem.value * 100.0 / total) + '%');
 
-      main_total.transition().style('opacity', 0).each("end", function(){
+      main_total.transition().style('opacity', 0).each("end", function()
+      {
         details_total.transition().style('opacity', 1);
       });
 
@@ -89,13 +93,16 @@ var PieChart = React.createClass({
       }.bind(this));
     }.bind(this);
 
-    var showOverall = function() {
+    var showOverall = function() 
+    {
       stopOngoingAnimations();
       var color = this.buildColorScale();
-      details_total.transition().style('opacity', 0).each("end", function(){
+      details_total.transition().style('opacity', 0).each("end", function()
+      {
         main_total.transition().style('opacity', 1);
       });
-      arcs_path.transition().attr('fill', function(d) {
+      arcs_path.transition().attr('fill', function(d) 
+      {
         return color(d.label);
       }.bind(this));
     }.bind(this);
@@ -109,14 +116,13 @@ var PieChart = React.createClass({
       .on('mouseleave', showOverall);
   },
 
-  render: function() {
+  render: function() 
+  {
     var radius = Math.min(this.props.width || this.props.height, this.props.height) / 2;
-
     var color = this.buildColorScale();
-
     var arc = d3.svg.arc()
-      .outerRadius(radius - 10)
-      .innerRadius(radius - 35);
+      .outerRadius(radius)
+      .innerRadius(0);
 
     var pie = d3.layout.pie()
       .sort(null)
@@ -127,10 +133,10 @@ var PieChart = React.createClass({
       .rangePoints([-25 * (this.props.data.length - 1) / 2, 25 * (this.props.data.length - 1) / 2]);
 
     var svgProps = {}
-    if (this.props.width) {
+    if (this.props.width) 
+    {
       svgProps.viewBox = "0 0 " + this.props.width + " " + this.props.height
     }
-
     return (
       <div>
         <div className={this.state.shouldHide ? '' : 'hidden'}>
@@ -143,25 +149,21 @@ var PieChart = React.createClass({
            {...svgProps}>
           <g transform={"translate(" + radius + "," + this.props.height / 2 + ")"}>
           {/* Total Count */}
-          <text className="main total"
-                dy=".35em">{d3.sum(this.props.data, function(d) { return d.value })}</text>
-          <text className="main total legend"
-                dy="2.5em">{this.props.label}</text>
+          <text className="main total" dy=".35em">{ d3.sum(this.props.data, function(d) { return d.value }) }</text>
+          <text className="main total legend" dy="2.5em">{this.props.label}</text>
 
           {/* Details Count */}
-          <text className="details total number"
-                dy=".35em"></text>
-          <text className="details total legend"
-                dy="2.5em">
+          <text className="details total number"  dy=".35em"></text>
+          <text className="details total legend"  dy="2.5em">
                 <tspan className="left" width="120"></tspan>
                 <tspan className="right" dx=".35em"></tspan>
-                </text>
+          </text>
 
           {/* Pie Slices */}
-          {pie(this.props.data).map(function(d) {
+          {pie(this.props.data).map(function(d,i) {
             return (
               <g className="arc" key={d.data.label}>
-                <path d={arc(d)} fill={color(d.data.label)}/>
+                <path d={arc(d,i)} fill={color(d.data.label)}/>
               </g>
             );
           })}
