@@ -1,4 +1,4 @@
-var xGroupedVerticalBarChart = React.createClass({ 
+var GroupedVerticalBarChart = React.createClass({ 
   getInitialState: function() {
     var width_value = this.props.width || 400;
     return {
