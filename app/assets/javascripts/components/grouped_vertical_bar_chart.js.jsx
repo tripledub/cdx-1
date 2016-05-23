@@ -73,7 +73,7 @@ var GroupedVerticalBarChart = React.createClass({
 
     svg.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0,)")
+      .attr("transform", "translate(0,0)")
       .call(xAxis);
 
     // Vertical Axis
@@ -102,24 +102,24 @@ var GroupedVerticalBarChart = React.createClass({
       .append("rect")
       .attr("width", barWidth )
       .attr("x", function(d) { return x1(d.name); })
-      .attr("y", function(d) { return 0; })
+      .attr("y", function(d) { return y(d.value)-100; })
       .attr("height", function(d) { return y(d.value); })
-      .style("fill", function(d) { return color(d.name); })
-
+      .style("fill", function(d) { return color(d.name); });
+/*
       .append("rect")
       .attr("width", barWidth )
       .attr("x", function(d) { return x1(d.name) + barWidth; })
-      .attr("y", function(d) { return 0; })
+      .attr("y", function(d) { return height-y(d.value); })
       .attr("height", function(d) { return y(d.value); })
       .style("fill", function(d) { return color(d.name); });
-
+*/
 
       // legend
     var legend = svg.selectAll(".legend")
       .data(legendNames.slice().reverse())
       .enter().append("g")
       .attr("class", "legend")
-      .attr("transform", function(d, i) { return "translate(0," + i * 25 + ")"; });
+      .attr("transform", function(d, i) { return "translate(" + i * 25 + ","+height+")"; });
 
     legend.append("rect")
       .attr("x", width - 1)
@@ -132,6 +132,7 @@ var GroupedVerticalBarChart = React.createClass({
       .attr("y", 9)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
+      .attr("transform", "rotate(-45)")
       .text(function(d) { return d; });
 
     if (all_data.length == 0) {

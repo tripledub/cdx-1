@@ -120,13 +120,15 @@ var SnailPieChart = React.createClass({
   {
     var radius = Math.min(this.props.width || this.props.height, this.props.height) / 2;
     var color = this.buildColorScale();
+    var dropamount = this.props.data.length>10 ? (50/this.props.data.length) : 5; // up to 10 will contract by 5, else less.
+
     var arc = d3.svg.arc()
-      .outerRadius(radius)
+      .outerRadius( function(d,i) { return radius - (dropamount * i)} )
       .innerRadius(0);
 
     var pie = d3.layout.pie()
       .sort(null)
-      .value(function(d) { return d.value; });
+      .value(function(d) { return d.value < 10?10:d.value; });
 
     var legendPos = d3.scale.ordinal()
       .domain(this.props.data.map(function(x, i) { return i; }))
@@ -147,7 +149,7 @@ var SnailPieChart = React.createClass({
            width="100%"
            height={this.props.height} ref="svg"
            {...svgProps}>
-          <g transform={"translate(" + radius + "," + this.props.height / 2 + ")"}>
+          <g transform={"translate(" + radius + "," + (this.props.height / 2) + ")"}>
           {/* Total Count */}
           <text className="main total" dy=".35em">{ d3.sum(this.props.data, function(d) { return d.value }) }</text>
           <text className="main total legend" dy="2.5em">{this.props.label}</text>
@@ -160,13 +162,15 @@ var SnailPieChart = React.createClass({
           </text>
 
           {/* Pie Slices */}
-          {pie(this.props.data).map(function(d,i) {
-            return (
-              <g className="arc" key={d.data.label}>
-                <path d={arc(d,i)} fill={color(d.data.label)}/>
-              </g>
-            );
-          })}
+          {pie(this.props.data).map(function(d,i) 
+            {
+              return (
+                <g className="arc" key={d.data.label}>
+                  <path d={arc(d,i)} fill={color(d.data.label)}/>
+                </g>
+              );
+            }
+          )}
 
           {/* Legends */}
           {this.props.data.map(function(d, i) {

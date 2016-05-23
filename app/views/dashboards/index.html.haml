@@ -17,29 +17,29 @@
 
   .section.group
     .col.col-3.teal.summary
-      %img{:alt => "", :src => "/assets/img/test-tube-rack.png"}
-        %h2 Total Tests
-        .stat
-          %span 102
-          %p.label this year
+      = image_tag('img/test-tube-rack.png')
+      %h2 Total Tests
+      .stat
+        %span 102
+        %p.label this year
     .col.col-3.light-green.summary
-      %img{:alt => "", :src => "/assets/img/test-tube.png"}
-        %h2 Outstanding Tests
-        .stat
-          %span 50
-          %p.label this month
+      = image_tag('img/test-tube.png')
+      %h2 Outstanding Tests
+      .stat
+        %span 50
+        %p.label this month
     .col.col-3.sand.summary
-      %img{:alt => "", :src => "/assets/img/user.png"}
-        %h2 Total Technicians
-        .stat
-          %span 58
-          %p.label 4% increase
+      = image_tag('img/user.png')
+      %h2 Total Technicians
+      .stat
+        %span 58
+        %p.label 4% increase
     .col.col-3.orange.summary
-      %img{:alt => "", :src => "/assets/img/site.png"}
-        %h2 Total Sites
-        .stat
-          %span 21
-          %p.label in the UK
+      =image_tag('img/site.png')
+      %h2 Total Sites
+      .stat
+        %span 21
+        %p.label in the UK
 
   .section.group
     .col.col-12.title
@@ -64,79 +64,80 @@
     -if(query_tests_chart.present?)
       .col.col-8.box
         %header
-          %img{:alt => "", :src => "/assets/img/test-tube-rack.png"}
-            %h3 Total Tests
+          = image_tag('img/test-tube-rack.png')
+          %h3 Total Tests
         .box-content
           -#= react_component('BarChart', data: query_tests_chart, height: 300, y_label: 'Tests Run', colors: standard_colours)
-          %img{:alt => "", :src => "/assets/img/charts/total-tests.png"}
+          -#= react_component('BarChart', data: query_tests_chart, height: 300, y_label: 'Tests Run', colors: standard_colours)
+          = image_tag('img/charts/total-tests.png')
 
     -if(failed_tests.present?)
       .col.col-4.box
         %header
-          %img{:alt => "", :src => "/assets/img/fail.png"}
-            %h3 Failed Tests
+          = image_tag('img/fail.png')
+          %h3 Failed Tests
         .box-content
           = react_component('HorizontalNiceBarChartImages', data: failed_tests, width: 400, label: 'Failed tests', chart_div: 'chart_failed_tests_graph', colors: ["#00A8AB", "#F15754"] )
           #chart_failed_tests_graph
-          -#%img{:alt => "", :src => "/assets/img/charts/failed-tests.png"}
+          -#= image_tag('img/charts/failed-tests.png')
           %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum cumque ut at voluptates. Excepturi minus maiores atque earum ad placeat beatae! Quidem placeat atque corrupti! Incidunt repudiandae, quam neque dicta.
 
     -if(query_site_tests_chart.present?)
       .col.col-6.box
         %header
-          %img{:alt => "", :src => "/assets/img/site.png"}
-            %h3 Total Tests by Site
+          = image_tag('img/site.png')
+          %h3 Total Tests by Site
         .box-content
           = react_component('HorizontalNiceBarChart', data: query_site_tests_chart, width: 600, chart_div: 'chart_site_tests', label: 'Total Tests by Site', colors: standard_colours)
           #chart_site_tests
-          -#%img{:alt => "", :src => "/assets/img/charts/tests-site.png"}
+          -#= image_tag('img/charts/tests-site.png')
 
     -if(average_test_per_site_chart.present?)
       .col.col-6.box
         %header
-          %img{:alt => "", :src => "/assets/img/site.png"}
-            %h3 Average Tests by Site
+          = image_tag('img/site.png')
+          %h3 Average Tests by Site
         .box-content
-          = react_component('GroupedVerticalBarChart', height: 300, width: 600, chart_div: 'chart_average_test_per_site_chart', data: average_test_per_site_chart, colors: standard_colours)
+          = react_component('GroupedVerticalBarChart', height: 600, width: 600, chart_div: 'chart_average_test_per_site_chart', data: average_test_per_site_chart, colors: standard_colours)
           #chart_average_test_per_site_chart
-          %img{:alt => "", :src => "/assets/img/charts/avg-tests-site.png"}
+          = image_tag('img/charts/avg-tests-site.png')
 
     -if(devices_grouped.present?)
       .col.col-4.box
         %header
-          %img{:alt => "", :src => "/assets/img/device.png"}
-            %h3 Total Tests by Device
+          = image_tag('img/device.png')
+          %h3 Total Tests by Device
         .box-content#tests_run
           = react_component('SnailPieChart', data: devices_grouped, height: 250, label: 'Tests Run', colors: standard_colours)
-          -#%img{:alt => "", :src => "/assets/img/charts/tests-device.png"}
+          -#= image_tag('img/charts/tests-device.png')
 
     -if(average_tests_per_technician_chart.present?)
       .col.col-8.box
         %header
-          %img{:alt => "", :src => "/assets/img/user.png"}
-            %h3 Average Tests by Technician
+          = image_tag('img/user.png')
+          %h3 Average Tests by Technician
         .box-content
           = react_component('GroupedHorizontalBarChart', data: average_tests_per_technician_chart, width: 600, chart_div: 'chart_average_tests', label: 'DAYS', colors: standard_colours)
           #chart_average_tests
-          -#%img{:alt => "", :src => "/assets/img/charts/tests-technician.png"}
+          -#= image_tag('img/charts/tests-technician.png')
 
       .col.col-12.box
         %header
-          %img{:alt => "", :src => "/assets/img/test-tube.png"}
-            %h3 Outstanding Tests
+          = image_tag('img/test-tube.png')
+          %h3 Outstanding Tests
         .box-content
           %table
             %thead
               %th Test Order Number
               %th
                 Date Ordered
-                %img{:alt => "", :src => "/assets/img/filter-arrow.png"}/
+                = image_tag('img/filter-arrow.png')
               %th
                 Ordered By
-                %img{:alt => "", :src => "/assets/img/filter-arrow.png"}/
+                = image_tag('img/filter-arrow.png')
               %th
                 Outstanding Days
-                %img{:alt => "", :src => "/assets/img/filter-arrow.png"}/
+                = image_tag('img/filter-arrow.png')
             %tbody
               %tr
                 %td 02468aff-2cdb-af93-d6a9-df78d4fbdd13
