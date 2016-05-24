@@ -3,54 +3,57 @@ namespace :manifests do
   desc "Creates device models from seed manifests and creates their associated institutions with default users"
   task :load => :environment do |task, args|
     default_password = ENV['PASSWORD']
-    raise "Please specify `PASSWORD` environment variable to be used as the default password for all admins" if default_password.blank?
+    default_email = ENV['EMAIL']
+    default_institution = 'Institute One' if ENV['SINGLE_TENANT']
+    raise 'Please specify `PASSWORD` environment variable to be used as the default password for all admins' if default_password.blank?
+    raise "Please specify `EMAIL` environment variable to be used as the default email for all admins" if ENV['SINGLE_TENANT'] && default_email.blank?
 
     data = {
       'genexpert' => {
         title: 'GeneXpert',
         activation: true,
-        institution: 'Cepheid',
-        owner: 'cepheid_admin@instedd.org'
+        institution: default_institution || 'Cepheid',
+        owner: default_email || 'cepheid_admin@instedd.org'
       },
       'epicenter_m.g.i.t._spanish' => {
         activation: true,
-        institution: 'BD',
-        owner: 'bd_admin@instedd.org'
+        institution: default_institution ||  'BD',
+        owner: default_email || 'bd_admin@instedd.org'
       },
       'deki_reader' => {
         activation: false,
-        institution: "Fio Corporation",
-        owner: "fio_admin@instedd.org"
+        institution: default_institution || "Fio Corporation",
+        owner: default_email || 'fio_admin@instedd.org'
       },
       'genoscan' => {
         activation: true,
-        institution: 'Hain Lifescience',
-        owner: 'hain_admin@instedd.org'
+        institution: default_institution || 'Hain Lifescience',
+        owner: default_email || 'hain_admin@instedd.org'
       },
       'esequant_lr3' => {
         title: 'EseQuant LR3',
         activation: false,
-        institution: 'Qiagen',
-        owner: "qiagen_admin@instedd.org"
+        institution: default_institution || 'Qiagen',
+        owner: default_email || 'qiagen_admin@instedd.org'
       },
       'micro_imager' => {
         activation: false,
-        institution: 'BD',
-        owner: 'bd_admin@instedd.org'
+        institution: default_institution || 'BD',
+        owner: default_email || 'bd_admin@instedd.org'
       },
       'alere_pima' => {
         activation: false,
         ftp: true,
         pattern: '^(?<sn>[A-Za-z\-0-9]+)_(?<ts>\d{1,4}-\d{1,4}-\d{1,4}_\d{1,2}-\d{1,2}-\d{1,2})_AssayID_(?<assayid>\d+|X)_\((?<assayname>[A-Za-z0-9_\-]+)\)\.csv$',
-        institution: 'Alere',
-        owner: 'alere_admin@instedd.org'
+        institution: default_institution || 'Alere',
+        owner: default_email || 'alere_admin@instedd.org'
       },
       'alere_q' => {
         activation: false,
         ftp: true,
         pattern: '^(?<assayid>[A-Za-z0-9\-]+)_(?<sn>[A-Za-z\-0-9]+)_(?<ts>\d{1,4}-\d{1,4}-\d{1,4}-\d{1,2}-\d{1,2}-\d{1,2})\.csv$',
-        institution: 'Alere',
-        owner: 'alere_admin@instedd.org'
+        institution: default_institution || 'Alere',
+        owner: default_email || 'alere_admin@instedd.org'
       }
     }
 
@@ -77,6 +80,5 @@ namespace :manifests do
         device_model.tap(&:set_published_at).save!
       end
     end
-
   end
 end
