@@ -1,16 +1,16 @@
 var GroupedVerticalBarChart = React.createClass({ 
   getInitialState: function() {
-    var width_value = this.props.width || 400;
+    var height_value = this.props.height || 400;
     return {
-      width: width_value,
+      height: height_value,
     };
   },
   getDefaultProps: function() {
     return {
       margin: {top: 20, right: 20, bottom: 30, left: 50},
-      height: 250,
-      bar_height: 20,
-      bar_gap: 30,
+      width: 500,
+      bar_size: 30,
+      bar_gap: 20,
       space_for_labels: 150,
       space_for_ticks: 30,
       space_for_legend: 100,
@@ -21,11 +21,45 @@ var GroupedVerticalBarChart = React.createClass({
   },
 
   render: function() {
-    var margin = this.props.margin,
-      width = this.props.width - margin.left - margin.right -this.props.space_for_legend,
-      height = this.props.height - margin.top - margin.bottom - this.props.space_for_labels;
+    var barWidth  = this.props.bar_size;
+    var barGap    = this.props.bar_gap;
+    var margin    = this.props.margin;
+
+    all_data = this.props.data;
+    var siteCount = all_data.length;
+
+    if(siteCount == 0) return '';
+
+    // returns array of all data fieldnames (except site)
+    var legendNames = d3.keys(all_data[0]).filter(function(key) 
+                          { 
+                            return key !== "site"; 
+                          });
+    var barCountPerSite = legendNames.length;
+
+    console.log('barCountPerSite:',barCountPerSite);
+    console.log('barWidth:',barWidth);
+    console.log('barGap:',barGap);
+    console.log('siteCount:',siteCount);
+    console.log('space_for_legend:',this.props.space_for_legend);
+
+    var xtmp = (barCountPerSite * barWidth) + (barGap * siteCount) + margin.left + margin.right + this.props.space_for_legend;
+
+    if(this.props.width > xtmp) xtmp = this.props.width;
+    console.log('xtmp:',xtmp);
+
+    var  width = xtmp - margin.left - margin.right - this.props.space_for_legend;
+    var  height = this.props.height - margin.top - margin.bottom - this.props.space_for_labels;
 
     var chart = document.getElementById(this.props.chart_div);
+
+    if(width == NaN) return '';
+    console.log('width:',width);
+
+/*
+    var shadeOfColour = d3.scale.linear()
+      .rangeRound(["white", d ]);
+*/
 
     // set the range bands for the domain array (created further down the code)
     // rangeband will return the step for each band
@@ -52,19 +86,13 @@ var GroupedVerticalBarChart = React.createClass({
       .orient("left")
       .tickFormat(d3.format(".2s"));
 
+    console.log('margin:',margin);
+
     var svg = d3.select(chart).append("svg")
       .attr("width", width + margin.left + margin.right + this.props.space_for_legend)
       .attr("height", height + margin.top + margin.bottom + this.props.space_for_labels)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    all_data = this.props.data;
-
-    // returns array of all data fieldnames (except site)
-    var legendNames = d3.keys(all_data[0]).filter(function(key) 
-                          { 
-                            return key !== "site"; 
-                          });
 
     // This bit must come AFTER the legendNames section above
     // creates new section in data with just data values
@@ -102,7 +130,7 @@ var GroupedVerticalBarChart = React.createClass({
 
     // Horizontal Axis
     svg.append("g")
-      .attr("class", "x axis")
+      .attr("class", "chart-axis")
       .attr("transform", "translate(0,"+y(0)+")")
       .call(xAxis)
         .selectAll("text")
@@ -113,7 +141,7 @@ var GroupedVerticalBarChart = React.createClass({
 
     // Vertical Axis
     svg.append("g")
-      .attr("class", "y axis")
+      .attr("class", "chart-axis")
       .call(yAxis)
       .append("text")
         .attr("transform", "rotate(-90)")
@@ -132,7 +160,8 @@ var GroupedVerticalBarChart = React.createClass({
         .attr("transform", function(d) { return "translate(" + x0(d.site) + ",0)"; });
 
     // all bars within site
-    var barWidth = x1.rangeBand();
+    //var barWidth = x1.rangeBand();
+
     state.selectAll("rect")
       .data(function(d) { return d.tests; })
       .enter()
@@ -142,6 +171,42 @@ var GroupedVerticalBarChart = React.createClass({
           .attr("y", function(d) { return y(d.value)-yi(0); })
           .attr("height", function(d) { return yi(d.value)-yi(0); })
           .style("fill", function(d) { return colorFromRange(d.name); });
+
+    state.selectAll("text")
+      .data(function(d) { return d.tests; })
+      .enter()
+        .append("circle")
+          .attr("r", barWidth/2 )
+          .attr("cx", function(d,i) { return (barWidth*i)+(barWidth/2); })
+          .attr("cy", function(d) { return y(d.value)-yi(0); })
+          .attr("fill", function(d) { return colorFromRange(d.name); })
+          .attr("stroke", function(d, i) { return barColour(i) })
+          .attr("stroke-width", 2)
+          .attr("stroke-opacity", 0.2);
+
+    state.selectAll("text")
+      .data(function(d) { return d.tests; })
+      .enter()
+        .append("circle")
+          .attr("r", (barWidth/2)-3 )
+          .attr("cx", function(d,i) { return (barWidth*i)+(barWidth/2); })
+          .attr("cy", function(d) { return y(d.value)-yi(0); })
+          .attr("fill", "white")
+          .attr("stroke", "none")
+          .attr("stroke-width", 2)
+          .attr("stroke-opacity", 0.2);
+
+    state.selectAll("text")
+      .data(function(d) { return d.tests; })
+      .enter()
+        .append("text")
+          .attr("class", "chart-value-item")
+          .style("text-anchor", "middle")
+          .attr("x", function(d,i) { return (barWidth*i)+(barWidth/2); })
+          .attr("y", function(d) { return y(d.value)-yi(0); })
+          .attr("dy", ".35em") //vertical align middle
+          .style("color", "black")
+          .text(function(d) { return d.value.toFixed(0); });
 
       // legend
     var legend = svg.selectAll(".legend")

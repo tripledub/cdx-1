@@ -65,7 +65,7 @@ var HorizontalNiceBarChart = React.createClass({
       .attr("width", this.state.width)
       .attr("height", chartHeight);
 
-    // make a bar
+    // make all bars
     bar = svg.selectAll("g")
       .data(data)
       .enter()
@@ -80,9 +80,10 @@ var HorizontalNiceBarChart = React.createClass({
     // per bar labels
     bar.append("text")
       .attr("class", "chart-axis-label" )
+      .attr("text-anchor", "end")
       .attr("y", barHeightHalf)
       .attr("dy", ".35em") //vertical align middle
-      .attr("x", -10)
+      .attr("x", labelWidth+50)
       .text(function(d){ return d[0]; })
       .each(function() {
         labelWidth = Math.ceil(Math.max(labelWidth, this.getBBox().width));
@@ -150,12 +151,11 @@ var HorizontalNiceBarChart = React.createClass({
       {
         if( d[1] > 0 )
           return d[1];
-        return '';
+        return '0';
       })
       .attr("x", function(d)
       {
-        var width = this.getBBox().width;
-        return Math.max(width, scale(d[1]) ) + valueMargin + labelWidth;
+        return scale(d[1]) + valueMargin + labelWidth;
       });
 
     var canvasWidth = this.props.width,
