@@ -17,12 +17,12 @@ namespace :manifests do
       },
       'epicenter_m.g.i.t._spanish' => {
         activation: true,
-        institution: default_institution ||  'BD',
+        institution: default_institution || 'BD',
         owner: default_email || 'bd_admin@instedd.org'
       },
       'deki_reader' => {
         activation: false,
-        institution: default_institution || "Fio Corporation",
+        institution: default_institution || 'Fio Corporation',
         owner: default_email || 'fio_admin@instedd.org'
       },
       'genoscan' => {
@@ -67,7 +67,7 @@ namespace :manifests do
               u.skip_confirmation!
             end
             institution.user = owner
-            institution.kind = 'manufacturer'
+            institution.kind = 'institution'
           end
         end
 
