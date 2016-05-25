@@ -186,34 +186,11 @@ var SiteTreeViewNode = React.createClass({
   // This handles a click on an entry in the sidebar.
   // This has been modified to do a call as jquery ajax instead of a page refresh
   onSiteClick: function(event) {
-    //this.props.onSiteClick(this.props.site);
     event.preventDefault();
     var ctx = this.props.site.uuid;
     var url = window.location.href.split('?')[0];
-    //var bits = url.split('/');
-    //var trg = bits.pop();
-    //url = bits.join('/');
-
-    var link = url+'?nav=false&context='+ctx;
-    $("#iframeid").remove();
-    var iframe = document.createElement('iframe');
-    iframe.frameBorder=0;
-    iframe.width="100%";
-    iframe.height="950px";
-    iframe.id="iframeid";
-    iframe.setAttribute("src", link);
-    $( "#contentcontainer").append(iframe);
-    document.getElementById('iframeid').onload = function() {
-      return function() {
-        $( "#contentsection").remove(); 
-        $("#contentcontainer").removeClass('maincol');
-      }
-    }();
-
-    $('li').removeClass('selected');
-    $('li[data-reactid*="'+this.props.site.uuid+'"]').first().addClass('selected');
-    $('#nav-context').attr('title',this.props.site.name).text('at '+this.props.site.name);
-    this.props.site.selected = true;
+    var link = url+'?nav=true&context='+ctx;
+    window.location.href = link;
   },
 
   render: function() {
