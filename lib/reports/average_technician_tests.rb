@@ -26,7 +26,6 @@ module Reports
 
       calculate_average(test_users_list)
       data = format_data(test_users_list)
-      data[0]
     end
 
     private
@@ -40,22 +39,14 @@ module Reports
     end
 
     def format_data(test_result_data)
-      chart_data = []
-      labels = []
-      peaks = []
-      averages = []
       test_result_data.map do |test_user_data|
-        labels << test_user_data[:site_user].truncate(12)
-        peaks << test_user_data[:peak]
-        averages << test_user_data[:average]
+        data << {
+          _label: test_user_data[:site_user].truncate(12),
+          'Peak Tests': test_user_data[:peak],
+          'Average Tests': test_user_data[:average]
+        }
       end
-
-      series =[]
-      series << {label: 'Peak Tests', values: peaks}
-      series << {label: 'Avg Tests', values: averages}
-      chart_data << {labels: labels, series: series}
-
-      return chart_data
+      data
     end
 
   end

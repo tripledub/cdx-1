@@ -16,11 +16,11 @@ module Reports
       data = results['tests'].map do |test|
         no_error_code -= test['count']
         {
-          label: label(test[groupings[symbol][0]], symbol),
-          value: test['count']
+          _label: label(test[groupings[symbol][0]], symbol),
+          _value: test['count']
         }
       end
-      data << { label: 'Unknown', value: no_error_code } if no_error_code > 0
+      data << { _label: 'Unknown', _value: no_error_code } if no_error_code > 0
       data
     end
 
