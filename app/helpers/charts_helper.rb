@@ -62,11 +62,6 @@ module ChartsHelper
     data.average_tests
   end
 
-  def average_tests_per_technician_chart
-    data = Reports::AverageTechnicianTests.process(current_user, @navigation_context, options)
-    data.average_tests
-  end
-
   def outstanding_orders
     data = Reports::OutstandingOrders.process(current_user, @navigation_context, options)
     data.latest_encounter
