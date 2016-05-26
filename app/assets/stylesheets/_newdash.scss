@@ -288,7 +288,55 @@ body {
 .container .col-2{min-width: 14.33%;flex:1 1 14.33%;}
 .container .col-1 {min-width: 5.866%;flex:1 1 5.866%;} 
 
-.container .col {margin: 1% 0.5%;}
+
+
+
+#filters-form{
+background:#dc602e;
+}
+
+#filters-form fieldset{
+color:white;
+font-weight:bold;
+padding-left:20px;
+padding-right:30px;
+border-right:1px solid #F4F4F4;
+}
+
+#filters-form fieldset:first-child{
+float:left;
+width:260px;
+}
+
+#filters-form fieldset:first-child label{
+float:left;
+width:100px;
+color:white;
+font-weight:bold;
+}
+
+#filters-form fieldset:first-child .Select{
+float:left;
+width:100px;
+margin-top:2px;
+border-bottom:1px solid #fff;
+}
+
+#filters-form fieldset:first-child .Select .Select-control .Select-placeholder{
+color:white;
+}
+
+
+#filters-form fieldset label{
+color:white;
+font-weight:bold;
+}
+
+#filters-form #query_button{
+height:40px;
+line-height: 10px;
+margin-left:30px;
+}
 
 
 

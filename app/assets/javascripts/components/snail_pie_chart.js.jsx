@@ -42,7 +42,7 @@ var SnailPieChart = React.createClass({
     var svg = d3.select(this.refs.svg.getDOMNode());
     var data = this.props.data;
 
-    var total = _.sum(data, 'value');
+    var total = _.sum(data, '_value');
 
     var arcs_path = svg.selectAll(".arc path").data(data);
     var g_legends = svg.selectAll("g.legend").data(data);
@@ -58,6 +58,25 @@ var SnailPieChart = React.createClass({
       main_total.transition().duration(0);
       details_total.transition().duration(0);
     };
+
+    var radialGradient = svg.append("defs")
+      .append("radialGradient")
+        .attr("id", "radial-gradient");
+
+    radialGradient.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "white")
+        .attr("stop-opacity", "1");
+
+    radialGradient.append("stop")
+        .attr("offset", "90%")
+        .attr("stop-color", "white")
+        .attr("stop-opacity", "1");
+
+    radialGradient.append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", "white")
+        .attr("stop-opacity", "0");
 
     // source: http://stackoverflow.com/a/32129715/30948
     function wrapWithEllipsis( d ) 
@@ -78,17 +97,17 @@ var SnailPieChart = React.createClass({
       stopOngoingAnimations();
       var color = this.buildColorScale();
 
-      details_total_number.text(hoverItem.value);
-      details_total_legend_l.text(hoverItem.label).each(wrapWithEllipsis);
-      details_total_legend_r.text(_.round(hoverItem.value * 100.0 / total) + '%');
+      details_total_number.text(hoverItem._value);
+      details_total_legend_l.text(hoverItem._label).each(wrapWithEllipsis);
+      details_total_legend_r.text(_.round(hoverItem._value * 100.0 / total) + '%');
 
       main_total.transition().style('opacity', 0).each("end", function()
       {
         details_total.transition().style('opacity', 1);
       });
 
-      arcs_path.transition().attr('fill', function(d) {
-        var c = color(d.label);
+      arcs_path.transition().attr('fill', function(d,i) {
+        var c = color(i);
         return hoverItem == d ? c : this.props.offcolor;
       }.bind(this));
     }.bind(this);
@@ -101,9 +120,9 @@ var SnailPieChart = React.createClass({
       {
         main_total.transition().style('opacity', 1);
       });
-      arcs_path.transition().attr('fill', function(d) 
+      arcs_path.transition().attr('fill', function(d,i) 
       {
-        return color(d.label);
+        return color(i);
       }.bind(this));
     }.bind(this);
 
@@ -128,7 +147,7 @@ var SnailPieChart = React.createClass({
 
     var pie = d3.layout.pie()
       .sort(null)
-      .value(function(d) { return d.value < 10?10:d.value; });
+      .value(function(d) { return d._value < 10?10:d._value; });
 
     var legendPos = d3.scale.ordinal()
       .domain(this.props.data.map(function(x, i) { return i; }))
@@ -144,41 +163,45 @@ var SnailPieChart = React.createClass({
         <div className={this.state.shouldHide ? '' : 'hidden'}>
           <span className="chart-value-item">There is no data to display</span>
         </div>
+
         <div className={this.state.shouldHide ? 'hidden' : ''}>    
          <svg className="chart"
            width="100%"
            height={this.props.height} ref="svg"
            {...svgProps}>
           <g transform={"translate(" + radius + "," + (this.props.height / 2) + ")"}>
-          {/* Total Count */}
-          <text className="main total" dy=".35em">{ d3.sum(this.props.data, function(d) { return d.value }) }</text>
-          <text className="main total legend" dy="2.5em">{this.props.label}</text>
-
-          {/* Details Count */}
-          <text className="details total number"  dy=".35em"></text>
-          <text className="details total legend"  dy="2.5em">
-                <tspan className="left" width="120"></tspan>
-                <tspan className="right" dx=".35em"></tspan>
-          </text>
 
           {/* Pie Slices */}
           {pie(this.props.data).map(function(d,i) 
             {
               return (
-                <g className="arc" key={d.data.label}>
-                  <path d={arc(d,i)} fill={color(d.data.label)}/>
+                <g className="arc" key={d._label}>
+                  <path d={arc(d,i)} fill={color(i)}/>
                 </g>
               );
             }
           )}
 
+          <circle r="60" fill="url(#radial-gradient)" />
+
+          {/* Total Count */}
+          <text className="main total" dy=".25em">{ d3.sum(this.props.data, function(d) { return d._value }) }</text>
+          <text className="main total legend" dy="2.25em">{this.props.label}</text>
+
+          {/* Details Count */}
+          <text className="details total number"  dy=".25em"></text>
+          <text className="details total legend"  dy="2.25em">
+                <tspan className="left" width="120"></tspan>
+                <tspan className="right" dx=".35em"></tspan>
+          </text>
+
           {/* Legends */}
           {this.props.data.map(function(d, i) {
-            var txt = d.label+' ('+d.value+')';
+            var txt = d._label+' ('+d._value+')';
             return (
-              <g className="legend" key={d.label}
+              <g className="legend" key={d._label}
                  transform={"translate(" + (radius + 30) + "," + legendPos(i) + ")"}>
-                <circle r="8" fill={color(d.label)} />
+                <circle r="8" fill={color(i)} />
                 <text dx="15" dy=".35em">{txt}</text>
               </g>
             )
