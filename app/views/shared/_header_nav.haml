@@ -28,12 +28,12 @@
         -# ------------ TEST Orders
         - if has_access_to_test_results_index?
           %li{:class => ["test_orders", "encounters"].include?(params[:controller]) && "active"}
-            = link_to "Test Orders", '/test_results/?display_as=test_order'
+            = link_to "Test Orders", '/test_results?display_as=test_order'
 
         -# ------------ TEST RESULTS
         - if has_access_to_test_results_index?
           %li{:class => ["test_results", "encounters"].include?(params[:controller]) && "active"}
-            = link_to "Test Results", '/test_results/'
+            = link_to "Test Results", '/test_results'
 
 
         -# ------------ DEVICES
