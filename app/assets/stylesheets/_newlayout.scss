@@ -1,0 +1,79 @@
+// New Navigation Bar ---------------------------------------------------------//
+
+body {
+    margin: 0px;
+}
+
+.wrapper #context_side_bar{
+background:#555354;
+}
+
+.sites-tree-view .selected::before {
+background:#e06023;
+}
+
+#context_side_bar .search-sites {
+background:#03abae !important;
+}
+
+.sites-tree-view li.expanded > a > button {
+    background: transparent url("/assets/arr-select-down-inv-901cf5db9d4969e8e0b2192aed57309c.png") no-repeat scroll center 50%;
+}
+
+.sites-tree-view li button,
+.sites-tree-view li.selected > a > button {
+    background: transparent url("/assets/arr-select-right-inv-17a8a9c40b80687c153e5f8fd2cf8528.png") no-repeat scroll center center;
+}
+
+.sites-tree-view li.expanded > a > button {
+    background: transparent url("/assets/arr-select-down-inv-901cf5db9d4969e8e0b2192aed57309c.png") no-repeat scroll center 50%;
+}
+
+
+.sites-tree-view li ul{
+border:0px;
+}
+
+
+#context_side_bar {
+overflow-y:auto;
+}
+
+#contentcontainer {
+overflow:auto;
+}
+
+
+.wrapper{
+padding-top:60px;
+}
+
+.wrapper > header{
+position:fixed;
+width:100%;
+top:0px;
+z-index:99999;
+}
+
+
+
+.chromeimage{
+width:40px;
+float:left;
+border-top:1px solid #ddd;
+padding-top:12px;
+}
+
+
+.chrometest{
+float:left;
+margin-top:px;
+border-top:1px solid #ddd;
+padding-top:10px;
+}
+
+.chrometest p{
+margin:0px;
+font-size:12px;
+color:#777
+}

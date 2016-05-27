@@ -196,3 +196,47 @@ footer {
   padding: 0;
   display: none;
 }
+
+
+
+// New Navigation Bar ---------------------------------------------------------//
+
+.wrapper #context_side_bar{
+background:#555354;
+}
+
+.sites-tree-view .selected::before {
+background:#e06023;
+}
+
+.show-navigation-context-picker #context_side_bar .search-sites {
+background:#03abae;
+
+}
+
+.sites-tree-view li.expanded > a > button {
+    background: transparent url("/assets/arr-select-down-inv-901cf5db9d4969e8e0b2192aed57309c.png") no-repeat scroll center 50%;
+}
+
+.sites-tree-view li button,
+.sites-tree-view li.selected > a > button {
+    background: transparent url("/assets/arr-select-right-inv-17a8a9c40b80687c153e5f8fd2cf8528.png") no-repeat scroll center center;
+}
+
+.sites-tree-view li.expanded > a > button {
+    background: transparent url("/assets/arr-select-down-inv-901cf5db9d4969e8e0b2192aed57309c.png") no-repeat scroll center 50%;
+}
+
+
+.sites-tree-view li ul{
+border:0px;
+}
+
+
+#context_side_bar {
+overflow-y:auto;
+}
+
+#contentcontainer {
+overflow:auto;
+}

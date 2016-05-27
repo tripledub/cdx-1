@@ -45,8 +45,8 @@ var HorizontalNiceBarChart = React.createClass({
       chartHeight = (barHeight * (data.length+1)) + (gapBetweenGroups * (data.length+1));
 
       // get maximum data value
-    max = d3.max(data.map(function(i){ 
-        return i[1];
+    max = d3.max(data.map(function(d){ 
+        return d._value;
       }));
 
     if (data.length==0) {
@@ -65,7 +65,7 @@ var HorizontalNiceBarChart = React.createClass({
       .attr("width", this.state.width)
       .attr("height", chartHeight);
 
-    // make a bar
+    // make all bars
     bar = svg.selectAll("g")
       .data(data)
       .enter()
@@ -80,10 +80,11 @@ var HorizontalNiceBarChart = React.createClass({
     // per bar labels
     bar.append("text")
       .attr("class", "chart-axis-label" )
+      .attr("text-anchor", "end")
       .attr("y", barHeightHalf)
       .attr("dy", ".35em") //vertical align middle
-      .attr("x", -10)
-      .text(function(d){ return d[0]; })
+      .attr("x", labelWidth+50)
+      .text(function(d){ return d._label; })
       .each(function() {
         labelWidth = Math.ceil(Math.max(labelWidth, this.getBBox().width));
       });
@@ -105,7 +106,7 @@ var HorizontalNiceBarChart = React.createClass({
       .attr("fill",function(d, i) { return barColour(i) })
       .attr("width", function(d)
       {
-        return scale(d[1]);
+        return scale(d._value);
       })
       .attr("id", function(d, i)
       {
@@ -122,7 +123,7 @@ var HorizontalNiceBarChart = React.createClass({
       .attr("stroke-opacity", 0.2)
       .attr("cx", function(d)
       {
-        return scale(d[1]) + labelWidth;
+        return scale(d._value) + labelWidth;
       });
 
     // inner circle
@@ -135,7 +136,7 @@ var HorizontalNiceBarChart = React.createClass({
       .attr("stroke-opacity", 0.2)
       .attr("cx", function(d)
       {
-        return scale(d[1]) + labelWidth;
+        return scale(d._value) + labelWidth;
       });
 
     // end of bar labels
@@ -148,14 +149,13 @@ var HorizontalNiceBarChart = React.createClass({
       .attr("color", function(d, i) { return barColour(i) })
       .text(function(d)
       {
-        if( d[1] > 0 )
-          return d[1];
-        return '';
+        if( d._value > 0 )
+          return d._value;
+        return '0';
       })
       .attr("x", function(d)
       {
-        var width = this.getBBox().width;
-        return Math.max(width, scale(d[1]) ) + valueMargin + labelWidth;
+        return scale(d._value) + valueMargin + labelWidth;
       });
 
     var canvasWidth = this.props.width,

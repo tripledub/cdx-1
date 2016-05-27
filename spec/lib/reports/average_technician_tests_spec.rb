@@ -48,8 +48,8 @@ RSpec.describe Reports::AverageTechnicianTests, elasticsearch: true do
     end
 
     it 'returns a value for each user' do
-      expect(@data[:labels].length).to eq(2)
-      expect(@data[:series].length).to eq(2)
+      expect(@data).to be_a(Array)
+      expect(@data.first).to be_a(Hash)
     end
 
   end

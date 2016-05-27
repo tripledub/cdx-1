@@ -1,10 +1,11 @@
--#query_tests_chart = [[{'aaa':23},{'bbb':42}, {'site':90}], [{'aaa':33},{'bbb':32}, {'site':30}]];
--#devices_grouped = [{label:'Sally',value:42},{label:'Bobby',value:25},{label:'George',value:15},{label:'Site',value:8},{label:'Another Site',value:4}];
--#query_site_tests_chart = [['Sally',42],['Bobby',25],['George',15],['Site',8],['Another Site',4]];
--#average_test_per_site_chart = [{:site=>"AbbA", :peak=>26, :average=>12},{:site=>"BB", :peak=>26, :average=>70},{:site=>"CC", :peak=>26, :average=>0},{:site=>"Aardvark", :peak=>42, :average=>21}];
+-# ----  The Lines below provide dummy data for the graphs while the code is being improved ---
+-query_tests_chart = [{_label:'Jun',avg:21,peak:12},{_label:'Jul',avg:24,peak:16}];
+-#devices_grouped = [{_label:'Sally',_value:42},{_label:'Bobby',_value:25},{_label:'George',_value:15},{_label:'Site',_value:8},{_label:'Another Site',_value:4}];
+-query_site_tests_chart = [ {"_label":"site20", "_value":2 }, {"_label":"site40", "_value":3 }];
+-#average_test_per_site_chart = [{:_label=>"AbbA", :peak=>26, :average=>12.2343},{:_label=>"BB", :peak=>26, :average=>70.12341234},{:_label=>"CC", :peak=>26, :average=>0.76347},{:_label=>"Aardvark", :peak=>42, :average=>21.345234},{:_label=>"Thirds", :peak=>66, :average=>33},{:_label=>"Fork", :peak=>12, :average=>5},{:_label=>"Spoon", :peak=>40, :average=>45}];
 -#failed_labels = ['Total','Failed'];
--failed_tests = [['Total',55,'chart-box-tick'],['Failed',5,'chart-box-exclam']];
--#average_tests_per_technician_chart = [1];
+-#failed_tests = [ {"_label":"Total", "_value":55, "_img":"chart-box-tick"}, {"_label":"Failed", "_value":15, "_img":"chart-box-exclam"} ];
+-#average_tests_per_technician_chart = [{_label:"JaneDoe", "Peak Tests":10, "Avg Tests":2}];
 -#query_devices_not_reporting_chart = [1];
 -#error_codes_by_device = [1];
 
@@ -43,7 +44,7 @@
 
   .section.group
     .col.col-12.title
-      %h2 WHO Institution
+      %h2 (institution name goes here)
       %span SHOWING: in the last 12 months
 
   .section.group
@@ -67,9 +68,8 @@
           = image_tag('img/test-tube-rack.png')
           %h3 Total Tests
         .box-content
-          -#= react_component('BarChart', data: query_tests_chart, height: 300, y_label: 'Tests Run', colors: standard_colours)
-          -#= react_component('BarChart', data: query_tests_chart, height: 300, y_label: 'Tests Run', colors: standard_colours)
-          = image_tag('img/charts/total-tests.png')
+          = react_component('GroupedVerticalBarChart', data: query_tests_chart, height: 600, width: 1000, chart_div: 'chart_total_tests', colors: standard_colours)
+          #chart_total_tests
 
     -if(failed_tests.present?)
       .col.col-4.box
@@ -79,8 +79,7 @@
         .box-content
           = react_component('HorizontalNiceBarChartImages', data: failed_tests, width: 400, label: 'Failed tests', chart_div: 'chart_failed_tests_graph', colors: ["#00A8AB", "#F15754"] )
           #chart_failed_tests_graph
-          -#= image_tag('img/charts/failed-tests.png')
-          %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum cumque ut at voluptates. Excepturi minus maiores atque earum ad placeat beatae! Quidem placeat atque corrupti! Incidunt repudiandae, quam neque dicta.
+          %p This should be some meaingful text that explains the above informative chart. Rerum cumque ut at voluptates. Excepturi minus maiores atque earum ad placeat beatae! Quidem placeat atque corrupti! Incidunt repudiandae, quam neque dicta.
 
     -if(query_site_tests_chart.present?)
       .col.col-6.box
@@ -90,7 +89,6 @@
         .box-content
           = react_component('HorizontalNiceBarChart', data: query_site_tests_chart, width: 600, chart_div: 'chart_site_tests', label: 'Total Tests by Site', colors: standard_colours)
           #chart_site_tests
-          -#= image_tag('img/charts/tests-site.png')
 
     -if(average_test_per_site_chart.present?)
       .col.col-6.box
@@ -98,9 +96,8 @@
           = image_tag('img/site.png')
           %h3 Average Tests by Site
         .box-content
-          = react_component('GroupedVerticalBarChart', height: 600, width: 600, chart_div: 'chart_average_test_per_site_chart', data: average_test_per_site_chart, colors: standard_colours)
+          = react_component('GroupedVerticalBarChart', height: 600, width: 800, chart_div: 'chart_average_test_per_site_chart', data: average_test_per_site_chart, colors: standard_colours)
           #chart_average_test_per_site_chart
-          =#= image_tag('img/charts/avg-tests-site.png')
 
     -if(devices_grouped.present?)
       .col.col-4.box
@@ -109,7 +106,6 @@
           %h3 Total Tests by Device
         .box-content#tests_run
           = react_component('SnailPieChart', data: devices_grouped, height: 250, label: 'Tests Run', colors: standard_colours)
-          -#= image_tag('img/charts/tests-device.png')
 
     -if(average_tests_per_technician_chart.present?)
       .col.col-8.box
@@ -117,9 +113,8 @@
           = image_tag('img/user.png')
           %h3 Average Tests by Technician
         .box-content
-          = react_component('GroupedHorizontalBarChart', data: average_tests_per_technician_chart, width: 600, chart_div: 'chart_average_tests', label: 'DAYS', colors: standard_colours)
+          = react_component('GroupedVerticalBarChart', data: average_tests_per_technician_chart, height: 600, width: 1000, chart_div: 'chart_average_tests', label: 'DAYS', colors: standard_colours)
           #chart_average_tests
-          -#= image_tag('img/charts/tests-technician.png')
 
       .col.col-12.box
         %header

@@ -8,9 +8,9 @@ module Reports
     def show
       results['tests'].each do |result|
         data << {
-          site: lookup_site(result['site.uuid']),
-          peak: calculate_peak(result['site.uuid']),
-          average: calculate_average(result)
+          _label: lookup_site(result['site.uuid']),
+          'Peak Tests': calculate_peak(result['site.uuid']),
+          'Average Tests': calculate_average(result)
         }
       end
       data
