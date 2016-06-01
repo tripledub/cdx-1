@@ -1,0 +1,17 @@
+# encoding: utf-8
+# -*- mode: ruby -*-
+# # vi: set ft=ruby :
+
+site 'http://community.opscode.com/api/v1'
+
+cookbook 'apt'
+cookbook 'redis', {:github=>'phlipper/chef-redis'}
+cookbook 'nodejs', {:github=>'mdxp/nodejs-cookbook'}
+cookbook 'mysql', '5.5.3'
+cookbook 'vim'
+cookbook 'ruby_build', {:github=>'fnichol/chef-ruby_build', :ref=>'v0.7.2'}
+cookbook 'rbenv', git: 'https://github.com/aminin/chef-rbenv'
+cookbook 'phantomjs'
+
+cookbook 'java'
+cookbook 'elasticsearch'

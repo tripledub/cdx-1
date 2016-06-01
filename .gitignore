@@ -39,3 +39,6 @@ public/system
 examples.txt
 Procfile.local
 import
+cookbooks
+Cheffile.lock
+.vagrant
