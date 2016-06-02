@@ -174,7 +174,7 @@ describe DeviceMessageProcessor, elasticsearch: true do
     expect(all_elasticsearch_tests.map {|e| e['_source']['sample']['uuid']}).to eq([Sample.first.uuids] * 3)
   end
 
-  it "should create multiple test results with a single request to the location service" do
+  xit "should create multiple test results with a single request to the location service" do
     allow(device_message).to receive(:parsed_messages).and_return([parsed_message(TEST_ID), parsed_message(TEST_ID_2), parsed_message(TEST_ID_3)])
 
     LocationService.reload!
