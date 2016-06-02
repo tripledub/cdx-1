@@ -204,7 +204,7 @@ RSpec.describe PatientsController, type: :controller do
 
   context "create" do
     let(:patient_form_plan) {
-      { name: 'Lorem', entity_id: '1001', gender: 'female', dob: '1/1/2000' }
+      { name: 'Lorem', entity_id: '1001', gender: 'female', dob: '1/1/2000', address: "1 street", city: 'london', state: "aa", zip_code: 'sw11' }
     }
     let(:patient_form_plan_dob) { Time.parse("2000-01-01") }
     def build_patient_form_plan(options)
@@ -227,6 +227,11 @@ RSpec.describe PatientsController, type: :controller do
       expect(patient.entity_id).to eq(patient_form_plan[:entity_id])
       expect(patient.gender).to eq(patient_form_plan[:gender])
       expect(Time.parse(patient.dob)).to eq(patient_form_plan_dob)
+      
+      expect(patient.address).to eq(patient_form_plan[:address])
+      expect(patient.city).to eq(patient_form_plan[:city])
+      expect(patient.state).to eq(patient_form_plan[:state])
+      expect(patient.zip_code).to eq(patient_form_plan[:zip_code])
 
       expect(patient.plain_sensitive_data['name']).to eq(patient_form_plan[:name])
       expect(patient.core_fields['gender']).to eq(patient_form_plan[:gender])
@@ -395,13 +400,17 @@ RSpec.describe PatientsController, type: :controller do
     let(:patient) { institution.patients.make }
 
     it "should update existing patient" do
-      post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', dob: '1/18/2000' }
+      post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', dob: '1/18/2000', address: "1 street", city: 'london', state: "aa", zip_code: 'sw11' }
       expect(response).to be_redirect
 
       patient.reload
       expect(patient.name).to eq("Lorem")
       expect(patient.gender).to eq("female")
       expect(Time.parse(patient.dob)).to eq(Time.parse("2000-01-18"))
+      expect(patient.address).to eq("1 street")
+      expect(patient.city).to eq("london")
+      expect(patient.state).to eq("aa")
+      expect(patient.zip_code).to eq("sw11")
     end
 
     it "should assign entity_id if previous is blank" do

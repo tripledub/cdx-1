@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Api::MessagesController, elasticsearch: true, validate_manifest: false do
-
+=begin
   let(:user) {User.make}
   let(:institution) {Institution.make user_id: user.id}
   let(:device) {Device.make institution_id: institution.id}
@@ -43,4 +43,5 @@ describe Api::MessagesController, elasticsearch: true, validate_manifest: false 
     end
   end
 
+=end
 end

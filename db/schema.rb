@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419123349) do
+ActiveRecord::Schema.define(version: 20160602211123) do
 
   create_table "alert_condition_results", force: :cascade do |t|
     t.string  "result",   limit: 255
@@ -381,6 +381,9 @@ ActiveRecord::Schema.define(version: 20160419123349) do
     t.string   "entity_id",      limit: 255
     t.integer  "site_id",        limit: 4
     t.string   "site_prefix",    limit: 255
+    t.string   "state",          limit: 255
+    t.string   "city",           limit: 255
+    t.string   "zip_code",       limit: 255
   end
 
   add_index "patients", ["deleted_at"], name: "index_patients_on_deleted_at", using: :btree
