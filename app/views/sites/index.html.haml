@@ -17,12 +17,12 @@
         - t.thead do
           %tr
             %th Name
-            %th Location
+            %th City
         - t.tbody do
           - @sites.each do |site|
             %tr{data: {href: edit_site_path(site) }}
               %td= site.name
-              %td= site.location.try(:name)
+              %td= site.city !=nil ? site.city : ''
 
       .pagination
         = render 'shared/pagination'

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe Api::TestsController, elasticsearch: true, validate_manifest: false do
-
+xdescribe Api::TestsController, elasticsearch: true, validate_manifest: false do
   let(:user) {User.make}
   let(:institution) {Institution.make user_id: user.id}
 
@@ -66,5 +65,4 @@ describe Api::TestsController, elasticsearch: true, validate_manifest: false do
       ])
     end
   end
-
 end

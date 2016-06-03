@@ -28,8 +28,8 @@ describe SitesController do
     it "should return a valid CSV when requested" do
       get :index, format: :csv
       csv = CSV.parse(response.body)
-      expect(csv[0]).to eq(["Name", "Location"])
-      expect(csv[1]).to eq([site.name, site.location.name])
+      expect(csv[0]).to eq(["Name", "Address","City", "State", "Zipcode"])   
+      expect(csv[1]).to eq([site.name, site.address, site.city, site.state, site.zip_code])
     end
 
     it "should list sites without location" do
@@ -130,19 +130,12 @@ describe SitesController do
     let!(:site) { institution.sites.make }
 
     it "should update site" do
-      patch :update, id: site.id, site: { name: "newname", location_geoid: "LOCATION_GEOID", lat: 40, lng: 50 }
+      patch :update, id: site.id, site: { name: "newname", address: "1 street", city: 'london', state: "aa", zip_code: 'sw11'}
       expect(site.reload.name).to eq("newname")
-      expect(site.reload.lat).to eq(40)
-      expect(site.reload.lng).to eq(50)
-      expect(response).to be_redirect
-    end
-
-    it "should update site inferring latlng from geoid" do
-      expect(Location).to receive(:details).with("LOCATION_GEOID") { [Location.new.tap {|l| l.lat= 10; l.lng= -42}] }
-      patch :update, id: site.id, site: { name: "newname", location_geoid: "LOCATION_GEOID" }
-      expect(site.reload.name).to eq("newname")
-      expect(site.reload.lat).to eq(10)
-      expect(site.reload.lng).to eq(-42)
+      expect(site.address).to eq("1 street")
+      expect(site.city).to eq("london")
+       expect(site.state).to eq("aa")
+      expect(site.zip_code).to eq("sw11")
       expect(response).to be_redirect
     end
 

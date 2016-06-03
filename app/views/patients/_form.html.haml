@@ -35,7 +35,7 @@
     .col
       = f.text_field :dob, placeholder: @patient.dob_placeholder
 
-  = patient_address_component(@patient)
+  = render partial: "shared/address", :locals => { :f => f, model_type: "patient" }
 
   .row
     .col.pe-2

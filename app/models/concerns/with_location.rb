@@ -15,10 +15,7 @@ module WithLocation
     end
 
     def self.preload_locations!
-      locations = Location.details(all.map(&:location_geoid).map(&:presence).compact.uniq).index_by(&:id)
-      all.to_a.each do |record|
-        record.location = locations[record.location_geoid]
-      end
+      return []
     end
   end
 end

@@ -38,14 +38,20 @@
     .value= @site.address
 .row
   .col.pe-2
-    = label_tag :region
+    = label_tag :city
   .col
-    .value
-      = react_component "LocationLabel", id: @site.location_geoid
+    .value= @site.city
 .row
   .col.pe-2
-  .col.pe-8
-    = react_component "NonEditableMap", position:[@site.lat, @site.lng], zoom:12
+    = label_tag :state
+  .col
+    .value= @site.state
+.row
+  .col.pe-2
+    = label_tag :zip_code
+  .col
+    .value= @site.zip_code
+
 .row
   .col.pe-2
     = label_tag :sample_id_reset_policy, "Sample ID reset policy"

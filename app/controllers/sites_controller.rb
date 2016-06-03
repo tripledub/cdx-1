@@ -171,9 +171,9 @@ class SitesController < ApplicationController
 
   def build_csv
     CSV.generate do |csv|
-      csv << ["Name", "Location"]
+      csv << ["Name", "Address","City", "State", "Zipcode"]
       @sites.each do |s|
-        csv << [s.name, s.location.try(:name)]
+        csv << [s.name, s.address, s.city, s.state, s.zip_code]
       end
     end
   end

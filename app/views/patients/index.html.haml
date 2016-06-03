@@ -13,14 +13,14 @@
           %col{:width => "25%"}
           %col{:width => "12%"}
           %col{:width => "13%"}
-          %col{:width => "32%"}
           %col{:width => "18%"}
+          %col{:width => "32%"}
         - t.thead do
           %tr
             %th Name
             %th Patient Id
             %th Date of Birth
-            %th Location
+            %th City
             %th Last test order
         - t.tbody do
           - @patients.each do |patient|
@@ -28,7 +28,7 @@
               %td{class: patient.name.blank? ? "unknown-name" : ""}= patient.name || "(Unknown name)"
               %td= patient.entity_id
               %td= patient.dob_description(I18n.t('date.input_format.pattern'))
-              %td= patient.location.try(:name)
+              %td= patient.city !=nil ? patient.city : ''
               %td= format_date(patient.last_encounter)
 
       .pagination
