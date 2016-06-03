@@ -106,8 +106,7 @@ describe Manifest, validate_manifest: false do
       {"sample" => {"custom" => {"fields" => "#{site.name},#{site.address},#{site.city},#{site.state},#{site.zip_code},#{site.region},#{site.lat.to_i},#{site.lng.to_i},#{site.location_geoid}"}, "pii" => {}, "core" => {}}}, device
     end
 
-=begin
-    it "has access to location from script" do
+    xit "has access to location from script" do
       device = Device.make
       loc = device.site.location
       assert_manifest_application %(
@@ -121,7 +120,7 @@ describe Manifest, validate_manifest: false do
       ), %({}),
       {"sample" => {"custom" => {"fields" => "#{loc.name},#{loc.lat.to_i},#{loc.lng.to_i}"}, "pii" => {}, "core" => {}}}, device
     end
-=end
+
     it "loads xml in javascript" do
       assert_manifest_application %(
         {

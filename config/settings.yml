@@ -1,6 +1,5 @@
 host: localhost:3000
 nndd_url: "/nndd/"
-#location_service_url: "http://locations-stg.instedd.org"
 location_service_url: ""
 location_service_set: 'ne'
 location_geocoder: 'Nominatim'

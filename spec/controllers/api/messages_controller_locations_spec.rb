@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe Api::MessagesController, elasticsearch: true, validate_manifest: false do
-=begin
+xdescribe Api::MessagesController, elasticsearch: true, validate_manifest: false do
   let(:user) {User.make}
   let(:institution) {Institution.make user_id: user.id}
   let(:device) {Device.make institution_id: institution.id}
@@ -42,6 +41,4 @@ describe Api::MessagesController, elasticsearch: true, validate_manifest: false 
       expect(DeviceMessage.last.index_failed).to be_truthy
     end
   end
-
-=end
 end
