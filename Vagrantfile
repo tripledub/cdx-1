@@ -39,13 +39,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Set an empty root password for MySQL to make things simple
     chef.json = {
       redis: {
-        bind: 'true',
+        bind: '0.0.0.0',
         port: '6379',
         config_path: '/etc/redis/redis.conf',
         daemonize: 'yes',
         timeout: '300',
         loglevel: 'notice',
         create_service: true
+      },
+      java: {
+        jdk_version: 7,
       },
       rbenv: {
         user_installs: [{
@@ -77,7 +80,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       },
       elasticsearch: {
         version: '1.7.5',
-        install: 'package'
+        install: 'package',
+        service: 'start'
       }
     }
   end
