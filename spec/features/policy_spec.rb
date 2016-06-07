@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "policy", elasticsearch: true do
+xdescribe "policy", elasticsearch: true do
 
   let(:institution) { Institution.make }
   let(:user) { institution.user }
@@ -51,7 +51,7 @@ describe "policy", elasticsearch: true do
         end
       end
 
-      it "should access first test result" do
+      xit "should access first test result" do
         goto_page TestResultsPage do |page|
           page.table.items.first.click
           expect(page).to be_success
