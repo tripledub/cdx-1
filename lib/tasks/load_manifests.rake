@@ -66,6 +66,7 @@ namespace :manifests do
             owner = User.create_with(password: default_password).find_or_create_by!(email: props[:owner]) do |u|
               u.skip_confirmation!
             end
+            owner.grant_superadmin_policy if default_email && default_password
             institution.user = owner
             institution.kind = 'institution'
           end
