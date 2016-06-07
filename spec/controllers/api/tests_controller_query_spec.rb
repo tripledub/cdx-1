@@ -243,7 +243,6 @@ describe Api::TestsController, elasticsearch: true, validate_manifest: false do
         response = get_updates(order_by: "encounter.patient_age")
 
         expect(response[0]["test"]["assays"].first["result"]).to eq("negative")
-        binding.pry
      #   expect(response[0]["encounter"]["patient_age"]["years"]).to eq(10)
           expect(response[0]["encounter"]).to eq({})
         expect(response[1]["test"]["assays"].first["result"]).to eq("positive")

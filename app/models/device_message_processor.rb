@@ -72,11 +72,9 @@ class DeviceMessageProcessor
 
         if klazz.to_s == "Encounter" 
           p 'ffff'
- #         binding.pry
         end
                 
         if new_entity && klazz.to_s == "Encounter" 
-#binding.pry
           is_there_an_encounter = false
       p '-zzzz-'
         else
@@ -91,7 +89,16 @@ class DeviceMessageProcessor
 
       # Merge entity attributes from this device message
       [Sample, Encounter, Patient].each do |klazz|
-        parent_blenders[klazz].merge_attributes attributes_for(klazz.entity_scope) if klazz.to_s != "Encounter" && is_there_an_encounter == false
+        
+        
+          if klazz.to_s == "Encounter" && is_there_an_encounter == false
+            p 'no parent blender'
+           else
+            parent_blenders[klazz].merge_attributes attributes_for(klazz.entity_scope) 
+            end 
+            
+
+#        parent_blenders[klazz].merge_attributes attributes_for(klazz.entity_scope) if klazz.to_s != "Encounter" && is_there_an_encounter == false
       end
       parent_blenders[Encounter].site = device.site if is_there_an_encounter == true
       # Commit changes
