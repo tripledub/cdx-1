@@ -77,3 +77,125 @@ margin:0px;
 font-size:12px;
 color:#777
 }
+
+.show-navigation-context-picker #context_side_bar > div {
+    flex: 1;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+	padding-top:60px;
+    left: 0;
+    right: 0;
+    overflow: auto;
+    overflow-x: hidden;
+    width: 300px;
+    height: 100;
+}
+
+
+
+.search-sites::-webkit-input-placeholder {
+   color: #fff;
+}
+
+.search-sites:-moz-placeholder { /* Firefox 18- */
+   color: #fff;  
+}
+
+.search-sites::-moz-placeholder {  /* Firefox 19+ */
+   color: #fff;  
+}
+
+.search-sites:-ms-input-placeholder {  
+   color: #fff;  
+}
+
+
+
+/* Test Area */
+
+.maincol {
+    margin: 0px;
+}
+
+.custom_filters{
+background:#dc602e;
+height: 85px;
+margin-left: 15px;
+margin-right: 15px;
+padding-left: 0;
+}
+
+.custom_filters .Select-placeholder, .custom_filters input{
+color:#fff;
+}
+
+.filterbartest #query_button {
+background:#555;
+}
+
+.filterbartest #query_button:hover{
+opacity:0.7;
+}
+
+.filterbartest .btn-add{
+margin-top: -5px;
+}
+
+.filterbartest .title{
+margin-top:5px;
+}
+
+.filterbartest{
+height:90px;
+margin-top:0px;
+background:transparent;
+}
+
+
+
+/*  Device */
+
+
+.devicearea .add-new{
+margin-top:10px;
+background:transparent;
+}
+
+.devicearea .add-new h2{
+color:black;
+}
+
+.devicearea .side-link {
+    background: #2196f3 none repeat scroll 0 0;
+    border-radius: 50%;
+    color: white;
+    display: inline-block;
+    font-family: "Open Sans",sans-serif;
+    font-size: 27px;
+    font-weight: 300 !important;
+    height: 48px;
+    line-height: 48px;
+    text-align: center;
+    vertical-align: middle;
+    width: 48px;
+    margin-top:-3px;
+}
+
+.new_device{
+margin:15px;
+padding:20px;
+background:#b8d5b8;
+}
+
+.new_device label{
+color:#fff;
+}
+
+.new_device .value{
+color:#fff;
+}
+
+.new_device .Select-placeholder{
+color:#fff !important;
+}
