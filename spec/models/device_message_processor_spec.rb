@@ -1186,8 +1186,7 @@ describe DeviceMessageProcessor, elasticsearch: true do
 
         device_message_processor.process
 
-      #  expect(Encounter.count).to eq(2)
-   expect(Encounter.count).to eq(1)
+        expect(Encounter.count).to eq(1)
 
         encounter = Encounter.first
         encounter2 = TestResult.first.encounter

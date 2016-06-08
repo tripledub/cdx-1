@@ -44,9 +44,11 @@ class DeviceMessageProcessor
       test_id = parsed_message.get_in('test', 'core', 'id')
       original_test = test_id && TestResult.within_time(1.year, @parent.device_message.created_at).find_by(test_id: test_id, device_id: device.id, site_id: device.site_id)
       test_result = original_test || TestResult.new(institution: institution, device: device) 
+      
       test_result.device_messages << device_message
       test_result.test_result_parsed_data << TestResultParsedDatum.new(data: @parsed_message)
       test_blender = @blender.load(test_result)
+      
       # Merge new attributes and sample id
       sample_id = parsed_message.get_in('sample', 'core', 'id').try(:to_s)
       test_blender.merge_attributes attributes_for('test').merge(sample_id: sample_id)
