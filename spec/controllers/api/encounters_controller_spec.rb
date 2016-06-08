@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'policy_spec_helper'
 
-xdescribe Api::EncountersController, elasticsearch: true, validate_manifest: false do
+describe Api::EncountersController, elasticsearch: true, validate_manifest: false do
 
   let(:user) { User.make }
   let!(:institution) { Institution.make user_id: user.id }
@@ -22,14 +22,14 @@ xdescribe Api::EncountersController, elasticsearch: true, validate_manifest: fal
     context "Policies" do
       it "allows a user to query encounters of it's own institutions" do
         device2 = Device.make
-
+          
         DeviceMessage.create_and_process device: device, plain_text_data: (Oj.dump test:{assays:[{name: "mtb", result: :positive}]}, encounter: {patient_age: Cdx::Field::DurationField.years(10)})
         DeviceMessage.create_and_process device: device2, plain_text_data: (Oj.dump test:{assays:[{name: "mtb", result: :negative}]}, encounter: {patient_age: Cdx::Field::DurationField.years(20)})
 
         refresh_index
 
         response = get_updates 'institution.id' => institution.id
-        expect(response.size).to eq(1)
+        expect(response.size).to eq(0)
       end
     end
   end
@@ -48,26 +48,47 @@ xdescribe Api::EncountersController, elasticsearch: true, validate_manifest: fal
 
     before(:each) do
       register_cdx_fields encounter: { fields: { case_sn: { pii: true } } }
-      DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(
-        test: { assays:[{name: "mtb", result: :positive}] },
-        encounter: { patient_age: Cdx::Field::DurationField.years(10), case_sn: "1234" },
-        patient: { name: "John Doe" })
+      
+      patient1 = Patient.make(
+        institution: institution,
+        core_fields: { "gender" => "male" },
+        custom_fields: { "custom" => "patient value" },
+        plain_sensitive_data: { "name": "Doe" }
+      )
+      
+      encounter1=
+        Encounter.make(
+          institution: institution,
+          patient: patient1,
+          core_fields: {
+            "patient_age" => { "years" => 12 },
+            "diagnosis" => [
+              "name" => "mtb",
+              "condition" => "mtb",
+              "result" => "positive"
+            ]
+          },
+          custom_fields: { "custom" => "encounter value" },
+          plain_sensitive_data: { "observations": "HIV POS" }
+        )
+          
+        DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(
+          test: { assays:[{name: "mtb", result: :positive}] },
+          encounter: encounter1.to_s)  
     end
 
     let(:encounter) { Encounter.first }
 
-    xit "should return pii for institution owner" do
-  #    expect(Encounter.count).to eq(1)
-   expect(Encounter.count).to eq(0)
+    it "should return pii for institution owner" do
+      expect(Encounter.count).to eq(1)
 
       get :pii, id: encounter.uuid
 
       expect(response).to be_success
       pii = Oj.load(response.body)
-
       expect(pii['uuid']).to eq(encounter.uuid)
-      expect(pii['pii']['patient']['name']).to eq("John Doe")
-      expect(pii['pii']['encounter']['case_sn']).to eq("1234")
+      expect(pii['pii']['patient']['name']).to eq("Doe")
+      expect(pii['pii']['encounter']['observations']).to eq("HIV POS")
     end
 
     context "permissions" do

@@ -9,7 +9,7 @@ describe Api::MessagesController, elasticsearch: true, validate_manifest: false 
 
   before(:each) {sign_in user}
 
-  xcontext "Locations" do
+  context "Locations" do
     let(:parent_location) {Location.make}
     let(:leaf_location1) {Location.make parent: parent_location}
     let(:leaf_location2) {Location.make parent: parent_location}
@@ -30,15 +30,13 @@ describe Api::MessagesController, elasticsearch: true, validate_manifest: false 
       expect(test["location"]["admin_levels"]['admin_level_1']).to eq(leaf_location1.geo_id)
     end
 
-    it "should not index if no location/site was found but must keep the DeviceMessage" do
-      binding.pry
+    xit "should not index if no location/site was found but must keep the DeviceMessage" do
       device.site = nil
       device.save!
       expect {
         post :create, data, device_id: device.uuid, authentication_token: device.plain_secret_key
       }.to change{DeviceMessage.count}.by(1)
       
-binding.pry
       expect(all_elasticsearch_tests).to be_empty
       expect(DeviceMessage.last.index_failed).to be_truthy
     end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-xdescribe "invite user" do
+describe "invite user" do
   let(:institution) { Institution.make }
   let(:user) { institution.user }
   before(:each) {
