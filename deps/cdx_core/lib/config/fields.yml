@@ -61,6 +61,7 @@ entities:
               - positive
               - negative
               - indeterminate
+              - quantitative
               - n/a
           quantitative_result:
             searchable: true
