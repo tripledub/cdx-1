@@ -46,14 +46,12 @@ class DeviceMessageProcessor
       test_result = original_test || TestResult.new(institution: institution, device: device) 
       test_result.device_messages << device_message
       test_result.test_result_parsed_data << TestResultParsedDatum.new(data: @parsed_message)
-
       test_blender = @blender.load(test_result)
       # Merge new attributes and sample id
       sample_id = parsed_message.get_in('sample', 'core', 'id').try(:to_s)
       test_blender.merge_attributes attributes_for('test').merge(sample_id: sample_id)
       # Re-assign each entity if present and does not match the original test's
       parent_blenders = {}
-      
       is_there_an_encounter = true
       [Sample, Encounter, Patient].each do |klazz|
 
@@ -78,12 +76,9 @@ class DeviceMessageProcessor
 
       # Merge entity attributes from this device message
       [Sample, Encounter, Patient].each do |klazz|
-      #    if klazz.to_s == "Encounter" && is_there_an_encounter == false
-       #     p 'no parent blender'
-        #   else
-          if !(klazz.to_s == "Encounter" && is_there_an_encounter == false)
-            parent_blenders[klazz].merge_attributes attributes_for(klazz.entity_scope) 
-            end 
+        if !(klazz.to_s == "Encounter" && is_there_an_encounter == false)
+          parent_blenders[klazz].merge_attributes attributes_for(klazz.entity_scope) 
+        end 
       end
       parent_blenders[Encounter].site = device.site if is_there_an_encounter == true
       # Commit changes

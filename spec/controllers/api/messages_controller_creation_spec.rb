@@ -87,9 +87,6 @@ describe Api::MessagesController, elasticsearch: true, validate_manifest: false 
       test = tests.first
       expect(test["_source"]["test"]["id"]).to eq("1234")
       expect(test["_id"]).to eq(test["_source"]["test"]["uuid"])
-      
-      
-      #expect(test["_source"]["encounter"]["patient_age"]["years"]).to eq(20)
       expect(test["_source"]["encounter"]).to eq({})
 
       post :create, Oj.dump(test: {id: "1234"}, encounter: {patient_age: {"years" => 30}}), device_id: device.uuid, authentication_token: device.plain_secret_key
@@ -106,9 +103,7 @@ describe Api::MessagesController, elasticsearch: true, validate_manifest: false 
       test = tests.first
       expect(test["_source"]["test"]["id"]).to eq("1234")
       expect(test["_id"]).to eq(test["_source"]["test"]["uuid"])
-      
-    #  expect(test["_source"]["encounter"]["patient_age"]["years"]).to eq(30)
-    expect(test["_source"]["encounter"]).to eq({})
+      expect(test["_source"]["encounter"]).to eq({})
 
       a_device = Device.make(institution: institution)
       post :create, Oj.dump(test: {id: "1234", age: {"years" => 20}}), device_id: a_device.uuid, authentication_token: a_device.plain_secret_key

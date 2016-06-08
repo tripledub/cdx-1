@@ -21,8 +21,7 @@ describe Api::EncountersController, elasticsearch: true, validate_manifest: fals
   context "Query" do
     context "Policies" do
       it "allows a user to query encounters of it's own institutions" do
-        device2 = Device.make
-          
+        device2 = Device.make      
         DeviceMessage.create_and_process device: device, plain_text_data: (Oj.dump test:{assays:[{name: "mtb", result: :positive}]}, encounter: {patient_age: Cdx::Field::DurationField.years(10)})
         DeviceMessage.create_and_process device: device2, plain_text_data: (Oj.dump test:{assays:[{name: "mtb", result: :negative}]}, encounter: {patient_age: Cdx::Field::DurationField.years(20)})
 

@@ -151,7 +151,7 @@ class Blender
     set_parent(child_blender, merged_parents.last)
   end
 
-  def save_without_index!   
+  def save_without_index!
     ActiveRecord::Base.transaction do
       entities = @patients.map(&:save!) + @encounters.map(&:save!) + @samples.map(&:save!) + @test_results.map(&:save!)
       [blenders.values + @garbage].flatten.each &:sweep
