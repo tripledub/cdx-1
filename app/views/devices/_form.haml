@@ -1,4 +1,4 @@
-= form_for(@device) do |f|
+= form_for(@device, html: { autocomplete: 'off' }) do |f|
   = validation_errors @device
 
   .row
@@ -58,6 +58,10 @@
           = f.check_box :ftp_passive
           = f.label :ftp_passive, "&nbsp;".html_safe
         .col.pe-2= f.text_field :ftp_directory, placeholder: 'Folder'
+      .row{style: 'visibility:hidden; height: 1px'}
+        .col.pe-2= f.label :fake_username, 'Login'
+        .col.pe-2= text_field :fake_username, placeholder: 'Username', autocomplete: 'on'
+        .col.pe-2= f.password_field :fake_password, value: '', placeholder: 'Password', autocomplete: 'off'
       .row
         .col.pe-2= f.label :ftp_username, 'Login'
         .col.pe-2= f.text_field :ftp_username, placeholder: 'Username', autocomplete: 'off'
