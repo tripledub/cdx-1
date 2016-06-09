@@ -280,8 +280,8 @@ describe Encounter do
         create_encounter_and_test
       end
 
-      it "should have a pending test" do
-        expect(Encounter.last.test_results_not_in_diagnostic).to eq([TestResult.last])
+      it "if there is no existing encounter for a sample id then do not create one automatically" do
+        expect(TestResult.last.encounter_id).to eq(nil)
       end
     end
   end

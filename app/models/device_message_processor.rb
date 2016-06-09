@@ -48,43 +48,43 @@ class DeviceMessageProcessor
       test_result.device_messages << device_message
       test_result.test_result_parsed_data << TestResultParsedDatum.new(data: @parsed_message)
       test_blender = @blender.load(test_result)
-
+      
       # Merge new attributes and sample id
       sample_id = parsed_message.get_in('sample', 'core', 'id').try(:to_s)
       test_blender.merge_attributes attributes_for('test').merge(sample_id: sample_id)
-
       # Re-assign each entity if present and does not match the original test's
       parent_blenders = {}
+      is_there_an_encounter = true
       [Sample, Encounter, Patient].each do |klazz|
 
         original_entity_id = entity_id_for(original_test, klazz)
         new_entity_id = parsed_message.get_in(klazz.entity_scope, (klazz == Patient ? 'pii' : 'core'), 'id').try(:to_s)
         entity_id_does_not_match = original_entity_id && new_entity_id && original_entity_id != new_entity_id
-
         new_entity = find_entity_by_id(klazz, new_entity_id)
         original_blender = test_blender.send(klazz.entity_scope)
-
         new_entity ||= klazz.new(institution: institution) if entity_id_does_not_match || original_blender.nil?
-
-        parent_blenders[klazz] = if new_entity
-          @blender.load(new_entity)
+                
+        if new_entity && klazz.to_s == "Encounter" 
+          is_there_an_encounter = false
         else
-           original_blender
-        end
-
-        @blender.set_parent(test_blender, parent_blenders[klazz])
+          parent_blenders[klazz] = if new_entity
+            @blender.load(new_entity)
+          else
+            original_blender
+          end
+          @blender.set_parent(test_blender, parent_blenders[klazz])
+        end          
       end
 
       # Merge entity attributes from this device message
       [Sample, Encounter, Patient].each do |klazz|
-        parent_blenders[klazz].merge_attributes attributes_for(klazz.entity_scope)
+        if !(klazz.to_s == "Encounter" && is_there_an_encounter == false)
+          parent_blenders[klazz].merge_attributes attributes_for(klazz.entity_scope) 
+        end 
       end
-
-      parent_blenders[Encounter].site = device.site
-
+      parent_blenders[Encounter].site = device.site if is_there_an_encounter == true
       # Commit changes
-      @blender.save_and_index!
-      
+      @blender.save_and_index!     
       check_invalid_start_time_alert(test_result)
     end
 

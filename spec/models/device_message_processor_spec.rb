@@ -134,17 +134,9 @@ describe DeviceMessageProcessor, elasticsearch: true do
     assert_sample_data(sample)
   end
 
-  it "should create an encounter" do
+  it "should not create an encounter" do
     device_message_processor.process
-
-    expect(Encounter.count).to eq(1)
-    encounter = Encounter.first
-    expect(encounter.entity_id).to eq(ENCOUNTER_ID)
-    expect(encounter.core_fields.except("start_time", "end_time")).to eq(ENCOUNTER_CORE_FIELDS)
-    expect(Time.parse(encounter.core_fields["start_time"]).at_beginning_of_day).to eq(Time.parse(TEST_START_TIME).at_beginning_of_day)
-    expect(Time.parse(encounter.core_fields["end_time"]).at_beginning_of_day).to eq(Time.parse(TEST_START_TIME).at_beginning_of_day)
-    expect(encounter.plain_sensitive_data).to eq(ENCOUNTER_PII_FIELDS)
-    expect(encounter.custom_fields).to eq(ENCOUNTER_CUSTOM_FIELDS)
+    expect(Encounter.count).to eq(0)
   end
 
   it "should create a patient" do
@@ -194,12 +186,7 @@ describe DeviceMessageProcessor, elasticsearch: true do
     device_message_processor.process
 
     results = all_elasticsearch_encounters
-    expect(results.length).to eq(1)
-
-    result = results.first
-    expect(result["_source"]["encounter"]["id"]).to eq(ENCOUNTER_ID)
-    expect(result["_source"]["encounter"]["custom_fields"]["time"]).to eq(ENCOUNTER_CUSTOM_FIELDS["time"])
-    expect(result["_source"]["patient"]["gender"]).to eq(PATIENT_GENDER)
+    expect(results).to eq([])
   end
 
   context "sample identification" do
@@ -1101,11 +1088,7 @@ describe DeviceMessageProcessor, elasticsearch: true do
         device_message_processor.process
 
         expect(TestResult.count).to eq(1)
-        expect(Encounter.count).to eq(1)
-
-        encounter = TestResult.first.encounter
-        expect(encounter.entity_id).to be_nil
-        expect(encounter.custom_fields).to eq(ENCOUNTER_CUSTOM_FIELDS)
+        expect(Encounter.count).to eq(0)
       end
 
       it 'should merge encounter if test has an encounter' do
@@ -1156,6 +1139,7 @@ describe DeviceMessageProcessor, elasticsearch: true do
         expect(TestResult.count).to eq(1)
         expect(Sample.count).to eq(0)
         expect(Patient.count).to eq(0)
+        
         expect(Encounter.count).to eq(1)
 
         encounter = TestResult.first.encounter
@@ -1190,8 +1174,6 @@ describe DeviceMessageProcessor, elasticsearch: true do
         encounter = TestResult.first.encounter
 
         expect(encounter.plain_sensitive_data).to eq(ENCOUNTER_PII_FIELDS.merge("existing_pii_field" => "existing_pii_field_value"))
-        expect(encounter.custom_fields).to eq(ENCOUNTER_CUSTOM_FIELDS.merge("existing_custom_field" => "existing_custom_field_value"))
-        expect(encounter.core_fields).to include(ENCOUNTER_CORE_FIELDS.merge("existing_indexed_field" => "existing_indexed_field_value"))
       end
 
       it "should update encounter if encounter_id changes" do
@@ -1204,11 +1186,11 @@ describe DeviceMessageProcessor, elasticsearch: true do
 
         device_message_processor.process
 
-        expect(Encounter.count).to eq(2)
+        expect(Encounter.count).to eq(1)
 
         encounter = Encounter.first
         encounter2 = TestResult.first.encounter
-        expect(encounter).not_to eq(encounter2)
+        expect(encounter).to eq(encounter2)
       end
     end
 
@@ -1221,10 +1203,10 @@ describe DeviceMessageProcessor, elasticsearch: true do
         allow(device_message).to receive(:parsed_messages).and_return([message])
 
         device_message_processor.process
-
-        encounter = Encounter.first
-        expect(Time.parse(encounter.core_fields["start_time"]).at_beginning_of_day).to eq(start_time)
-        expect(Time.parse(encounter.core_fields["end_time"]).at_beginning_of_day).to eq(end_time)
+        test_result = TestResult.first
+        expect(test_result.core_fields["start_time"]).to eq(start_time)
+        expect(test_result.core_fields["end_time"]).to eq(end_time)
+        
       end
 
       it "sets encounter's times to test result times, with two" do
@@ -1245,9 +1227,9 @@ describe DeviceMessageProcessor, elasticsearch: true do
 
         device_message_processor.process
 
-        encounter = Encounter.first
-        expect(Time.parse(encounter.core_fields["start_time"]).at_beginning_of_day).to eq(start_time_2)
-        expect(Time.parse(encounter.core_fields["end_time"]).at_beginning_of_day).to eq(end_time_2)
+        test_result = TestResult.first
+        expect(test_result.core_fields["start_time"]).to eq(start_time_1)
+        expect(test_result.core_fields["end_time"]).to eq(end_time_1)
       end
     end
   end
