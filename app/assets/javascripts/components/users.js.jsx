@@ -65,29 +65,6 @@ var UserInviteForm = React.createClass({
     this.props.onFinished();
   },
 
-  checkUser: function(users)
-  {
-    var data = {
-      email: users.email
-    }
-    $.ajax({
-      url: '/users/find/',
-      method: 'GET',
-      data: data,
-      fail: function() {
-        // If user is not found then add it
-        this.addUser(users);
-      }.bind(this),
-      success: function () {
-        // needs a message here
-        this.setState(React.addons.update(this.state, {
-          message: { $set: "This Email is in Use already" }
-        })); 
-      }
-    });
-
-  },
-
   addUser: function(users) {
     this.setState(React.addons.update(this.state, {
       users: { $set: users }
@@ -123,7 +100,7 @@ var UserInviteForm = React.createClass({
       <div className="row">
         <div className="col pe-3"><label>Users</label></div>
         <div className="col"><OptionList ref="usersList"
-          callback={this.checkUser}
+          callback={this.addUser}
           autocompleteCallback="/users/autocomplete"
           context={this.props.context}
           allowNonExistent={true}
