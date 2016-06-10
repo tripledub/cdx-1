@@ -43,19 +43,49 @@ var UserInviteForm = React.createClass({
 
     if(this.state.includeMessage)
       data.message = this.state.message;
+
     $.ajax({
       url: '/users',
       method: 'POST',
       data: data,
-      success: function () {
-        this.closeModal();
-        window.location.reload(true); // reload page to update users table
+      success: function (d) {
+        d = $.parseJSON(d);
+        //if(d.info)
+        //  console.log(d.info);
+        //else
+        {
+          this.closeModal();
+          window.location.reload(true); // reload page to update users table
+        }
       }.bind(this)
     });
   },
 
   closeModal: function() {
     this.props.onFinished();
+  },
+
+  checkUser: function(users)
+  {
+    var data = {
+      email: users.email
+    }
+    $.ajax({
+      url: '/users/find/',
+      method: 'GET',
+      data: data,
+      fail: function() {
+        // If user is not found then add it
+        this.addUser(users);
+      }.bind(this),
+      success: function () {
+        // needs a message here
+        this.setState(React.addons.update(this.state, {
+          message: { $set: "This Email is in Use already" }
+        })); 
+      }
+    });
+
   },
 
   addUser: function(users) {
@@ -93,7 +123,7 @@ var UserInviteForm = React.createClass({
       <div className="row">
         <div className="col pe-3"><label>Users</label></div>
         <div className="col"><OptionList ref="usersList"
-          callback={this.addUser}
+          callback={this.checkUser}
           autocompleteCallback="/users/autocomplete"
           context={this.props.context}
           allowNonExistent={true}
