@@ -46,26 +46,6 @@
     .col
       = cdx_select form: f, name: :time_zone, class: 'input-x-large' do |select|
         - select.items(ActiveSupport::TimeZone.all, :name, :to_s)
-  - if @device.new_record? || @device.device_model.try(:supports_ftp)
-    .device-ftp-config{class: ('nodisplay' unless @device.device_model.try(:supports_ftp))}
-      .row
-        .col.pe-2= f.label :ftp_hostname, 'FTP'
-        .col.pe-2= f.text_field :ftp_hostname, placeholder: 'Hostname'
-        .col.pe-2= f.number_field :ftp_port, min: 0, max: 65535, placeholder: 'Port'
-        .col.pe-1
-          = f.label :ftp_passive, "Passive"
-        .col.pe-1
-          = f.check_box :ftp_passive
-          = f.label :ftp_passive, "&nbsp;".html_safe
-        .col.pe-2= f.text_field :ftp_directory, placeholder: 'Folder'
-      .row{style: 'visibility:hidden; height: 1px'}
-        .col.pe-2= f.label :fake_username, 'Login'
-        .col.pe-2= text_field :fake_username, placeholder: 'Username', autocomplete: 'on'
-        .col.pe-2= f.password_field :fake_password, value: '', placeholder: 'Password', autocomplete: 'off'
-      .row
-        .col.pe-2= f.label :ftp_username, 'Login'
-        .col.pe-2= f.text_field :ftp_username, placeholder: 'Username', autocomplete: 'off'
-        .col.pe-2= f.password_field :ftp_password, value: @device.ftp_password, placeholder: 'Password', autocomplete: 'off'
   #custom_mappings
     = render "custom_mappings" if @device.device_model
 
