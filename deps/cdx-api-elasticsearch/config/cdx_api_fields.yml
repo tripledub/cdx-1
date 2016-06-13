@@ -41,6 +41,15 @@ test:
       - name: test.error_code.max
         type: range-integer
         boundary: lte
+  - name: test.assays.quantitative_result
+    filter_parameter_definition:
+      - include_default: true
+      - name: test.assays.quantitative_result.min
+        type: range-integer
+        boundary: gte
+      - name: test.assays.quantitative_result.max
+        type: range-integer
+        boundary: lte
   - name: test.start_time
     filter_parameter_definition:
       - name: since

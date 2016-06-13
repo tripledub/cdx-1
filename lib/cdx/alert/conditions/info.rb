@@ -5,6 +5,8 @@ class Cdx::Alert::Conditions::Info
   end
 
   def create
+    return unless @conditions_info
+
     conditions = @conditions_info.split(',')
     query_conditions=[]
     conditions.each do |conditionid|

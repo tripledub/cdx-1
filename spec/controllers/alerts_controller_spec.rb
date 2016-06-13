@@ -3,8 +3,8 @@ require 'policy_spec_helper'
 
 describe AlertsController, type: :controller, elasticsearch: true do
   render_views
-  let!(:user)          { User.make }
-  let!(:institution)   { user.create Institution.make_unsaved }
+  let(:user)          { User.make }
+  let(:institution)   { Institution.make user_id: user.id }
   let(:default_params) { { context: institution.uuid } }
 
   let(:user2)         { User.make }
@@ -15,8 +15,9 @@ describe AlertsController, type: :controller, elasticsearch: true do
   let(:subsite)       { Site.make institution: institution, location: location, parent: site }
   let(:device)        { Device.make institution_id: institution.id, site: site }
   let(:device2)       { Device.make institution_id: institution.id, site: site }
-  let(:alert)         { Alert.make institution_id: institution.id }
+  let(:alert)         { Alert.make institution_id: institution.id, user_id: user.id, query: { "test.assays.condition"=>["malaria_pv", "hiv_2"] } }
   let(:role)          { Role.make institution_id: institution.id }
+  let(:user_device)   { Device.make institution_id: institution.id, site: site }
   let(:alert_params)  { {
     name:         'Updated alert',
     devices_info: "#{device2.id}, #{device.id}",
@@ -27,7 +28,9 @@ describe AlertsController, type: :controller, elasticsearch: true do
     external_users: {
       '0': { id: '12', first_name: 'External', last_name: 'User', email: 'external@user.com', telephone: '444' }
     },
-    sample_id: '963'
+    sample_id: '963',
+    test_result_min_threshold: 12,
+    test_result_max_threshold: 666
   }}
 
   before :each do
@@ -158,7 +161,7 @@ describe AlertsController, type: :controller, elasticsearch: true do
         let(:test_results_params) { alert_params.merge(test_result_min_threshold: '0', test_result_max_threshold: '835') }
 
         it 'should update the max result info' do
-          expect(alert.query['test.assays.quantitative_result']).to eq({ 'from' => 0, 'to' => 835 })
+          expect(alert.query['test.assays.quantitative_result']).to eq({ 'test.assays.quantitative_result.min' => 0, 'test.assays.quantitative_result.max' => 835 })
         end
       end
     end

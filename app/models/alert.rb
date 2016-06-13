@@ -45,7 +45,7 @@ class Alert < ActiveRecord::Base
   enum aggregation_type: [:record, :aggregated]
   enum aggregation_frequency: [:hour, :day, :week, :month]
   enum channel_type: [:email, :sms, :email_and_sms]
-  
+
   #Note: elasticsearch filter issue  with start_time, for some reason, {"test.start_time"=>"null"}, does not work.
   #enum anomalie_type: [:missing_sample_id, :missing_start_time]
   enum anomalie_type: [:missing_sample_id, :invalid_test_date]
@@ -64,23 +64,23 @@ class Alert < ActiveRecord::Base
   def create_percolator
      # for invalid_test_date, no percolator is used, done for each test result received as could not find
      # a way to do it with elasticsearch
-    if anomalie_type != "invalid_test_date"
-      es_query =  TestResult.query(self.query, self.user).elasticsearch_query
-      return unless es_query
-      Cdx::Api.client.index index: Cdx::Api.index_name_pattern,
-      type: '.percolator',
-      id: 'alert_'+self.id.to_s,
-      body: { query: es_query, type: 'test' }
-    end
+    return if anomalie_type == "invalid_test_date"
+
+    es_query = TestResult.query(self.query, self.user).elasticsearch_query
+
+    return unless es_query
+
+    Cdx::Api.client.index index: Cdx::Api.index_name_pattern,
+    type: '.percolator',
+    id: 'alert_'+self.id.to_s,
+    body: { query: es_query, type: 'test' }
   end
 
   def recreate_alert_percolator
     #when you disable an alert ,it will be deleted from elasticsearch
-    if anomalie_type != "invalid_test_date"
-      if self.enabled==true
-        create_percolator
-      end
-    end
+    return if anomalie_type == "invalid_test_date"
+
+    create_percolator if self.enabled==true
   end
 
   def delete_percolator
@@ -91,8 +91,8 @@ class Alert < ActiveRecord::Base
       ignore: 404
     end
   end
-  
-  
+
+
   private
 
   def is_integer?(str_val)
@@ -105,7 +105,7 @@ class Alert < ActiveRecord::Base
       if error_code.include? '-'
         minmax=error_code.split('-')
         error = true if !is_integer?(minmax[0])
-        error = true if !is_integer?(minmax[1]) 
+        error = true if !is_integer?(minmax[1])
       else
         error = true if !is_integer?(error_code)
       end
@@ -122,7 +122,7 @@ class Alert < ActiveRecord::Base
       end
     end
   end
-  
+
   def aggregation_percentage_validation
     if (use_aggregation_percentage?) && (aggregation_threshold > 100)
       errors.add(:aggregation_threshold, "Value cannot be greater than 100%")

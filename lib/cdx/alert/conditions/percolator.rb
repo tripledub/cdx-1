@@ -17,7 +17,7 @@ class Cdx::Alert::Conditions::Percolator
     if @alert_saved_ok == false
       error_text = @alert_info.errors.messages
     else
-      @alert_info.query = "{}"
+      @alert_info.query = {}
       edit = false
       set_channel_info(edit)
       set_category(edit)
@@ -39,7 +39,7 @@ class Cdx::Alert::Conditions::Percolator
         @alert_info.delete_percolator
       end
 
-      @alert_info.query = "{}"
+      @alert_info.query = {}
       edit             = true
       set_channel_info(edit)
 
@@ -123,7 +123,7 @@ class Cdx::Alert::Conditions::Percolator
     elsif @alert_info.category_type == "test_results"
       #this will generate a query like: core_fields: {"assays" =>["condition" => "mtb", "result" => :positive]}
 
-      query_conditions = Cdx::Alert::Conditions::Info.new(@alert_info, alert_params[:conditions_info]).create if alert_params[:conditions_info]
+      query_conditions = Cdx::Alert::Conditions::Info.new(@alert_info, alert_params[:conditions_info]).create
 
       if alert_params[:condition_results_info]
         results_info            = Cdx::Alert::Conditions::ResultsInfo.new(@alert_info, alert_params[:condition_results_info])

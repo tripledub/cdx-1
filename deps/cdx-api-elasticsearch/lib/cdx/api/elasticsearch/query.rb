@@ -152,6 +152,7 @@ class Cdx::Api::Elasticsearch::Query
 
   def self.process_field(field_definition, filter_definition, params, conditions)
     field_value = params[filter_definition['name']]
+
     if field_value
       case filter_definition['type']
       when 'match'
