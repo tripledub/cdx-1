@@ -1,4 +1,4 @@
-class Cdx::Alert::Conditions::Percolator
+class Cdx::Alert::Conditions::Alert
   def initialize(params, alert_info)
     @params                 = params
     @alert_info             = alert_info

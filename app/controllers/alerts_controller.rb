@@ -89,22 +89,22 @@ class AlertsController < ApplicationController
   end
 
   def create
-    percolator = Cdx::Alert::Conditions::Percolator.new(params, alert_info)
+    alert = Cdx::Alert::Conditions::Alert.new(params, alert_info)
 
-    if percolator.create(current_user)
+    if alert.create(current_user)
       render json: alert_info
     else
-      render json: percolator.error_text, status: :unprocessable_entity
+      render json: alert.error_text, status: :unprocessable_entity
     end
   end
 
   def update
-    percolator = Cdx::Alert::Conditions::Percolator.new(params, alert_info)
+    alert = Cdx::Alert::Conditions::Alert.new(params, alert_info)
 
-    if percolator.update
+    if alert.update
       render json: alert_info
     else
-      render json: percolator.error_text, status: :unprocessable_entity
+      render json: alert.error_text, status: :unprocessable_entity
     end
   end
 
