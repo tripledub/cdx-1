@@ -157,7 +157,7 @@ describe RolesController do
       create_role name: "Device models", definition: policy_definition("deviceModel", '*').to_json
       add_grantee_to_role "Device models"
 
-      assert_cannot grantee, device_model, 'deviceModel:read'
+      assert_can grantee, device_model, 'deviceModel:read'
     end
 
     it "should update computed policies when updating a role which users already have" do
