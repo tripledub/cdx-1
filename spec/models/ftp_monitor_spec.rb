@@ -4,18 +4,18 @@ describe FtpMonitor, elasticsearch: true do
   context 'orchestration' do
     it 'should group devices by ftp info' do
       dm = DeviceModel.make(supports_ftp: true, filename_pattern: '(?<sn>.+)')
-      d1 = Device.make(device_model: dm, ftp_hostname: 'example.com')
-      d2 = Device.make(device_model: dm, ftp_hostname: 'example.com')
-      d3 = Device.make(device_model: dm, ftp_hostname: 'example.com', ftp_port: 1000)
-      d4 = Device.make(device_model: dm, ftp_hostname: 'example.com', ftp_port: 1000)
-      d5 = Device.make(device_model: dm, ftp_hostname: 'example.com', ftp_port: 2000)
+      i1 = Institution.make(ftp_hostname: 'example.com')
+      i2 = Institution.make(ftp_hostname: 'example.com')
+      i3 = Institution.make(ftp_hostname: 'example.com', ftp_port: 1000)
+      i4 = Institution.make(ftp_hostname: 'example.com', ftp_port: 1000)
+      i5 = Institution.make(ftp_hostname: 'example.com', ftp_port: 2000)
 
       groups = FtpMonitor.new.device_groups
       expect(groups).to have(3).items
       expect(groups.to_a).to contain_exactly\
-        [FtpInfo.new(hostname: 'example.com'), [d1, d2]],
-        [FtpInfo.new(hostname: 'example.com', port: 1000), [d3, d4]],
-        [FtpInfo.new(hostname: 'example.com', port: 2000), [d5]]
+        [FtpInfo.new(hostname: 'example.com'), [i1, i2]],
+        [FtpInfo.new(hostname: 'example.com', port: 1000), [i3, i4]],
+        [FtpInfo.new(hostname: 'example.com', port: 2000), [i5]]
     end
   end
 
@@ -232,8 +232,6 @@ describe FtpMonitor, elasticsearch: true do
       let!(:device) do
         Device.make(
           device_model: device_model,
-          ftp_hostname: 'example.com',
-          ftp_port: 2000,
           serial_number: 'NAT-04000443'
         )
       end

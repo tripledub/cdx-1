@@ -17,6 +17,8 @@ class Institution < ActiveRecord::Base
   has_many :roles, dependent: :destroy
   has_many :alerts
 
+  composed_of :ftp_info, mapping: FtpInfo.mapping('ftp_')
+
   validates_presence_of :name
   validates_presence_of :kind
   validates_inclusion_of :kind, in: KINDS
