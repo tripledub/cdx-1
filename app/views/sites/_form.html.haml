@@ -76,6 +76,6 @@
       if parent_id? && (Number(parent_id) > 0)
         $.get '/sites/' + parent_id, (result) ->
           # result.sample_id_reset_policy
-          # $( "input[name='site[sample_id_reset_policy]']" ).val('monthly')
-          $('.sample-id-reset .Select-input input').val('monthly')
-          $('.sample-id-reset .Select-input input').trigger('blur')
+          $( "input[name='site[sample_id_reset_policy]']" ).val('monthly')
+          $('.sample-id-reset .Select-placeholder').text('Monthly')
+          #$('.sample-id-reset .Select-placeholder').trigger('change')
