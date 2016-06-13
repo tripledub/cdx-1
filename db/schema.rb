@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160602211123) do
+ActiveRecord::Schema.define(version: 20160613092735) do
 
   create_table "alert_condition_results", force: :cascade do |t|
     t.string  "result",   limit: 255
@@ -214,13 +214,7 @@ ActiveRecord::Schema.define(version: 20160602211123) do
     t.string   "serial_number",    limit: 255
     t.string   "site_prefix",      limit: 255
     t.string   "activation_token", limit: 255
-    t.string   "ftp_hostname",     limit: 255
-    t.string   "ftp_username",     limit: 255
-    t.string   "ftp_password",     limit: 255
-    t.string   "ftp_directory",    limit: 255
-    t.integer  "ftp_port",         limit: 4
     t.datetime "deleted_at"
-    t.boolean  "ftp_passive"
   end
 
   add_index "devices", ["deleted_at"], name: "index_devices_on_deleted_at", using: :btree
@@ -291,12 +285,18 @@ ActiveRecord::Schema.define(version: 20160602211123) do
   end
 
   create_table "institutions", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.integer  "user_id",    limit: 4
+    t.string   "name",          limit: 255
+    t.integer  "user_id",       limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "uuid",       limit: 255
-    t.string   "kind",       limit: 255, default: "institution"
+    t.string   "uuid",          limit: 255
+    t.string   "kind",          limit: 255, default: "institution"
+    t.string   "ftp_hostname",  limit: 255
+    t.string   "ftp_username",  limit: 255
+    t.string   "ftp_password",  limit: 255
+    t.string   "ftp_directory", limit: 255
+    t.integer  "ftp_port",      limit: 4
+    t.boolean  "ftp_passive"
   end
 
   add_index "institutions", ["user_id"], name: "index_institutions_on_user_id", using: :btree
