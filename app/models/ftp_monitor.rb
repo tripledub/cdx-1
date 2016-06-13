@@ -24,7 +24,7 @@ class FtpMonitor
   end
 
   def device_groups
-    Device.joins(:device_model).where(device_models: { supports_ftp: true }).group_by(&:ftp_info)
+    Institution.all.group_by(&:ftp_info)
   end
 
   class FtpProcessor

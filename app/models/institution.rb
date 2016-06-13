@@ -9,7 +9,7 @@ class Institution < ActiveRecord::Base
   has_many :sites, dependent: :restrict_with_error
   has_many :devices, dependent: :restrict_with_error
   has_many :device_models, dependent: :restrict_with_error, inverse_of: :institution
-  
+
   has_many :encounters, dependent: :destroy
   has_many :patients, dependent: :destroy
   has_many :samples, dependent: :destroy
@@ -17,9 +17,19 @@ class Institution < ActiveRecord::Base
   has_many :roles, dependent: :destroy
   has_many :alerts
 
+  composed_of :ftp_info, mapping: FtpInfo.mapping('ftp_')
+
   validates_presence_of :name
   validates_presence_of :kind
   validates_inclusion_of :kind, in: KINDS
+
+  validates :ftp_port,
+            numericality: {
+              only_integer: true,
+              greater_than_or_equal_to: 0,
+              less_than_or_equal_to: 65_535
+            },
+            allow_blank: true
 
   after_create :create_predefined_roles
   after_update :update_predefined_roles, if: :name_changed?

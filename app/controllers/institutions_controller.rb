@@ -103,6 +103,6 @@ class InstitutionsController < ApplicationController
   end
 
   def institution_params
-    params.require(:institution).permit(:name, :kind)
+    params.require(:institution).permit(:name, :kind, :ftp_directory, :ftp_hostname, :ftp_username, :ftp_port, :ftp_password, :ftp_passive)
   end
 end

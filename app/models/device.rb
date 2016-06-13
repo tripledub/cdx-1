@@ -18,8 +18,6 @@ class Device < ActiveRecord::Base
 
   serialize :custom_mappings, JSON
 
-  composed_of :ftp_info, mapping: FtpInfo.mapping('ftp_')
-
   attr_reader :plain_secret_key
   attr_accessor :fake_username, :fake_password
 
@@ -27,21 +25,6 @@ class Device < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :serial_number
   validates_presence_of :device_model
-
-  validates :ftp_hostname,
-            :ftp_username,
-            :ftp_password,
-            :ftp_directory,
-            :ftp_port,
-            presence: { message: ' is required to complete FTP settings' },
-            if: proc { |d| d.device_model.name.include?('Alere') rescue false }
-  validates :ftp_port,
-            numericality: {
-              only_integer: true,
-              greater_than_or_equal_to: 0,
-              less_than_or_equal_to: 65_535
-            },
-            allow_blank: true
 
   validate :unpublished_device_model_from_institution
 
