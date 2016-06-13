@@ -59,10 +59,6 @@
   $ ->
     selected_device_model_id = #{@device.device_model_id.to_s.to_json}
     cdx_select_on_change "device[device_model_id]", (device_model_id) ->
-      # Hide/show ftp config info
-      supports_ftp = _.find(gon.device_models, (dm) -> dm.id == parseInt(device_model_id)).supports_ftp
-      $('.device-ftp-config').toggle(!!supports_ftp).find('input').prop('disabled', !supports_ftp)
-
       # Load custom mappings
       if device_model_id != selected_device_model_id
         $("#custom_mappings").load(
