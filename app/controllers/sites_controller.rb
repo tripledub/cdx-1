@@ -1,8 +1,13 @@
 class SitesController < ApplicationController
   set_institution_tab :sites
+
+  respond_to :json, only: [:show, :create, :update, :destroy]
+
   before_filter do
     head :forbidden unless has_access_to_sites_index?
   end
+
+  before_filter :find_site, only: [:show, :update, :destroy, :devices, :tests]
 
   def index
     @sites = check_access(Site.within(@navigation_context.entity, @navigation_context.exclude_subsites), READ_SITE)
@@ -23,6 +28,10 @@ class SitesController < ApplicationController
         self.response_body = build_csv
       end
     end
+  end
+
+  def show
+    render json: @site
   end
 
   def new
@@ -68,7 +77,6 @@ class SitesController < ApplicationController
   # PATCH/PUT /sites/1
   # PATCH/PUT /sites/1.json
   def update
-    @site = Site.find params[:id]
     institution = @site.institution
     redirect_options = {}
 
@@ -122,7 +130,6 @@ class SitesController < ApplicationController
   # DELETE /sites/1
   # DELETE /sites/1.json
   def destroy
-    @site = Site.find params[:id]
     return unless authorize_resource(@site, DELETE_SITE)
 
     @site.destroy
@@ -134,7 +141,6 @@ class SitesController < ApplicationController
   end
 
   def devices
-    @site = Site.find(params[:id])
     return unless authorize_resource(@site, READ_SITE)
 
     @devices_to_edit = check_access(@site.devices, UPDATE_DEVICE).pluck(:id)
@@ -143,13 +149,16 @@ class SitesController < ApplicationController
   end
 
   def tests
-    @site = Site.find(params[:id])
     return unless authorize_resource(@site, READ_SITE)
 
     render layout: false
   end
 
   private
+
+  def find_site
+    @site = Site.find(params[:id])
+  end
 
   def site_params(with_parent_id = false)
     if params[:site] && (params[:site][:lat].blank? || params[:site][:lng].blank?) && !params[:site][:location_geoid].blank?

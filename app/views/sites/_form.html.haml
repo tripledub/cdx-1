@@ -38,7 +38,7 @@
     .col.pe-2
       = f.label :sample_id_reset_policy, "Sample ID reset policy"
     .col
-      = cdx_select form: f, name: :sample_id_reset_policy, class: 'input-large' do |select|
+      = cdx_select form: f, name: :sample_id_reset_policy, class: 'input-large sample-id-reset' do |select|
         - select.item "yearly", "Yearly"
         - select.item "monthly", "Monthly"
         - select.item "weekly", "Weekly"
@@ -69,3 +69,13 @@
         - else
           - # TODO: link to page with Devices tab always active - it's the current default, but may change
           = link_to "Delete", '#', data: { confirm: "In order to delete this site you must first reassign the <a href=\"#{edit_site_path(@site)}\">#{@site.devices.count} #{"device".pluralize(@site.devices.count)}</a> assigned to it.", confirm_title: 'Action required', confirm_hide_cancel: 'true', confirm_button_message: 'Understood' }, class: 'btn-secondary pull-right', title: 'Delete Site'
+
+:coffeescript
+  $ ->
+    cdx_select_on_change "site[parent_id]", (parent_id) ->
+      if parent_id? && (Number(parent_id) > 0)
+        $.get '/sites/' + parent_id, (result) ->
+          # result.sample_id_reset_policy
+          # $( "input[name='site[sample_id_reset_policy]']" ).val('monthly')
+          $('.sample-id-reset .Select-input input').val('monthly')
+          $('.sample-id-reset .Select-input input').trigger('blur')

@@ -38,7 +38,7 @@ Rails.application.routes.draw do
 
   get 'settings' => 'home#settings'
 
-  resources :sites, except: [:show] do
+  resources :sites do
     member do
       get :devices
       get :tests
