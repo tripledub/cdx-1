@@ -50,9 +50,9 @@ var UserInviteForm = React.createClass({
       data: data,
       success: function (d) {
         d = $.parseJSON(d);
-        //if(d.info)
-        //  console.log(d.info);
-        //else
+        if(d.info.trim().length > 0)
+          $('.flashmessage').hide().html(d.info).fadeIn('fast').delay(3000).fadeOut('fast');
+        else
         {
           this.closeModal();
           window.location.reload(true); // reload page to update users table
@@ -120,6 +120,9 @@ var UserInviteForm = React.createClass({
           <div className="col pe-3"><label>Message</label></div>
           <div className="col"><textarea value={this.state.message} onChange={this.writeMessage} className="input-block resizeable" rows="1" /></div>
         </div> : null }
+
+      <div className="row flashmessage">
+      </div>
 
       <div className="modal-footer">
         <button className="btn btn-primary" onClick={this.sendInvitation}>Send</button>

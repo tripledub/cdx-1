@@ -51,7 +51,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    tt = ''
+    output_info = ' '
     @role = Role.find(params[:role])
     message = params[:message]
     (params[:users] || []).each do |email|
@@ -59,9 +59,8 @@ class UsersController < ApplicationController
       if email.length > 0
         user = User.find_by(email: email)
         if user.present?
-          tt << "User with Email Found <br>"
+          output_info << "User with Email '#{email}' is already in the System - please edit that User<br>"
         else
-          tt << "User New <br>"
           user = User.new(email: email)
           unless user.persisted?
             user.invite! do |u|
@@ -74,16 +73,9 @@ class UsersController < ApplicationController
           user.roles << @role unless user.roles.include?(@role)
           ComputedPolicy.update_user(user)
         end
-      else
-        tt << "Empty Email Ignored <br>"
       end
     end
-    #if tt.length > 0
-      qq = {'info' => tt}
-      render text:qq.to_json
-    #else
-    #  render nothing: true
-    #end
+    render text:{'info' => output_info}.to_json, layout:false
   end
 
   def assign_role
