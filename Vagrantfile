@@ -45,6 +45,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         daemonize: 'yes',
         timeout: '300',
         loglevel: 'notice',
+        socket: '/tmp/redis.sock',
         create_service: true
       },
       java: {
