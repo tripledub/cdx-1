@@ -14,6 +14,7 @@ class CommentsController < ApplicationController
 
   def create
     @comment              = @patient.comments.new(comment_params)
+    @comment.user         = current_user
     @comment.commented_on = Extras::Dates::Format.string_to_pattern(params[:comment][:commented_on])
 
     if @comment.save
@@ -30,6 +31,6 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:comment).permit(:commented_on, :description, :comment, :user_id)
+    params.require(:comment).permit(:commented_on, :description, :comment)
   end
 end

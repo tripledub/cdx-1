@@ -8,7 +8,6 @@ describe CommentsController do
   let(:patient)        { Patient.make institution: institution }
   let(:default_params) { { context: institution.uuid } }
   let(:valid_params)   { {
-    user_id:      user.id,
     description:  'New valid comment',
     comment:      'For whom the bell tolls'
   } }
@@ -59,7 +58,7 @@ describe CommentsController do
 
     context 'with invalid data' do
       it 'should render the edit page' do
-        post :create, patient_id: patient.id, comment: { description: 'Invalid' }
+        post :create, patient_id: patient.id, comment: { comment: 'Invalid' }
 
         expect(response).to render_template('new')
       end
