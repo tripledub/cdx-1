@@ -5,6 +5,8 @@ describe Comment do
   let(:patient) { Patient.make }
 
   context "validations" do
+    it { should have_attached_file(:image) }
+
     it { should belong_to(:patient) }
 
     it { should belong_to(:user) }

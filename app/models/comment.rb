@@ -1,6 +1,8 @@
 class Comment < ActiveRecord::Base
   include AutoUUID
 
+  has_attached_file :image
+
   belongs_to :patient
   belongs_to :user
 

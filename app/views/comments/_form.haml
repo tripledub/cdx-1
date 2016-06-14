@@ -19,6 +19,12 @@
     .col
       = f.text_area :comment, rows: 5, cols: 65
 
+  .row
+    .col.pe-2
+      = f.label :image
+    .col
+      = f.file_field :image
+
   .row.button-actions
     .col
       = f.submit 'Save', class: 'btn-primary'
