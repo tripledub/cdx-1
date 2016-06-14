@@ -57,7 +57,7 @@ class UsersController < ApplicationController
     (params[:users] || []).each do |email|
       email = email.strip
       if email.length > 0
-        user = User.find_by(email: email)
+        user = User.find_by(email: email)      
         if user.present?
           output_info << "User with Email '#{email}' is already in the System - please edit that User<br>"
         else
