@@ -87,22 +87,6 @@ var GroupedVerticalBarChart = React.createClass({
 
     if(width == NaN) return '';
 
-    console.log('barCountPerSite: ',barCountPerSite);
-    console.log('barWidth: ',barWidth);
-    console.log('barGap: ',barGap);
-    console.log('siteCount: ',siteCount);
-    console.log('margin.left: ',margin.left);
-    console.log('margin.right: ',margin.right);
-    console.log('this.props.space_for_legend: ',this.props.space_for_legend);
-    console.log('xtmp: ',xtmp);
-    console.log('this.props.width: ',this.props.width);
-    console.log('width: ',width);
-
-    /*
-    var shadeOfColour = d3.scale.linear()
-      .rangeRound(["white", d ]);
-    */
-
     // set the range bands for the domain array (created further down the code)
     // rangeband will return the step for each band
     var x0 = d3.scale.ordinal()

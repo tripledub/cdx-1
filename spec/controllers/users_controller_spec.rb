@@ -62,7 +62,7 @@ describe UsersController, type: :controller do
       expect(ActionMailer::Base.deliveries.count).to eq(2)
     end
 
-   it "does not add role to existing users" do
+    it "does not add role to existing users" do
       post :create, {users: [user_to_edit.email], role: role.id}
       expect(user_to_edit.roles.count).to eq(0)
     end
