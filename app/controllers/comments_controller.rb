@@ -13,7 +13,9 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = @patient.comments.new(comment_params)
+    @comment              = @patient.comments.new(comment_params)
+    @comment.commented_on = Extras::Dates::Format.string_to_pattern(params[:comment][:commented_on])
+
     if @comment.save
       redirect_to patient_path(@patient), notice: 'Comment was successfully created.'
     else
@@ -25,10 +27,6 @@ class CommentsController < ApplicationController
 
   def find_patient
     @patient = Patient.where(institution: @navigation_context.institution, id: params[:patient_id]).first
-  end
-
-  def find_comment
-    @comment = @patient.comments.find(params[:id])
   end
 
   def comment_params

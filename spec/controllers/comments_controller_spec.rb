@@ -29,11 +29,31 @@ describe CommentsController do
         expect(comment.user).to     eq(user)
         expect(comment.uuid).not_to be_empty
         expect(comment.comment).to  eq('For whom the bell tolls')
-        expect(comment.commented_on).to eq(Date.today)
       end
 
       it 'should redirect to the patients page' do
         expect(response).to redirect_to patient_path(patient)
+      end
+    end
+
+    describe 'comment date' do
+      context 'if no date is provided ' do
+        it 'should add today as default date' do
+          post :create, patient_id: patient.id, comment: valid_params
+          comment = patient.comments.where(description: 'New valid comment').first
+
+          expect(comment.commented_on).to eq(Date.today)
+        end
+      end
+
+      context 'if a date is provided' do
+        it 'should be saved' do
+          post :create, patient_id: patient.id, comment: valid_params.merge!({ commented_on: '11/26/2016' })
+
+          comment = patient.comments.where(description: 'New valid comment').first
+
+          expect(comment.commented_on).to eq(Date.new(2016, 11, 26))
+        end
       end
     end
 
