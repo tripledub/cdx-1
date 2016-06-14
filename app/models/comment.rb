@@ -4,5 +4,6 @@ class Comment < ActiveRecord::Base
   belongs_to :patient
   belongs_to :user
 
-  validates_presence_of :description, :commented_at, :patient_id, :user_id
+  validates_presence_of :description, :commented_on, :patient_id, :user_id
+
 end

@@ -109,12 +109,16 @@ ActiveRecord::Schema.define(version: 20160614093412) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.datetime "commented_at"
-    t.text     "comment",      limit: 65535
-    t.string   "description",  limit: 255
-    t.string   "uuid",         limit: 255
-    t.integer  "patient_id",   limit: 4
-    t.integer  "user_id",      limit: 4
+    t.date     "commented_on",                     default: '2016-06-14'
+    t.text     "comment",            limit: 65535
+    t.string   "description",        limit: 255
+    t.string   "uuid",               limit: 255
+    t.integer  "patient_id",         limit: 4
+    t.integer  "user_id",            limit: 4
+    t.string   "image_file_name",    limit: 255
+    t.string   "image_content_type", limit: 255
+    t.integer  "image_file_size",    limit: 4
+    t.datetime "image_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

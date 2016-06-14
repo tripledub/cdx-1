@@ -7,6 +7,9 @@
             = link_to patients_path, class: 'side-link', title: 'Back' do
               = image_tag "arrow-left.png"
             = @patient.name
+.row
+  .col
+    = link_to 'Add Comment', new_patient_comment_path(@patient), class: 'btn', title: 'Add new comment'
 
 .row
   .col
