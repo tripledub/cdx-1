@@ -13,7 +13,7 @@ var HorizontalNiceBarChartImages = React.createClass({
       height: 250,
       bar_height: 30,
       bar_gap: 40,
-      space_for_labels: 160,
+      space_for_labels: 34,
       space_for_ticks: 60,
       space_for_legend: 200,
       fill_colour: '#03A9F4',
@@ -94,16 +94,16 @@ var HorizontalNiceBarChartImages = React.createClass({
       .attr("dx", barHeight )
       .text(function(d){ return d._label; })
       .each(function() {
-        labelWidth = Math.ceil(Math.max(labelWidth, this.getBBox().width));
+        labelWidth = Math.min(spaceForLabels, Math.max(labelWidth, this.getBBox().width));
       });
 
     scale = d3.scale.linear()
       .domain([0, max])
-      .range([0, width - margin*2 - labelWidth]);
+      .range([0, width - (margin*2) - labelWidth]);
 
     xAxis = d3.svg.axis()
       .scale(scale)
-      .tickSize(-chartHeight + 2*margin + axisMargin)
+      .tickSize( -chartHeight + (margin*2) + axisMargin)
       .orient("bottom");
 
     // main bar rectangle
@@ -167,7 +167,8 @@ var HorizontalNiceBarChartImages = React.createClass({
         return Math.max(width, scale(d._value) + valueMargin + labelWidth );
       });
 
-    var canvasWidth = this.props.width,
+    /*
+    var canvasWidth = this.state.width,
         canvasHeight = chartHeight,
         otherMargins = canvasWidth * 0.1,
         leftMargin = canvasWidth * 0.25,
@@ -175,7 +176,6 @@ var HorizontalNiceBarChartImages = React.createClass({
         maxChartHeight = canvasHeight - (otherMargins * 2);
 
     //x axis title        
-    /*
     svg.append("text")
       .attr("x", (maxBarWidth / 2) + leftMargin)
       .attr("y", chartHeight - (otherMargins / 8))
@@ -183,6 +183,7 @@ var HorizontalNiceBarChartImages = React.createClass({
       .attr("class", "chart-axis-title")
       .text(this.props.label);                                
     */
+    /*
     if (data.length==0) 
     {
       svg.append("text")
@@ -193,7 +194,7 @@ var HorizontalNiceBarChartImages = React.createClass({
         .style("text-anchor", "middle")
         .text("There is no data to display");
     }
-
+    */
     return (
         <div>
         </div>

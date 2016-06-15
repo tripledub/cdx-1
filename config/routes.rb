@@ -4,7 +4,7 @@ require 'sidekiq/cron/web'
 Rails.application.routes.draw do
   use_doorkeeper
 
-  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env == 'development'
+  #mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env == 'development'
 
   if Settings.single_tenant
     devise_for(
@@ -119,6 +119,7 @@ Rails.application.routes.draw do
   resources :alerts, except: [:show]
   resources :incidents, only: [:index]
   resources :alert_messages, only: [:index]
+  resources :alert_groups, except: [:show]
 
   scope :dashboards, controller: :dashboards do
     get :index, as: :dashboard
@@ -183,6 +184,12 @@ Rails.application.routes.draw do
       get :no_data_allowed
     end
   end
+
+  get "users/:id/remove" => "users#remove"
+  get "users/find/:email" => "users#find"
+  get "users/:id/resend_invite" => "users#resend_invite"
+
+
   resources :roles do
     collection do
       get :autocomplete

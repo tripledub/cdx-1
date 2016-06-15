@@ -21,7 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Use Chef Solo to provision our virtual machine
   config.vm.provision :chef_solo do |chef|
-    chef.version = '12.10.40'
+    chef.version = '12.10.24'
     chef.cookbooks_path = ['cookbooks']
     chef.add_recipe :apt
     chef.add_recipe 'redis::server'
@@ -45,6 +45,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         daemonize: 'yes',
         timeout: '300',
         loglevel: 'notice',
+        socket: '/tmp/redis.sock',
         create_service: true
       },
       java: {
