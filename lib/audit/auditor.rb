@@ -1,8 +1,8 @@
 module Audit
   class Auditor
-    def initialize(patient, user)
-      @patient = patient
-      @user    = user
+    def initialize(patient_id, user_id)
+      @patient_id = patient_id
+      @user_id    = user_id
     end
 
     def create(title, comment='')
@@ -19,10 +19,10 @@ module Audit
 
     def create_log(title, comment)
       AuditLog.create do |log|
-        log.title   = title
-        log.patient = @patient
-        log.user    = @user
-        log.comment = comment
+        log.title      = title
+        log.patient_id = @patient_id
+        log.user_id    = @user_id
+        log.comment    = comment
       end
     end
 

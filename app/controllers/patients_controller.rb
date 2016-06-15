@@ -52,7 +52,7 @@ class PatientsController < ApplicationController
     @patient.institution = @institution
     @patient.site = @navigation_context.site
 
-    if @patient.save
+    if @patient.save_and_audit(current_user, 'New patient added')
       next_url = if params[:next_url].blank?
         patient_path(@patient)
       else

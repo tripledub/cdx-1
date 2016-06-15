@@ -1,5 +1,6 @@
 class PatientForm
   include ActiveModel::Model
+  include Auditable
 
   def self.shared_attributes # shared editable attributes with patient model
     [:institution, :site, :name, :entity_id, :gender, :dob, :lat, :lng, :location_geoid, :address, :email, :phone, :city, :zip_code, :state]
