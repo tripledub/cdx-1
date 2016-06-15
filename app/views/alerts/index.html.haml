@@ -8,7 +8,7 @@
 
     .section.settings.centered
       -# ------------ ALERT GROUPS
-      = setting_card title: "Alert Groups", href: alert_groups_path, icon: 'fa-exclamation-triangle', colour: 'orange' do |c|
+      = setting_card title: pluralize(@total, "Alert Group"), href: alert_groups_path, icon: 'fa-exclamation-triangle', colour: 'orange' do |c|
         - c.body do
           Keep your team notified about important stuff.
 
