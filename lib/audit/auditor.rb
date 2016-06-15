@@ -5,19 +5,19 @@ module Audit
       @user    = user
     end
 
-    def create_log(title, comment='')
-      add_new_log(title, comment)
+    def create(title, comment='')
+      create_log(title, comment)
     end
 
-    def update_log(title, comment='')
-      audit_log = add_new_log(title, comment)
+    def update(title, comment='')
+      audit_log = create_log(title, comment)
 
       log_changes(audit_log, @patient)
     end
 
     protected
 
-    def add_new_log(title, comment)
+    def create_log(title, comment)
       AuditLog.create do |log|
         log.title   = title
         log.patient = @patient

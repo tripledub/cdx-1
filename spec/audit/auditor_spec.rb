@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe Audit::Model::Patient do
+describe Audit::Auditor do
   let(:user)    { User.make }
   let(:patient) { Patient.make name: 'Ruben Barichello'}
 
   describe 'create' do
     before :each do
-      described_class.new(patient, user).create
+      described_class.new(patient, user).create('New patient added')
     end
 
     it 'should add a new audit log' do
-      expect{ described_class.new(patient, user).create }.to change{ AuditLog.count }.by(1)
+      expect{ described_class.new(patient, user).create('New patient added') }.to change{ AuditLog.count }.by(1)
     end
 
     it 'should add a title' do
@@ -29,11 +29,11 @@ describe Audit::Model::Patient do
   describe 'update' do
     before :each do
       patient.name = 'Graham Hill'
-      described_class.new(patient, user).update
+      described_class.new(patient, user).update('Patient details have been updated')
     end
 
     it 'should add a new audit log' do
-      expect{ described_class.new(patient, user).update }.to change{ AuditLog.count }.by(1)
+      expect{ described_class.new(patient, user).update('Patient details have been updated') }.to change{ AuditLog.count }.by(1)
     end
 
     it 'should add a title' do
