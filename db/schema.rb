@@ -109,7 +109,7 @@ ActiveRecord::Schema.define(version: 20160615102904) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.date     "commented_on",                     default: '2016-06-14'
+    t.date     "commented_on",                     default: '2016-06-15'
     t.text     "comment",            limit: 65535
     t.string   "description",        limit: 255
     t.string   "uuid",               limit: 255
