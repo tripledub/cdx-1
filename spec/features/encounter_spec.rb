@@ -138,6 +138,7 @@ describe "create encounter" do
     expect_page NewPatientPage do |page|
       page.name.set "John Doe"
       page.patient_id.set "1001"
+      page.dob.set "01/01/1988"
       page.submit
     end
 
