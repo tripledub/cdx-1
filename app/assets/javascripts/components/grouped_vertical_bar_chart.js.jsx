@@ -75,7 +75,6 @@ var GroupedVerticalBarChart = React.createClass({
 
     // calc width
     var xtmp = (((barCountPerSite * barWidth) + barGap) * siteCount) + margin.left + margin.right + this.props.space_for_legend;
-    console.log('Bar Width:', xtmp, ' , ', this.props.width);
     if(this.props.width > xtmp) xtmp = this.props.width;
 
     var chart = document.getElementById(this.props.chart_div);

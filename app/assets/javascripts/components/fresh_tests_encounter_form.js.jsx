@@ -190,7 +190,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     $('.req_tests_checks input:checked').each(function(dd) {
       reqtests += $(this).attr('name') + '|';
     });
-    console.log('ReqTests: ' + reqtests);
     this.setState(React.addons.update(this.state, {
       encounter: {
         tests_requested: {
