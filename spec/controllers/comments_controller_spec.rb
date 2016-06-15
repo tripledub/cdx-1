@@ -17,6 +17,14 @@ describe CommentsController do
       sign_in user
     end
 
+    describe 'new' do
+      it 'should render the new template' do
+        get 'new', patient_id: patient.id
+
+        expect(response).to  render_template('new')
+      end
+    end
+
     describe 'create' do
       context 'with valid data' do
         before :each do
