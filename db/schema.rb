@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160613092735) do
+ActiveRecord::Schema.define(version: 20160614093412) do
 
   create_table "alert_condition_results", force: :cascade do |t|
     t.string  "result",   limit: 255
@@ -107,6 +107,25 @@ ActiveRecord::Schema.define(version: 20160613092735) do
     t.integer "alert_id", limit: 4, null: false
     t.integer "site_id",  limit: 4, null: false
   end
+
+  create_table "comments", force: :cascade do |t|
+    t.date     "commented_on",                     default: '2016-06-14'
+    t.text     "comment",            limit: 65535
+    t.string   "description",        limit: 255
+    t.string   "uuid",               limit: 255
+    t.integer  "patient_id",         limit: 4
+    t.integer  "user_id",            limit: 4
+    t.string   "image_file_name",    limit: 255
+    t.string   "image_content_type", limit: 255
+    t.integer  "image_file_size",    limit: 4
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["patient_id"], name: "index_comments_on_patient_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+  add_index "comments", ["uuid"], name: "index_comments_on_uuid", using: :btree
 
   create_table "computed_policies", force: :cascade do |t|
     t.integer "user_id",                  limit: 4
