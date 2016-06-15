@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614093412) do
+ActiveRecord::Schema.define(version: 20160615102904) do
 
   create_table "alert_condition_results", force: :cascade do |t|
     t.string  "result",   limit: 255
@@ -126,6 +126,34 @@ ActiveRecord::Schema.define(version: 20160614093412) do
   add_index "comments", ["patient_id"], name: "index_comments_on_patient_id", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
   add_index "comments", ["uuid"], name: "index_comments_on_uuid", using: :btree
+
+  create_table "audit_logs", force: :cascade do |t|
+    t.text     "comment",    limit: 65535
+    t.string   "title",      limit: 255
+    t.string   "uuid",       limit: 255
+    t.integer  "patient_id", limit: 4
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "audit_logs", ["patient_id"], name: "index_audit_logs_on_patient_id", using: :btree
+  add_index "audit_logs", ["user_id"], name: "index_audit_logs_on_user_id", using: :btree
+  add_index "audit_logs", ["uuid"], name: "index_audit_logs_on_uuid", using: :btree
+
+  create_table "audit_updates", force: :cascade do |t|
+    t.string   "field_name",   limit: 255
+    t.string   "old_value",    limit: 255
+    t.string   "new_value",    limit: 255
+    t.string   "uuid",         limit: 255
+    t.integer  "audit_log_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "audit_updates", ["audit_log_id"], name: "index_audit_updates_on_audit_log_id", using: :btree
+  add_index "audit_updates", ["uuid"], name: "index_audit_updates_on_uuid", using: :btree
+
 
   create_table "computed_policies", force: :cascade do |t|
     t.integer "user_id",                  limit: 4
