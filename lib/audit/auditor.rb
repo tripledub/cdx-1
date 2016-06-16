@@ -1,8 +1,8 @@
 module Audit
   class Auditor
-    def initialize(patient_id, user_id)
-      @patient_id = patient_id
-      @user_id    = user_id
+    def initialize(auditable_model, user_id)
+      @auditable_model = auditable_model
+      @user_id         = user_id
     end
 
     def create(title, comment='')
@@ -12,7 +12,7 @@ module Audit
     def update(title, comment='')
       audit_log = create_log(title, comment)
 
-      log_changes(audit_log, @patient)
+      log_changes(audit_log)
     end
 
     def destroy(title, comment='')
@@ -24,14 +24,14 @@ module Audit
     def create_log(title, comment)
       AuditLog.create do |log|
         log.title      = title
-        log.patient_id = @patient_id
+        log.patient_id = patient_id
         log.user_id    = @user_id
         log.comment    = comment
       end
     end
 
-    def log_changes(audit_log, auditing_model)
-      auditing_model.changes.each { |key, value| create_log_update(audit_log, key, value) }
+    def log_changes(audit_log)
+      @auditable_model.changes.each { |key, value| create_log_update(audit_log, key, value) }
     end
 
     def create_log_update(audit_log, field, values)
@@ -40,6 +40,10 @@ module Audit
         log_update.old_value  = values[0]
         log_update.new_value  = values[1]
       end
+    end
+
+    def patient_id
+      @auditable_model.id
     end
   end
 end

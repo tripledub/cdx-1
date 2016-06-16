@@ -28,19 +28,15 @@ module Auditable
     protected
 
     def audit_create(current_user, title, comment='')
-      Audit::Auditor.new(patient_id, current_user.id).create(title, comment)
+      Audit::Auditor.new(self, current_user.id).create(title, comment)
     end
 
     def audit_update(current_user, title, comment='')
-      Audit::Auditor.new(patient_id, current_user.id).update(title, comment)
+      Audit::Auditor.new(self, current_user.id).update(title, comment)
     end
 
     def audit_destroy
-      Audit::Auditor.new(patient_id, current_user.id).destroy(title, comment)
-    end
-
-    def patient_id
-      self.id
+      Audit::Auditor.new(self, current_user.id).destroy(title, comment)
     end
   end
 end
