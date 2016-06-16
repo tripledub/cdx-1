@@ -78,7 +78,7 @@ class PatientsController < ApplicationController
     @patient = PatientForm.edit(patient)
     return unless authorize_resource(patient, UPDATE_PATIENT)
 
-    if @patient.update(patient_params)
+    if @patient.update_and_audit(patient_params, current_user, 'Patient details have been updated')
       redirect_to patient_path(@patient), notice: 'Patient was successfully updated.'
     else
       render action: 'edit'

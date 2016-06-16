@@ -15,6 +15,10 @@ module Audit
       log_changes(audit_log, @patient)
     end
 
+    def destroy(title, comment='')
+      create_log(title, comment)
+    end
+
     protected
 
     def create_log(title, comment)

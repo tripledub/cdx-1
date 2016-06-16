@@ -19,6 +19,12 @@ module Auditable
       save
     end
 
+    def destroy_and_audit(current_user, title, comment='')
+      audit_destroy(current_user, title, comment='')
+
+      destroy
+    end
+
     protected
 
     def audit_create(current_user, title, comment='')
@@ -26,6 +32,11 @@ module Auditable
     end
 
     def audit_update(current_user, title, comment='')
+      Audit::Auditor.new(patient_id, current_user.id).update(title, comment)
+    end
+
+    def audit_destroy
+      Audit::Auditor.new(patient_id, current_user.id).destroy(title, comment)
     end
 
     def patient_id
