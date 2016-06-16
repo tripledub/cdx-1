@@ -347,7 +347,78 @@ height:auto;
 
 
 
+.section .box:hover {
+opacity:1;
+cursor:default;
+}
 
+.section .col{
+min-height: 130px;
+height:130px;
+}
+
+.container .box-content {
+height:91%;
+}
+
+.container .col:hover{
+position:relative;
+z-index:99999;
+}
+
+.section .col img{
+height:25px;
+}
+
+.section .col h2{
+font-size:16px;
+}
+
+.section .col .stat{
+height:80px;
+margin-top:-10px;
+}
+
+.section .col .stat span{
+font-size:50px;
+float:left;
+}
+
+.section .col .stat .label{
+padding-top:31px;
+}
+
+.section .col{
+height:auto;
+min-height:auto;
+}
+
+.section .box {
+    height: 475px;
+}
+
+.section .box #chart_total_tests{
+text-align:center;
+}
+
+.section .box #chart_total_tests svg{
+margin:auto !important;
+}
+
+
+.section #filters-form fieldset {
+    border: 0px solid #f4f4f4;
+    border-right: 1px solid #f4f4f4;
+}
+
+.Select{
+z-index:99999;
+position:relative;
+}
+
+.Select-menu-outer *{
+z-index:99999;
+}
 
 
 

@@ -1,5 +1,8 @@
 class DashboardsController < ApplicationController
-  def index; end
+  def index; 
+  	@institution_name = @navigation_context.name if @navigation_context.try(:entity)
+  	@timeframe = ''
+  end
 
   def nndd
     return unless authorize_resource(TestResult, MEDICAL_DASHBOARD)

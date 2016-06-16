@@ -16,8 +16,8 @@ module Reports
     end
 
     def sort_pie
-      im1 = "chart-box-tick"
-      im2 = "chart-box-exclam"
+      im1 = ActionController::Base.helpers.asset_url("chart-box-tick.png", type: :image)
+      im2 = ActionController::Base.helpers.asset_url("chart-box-exclam.png", type: :image)
       data << { _label: 'Success', _value: total_tests - failed_tests, _img: im1}
       data << { _label: 'Failed', _value: failed_tests, _img: im2 }
     end

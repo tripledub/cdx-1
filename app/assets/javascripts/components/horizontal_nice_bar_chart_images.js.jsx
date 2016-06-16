@@ -83,7 +83,8 @@ var HorizontalNiceBarChartImages = React.createClass({
       .attr('y',-5)
       .attr('width', barHeight+20)
       .attr('height', barHeight+20)
-      .attr("xlink:href",function(d){ return "/assets/"+d._img+".png" } )
+      .attr("xlink:href",function(d){ return d._img } );
+
 
     // per bar labels
     bar.append("text")
