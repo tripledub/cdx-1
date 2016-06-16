@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   respond_to :html
 
-  before_filter :find_patient
+  before_filter :find_patient, :check_permissions
 
   expose(:comment, scope: -> { @patient.comments })
 
@@ -32,5 +32,9 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:commented_on, :description, :comment)
+  end
+
+  def check_permissions
+    redirect_to(patient_path(@patient), error: "You can't add comments to this patient") unless has_access?(@patient, UPDATE_PATIENT)
   end
 end
