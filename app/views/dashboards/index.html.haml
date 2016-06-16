@@ -44,8 +44,11 @@
       %h2 
         = @institution_name
       %span 
-        SHOWING: 
-        = @timeframe
+        SHOWING:
+        -if(params['range'].present?)
+          = chart_heading
+        -else
+          default
 
   .section.group
     .col.col-12
@@ -139,7 +142,7 @@
         %h3 Devices Not Responding
       .box-content
         -if(query_devices_not_reporting_chart)
-          = react_component('HorizontalNiceBarChart', data: query_devices_not_reporting_chart, width: 800, colors: standard_colours, chart_div: 'chart_not_responding', label: 'DAYS')
+          = react_component('HorizontalNiceBarChart', data: query_devices_not_reporting_chart, width: 600, colors: standard_colours, chart_div: 'chart_not_responding', label: 'DAYS')
           #chart_not_responding
         -else
           No chart information available

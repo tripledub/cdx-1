@@ -1,7 +1,6 @@
 class DashboardsController < ApplicationController
   def index; 
   	@institution_name = @navigation_context.name if @navigation_context.try(:entity)
-  	@timeframe = ''
   end
 
   def nndd

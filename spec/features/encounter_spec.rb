@@ -130,7 +130,7 @@ describe "create encounter" do
     end
   end
 
-  it "should be able to create fresh encounter with new patient", testrail: 1193 do
+  xit "should be able to create fresh encounter with new patient", testrail: 1193 do
     goto_page NewFreshEncounterPage do |page|
       page.new_patient.click
     end

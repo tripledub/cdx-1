@@ -89,7 +89,7 @@ var HorizontalNiceBarChartImages = React.createClass({
     // per bar labels
     bar.append("text")
       .attr("class", "chart-axis-label-small" )
-      .attr("y", barHeight+11 )
+      .attr("y", -11 )
       .attr("dy", ".35em") //vertical align middle
       .attr("text-anchor", "end" )
       .attr("dx", barHeight )

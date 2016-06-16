@@ -348,8 +348,9 @@ height:auto;
 
 
 .section .box:hover {
-opacity:1;
+opacity:1 !important;
 cursor:default;
+z-index:0 !important;
 }
 
 .section .col{
@@ -358,12 +359,13 @@ height:130px;
 }
 
 .container .box-content {
-height:91%;
+height:92%;
 }
 
 .container .col:hover{
 position:relative;
 z-index:99999;
+opacity:1;
 }
 
 .section .col img{
@@ -394,7 +396,11 @@ min-height:auto;
 }
 
 .section .box {
-    height: 475px;
+    height: 500px;
+}
+
+.section .box:first-child {
+	max-width: 700px;
 }
 
 .section .box #chart_total_tests{
@@ -414,18 +420,29 @@ margin:auto !important;
 .Select{
 z-index:99999;
 position:relative;
+
 }
 
 .Select-menu-outer *{
 z-index:99999;
 }
 
+#filters-form *{
+font-size:12px;
+}
 
 
+#filters-form .Select-placeholder{
+margin-top:2px;
+}
 
+.section #filters-form fieldset {
+    border: 0px;
+}
 
-
-
+.container .col {
+    margin: 13px;
+}
 
 
 
