@@ -13,8 +13,8 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     var today = now.getFullYear() + "-" + (month) + "-" + (day);
 
     return (
-      <div class="newTestOrder">
-      <div class="panel">
+      <div className="newTestOrder">
+      <div className="panel">
 
         <PatientSelect patient={this.state.encounter.patient} context={this.props.context} onPatientChanged={this.onPatientChanged}/>
 
