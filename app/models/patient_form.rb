@@ -43,7 +43,7 @@ class PatientForm
       self.send("#{attr}=", value)
     end
 
-    Audit::Auditor.new(patient, audit_params[:current_user].id).update(audit_params[:title], audit_params[:comment])
+    Audit::Auditor.new(patient, audit_params[:current_user].id).log_changes(audit_params[:title], audit_params[:comment])
 
     save
   end
@@ -62,7 +62,7 @@ class PatientForm
 
     # validate/save patient. all done if succeeded
     if patient.save
-      Audit::Auditor.new(self.patient, audit_params[:current_user].id).create(audit_params[:title], audit_params[:comment]) if audit_params.present?
+      Audit::Auditor.new(self.patient, audit_params[:current_user].id).log_action(audit_params[:title], audit_params[:comment]) if audit_params.present?
       return true
     end
 
@@ -79,7 +79,7 @@ class PatientForm
   end
 
   def destroy_and_audit(current_user, title, comment='')
-    Audit::Auditor.new(self.patient, current_user.id).destroy(title, comment)
+    Audit::Auditor.new(self.patient, current_user.id).log_action(title, comment)
     destroy
   end
 

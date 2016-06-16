@@ -1,5 +1,6 @@
 class Comment < ActiveRecord::Base
   include AutoUUID
+  include Auditable
 
   has_attached_file :image
 
