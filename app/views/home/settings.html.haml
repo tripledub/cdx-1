@@ -9,7 +9,7 @@
     .section.settings.centered
       -# ------------ ALERTS
       - if has_access_to_test_results_index?
-        = setting_card title: pluralize(@alerts_count, "Alert"), href: alerts_path, icon: 'fa-exclamation-triangle', colour: 'red' do |c|
+        = setting_card title: "Alerts", href: alerts_path, icon: 'fa-exclamation-triangle', colour: 'red' do |c|
           - c.body do
             Keep your team notified about important stuff.
 
