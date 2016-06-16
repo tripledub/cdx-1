@@ -42,3 +42,9 @@
         = setting_card title: "Users", href: users_path, icon: 'fa-users', colour:'blue' do | c |
           - c.body do
             Manager Users
+
+      -# ------------ FTP settings
+      - if @institution && has_access?(@institution, Policy::Actions::UPDATE_INSTITUTION)
+        = setting_card title: "FTP", href: edit_ftp_setting_path(@institution), icon: 'fa-download', colour:'light-green' do | c |
+          - c.body do
+            Device FTP settings

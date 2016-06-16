@@ -115,6 +115,7 @@ Rails.application.routes.draw do
     resources :comments
   end
 
+  resources :ftp_settings, only: [:edit, :update]
 
   resources :alerts, except: [:show]
   resources :incidents, only: [:index]
@@ -129,7 +130,9 @@ Rails.application.routes.draw do
   devise_scope :user do
     root to: "devise/sessions#new"
   end
+
   get 'verify' => 'home#verify'
+
   if Rails.env.development?
     get 'join' => 'home#join'
     get 'design' => 'home#design'
