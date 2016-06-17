@@ -41,7 +41,6 @@ var EncounterNew = React.createClass({
       }
     }));
   },
-
   render: function() {
     var sitesUrl = URI("/encounters/sites").query({context: this.props.context.institution.uuid});
     var siteSelect = <SiteSelect onChange={this.setSite} url={sitesUrl} fieldLabel='Requested' defaultSiteUuid={_.get(this.props.context.site, 'uuid')} />;
