@@ -26,4 +26,12 @@ module PatientsHelper
       "#{months}m/o."
     end
   end
+
+  def patient_diagnostic(encounter)
+    encounter.diagnostic.blank? ? "Pending" : encounter.human_diagnose
+  end
+
+  def patient_observations(encounter)
+    encounter.observations.blank? ? "No comments" : encounter.observations
+  end
 end

@@ -9,7 +9,7 @@
             = @patient.name
 .testflow
   .container
-    = render partial: 'patient_summary', locals: { patient: @patient, can_edit: @can_edit }
+    = render partial: 'patient_summary', locals: { patient: @patient }
 
     - if @encounters.empty?
       = empty_data icon: 'icon-outline-test xx-large' do |c|
@@ -17,37 +17,8 @@
           %h1 No medical history
           %p Create test orders in order to start the medical history
     - else
-      .row
-        .col
-          %h1 Medical history
-      .row
-        .col
-          %ul.nav-list
-            - @encounters.each do |encounter|
-              %li{'data-href' => encounter_path(encounter)}
-                .row
-                  .col.pe-2
-                    %label Date
-                  .col
-                    .value= format_date(encounter.start_time)
-                .row
-                  .col.pe-2
-                    %label Diagnose
-                  .col
-                    .value
-                      - if encounter.diagnostic.blank?
-                        %i Pending
-                      - else
-                        = encounter.human_diagnose
-                .row
-                  .col.pe-2
-                    %label Comments
-                  .col
-                    .value
-                      - if encounter.observations.blank?
-                        %i No comments
-                      - else
-                        = encounter.observations
+      = render partial: 'patient_medical_history', locals: { encounters: @encounters }
+
     .row
       .col
         = link_to 'Add Comment', new_patient_comment_path(@patient), class: 'btn', title: 'Add new comment'

@@ -11,7 +11,7 @@
           %span
             %i.fa.fa-user
     .col-10
-      - if can_edit
+      - if has_access?(@patient, Policy::Actions::UPDATE_PATIENT)
         %ul.button-container
           %li
             = link_to('Edit patient', edit_patient_path(patient), class: 'button edit')
