@@ -15,7 +15,7 @@
 - if @encounters.empty?
   = empty_data icon: 'icon-outline-test xx-large' do |c|
     - c.body do
-      %h1 No medical history [Create Episode]
+      %h1 No medical history
       %p Create test orders in order to start the medical history
 - else
   .row
@@ -49,3 +49,10 @@
                     %i No comments
                   - else
                     = encounter.observations
+.row
+  .row.col-6
+    %h3 Episode Summary
+  .row.col-6
+    %ul
+      %li
+        = link_to('Add Episode', new_patient_episode_path(@patient), id: :add_episode)

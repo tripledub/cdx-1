@@ -116,6 +116,7 @@ Rails.application.routes.draw do
     resources :patient_logs ,         only: [:index, :show]
     resources :patient_test_results , only: [:index]
     resources :patient_test_orders ,  only: [:index]
+    resources :episodes
   end
 
   resources :ftp_settings, only: [:edit, :update]

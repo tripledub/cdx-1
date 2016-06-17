@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615102904) do
+ActiveRecord::Schema.define(version: 20160621152015) do
 
   create_table "alert_condition_results", force: :cascade do |t|
     t.string  "result",   limit: 255
@@ -108,25 +108,6 @@ ActiveRecord::Schema.define(version: 20160615102904) do
     t.integer "site_id",  limit: 4, null: false
   end
 
-  create_table "comments", force: :cascade do |t|
-    t.date     "commented_on",                     default: '2016-06-15'
-    t.text     "comment",            limit: 65535
-    t.string   "description",        limit: 255
-    t.string   "uuid",               limit: 255
-    t.integer  "patient_id",         limit: 4
-    t.integer  "user_id",            limit: 4
-    t.string   "image_file_name",    limit: 255
-    t.string   "image_content_type", limit: 255
-    t.integer  "image_file_size",    limit: 4
-    t.datetime "image_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "comments", ["patient_id"], name: "index_comments_on_patient_id", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
-  add_index "comments", ["uuid"], name: "index_comments_on_uuid", using: :btree
-
   create_table "audit_logs", force: :cascade do |t|
     t.text     "comment",    limit: 65535
     t.string   "title",      limit: 255
@@ -154,6 +135,24 @@ ActiveRecord::Schema.define(version: 20160615102904) do
   add_index "audit_updates", ["audit_log_id"], name: "index_audit_updates_on_audit_log_id", using: :btree
   add_index "audit_updates", ["uuid"], name: "index_audit_updates_on_uuid", using: :btree
 
+  create_table "comments", force: :cascade do |t|
+    t.date     "commented_on",                     default: '2016-06-15'
+    t.text     "comment",            limit: 65535
+    t.string   "description",        limit: 255
+    t.string   "uuid",               limit: 255
+    t.integer  "patient_id",         limit: 4
+    t.integer  "user_id",            limit: 4
+    t.string   "image_file_name",    limit: 255
+    t.string   "image_content_type", limit: 255
+    t.integer  "image_file_size",    limit: 4
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["patient_id"], name: "index_comments_on_patient_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+  add_index "comments", ["uuid"], name: "index_comments_on_uuid", using: :btree
 
   create_table "computed_policies", force: :cascade do |t|
     t.integer "user_id",                  limit: 4
@@ -295,6 +294,16 @@ ActiveRecord::Schema.define(version: 20160615102904) do
   add_index "encounters", ["deleted_at"], name: "index_encounters_on_deleted_at", using: :btree
   add_index "encounters", ["site_id"], name: "index_encounters_on_site_id", using: :btree
   add_index "encounters", ["user_id"], name: "index_encounters_on_user_id", using: :btree
+
+  create_table "episodes", force: :cascade do |t|
+    t.string  "diagnosis",       limit: 255
+    t.integer "patient_id",      limit: 4
+    t.string  "hiv_status",      limit: 255
+    t.string  "drug_resistance", limit: 255
+    t.string  "outcome",         limit: 255
+  end
+
+  add_index "episodes", ["patient_id"], name: "index_episodes_on_patient_id", using: :btree
 
   create_table "file_messages", force: :cascade do |t|
     t.string  "filename",          limit: 255
@@ -650,5 +659,6 @@ ActiveRecord::Schema.define(version: 20160615102904) do
   add_foreign_key "device_messages", "sites"
   add_foreign_key "encounters", "sites"
   add_foreign_key "encounters", "users"
+  add_foreign_key "episodes", "patients"
   add_foreign_key "patients", "sites"
 end

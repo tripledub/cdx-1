@@ -1,0 +1,68 @@
+require 'spec_helper'
+
+RSpec.describe Episode, type: :model do
+  describe 'associations' do
+    it { should belong_to(:patient) }
+  end
+
+  describe 'diagnosis options for drop-downs' do
+    let(:diagnosis_options) { described_class.diagnosis_options }
+    it 'has an array of diagnosis options' do
+      expect(diagnosis_options).to be_a(Array)
+    end
+
+    it 'includes Clinically Diagnosed' do
+      expected = diagnosis_options.select { |o| o.id == :clinically_diagnosed }
+      expect(expected.first.name).to eq('Clinically Diagnosed')
+    end
+  end
+
+  describe 'HIV status options for drop-downs' do
+    let(:hiv_status_options) { described_class.hiv_status_options }
+    it 'has an array of hiv status options' do
+      expect(hiv_status_options).to be_a(Array)
+    end
+
+    it 'includes positive, negative and unkown' do
+      expect(hiv_status_options.size).to eq(3)
+      %w(positive negative unknown).each do |status|
+        id = "#{status}_tb".to_sym
+        expected = hiv_status_options.select { |st| st.id == id }
+        expect(expected.first.id).to eq(id)
+      end
+    end
+  end
+
+  describe 'drug resistance options for drop-downs' do
+    let(:drug_resistance_options) { described_class.drug_resistance_options }
+    it 'has an array of drug resistance options' do
+      expect(drug_resistance_options).to be_a(Array)
+    end
+
+    it 'includes mono, poly, multi, extensive rif and unkown' do
+      expect(drug_resistance_options.size).to eq(6)
+      %w(mono poly multi extensive rif unknown).each do |status|
+        id = status.to_sym
+        expected = drug_resistance_options.select { |st| st.id == id }
+        expect(expected.first.id).to eq(id)
+      end
+    end
+  end
+
+  describe 'treatment outcome options for drop-downs' do
+    let(:treatment_outcome_options) { described_class.treatment_outcome_options }
+    it 'has an array of treatment outcome options' do
+      expect(treatment_outcome_options).to be_a(Array)
+    end
+
+    it 'includes cured, completed, failed, died, lost, not evaluated and success' do
+      expect(treatment_outcome_options.size).to eq(7)
+      %w(cured completed failed died lost_to_follow_up not_evaluated success).each do |status|
+        id = status.to_sym
+        puts id
+        expected = treatment_outcome_options.select { |st| st.id == id }
+        expect(expected.first.id).to eq(id)
+      end
+    end
+  end
+end

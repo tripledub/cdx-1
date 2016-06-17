@@ -17,11 +17,14 @@ Given(/^a patient called "(.*?)"$/) do |patient_name|
 end
 
 When(/^Barney views Freds patient details card$/) do
-  @patient_page = PatientPage.new
-  @patient_page.load(patient_id: @patient.id, query: { context: @institution.uuid})
-
+  @episode_page = EpisodePage.new
+  @episode_page.load(patient_id: @patient.id, query: { context: @institution.uuid})
 end
 
-Then(/^Barney should see "(.*?)"$/) do |message|
-  @patient_page.should have_content(message)
+Then(/^he should see the New Episode tab$/) do
+  @episode_page.should have_content('New Episode')
+end
+
+Then(/^he should see the correct fields$/) do
+  pending # express the regexp above with the code you wish you had
 end

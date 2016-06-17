@@ -1,3 +1,4 @@
+@wip
 Feature: Clinician creates episode for patient
   As a logged in clinician
   I want to start a new episode for a patient
@@ -7,6 +8,7 @@ Feature: Clinician creates episode for patient
     Given an authenticated clinician called Barney
     And a patient called "Fred"
 
-  Scenario: Barney creates new episode for Fred
+  Scenario: Barney wants to create a new episode for Fred
     When Barney views Freds patient details card
-    Then Barney should see "Create Episode"
+    Then he should see the New Episode tab
+    And he should see the correct fields
