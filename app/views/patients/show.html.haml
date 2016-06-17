@@ -17,8 +17,6 @@
           %h1 No medical history
           %p Create test orders in order to start the medical history
     - else
-      = render partial: 'patient_medical_history', locals: { encounters: @encounters }
+      = render partial: 'patient_episode_summary', locals: { encounters: @encounters }
 
-    .row
-      .col
-        = link_to 'Add Comment', new_patient_comment_path(@patient), class: 'btn', title: 'Add new comment'
+    = render partial: 'patient_history', locals: { patient: @patient }
