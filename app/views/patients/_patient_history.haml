@@ -1,0 +1,19 @@
+.row.labelHeader
+  .col-6
+    %h3 Patient History
+  .col-6
+    %ul
+      %li
+        = link_to 'Add Test Order', new_encounter_path(mode: 'fresh_tests', patient_id: patient.id), class: 'button add'
+      %li
+        = link_to 'Add Comment', new_patient_comment_path(patient), class: 'button add', title: 'Add new comment'
+.panel.patient-details
+  %ul.tab
+    %li
+      %a.tablinks{:href => "#", :onclick => "openCity(event, 'History')"} History
+    %li
+      %a.tablinks.active{:href => "#", :onclick => "openCity(event, 'Test Orders')"} Test Orders
+    %li
+      %a.tablinks{:href => "#", :onclick => "openCity(event, 'Results')"} Results
+    %li
+      %a.tablinks{:href => "#", :onclick => "openCity(event, 'Comments')"} Comments
