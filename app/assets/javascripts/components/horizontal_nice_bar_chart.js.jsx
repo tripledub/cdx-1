@@ -1,7 +1,7 @@
 var HorizontalNiceBarChart = React.createClass({
 
   getInitialState: function() {
-    var width_value = this.props.width || 0;
+    var width_value = this.props.width || 600;
     return {
       width: width_value
     };
@@ -17,7 +17,7 @@ var HorizontalNiceBarChart = React.createClass({
       space_for_ticks: 60,
       space_for_legend: 200,
       fill_colour: '#03A9F4',
-      colors: ["#9D1CB2", "#F6B500", "#47B04B", "#009788", "#A05D56", "#D0743C", "#FF8C00"],
+      colors: ["#9D1CB2", "#F6B500", "#47B04B", "#009788", "#A05D56", "#D0743C", "#FF8C00","#9D1CB2", "#F6B500", "#47B04B", "#009788", "#A05D56", "#D0743C", "#FF8C00","#9D1CB2", "#F6B500", "#47B04B", "#009788", "#A05D56", "#D0743C", "#FF8C00"],
       offcolor: "#434343",
     }
   },
@@ -41,7 +41,7 @@ var HorizontalNiceBarChart = React.createClass({
       valueMargin = 0,
       width = this.state.width,
       barPadding = gapBetweenGroups,
-      bar, svg, scale, xAxis, labelWidth = 0,
+      bar, svg, _scale, xAxis, labelWidth = 0,
       chartHeight = (barHeight * (data.length+1)) + (gapBetweenGroups * (data.length+1));
 
       // get maximum data value
@@ -89,12 +89,12 @@ var HorizontalNiceBarChart = React.createClass({
       })
       .attr("x", labelWidth-barHeightHalf);
 
-    scale = d3.scale.linear()
+    _scale = d3.scale.linear()
       .domain([0, max_data_value])
       .range([0, width - (margin*4) - labelWidth]);
 
     xAxis = d3.svg.axis()
-      .scale(scale)
+      .scale(_scale)
       .tickSize( -chartHeight + (margin*2) + axisMargin)
       .orient("bottom");
 
@@ -106,7 +106,7 @@ var HorizontalNiceBarChart = React.createClass({
       .attr("fill",function(d, i) { return barColour(i) })
       .attr("width", function(d)
       {
-        return scale(d._value);
+        return _scale(d._value);
       })
       .attr("id", function(d, i)
       {
@@ -123,7 +123,7 @@ var HorizontalNiceBarChart = React.createClass({
       .attr("stroke-opacity", 0.2)
       .attr("cx", function(d)
       {
-        return scale(d._value) + labelWidth;
+        return _scale(d._value) + labelWidth;
       });
 
     // inner circle
@@ -136,7 +136,7 @@ var HorizontalNiceBarChart = React.createClass({
       .attr("stroke-opacity", 0.2)
       .attr("cx", function(d)
       {
-        return scale(d._value) + labelWidth;
+        return _scale(d._value) + labelWidth;
       });
 
     // end of bar labels
@@ -155,7 +155,7 @@ var HorizontalNiceBarChart = React.createClass({
       })
       .attr("x", function(d)
       {
-        return scale(d._value) + valueMargin + labelWidth;
+        return _scale(d._value) + valueMargin + labelWidth;
       });
 
     /*

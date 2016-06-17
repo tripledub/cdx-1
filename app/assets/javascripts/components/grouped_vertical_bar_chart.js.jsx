@@ -33,7 +33,7 @@ var GroupedVerticalBarChart = React.createClass({
       space_for_ticks: 30,
       space_for_legend: 100,
       fill_colour: '#03A9F4',
-      colors: ["#9D1CB2", "#F6B500", "#47B04B", "#009788", "#A05D56", "#D0743C", "#FF8C00"],
+      colors: ["#9D1CB2", "#F6B500", "#47B04B", "#009788", "#A05D56", "#D0743C", "#FF8C00","#9D1CB2", "#F6B500", "#47B04B", "#009788", "#A05D56", "#D0743C", "#FF8C00","#9D1CB2", "#F6B500", "#47B04B", "#009788", "#A05D56", "#D0743C", "#FF8C00"],
       offcolor: "#434343",
     }
   },
@@ -78,7 +78,7 @@ var GroupedVerticalBarChart = React.createClass({
     if(this.props.width > xtmp) xtmp = this.props.width;
 
     var chart = document.getElementById(this.props.chart_div);
-    var height = Math.abs( parseInt(d3.select(chart).style('height'), 10) );
+    var height = Math.abs( parseInt(d3.select(chart).style('height'), 10) )-20;
     if(height <= 0) height = this.props.height || 400;
 
     var  width = xtmp - margin.left - margin.right - this.props.space_for_legend;
@@ -132,7 +132,7 @@ var GroupedVerticalBarChart = React.createClass({
 
     x1.domain(legendNames).rangeRoundBands([0, x0.rangeBand()]);
 
-    // return the y value scaled to fit the minima and maxima for the chart
+    // return the y value scaled to fit the minima (0) and maxima for the chart
     y.domain([0,d3.max(all_data, function(d) 
       { 
         return d3.max(d.tests, function(d) 

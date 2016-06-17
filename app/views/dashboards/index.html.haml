@@ -1,5 +1,5 @@
 -# ----  The Lines below provide dummy data for the graphs while the code is being improved ---
--query_tests_chart = [{_label:'Jun',avg:21,peak:12},{_label:'Jul',avg:24,peak:16}];
+-#query_tests_chart = [{_label:'Jun',avg:21,peak:12},{_label:'Jul',avg:24,peak:16}];
 -#devices_grouped = [{_label:'Sally',_value:42},{_label:'Bobby',_value:25},{_label:'George',_value:15},{_label:'Site',_value:8},{_label:'Another Site',_value:4}];
 -#query_site_tests_chart = [ {"_label":"site20", "_value":2 }, {"_label":"site40", "_value":3 }];
 -#average_test_per_site_chart = [{:_label=>"AbbA", :peak=>26, :average=>12.2343},{:_label=>"BB", :peak=>26, :average=>70.12341234},{:_label=>"CC", :peak=>26, :average=>0.76347},{:_label=>"Aardvark", :peak=>42, :average=>21.345234},{:_label=>"Thirds", :peak=>66, :average=>33},{:_label=>"Fork", :peak=>12, :average=>5},{:_label=>"Spoon", :peak=>40, :average=>45}];
@@ -13,7 +13,7 @@
 
 .container
 
-  .section.group
+  -#.section.group
     .col.col-3.teal.summary
       = image_tag('img/test-tube-rack.png')
       %h2 Total Tests
@@ -41,8 +41,14 @@
 
   .section.group
     .col.col-12.title
-      %h2 (institution name goes here)
-      %span SHOWING: in the last 12 months
+      %h2 
+        = @institution_name
+      %span 
+        SHOWING:
+        -if(params['range'].present?)
+          = chart_heading
+        -else
+          default
 
   .section.group
     .col.col-12
@@ -65,8 +71,8 @@
         = image_tag('img/test-tube-rack.png')
         %h3 Total Tests
       .box-content
-        -if(query_tests_chart.present?)
-          = react_component('GroupedVerticalBarChart', data: query_tests_chart, chart_div: 'chart_total_tests', space_for_labels: 10, colors: standard_colours)
+        -if(query_tests_chart_reformat.present?)
+          = react_component('GroupedVerticalBarChart', data: query_tests_chart_reformat, chart_div: 'chart_total_tests', space_for_labels: 10, colors: standard_colours)
           #chart_total_tests
         -else
           No chart information available
@@ -80,7 +86,6 @@
         -if(failed_tests.present?)
           = react_component('HorizontalNiceBarChartImages', data: failed_tests, width: 400, label: 'Failed tests', chart_div: 'chart_failed_tests_graph', colors: ["#00A8AB", "#F15754"] )
           #chart_failed_tests_graph
-          %p This should be some meaingful text that explains the above informative chart. Rerum cumque ut at voluptates. Excepturi minus maiores atque earum ad placeat beatae! Quidem placeat atque corrupti! Incidunt repudiandae, quam neque dicta.
         -else
           No chart information available
 
@@ -137,7 +142,7 @@
         %h3 Devices Not Responding
       .box-content
         -if(query_devices_not_reporting_chart)
-          = react_component('HorizontalNiceBarChart', data: query_devices_not_reporting_chart, width: 800, colors: standard_colours, chart_div: 'chart_not_responding', label: 'DAYS')
+          = react_component('HorizontalNiceBarChart', data: query_devices_not_reporting_chart, width: 600, colors: standard_colours, chart_div: 'chart_not_responding', label: 'DAYS')
           #chart_not_responding
         -else
           No chart information available

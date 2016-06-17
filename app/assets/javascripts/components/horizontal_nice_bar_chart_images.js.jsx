@@ -83,12 +83,13 @@ var HorizontalNiceBarChartImages = React.createClass({
       .attr('y',-5)
       .attr('width', barHeight+20)
       .attr('height', barHeight+20)
-      .attr("xlink:href",function(d){ return "/assets/"+d._img+".png" } )
+      .attr("xlink:href",function(d){ return d._img } );
+
 
     // per bar labels
     bar.append("text")
       .attr("class", "chart-axis-label-small" )
-      .attr("y", barHeight+11 )
+      .attr("y", -11 )
       .attr("dy", ".35em") //vertical align middle
       .attr("text-anchor", "end" )
       .attr("dx", barHeight )
