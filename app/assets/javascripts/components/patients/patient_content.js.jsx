@@ -16,7 +16,7 @@ var PatientContent = React.createClass({
             :null}
 
           {this.props.currentTab === 4 ?
-            <p>Content for tab 4</p>
+            <PatientComments commentsUrl={this.props.commentsUrl}/>
             :null}
         </div>
       </div>
