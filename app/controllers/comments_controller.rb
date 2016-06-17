@@ -1,11 +1,13 @@
 class CommentsController < ApplicationController
   respond_to :html
+  respond_to :json, only:  [:index]
 
   before_filter :find_patient, :check_permissions
 
-  expose(:comment, scope: -> { @patient.comments })
+  expose(:comments, scope: -> { @patient.comments })
 
   def index
+    render json: comments
   end
 
   def new
