@@ -42,6 +42,18 @@ describe CommentsController do
         it 'should redirect to the patients page' do
           expect(response).to redirect_to patient_path(patient)
         end
+
+        context 'audited data do' do
+          before :each do
+            @audit_log = AuditLog.where(patient: patient, title: 'New comment added').first
+          end
+
+          it 'should audit the comment' do
+            expect(@audit_log.comment).to eq('For whom the bell tolls')
+          end
+        end
+
+
       end
 
       describe 'comment date' do

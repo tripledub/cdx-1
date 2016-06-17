@@ -6,6 +6,7 @@ class Patient < ActiveRecord::Base
   include DateDistanceHelper
   include WithLocation
   include SiteContained
+  include Auditable
 
   has_many :test_results, dependent: :restrict_with_error
   has_many :samples, dependent: :restrict_with_error

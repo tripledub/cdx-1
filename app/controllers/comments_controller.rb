@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
     @comment.user         = current_user
     @comment.commented_on = Extras::Dates::Format.string_to_pattern(params[:comment][:commented_on])
 
-    if @comment.save
+    if @comment.save_and_audit(current_user, 'New comment added', @comment.comment)
       redirect_to patient_path(@patient), notice: 'Comment was successfully created.'
     else
       render action: 'new'
