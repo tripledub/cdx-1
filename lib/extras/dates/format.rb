@@ -4,7 +4,7 @@ class Extras::Dates::Format
       begin
         Date.strptime(string, input_format_pattern)
       rescue
-        Date.today
+        Date.today.strftime(input_format_pattern)
       end
     end
   end
