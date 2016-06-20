@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
   expose(:comments, scope: -> { @patient.comments })
 
   def index
-    render json: comments
+    render json: Presenters::Comments.patient_view(comments)
   end
 
   def new
