@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
   expose(:comments, scope: -> { @patient.comments })
 
   def index
-    render json: Presenters::Comments.patient_view(comments)
+    render json: Presenters::Comments.patient_view(comments.joins(:user).order(set_order_from_params))
   end
 
   def new
@@ -38,5 +38,10 @@ class CommentsController < ApplicationController
 
   def check_permissions
     redirect_to(patient_path(@patient), error: "You can't add comments to this patient") unless has_access?(@patient, UPDATE_PATIENT)
+  end
+
+  def set_order_from_params
+    order = params[:order] == 'true' ? 'desc' : 'asc'
+    params[:field] == 'name' ? "users.first_name #{order}, users.last_name" : "comments.commented_on #{order}"
   end
 end

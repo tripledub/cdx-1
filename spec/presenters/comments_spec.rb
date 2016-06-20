@@ -14,6 +14,7 @@ describe Presenters::Comments do
 
     it 'should return elements formated' do
       expect(Presenters::Comments.patient_view(patient.comments).first).to eq({
+        id:           patient.comments.first.uuid,
         comment_date: patient.comments.first.commented_on.strftime(I18n.t('date.input_format.pattern')),
         commenter:    patient.comments.first.user.full_name,
         title:        patient.comments.first.description,

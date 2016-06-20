@@ -3,8 +3,8 @@ require 'policy_spec_helper'
 
 describe CommentsController do
   render_views
-  let(:institution)    { Institution.make }
-  let(:user)           { institution.user }
+  let(:user)           { User.make }
+  let!(:institution)   { user.institutions.make }
   let(:patient)        { Patient.make institution: institution }
   let(:default_params) { { context: institution.uuid } }
   let(:valid_params)   { {
@@ -18,12 +18,35 @@ describe CommentsController do
     end
 
     describe 'index' do
-      let!(:comment) { Comment.make patient: patient }
+      before :each do
+        7.times { Comment.make patient: patient }
+      end
 
       it 'should return a json with comments' do
         get 'index', patient_id: patient.id
 
-        expect(JSON.parse(response.body).size).to eq(1)
+        expect(JSON.parse(response.body).size).to eq(7)
+      end
+
+      it 'should return a json with comments ordered by comment date ascending' do
+        first_comment = patient.comments.order(commented_on: :asc).first
+        get 'index', patient_id: patient.id
+
+        expect(JSON.parse(response.body).first['title']).to eq(first_comment.description)
+      end
+
+      it 'should return a json with comments ordered by user name ascending' do
+        first_user = User.order(first_name: :asc).first
+        get 'index', patient_id: patient.id, field: 'name', order: 0
+
+        expect(JSON.parse(response.body).first['commenter']).to eq(first_user.full_name)
+      end
+
+      it 'should return a json with comments ordered by user name ascending' do
+        first_user = User.order(first_name: :desc).first
+        get 'index', patient_id: patient.id, field: 'name', order: 1
+
+        expect(JSON.parse(response.body).first['commenter']).to eq(first_user.full_name)
       end
     end
 
