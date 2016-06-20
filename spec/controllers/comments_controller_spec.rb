@@ -17,6 +17,16 @@ describe CommentsController do
       sign_in user
     end
 
+    describe 'index' do
+      let!(:comment) { Comment.make patient: patient }
+
+      it 'should return a json with comments' do
+        get 'index', patient_id: patient.id
+
+        expect(JSON.parse(response.body).size).to eq(1)
+      end
+    end
+
     describe 'new' do
       it 'should render the new template' do
         get 'new', patient_id: patient.id
