@@ -17,7 +17,7 @@
             = link_to('Edit patient', edit_patient_path(patient), class: 'button edit')
       %ul
         %li
-          = patient.name
+          = patient_display_name(patient.name)
         %li
           = patient.entity_id
         %li

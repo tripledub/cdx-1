@@ -34,4 +34,8 @@ module PatientsHelper
   def patient_observations(encounter)
     encounter.observations.blank? ? "No comments" : encounter.observations
   end
+
+  def patient_display_name(patient_name)
+    patient_name.present? ? patient_name : '(Unknown name)'
+  end
 end
