@@ -10,7 +10,6 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-
 ActiveRecord::Schema.define(version: 20160623120302) do
   create_table "alert_condition_results", force: :cascade do |t|
     t.string  "result",   limit: 255
