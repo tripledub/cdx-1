@@ -8,8 +8,7 @@ var RequestedTestRow = React.createClass({
     if (i>0) {
       samples +=",";
     }
-//TODO what is do when this.props.sample.entity_ids.length>1???
-samples += encounter.samples[i].entity_ids[0]
+    samples += encounter.samples[i].entity_ids[0]
   }
 
   created_at = new Date(Date.parse(test.created_at));

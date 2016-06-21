@@ -32,8 +32,11 @@ class NewFreshEncounterPage < CdxPageBase
   set_url_matcher /\/encounters\/new?.*mode=fresh_tests/
 
   section :site, CdxSelect, "label", text: "SITE"
+  section :requested_site, CdxSelect, "label", text: /Requested/i   
+  section :performing_site, CdxSelect, "label", text: "PERFORMING SITE"
   section :patient, CdxSelect, "label", text: /Patient/i
-  element :new_patient, "a[title='Create new patient']"
+  element :new_patient, "a[title='Create new patient']" 
+  element :testing_for,     "select[id='testing_for']"
 
   element :add_sample, :link, "Add sample"
 end
@@ -42,6 +45,7 @@ class NewEncounterPage < EncounterFormPage
   set_url "/encounters/new?mode=existing_tests"
 
   section :site, CdxSelect, "label", text: "SITE"
+  section :performing_site, CdxSelect, "label", text: "PERFORMING SITE"
 end
 
 class EditEncounterPage < EncounterFormPage

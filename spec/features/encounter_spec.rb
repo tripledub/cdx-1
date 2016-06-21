@@ -12,16 +12,16 @@ describe "create encounter" do
     sign_in(user)
   }
 
-  xit "should use current context site as default" do
+  it "should use current context site as default" do
     goto_page NewEncounterPage do |page|
-      page.submit
+       page.submit
     end
 
     expect_page ShowEncounterPage do |page|
       expect(page.encounter.site).to eq(site)
     end
   end
-  xit "should work when context is institution with single site" do
+  it "should work when context is institution with single site" do
     user.update_attribute(:last_navigation_context, institution.uuid)
 
     goto_page NewEncounterPage do |page|
@@ -32,7 +32,7 @@ describe "create encounter" do
       expect(page.encounter.site).to eq(site)
     end
   end
-  xit "should obly user to choose site when context is institution with multiple sites", testrail: 432 do
+  it "should obly user to choose site when context is institution with multiple sites", testrail: 432 do
     other_site = institution.sites.make
     user.update_attribute(:last_navigation_context, institution.uuid)
 
@@ -47,7 +47,7 @@ describe "create encounter" do
       expect(page.encounter.site).to eq(other_site)
     end
   end
-  xcontext "within not owned institution" do
+  context "within not owned institution" do
     let(:other_institution) { Institution.make }
     let(:site1) { other_institution.sites.make }
     let(:site2) { other_institution.sites.make }
@@ -109,7 +109,7 @@ describe "create encounter" do
     it "should leave one encounter"
   end
 
-  xit "should be able to create fresh encounter with existing patient", testrail: 1192 do
+  it "should be able to create fresh encounter with existing patient", testrail: 1192 do
     patient = institution.patients.make name: Faker::Name.name, site: site
 
     goto_page NewFreshEncounterPage do |page|
@@ -127,9 +127,10 @@ describe "create encounter" do
     end
   end
 
-  xit "should be able to create fresh encounter with new patient", testrail: 1193 do
+  it "should be able to create fresh encounter with new patient", testrail: 1193 do
     goto_page NewFreshEncounterPage do |page|
-      page.site.set site.name
+      # page.site.set site.name
+      #NOTE: no site selection is displayed if there is only one site in an institution
       page.new_patient.click
     end
 
@@ -143,15 +144,22 @@ describe "create encounter" do
     expect_page NewFreshEncounterPage do |page|
       page.add_sample.click
       page.add_sample.click
-    #  page.submit
-    click_link('encountersave')
-    click_link('encountersave')
+    
+      page.testing_for.select("TB")
+      page.find("#requested_culture").trigger("click")
+      page.find("#requested_dst").trigger("click")
+      page.find("#requested_lineprobe").trigger("click")
+      page.find("#requested_drug_susceptibility").trigger("click")
+      
+     click_link('encountersave')
+     click_link('encountersave')
     end
 
     expect_page ShowEncounterPage do |page|
       expect(page.encounter.patient.name).to eq("John Doe")
       expect(page.encounter.patient.entity_id).to eq("1001")
       expect(page.encounter.samples.count).to eq(2)
+      expect(page.encounter.RequestedTests.count).to eq(4)
       expect(page.encounter.test_results.count).to eq(0)
     end
   end
