@@ -4,11 +4,12 @@ class TestResult < ActiveRecord::Base
   include Resource
   include SiteContained
 
-  NAME_FIELD = 'name'
-  LAB_USER_FIELD = 'site_user'
-  ASSAYS_FIELD = 'assays'
+  NAME_FIELD       = 'name'
+  LAB_USER_FIELD   = 'site_user'
+  ASSAYS_FIELD     = 'assays'
   START_TIME_FIELD = 'start_time'
-  END_TIME_FIELD = 'end_time'
+  END_TIME_FIELD   = 'end_time'
+  STATUS_FIELD     = 'status'
 
   has_and_belongs_to_many :device_messages
   has_many :test_result_parsed_data
@@ -120,7 +121,7 @@ class TestResult < ActiveRecord::Base
     json.name test["name"]
     json.assays test["assays"]
     json.test_id test["id"]
-    
+
     json.type test["type"]
     json.status test["status"]
     json.error_code test["error_code"]

@@ -12,7 +12,7 @@ var PatientContent = React.createClass({
             :null}
 
           {this.props.currentTab === 3 ?
-            <PatientResults testResultsUrl={this.props.commentsUrl} />
+            <PatientResults testResultsUrl={this.props.testResultsUrl} />
             :null}
 
           {this.props.currentTab === 4 ?

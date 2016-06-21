@@ -7,5 +7,13 @@ class Extras::Dates::Format
         Date.today
       end
     end
+
+    def datetime_with_time_zone(value, tz=nil)
+      return nil unless value
+
+      value = Time.parse(value) unless value.is_a?(Time)
+      value = value.in_time_zone(tz) if tz
+      I18n.localize(value, locale: I18n.locale, format: :long)
+    end
   end
 end

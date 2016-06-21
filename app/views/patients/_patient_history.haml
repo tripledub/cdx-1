@@ -9,4 +9,4 @@
       %li
         = link_to 'Add Comment', new_patient_comment_path(patient), class: 'button add', title: 'Add new comment'
 .panel.patient-details
-  = react_component 'PatientHistory', commentsUrl: patient_comments_path(patient), patientLogsUrl: patient_patient_logs_path(patient)
+  = react_component 'PatientHistory', commentsUrl: patient_comments_path(patient), patientLogsUrl: patient_patient_logs_path(patient), testResultsUrl: patient_patient_test_results_path(patient)
