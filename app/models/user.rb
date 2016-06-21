@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
   has_many :alert_recipients
   has_many :recipient_notification_history
   has_many :comments
+  has_many :audit_logs
 
   include Resource
 

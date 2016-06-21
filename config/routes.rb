@@ -113,6 +113,7 @@ Rails.application.routes.draw do
       get :search
     end
     resources :comments
+    resources :patient_logs , only: [:index, :show]
   end
 
   resources :ftp_settings, only: [:edit, :update]
