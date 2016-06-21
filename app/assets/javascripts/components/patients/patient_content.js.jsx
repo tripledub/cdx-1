@@ -8,7 +8,7 @@ var PatientContent = React.createClass({
             :null}
 
           {this.props.currentTab === 2 ?
-            <PatientTestOrders testOrdersUrl={this.props.commentsUrl} />
+            <PatientTestOrders testOrdersUrl={this.props.testOrdersUrl} />
             :null}
 
           {this.props.currentTab === 3 ?

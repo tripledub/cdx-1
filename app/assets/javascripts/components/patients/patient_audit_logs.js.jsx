@@ -39,7 +39,7 @@ var PatientAuditLogs = React.createClass({
 
     return (
       <div className="row">
-        <table className="patient-history">
+        <table className="patient-audit-logs">
           <thead>
             <tr>
               <th>Title</th>

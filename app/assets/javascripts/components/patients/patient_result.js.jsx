@@ -1,9 +1,11 @@
 var PatientResult = React.createClass({
   render: function(){
     return (
-      <div className='row'>
-        <h2>{this.props.patientResult.start_date}</h2>
-      </div>
+      <tr>
+        <td>{this.props.patientResult.name}</td>
+        <td>{this.props.patientResult.status}</td>
+        <td>{this.props.patientResult.date}</td>
+      </tr>
     );
   }
 });
