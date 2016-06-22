@@ -133,6 +133,15 @@ Encounter.blueprint do
   }
 end
 
+Episode.blueprint do
+  diagnosis :presumptive_tb
+  hiv_status :unknown
+  drug_resistance :mono
+  initial_history :previous
+  previous_history :relapsed
+  outcome :cured
+end
+
 def first_or_make_site_unless_manufacturer(institution)
   unless institution.kind_manufacturer?
     institution.sites.first || institution.sites.make

@@ -5,6 +5,23 @@ RSpec.describe Episode, type: :model do
     it { should belong_to(:patient) }
   end
 
+  describe 'validations' do
+    it { should validate_presence_of(:diagnosis) }
+    it { should validate_presence_of(:hiv_status) }
+    it { should validate_presence_of(:drug_resistance) }
+
+    describe 'history of previous treatment' do
+      it { should validate_presence_of(:initial_history) }
+
+      context 'when previously treated' do
+        subject { Episode.make_unsaved(initial_history: :previous) }
+        it 'requires presence of :previous_history' do
+          expect(subject).to_not be_valid
+        end
+      end
+    end
+  end
+
   describe 'diagnosis options for drop-downs' do
     let(:diagnosis_options) { described_class.diagnosis_options }
     it 'has an array of diagnosis options' do

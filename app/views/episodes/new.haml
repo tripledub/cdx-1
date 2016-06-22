@@ -8,7 +8,7 @@
           %li
             = link_to 'Save', '#', class: 'button save', title: 'Save'
           %li
-            = link_to 'Cancel', '#', class: 'button cancel', title: 'Cancel'
+            = link_to 'Cancel', patient_path(@patient), class: 'button cancel', title: 'Cancel'
 
     = form_for([@patient, @episode], html: { class: 'zebra' } ) do |f|
       .panel
@@ -33,7 +33,7 @@
           .col-6
             = f.label 'HIV Status'
           .col-6
-            = f.collection_select :diagnosis, Episode.hiv_status_options, :id, :name, include_blank: true
+            = f.collection_select :hiv_status, Episode.hiv_status_options, :id, :name, include_blank: true
         .row
           .col-6
             = f.label 'Drug Resistance'
@@ -44,3 +44,8 @@
             = f.label 'Treatment Outcome'
           .col-6
             = f.collection_select :outcome, Episode.treatment_outcome_options, :id, :name, include_blank: true
+        .row
+          .col-6
+            = f.submit
+          .col-6
+            

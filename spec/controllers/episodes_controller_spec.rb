@@ -6,6 +6,17 @@ RSpec.describe EpisodesController, type: :controller do
   let(:user)           { institution.user }
   let(:patient)        { Patient.make institution: institution }
   let(:default_params) { { context: institution.uuid } }
+  let(:valid_params) do
+    {
+      diagnosis: :presumptive_tb,
+      initial_history: :previous,
+      previous_history: :relapsed,
+      drug_resistance: :mono,
+      hiv_status: :unknown,
+      anatomical_site_diagnosis: :preumpitve_tb,
+      outcome: :cured
+    }
+  end
 
   before(:each) do
     sign_in user
@@ -16,8 +27,41 @@ RSpec.describe EpisodesController, type: :controller do
       get :new, patient_id: patient.id
     end
 
-    it 'can be accessed' do
-      expect(response).to be_succes
+    it 'renders the :new view' do
+      expect(response).to render_template(:new)
+    end
+  end
+
+  describe '#POST :create' do
+    context 'with valid params' do
+      before do
+        post :create, patient_id: patient.id, episode: valid_params
+      end
+
+      it 'creates a new episode' do
+        episode = patient.episodes.last
+        expect(episode.diagnosis).to eq('presumptive_tb')
+        expect(episode.initial_history).to eq('previous')
+        expect(episode.previous_history).to eq('relapsed')
+        expect(episode.drug_resistance).to eq('mono')
+        expect(episode.hiv_status).to eq('unknown')
+        expect(episode.outcome).to eq('cured')
+      end
+
+      it 'redirects to the patients :show page' do
+        expect(response).to redirect_to patient_path(patient)
+      end
+    end
+
+    context 'with invalid params' do
+      before do
+        valid_params.delete(:hiv_status)
+        post :create, patient_id: patient.id, episode: valid_params
+      end
+
+      it 're-renders the :new action' do
+        expect(response).to render_template(:new)
+      end
     end
   end
 end

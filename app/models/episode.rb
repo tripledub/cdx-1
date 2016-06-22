@@ -1,6 +1,9 @@
 class Episode < ActiveRecord::Base
   belongs_to :patient
 
+  validates_presence_of :diagnosis, :hiv_status, :drug_resistance, :initial_history
+  validates :previous_history, presence: true, if: Proc.new { |a| a.initial_history == 'previous' }
+
   def self.anatomical_diagnosis_options
     diagnosis_options.select { |opt| opt.anatomical == true }
   end
