@@ -1,7 +1,23 @@
 var RequestedTestRow = React.createClass({
+	mixins: [React.addons.LinkedStateMixin],
+	
+	getInitialState: function() {
+		return {
+			statusField: '',
+			test: this.props.requested_test
+		};
+	},
+	statusChanged: function(event) {
+      var temp_test = this.state.test;
+      temp_test.status=event.target.value;
+			this.setState({
+				test: temp_test
+			});
+			this.props.onTestChanged(this.state.test, this.props.key)
+	},
   render: function() {
     var encounter = this.props.encounter;
-    var test = this.props.requested_test;
+    //var test = this.props.requested_test;
 
   samples ="";
   for (var i = 0, len = encounter.samples.length; i < len; i++) {
@@ -11,19 +27,36 @@ var RequestedTestRow = React.createClass({
     samples += encounter.samples[i].entity_ids[0]
   }
 
-  created_at = new Date(Date.parse(test.created_at));
+  created_at = new Date(Date.parse(this.state.test.created_at));
   created_at_date=created_at.toISOString().slice(0, 10);
+
+	
+	var status_array=[];
+	for (var index in this.props.status_types) { 
+			status_array.push(index);
+	}
+		
+		
+	//	this.state.test.status="reopen";
+		
+	var status_data = status_array,
+			    MakeItem = function(X) {
+	           return <option key={X} value={X}>{X}</option>;
+           };
 
   return (
     <tr>
-      <td>{test.name}</td>
+      <td>{this.state.test.name}</td>
       <td>{encounter.uuid}</td>
       <td>{encounter.site.name}</td>
       <td>{samples}</td>
       <td>{this.props.requested_by}</td>
       <td>{created_at_date}</td>
       <td>{encounter.testdue_date}</td>
-      <td>{test.status}</td>
+      <td><select key={this.state.test.id} onChange = {
+					this.statusChanged
+				}
+				 value={this.state.test.status}>{status_data.map(MakeItem)}</select></td>
     </tr>);
   }
 });
@@ -35,6 +68,10 @@ var RequestedTestsList = React.createClass({
       titleClassName: ""
     }
   },
+  onTestChanged: function(new_test) {
+	console.log("ggg");
+	this.props.onTestChanged(new_test)
+	},
   render: function() {
     return (
       <table className="table" cellPadding="0" cellSpacing="0">
@@ -67,8 +104,8 @@ var RequestedTestsList = React.createClass({
         </thead>
         <tbody>
           {this.props.requested_tests.map(function(requested_test) {
-             return <RequestedTestRow key={requested_test.id} requested_test={requested_test}
-              encounter={this.props.encounter} requested_by={this.props.requested_by} />;
+             return <RequestedTestRow key={requested_test.id} requested_test={requested_test} onTestChanged={this.onTestChanged}
+              encounter={this.props.encounter} requested_by={this.props.requested_by}  status_types={this.props.status_types} edit={this.props.edit}/>;
           }.bind(this))}
         </tbody>
       </table>
@@ -77,8 +114,72 @@ var RequestedTestsList = React.createClass({
 });
 
 var RequestedTestsIndexTable = React.createClass({
+	onTestChanged: function(new_test) {
+	console.log("ggg");
+	this.props.onTestChanged(new_test)
+	},
   render: function() {
-    return <RequestedTestsList requested_tests={this.props.requested_tests} encounter={this.props.encounter}
-              title={this.props.title} requested_by={this.props.requested_by} titleClassName="table-title" />
+    return <RequestedTestsList requested_tests={this.props.requested_tests} encounter={this.props.encounter} onTestChanged={this.onTestChanged}
+              title={this.props.title} requested_by={this.props.requested_by} titleClassName="table-title" status_types={this.props.status_types} edit={this.props.edit} />
   }
 });
+
+
+
+
+
+//voidcanvas.com/react-tutorial-two-way-data-binding/
+var RequestedTestStatus = React.createClass({
+	getDefaultProps: function() {
+		return {
+			multiple: false,
+			name: 'Status'
+		}
+	},
+	//https://github.com/JedWatson/react-select/issues/256
+	onChange(textValue, arrayValue) {
+		this.props.valueLink.requestChange(arrayValue[0].label);
+	},
+	render: function() {
+		var options = [];
+
+		for (var i = 0; i < Object.keys(this.props.status_types).length; i++) {
+			option = {};
+			option["value"] = i;
+			option["label"] = Object.keys(this.props.status_types)[i];
+			options.push(option);
+		}
+
+		var {
+			valueLink,
+			value,
+			onChange
+		} = this.props;
+		return (
+         <div>
+				<Select
+					name = "status"
+					value = {
+						value || valueLink.value
+					}
+					options = {
+						options
+					}
+					multi = {
+						false
+					}
+					onChange = {
+						this.onChange
+					}
+					disabled = {
+						this.props.disable_all_selects
+					}
+					placeholder="Select"
+					clearable = { false }
+					className="testorder-status-menu"
+					/>
+			</div>
+	);
+}
+});
+

@@ -141,7 +141,7 @@ class EncountersController < ApplicationController
     tests_requested = encounter_param['tests_requested']
     if !tests_requested.blank? 
       tests_requested.split('|').each do |name|
-        @encounter.RequestedTests.build(name: name, status: RequestedTest.statuses["open"]) 
+        @encounter.RequestedTests.build(name: name, status: RequestedTest.statuses["pending"]) 
       end
    end 
   end

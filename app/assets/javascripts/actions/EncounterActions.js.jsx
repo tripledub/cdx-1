@@ -1,3 +1,4 @@
 var EncounterActions = Reflux.createActions([
-  'deleteEncounter'
+  'deleteEncounter',
+  'updateEncounter'
 ]);

@@ -147,7 +147,7 @@ end
 RequestedTest.blueprint do
   encounter
   name { "CD4" }
-  status {RequestedTest.statuses["open"]}
+  status {RequestedTest.statuses["pending"]}
 end
 
 
