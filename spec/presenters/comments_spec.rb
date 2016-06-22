@@ -14,11 +14,11 @@ describe Presenters::Comments do
 
     it 'should return elements formated' do
       expect(Presenters::Comments.patient_view(patient.comments).first).to eq({
-        id:           patient.comments.first.uuid,
-        comment_date: patient.comments.first.commented_on.strftime(I18n.t('date.input_format.pattern')),
-        commenter:    patient.comments.first.user.full_name,
-        title:        patient.comments.first.description,
-        view_link:    Rails.application.routes.url_helpers.patient_comment_path(patient, patient.comments.first)
+        id:          patient.comments.first.uuid,
+        commentDate: patient.comments.first.commented_on.strftime(I18n.t('date.input_format.pattern')),
+        commenter:   patient.comments.first.user.full_name,
+        title:       patient.comments.first.description,
+        viewLink:    Rails.application.routes.url_helpers.patient_comment_path(patient, patient.comments.first)
       })
     end
   end
