@@ -1,7 +1,11 @@
 var PatientTestOrder = React.createClass({
+  navigateTo: function (toUrl) {
+    window.location = toUrl;
+  },
+
   render: function(){
     return (
-      <tr>
+      <tr onClick={this.navigateTo.bind(this, this.props.patientTestOrder.viewLink)}>
         <td>{this.props.patientTestOrder.siteName}</td>
         <td>{this.props.patientTestOrder.id}</td>
         <td>{this.props.patientTestOrder.requester}</td>

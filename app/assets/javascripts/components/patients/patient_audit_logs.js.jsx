@@ -2,16 +2,19 @@ var PatientAuditLogs = React.createClass({
   getInitialState: function() {
     return {
       patientLogs: [],
-      queryOrder: true
+      queryOrder: true,
+      loadingMessasge: 'Loading logs...'
     };
   },
 
   getPatientLogs: function(field, e) {
     if (e) { e.preventDefault(); }
     this.serverRequest = $.get(this.props.patientLogsUrl + this.getParams(field), function (results) {
-      this.setState({
-        patientLogs: results
-      });
+      if (results.length > 0) {
+        this.setState({ patientLogs: results });
+      } else {
+        this.setState({ loadingMessasge: 'There are no logs available.' });
+      };
     }.bind(this));
   },
 
@@ -39,6 +42,7 @@ var PatientAuditLogs = React.createClass({
 
     return (
       <div className="row">
+        {this.state.patientLogs.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> : null}
         <table className="patient-audit-logs">
           <thead>
             <tr>

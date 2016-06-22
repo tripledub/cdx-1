@@ -2,16 +2,19 @@ var PatientComments = React.createClass({
   getInitialState: function() {
     return {
       patientComments: [],
-      queryOrder: true
+      queryOrder: true,
+      loadingMessasge: 'Loading comments...'
     };
   },
 
   getComments: function(field, e) {
     if (e) { e.preventDefault(); }
     this.serverRequest = $.get(this.props.commentsUrl + this.getParams(field), function (results) {
-      this.setState({
-        patientComments: results
-      });
+      if (results.length > 0) {
+        this.setState({ patientComments: results });
+      } else {
+        this.setState({ loadingMessasge: 'There are no comments available.' });
+      };
     }.bind(this));
   },
 
@@ -39,6 +42,7 @@ var PatientComments = React.createClass({
 
     return (
       <div className="row">
+        {this.state.patientComments.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> : null}
         <table className="patient-history">
           <thead>
             <tr>

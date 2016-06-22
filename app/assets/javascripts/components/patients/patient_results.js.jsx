@@ -2,16 +2,19 @@ var PatientResults = React.createClass({
   getInitialState: function() {
     return {
       patientResults: [],
-      queryOrder: true
+      queryOrder: true,
+      loadingMessasge: 'Loading test results...'
     };
   },
 
-  getpatientResults: function(field, e) {
+  getPatientResults: function(field, e) {
     if (e) { e.preventDefault(); }
     this.serverRequest = $.get(this.props.testResultsUrl + this.getParams(field), function (results) {
-      this.setState({
-        patientResults: results
-      });
+      if (results.length > 0) {
+        this.setState({ patientResults: results });
+      } else {
+        this.setState({ loadingMessasge: 'There are no comments available.' });
+      };
     }.bind(this));
   },
 
@@ -22,7 +25,7 @@ var PatientResults = React.createClass({
   },
 
   componentDidMount: function() {
-    this.getpatientResults(1);
+    this.getPatientResults(1);
   },
 
   componentWillUnmount: function() {
@@ -39,6 +42,7 @@ var PatientResults = React.createClass({
 
     return (
       <div className="row">
+        {this.state.patientResults.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> : null}
         <table className="patient-results">
           <thead>
             <tr>

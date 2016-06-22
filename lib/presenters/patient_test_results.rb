@@ -7,7 +7,7 @@ class Presenters::PatientTestResults
           name:            result.core_fields[TestResult::NAME_FIELD],
           date:            Extras::Dates::Format.datetime_with_time_zone(result.core_fields[TestResult::START_TIME_FIELD]),
           status:          result.core_fields[TestResult::STATUS_FIELD],
-          viewLink:        Rails.application.routes.url_helpers.test_result_path(result)
+          viewLink:        Rails.application.routes.url_helpers.test_result_path(id: result.uuid)
         }
       end
     end

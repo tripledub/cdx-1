@@ -1,17 +1,20 @@
 var PatientTestOrders = React.createClass({
   getInitialState: function() {
     return {
-      patientTestOrder: [],
-      queryOrder: true
+      patientTestOrders: [],
+      queryOrder: true,
+      loadingMessage: 'Loading test orders...'
     };
   },
 
   getTestOrders: function(field, e) {
     if (e) { e.preventDefault(); }
     this.serverRequest = $.get(this.props.testOrdersUrl + this.getParams(field), function (results) {
-      this.setState({
-        patientTestOrder: results
-      });
+      if (results.length > 0) {
+        this.setState({ patientTestOrders: results });
+      } else {
+        this.setState({ loadingMessasge: 'There are no test orders.' });
+      };
     }.bind(this));
   },
 
@@ -30,7 +33,7 @@ var PatientTestOrders = React.createClass({
 
   render: function(){
     var rows = [];
-    this.state.patientTestOrder.forEach(
+    this.state.patientTestOrders.forEach(
       function(patientTestOrder) {
         rows.push(<PatientTestOrder patientTestOrder={patientTestOrder} key={patientTestOrder.id} />);
       }
@@ -38,6 +41,7 @@ var PatientTestOrders = React.createClass({
 
     return (
       <div className="row">
+        {this.state.patientTestOrders.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> : null}
         <table className="patient-test-orders">
           <thead>
             <tr>
