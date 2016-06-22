@@ -1,6 +1,14 @@
 class Episode < ActiveRecord::Base
   belongs_to :patient
 
+  def self.anatomical_diagnosis_options
+    diagnosis_options.select { |opt| opt.anatomical == true }
+  end
+
+  def self.initial_history_options
+    history_options.select { |opt| opt.initial == true }
+  end
+
   def self.diagnosis_options
     [
       OpenStruct.new(id: :presumptive_tb,
@@ -26,12 +34,27 @@ class Episode < ActiveRecord::Base
     ]
   end
 
+  def self.history_options
+    [
+      OpenStruct.new(id: :new, name: 'New Patients', initial: true),
+      OpenStruct.new(id: :previous, name: 'Previously Treated', initial: true),
+      OpenStruct.new(id: :unknown, name: 'Unknown Previously', initial: true),
+      OpenStruct.new(id: :relapsed, name: 'Relapsed Treatment Aft..'),
+      OpenStruct.new(id: :loss, name: 'Loss to follow-up'),
+      OpenStruct.new(id: :other, name: 'Other previous treatments')
+    ]
+  end
+
   def self.hiv_status_options
     [
       OpenStruct.new(id: :positive_tb, name: 'HIV-positive TB patient'),
       OpenStruct.new(id: :negative_tb, name: 'HIV-negative TB patient'),
       OpenStruct.new(id: :unknown_tb, name: 'HIV Status Unkown TB patient')
     ]
+  end
+
+  def self.previous_history_options
+    history_options.select { |opt| opt.initial == nil }
   end
 
   def self.treatment_outcome_options

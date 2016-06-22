@@ -1,5 +1,6 @@
 class EpisodesController < ApplicationController
  def new
-   @patient_episode = Episode.new(patient: Patient.first)
+   @patient = Patient.find(params[:patient_id])
+   @episode = Episode.new(patient: @patient)
  end
 end

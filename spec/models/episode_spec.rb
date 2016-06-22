@@ -17,6 +17,62 @@ RSpec.describe Episode, type: :model do
     end
   end
 
+  describe 'diagnosis options for anatomical sites' do
+    let(:diagnosis_options) { described_class.anatomical_diagnosis_options }
+    it 'has an array of diagnosis options' do
+      expect(diagnosis_options).to be_a(Array)
+    end
+
+    it 'excludes Clinically Diagnosed' do
+      expected = diagnosis_options.select { |o| o.id == :clinically_diagnosed }
+      expect(expected).to eq([])
+    end
+  end
+
+  describe 'treament history options' do
+    context 'initial treatment' do
+      let(:initial_history_options) { described_class.initial_history_options } 
+      it 'has an array of initial history options' do
+        expect(initial_history_options).to be_a(Array)
+      end
+
+      it 'includes new, previous and unknown' do
+        %w(new previous unknown).each do |opt|
+          expected = initial_history_options.select { |o| o.id == opt.to_sym }
+          expect(expected.map(&:id)).to include(opt.to_sym)
+        end
+      end
+
+      it 'excudes relapsed, loss and other' do
+        %w(relapsed loss other).each do |opt|
+          expected = initial_history_options.map(&:id)
+          expect(expected).to_not include(opt.to_sym)
+        end
+      end
+    end
+
+    context 'previous treatment' do
+      let(:previous_history_options) { described_class.previous_history_options } 
+      it 'has an array of initial history options' do
+        expect(previous_history_options).to be_a(Array)
+      end
+
+      it 'excludes new, previous and unknown' do
+        %w(new previous unknown).each do |opt|
+          expected = previous_history_options.map(&:id)
+          expect(expected).to_not include(opt.to_sym)
+        end
+      end
+
+      it 'includes relapsed, loss and other' do
+        %w(relapsed loss other).each do |opt|
+          expected = previous_history_options.map(&:id)
+          expect(expected).to include(opt.to_sym)
+        end
+      end
+    end
+  end
+
   describe 'HIV status options for drop-downs' do
     let(:hiv_status_options) { described_class.hiv_status_options }
     it 'has an array of hiv status options' do
@@ -59,7 +115,6 @@ RSpec.describe Episode, type: :model do
       expect(treatment_outcome_options.size).to eq(7)
       %w(cured completed failed died lost_to_follow_up not_evaluated success).each do |status|
         id = status.to_sym
-        puts id
         expected = treatment_outcome_options.select { |st| st.id == id }
         expect(expected.first.id).to eq(id)
       end
