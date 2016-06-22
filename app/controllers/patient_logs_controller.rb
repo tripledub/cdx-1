@@ -5,8 +5,13 @@ class PatientLogsController < ApplicationController
 
   expose(:patient_logs, scope: -> { @patient.audit_logs }, model: 'AuditLogs')
 
+  expose(:patient_log, scope: -> { @patient.audit_logs }, model: 'AuditLogs')
+
   def index
     render json: Presenters::PatientLogs.patient_view(patient_logs.joins(:user).order(set_order_from_params).limit(30).offset(params[:page] || 0))
+  end
+
+  def show
   end
 
   protected

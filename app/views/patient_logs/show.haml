@@ -1,0 +1,95 @@
+.testflow
+  .container
+    / Commented Out Spans are for use within CDX using your icon set, where applicable at least
+    .row.labelHeader
+      .col-6
+        %h3 History
+      .col-6
+        %ul
+          %li
+            = link_to "Back", patient_path(patient_log.patient), class: 'button new'
+    .order-details
+      .panel
+        / Start of Row
+        .row
+          .col-6
+            .row
+              .col-12
+                %label Date:
+                = patient_log.created_at.strftime(I18n.t('date.input_format.pattern'))
+            .row
+              .col-12
+                %label User:
+                = patient_log.user.full_name
+            .row
+              .col-12
+                %label Description
+                = patient_log.title
+            .row
+              .col-12
+                %label Comment:
+                = patient_log.comment
+          .col-6
+            .panel.patient-details
+              .row
+                .col-3.summary.patient
+                  .stat
+                    .empty-icon.centered
+                      %span
+                        %i.fa.fa-user
+                .col-9
+                  %ul
+                    %li
+                      %label Patient Name
+                    %li
+                      %label Patient ID
+                    %li
+                      %label Sex
+                    %li
+                      %label Date of Birth
+                  %ul
+                    %li
+                      %label Contact Number
+                    %li
+                      %label Email Address
+        / End of row
+        / Start of Row
+        .row
+          %table.patient-history
+            %tbody
+              %tr
+                %th Name
+                %th Order ID
+                %th Site
+                %th Sample ID
+                %th Requested By
+                %th Requested Date
+                %th Due Date
+                %th Status
+              %tr
+                %td Microscopy
+                %td 12345-321
+                %td Demo Site
+                %td 12345678
+                %td Joe Bloggs
+                %td Jun 17 2016 23:31
+                %td Jun 17 2017 23:31
+                %td Pending
+              %tr
+                %td Microscopy
+                %td 12345-321
+                %td Demo Site
+                %td 12345678
+                %td Joe Bloggs
+                %td Jun 17 2016 23:31
+                %td Jun 17 2017 23:31
+                %td In Progress
+              %tr
+                %td Microscopy
+                %td 12345-321
+                %td Demo Site
+                %td 12345678
+                %td Joe Bloggs
+                %td Jun 17 2016 23:31
+                %td Jun 17 2017 23:31
+                %td Complete

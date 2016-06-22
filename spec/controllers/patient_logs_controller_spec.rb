@@ -24,5 +24,17 @@ describe PatientLogsController do
         expect(JSON.parse(response.body).size).to eq(9)
       end
     end
+
+    describe 'show' do
+      let(:audit_log) { AuditLog.make patient: patient, user: user }
+
+      before :each do
+        get 'show', patient_id: patient.id, id: audit_log.id
+      end
+
+      it 'should display the right template' do
+        response.should render_template('show')
+      end
+    end
   end
 end
