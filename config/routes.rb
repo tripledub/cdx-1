@@ -113,7 +113,9 @@ Rails.application.routes.draw do
       get :search
     end
     resources :comments
-    resources :patient_logs ,         only: [:index, :show]
+    resources :patient_logs, only: [:index, :show] do
+      resources :audit_updates, only: [:index]
+    end
     resources :patient_test_results , only: [:index]
     resources :patient_test_orders ,  only: [:index]
   end

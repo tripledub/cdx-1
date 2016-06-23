@@ -41,55 +41,22 @@
                   %ul
                     %li
                       %label Patient Name
+                      = patient_display_name(patient_log.patient.name)
                     %li
                       %label Patient ID
+                      = patient_log.patient.entity_id
                     %li
                       %label Sex
-                    %li
-                      %label Date of Birth
+                      = patient_log.patient.gender
                   %ul
                     %li
+                      %label Date of Birth
+                      = patient_birth_date(patient_log.patient.dob)
+                    %li
                       %label Contact Number
+                      = patient_log.patient.phone
                     %li
                       %label Email Address
-        / End of row
-        / Start of Row
-        .row
-          %table.patient-history
-            %tbody
-              %tr
-                %th Name
-                %th Order ID
-                %th Site
-                %th Sample ID
-                %th Requested By
-                %th Requested Date
-                %th Due Date
-                %th Status
-              %tr
-                %td Microscopy
-                %td 12345-321
-                %td Demo Site
-                %td 12345678
-                %td Joe Bloggs
-                %td Jun 17 2016 23:31
-                %td Jun 17 2017 23:31
-                %td Pending
-              %tr
-                %td Microscopy
-                %td 12345-321
-                %td Demo Site
-                %td 12345678
-                %td Joe Bloggs
-                %td Jun 17 2016 23:31
-                %td Jun 17 2017 23:31
-                %td In Progress
-              %tr
-                %td Microscopy
-                %td 12345-321
-                %td Demo Site
-                %td 12345678
-                %td Joe Bloggs
-                %td Jun 17 2016 23:31
-                %td Jun 17 2017 23:31
-                %td Complete
+                      = patient_log.patient.email
+
+        =  react_component 'PatientAuditUpdates', auditUpdatesUrl: patient_patient_log_audit_updates_path(patient_log.patient, patient_log)
