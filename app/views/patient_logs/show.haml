@@ -1,0 +1,62 @@
+.testflow
+  .container
+    / Commented Out Spans are for use within CDX using your icon set, where applicable at least
+    .row.labelHeader
+      .col-6
+        %h3 History
+      .col-6
+        %ul
+          %li
+            = link_to "Back", patient_path(patient_log.patient), class: 'button new'
+    .order-details
+      .panel
+        / Start of Row
+        .row
+          .col-6
+            .row
+              .col-12
+                %label Date:
+                = patient_log.created_at.strftime(I18n.t('date.input_format.pattern'))
+            .row
+              .col-12
+                %label User:
+                = patient_log.user.full_name
+            .row
+              .col-12
+                %label Description
+                = patient_log.title
+            .row
+              .col-12
+                %label Comment:
+                = patient_log.comment
+          .col-6
+            .panel.patient-details
+              .row
+                .col-3.summary.patient
+                  .stat
+                    .empty-icon.centered
+                      %span
+                        %i.fa.fa-user
+                .col-9
+                  %ul
+                    %li
+                      %label Patient Name
+                      = patient_display_name(patient_log.patient.name)
+                    %li
+                      %label Patient ID
+                      = patient_log.patient.entity_id
+                    %li
+                      %label Sex
+                      = patient_log.patient.gender
+                  %ul
+                    %li
+                      %label Date of Birth
+                      = patient_birth_date(patient_log.patient.dob)
+                    %li
+                      %label Contact Number
+                      = patient_log.patient.phone
+                    %li
+                      %label Email Address
+                      = patient_log.patient.email
+
+        =  react_component 'PatientAuditUpdates', auditUpdatesUrl: patient_patient_log_audit_updates_path(patient_log.patient, patient_log)

@@ -36,14 +36,14 @@ describe CommentsController do
       end
 
       it 'should return a json with comments ordered by user name ascending' do
-        first_user = User.order(first_name: :asc).first
+        first_user = User.where.not(id: user.id).order(first_name: :asc).first
         get 'index', patient_id: patient.id, field: 'name', order: 0
 
         expect(JSON.parse(response.body).first['commenter']).to eq(first_user.full_name)
       end
 
       it 'should return a json with comments ordered by user name ascending' do
-        first_user = User.order(first_name: :desc).first
+        first_user = User.where.not(id: user.id).order(first_name: :desc).first
         get 'index', patient_id: patient.id, field: 'name', order: 'true'
 
         expect(JSON.parse(response.body).first['commenter']).to eq(first_user.full_name)
