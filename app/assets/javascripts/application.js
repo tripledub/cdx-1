@@ -24,6 +24,7 @@
 //= require react
 //= require react_ujs
 //= require react-dom
+//= require reflux
 //= require react-autosuggest
 //= require react-input-autosize
 //= require react-select
@@ -31,7 +32,6 @@
 //= require components
 //= require d3
 //= require jquery.custom-file-input
-//= require reflux
 //= require_tree .
 //= require turbolinks
 

@@ -121,6 +121,8 @@ Rails.application.routes.draw do
     resources :episodes
   end
 
+  resources :patient_search, only: [:index]
+
   resources :ftp_settings, only: [:edit, :update]
 
   resources :alerts, except: [:show]
