@@ -46,10 +46,7 @@ class EpisodesController < ApplicationController
   end
 
   def find_episode
-    @episode = Episode.where(
-      id: params[:id],
-      patient_id: params[:patient_id],
-    ).first
+    @episode = @patient.episodes.find(params[:id])
   end
 
   def find_patient
