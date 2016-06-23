@@ -1,0 +1,51 @@
+.testflow
+  .container
+    .row.labelHeader
+      .row.col-6
+        %h3 New Episode (TB)
+      .row.col-6
+        %ul
+          %li
+            = link_to 'Save', '#', class: 'button save', title: 'Save'
+          %li
+            = link_to 'Cancel', patient_path(@patient), class: 'button cancel', title: 'Cancel'
+
+    = form_for([@patient, @episode], html: { class: 'zebra' } ) do |f|
+      .panel
+        .row
+          .col-6
+            = f.label :diagnosis, 'Diagnosis'
+          .col-6
+            = f.collection_select :diagnosis, Episode.diagnosis_options, :id, :name, include_blank: true
+        .row
+          .col-6
+            = f.label 'Diagnosis classify by Anatomical site'
+          .col-6
+            = collection_radio_buttons(:anatomical_site_diagnosis, '', Episode.anatomical_diagnosis_options, :id, :name)
+        .row
+          .col-6
+            = f.label 'History of Previous Treatment'
+          .col-6
+            = f.collection_select :initial_history, Episode.initial_history_options, :id, :name, include_blank: true
+            %hr
+            = f.collection_select :previous_history, Episode.previous_history_options, :id, :name, include_blank: true
+        .row
+          .col-6
+            = f.label 'HIV Status'
+          .col-6
+            = f.collection_select :hiv_status, Episode.hiv_status_options, :id, :name, include_blank: true
+        .row
+          .col-6
+            = f.label 'Drug Resistance'
+          .col-6
+            = f.collection_select :drug_resistance, Episode.drug_resistance_options, :id, :name, include_blank: true
+        .row
+          .col-6
+            = f.label 'Treatment Outcome'
+          .col-6
+            = f.collection_select :outcome, Episode.treatment_outcome_options, :id, :name, include_blank: true
+        .row
+          .col-6
+            = f.submit
+          .col-6
+            

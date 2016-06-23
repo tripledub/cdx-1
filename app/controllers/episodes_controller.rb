@@ -1,10 +1,7 @@
 class EpisodesController < ApplicationController
   before_filter :find_patient
-  before_filter :check_access, only: [:new, :create]
-
-  def new
-    @episode = @patient.episodes.new
-  end
+  before_filter :find_episode, only: [:edit, :update]
+  before_filter :check_access, only: [:new, :create, :edit, :update]
 
   def create
     @episode = @patient.episodes.new(episode_params)
@@ -12,6 +9,18 @@ class EpisodesController < ApplicationController
       redirect_to patient_path(@patient), notice: 'Episode successfully created.'
     else
       render action: 'new'
+    end
+  end
+
+  def edit; end
+
+  def new
+    @episode = @patient.episodes.new
+  end
+
+  def update
+    if @episode && @episode.update(episode_params)
+      redirect_to patient_path(@patient), notice: 'Episode successfully updated.'
     end
   end
 
@@ -34,6 +43,13 @@ class EpisodesController < ApplicationController
       :previous_history,
       :outcome
     )
+  end
+
+  def find_episode
+    @episode = Episode.where(
+      id: params[:id],
+      patient_id: params[:patient_id],
+    ).first
   end
 
   def find_patient

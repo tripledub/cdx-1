@@ -17,6 +17,7 @@ RSpec.describe EpisodesController, type: :controller do
       outcome: :cured
     }
   end
+  let(:episode) { Episode.make(patient: patient) }
 
   before(:each) do
     sign_in user
@@ -29,6 +30,20 @@ RSpec.describe EpisodesController, type: :controller do
 
     it 'renders the :new view' do
       expect(response).to render_template(:new)
+    end
+  end
+
+  describe '#edit' do
+    before do
+      get :edit, patient_id: patient.id, id: episode.id
+    end
+
+    it 'renders the :edit view' do
+      expect(response).to render_template(:edit)
+    end
+
+    it 'assigns the :episode to the view' do
+      expect(assigns(:episode)).to eq(episode)
     end
   end
 
@@ -61,6 +76,25 @@ RSpec.describe EpisodesController, type: :controller do
 
       it 're-renders the :new action' do
         expect(response).to render_template(:new)
+      end
+    end
+  end
+
+  describe '#PUT :update' do
+    context 'with valid params' do
+      let(:valid_params) { episode.attributes }
+      before do
+        valid_params['outcome'] = 'new_value'
+        put :update, patient_id: patient.id, id: episode.id, episode: valid_params
+      end
+
+      it 'sets the new value(s)' do
+        updated_episode = episode.reload
+        expect(updated_episode.outcome).to eq('new_value')
+      end
+
+      it 'redirects to the patients :show page' do
+        expect(response).to redirect_to patient_path(patient)
       end
     end
   end
