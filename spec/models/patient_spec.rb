@@ -1,9 +1,11 @@
 require 'spec_helper'
 
 describe Patient do
+  describe 'associations' do
+    it { should have_many(:episodes) }
+  end
 
   context "validations" do
-
     it "should make a valid patient" do
       expect(Patient.make_unsaved).to be_valid
       expect(Patient.make_unsaved :phantom).to be_valid

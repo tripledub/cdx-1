@@ -118,6 +118,7 @@ Rails.application.routes.draw do
     end
     resources :patient_test_results , only: [:index]
     resources :patient_test_orders ,  only: [:index]
+    resources :episodes
   end
 
   resources :ftp_settings, only: [:edit, :update]

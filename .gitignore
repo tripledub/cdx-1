@@ -42,3 +42,4 @@ import
 cookbooks
 Cheffile.lock
 .vagrant
+.rbenv-vars
