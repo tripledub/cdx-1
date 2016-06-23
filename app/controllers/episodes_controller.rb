@@ -5,7 +5,7 @@ class EpisodesController < ApplicationController
 
   def create
     @episode = @patient.episodes.new(episode_params)
-    if @episode.save
+    if @episode.save_and_audit(current_user, 'New Episode Created', @episode)
       redirect_to patient_path(@patient), notice: 'Episode successfully created.'
     else
       render action: 'new'
@@ -19,7 +19,7 @@ class EpisodesController < ApplicationController
   end
 
   def update
-    if @episode && @episode.update(episode_params)
+    if @episode && @episode.update_and_audit( episode_params, current_user, 'Episode updated')
       redirect_to patient_path(@patient), notice: 'Episode successfully updated.'
     end
   end

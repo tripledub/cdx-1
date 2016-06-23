@@ -78,6 +78,15 @@ RSpec.describe EpisodesController, type: :controller do
         expect(response).to render_template(:new)
       end
     end
+
+    describe 'auditing :create' do
+      it 'gets logged in AuditLog' do
+        expected = expect do
+          post :create, patient_id: patient.id, episode: valid_params
+        end
+        expected.to change(AuditLog, :count).by(1)
+      end
+    end
   end
 
   describe '#PUT :update' do
@@ -95,6 +104,20 @@ RSpec.describe EpisodesController, type: :controller do
 
       it 'redirects to the patients :show page' do
         expect(response).to redirect_to patient_path(patient)
+      end
+    end
+
+    describe 'auditing :create' do
+      let(:expected) do
+        expect do
+          put :update, patient_id: patient.id,
+                       id: episode.id,
+                       episode: valid_params
+        end
+      end
+
+      it 'gets logged in AuditLog' do
+        expected.to change(AuditLog, :count).by(1)
       end
     end
   end

@@ -1,4 +1,7 @@
 class Episode < ActiveRecord::Base
+  include AutoUUID
+  include Auditable
+
   belongs_to :patient
 
   validates_presence_of :diagnosis, :hiv_status, :drug_resistance, :initial_history

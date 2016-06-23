@@ -14,7 +14,7 @@ RSpec.describe Episode, type: :model do
       it { should validate_presence_of(:initial_history) }
 
       context 'when previously treated' do
-        subject { Episode.make_unsaved(initial_history: :previous) }
+        subject { Episode.make_unsaved(initial_history: :previous, previous_history: nil) }
         it 'requires presence of :previous_history' do
           expect(subject).to_not be_valid
         end
