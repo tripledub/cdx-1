@@ -4,19 +4,19 @@ var PatientContent = React.createClass({
       <div className="row">
         <div className="col-12">
           {this.props.currentTab === 1 ?
-            <p>Content for tab 1</p>
+            <PatientAuditLogs patientLogsUrl={this.props.patientLogsUrl} />
             :null}
 
           {this.props.currentTab === 2 ?
-            <p>Content for tab 2</p>
+            <PatientTestOrders testOrdersUrl={this.props.testOrdersUrl} />
             :null}
 
           {this.props.currentTab === 3 ?
-            <p>Content for tab 3</p>
+            <PatientResults testResultsUrl={this.props.testResultsUrl} />
             :null}
 
           {this.props.currentTab === 4 ?
-            <PatientComments commentsUrl={this.props.commentsUrl}/>
+            <PatientComments commentsUrl={this.props.commentsUrl} />
             :null}
         </div>
       </div>

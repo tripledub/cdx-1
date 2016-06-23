@@ -25,7 +25,7 @@ var PatientHistory = React.createClass({
           tabList={this.state.tabList}
           changeTab={this.changeTab}
           />
-        <PatientContent currentTab={this.state.currentTab} commentsUrl={this.props.commentsUrl}/>
+        <PatientContent currentTab={this.state.currentTab} commentsUrl={this.props.commentsUrl} testOrdersUrl={this.props.testOrdersUrl} patientLogsUrl={this.props.patientLogsUrl} testResultsUrl={this.props.testResultsUrl} />
       </div>
     );
   }

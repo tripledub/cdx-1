@@ -1,17 +1,17 @@
-var PatientComments = React.createClass({
+var PatientResults = React.createClass({
   getInitialState: function() {
     return {
-      patientComments: [],
+      patientResults: [],
       queryOrder: true,
-      loadingMessasge: 'Loading comments...'
+      loadingMessasge: 'Loading test results...'
     };
   },
 
-  getComments: function(field, e) {
+  getPatientResults: function(field, e) {
     if (e) { e.preventDefault(); }
-    this.serverRequest = $.get(this.props.commentsUrl + this.getParams(field), function (results) {
+    this.serverRequest = $.get(this.props.testResultsUrl + this.getParams(field), function (results) {
       if (results.length > 0) {
-        this.setState({ patientComments: results });
+        this.setState({ patientResults: results });
       } else {
         this.setState({ loadingMessasge: 'There are no comments available.' });
       };
@@ -25,7 +25,7 @@ var PatientComments = React.createClass({
   },
 
   componentDidMount: function() {
-    this.getComments(1);
+    this.getPatientResults(1);
   },
 
   componentWillUnmount: function() {
@@ -34,21 +34,21 @@ var PatientComments = React.createClass({
 
   render: function(){
     var rows = [];
-    this.state.patientComments.forEach(
-      function(comment) {
-        rows.push(<PatientComment comment={comment} key={comment.id} />);
+    this.state.patientResults.forEach(
+      function(patientResult) {
+        rows.push(<PatientResult patientResult={patientResult} key={patientResult.id} />);
       }
     );
 
     return (
       <div className="row">
-        {this.state.patientComments.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> : null}
-        <table className="patient-history">
+        {this.state.patientResults.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> : null}
+        <table className="patient-results">
           <thead>
             <tr>
-              <th><a href="#" onClick={this.getComments.bind(null, 1)}>Date</a></th>
-              <th><a href="#" onClick={this.getComments.bind(null, 2)}>Commenter</a></th>
-              <th>Title</th>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Date</th>
             </tr>
           </thead>
           <tbody>

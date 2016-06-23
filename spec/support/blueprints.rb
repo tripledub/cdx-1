@@ -59,6 +59,19 @@ Comment.blueprint do
   comment       { Faker::Lorem.paragraph }
 end
 
+AuditLog.blueprint do
+  patient       { Patient.make }
+  user          { User.make }
+  title         { Faker::Lorem.sentence }
+  comment       { Faker::Lorem.paragraph }
+end
+
+AuditUpdate.blueprint do
+  field_name    { Faker::Lorem.word }
+  old_value     { Faker::Lorem.word }
+  new_value     { Faker::Lorem.word }
+  audit_log     { AuditLog.make }
+end
 
 User.blueprint(:invited_pending) do
   confirmed_at nil

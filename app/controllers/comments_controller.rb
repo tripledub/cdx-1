@@ -1,13 +1,14 @@
 class CommentsController < ApplicationController
   respond_to :html
-  respond_to :json, only:  [:index]
+  respond_to :json, only: [:index]
 
-  before_filter :find_patient, :check_permissions
+  before_filter :find_patient
+  before_filter :check_permissions, only: [:new, :create]
 
   expose(:comments, scope: -> { @patient.comments })
 
   def index
-    render json: Presenters::Comments.patient_view(comments.joins(:user).order(set_order_from_params))
+    render json: Presenters::Comments.patient_view(comments.joins(:user).order(set_order_from_params).limit(30).offset(params[:page] || 0))
   end
 
   def new
