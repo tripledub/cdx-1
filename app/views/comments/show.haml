@@ -12,7 +12,7 @@
       .panel
         / Start of Row
         .row
-          .col-11
+          .col-6
             .row
               .col-12
                 %label Date:
@@ -23,9 +23,13 @@
                 = comment.user.full_name
             .row
               .col-12
-                %label Description
+                %label Description:
                 = comment.description
             .row
               .col-12
-                %label Comment:
-                = comment.comment
+                = simple_format comment.comment
+          .col-6
+            - if comment.image
+              .row
+                .col-12
+                  = image_tag comment.image.url
