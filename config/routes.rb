@@ -118,6 +118,8 @@ Rails.application.routes.draw do
     resources :patient_test_orders ,  only: [:index]
   end
 
+  resources :patient_search, only: [:index]
+
   resources :ftp_settings, only: [:edit, :update]
 
   resources :alerts, except: [:show]

@@ -8,4 +8,8 @@
               = image_tag "arrow-left-white.png"
             New Patient
 
-= render 'form'
+.row
+  .col.pe-6
+    = render 'form'
+  .col.pe-6
+    = react_component 'PatientNameSearchResults', patientsSearchUrl: patient_search_index_path
