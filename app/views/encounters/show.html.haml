@@ -8,5 +8,5 @@
               = image_tag "arrow-left.png"
             Test Order
 
-= react_component('ChangedEncounterShow', encounter: @encounter_as_json,  requested_tests: @encounter.RequestedTests, requested_by:   @encounter.user !=nil ? @encounter.user.email : '', can_update: @can_update, edit: true, cancel: false, status_types:RequestedTest.statuses)
+= react_component('ChangedEncounterShow', encounter: @encounter_as_json,  requested_tests: @encounter.RequestedTests, requested_by:   @encounter.user !=nil ? @encounter.user.email : '', can_update: @can_update, edit: false, cancel: true, status_types:RequestedTest.statuses)
 

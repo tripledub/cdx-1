@@ -4,6 +4,8 @@ var ChangedEncounterShow = React.createClass({
     if (this.props.encounter["user"] != null) {
       user_email= this.props.encounter["user"].email
     };
+
+		
     return {
       user_email: user_email,
       error_messages:[],
@@ -20,37 +22,36 @@ var ChangedEncounterShow = React.createClass({
     var  urlParam = this.props.encounter.id
     EncounterActions.deleteEncounter(urlParam, '/test_results?display_as=test_order', this.submit_error);
   },
- EncounterUpdateHandler: function() {
-		var urlParam = '/encounter_requested_tests';
-		urlParam = urlParam + '/' + this.props.encounter.id;
-    requested_tests = this.props.requested_tests;
-
-    EncounterRequestTestActions.update(urlParam, requested_tests, '/test_results?display_as=test_order', this.submit_error);
+ EncounterUpdateHandler: function() {	
+		successUrl = '/test_results?display_as=test_order';
+		if (this.props.requested_tests.length>0) {
+		  var urlParam = '/encounter_requested_tests';
+		  urlParam = urlParam + '/' + this.props.encounter.id;
+      requested_tests = this.props.requested_tests;
+      EncounterRequestTestActions.update(urlParam, requested_tests, successUrl, this.submit_error);
+    } else {
+	    window.location.href = successUrl;
+    }
   },
 	onTestChanged: function(new_test) {
-	console.log("gggYYYY");
-//	this.props.onTestChanged(new_test)
-	
-	var len = this.state.requested_tests.length;
-	for (var i=0;i<len; i++) {
-		if (this.state.requested_tests[i].id == new_test.id) {
-			temp_requested_tests = this.state.requested_tests;
-			temp_requested_tests[i] = new_test;
-				this.setState({
-					requested_tests: temp_requested_tests
-				});
-			
-		}
-	}
-	
+	  var len = this.state.requested_tests.length;
+	  for (var i=0;i<len; i++) {
+		  if (this.state.requested_tests[i].id == new_test.id) {
+			  temp_requested_tests = this.state.requested_tests;
+			  temp_requested_tests[i] = new_test;
+			  	this.setState({
+				  	requested_tests: temp_requested_tests
+				  });
+		  }
+	  }
 	},
   render: function() {
     if (this.props.can_update && this.props.cancel) {
-      cancelButton = <EncounterDelete edit={true} onChangeParentLevel={this.EncounterDeleteHandler} />;
+      actionButton = <EncounterDelete edit={true} onChangeParentLevel={this.EncounterDeleteHandler} />;
     } else if (this.props.can_update && this.props.edit) {
-      cancelButton = <EncounterUpdate onChangeParentLevel={this.EncounterUpdateHandler} />;
+      actionButton = <EncounterUpdate onChangeParentLevel={this.EncounterUpdateHandler} />;
    } else {
-      cancelButton = "<div>/<div>";
+      actionButton = "<div>/<div>";
     }
 
     if (this.props.encounter.performing_site == null) {
@@ -61,10 +62,10 @@ var ChangedEncounterShow = React.createClass({
     return (
       <div>
 			 <div className="row">
-          <div className="col pe-2">
-<FlashErrorMessages messages={this.state.error_messages} />
-   </div>
-  </div>
+         <div className="col pe-2">
+           <FlashErrorMessages messages={this.state.error_messages} />
+         </div>
+        </div>
 
         <div className="row">
           <div className="col pe-2">
@@ -158,10 +159,10 @@ var ChangedEncounterShow = React.createClass({
         <br />
         <div className="row">
           <div className="col pe-2">
-            {cancelButton}
+            {actionButton}
           </div>
         </div>
-</div>
+    </div>
       );
     },
 

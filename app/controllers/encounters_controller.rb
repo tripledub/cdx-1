@@ -23,7 +23,7 @@ class EncountersController < ApplicationController
       create_requested_tests
       create_new_samples
       @encounter.user = current_user
-      @blender.save_and_index!
+      @blender.save_and_index!   
       @encounter.updated_diagnostic_timestamp!
     end
   end
@@ -50,7 +50,13 @@ class EncountersController < ApplicationController
   def destroy
     @encounter = Encounter.find(params[:id])  
     return unless authorize_resource(@encounter, DELETE_ENCOUNTER)
-    @encounter.destroy 
+    # note: Cannot delete record because dependent samples exist, so just set delated_at
+    @encounter.update(deleted_at: Time.now)
+    begin
+       Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: @encounter.uuid
+    rescue => ex
+      Rails.logger.error ex.message
+    end
     respond_to do |format|
        format.html { redirect_to encounters_path, notice: 'Encounter was successfully deleted.' }
       format.json { head :no_content }
