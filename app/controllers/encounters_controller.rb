@@ -35,6 +35,16 @@ class EncountersController < ApplicationController
 
   def show
     return unless authorize_resource(@encounter, READ_ENCOUNTER)
+    
+    @show_edit_encounter=false
+    @show_cancel_encounter=false
+ binding.pry   
+    referer = URI(request.referer).path
+    if referer.include? '/patients/' 
+      @show_edit_encounter=true
+      @show_cancel_encounter=false
+      @return_path_encounter=referer
+    end
     @can_update = has_access?(@encounter, UPDATE_ENCOUNTER)
   end
 

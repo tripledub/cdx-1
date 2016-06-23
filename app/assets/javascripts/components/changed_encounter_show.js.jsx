@@ -46,9 +46,9 @@ var ChangedEncounterShow = React.createClass({
 	  }
 	},
   render: function() {
-    if (this.props.can_update && this.props.cancel) {
+    if (this.props.can_update && this.props.show_cancel) {
       actionButton = <EncounterDelete edit={true} onChangeParentLevel={this.EncounterDeleteHandler} />;
-    } else if (this.props.can_update && this.props.edit) {
+    } else if (this.props.can_update && this.props.show_edit) {
       actionButton = <EncounterUpdate onChangeParentLevel={this.EncounterUpdateHandler} />;
    } else {
       actionButton = "<div>/<div>";
@@ -153,7 +153,7 @@ var ChangedEncounterShow = React.createClass({
         </FlexFullRow>
 
         <div className="row">
-          <RequestedTestsIndexTable encounter={this.props.encounter} requested_tests={this.state.requested_tests} requested_by={this.props.requested_by}  status_types={this.props.status_types} edit={this.props.edit} onTestChanged={this.onTestChanged} />        
+          <RequestedTestsIndexTable encounter={this.props.encounter} requested_tests={this.state.requested_tests} requested_by={this.props.requested_by}  status_types={this.props.status_types} edit={this.props.show_edit} onTestChanged={this.onTestChanged} />        
         </div>
 
         <br />
@@ -207,7 +207,7 @@ var EncounterDelete = React.createClass({
       );
     }
     else
-    if (this.props.edit) {
+    if (this.props.show_edit) {
     return (
       <div>
         <a className = "btn-secondary pull-right" onClick={this.clickHandler} id="delete_encounter" href="#">Cancel Test Order</a>
