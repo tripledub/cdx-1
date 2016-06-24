@@ -10,7 +10,7 @@
     .col
       .value= f.object.institution
 
-  = react_component 'PatientInputName', fieldValue: @patient.name
+  = react_component 'PatientInputName', fieldValue: @patient.name, patientsSearchUrl: patient_search_index_path
 
   .row
     .col.pe-2
