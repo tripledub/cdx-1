@@ -29,32 +29,32 @@ var ChangedEncounterShow = React.createClass({
     EncounterActions.deleteEncounter(urlParam, successUrl, this.submit_error);
   },
  EncounterUpdateHandler: function() {	
-	  if (this.props.referer != null) {
-		  successUrl = this.props.referer;
-		} else {
-		  successUrl = '/test_results?display_as=test_order';
-	  }
-	
-		if (this.props.requested_tests.length>0) {
-		  var urlParam = '/encounter_requested_tests';
-		  urlParam = urlParam + '/' + this.props.encounter.id;
+  if (this.props.referer != null) {
+    successUrl = this.props.referer;
+  } else {
+    successUrl = '/test_results?display_as=test_order';
+  }
+
+  if (this.props.requested_tests.length>0) {
+    var urlParam = '/encounter_requested_tests';
+    urlParam = urlParam + '/' + this.props.encounter.id;
       requested_tests = this.props.requested_tests;
       EncounterRequestTestActions.update(urlParam, requested_tests, successUrl, this.submit_error);
     } else {
-	    window.location.href = successUrl;
+      window.location.href = successUrl;
     }
   },
-	onTestChanged: function(new_test) {
-	  var len = this.state.requested_tests.length;
-	  for (var i=0;i<len; i++) {
-		  if (this.state.requested_tests[i].id == new_test.id) {
-			  temp_requested_tests = this.state.requested_tests;
-			  temp_requested_tests[i] = new_test;
-			  	this.setState({
-				  	requested_tests: temp_requested_tests
-				  });
-		  }
-	  }
+  onTestChanged: function(new_test) {
+    var len = this.state.requested_tests.length;
+    for (var i=0;i<len; i++) {
+      if (this.state.requested_tests[i].id == new_test.id) {
+        temp_requested_tests = this.state.requested_tests;
+        temp_requested_tests[i] = new_test;
+        this.setState({
+          requested_tests: temp_requested_tests
+        });
+      }
+     }
 	},
   render: function() {
     if (this.props.can_update && this.props.show_cancel) {

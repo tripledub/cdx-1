@@ -11,7 +11,7 @@ var BaseEncounterForm = {
 
   save: function() {
     var callback = function() {
-	    if (this.props.referer!=null) {
+	    if (this.props.referer != null) {
         window.location.href = this.props.referer;
       } else {
 	      window.location.href = '/encounters/' + this.state.encounter.id;

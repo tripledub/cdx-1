@@ -131,7 +131,7 @@ module ChartsHelper
     return results.sort_by_month if results.number_of_months > 1
     results.sort_by_day
   end
-  
+
   def query_tests_chart_reformat
     results = Reports::AllTests.process(current_user, @navigation_context, options)
     if results.number_of_months > 1

@@ -129,7 +129,6 @@ describe "create encounter" do
 
   it "should be able to create fresh encounter with new patient", testrail: 1193 do
     goto_page NewFreshEncounterPage do |page|
-      # page.site.set site.name
       #NOTE: no site selection is displayed if there is only one site in an institution
       page.new_patient.click
     end
