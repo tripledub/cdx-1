@@ -145,22 +145,20 @@ class EncountersController < ApplicationController
 
   private
 
-def determine_referal
-  @show_edit_encounter=true
-  @show_cancel_encounter=false
-  @return_path_encounter=nil
-
-  if request.referer != nil
-    referer = URI(request.referer).path
-    referer_check = referer =~ /\/patients\/\d/
-    if  referer_check != nil
-    if URI(request.referer).path =~ /\/patients\/\d/
-      @show_edit_encounter=false
-      @show_cancel_encounter=true
-      @return_path_encounter=referer
+  def determine_referal
+    @show_edit_encounter=true
+    @show_cancel_encounter=false
+    @return_path_encounter=nil
+    if request.referer != nil
+      referer = URI(request.referer).path
+      referer_check = referer =~ /\/patients\/\d/
+       if  referer_check != nil
+        @show_edit_encounter=false
+        @show_cancel_encounter=true
+        @return_path_encounter=referer
+      end
     end
   end
-end
 
   def create_requested_tests
     encounter_param = @encounter_param = JSON.parse(params[:encounter])
