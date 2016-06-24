@@ -39,13 +39,8 @@
             = f.label 'Drug Resistance'
           .col-6
             = f.collection_select :drug_resistance, Episode.drug_resistance_options, :id, :name, include_blank: true
-        .row
-          .col-6
-            = f.label 'Treatment Outcome'
-          .col-6
-            = f.collection_select :outcome, Episode.treatment_outcome_options, :id, :name, include_blank: true
+        = react_component 'EpisodeSelectOutcome', outcomeOptions: outcome_options
         .row
           .col-6
             = f.submit
           .col-6
-            
