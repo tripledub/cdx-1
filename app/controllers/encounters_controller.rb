@@ -6,6 +6,8 @@ class EncountersController < ApplicationController
   end
 
   def new
+    determine_referal  
+  
     if params[:patient_id].present?
       @institution = @navigation_context.institution
       @patient_json = Jbuilder.new do |json|
@@ -35,16 +37,7 @@ class EncountersController < ApplicationController
 
   def show
     return unless authorize_resource(@encounter, READ_ENCOUNTER)
-    
-    @show_edit_encounter=false
-    @show_cancel_encounter=false
- binding.pry   
-    referer = URI(request.referer).path
-    if referer.include? '/patients/' 
-      @show_edit_encounter=true
-      @show_cancel_encounter=false
-      @return_path_encounter=referer
-    end
+    determine_referal
     @can_update = has_access?(@encounter, UPDATE_ENCOUNTER)
   end
 
@@ -151,6 +144,23 @@ class EncountersController < ApplicationController
   end
 
   private
+
+def determine_referal
+  @show_edit_encounter=true
+  @show_cancel_encounter=false
+  @return_path_encounter=nil
+
+  if request.referer != nil
+    referer = URI(request.referer).path
+    
+    referer_check = referer =~ /\/patients\/\d/
+    if  referer_check != nil
+      @show_edit_encounter=false
+      @show_cancel_encounter=true
+      @return_path_encounter=referer
+    end
+  end
+end
 
   def create_requested_tests
     encounter_param = @encounter_param = JSON.parse(params[:encounter])

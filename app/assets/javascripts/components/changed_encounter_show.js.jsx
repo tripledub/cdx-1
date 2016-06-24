@@ -18,12 +18,23 @@ var ChangedEncounterShow = React.createClass({
     });
     $('body').scrollTop(0);
   },
-  EncounterDeleteHandler: function() {
+  EncounterDeleteHandler: function() {	
+		 if (this.props.referer != nil) {
+			  successUrl = this.props.referer;
+			} else {
+			successUrl = '/test_results?display_as=test_order';
+		}
+		
     var  urlParam = this.props.encounter.id
-    EncounterActions.deleteEncounter(urlParam, '/test_results?display_as=test_order', this.submit_error);
+    EncounterActions.deleteEncounter(urlParam, successUrl, this.submit_error);
   },
  EncounterUpdateHandler: function() {	
-		successUrl = '/test_results?display_as=test_order';
+	  if (this.props.referer != null) {
+		  successUrl = this.props.referer;
+		} else {
+		  successUrl = '/test_results?display_as=test_order';
+	  }
+	
 		if (this.props.requested_tests.length>0) {
 		  var urlParam = '/encounter_requested_tests';
 		  urlParam = urlParam + '/' + this.props.encounter.id;
@@ -47,11 +58,11 @@ var ChangedEncounterShow = React.createClass({
 	},
   render: function() {
     if (this.props.can_update && this.props.show_cancel) {
-      actionButton = <EncounterDelete edit={true} onChangeParentLevel={this.EncounterDeleteHandler} />;
+      actionButton = <EncounterDelete show_edit={true} onChangeParentLevel={this.EncounterDeleteHandler} />;
     } else if (this.props.can_update && this.props.show_edit) {
       actionButton = <EncounterUpdate onChangeParentLevel={this.EncounterUpdateHandler} />;
    } else {
-      actionButton = "<div>/<div>";
+      actionButton = <ShowNoButton />;
     }
 
     if (this.props.encounter.performing_site == null) {
@@ -180,6 +191,13 @@ var EncounterUpdate = React.createClass({
 	  }
 	});
 	
+var ShowNoButton = React.createClass({
+  render: function() {
+	return(
+	<div></div>
+   );
+  }
+});	
 	
 var EncounterDelete = React.createClass({
   getInitialState: function() {

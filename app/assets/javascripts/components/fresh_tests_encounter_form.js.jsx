@@ -11,6 +11,11 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = now.getFullYear() + "-" + (month) + "-" + (day);
 
+    var cancel_url = "/encounters/new_index";
+    if (this.props.referer != null) {
+	     cancel_url = this.props.referer;
+    }
+
     return (
       <div className="newTestOrder">
       <div className="panel">
@@ -159,7 +164,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
                 <a href="#" id="encountersave" className="button save" onClick={this.save}>Save</a>
               </li>
               <li>
-                <a href="/encounters/new_index" className="button cancel">Cancel</a>
+                <a href={cancel_url} className="button cancel">Cancel</a>
               </li>
             </ul>
           </div>
