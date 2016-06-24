@@ -6,35 +6,46 @@ var PatientSearchStore = Reflux.createStore({
 
   listenables: PatientSearchActions,
 
-  searchPatients: function(patientName) {
-    this.trigger(patientName);
+  searchPatients: function(patientName, searchUrl) {
+    var that    = this;
+    patientName = encodeURIComponent(patientName)
+    $.get(searchUrl + '&q=' + patientName, function (results) {
+      that.trigger(results);
+    });
+
   }
 });
 
-var PatientNameSearchResults = React.createClass({
+var PatientNameSearch = React.createClass({
   mixins: [Reflux.listenTo(PatientSearchStore, "onStatusChange")],
 
   getInitialState: function() {
     return { searchResults: [] };
   },
 
-  onStatusChange: function(patientName) {
-    var that = this;
-    // sanitize patientName
-    console.log(patientName);
-    $.get(this.props.patientsSearchUrl + '&q=' + patientName, function (results) {
-      console.log(results);
-      that.setState({ searchResults: results });
-    });
+  onStatusChange: function(patientResults) {
+    this.setState({ searchResults: patientResults });
   },
 
   render: function(){
+    return (
+      <div>
+        { this.state.searchResults.length > 0 ? <PatientNameSearchResults searchResults={this.state.searchResults} /> : null }
+      </div>
+
+    );
+  }
+});
+
+var PatientNameSearchResults = React.createClass({
+  render: function(){
     var rows = [];
-    this.state.searchResults.forEach(
+    this.props.searchResults.forEach(
       function(searchResult) {
         rows.push(<PatientNameSearchResult patientNameSearchResult={searchResult} key={searchResult.id} />);
       }
     );
+
     return (
       <table className="patient-name-duplicates">
         <caption>Patients with same name.</caption>

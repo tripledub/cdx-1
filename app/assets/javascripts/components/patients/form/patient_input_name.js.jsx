@@ -7,7 +7,7 @@ var PatientInputName = React.createClass({
 
   checkPatientName: function() {
     if ( this.linkState('inputValue').value.length > 3 ) {
-      PatientSearchActions.searchPatients(this.linkState('inputValue').value);
+      PatientSearchActions.searchPatients(this.linkState('inputValue').value, this.props.patientsSearchUrl);
     }
   },
 
