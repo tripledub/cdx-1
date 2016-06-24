@@ -5,7 +5,6 @@ var ChangedEncounterShow = React.createClass({
       user_email= this.props.encounter["user"].email
     };
 
-		
     return {
       user_email: user_email,
       error_messages:[],
@@ -19,21 +18,21 @@ var ChangedEncounterShow = React.createClass({
     $('body').scrollTop(0);
   },
   EncounterDeleteHandler: function() {	
-		 if (this.props.referer != nil) {
-			  successUrl = this.props.referer;
-			} else {
-			successUrl = '/test_results?display_as=test_order';
-		}
-		
+    if (this.props.referer != nil) {
+      successUrl = this.props.referer;
+    } else {
+      successUrl = '/test_results?display_as=test_order';
+    }
+
     var  urlParam = this.props.encounter.id
     EncounterActions.deleteEncounter(urlParam, successUrl, this.submit_error);
   },
  EncounterUpdateHandler: function() {	
-  if (this.props.referer != null) {
-    successUrl = this.props.referer;
-  } else {
-    successUrl = '/test_results?display_as=test_order';
-  }
+   if (this.props.referer != null) {
+     successUrl = this.props.referer;
+   } else {
+     successUrl = '/test_results?display_as=test_order';
+   }
 
   if (this.props.requested_tests.length>0) {
     var urlParam = '/encounter_requested_tests';
@@ -55,7 +54,7 @@ var ChangedEncounterShow = React.createClass({
         });
       }
      }
-	},
+  },
   render: function() {
     if (this.props.can_update && this.props.show_cancel) {
       actionButton = <EncounterDelete show_edit={true} onChangeParentLevel={this.EncounterDeleteHandler} />;
@@ -72,7 +71,7 @@ var ChangedEncounterShow = React.createClass({
     }
     return (
       <div>
-			 <div className="row">
+        <div className="row">
          <div className="col pe-2">
            <FlashErrorMessages messages={this.state.error_messages} />
          </div>
@@ -173,32 +172,31 @@ var ChangedEncounterShow = React.createClass({
             {actionButton}
           </div>
         </div>
-    </div>
+      </div>
       );
     },
-
   });
 
 
 var EncounterUpdate = React.createClass({
-	  clickHandler: function() {
-		    this.props.onChangeParentLevel();
-	  },
-	  render: function() {
-		return(
-		<div><a className = "btn-secondary pull-right" onClick={this.clickHandler} id="update_encounter" href="#">Update Test Order</a></div>
-	   );
-	  }
-	});
-	
+  clickHandler: function() {
+    this.props.onChangeParentLevel();
+   },
+  render: function() {
+    return(
+      <div><a className = "btn-secondary pull-right" onClick={this.clickHandler} id="update_encounter" href="#">Update Test Order</a></div>
+    );
+  }
+});
+
 var ShowNoButton = React.createClass({
   render: function() {
-	return(
-	<div></div>
-   );
-  }
-});	
-	
+    return(
+      <div></div>
+     );
+    }
+});
+
 var EncounterDelete = React.createClass({
   getInitialState: function() {
     return {
@@ -241,26 +239,21 @@ var ConfirmationModalEncounter = React.createClass({
   modalTitle: function() {
     return this.props.title || (this.props.deletion ? "Cancel confirmation" : "Confirmation");
   },
-
   cancelMessage: function() {
    return this.props.cancelMessage || "Cancel";
   },
-
   confirmMessage: function() {
     return this.props.confirmMessage || (this.props.deletion ? "Cancel" : "Confirm");
   },
-
   componentDidMount: function() {
     this.refs.confirmationModal.show();
   },
-
   onCancel: function() {
    this.refs.confirmationModal.hide();
    if (this.props.target instanceof Function ) {
      this.props.cancel_target();	
    }
   },
-
    onConfirm: function() {
      if (this.props.target instanceof Function ) {
        this.props.target();	
@@ -269,19 +262,15 @@ var ConfirmationModalEncounter = React.createClass({
     }
       this.refs.confirmationModal.hide();
     },
-
     message: function() {
       return {__html: this.props.message};
     },
-
     confirmButtonClass: function() {
       return this.props.deletion ? "btn-primary btn-danger" : "btn-primary";
     },
-
     showCancelButton: function() {
       return this.props.hideCancel != true;
     },
-
     render: function() {
       var cancelButton = null;
       if (this.showCancelButton()) {
@@ -300,4 +289,3 @@ var ConfirmationModalEncounter = React.createClass({
       );
     }
  });
-	
