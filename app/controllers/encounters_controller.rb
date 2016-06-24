@@ -152,7 +152,8 @@ def determine_referal
 
   if request.referer != nil
     referer = URI(request.referer).path
-    if  referer =~ /\/patients\/\d/ != nil
+    referer_check = referer =~ /\/patients\/\d/
+    if  referer_check != nil
     if URI(request.referer).path =~ /\/patients\/\d/
       @show_edit_encounter=false
       @show_cancel_encounter=true
