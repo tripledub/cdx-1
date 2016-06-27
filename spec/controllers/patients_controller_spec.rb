@@ -410,6 +410,11 @@ RSpec.describe PatientsController, type: :controller do
       expect(patient.zip_code).to eq("sw11")
     end
 
+    it 'should log the updates' do
+      post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', dob: '1/18/2000', address: "1 street", city: 'london', state: "aa", zip_code: 'sw11' }
+      audit_update = patient.audit_logs.last.audit_updates.first
+    end
+
     it "should assign entity_id if previous is blank" do
       patient = institution.patients.make :phantom
       expect(patient.entity_id).to be_blank

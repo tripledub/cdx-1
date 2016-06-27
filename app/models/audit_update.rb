@@ -3,5 +3,5 @@ class AuditUpdate < ActiveRecord::Base
 
   belongs_to :audit_log
 
-  validates_presence_of :field_name, :old_value, :new_value
+  validates_presence_of :field_name
 end

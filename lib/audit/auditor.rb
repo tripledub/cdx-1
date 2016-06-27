@@ -31,7 +31,7 @@ module Audit
     end
 
     def create_log_update(audit_log, field, values)
-      audit_log.audit_updates.create do |log_update|
+      audit_log.audit_updates.create! do |log_update|
         log_update.field_name = field
         log_update.old_value  = values[0]
         log_update.new_value  = values[1]

@@ -65,7 +65,7 @@ class PatientsController < ApplicationController
   end
 
   def edit
-    patient = Patient.find(params[:id])
+    patient  = Patient.find(params[:id])
     @patient = PatientForm.edit(patient)
     return unless authorize_resource(patient, UPDATE_PATIENT)
 
@@ -73,7 +73,7 @@ class PatientsController < ApplicationController
   end
 
   def update
-    patient = Patient.find(params[:id])
+    patient  = Patient.find(params[:id])
     @patient = PatientForm.edit(patient)
     return unless authorize_resource(patient, UPDATE_PATIENT)
 
