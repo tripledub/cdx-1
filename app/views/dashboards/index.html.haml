@@ -27,91 +27,55 @@
     %section.row
       .small-8.columns.box
         %header
-          %img{:alt => "", :src => "img/test-tube-rack.png"}
-            %h3 Total Tests
+          = image_tag('img/test-tube-rack.png')
+          %h3 Total Tests
         .box-content
           #chartContainer{:style => "height: 200px; width: 100%;"}
       .small-4.columns.box
         %header
-          %img{:alt => "", :src => "img/fail.png"}
-            %h3 Failed Tests
+          = image_tag('img/test-tube.png')
+          %h3 Failed Tests
         .box-content
           #failedchartContainer{:style => "height: 200px; width: 100%;"}
     %section.row
       .small-6.columns.box
         %header
-          %img{:alt => "", :src => "img/site.png"}
-            %h3 Total Tests by Site
+          =image_tag('img/site.png')
+          %h3 Total Tests by Site
         .box-content
           #chartContainer2{:style => "height: 200px; width: 100%;"}
       .col.small-6.columns.box
         %header
-          %img{:alt => "", :src => "img/site.png"}
-            %h3 Average Tests by Site
+          =image_tag('img/site.png')
+          %h3 Average Tests by Site
         .box-content
           #chartContainer3{:style => "height: 200px; width: 100%;"}
     %section.row
       .small-4.columns.box
         %header
-          %img{:alt => "", :src => "img/device.png"}
-            %h3 Total Tests by Device
+          = image_tag('img/device.png')
+          %h3 Total Tests by Device
         .box-content
           #chartContainer4{:style => "height: 200px; width: 100%;"}
+      
       .small-8.columns.box
         %header
-          %img{:alt => "", :src => "img/user.png"}
-            %h3 Average Tests by Technician
+          = image_tag('img/user.png')
+          %h3 Average Tests by Technician
         .box-content
           #chartContainer5{:style => "height: 200px; width: 100%;"}
     %section.row
+      
       .small-12.columns.box
         %header
-          %img{:alt => "", :src => "img/test-tube.png"}
-            %h3 Outstanding Tests
+          = image_tag('img/test-tube.png')
+          %h3 Outstanding Tests
         .box-content
-          %table
-            %thead
-              %th Test Order Number
-              %th
-                Date Ordered
-                %img{:alt => "", :src => "img/filter-arrow.png"}/
-              %th
-                Ordered By
-                %img{:alt => "", :src => "img/filter-arrow.png"}/
-              %th
-                Outstanding Days
-                %img{:alt => "", :src => "img/filter-arrow.png"}/
-            %tbody
-              %tr
-                %td 02468aff-2cdb-af93-d6a9-df78d4fbdd13
-                %td 16-05-2016
-                %td Jane Doe
-                %td 88
-              %tr
-                %td 073b4d77-3f0b-3487-4a44-db3b41bb8c2a
-                %td 14-05-2016
-                %td Cornelia
-                %td 86
-              %tr
-                %td 0acb86c9-9eb7-97a5-1799-d4322bb71d4b
-                %td 01-05-2016
-                %td Harris
-                %td 71
-              %tr
-                %td 0cff0bc4-a10d-55ef-604f-09c14802f40f
-                %td 21-04-2016
-                %td John Doe
-                %td 69
-              %tr
-                %td 152770e8-4f18-16ac-1c0c-35f270f14ac1
-                %td 17-04-2016
-                %td Trintass
-                %td 57
-              %tr
-                %td 25a7b3a9-e6de-c00b-d97e-c0fc7dffe9b0
-                %td 03-04-2016
-                %td Christiana
-                %td 45
+          -if(outstanding_orders)
+            = react_component('OutstandingTestsTable', title: "title", allowSorting: "true", orderBy: "-test_order", data: outstanding_orders)
+          -else
+            No chart information available
+
 %script{:src => "http://canvasjs.com/assets/script/canvasjs.min.js", :type => "text/javascript"}
 :javascript
 
@@ -199,7 +163,7 @@
   data: [
   {        
   type: "doughnut",
-  startAngle: 60,                          
+  startAngle: 60, 
   toolTipContent: "{legendText}: {y} - #percent% ", 					
   showInLegend: true,
   dataPoints: [
@@ -223,10 +187,14 @@
   shared: true
   },			
   axisY: {
-  title: "billion of barrels"
+  title: "billion of barrels",
+  labelFontFamily: "arial",
+  labelFontSize: 10
   },
   axisY2: {
-  title: "million barrels/day"
+  title: "million barrels/day",
+  labelFontFamily: "arial",
+  labelFontSize: 10
   },			
   data: [ 
   {
