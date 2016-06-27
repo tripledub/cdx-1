@@ -85,8 +85,6 @@ describe CommentsController do
             expect(@audit_log.comment).to eq('For whom the bell tolls')
           end
         end
-
-
       end
 
       describe 'comment date' do
@@ -118,6 +116,16 @@ describe CommentsController do
         end
       end
     end
+
+    describe 'show' do
+      let(:comment) { Comment.make patient: patient }
+
+      it 'should render the show template' do
+        get 'show', patient_id: patient.id, id: comment.id
+
+        expect(response).to  render_template('show')
+      end
+    end
   end
 
   context 'user with no edit patient permission' do
@@ -142,6 +150,16 @@ describe CommentsController do
         post :create, patient_id: patient.id, comment: valid_params
 
         expect(response).to redirect_to(patient_path(patient))
+      end
+    end
+
+    describe 'show' do
+      let(:comment) { Comment.make patient: patient }
+
+      it 'should render the show template' do
+        get 'show', patient_id: patient.id, id: comment.id
+
+        expect(response).to_not redirect_to(patient_path(patient))
       end
     end
   end

@@ -40,7 +40,7 @@ class PatientForm
 
   def update(attributes, audit=false, audit_params={})
     attributes.each do |attr, value|
-      self.send("#{attr}=", value)
+      self.public_send("#{attr}=", value)
     end
 
     Audit::Auditor.new(patient, audit_params[:current_user].id).log_changes(audit_params[:title], audit_params[:comment])
@@ -61,17 +61,23 @@ class PatientForm
     return false unless form_valid
 
     # validate/save patient. all done if succeeded
-    if patient.save
-      Audit::Auditor.new(self.patient, audit_params[:current_user].id).log_action(audit_params[:title], audit_params[:comment]) if audit_params.present?
-      return true
-    end
+    if patient.valid?
+      if patient.new_record?
+        patient.save
+        Audit::Auditor.new(patient, audit_params[:current_user].id).log_action(audit_params[:title], audit_params[:comment]) if audit_params.present?
+        true
+      else
+        Audit::Auditor.new(patient, audit_params[:current_user].id).log_changes(audit_params[:title], audit_params[:comment]) if audit_params.present?
+        patient.save
+      end
+    else
+      # copy validations from patient to form (form is valid, but patient is not)
+      patient.errors.each do |key, error|
+        errors.add(key, error) if self.class.shared_attributes.include?(key)
+      end
 
-    # copy validations from patient to form (form is valid, but patient is not)
-    patient.errors.each do |key, error|
-      errors.add(key, error) if self.class.shared_attributes.include?(key)
+      return false
     end
-
-    return false
   end
 
   def save_and_audit(current_user, title, comment='')
@@ -131,7 +137,7 @@ class PatientForm
 
   def self.assign_attributes(target, source)
     shared_attributes.each do |attr|
-      target.send("#{attr}=", source.send(attr))
+      target.public_send("#{attr}=", source.send(attr))
     end
   end
 end
