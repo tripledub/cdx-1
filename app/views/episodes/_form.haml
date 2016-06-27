@@ -11,6 +11,7 @@
             = link_to 'Cancel', patient_path(@patient), class: 'button cancel', title: 'Cancel'
 
     = form_for([@patient, @episode], html: { class: 'zebra' } ) do |f|
+      = f.hidden_field :closed, value: @episode.closed
       .panel
         .row
           .col-6
@@ -39,7 +40,8 @@
             = f.label 'Drug Resistance'
           .col-6
             = f.collection_select :drug_resistance, Episode.drug_resistance_options, :id, :name, include_blank: true
-        = react_component 'EpisodeSelectOutcome', outcomeOptions: outcome_options
+        .row
+        = react_component 'EpisodeSelectOutcome', outcomeOptions: outcome_options, selected: @episode.outcome
         .row
           .col-6
             = f.submit
