@@ -156,7 +156,7 @@ describe CommentsController do
     describe 'show' do
       let(:comment) { Comment.make patient: patient }
 
-      it 'should render the show template' do
+      it 'should not deny access and redirect' do
         get 'show', patient_id: patient.id, id: comment.id
 
         expect(response).to_not redirect_to(patient_path(patient))
