@@ -16,7 +16,7 @@ describe EncounterRequestedTestsController  do
     it "should update requestedTests status" do
       jsondata = 
           {
-            "requestedTests" => {
+            "requested_tests" => {
               "id" => requested_test1.id,
               "status" => "deleted"
             }

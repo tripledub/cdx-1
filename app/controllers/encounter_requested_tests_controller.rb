@@ -8,7 +8,7 @@ class EncounterRequestedTestsController < ApplicationController
     current_test=''
     auth_ok = authorize_resource(encounter, UPDATE_ENCOUNTER)
     if auth_ok
-       requested_tests = params["requestedTests"]
+     requested_tests = params["requested_tests"]
        requested_tests.each do |test|
          current_test = RequestedTest.find(test[1]["id"])
          saved_ok = current_test.update(status: test[1]["status"]) if current_test

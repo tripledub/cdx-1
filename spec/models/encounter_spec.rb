@@ -296,7 +296,7 @@ describe Encounter do
         requested_test2.encounter = encounter
         requested_test1.save!
         requested_test2.save!
-        expect(encounter.RequestedTests.count).to eq(2)
+        expect(encounter.requested_tests.count).to eq(2)
       end
     end
   

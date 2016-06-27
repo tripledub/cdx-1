@@ -163,9 +163,9 @@ class EncountersController < ApplicationController
   def create_requested_tests
     encounter_param = @encounter_param = JSON.parse(params[:encounter])
     tests_requested = encounter_param['tests_requested']
-    if !tests_requested.blank? 
+    if tests_requested.present?
       tests_requested.split('|').each do |name|
-        @encounter.RequestedTests.build(name: name, status: RequestedTest.statuses["pending"]) 
+        @encounter.requested_tests.build(name: name, status: RequestedTest.statuses["pending"]) 
       end
    end 
   end

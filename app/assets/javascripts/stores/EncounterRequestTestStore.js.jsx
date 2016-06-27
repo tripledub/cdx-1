@@ -7,7 +7,7 @@ var EncounterRequestTestStore = Reflux.createStore({
       url: url,
       dataType: 'json',
       type: 'PUT',
-      data: {"requestedTests" : requested_tests},
+      data: {"requested_tests" : requested_tests},
       success: function(data) {
         window.location.href = successUrl;
       }.bind(this),
