@@ -791,3 +791,36 @@ html {
         -ms-flex: 0 0 100%;
             flex: 0 0 100%;
     max-width: 100%; }}
+	
+.dashboard header img{
+height:20px;
+width:auto !important;
+}
+
+.box-content table{
+margin:auto;
+}
+
+
+.dashboard main .row{
+margin-bottom:65px;
+}
+
+.box-content{
+padding:30px;
+background:#fff;
+}
+
+.box-content{
+height:100%;
+   overflow-y: auto;
+}
+
+.box-content .hidden{
+display:none;
+}
+
+.box-content .table_scroll_container{
+    max-height: auto;
+    overflow-y: visible;
+}
