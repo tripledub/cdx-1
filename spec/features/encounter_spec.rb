@@ -18,6 +18,7 @@ describe "create encounter" do
     end
 
     expect_page ShowEncounterPage do |page|
+      expect(page.encounter.status).to eq('pending')
       expect(page.encounter.site).to eq(site)
     end
   end
@@ -119,7 +120,7 @@ describe "create encounter" do
       click_link('encountersave')
       click_link('encountersave')
     end
-    
+
     expect_page ShowEncounterPage do |page|
       expect(page.encounter.patient).to eq(patient)
       expect(page.encounter.samples.count).to eq(2)
@@ -127,7 +128,7 @@ describe "create encounter" do
     end
   end
 
-  xit "should be able to create fresh encounter with new patient", testrail: 1193 do
+  it "should be able to create fresh encounter with new patient", testrail: 1193 do
     goto_page NewFreshEncounterPage do |page|
       #NOTE: no site selection is displayed if there is only one site in an institution
       page.new_patient.click
@@ -143,13 +144,13 @@ describe "create encounter" do
     expect_page NewFreshEncounterPage do |page|
       page.add_sample.click
       page.add_sample.click
-    
+
       page.testing_for.select("TB")
       page.find("#requested_culture").trigger("click")
       page.find("#requested_dst").trigger("click")
       page.find("#requested_lineprobe").trigger("click")
       page.find("#requested_drug_susceptibility").trigger("click")
-      
+
      click_link('encountersave')
      click_link('encountersave')
     end
