@@ -4,7 +4,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     $('.test_for_ebola').attr('checked', false).parent().hide();
     $('.test_for_tb').attr('checked', false).parent().hide();
     $('.test_for_hiv').attr('checked', false).parent().hide();
-
   },
   render: function() {
     var now = new Date();
@@ -12,12 +11,15 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = now.getFullYear() + "-" + (month) + "-" + (day);
 
+    var cancel_url = "/encounters/new_index";
+    if (this.props.referer != null) {
+	     cancel_url = this.props.referer;
+    }
+
     return (
       <div className="newTestOrder">
       <div className="panel">
-
         <PatientSelect patient={this.state.encounter.patient} context={this.props.context} onPatientChanged={this.onPatientChanged}/>
-
         <div className="row">
           <div className="col-6">
             <label>Samples</label>
@@ -69,7 +71,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
           </div>
         </div>
 
-
         <div className="row">
           <div className="col-6">
             <label>Tests Requested</label>
@@ -83,8 +84,11 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
                 <label htmlFor="requested_xpertmtb">Xpert MTB/RIF</label>
               </li>
               <li><input type="checkbox" onChange={this.reqtests_change} name="culture" className="test_for_tb" id="requested_culture"/>
-                <label htmlFor="requested_culture">Culture Drug susceptibility</label>
+                <label htmlFor="requested_culture">Culture</label>
               </li>
+              <li><input type="checkbox" onChange={this.reqtests_change} name="culture" className="test_for_tb" id="requested_drug_susceptibility"/>
+                 <label htmlFor="requested_drug_susceptibility">Drug susceptibility</label>
+               </li>
               <li><input type="checkbox" onChange={this.reqtests_change} name="dst" className="test_for_tb" id="requested_dst"/>
                 <label htmlFor="requested_dst">DST</label>
               </li>
@@ -157,15 +161,14 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
           <div className="col-12">
             <ul>
               <li>
-                <a href="#" className="button save" onClick={this.save}>Save</a>
+                <a href="#" id="encountersave" className="button save" onClick={this.save}>Save</a>
               </li>
               <li>
-                <a href="/encounters/new_index" className="button cancel">Cancel</a>
+                <a href={cancel_url} className="button cancel">Cancel</a>
               </li>
             </ul>
           </div>
         </div>
-
 
         <Modal ref="addNewSamplesModal">
           <h1>
@@ -200,7 +203,8 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     var tests = [];
     tests['microscopy'] = 'Microscopy';
     tests['xpert'] = 'Xpert MTB/RIF';
-    tests['culture'] = 'Culture Drug susceptibility';
+    tests['culture'] = 'Culture';
+    tests['drugsusceptibility'] = 'Culture Drug susceptibility';
     tests['lineprobe'] = 'Line probe assay';
     tests['cd4'] = 'CD4 Count';
     tests['viral'] = 'Viral Load Count';
@@ -238,46 +242,37 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
   },
 
   diag_comment_change: function() {
-    var xx = $('#diag_comment').val();
+    var comment = $('#diag_comment').val();
     this.setState(React.addons.update(this.state, {
       encounter: {
         diag_comment: {
-          $set: xx
+          $set: comment
         }
       }
     }));
-
-    //anthony added
-    //this.state.encounter.diag_comment = xx;
-
   },
 
   treatmentdate_change: function() {
-    var xx = $('#treatment_weeks').val();
+    var treatmentdate = $('#treatment_weeks').val();
     this.setState(React.addons.update(this.state, {
       encounter: {
         treatment_weeks: {
-          $set: xx
+          $set: treatmentdate
         }
       }
     }));
-
-    //anthony added
-    //this.state.encounter.treatment_weeks = xx;
   },
 
   testduedate_change: function() {
-    var xx = $('#testdue_date').val();
+    var testduedate = $('#testdue_date').val();
     this.setState(React.addons.update(this.state, {
       encounter: {
         testdue_date: {
-          $set: xx
+          $set: testduedate
         }
       }
     }));
-
-    //anthony added
-    this.state.encounter.testdue_date = xx;
+    this.state.encounter.testdue_date = testduedate;
   },
 
   testing_for_change: function() {

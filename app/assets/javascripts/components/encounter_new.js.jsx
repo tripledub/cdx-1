@@ -3,7 +3,7 @@ var EncounterNew = React.createClass({
     return {encounter: {
       institution: this.props.context.institution,
       site: null,
-      performingsite: null,
+      performing_site: null,
       patient: this.props.patient,
       samples: [],
       new_samples: [],
@@ -19,12 +19,11 @@ var EncounterNew = React.createClass({
       testdue_date: ''
     }};
   },
-
   setSite: function(site) {
     this.setState(React.addons.update(this.state, {
       encounter: {
         site: { $set: site },
-        performingsite: { $set: site },
+        performing_site: { $set: site },
         patient: { $set: this.props.patient },
         samples: { $set: [] },
         new_samples: { $set: [] },
@@ -41,7 +40,13 @@ var EncounterNew = React.createClass({
       }
     }));
   },
-
+  setPerformingSite: function(site) {  
+    this.setState(React.addons.update(this.state, {
+      encounter: {
+        performing_site: { $set: site },
+      }
+    }));
+  },
   render: function() {
     var sitesUrl = URI("/encounters/sites").query({context: this.props.context.institution.uuid});
     var siteSelect = <SiteSelect onChange={this.setSite} url={sitesUrl} fieldLabel='Requested' defaultSiteUuid={_.get(this.props.context.site, 'uuid')} />;
@@ -59,11 +64,10 @@ var EncounterNew = React.createClass({
           if (this.props.mode == 'existing_tests') {
             return <EncounterForm encounter={this.state.encounter} context={this.props.context} possible_assay_results={this.props.possible_assay_results} manual_sample_entry={this.state.encounter.site.allows_manual_entry} />
           } else {
-            return <FreshTestsEncounterForm encounter={this.state.encounter} context={this.props.context} possible_assay_results={this.props.possible_assay_results} manual_sample_entry={this.state.encounter.site.allows_manual_entry} />
+            return <FreshTestsEncounterForm encounter={this.state.encounter} context={this.props.context} possible_assay_results={this.props.possible_assay_results} manual_sample_entry={this.state.encounter.site.allows_manual_entry} referer={this.props.referer} />                 
           }
         }.bind(this))()}
       </div>
     );
   },
-
 });

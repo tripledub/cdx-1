@@ -9,7 +9,10 @@ class Encounter < ActiveRecord::Base
 
   has_many :samples, dependent: :restrict_with_error
   has_many :test_results, dependent: :restrict_with_error
+  has_many :requested_tests, autosave: true, dependent: :destroy
 
+  belongs_to :performing_site, class_name: 'Site'
+  
   belongs_to :patient
   belongs_to :user
 

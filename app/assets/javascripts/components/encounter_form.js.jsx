@@ -11,7 +11,11 @@ var BaseEncounterForm = {
 
   save: function() {
     var callback = function() {
-      window.location.href = '/encounters/' + this.state.encounter.id;
+	    if (this.props.referer != null) {
+        window.location.href = this.props.referer;
+      } else {
+	      window.location.href = '/encounters/' + this.state.encounter.id;
+	    }
     };
 
     if (this.state.encounter.id) {

@@ -140,7 +140,7 @@ module ChartsHelper
       sorted_data = results.sort_by_day.data
     end
     
-    new_sorted_data = sorted_data.map{|x| {_label: x[:label], Tests: x[:values][0], Errors: x[:values][1]} }
+    new_sorted_data = sorted_data.map{|x| {_label: x[:label], peak: x[:values][0], average: x[:values][1]} }
   end
 
   def tests_by_status

@@ -122,10 +122,12 @@ Manifest.blueprint do
   definition { DefaultManifest.definition }
 end
 
+
 Encounter.blueprint do
   institution { object.patient.try(:institution) || Institution.make }
   user { institution.user }
   site { object.institution.sites.first || object.institution.sites.make }
+  performing_site { object.institution.sites.first || object.institution.sites.make }
   core_fields {
     { "id" => "encounter-#{Sham.sn}" }.tap do |h|
       h["start_time"] = object.start_time if object.start_time
@@ -141,6 +143,13 @@ Episode.blueprint do
   previous_history :relapsed
   outcome :cured
 end
+
+RequestedTest.blueprint do
+  encounter
+  name { "CD4" }
+  status {RequestedTest.statuses["pending"]}
+end
+
 
 def first_or_make_site_unless_manufacturer(institution)
   unless institution.kind_manufacturer?

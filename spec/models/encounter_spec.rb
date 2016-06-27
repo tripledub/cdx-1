@@ -7,7 +7,7 @@ describe Encounter do
 
   it "#human_diagnose" do
     encounter.core_fields[Encounter::ASSAYS_FIELD] = [{"condition" => "flu_a", "name" => "flu_a", "result" => "positive", "quantitative_result" => nil}]
-    encounter.human_diagnose.should eq("FLU_A detected.")
+    expect(encounter.human_diagnose).to eq("FLU_A detected.")
   end
 
   describe "merge assays" do
@@ -285,4 +285,19 @@ describe Encounter do
       end
     end
   end
+  
+  
+   context "add request test" do
+      let(:requested_test1) { RequestedTest.make }
+      let(:requested_test2) { RequestedTest.make }
+   
+      it "should save requested tests" do
+        requested_test1.encounter = encounter
+        requested_test2.encounter = encounter
+        requested_test1.save!
+        requested_test2.save!
+        expect(encounter.requested_tests.count).to eq(2)
+      end
+    end
+  
 end
