@@ -10,11 +10,7 @@
     .col
       .value= f.object.institution
 
-  .row
-    .col.pe-2
-      = f.label :name
-    .col
-      = f.text_field :name, :class => 'input-large'
+  = react_component 'PatientInputName', fieldValue: @patient.name, patientsSearchUrl: patient_search_index_path
 
   .row
     .col.pe-2
@@ -36,7 +32,7 @@
       = f.date_field :dob, value: @patient.dob_placeholder
       -#= f.text_field :dob, placeholder: @patient.dob_placeholder
 
-      
+
 
   = render partial: "shared/address", :locals => { :f => f, model_type: "patient" }
 
