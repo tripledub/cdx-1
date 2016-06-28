@@ -7,7 +7,7 @@
           .topdateto
             %label.block Date To
             = date_field('range','start_time[lte]')
-  
+
           .topdatefrom
             %label.block Date From
             = date_field('range','start_time[gte]')
@@ -18,7 +18,7 @@
                 %label.block Date Period
                 = cdx_select name: 'since', value: params['since'] do |select|
                   - select.items options_for_date, :value, :label
-          
+
               .topbutton
                 %input#query_button.btn-primary(type='submit' value='Filter')
 
@@ -31,6 +31,7 @@
           %h3 Total Tests
         .box-content
           #chartContainer{:style => "height: 200px; width: 100%;"}
+            = react_component 'CanvasJsChart', chartDiv: 'chartContainer', chartData: Extras::Charts::Columns.new(@total_tests_char).render
       .small-4.columns.box
         %header
           = image_tag('img/test-tube.png')
@@ -57,7 +58,7 @@
           %h3 Total Tests by Device
         .box-content
           #chartContainer4{:style => "height: 200px; width: 100%;"}
-      
+
       .small-8.columns.box
         %header
           = image_tag('img/user.png')
@@ -65,7 +66,7 @@
         .box-content
           #chartContainer5{:style => "height: 200px; width: 100%;"}
     %section.row
-      
+
       .small-12.columns.box
         %header
           = image_tag('img/test-tube.png')
@@ -76,196 +77,33 @@
           -else
             No chart information available
 
-%script{:src => "http://canvasjs.com/assets/script/canvasjs.min.js", :type => "text/javascript"}
-:javascript
-
-  var chart = new CanvasJS.Chart("chartContainer",
-  {
-  theme: "theme3",
-  animationEnabled: true,
-  toolTip: {
-  shared: true
-  },			
-  axisY: {
-  title: "number of barrels"
-  },
-  axisY2: {
-  title: "bazillion barrels/day"
-  },			
-  data: [ 
-  {
-  type: "column",	
-  color: "darkgreen",
-  name: "Proven Oil Reserves (bn)",
-  legendText: "Proven Oil Reserves",
-  showInLegend: true, 
-  dataPoints:[
-  {label: "Saudi", y: 262},
-  {label: "Venezuela", y: 211},
-  {label: "Canada", y: 175},
-  {label: "Iran", y: 137},
-  {label: "Iraq", y: 115},
-  {label: "Kuwait", y: 104},
-  {label: "UAE", y: 97.8},
-  {label: "Russia", y: 60},
-  {label: "US", y: 23.3},
-  {label: "China", y: 20.4}
-  
-  
-  ]
-  },
-  {
-  type: "column",	
-  name: "Oil Production (million/day)",
-  legendText: "Oil Production",
-  axisYType: "secondary",
-  color: "#1E97CC",
-  showInLegend: true,
-  dataPoints:[
-  {label: "Saudi", y: 11.15},
-  {label: "Venezuela", y: 2.5},
-  {label: "Canada", y: 3.6},
-  {label: "Iran", y: 4.2},
-  {label: "Iraq", y: 2.6},
-  {label: "Kuwait", y: 2.7},
-  {label: "UAE", y: 3.1},
-  {label: "Russia", y: 10.23},
-  {label: "US", y: 10.3},
-  {label: "China", y: 4.3}
-  
-  
-  ]
-  }
-  
-  ],
-  legend:{
-  cursor:"pointer",
-  fontSize: 10,
-  itemclick: function(e){
-  if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-  e.dataSeries.visible = false;
-  }
-  else {
-  e.dataSeries.visible = true;
-  }
-  chart.render();
-  }
-  },
-  });
-  
-  chart.render();
-  
 :javascript
   setTimeout(function(){
   var chart = new CanvasJS.Chart("failedchartContainer",
   {
-  animationEnabled: true,     
+  animationEnabled: true,
   data: [
-  {        
+  {
   type: "doughnut",
-  startAngle: 60, 
-  toolTipContent: "{legendText}: {y} - #percent% ", 					
+  startAngle: 60,
+  toolTipContent: "{legendText}: {y} - #percent% ",
   showInLegend: true,
   dataPoints: [
   {y: 65899660, color: "#b5e083",indexLabel: "Barack Obama #percent%", legendText: "Barack Obama" },
   {y: 60929152, color: "#069ada",indexLabel: "Mitt Romney #percent%", legendText: "Mitt Romney" },
-  {y: 2175850,  color: "#aaaaaa",indexLabel: "Others #percent%", legendText: "Others" }			
+  {y: 2175850,  color: "#aaaaaa",indexLabel: "Others #percent%", legendText: "Others" }
   ]
   }
   ]
   });
   chart.render();
   },10);
-  
-:javascript
-  setTimeout(function(){
-  var chart = new CanvasJS.Chart("chartContainer",
-  {
-   theme: "theme1",
-  animationEnabled: true,
-  toolTip: {
-  shared: true
-  },			
-  axisY: {
-  title: "billion of barrels",
-  labelFontFamily: "arial",
-  labelFontSize: 10
-  },
-  axisY2: {
-  title: "million barrels/day",
-  labelFontFamily: "arial",
-  labelFontSize: 10
-  },			
-  data: [ 
-  {
-  type: "column",	
-  color: "#9dce65",
-  name: "Proven Oil Reserves (bn)",
-  legendText: "Proven Oil Reserves",
-  showInLegend: true,   
-  color: "#1E97CC",
-  dataPoints:[
-  {label: "Saudi", y: 262},
-  {label: "Venezuela", y: 211},
-  {label: "Canada", y: 175},
-  {label: "Iran", y: 137},
-  {label: "Iraq", y: 115},
-  {label: "Kuwait", y: 104},
-  {label: "UAE", y: 97.8},
-  {label: "Russia", y: 60},
-  {label: "US", y: 23.3},
-  {label: "China", y: 20.4}
-  
-  
-  ]
-  },
-  {
-  type: "column",	
-  color: "#de4843",
-  name: "Oil Production (million/day)",
-  legendText: "Oil Production",
-  axisYType: "secondary",
-  showInLegend: true,
-  color: "#9DCE65",
-  dataPoints:[
-  {label: "Saudi", y: 11.15},
-  {label: "Venezuela", y: 2.5},
-  {label: "Canada", y: 3.6},
-  {label: "Iran", y: 4.2},
-  {label: "Iraq", y: 2.6},
-  {label: "Kuwait", y: 2.7},
-  {label: "UAE", y: 3.1},
-  {label: "Russia", y: 10.23},
-  {label: "US", y: 10.3},
-  {label: "China", y: 4.3}
-  
-  
-  ]
-  }
-  
-  ],
-  legend:{
-  cursor:"pointer",
-  fontSize: 10,
-  itemclick: function(e){
-  if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-  e.dataSeries.visible = false;
-  }
-  else {
-  e.dataSeries.visible = true;
-  }
-  chart.render();
-  }
-  },
-  });
-  
-  chart.render();
-  },10);
-  
+
+
 :javascript
   setTimeout(function(){
   var chart = new CanvasJS.Chart("chartContainer2", {
-  
+
   axisX:{
   interval: 1,
   gridThickness: 0,
@@ -273,22 +111,22 @@
   labelFontStyle: "normal",
   labelFontWeight: "normal",
   labelFontFamily: "Lucida Sans Unicode"
-  
+
   },
   axisY2:{
   interlacedColor: "rgba(1,77,101,.2)",
   gridColor: "rgba(1,77,101,.1)"
-  
+
   },
-  
+
   data: [
-  {     
+  {
   type: "bar",
   name: "companies",
   axisYType: "secondary",
-  color: "#9dce65",				
+  color: "#9dce65",
   dataPoints: [
-  
+
   {y: 5, label: "Sweden"  },
   {y: 6, label: "Taiwan"  },
   {y: 7, label: "Russia"  },
@@ -302,13 +140,13 @@
   {y: 13, label: "Netherlands"  }
   ]
   }
-  
+
   ]
   });
-  
+
   chart.render();
-  },10);  
-  
+  },10);
+
 :javascript
   setTimeout(function(){
   var chart = new CanvasJS.Chart("chartContainer3",
@@ -317,20 +155,20 @@
   animationEnabled: true,
   toolTip: {
   shared: true
-  },			
+  },
   axisY: {
   title: "billion of barrels"
   },
   axisY2: {
   title: "million barrels/day"
-  },			
-  data: [ 
+  },
+  data: [
   {
-  type: "column",	
+  type: "column",
   color: "#9dce65",
   name: "Proven Oil Reserves (bn)",
   legendText: "Proven Oil Reserves",
-  showInLegend: true,   
+  showInLegend: true,
   color: "#1E97CC",
   dataPoints:[
   {label: "Saudi", y: 262},
@@ -343,12 +181,12 @@
   {label: "Russia", y: 60},
   {label: "US", y: 23.3},
   {label: "China", y: 20.4}
-  
-  
+
+
   ]
   },
   {
-  type: "column",	
+  type: "column",
   color: "#de4843",
   name: "Oil Production (million/day)",
   legendText: "Oil Production",
@@ -366,11 +204,11 @@
   {label: "Russia", y: 10.23},
   {label: "US", y: 10.3},
   {label: "China", y: 4.3}
-  
-  
+
+
   ]
   }
-  
+
   ],
   legend:{
   cursor:"pointer",
@@ -386,32 +224,32 @@
   }
   },
   });
-  
+
   chart.render();
   },10);
-  
+
 :javascript
   setTimeout(function(){
   var chart = new CanvasJS.Chart("chartContainer4",
   {
-  animationEnabled: true,     
+  animationEnabled: true,
   data: [
-  {        
+  {
   type: "doughnut",
-  startAngle: 60,                          
-  toolTipContent: "{legendText}: {y} - #percent% ", 					
+  startAngle: 60,
+  toolTipContent: "{legendText}: {y} - #percent% ",
   showInLegend: true,
   dataPoints: [
   {y: 65899660, color: "#b5e083",indexLabel: "Barack Obama #percent%", legendText: "Barack Obama" },
   {y: 60929152, color: "#069ada",indexLabel: "Mitt Romney #percent%", legendText: "Mitt Romney" },
-  {y: 2175850,  color: "#aaaaaa",indexLabel: "Others #percent%", legendText: "Others" }			
+  {y: 2175850,  color: "#aaaaaa",indexLabel: "Others #percent%", legendText: "Others" }
   ]
   }
   ]
   });
   chart.render();
   },10);
-  
+
 :javascript
   setTimeout(function(){
   var chart = new CanvasJS.Chart("chartContainer5",
@@ -420,20 +258,20 @@
   animationEnabled: true,
   toolTip: {
   shared: true
-  },			
+  },
   axisY: {
   title: "billion of barrels"
   },
   axisY2: {
   title: "million barrels/day"
-  },			
-  data: [ 
+  },
+  data: [
   {
-  type: "column",	
+  type: "column",
   color: "#9dce65",
   name: "Proven Oil Reserves (bn)",
   legendText: "Proven Oil Reserves",
-  showInLegend: true,   
+  showInLegend: true,
   color: "#1E97CC",
   dataPoints:[
   {label: "Saudi", y: 262},
@@ -446,12 +284,12 @@
   {label: "Russia", y: 60},
   {label: "US", y: 23.3},
   {label: "China", y: 20.4}
-  
-  
+
+
   ]
   },
   {
-  type: "column",	
+  type: "column",
   color: "#de4843",
   name: "Oil Production (million/day)",
   legendText: "Oil Production",
@@ -469,11 +307,11 @@
   {label: "Russia", y: 10.23},
   {label: "US", y: 10.3},
   {label: "China", y: 4.3}
-  
-  
+
+
   ]
   }
-  
+
   ],
   legend:{
   cursor:"pointer",
@@ -489,6 +327,6 @@
   }
   },
   });
-  
+
   chart.render();
   },10);
