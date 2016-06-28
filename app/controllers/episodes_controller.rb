@@ -41,7 +41,8 @@ class EpisodesController < ApplicationController
       :anatomical_site_diagnosis,
       :initial_history,
       :previous_history,
-      :outcome
+      :outcome,
+      :closed
     )
   end
 

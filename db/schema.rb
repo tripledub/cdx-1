@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623120302) do
+ActiveRecord::Schema.define(version: 20160627132226) do
 
   create_table "alert_condition_results", force: :cascade do |t|
     t.string  "result",   limit: 255
@@ -307,6 +307,7 @@ ActiveRecord::Schema.define(version: 20160623120302) do
     t.string  "initial_history",           limit: 255
     t.string  "previous_history",          limit: 255
     t.string  "uuid",                      limit: 255
+    t.boolean "closed"
   end
 
   add_index "episodes", ["patient_id"], name: "index_episodes_on_patient_id", using: :btree
