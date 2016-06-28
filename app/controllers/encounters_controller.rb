@@ -154,7 +154,7 @@ class EncountersController < ApplicationController
       referer_check = referer =~ /\/patients\/\d/
        if  referer_check != nil
         @show_edit_encounter=false
-        @show_cancel_encounter=true
+        @show_cancel_encounter=true if (@encounter != nil) && (Encounter.statuses[@encounter.status] != Encounter.statuses["inprogress"]) 
         @return_path_encounter=referer
       end
     end

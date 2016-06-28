@@ -5,10 +5,16 @@ var EncounterShow = React.createClass({
       user_email= this.props.encounter["user"].email
     };
 
+    var disable_all_selects=false;
+    if (this.props.show_cancel==true || this.props.show_edit==false) {
+      disable_all_selects=true;
+    }
+
     return {
       user_email: user_email,
       error_messages:[],
-      requested_tests: this.props.requested_tests
+      requested_tests: this.props.requested_tests,
+      disable_all_selects: disable_all_selects
     };
   },
   submit_error: function(errorArray) {
@@ -172,7 +178,8 @@ var EncounterShow = React.createClass({
         </FlexFullRow>
 
         <div className="row">
-          <RequestedTestsIndexTable encounter={this.props.encounter} requested_tests={this.state.requested_tests} requested_by={this.props.requested_by}  status_types={this.props.status_types} edit={this.props.show_edit} onTestChanged={this.onTestChanged} />
+          <RequestedTestsIndexTable encounter={this.props.encounter} requested_tests={this.state.requested_tests} requested_by={this.props.requested_by}  
+            status_types={this.props.status_types} edit={this.props.show_edit} onTestChanged={this.onTestChanged} disable_all_selects={this.state.disable_all_selects} />
         </div>
 
         <br />

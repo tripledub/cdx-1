@@ -49,6 +49,9 @@ var RequestedTestRow = React.createClass({
       <td><select key={this.state.test.id} onChange = {
           this.statusChanged
           }
+          disabled = {
+            this.props.disable_all_selects
+          }
           value={this.state.test.status}>{status_data.map(MakeItem)}</select></td>
     </tr>);
   }
@@ -97,7 +100,8 @@ var RequestedTestsList = React.createClass({
         <tbody>
           {this.props.requested_tests.map(function(requested_test) {
              return <RequestedTestRow key={requested_test.id} requested_test={requested_test} onTestChanged={this.onTestChanged}
-              encounter={this.props.encounter} requested_by={this.props.requested_by}  status_types={this.props.status_types} edit={this.props.edit}/>;
+              encounter={this.props.encounter} requested_by={this.props.requested_by}  status_types={this.props.status_types} 
+              edit={this.props.edit} disable_all_selects={this.props.disable_all_selects}  />;
           }.bind(this))}
         </tbody>
       </table>
@@ -111,6 +115,7 @@ var RequestedTestsIndexTable = React.createClass({
    },
   render: function() {
     return <RequestedTestsList requested_tests={this.props.requested_tests} encounter={this.props.encounter} onTestChanged={this.onTestChanged}
-              title={this.props.title} requested_by={this.props.requested_by} titleClassName="table-title" status_types={this.props.status_types} edit={this.props.edit} />
+              title={this.props.title} requested_by={this.props.requested_by} titleClassName="table-title" status_types={this.props.status_types} 
+              edit={this.props.edit} disable_all_selects={this.props.disable_all_selects} />
   }
 });
