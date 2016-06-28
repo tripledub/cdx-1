@@ -1,7 +1,11 @@
 var CanvasJsChart = React.createClass({
   componentDidMount() {
-    var chart = new CanvasJS.Chart(this.props.chartDiv, this.props.chartData);
-    chart.render();
+    var that = this;
+    setTimeout(function(){
+      var chart = new CanvasJS.Chart(that.props.chartDiv, that.props.chartData);
+      chart.render();
+    }, 10);
+
   },
 
   render: function(){

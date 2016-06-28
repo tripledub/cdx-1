@@ -1,12 +1,13 @@
 class DashboardsController < ApplicationController
   def index;
-  	@institution_name            = @navigation_context.name if @navigation_context.try(:entity)
-    @total_tests_char            = Reports::AllTests.new(current_user, @navigation_context, options).generate_chart
-    @failed_tests_char           = Reports::Failed.new(current_user, @navigation_context, options).generate_chart
-    @query_site_tests_chart      = Reports::Site.new(current_user, @navigation_context, options).generate_chart
-    @outstanding_orders          = Reports::OutstandingOrders.process(current_user, @navigation_context, options).latest_encounter
-    @average_test_per_site_chart = Reports::AverageSiteTests.new(current_user, @navigation_context, options).generate_chart
-    @total_tests_by_device       = Reports::Grouped.new(current_user, @navigation_context, options).by_device
+  	@institution_name             = @navigation_context.name if @navigation_context.try(:entity)
+    @total_tests                  = Reports::AllTests.new(current_user, @navigation_context, options).generate_chart
+    @failed_tests                 = Reports::Failed.new(current_user, @navigation_context, options).generate_chart
+    @query_site_tests             = Reports::Site.new(current_user, @navigation_context, options).generate_chart
+    @outstanding_orders           = Reports::OutstandingOrders.process(current_user, @navigation_context, options).latest_encounter
+    @average_test_per_site        = Reports::AverageSiteTests.new(current_user, @navigation_context, options).generate_chart
+    @total_tests_by_device        = Reports::Grouped.new(current_user, @navigation_context, options).by_device
+    @average_tests_per_technician = Reports::AverageTechnicianTests.new(current_user, @navigation_context, options).generate_chart
   end
 
   def nndd
