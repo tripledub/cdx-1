@@ -22,11 +22,10 @@ module Reports
       else
         sorted_data = results.sort_by_day.data
       end
-
       {
-        title:   @options.fetch(:title, ''),
-        titleY:  @options.fetch(:titleY, ''),
-        titleY2: @options.fetch(:titleY2, ''),
+        title:   '',
+        titleY:  'Number of tests',
+        titleY2: 'Number of errors',
         columns: generate_columns(sorted_data)
       }
     end

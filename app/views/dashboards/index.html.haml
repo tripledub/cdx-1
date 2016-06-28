@@ -31,13 +31,14 @@
           %h3 Total Tests
         .box-content
           #chartContainer{:style => "height: 200px; width: 100%;"}
-            = react_component 'CanvasJsChart', chartDiv: 'chartContainer', chartData: Extras::Charts::Columns.new(@total_tests_char).render
+            = react_component 'CanvasJsChart', chartDiv: 'chartContainer', chartData: Extras::Charts::VerticalColumns.new(@total_tests_char).render
       .small-4.columns.box
         %header
           = image_tag('img/test-tube.png')
           %h3 Failed Tests
         .box-content
-          #failedchartContainer{:style => "height: 200px; width: 100%;"}
+          #failedChartContainer{:style => "height: 200px; width: 100%;"}
+            = react_component 'CanvasJsChart', chartDiv: 'failedChartContainer', chartData: Extras::Charts::Pie.new({}).render
     %section.row
       .small-6.columns.box
         %header
@@ -72,32 +73,10 @@
           = image_tag('img/test-tube.png')
           %h3 Outstanding Tests
         .box-content
-          -if(outstanding_orders)
-            = react_component('OutstandingTestsTable', title: "title", allowSorting: "true", orderBy: "-test_order", data: outstanding_orders)
+          -if(@outstanding_orders)
+            = react_component('OutstandingTestsTable', title: "title", allowSorting: "true", orderBy: "-test_order", data: @outstanding_orders)
           -else
             No chart information available
-
-:javascript
-  setTimeout(function(){
-  var chart = new CanvasJS.Chart("failedchartContainer",
-  {
-  animationEnabled: true,
-  data: [
-  {
-  type: "doughnut",
-  startAngle: 60,
-  toolTipContent: "{legendText}: {y} - #percent% ",
-  showInLegend: true,
-  dataPoints: [
-  {y: 65899660, color: "#b5e083",indexLabel: "Barack Obama #percent%", legendText: "Barack Obama" },
-  {y: 60929152, color: "#069ada",indexLabel: "Mitt Romney #percent%", legendText: "Mitt Romney" },
-  {y: 2175850,  color: "#aaaaaa",indexLabel: "Others #percent%", legendText: "Others" }
-  ]
-  }
-  ]
-  });
-  chart.render();
-  },10);
 
 
 :javascript
