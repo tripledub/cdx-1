@@ -6,6 +6,7 @@ module Reports
     end
 
     def generate_chart
+      process
       {
         title:   '',
         titleY:  'Peak Tests',

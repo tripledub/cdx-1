@@ -57,10 +57,6 @@ module ChartsHelper
     results.sort_by_day
   end
 
-  def devices_grouped
-    Reports::Grouped.by_device(current_user, @navigation_context, options)
-  end
-
   def errors_by_model_chart
     results = Reports::ModelErrors.process(current_user, @navigation_context, options)
     return results.sort_by_month if results.number_of_months > 1
