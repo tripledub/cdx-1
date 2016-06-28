@@ -161,12 +161,4 @@ module ChartsHelper
   def since
     params['since'] ? Date.parse(params['since']) : Date.today - 1.year
   end
-
-  def average_test_per_site_chart
-    Reports::AverageSiteTests.process(
-      current_user,
-      @navigation_context,
-      options
-    ).show
-  end
 end

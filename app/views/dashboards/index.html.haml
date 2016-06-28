@@ -52,7 +52,8 @@
           =image_tag('img/site.png')
           %h3 Average Tests by Site
         .box-content
-          #chartContainer3{:style => "height: 200px; width: 100%;"}
+          #chartAverageTestsSite{:style => "height: 200px; width: 100%;"}
+            = react_component 'CanvasJsChart', chartDiv: 'chartAverageTestsSite', chartData: Extras::Charts::VerticalColumns.new(@average_test_per_site_chart).render
     %section.row
       .small-4.columns.box
         %header
@@ -79,87 +80,6 @@
           -else
             No chart information available
 
-
-:javascript
-  setTimeout(function(){
-  var chart = new CanvasJS.Chart("chartContainer3",
-  {
-  theme: "theme1",
-  animationEnabled: true,
-  toolTip: {
-  shared: true
-  },
-  axisY: {
-  title: "billion of barrels"
-  },
-  axisY2: {
-  title: "million barrels/day"
-  },
-  data: [
-  {
-  type: "column",
-  color: "#9dce65",
-  name: "Proven Oil Reserves (bn)",
-  legendText: "Proven Oil Reserves",
-  showInLegend: true,
-  color: "#1E97CC",
-  dataPoints:[
-  {label: "Saudi", y: 262},
-  {label: "Venezuela", y: 211},
-  {label: "Canada", y: 175},
-  {label: "Iran", y: 137},
-  {label: "Iraq", y: 115},
-  {label: "Kuwait", y: 104},
-  {label: "UAE", y: 97.8},
-  {label: "Russia", y: 60},
-  {label: "US", y: 23.3},
-  {label: "China", y: 20.4}
-
-
-  ]
-  },
-  {
-  type: "column",
-  color: "#de4843",
-  name: "Oil Production (million/day)",
-  legendText: "Oil Production",
-  axisYType: "secondary",
-  showInLegend: true,
-  color: "#9DCE65",
-  dataPoints:[
-  {label: "Saudi", y: 11.15},
-  {label: "Venezuela", y: 2.5},
-  {label: "Canada", y: 3.6},
-  {label: "Iran", y: 4.2},
-  {label: "Iraq", y: 2.6},
-  {label: "Kuwait", y: 2.7},
-  {label: "UAE", y: 3.1},
-  {label: "Russia", y: 10.23},
-  {label: "US", y: 10.3},
-  {label: "China", y: 4.3}
-
-
-  ]
-  }
-
-  ],
-  legend:{
-  cursor:"pointer",
-  fontSize: 10,
-  itemclick: function(e){
-  if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-  e.dataSeries.visible = false;
-  }
-  else {
-  e.dataSeries.visible = true;
-  }
-  chart.render();
-  }
-  },
-  });
-
-  chart.render();
-  },10);
 
 :javascript
   setTimeout(function(){
