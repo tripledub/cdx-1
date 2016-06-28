@@ -1,4 +1,4 @@
-class Extras::Charts::Columns
+class Extras::Charts::VerticalColumns
   def initialize(options)
     @title   = options.fetch(:title, '')
     @titleY  = options.fetch(:titleY, '')

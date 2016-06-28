@@ -66,8 +66,7 @@ module ChartsHelper
   end
 
   def outstanding_orders
-    data = Reports::OutstandingOrders.process(current_user, @navigation_context, options)
-    data.latest_encounter
+
   end
 
   def errors_by_device_chart
@@ -134,10 +133,6 @@ module ChartsHelper
     Reports::Grouped.by_failed(current_user, @navigation_context, options)
   end
 
-  def failed_tests
-    Reports::Failed.process(current_user, @navigation_context, options).data
-  end
-
   def days_since
     end_date.jd - start_date.jd
   end
@@ -152,14 +147,6 @@ module ChartsHelper
 
   def end_date
     params['range']['start_time']['lte'].present? ? Date.parse(params['range']['start_time']['lte']) : Date.today
-  end
-
-  def options
-    params.delete('range') if params['range'] && params['range']['start_time']['lte'].empty?
-    params.delete('range') if params['range'] && params['range']['start_time']['gte'].empty?
-    return { 'date_range' => params['range'] } if params['range']
-    return { 'since' => params['since'] } if params['since']
-    {}
   end
 
   def options_for_date
