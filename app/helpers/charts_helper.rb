@@ -42,15 +42,6 @@ module ChartsHelper
     data.get_device_location_details
   end
 
-  def average_tests_per_technician_chart
-    data = Reports::AverageTechnicianTests.process(current_user, @navigation_context, options)
-    data.average_tests
-  end
-
-  def outstanding_orders
-
-  end
-
   def errors_by_device_chart
     results = Reports::DeviceErrors.process(current_user, @navigation_context, options)
     return results.sort_by_month if results.number_of_months > 1

@@ -31,14 +31,14 @@
           %h3 Total Tests
         .box-content
           #chartContainer{:style => "height: 200px; width: 100%;"}
-            = react_component 'CanvasJsChart', chartDiv: 'chartContainer', chartData: Extras::Charts::VerticalColumns.new(@total_tests_char).render
+            = react_component 'CanvasJsChart', chartDiv: 'chartContainer', chartData: Extras::Charts::VerticalColumns.new(@total_tests).render
       .small-4.columns.box
         %header
           = image_tag('img/test-tube.png')
           %h3 Failed Tests
         .box-content
           #failedChartContainer{:style => "height: 200px; width: 100%;"}
-            = react_component 'CanvasJsChart', chartDiv: 'failedChartContainer', chartData: Extras::Charts::Pie.new(@failed_tests_char).render
+            = react_component 'CanvasJsChart', chartDiv: 'failedChartContainer', chartData: Extras::Charts::Pie.new(@failed_tests).render
     %section.row
       .small-6.columns.box
         %header
@@ -53,7 +53,7 @@
           %h3 Average Tests by Site
         .box-content
           #chartAverageTestsSite{:style => "height: 200px; width: 100%;"}
-            = react_component 'CanvasJsChart', chartDiv: 'chartAverageTestsSite', chartData: Extras::Charts::VerticalColumns.new(@average_test_per_site_chart).render
+            = react_component 'CanvasJsChart', chartDiv: 'chartAverageTestsSite', chartData: Extras::Charts::VerticalColumns.new(@average_test_per_site).render
     %section.row
       .small-4.columns.box
         %header
@@ -68,7 +68,8 @@
           = image_tag('img/user.png')
           %h3 Average Tests by Technician
         .box-content
-          #chartContainer5{:style => "height: 200px; width: 100%;"}
+          #chartAverageTestsTechnician{:style => "height: 200px; width: 100%;"}
+            = react_component 'CanvasJsChart', chartDiv: 'chartAverageTestsTechnician', chartData: Extras::Charts::VerticalColumns.new(@average_tests_per_technician).render
 
     %section.row
       .small-12.columns.box
@@ -80,7 +81,3 @@
             = react_component('OutstandingTestsTable', title: "title", allowSorting: "true", orderBy: "-test_order", data: @outstanding_orders)
           -else
             No chart information available
-
-
-
-  -# setTimeout(function(){},10);
