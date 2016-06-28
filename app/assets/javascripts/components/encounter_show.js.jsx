@@ -41,7 +41,7 @@ var EncounterShow = React.createClass({
    }
 
   if (this.props.requested_tests.length>0) {
-    var urlParam = '/encounter_requested_tests';
+    var urlParam = '/requested_tests';
     urlParam = urlParam + '/' + this.props.encounter.id;
       requested_tests = this.props.requested_tests;
       EncounterRequestTestActions.update(urlParam, requested_tests, successUrl, this.submit_error);
@@ -178,8 +178,7 @@ var EncounterShow = React.createClass({
         </FlexFullRow>
 
         <div className="row">
-          <RequestedTestsIndexTable encounter={this.props.encounter} requested_tests={this.state.requested_tests} requested_by={this.props.requested_by}  
-            status_types={this.props.status_types} edit={this.props.show_edit} onTestChanged={this.onTestChanged} disable_all_selects={this.state.disable_all_selects} />
+          <RequestedTestsIndexTable encounter={this.props.encounter} requested_tests={this.state.requested_tests} requested_by={this.props.requested_by}  status_types={this.props.status_types} edit={this.props.show_edit} onTestChanged={this.onTestChanged} />
         </div>
 
         <br />
