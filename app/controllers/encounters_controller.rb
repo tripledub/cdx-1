@@ -367,6 +367,7 @@ class EncountersController < ApplicationController
       json.(@encounter, :diag_comment)
       json.(@encounter, :treatment_weeks)
       json.(@encounter, :testdue_date)
+      json.(@encounter, :status)
       json.has_dirty_diagnostic @encounter.has_dirty_diagnostic?
       json.assays (@encounter_blender.core_fields[Encounter::ASSAYS_FIELD] || [])
       json.observations @encounter_blender.plain_sensitive_data[Encounter::OBSERVATIONS_FIELD]

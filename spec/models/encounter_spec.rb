@@ -144,6 +144,10 @@ describe Encounter do
 
   context "field validations" do
 
+    it "should default status to pending" do
+      expect(encounter.status).to eq('pending')
+    end
+    
     it "should allow observations pii field" do
       encounter.plain_sensitive_data[Encounter::OBSERVATIONS_FIELD] = "Observations"
       expect(encounter).to be_valid

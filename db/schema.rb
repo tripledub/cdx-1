@@ -290,6 +290,7 @@ ActiveRecord::Schema.define(version: 20160627164314) do
     t.date     "testdue_date"
     t.integer  "treatment_weeks",    limit: 4
     t.integer  "performing_site_id", limit: 4
+    t.integer  "status",             limit: 4,     default: 0
   end
 
   add_index "encounters", ["deleted_at"], name: "index_encounters_on_deleted_at", using: :btree
@@ -307,6 +308,7 @@ ActiveRecord::Schema.define(version: 20160627164314) do
     t.string  "initial_history",           limit: 255
     t.string  "previous_history",          limit: 255
     t.string  "uuid",                      limit: 255
+    t.boolean "closed"
   end
 
   add_index "episodes", ["patient_id"], name: "index_episodes_on_patient_id", using: :btree
