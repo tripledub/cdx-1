@@ -38,14 +38,15 @@
           %h3 Failed Tests
         .box-content
           #failedChartContainer{:style => "height: 200px; width: 100%;"}
-            = react_component 'CanvasJsChart', chartDiv: 'failedChartContainer', chartData: Extras::Charts::Pie.new({}).render
+            = react_component 'CanvasJsChart', chartDiv: 'failedChartContainer', chartData: Extras::Charts::Pie.new(@failed_tests_char).render
     %section.row
       .small-6.columns.box
         %header
           =image_tag('img/site.png')
           %h3 Total Tests by Site
         .box-content
-          #chartContainer2{:style => "height: 200px; width: 100%;"}
+          #chartTotalTestsSite{:style => "height: 200px; width: 100%;"}
+            = react_component 'CanvasJsChart', chartDiv: 'chartTotalTestsSite', chartData: Extras::Charts::HorizontalColumns.new({}).render
       .col.small-6.columns.box
         %header
           =image_tag('img/site.png')
@@ -78,53 +79,6 @@
           -else
             No chart information available
 
-
-:javascript
-  setTimeout(function(){
-  var chart = new CanvasJS.Chart("chartContainer2", {
-
-  axisX:{
-  interval: 1,
-  gridThickness: 0,
-  labelFontSize: 10,
-  labelFontStyle: "normal",
-  labelFontWeight: "normal",
-  labelFontFamily: "Lucida Sans Unicode"
-
-  },
-  axisY2:{
-  interlacedColor: "rgba(1,77,101,.2)",
-  gridColor: "rgba(1,77,101,.1)"
-
-  },
-
-  data: [
-  {
-  type: "bar",
-  name: "companies",
-  axisYType: "secondary",
-  color: "#9dce65",
-  dataPoints: [
-
-  {y: 5, label: "Sweden"  },
-  {y: 6, label: "Taiwan"  },
-  {y: 7, label: "Russia"  },
-  {y: 8, label: "Spain"  },
-  {y: 8, label: "Brazil"  },
-  {y: 8, label: "India"  },
-  {y: 9, label: "Italy"  },
-  {y: 9, label: "Australia"  },
-  {y: 12, label: "Canada"  },
-  {y: 13, label: "South Korea"  },
-  {y: 13, label: "Netherlands"  }
-  ]
-  }
-
-  ]
-  });
-
-  chart.render();
-  },10);
 
 :javascript
   setTimeout(function(){
