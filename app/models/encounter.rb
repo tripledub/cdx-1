@@ -13,6 +13,8 @@ class Encounter < ActiveRecord::Base
 
   belongs_to :performing_site, class_name: 'Site'
   
+  enum status: [:pending, :inprogress, :complete]
+  
   belongs_to :patient
   belongs_to :user
 
