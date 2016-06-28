@@ -1,7 +1,5 @@
 class PatientResult < ActiveRecord::Base
-  belongs_to :patient
-  belongs_to :encounter
+  include AutoUUID
 
-  validate :validate_encounter
-  validate :validate_patient
+  belongs_to :requested_test, :polymorphic => true
 end

@@ -17,7 +17,7 @@ var ChangedEncounterShow = React.createClass({
     });
     $('body').scrollTop(0);
   },
-  EncounterDeleteHandler: function() {	
+  EncounterDeleteHandler: function() {
     if (this.props.referer != nil) {
       successUrl = this.props.referer;
     } else {
@@ -27,7 +27,7 @@ var ChangedEncounterShow = React.createClass({
     var  urlParam = this.props.encounter.id
     EncounterActions.deleteEncounter(urlParam, successUrl, this.submit_error);
   },
- EncounterUpdateHandler: function() {	
+ EncounterUpdateHandler: function() {
    if (this.props.referer != null) {
      successUrl = this.props.referer;
    } else {
@@ -35,7 +35,7 @@ var ChangedEncounterShow = React.createClass({
    }
 
   if (this.props.requested_tests.length>0) {
-    var urlParam = '/encounter_requested_tests';
+    var urlParam = '/requested_tests';
     urlParam = urlParam + '/' + this.props.encounter.id;
       requested_tests = this.props.requested_tests;
       EncounterRequestTestActions.update(urlParam, requested_tests, successUrl, this.submit_error);
@@ -79,7 +79,7 @@ var ChangedEncounterShow = React.createClass({
 
         <div className="row">
           <div className="col pe-2">
-          <label>Requested Site:</label> 
+          <label>Requested Site:</label>
           </div>
           <div className="col">
             <p>{this.props.encounter.site.name}</p>
@@ -88,7 +88,7 @@ var ChangedEncounterShow = React.createClass({
 
         <div className="row">
           <div className="col pe-2">
-          <label>Performing Site:</label> 
+          <label>Performing Site:</label>
           </div>
           <div className="col">
             <p>{performing_site}</p>
@@ -163,7 +163,7 @@ var ChangedEncounterShow = React.createClass({
         </FlexFullRow>
 
         <div className="row">
-          <RequestedTestsIndexTable encounter={this.props.encounter} requested_tests={this.state.requested_tests} requested_by={this.props.requested_by}  status_types={this.props.status_types} edit={this.props.show_edit} onTestChanged={this.onTestChanged} />        
+          <RequestedTestsIndexTable encounter={this.props.encounter} requested_tests={this.state.requested_tests} requested_by={this.props.requested_by}  status_types={this.props.status_types} edit={this.props.show_edit} onTestChanged={this.onTestChanged} />
         </div>
 
         <br />
@@ -251,12 +251,12 @@ var ConfirmationModalEncounter = React.createClass({
   onCancel: function() {
    this.refs.confirmationModal.hide();
    if (this.props.target instanceof Function ) {
-     this.props.cancel_target();	
+     this.props.cancel_target();
    }
   },
    onConfirm: function() {
      if (this.props.target instanceof Function ) {
-       this.props.target();	
+       this.props.target();
      } else {
       window[this.props.target]();
     }

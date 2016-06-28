@@ -1,5 +1,4 @@
 class TestResult < PatientResult
-  include AutoUUID
   include Entity
   include Resource
   include SiteContained
@@ -11,12 +10,13 @@ class TestResult < PatientResult
   END_TIME_FIELD   = 'end_time'
   STATUS_FIELD     = 'status'
 
-  has_and_belongs_to_many :device_messages, through: :device_messages_test_results
-  has_many :test_result_parsed_data
-
+  belongs_to :patient
+  belongs_to :encounter
   belongs_to :device, -> { with_deleted }
   belongs_to :sample_identifier, inverse_of: :test_results, autosave: true
 
+  has_and_belongs_to_many :device_messages, through: :device_messages_test_results
+  has_many :test_result_parsed_data
   has_many :alert_histories
 
   validates_presence_of :device
