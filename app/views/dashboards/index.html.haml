@@ -31,14 +31,14 @@
           %h3 Total Tests
         .box-content
           #chartContainer{:style => "height: 200px; width: 100%;"}
-            = react_component 'CanvasJsChart', chartDiv: 'chartContainer', chartData: Extras::Charts::VerticalColumns.new(@total_tests).render
+            = react_component 'CanvasJsChart', chartDiv: 'chartContainer', chartData: Extras::Charts::VerticalColumns.new(@dashboard_report.total_tests).render
       .small-4.columns.box
         %header
           = image_tag('img/test-tube.png')
           %h3 Failed Tests
         .box-content
           #failedChartContainer{:style => "height: 200px; width: 100%;"}
-            = react_component 'CanvasJsChart', chartDiv: 'failedChartContainer', chartData: Extras::Charts::Pie.new(@failed_tests).render
+            = react_component 'CanvasJsChart', chartDiv: 'failedChartContainer', chartData: Extras::Charts::Pie.new(@dashboard_report.failed_tests).render
     %section.row
       .small-6.columns.box
         %header
@@ -46,14 +46,14 @@
           %h3 Total Tests by Site
         .box-content
           #chartTotalTestsSite{:style => "height: 200px; width: 100%;"}
-            = react_component 'CanvasJsChart', chartDiv: 'chartTotalTestsSite', chartData: Extras::Charts::HorizontalColumns.new({}).render
+            = react_component 'CanvasJsChart', chartDiv: 'chartTotalTestsSite', chartData: Extras::Charts::HorizontalColumns.new(@dashboard_report.query_site_tests).render
       .col.small-6.columns.box
         %header
           =image_tag('img/site.png')
           %h3 Average Tests by Site
         .box-content
           #chartAverageTestsSite{:style => "height: 200px; width: 100%;"}
-            = react_component 'CanvasJsChart', chartDiv: 'chartAverageTestsSite', chartData: Extras::Charts::VerticalColumns.new(@average_test_per_site).render
+            = react_component 'CanvasJsChart', chartDiv: 'chartAverageTestsSite', chartData: Extras::Charts::VerticalColumns.new(@dashboard_report.average_test_per_site).render
     %section.row
       .small-4.columns.box
         %header
@@ -61,7 +61,7 @@
           %h3 Total Tests by Device
         .box-content
           #chartTotalTestsDevice{:style => "height: 200px; width: 100%;"}
-            = react_component 'CanvasJsChart', chartDiv: 'chartTotalTestsDevice', chartData: Extras::Charts::Pie.new(@total_tests_by_device).render
+            = react_component 'CanvasJsChart', chartDiv: 'chartTotalTestsDevice', chartData: Extras::Charts::Pie.new(@dashboard_report.total_tests_by_device).render
 
       .small-8.columns.box
         %header
@@ -69,7 +69,7 @@
           %h3 Average Tests by Technician
         .box-content
           #chartAverageTestsTechnician{:style => "height: 200px; width: 100%;"}
-            = react_component 'CanvasJsChart', chartDiv: 'chartAverageTestsTechnician', chartData: Extras::Charts::VerticalColumns.new(@average_tests_per_technician).render
+            = react_component 'CanvasJsChart', chartDiv: 'chartAverageTestsTechnician', chartData: Extras::Charts::VerticalColumns.new(@dashboard_report.average_tests_per_technician).render
 
     %section.row
       .small-12.columns.box
@@ -77,7 +77,7 @@
           = image_tag('img/test-tube.png')
           %h3 Outstanding Tests
         .box-content
-          -if(@outstanding_orders)
-            = react_component('OutstandingTestsTable', title: "title", allowSorting: "true", orderBy: "-test_order", data: @outstanding_orders)
+          -if(@dashboard_report.outstanding_orders)
+            = react_component('OutstandingTestsTable', title: "title", allowSorting: "true", orderBy: "-test_order", data: @dashboard_report.outstanding_orders)
           -else
             No chart information available
