@@ -38,10 +38,10 @@ en:
 
   date:
     input_format:
-      pattern: "%m/%d/%Y"
-      placeholder: MM/DD/YYYY
+      pattern: "%d/%m/%Y"
+      placeholder: DD/MM/YYYY
     formats:
-      default: "%m/%d/%Y"
+      default: "%Y/%m/%d"
 
 # es:
 #   date:

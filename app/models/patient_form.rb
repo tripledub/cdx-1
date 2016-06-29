@@ -99,15 +99,11 @@ class PatientForm
   # PatientForm#dob= will accept either String or Time. The String will be converted if possible to a Time using the user locale
   validate :dob_is_a_date
 
-  def date_format
-    { pattern: I18n.t('date.input_format.pattern'), placeholder: I18n.t('date.input_format.placeholder') }
-  end
-
   def dob
     value = @dob
 
     if value.is_a?(Time)
-      return value.strftime(date_format[:pattern])
+      return value.strftime(I18n.t('date.input_format.pattern'))
     end
 
     value
@@ -117,14 +113,14 @@ class PatientForm
     value = nil if value.blank?
 
     @dob = if value.is_a?(String)
-      Time.strptime(value, date_format[:pattern]) rescue value
+      Time.strptime(value, I18n.t('date.formats.default')) rescue value
     else
       value
     end
   end
 
   def dob_placeholder
-    date_format[:placeholder]
+    I18n.t('date.input_format.placeholder')
   end
 
   def dob_is_a_date

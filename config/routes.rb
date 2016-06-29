@@ -106,6 +106,7 @@ Rails.application.routes.draw do
 
   resources :requested_tests , only: [:update] do
     resource :xpert_result, only: [:new, :create, :show]
+    resource :microscopy_result, only: [:new, :create, :show]
   end
 
   resources :test_results , only: [:index, :show]
