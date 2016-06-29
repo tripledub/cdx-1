@@ -18,12 +18,38 @@
           %col{:width => "25%"}
         - t.thead do
           %tr
-            %th Name
-            %th Description
-            %th Enabled
-            %th Sites
-            %th Roles
-            %th Last Incident
+            %th
+              %div.tooltip 
+                Name
+                %div.tooltiptext_r 
+                  This is the Name of the Alert.
+            %th
+              %div.tooltip
+                Description
+                %div.tooltiptext_r 
+                  A meaningful Description about
+                  %br
+                  What the Alert entails.
+            %th
+              %div.tooltip
+                Enabled
+                %div.tooltiptext_r 
+                  Is this Alert Enabled?
+            %th
+              %div.tooltip
+                Sites
+                %div.tooltiptext_r 
+                  Which Site(s) this Alert will trigger for.
+            %th
+              %div.tooltip
+                Roles
+                %div.tooltiptext_r 
+                  Something about Roles.
+            %th
+              %div.tooltip
+                Last Incident
+                %div.tooltiptext_b 
+                  When the Last Incident was reported.
 
         - t.tbody do
           - @alerts.each do |alert|

@@ -242,7 +242,9 @@ var AlertCategorySelect = React.createClass({
 
 							<div className="row">
 								<div className="col pe-3">
-									<label>Categories</label>
+									<label className="tooltip">Categories
+										<div className="tooltiptext_r">These are the categories for the Alerts.</div> 
+									</label>
 								</div>
 								<div className="col" >
 									<input type="radio" name="category_type" value={category_keys[0]}

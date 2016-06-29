@@ -8,21 +8,30 @@
 
   .row
     .col.pe-2
-      = f.label :name
+      %div.tooltip
+        = f.label :name
+        %div.tooltiptext_r 
+          Role Name
     .col
       = f.text_field :name
 
   - if @accessible_institutions != 1
     .row
       .col.pe-2
-        = f.label :institution_id
+        %div.tooltip
+          = f.label :institution_id
+          %div.tooltiptext_r 
+            Which Institution this Role applies to.
       .col
         .value= @institution
 
   - if @role.new_record?
     .row
       .col.pe-2
-        = f.label :site_id
+        %div.tooltip
+          = f.label :site_id
+          %div.tooltiptext_r 
+            Which Site within the Institution this Role Applies to.
       .col
         = cdx_select form: f, name: :site_id, class: 'input-x-large' do |select|
           - select.item "", "Choose one"
@@ -39,7 +48,10 @@
   %br
   .row
     .col
-      %h1 Policies
+      %div.tooltip
+        %h1 Policies
+        %div.tooltiptext_r 
+          Policies grant users permisions over specific resources
       %p.text-small.muted
         %i Policies grant users permisions over specific resources
   = react_component 'PolicyDefinition', definition: @role.definition, actions: actions_per_resource_type, context: params['context'], resources: @policy_definition_resources, resourceTypes: resource_types

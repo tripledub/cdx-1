@@ -28,7 +28,9 @@ var AlertAggregation = React.createClass({
 		return (
 			< div className = "row" id = "aggregationTypeRow" >
 			<div className = "col pe-3" >
-				<label>Aggregation Type</label>
+				<label className="tooltip">Aggregation Type
+					<div className="tooltiptext_r">Aggregation Type Tooltip.</div> 
+				</label>
 			</div>
 			<div className = "col" >
 				<Select
@@ -86,7 +88,9 @@ var AlertAggregationFrequency = React.createClass({
 		return (
 			< div className = "row" id = "aggregationFrequenciesRow" >
 			<div className = "col pe-3" >
-				<label>Aggregation Frequency</label>
+				<label className="tooltip">Aggregation Frequency
+					<div className="tooltiptext_r">Aggregation Frequency Tooltip.</div> 
+				</label>
 			</div>
 			<div className = "col" >
 				<Select
@@ -120,7 +124,9 @@ var AlertAggregationThreshold = React.createClass({
 		return (
 			< div className = "row" id = "aggregationThresholdRow" >
 			<div className = "col pe-3" >
-				<label>Aggregation Threshold</label>
+				<label className="tooltip">Aggregation Threshold
+					<div className="tooltiptext_r">Aggregation Threshold Tooltip.</div> 
+				</label>
 			</div>
 
 			<div className = "col" >
