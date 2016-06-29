@@ -10,7 +10,7 @@ class XpertResultsController < PatientResultsController
     @xpert_result           = @requested_test.build_xpert_result(xpert_result_params)
 
     if @requested_test.xpert_result.save
-      redirect_to encounter_path(@requested_test.encounter), notice: 'Result was successfully created.'
+      redirect_to encounter_path(@requested_test.encounter), notice: 'Xpert MTB/RIF result was successfully created.'
     else
       render action: 'new'
     end
