@@ -41,9 +41,11 @@ var AlertDelete = React.createClass({
 var AlertEnabled = React.createClass({
 	render: function() {
 		return (
-			< div className = "row">
+			<div className = "row">
 			<div className = "col pe-3">
-				<label>Enabled</label>
+				<label className="tooltip">Enabled
+					<div className="tooltiptext_r">Is this Alert Enabled?</div> 
+				</label>
 			</div>
 			<div className = "col">
 				<input
@@ -64,9 +66,11 @@ var AlertEnabled = React.createClass({
 var AlertName = React.createClass({
 	render: function() {
 		return (
-			< div className = "row" id = "namerow" >
+			<div className = "row" id = "namerow" >
 			<div className = "col pe-3" >
-				<label>Name</label>
+				<label className="tooltip">Name
+					<div className="tooltiptext_r">Descriptive Name for this Alert</div> 
+				</label>
 			</div>
 
 			<div className = "col" >
@@ -83,9 +87,11 @@ var AlertName = React.createClass({
 var AlertDescription = React.createClass({
 	render: function() {
 		return (
-			< div className = "row" >
+			<div className = "row" >
 			<div className = "col pe-3" >
-				<label>Description</label>
+				<label className="tooltip">Description
+					<div className="tooltiptext_r">Short description of the purpose of this Alert</div> 
+				</label>
 			</div>
 			<div className = "col pe-4" >
 				<input type = "text" size="34" placeholder = "Description" valueLink = {
@@ -102,9 +108,11 @@ var AlertDescription = React.createClass({
 var AlertErrorCode = React.createClass({
 	render: function() {
 		return (
-			< div className = "row" id="errorCodeRow">
+			<div className = "row" id="errorCodeRow">
 			<div className = "col pe-3">
-				<label>Errors</label>
+				<label className="tooltip">Errors
+					<div className="tooltiptext_r">Range of Error Codes</div> 
+				</label>
 			</div>
 
 			<div className = "col" >
@@ -154,7 +162,9 @@ var AlertSite = React.createClass({
 		return (
 			< div className = "row">
 			<div className = "col pe-3">
-				<label>Sites</label>
+				<label className="tooltip">Sites
+					<div className="tooltiptext_r">Sites using this Alert.</div> 
+				</label>
 			</div>
 			<div className = "col">
 				<Select
@@ -217,7 +227,9 @@ var AlertDevice = React.createClass({
 		return (
 			<div className = "row" >
 				<div className = "col pe-3" >
-					<label>Devices</label>
+					<label className="tooltip">Devices
+					<div className="tooltiptext_r">Which Device provides this Alert.</div> 
+				</label>
 				</div>
 				<div className = "col" >
 					<Select
@@ -276,7 +288,9 @@ var AlertAnomalieType = React.createClass({
 		return (
 			< div className = "row" id = "anomalieRow">
 			<div className = "col pe-3" >
-				<label>Anomalie Type</label>
+				<label className="tooltip">Anomalie Type
+					<div className="tooltiptext_r">Anomalie Type Tooltip</div> 
+				</label>
 			</div>
 			<div className = "col">
 				<Select
@@ -335,7 +349,9 @@ var AlertChannel = React.createClass({
 		return (
 			< div className = "row" id = "channelrow" >
 			<div className = "col pe-3" >
-				<label>Channel</label>
+				<label className="tooltip">Channel
+					<div className="tooltiptext_r">How the Alert is delivered</div> 
+				</label>
 			</div>
 			<div className = "col pe-2" >
 				<Select
@@ -399,7 +415,9 @@ var AlertRole = React.createClass({
 		return (
 			< div className = "row" >
 			<div className = "col pe-3" >
-				<label>Roles</label>
+				<label className="tooltip">Roles
+					<div className="tooltiptext_r">Roles this Alert applies to</div> 
+				</label>
 			</div>
 			<div className = "col" >
 				<Select
@@ -462,7 +480,9 @@ var AlertUser = React.createClass({
 		return (
 			<div className = "row">
 				<div className = "col pe-3">
-					<label>Internal Recipient</label>
+					<label className="tooltip">Internal Recipient
+						<div className="tooltiptext_r">Internal Recipient Tooltip</div> 
+					</label>
 				</div>
 				<div className = "col">
 					<Select
@@ -521,7 +541,9 @@ var AlertSampleId = React.createClass({
 		return (
 			< div className = "row" id = "sampleidrow" >
 			<div className = "col pe-3" >
-				<label>Sample Id</label>
+				<label className="tooltip">Sample Id
+					<div className="tooltiptext_r">ID of the Sample that produced this Alert</div> 
+				</label>
 			</div>
 
 			<div className = "col" >
@@ -542,7 +564,9 @@ var AlertSmsLimit = React.createClass({
 		return (
 			< div className = "row" id = "smslimitrow" >
 			<div className = "col pe-3" >
-				<label>Daily SMS Limit</label>
+				<label className="tooltip">Daily SMS Limit
+					<div className="tooltiptext_r">Maximum number of SMS messages per day this alert can send</div> 
+				</label>
 			</div>
 
 			<div className = "col" >
@@ -562,7 +586,9 @@ var AlertEmailLimit = React.createClass({
 		return (
 			< div className = "row" id = "emaillimitrow" >
 			<div className = "col pe-3" >
-				<label>Daily Email Limit</label>
+				<label className="tooltip">Daily Email Limit
+					<div className="tooltiptext_r">Maximum number of Email messages per day this alert can send</div> 
+				</label>
 			</div>
 
 			<div className = "col" >
@@ -582,7 +608,9 @@ var AlertEmailMessage = React.createClass({
 		return (
 			<div className = "row" id = "messagerow">
 				<div className = "col pe-3">
-					<label>Email Message</label>
+					<label className="tooltip">Email Message
+						<div className="tooltiptext_r">Email Content used when sending Alert</div> 
+					</label>
 				</div>
 
 				<div className = "col pe-4" >
@@ -602,7 +630,9 @@ var AlertSmsMessage = React.createClass({
 		return (
 			<div className = "row" id = "smsmessagerow" >
 				<div className = "col pe-3" >
-					<label>SMS Message</label>
+					<label className="tooltip">SMS Message
+						<div className="tooltiptext_r">SMS Content used when sending Alert</div> 
+					</label>
 				</div>
 
 				<div className = "col pe-2" >

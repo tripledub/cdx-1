@@ -44,10 +44,10 @@ var AlertExternalUser = React.createClass({
 		render: function() {
 			return (
 				<div>
-					< div className = "row" id = "newuserrow" >
+					<div className = "row" id = "newuserrow" >
 					<div className = "col pe-3" >
-						<label>
-							Ad-hoc Recipient
+						<label className="tooltip">Ad-hoc Recipient
+							<div className="tooltiptext_r">Ad-hoc Recipient Tooltip.</div> 
 						</label>
 					</div>
 
@@ -153,7 +153,7 @@ var ExternalUser = React.createClass({
 	},
 	render: function() {
 		return (
-			< div className = "row" id = "namerow">
+			<div className = "row" id = "namerow">
 			<div className = "col pe-3">
 				&nbsp;
 			</div>

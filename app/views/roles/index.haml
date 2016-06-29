@@ -9,9 +9,22 @@
         %col{:width => "10%"}
       - t.thead do
         %tr
-          %th Name
-          %th Location
-          %th Users
+          %th
+            %div.tooltip 
+              Name
+              %div.tooltiptext_r 
+                This is the Name of the Role.
+          %th
+            %div.tooltip 
+              Location
+              %div.tooltiptext_r 
+                This is the Site the Role applies to.
+          %th
+            %div.tooltip 
+              Users
+              %div.tooltiptext_b 
+                Number of Users who have this Role.
+
       - t.tbody do
         - @roles.each do |role|
           %tr{data: {href: edit_role_path(role)}}

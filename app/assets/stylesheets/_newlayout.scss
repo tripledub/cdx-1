@@ -55,27 +55,114 @@ top:0px;
 z-index:99999;
 }
 
+/*----------- Tooltips -------------*/
+.tooltip 
+{
+  outline:none; 
+}
 
+.tooltip strong 
+{
+  line-height:30px;
+}
 
-.chromeimage{
-width:40px;
-float:left;
-border-top:1px solid #ddd;
-padding-top:12px;
+.tooltip:hover 
+{
+  text-decoration:none;
+}
+
+/* General Styling */    
+.tooltip .tooltiptext_r, 
+.tooltip .tooltiptext_b 
+{
+  border-radius:5px;
+  box-shadow: 5px 5px 8px #CCC;
+  opacity: 0.9;
+
+  z-index:10;
+  display:none; 
+  padding:14px 20px;
+
+  width:300px; 
+  line-height:16px;
+  text-transform:none;
+}
+
+/* Tooltip positioning */
+.tooltip .tooltiptext_b 
+{
+  margin-top:20px; 
+  margin-left:-160px;
+}
+
+.tooltip .tooltiptext_r 
+{
+  margin-top:-20px; 
+  margin-left:28px;
+}
+
+/* Callout Arrows */
+.tooltip .tooltiptext_b:after 
+{
+  content: '';
+  position: absolute;
+  width: 0; height: 0;
+
+  bottom: 100%;
+  left: 50%;
+  margin-left: -8px;
+  border-bottom: 8px solid #ffffff;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+
+.tooltip .tooltiptext_r:after 
+{
+  content: '';
+  position: absolute;
+  width: 0; height: 0;
+
+  top: 50%;
+  right: 100%;
+  margin-top: -8px;
+  border-right: 8px solid #ffffff;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
+
+/* On Hover actions */
+.tooltip:hover .tooltiptext_r, 
+.tooltip:hover .tooltiptext_b 
+{
+  display:inline; 
+  position:absolute; 
+  color:#222222;
+  background:#ffffff;
 }
 
 
-.chrometest{
-float:left;
-margin-top:px;
-border-top:1px solid #ddd;
-padding-top:10px;
+.chromeimage
+{
+  width:40px;
+  float:left;
+  border-top:1px solid #ddd;
+  padding-top:12px;
 }
 
-.chrometest p{
-margin:0px;
-font-size:12px;
-color:#777
+
+.chrometest
+{
+  float:left;
+  margin-top:px;
+  border-top:1px solid #ddd;
+  padding-top:10px;
+}
+
+.chrometest p
+{
+  margin:0px;
+  font-size:12px;
+  color:#777
 }
 
 .show-navigation-context-picker #context_side_bar > div {
