@@ -11,6 +11,6 @@
   .container
     = render partial: 'patient_summary', locals: { patient: @patient }
 
-    = render partial: 'patient_episode_summary', locals: { encounters: @encounters }
+    = render partial: 'patient_episode_summary', locals: { episodes: @episodes, patient: @patient }
 
-    = render partial: 'patient_history', locals: { patient: @patient, can_add_test_orders: !@encounters.empty? }
+    = render partial: 'patient_history', locals: { patient: @patient, can_add_test_orders: !@episodes.empty? }
