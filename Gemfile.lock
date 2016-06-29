@@ -352,7 +352,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.99.1)
     mimemagic (0.3.0)
-    mini_portile2 (2.0.0)
+    mini_portile2 (2.1.0)
     minitest (5.8.4)
     multi_json (1.11.2)
     multi_test (0.1.2)
@@ -367,8 +367,9 @@ GEM
     net-ssh (2.9.2)
     netrc (0.10.3)
     newrelic_rpm (3.14.0.305)
-    nokogiri (1.6.7.2)
-      mini_portile2 (~> 2.0.0.rc2)
+    nokogiri (1.6.8)
+      mini_portile2 (~> 2.1.0)
+      pkg-config (~> 1.1.7)
     notiffany (0.0.7)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -401,6 +402,7 @@ GEM
       mimemagic (= 0.3.0)
     paranoia (2.1.4)
       activerecord (~> 4.0)
+    pkg-config (1.1.7)
     poltergeist (1.7.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -672,7 +674,7 @@ DEPENDENCIES
   machinist (~> 1.0)
   mysql2
   newrelic_rpm
-  nokogiri (~> 1.6.7.2)
+  nokogiri (~> 1.6)
   nuntium_api (~> 0.21)
   oj
   omniauth
