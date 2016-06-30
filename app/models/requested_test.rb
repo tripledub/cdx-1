@@ -4,5 +4,5 @@ class RequestedTest < ActiveRecord::Base
   acts_as_paranoid
   
   validates_presence_of :name
-  enum status: [:pending, :inprogress, :rejected, :deleted]
+  enum status: [:pending, :inprogress, :complete, :rejected, :deleted]
 end

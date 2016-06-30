@@ -160,6 +160,7 @@ describe "create encounter" do
       expect(page.encounter.patient.entity_id).to eq("1001")
       expect(page.encounter.samples.count).to eq(2)
       expect(page.encounter.requested_tests.count).to eq(4)
+      expect(page).to have_link("Update Test Order")
       expect(page.encounter.test_results.count).to eq(0)
     end
   end

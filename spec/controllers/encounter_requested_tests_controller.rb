@@ -22,9 +22,59 @@ describe EncounterRequestedTestsController  do
             }
           }
           
-      post :update,  id: encounter.id, requestedTests: jsondata
+      post :update,  id: encounter.id, requested_tests: jsondata
       test = RequestedTest.find(requested_test1.id)   
       expect(RequestedTest.statuses[test.status]).to eq RequestedTest.statuses["deleted"]
+      expect(Encounter.statuses[encounter.status]).to eq Encounter.statuses["pending"]
     end
+    
+    it "should update encounter status to completed ehen test status is complete" do
+      jsondata = 
+          {
+            "requested_tests" => {
+              "id" => requested_test1.id,
+              "status" => "complete"
+            }
+          }
+          
+      post :update,  id: encounter.id, requested_tests: jsondata
+      test = RequestedTest.find(requested_test1.id)   
+      updated_encounter = Encounter.find(encounter.id) 
+      expect(RequestedTest.statuses[test.status]).to eq RequestedTest.statuses["complete"]
+      expect(Encounter.statuses[updated_encounter.status]).to eq Encounter.statuses["complete"]
+    end
+    
+    it "should update encounter status to completed when test status is rejected" do
+      jsondata = 
+          {
+            "requested_tests" => {
+              "id" => requested_test1.id,
+              "status" => "rejected"
+            }
+          }
+          
+      post :update,  id: encounter.id, requested_tests: jsondata
+      test = RequestedTest.find(requested_test1.id)   
+      updated_encounter = Encounter.find(encounter.id) 
+      expect(RequestedTest.statuses[test.status]).to eq RequestedTest.statuses["rejected"]
+      expect(Encounter.statuses[updated_encounter.status]).to eq Encounter.statuses["complete"]
+    end
+    
+    it "should update encounter status to inprogress when test status is inprogress" do
+      jsondata = 
+          {
+            "requested_tests" => {
+              "id" => requested_test1.id,
+              "status" => "inprogress"
+            }
+          }
+          
+      post :update,  id: encounter.id, requested_tests: jsondata
+      test = RequestedTest.find(requested_test1.id)   
+      updated_encounter = Encounter.find(encounter.id) 
+      expect(RequestedTest.statuses[test.status]).to eq RequestedTest.statuses["inprogress"]
+      expect(Encounter.statuses[updated_encounter.status]).to eq Encounter.statuses["inprogress"]
+    end
+    
   end
 end
