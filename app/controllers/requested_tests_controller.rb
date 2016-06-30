@@ -1,4 +1,4 @@
-class EncounterRequestedTestsController < ApplicationController
+class RequestedTestsController < ApplicationController
 
   def update
     error_text=Hash.new

@@ -38,7 +38,7 @@ var TextInputModal = React.createClass({
         <h1>Test Comment</h1>
         <a className = "btn-link" href = "#" onClick={this.handleSave}>{this.state.button_text}</a><br />
         <textarea rows="10" cols="50" placeholder="Add Comment" value={this.state.new_comment} onChange={this.handleChange}
-         id = "testcomment" disabled={this.props.edit} />
+         id = "testcomment" disabled={!this.props.edit} />
       </Modal>
     </div>);
   }

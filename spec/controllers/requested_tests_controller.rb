@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'policy_spec_helper'
 
-describe EncounterRequestedTestsController  do
+describe RequestedTestsController  do
   let!(:institution) {Institution.make}
   let!(:user)        {institution.user}
   let!(:site)  { institution.sites.make }
