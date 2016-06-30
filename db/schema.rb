@@ -449,14 +449,21 @@ ActiveRecord::Schema.define(version: 20160627164314) do
     t.string   "specimen_type",        limit: 255
     t.string   "serial_number",        limit: 255
     t.string   "appearance",           limit: 255
-    t.string   "results_h",            limit: 255
-    t.string   "results_r",            limit: 255
-    t.string   "results_e",            limit: 255
-    t.string   "results_s",            limit: 255
-    t.string   "results_amk",          limit: 255
-    t.string   "results_km",           limit: 255
-    t.string   "results_cm",           limit: 255
-    t.string   "results_fq",           limit: 255
+    t.boolean  "results_negative",                   default: false
+    t.boolean  "results_1to9",                       default: false
+    t.boolean  "results_1plus",                      default: false
+    t.boolean  "results_2plus",                      default: false
+    t.boolean  "results_3plus",                      default: false
+    t.boolean  "results_ntm",                        default: false
+    t.boolean  "results_contaminated",               default: false
+    t.boolean  "results_h",                          default: false
+    t.boolean  "results_r",                          default: false
+    t.boolean  "results_e",                          default: false
+    t.boolean  "results_s",                          default: false
+    t.boolean  "results_amk",                        default: false
+    t.boolean  "results_km",                         default: false
+    t.boolean  "results_cm",                         default: false
+    t.boolean  "results_fq",                         default: false
     t.string   "examined_by",          limit: 255
     t.string   "tuberculosis",         limit: 255
     t.string   "rifampicin",           limit: 255
@@ -465,13 +472,6 @@ ActiveRecord::Schema.define(version: 20160627164314) do
     t.string   "results_other2",       limit: 255
     t.string   "results_other3",       limit: 255
     t.string   "results_other4",       limit: 255
-    t.boolean  "results_negative",                   default: false
-    t.boolean  "results_1to9",                       default: false
-    t.boolean  "results_1plus",                      default: false
-    t.boolean  "results_2plus",                      default: false
-    t.boolean  "results_3plus",                      default: false
-    t.boolean  "results_ntm",                        default: false
-    t.boolean  "results_contaminated",               default: false
   end
 
   add_index "patient_results", ["deleted_at"], name: "index_patient_results_on_deleted_at", using: :btree
