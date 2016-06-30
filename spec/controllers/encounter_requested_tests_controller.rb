@@ -18,14 +18,16 @@ describe EncounterRequestedTestsController  do
           {
             "requested_tests" => {
               "id" => requested_test1.id,
-              "status" => "deleted"
+              "status" => "deleted",
+              "comment" => "comment xyz"
             }
           }
-          
+   
       post :update,  id: encounter.id, requested_tests: jsondata
       test = RequestedTest.find(requested_test1.id)   
       expect(RequestedTest.statuses[test.status]).to eq RequestedTest.statuses["deleted"]
       expect(Encounter.statuses[encounter.status]).to eq Encounter.statuses["pending"]
+      expect(test.comment).to eq 'comment xyz'
     end
     
     it "should update encounter status to completed ehen test status is complete" do

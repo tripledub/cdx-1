@@ -13,7 +13,7 @@ class EncounterRequestedTestsController < ApplicationController
 
        requested_tests.each do |test|
          current_test = RequestedTest.find(test[1]["id"])
-         saved_ok = current_test.update(status: test[1]["status"]) if current_test
+         saved_ok = current_test.update(status: test[1]["status"], comment: test[1]["comment"]) if current_test
          
          if saved_ok==false
            error_text = current_test.errors.messages
