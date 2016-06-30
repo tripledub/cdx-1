@@ -162,6 +162,7 @@ describe "create encounter" do
       expect(page.encounter.requested_tests.count).to eq(4)
       expect(page).to have_link("Update Test Order")
       expect(page.encounter.test_results.count).to eq(0)
+      expect(page).to have_css('.icon-pencil', count: 4)
     end
   end
 
