@@ -3,7 +3,7 @@ module EpisodesHelper
     opts = Episode.treatment_outcome_options.inject([]) do |arr, obj|
       arr << obj.marshal_dump
     end
-    opts.unshift id: '', name: I18n.t('select')
+    opts.unshift id: '', name: I18n.t('select.default')
   end
 
   def diagnosis_name(diagnosis)
