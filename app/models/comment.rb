@@ -11,13 +11,13 @@ class Comment < ActiveRecord::Base
 
   validates_attachment :image, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
 
-  before_save :add_default_date
+  before_validation :add_default_date
 
   protected
 
   def add_default_date
     return if commented_on.present?
 
-    commented_on = Date.today
+    self.commented_on = Date.today
   end
 end
