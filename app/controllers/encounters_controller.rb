@@ -154,7 +154,7 @@ class EncountersController < ApplicationController
       referer_check = referer =~ /\/patients\/\d/
        if  referer_check != nil
         @show_edit_encounter=false
-        @show_cancel_encounter=true
+        @show_cancel_encounter=true if (@encounter != nil) && (Encounter.statuses[@encounter.status] != Encounter.statuses["inprogress"]) 
         @return_path_encounter=referer
       end
     end
@@ -366,8 +366,8 @@ class EncountersController < ApplicationController
       json.(@encounter, :coll_sample_other)
       json.(@encounter, :diag_comment)
       json.(@encounter, :treatment_weeks)
+      json.(@encounter, :status)  
       json.(@encounter, :testdue_date)
-      json.(@encounter, :status)
       json.has_dirty_diagnostic @encounter.has_dirty_diagnostic?
       json.assays (@encounter_blender.core_fields[Encounter::ASSAYS_FIELD] || [])
       json.observations @encounter_blender.plain_sensitive_data[Encounter::OBSERVATIONS_FIELD]
