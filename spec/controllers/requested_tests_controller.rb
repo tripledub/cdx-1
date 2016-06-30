@@ -35,15 +35,15 @@ describe RequestedTestsController  do
           {
             "requested_tests" => {
               "id" => requested_test1.id,
-              "status" => "complete"
+              "status" => "completed"
             }
           }
           
       post :update,  id: encounter.id, requested_tests: jsondata
       test = RequestedTest.find(requested_test1.id)   
       updated_encounter = Encounter.find(encounter.id) 
-      expect(RequestedTest.statuses[test.status]).to eq RequestedTest.statuses["complete"]
-      expect(Encounter.statuses[updated_encounter.status]).to eq Encounter.statuses["complete"]
+      expect(RequestedTest.statuses[test.status]).to eq RequestedTest.statuses["completed"]
+      expect(Encounter.statuses[updated_encounter.status]).to eq Encounter.statuses["completed"]
     end
     
     it "should update encounter status to completed when test status is rejected" do
@@ -59,7 +59,7 @@ describe RequestedTestsController  do
       test = RequestedTest.find(requested_test1.id)   
       updated_encounter = Encounter.find(encounter.id) 
       expect(RequestedTest.statuses[test.status]).to eq RequestedTest.statuses["rejected"]
-      expect(Encounter.statuses[updated_encounter.status]).to eq Encounter.statuses["complete"]
+      expect(Encounter.statuses[updated_encounter.status]).to eq Encounter.statuses["completed"]
     end
     
     it "should update encounter status to inprogress when test status is inprogress" do

@@ -17,7 +17,7 @@ class RequestedTestsController < ApplicationController
          
          if saved_ok==false
            error_text = current_test.errors.messages
-         elsif (RequestedTest.statuses[test[1]["status"]] == RequestedTest.statuses["complete"]) || 
+         elsif (RequestedTest.statuses[test[1]["status"]] == RequestedTest.statuses["completed"]) || 
                (RequestedTest.statuses[test[1]["status"]] == RequestedTest.statuses["rejected"])
            count_all_tests_complete_rejected += 1
            set_status_in_progress = true
@@ -27,7 +27,7 @@ class RequestedTestsController < ApplicationController
        end
       
        if (requested_tests.size > 0) && (requested_tests.size == count_all_tests_complete_rejected)
-         encounter.update!(status: Encounter.statuses["complete"])
+         encounter.update!(status: Encounter.statuses["completed"])
        elsif set_status_in_progress==true
          encounter.update!(status: Encounter.statuses["inprogress"])
        end
