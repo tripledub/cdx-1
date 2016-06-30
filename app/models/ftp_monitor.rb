@@ -42,7 +42,11 @@ class FtpMonitor
       Rails.logger.info("Listed files from #{ftp_info.hostname}: #{files.join(', ')}")
       # Remove files already seen
       files -= already_reviewed_files
-
+      # Return if there are no more files
+      if files.length <= 0
+        Rails.logger.info("No files to process from #{ftp_info.hostname}")
+        return nil
+      end
       # Download all files
       downloaded = download_files(files)
       unless downloaded.present?
