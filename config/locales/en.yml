@@ -43,6 +43,8 @@ en:
     formats:
       default: "%Y/%m/%d"
 
+  select:
+    default: Please Select
 # es:
 #   date:
 #     input_format:

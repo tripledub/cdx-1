@@ -1,8 +1,9 @@
 module EpisodesHelper
   def outcome_options
-    Episode.treatment_outcome_options.inject([]) do |arr, obj|
+    opts = Episode.treatment_outcome_options.inject([]) do |arr, obj|
       arr << obj.marshal_dump
     end
+    opts.unshift id: '', name: I18n.t('select')
   end
 
   def diagnosis_name(diagnosis)
