@@ -99,7 +99,7 @@ describe CommentsController do
 
         context 'if a date is provided' do
           it 'should be saved' do
-            post :create, patient_id: patient.id, comment: valid_params.merge!({ commented_on: '11/26/2016' })
+            post :create, patient_id: patient.id, comment: valid_params.merge!({ commented_on: '2016/11/26' })
 
             comment = patient.comments.where(description: 'New valid comment').first
 
