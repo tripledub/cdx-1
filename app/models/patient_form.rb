@@ -113,7 +113,7 @@ class PatientForm
     value = nil if value.blank?
 
     @dob = if value.is_a?(String)
-      Extras::Dates::Format.string_to_pattern(value, input_format_pattern=I18n.t('date.formats.default'))
+      Date.strptime(value, I18n.t('date.formats.default')) rescue value
     else
       value
     end

@@ -302,7 +302,7 @@ RSpec.describe PatientsController, type: :controller do
 
     it "should validate dob if present" do
       expect {
-        post :create, patient: build_patient_form_plan(dob: '14/14/2000')
+        post :create, patient: build_patient_form_plan(dob: '2000/14/14')
       }.to change(institution.patients, :count).by(0)
 
       expect(assigns(:patient).errors).to have_key(:dob)
