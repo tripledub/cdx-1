@@ -21,8 +21,8 @@ describe Presenters::PatientTestOrders do
         id:          patient.encounters.first.uuid,
         siteName:    patient.encounters.first.site.name,
         requester:   patient.encounters.first.user.full_name,
-        requestDate: I18n.l(Time.parse(patient.encounters.first.start_time), format: :short),
-        dueDate:     I18n.l(patient.encounters.first.testdue_date, format: :short),
+        requestDate: I18n.l(Time.parse(patient.encounters.first.start_time), format: :long),
+        dueDate:     I18n.l(patient.encounters.first.testdue_date, format: :long),
         status:      patient.encounters.first.core_fields['status'],
         viewLink:    Rails.application.routes.url_helpers.encounter_path(patient.encounters.first)
       })
