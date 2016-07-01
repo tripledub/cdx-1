@@ -29,14 +29,18 @@ en:
           has_many: "Cannot delete record because dependent %{record} exist"
     attributes:
       manifest:
-        definition: Manifest
+        definition: 'Manifest'
       site:
-        parent: Parent site
+        parent: 'Parent site'
       patient:
-        dob: Birthday
-        entity_id: Patient id
+        dob: 'Birthday'
+        entity_id: 'Patient id'
       comment:
-        commented_on: Date
+        created_at: 'Date'
+        description: 'Description'
+        comment: 'Observations'
+        user_id: 'Commented by'
+        image: 'Attached image'
       dst_lpa_result:
         sample_collected_on: 'Date sample collected'
         media_used: 'Method'
