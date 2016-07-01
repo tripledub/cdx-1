@@ -1,4 +1,5 @@
 module EpisodesHelper
+
   def outcome_options
     opts = Episode.treatment_outcome_options.inject([]) do |arr, obj|
       arr << obj.marshal_dump
