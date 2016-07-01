@@ -4,6 +4,7 @@ class CultureResultsController < PatientResultsController
     @culture_result                     = @requested_test.build_culture_result
     @culture_result.sample_collected_on = Date.today
     @culture_result.result_on           = Date.today
+    @culture_result.serial_number       = @requested_test.encounter.samples.map(&:entity_ids).join(', ')
   end
 
   def create

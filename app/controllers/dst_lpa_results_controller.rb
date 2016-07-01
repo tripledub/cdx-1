@@ -4,6 +4,7 @@ class DstLpaResultsController < PatientResultsController
     @dst_lpa_result                     = @requested_test.build_dst_lpa_result
     @dst_lpa_result.sample_collected_on = Date.today
     @dst_lpa_result.result_on           = Date.today
+    @dst_lpa_result.serial_number       = @requested_test.encounter.samples.map(&:entity_ids).join(', ')
   end
 
   def create
