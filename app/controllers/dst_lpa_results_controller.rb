@@ -9,7 +9,7 @@ class DstLpaResultsController < PatientResultsController
   def create
     @dst_lpa_result = @requested_test.build_dst_lpa_result(dst_lpa_result_params)
 
-    if @requested_test.dst_lpa_result.save
+    if @requested_test.dst_lpa_result.save_and_audit(current_user, 'DST and LPA result added')
       redirect_to encounter_path(@requested_test.encounter), notice: 'DST and LPA result was successfully created.'
     else
       render action: 'new'
