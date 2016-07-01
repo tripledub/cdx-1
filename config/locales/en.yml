@@ -32,9 +32,21 @@ en:
         definition: 'Manifest'
       site:
         parent: 'Parent site'
+      episode:
+        diagnosis: 'Diagnosis'
+        hiv_status: 'HIV Status'
+        initial_history: 'History'
+        drug_resistance: 'Drug resistance'
+        outcome: 'Outcome'
       patient:
         dob: 'Birthday'
         entity_id: 'Patient id'
+        name: 'Name'
+        gender: 'Gender'
+        phone: 'Phone'
+        email: 'E-mail'
+        address: 'Address'
+        created_at: 'Created at'
       comment:
         created_at: 'Date'
         description: 'Description'
