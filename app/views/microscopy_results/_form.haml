@@ -31,7 +31,7 @@
           %td
             = f.text_field :serial_number
           %td
-            = f.collection_select :appearance, MicroscopyResult.visual_appearance_results, :first, :last
+            = f.collection_select :appearance, MicroscopyResult.visual_appearance_options, :first, :last
           %td
             = f.check_box :results_negative
             %label{for: 'microscopy_result_results_negative'} &nbsp;
