@@ -8,7 +8,7 @@ module EpisodesHelper
   end
 
   def diagnosis_name(diagnosis)
-    return unless diagnosis.present?
+    return  unless diagnosis.present?
     Episode.diagnosis_options.select{ |option| option.id == diagnosis.to_sym }.first.name
   end
 
