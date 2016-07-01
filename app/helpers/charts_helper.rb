@@ -121,15 +121,16 @@ module ChartsHelper
   def options_for_date
     [
       {
-        label: I18n.t('dashboard.chart_helper.previous_month'),
-        value: 1.month.ago.strftime('%Y-%m-%d')
-      },
-      {
         label: I18n.t('dashboard.chart_helper.previous_week'),
         value: 1.week.ago.strftime('%Y-%m-%d')
       },
       {
+        label: I18n.t('dashboard.chart_helper.previous_month'),
+        value: 1.month.ago.strftime('%Y-%m-%d')
+      },
+      {
         label: I18n.t('dashboard.chart_helper.previous_quarter'),
+
         value: 3.months.ago.strftime('%Y-%m-%d')
       },
       {

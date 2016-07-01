@@ -20,7 +20,8 @@ module Reports
 
       # TODO: , order results by time desc to remove a time check below:
       # filter['order_by']='-test.reported_time'
-      to_diff_time = filter['until'] || Time.now
+      to_diff_time = Time.now
+      to_diff_time = Time.parse(filter['until'].to_s) unless filter['until'].nil?
 
       results = TestResult.query(filter, current_user).execute
       results['tests'].each do |result|

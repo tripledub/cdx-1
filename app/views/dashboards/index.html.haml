@@ -4,15 +4,15 @@
       .search
         %form#filters-form{ action: dashboard_path }
 
-          .topdateto
-            %label.block
-              = I18n.t('dashboard.index.date_to')
-            = date_field('range','start_time[lte]')
-
           .topdatefrom
             %label.block
               = I18n.t('dashboard.index.date_from')
-            = date_field('range','start_time[gte]')
+            = date_field('range','start_time[gte]', value: (params['range'].nil? ? '' : params['range']['start_time']['gte']), max: Date.today)
+
+          .topdateto
+            %label.block 
+              = I18n.t('dashboard.index.date_to')
+            = date_field('range','start_time[lte]', value: (params['range'].nil? ? '' : params['range']['start_time']['lte']) )
 
           .topdateperiod
             %form#filters-form{ action: dashboard_path, 'data-auto-submit' => true }
@@ -25,6 +25,15 @@
               .topbutton
                 %input#query_button.btn-primary(type='submit' value="#{I18n.t('dashboard.index.filter_button')}")
 
+  :javascript
+    $(document).ready( function()
+    {
+      $('input[name=since]').on('change', function() 
+      {
+        $('input#range_start_time\\[gte\\]').val( $(this).val() );
+        $('input#range_start_time\\[lte\\]').val( new Date().toJSON().slice(0,10) );
+      });
+    })
 
   %main
     %section.row
@@ -79,6 +88,22 @@
         .box-content
           #chartAverageTestsTechnician{:style => "height: 200px; width: 100%;"}
             = react_component 'CanvasJsChart', chartDiv: 'chartAverageTestsTechnician', chartData: Extras::Charts::VerticalColumns.new(@dashboard_report.average_tests_per_technician).render
+
+    -#%section.row
+      .small-8.columns.box
+        %header
+          =image_tag('img/site.png')
+          %h3 Devices Not Responding
+        .box-content
+          #chartTotalTestsSite{:style => "height: 200px; width: 100%;"}
+            = react_component 'CanvasJsChart', chartDiv: 'chartDevicesNotResponding', chartData: Extras::Charts::HorizontalColumns.new(@dashboard_report.devices_not_reporting).render
+      .small-4.columns.box
+        %header
+          = image_tag('img/user.png')
+          %h3 Device Error Codes
+        .box-content
+          #chartAverageTestsTechnician{:style => "height: 200px; width: 100%;"}
+            = react_component 'CanvasJsChart', chartDiv: 'chartDeviceErrorCodes', chartData: Extras::Charts::VerticalColumns.new(@dashboard_report.error_codes_by_device).render
 
     %section.row
       .small-12.columns.box

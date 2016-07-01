@@ -32,4 +32,13 @@ class Reports::Dashboard
   def average_tests_per_technician
     Reports::AverageTechnicianTests.new(@current_user, @navigation_context, @options).generate_chart
   end
+
+  def devices_not_reporting
+    nil
+  end
+
+  def error_codes_by_device
+    nil
+  end
+
 end
