@@ -1,0 +1,4 @@
+en:
+  dst_lpa_results:
+    new:
+      header: 'Add DST and LPA Test Result'
