@@ -3,6 +3,7 @@ en:
     show:
       test_belongs_to: 'This test belongs to an encounter.'
       click_here: 'Click here'
+      to_view_it: 'to view it.'
       institution_name: 'Institution: %{institution_name}'
       patient: 'Patient'
       test_performed_on: 'Test performed on'

@@ -29,8 +29,7 @@ class DeviceMessagesController < ApplicationController
   def reprocess
     return unless authorize_resource(@message.device, READ_DEVICE)
     @message.reprocess
-    redirect_to device_messages_path,
-                notice: 'The message will be reprocessed'
+    redirect_to device_messages_path, notice: I18n.t('device_messages.reprocess.message_reprocess')
   end
 
   private
