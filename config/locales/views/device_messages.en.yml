@@ -1,0 +1,29 @@
+en:
+  device_messages:
+    index:
+      no_logs: 'There are no logs to report at this time'
+      connect_device: 'Connect a device and upload tests to see the progress here'
+      message:
+        zero: 'No messages'
+        one: '1 message'
+        other: '%{count} messages'
+      table_header_status: 'Status'
+      table_header_model: 'Model'
+      table_header_message: 'Message'
+      table_header_device: 'Device'
+      table_header_error: 'Error field'
+      table_header_date: 'Date'
+      table_header_raw: 'Raw'
+      table_header_failure: 'Failures'
+      reprocess: '(reprocess)'
+      failed: 'Failed'
+      success: 'Success'
+    filters:
+      device_logs: 'Device logs'
+      message: 'Message'
+      device_model: 'Device model'
+      device: 'Device'
+      date: 'Date'
+      show_all: 'Show all'
+    reprocess:
+      message_reprocess: 'The message will be reprocessed'

@@ -4,25 +4,29 @@
       .row
         .col
           %h1
-            Device logs
+            = I18n.t('device_messages.filters.device_logs')
       %form#filters-form{action: device_messages_path, "data-auto-submit" => true}
         %input{type: "hidden", name: "page_size", value: @page_size}
         .row
           .filter
-            %label.block Message
+            %label.block
+              = I18n.t('device_messages.filters.message')
             %input{type: "text", name: "message", value: params["message"]}
           .filter
-            %label.block Device Model
+            %label.block
+              = I18n.t('device_messages.filters.device_model')
             = cdx_select name: "device_model", value: params["device_model"] do |select|
-              - select.item "", "Show all"
+              - select.item "", I18n.t('device_messages.filters.show_all')
               - select.items @device_models, :id, :name
           .filter
-            %label.block Device
+            %label.block
+              = I18n.t('device_messages.filters.device')
             = cdx_select name: "device.uuid", value: params["device.uuid"] do |select|
-              - select.item "", "Show all"
+              - select.item "", I18n.t('device_messages.filters.show_all')
               - select.items @devices, :uuid, :name
           .filter
-            %label.block Date
+            %label.block
+              = I18n.t('device_messages.filters.date')
             = cdx_select name: "created_at", value: params["created_at"] do |select|
-              - select.item "", "Show all"
+              - select.item "", I18n.t('device_messages.filters.show_all')
               - select.items @date_options, :value, :label

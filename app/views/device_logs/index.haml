@@ -2,13 +2,19 @@
   .col
     %table.table
       %tr
-        %th.tableheader{colspan:100} #{@device.name} - Device Logs
+        %th.tableheader
+          = I18n.t('device_logs.index.logs_header', device_name: @device.name)
       %tr
-        %th Date
-        %th Message
+        %th
+          = I18n.t('device_logs.index.date')
+        %th
+          = I18n.t('device_logs.index.message')
         %th
       - @device_logs.each do |log|
         %tr
-          %td= @localization_helper.format_datetime_time_zone(log.created_at, @device.time_zone)
-          %td= truncate log.message, length: 100
-          %td= link_to "Download", device_device_log_path(@device, log)
+          %td
+            = Extras::Dates::Format.datetime_with_time_zone(log.created_at, :long, @device.time_zone)
+          %td
+            = truncate log.message, length: 100
+          %td
+            = link_to I18n.t('device_logs.index.download'), device_device_log_path(@device, log)

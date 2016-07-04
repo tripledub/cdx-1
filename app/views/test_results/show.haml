@@ -4,7 +4,7 @@
       .row
         .col
           %h2
-            = link_to "javascript:history.back();", class: 'side-link', title: 'Back' do
+            = link_to "javascript:history.back();", class: 'side-link', title: I18n.t('views.back') do
               = image_tag "arrow-left.png"
             = @test_result.core_fields[TestResult::NAME_FIELD]
 
@@ -12,44 +12,48 @@
   .row
     .col
       %span
-        This test belongs to an encounter.
-        = link_to 'Click here', encounter_path(@test_result.encounter)
-        to view it.
+        = I18n.t('test_results.show.test_belongs_to')
+        = link_to I18n.t('test_results.show.click_here'), encounter_path(@test_result.encounter)
+        = I18n.t('test_results.show.to_view_it')
 
 .row
   .col
     = card image: "card-unkown.png" do |c|
       - c.top do
-        %b= @test_result.core_fields[TestResult::NAME_FIELD]
+        %b
+          = @test_result.core_fields[TestResult::NAME_FIELD]
         %br
-        %span= @localization_helper.format_datetime(@test_result.core_fields[TestResult::START_TIME_FIELD]) # TODO should use device timezone (?)
+        %span
+          = @localization_helper.format_datetime(@test_result.core_fields[TestResult::START_TIME_FIELD]) # TODO should use device timezone (?)
         - if @show_institution
           %div
-            Institution: #{@test_result.institution.name}
+            = I18n.t('test_results.show.institution_name', @test_result.institution.name)
       - c.bottom do
         - if @test_result.patient
-          Patient
+          = I18n.t('test_results.show.patient')
           = link_to @test_result.patient.name_or_unknown, @test_result.patient
           %br
-        Test performed on
+        = I18n.t('test_results.show.test_performed_on')
         = link_to @test_result.device.name, device_path(@test_result.device)
         - if @test_result.core_fields[TestResult::LAB_USER_FIELD].present?
-          by
+          = I18n.t('test_results.show.by')
           / TODO add link to site_user
           = @test_result.core_fields[TestResult::LAB_USER_FIELD]
         - if @test_result.device.site
-          at
+          = I18n.t('test_results.show.at')
           = link_to @test_result.device.site, edit_site_path(@test_result.device.site)
 
 .row
   .col.pe-3
-    %label Assays
+    %label
+      = I18n.t('test_results.show.assays')
   .col
     = react_component("AssaysResultList", assays: @test_result.core_fields[TestResult::ASSAYS_FIELD])
 
 .row
   .col.pe-3
-    %label Additional data
+    %label
+      = I18n.t('test_results.show.additional_data')
   .col
     - @test_result.custom_fields.each do |key, value|
       .row
@@ -74,10 +78,13 @@
 - @samples.each do |sample_id, sample_id_barcode|
   .row
     .col.pe-2
-      %label Sample
+      %label
+        = I18n.t('test_results.show.sample')
+
     .col
       -# TODO add print button
-      .value= sample_id
+      .value
+        = sample_id
       %br
       %br
       = raw sample_id_barcode.to_html
@@ -89,10 +96,13 @@
     .value
       - case @other_tests.count
       - when 0
-        No other test was made with this sample
+        = I18n.t('test_results.show.no_other_test')
       - when 1
         = link_to @other_tests.first.core_fields[TestResult::NAME_FIELD], test_result_path(@other_tests.first.uuid)
-        was also made with this sample
+        = I18n.t('test_results.show.was_also_made')
       - else
         = @other_tests.map { |t| link_to t.core_fields[TestResult::NAME_FIELD], test_result_path(t.uuid) }.to_sentence.html_safe
-        were also made with this sample
+        = I18n.t('test_results.show.were_also_made')
+- if @device_messages
+  .row
+    = render partial: 'device_messages/messages_table', locals: { messages: @device_messages, total: @total_messages }

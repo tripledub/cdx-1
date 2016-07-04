@@ -1,0 +1,17 @@
+en:
+  test_results:
+    show:
+      test_belongs_to: 'This test belongs to an encounter.'
+      click_here: 'Click here'
+      to_view_it: 'to view it.'
+      institution_name: 'Institution: %{institution_name}'
+      patient: 'Patient'
+      test_performed_on: 'Test performed on'
+      by: 'by'
+      at: 'at'
+      assays: 'Assays'
+      additional_data: 'Additional data'
+      sample: 'Sample'
+      no_other_test: 'No other test was made with this sample'
+      was_also_made: 'was also made with this sample'
+      were_also_made: 'were also made with this sample'
