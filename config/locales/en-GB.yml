@@ -1,80 +1,12 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
-en:
+en-GB:
   activerecord:
     errors:
       messages:
-        record_invalid: "Validation failed: %{errors}"
+        record_invalid: 'Validation failed: %{errors}'
         restrict_dependent_destroy:
           has_one: "Cannot delete record because a dependent %{record} exists"
           has_many: "Cannot delete record because dependent %{record} exist"
-    attributes:
-      manifest:
-        definition: 'Manifest'
-      site:
-        parent: 'Parent site'
-      episode:
-        diagnosis: 'Diagnosis'
-        hiv_status: 'HIV Status'
-        initial_history: 'History'
-        drug_resistance: 'Drug resistance'
-        outcome: 'Outcome'
-      patient:
-        dob: 'Birthday'
-        entity_id: 'Patient id'
-        name: 'Name'
-        gender: 'Gender'
-        phone: 'Phone'
-        email: 'E-mail'
-        address: 'Address'
-        created_at: 'Created at'
-      comment:
-        created_at: 'Date'
-        description: 'Description'
-        comment: 'Observations'
-        user_id: 'Commented by'
-        image: 'Attached image'
-      dst_lpa_result:
-        sample_collected_on: 'Date sample collected'
-        media_used: 'Method'
-        serial_number: 'Lab serial number'
-        results_h: 'Result H'
-        results_r: 'Result R'
-        results_e: 'Result E'
-        results_s: 'Result S'
-        results_amk: 'Result Amk'
-        results_km: 'Result Km'
-        results_cm: 'Result Cm'
-        results_fq: 'Result FQ'
-        results_other1: 'Result Other'
-        results_other2: 'Result Other'
-        results_other3: 'Result Other'
-        results_other4: 'Result Other'
-        examined_by: 'Examined by'
-        result_on: 'Date of result'
   date:
-    input_format:
-      pattern: "%d/%m/%Y"
-      placeholder: DD/MM/YYYY
     abbr_day_names:
     - Sun
     - Mon
@@ -106,10 +38,9 @@ en:
     - Friday
     - Saturday
     formats:
-      default: "%Y-%m-%d"
-      long: "%B %d, %Y"
-      short: "%b %d"
-      full_date: "%d/%m/%Y"
+      default: "%d-%m-%Y"
+      long: "%d %B, %Y"
+      short: "%d %b"
     month_names:
     -
     - January
@@ -125,9 +56,9 @@ en:
     - November
     - December
     order:
-    - :year
-    - :month
     - :day
+    - :month
+    - :year
   datetime:
     distance_in_words:
       about_x_hours:
@@ -176,7 +107,6 @@ en:
     messages:
       accepted: must be accepted
       blank: can't be blank
-      present: must be blank
       confirmation: doesn't match %{attribute}
       empty: can't be empty
       equal_to: must be equal to %{count}
@@ -188,11 +118,9 @@ en:
       invalid: is invalid
       less_than: must be less than %{count}
       less_than_or_equal_to: must be less than or equal to %{count}
-      model_invalid: "Validation failed: %{errors}"
       not_a_number: is not a number
       not_an_integer: must be an integer
       odd: must be odd
-      required: must exist
       taken: has already been taken
       too_long:
         one: is too long (maximum is 1 character)
@@ -203,7 +131,6 @@ en:
       wrong_length:
         one: is the wrong length (should be 1 character)
         other: is the wrong length (should be %{count} characters)
-      other_than: must be other than %{count}
     template:
       body: 'There were problems with the following fields:'
       header:
@@ -225,7 +152,7 @@ en:
         separator: "."
         significant: false
         strip_insignificant_zeros: false
-        unit: "$"
+        unit: "£"
     format:
       delimiter: ","
       precision: 3
@@ -260,7 +187,6 @@ en:
     percentage:
       format:
         delimiter: ''
-        format: "%n%"
     precision:
       format:
         delimiter: ''
@@ -273,11 +199,6 @@ en:
     am: am
     formats:
       default: "%a, %d %b %Y %H:%M:%S %z"
-      long: "%B %d, %Y %H:%M"
+      long: "%d %B, %Y %H:%M"
       short: "%d %b %H:%M"
-      full_time: "%d/%m/%Y %H:%M"
-      date_only: "%d/%m/%Y"
     pm: pm
-  user:
-    settings:
-      updated: "Settings updated"

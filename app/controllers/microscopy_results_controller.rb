@@ -9,7 +9,7 @@ class MicroscopyResultsController < PatientResultsController
   def create
     @microscopy_result = @requested_test.build_microscopy_result(microscopy_result_params)
 
-    if @requested_test.microscopy_result.save
+    if @requested_test.microscopy_result.save_and_audit(current_user, 'Microscopy result added')
       redirect_to encounter_path(@requested_test.encounter), notice: 'Microscopy result was successfully created.'
     else
       render action: 'new'
