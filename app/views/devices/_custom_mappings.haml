@@ -13,7 +13,7 @@
         .col.px-2
           = I18n.t('devices.custom_mappings.device_field')
         .col.px-2
-          = c
+          = I18n.t('devices.custom_mappings.to_enter')
       = fields_for(:device) do |d|
         = d.fields_for(:custom_mappings) do |m|
           - custom_fields.each do |field|

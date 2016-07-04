@@ -133,15 +133,15 @@ describe "device" do
           expect(page).to have_content("MyDevice")
           expect(page).to have_content("MyModel")
           expect(page).to_not have_content("Activation token")
-          expect(page).to have_content("Secret Key")
-          expect(page).to_not have_content("Regenerate Key")
+          expect(page).to have_content("Secret key")
+          expect(page).to_not have_content("Regenerate key")
           expect(page).to have_content("This is the last time you will be able to view this key.")
         end
 
         visit current_path
         expect_page DeviceSetupPage do |page|
-          expect(page).to have_content("Secret Key")
-          expect(page).to have_content("Regenerate Key")
+          expect(page).to have_content("Secret key")
+          expect(page).to have_content("Regenerate key")
           expect(page).to_not have_content("This is the last time you will be able to view this key.")
         end
       end
