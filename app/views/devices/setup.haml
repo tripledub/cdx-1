@@ -2,26 +2,32 @@
 
 .row
   .col
-    %h4 Setup
+    %h4
+      = I18n.t('devices.setup.setup_header')
 
     = react_component "DeviceSetup", device: { id: @device.id }, device_model: @device.device_model.try { |device_model| { support_url: device_model.support_url, setup_instructions_url: device_model.setup_instructions.present? ? device_model.setup_instructions.url : "" } }
 
     %p
-      The Device Id and Secure Key allow your device to identify itself with CDx.
+      = I18n.t('devices.setup.setup_text')
+
 
 - if @device.device_model.supports_activation?
   .row
-    .col.pe-2 Activation token
+    .col.pe-2
+      = I18n.t('devices.setup.activation_token')
     #activation-token.col
       = render 'activation_token'
 - else
   .row
-    .col.pe-2 Device Id
+    .col.pe-2
+      = I18n.t('devices.setup.device_id')
     .col
       .uuid= @device.uuid
-      %p= barcode @device.uuid
+      %p
+        = barcode @device.uuid
 
   .row
-    .col.pe-2 Secret Key
+    .col.pe-2
+      = I18n.t('devices.setup.secret_key')
     #secret-key.col
       = render 'secret_key'
