@@ -58,7 +58,7 @@
               %td
                 = message.index_failure_data[:target_field]
               %td
-                = @localization_helper.format_datetime_time_zone(message.created_at, message.device.time_zone)
+                = Extras::Dates::Format.datetime_with_time_zone(message.created_at, :long, message.device.time_zone)
               %td
                 = link_to raw_device_message_path(message) do
                   .icon-download.icon-gray
