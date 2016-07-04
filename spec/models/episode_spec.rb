@@ -98,8 +98,8 @@ RSpec.describe Episode, type: :model do
 
     it 'includes positive, negative and unkown' do
       expect(hiv_status_options.size).to eq(3)
-      %w(positive negative unknown).each do |status|
-        id = "#{status}_tb".to_sym
+      %w(positive_tb negative_tb unknown).each do |status|
+        id = status.to_sym
         expected = hiv_status_options.select { |st| st.id == id }
         expect(expected.first.id).to eq(id)
       end

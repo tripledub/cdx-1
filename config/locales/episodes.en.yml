@@ -3,3 +3,7 @@ en:
     presumptive_tb: Presumptive TB
     bacteriologically_confirmed: Bacteriologically Confirmed
     clinically_diagnosed: Clinically Diagnosed
+  hiv_status:
+    positive_tb: HIV-Positive
+    negative_tb: HIV-Negative
+    unknown: Unknown
