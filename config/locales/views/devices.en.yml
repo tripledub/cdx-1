@@ -14,9 +14,9 @@ en:
       no_devices: 'There are no devices reporting at %{entity_name}'
       configuration_steps: 'Follow the configuration steps to connect a device and start reporting'
       device:
-        zero: 'devices'
-        one: 'device'
-        other: 'devices'
+        zero: 'No devices'
+        one: '1 device'
+        other: '%{count} devices'
       download_csv: 'Download CSV'
       name: 'Name'
       manufacturer: 'Manufacturer'

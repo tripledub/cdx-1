@@ -4,9 +4,9 @@ en:
       no_logs: 'There are no logs to report at this time'
       connect_device: 'Connect a device and upload tests to see the progress here'
       message:
-        zero: 'messages'
-        one: 'message'
-        other: 'messages'
+        zero: 'No messages'
+        one: '1 message'
+        other: '%{count} messages'
       table_header_status: 'Status'
       table_header_model: 'Model'
       table_header_message: 'Message'

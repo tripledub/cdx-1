@@ -103,3 +103,6 @@
       - else
         = @other_tests.map { |t| link_to t.core_fields[TestResult::NAME_FIELD], test_result_path(t.uuid) }.to_sentence.html_safe
         = I18n.t('test_results.show.were_also_made')
+- if @device_messages
+  .row
+    = render partial: 'device_messages/messages_table', locals: { messages: @device_messages, total: @total_messages }

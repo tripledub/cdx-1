@@ -1,0 +1,55 @@
+= cdx_table title: I18n.t('device_messages.index.message', count: total) do |t|
+  - t.columns do
+    %col{:width => "15%"}
+    %col{:width => "25%"}
+    %col{:width => "10%"}
+    %col{:width => "10%"}
+    %col{:width => "10%"}
+    %col{:width => "10%"}
+    %col{:width => "15%"}
+    %col{:width => "5%"}
+  - t.thead do
+    %tr
+      %th
+        = I18n.t('device_messages.index.table_header_status')
+      %th
+        = I18n.t('device_messages.index.table_header_message')
+      %th
+        = I18n.t('device_messages.index.table_header_model')
+      %th
+        = I18n.t('device_messages.index.table_header_device')
+      %th
+        = I18n.t('device_messages.index.table_header_failure')
+      %th
+        = I18n.t('device_messages.index.table_header_error')
+      %th
+        = I18n.t('device_messages.index.table_header_date')
+      %th
+        = I18n.t('device_messages.index.table_header_raw')
+  - t.tbody do
+    - messages.each do |message|
+      %tr
+        %td
+          - if message.index_failed
+            = I18n.t('device_messages.index.failed')
+            = link_to I18n.t('device_messages.index.reprocess'), reprocess_device_message_path(message), method: 'post'
+          - else
+            = I18n.t('device_messages.index.success')
+        %td{title: message.index_failure_reason}
+          = message.index_failure_reason
+        %td
+          = message.device.device_model.name
+        %td
+          = message.device.name
+        %td
+          = message.index_failure_data[:number_of_failures]
+        %td
+          = message.index_failure_data[:target_field]
+        %td
+          = Extras::Dates::Format.datetime_with_time_zone(message.created_at, :long, message.device.time_zone)
+        %td
+          = link_to raw_device_message_path(message) do
+            .icon-download.icon-gray
+
+.pagination
+  = render 'shared/pagination'
