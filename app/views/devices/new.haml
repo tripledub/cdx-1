@@ -7,6 +7,6 @@
             %h2
               = link_to devices_path, class: 'side-link', title: 'Back' do
                 = image_tag "arrow-left-white.png"
-              New Device
+              = I18n.t('devices.new.new_device')
 
 = render 'form'

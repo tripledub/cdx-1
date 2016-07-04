@@ -17,17 +17,16 @@
         %span= @device.device_model.name
         - if @show_institution
           %div
-            Institution: #{@device.institution.name}
+            = I18n.t('devices.device_card.institution', institution_name: @device.institution.name)
       - if @can_edit
         - c.actions do
-          = link_to edit_device_path(@device), :title => 'Edit' do
+          = link_to edit_device_path(@device), :title => I18n.t('devices.device_card.edit') do
             = image_tag "ic-pencil.png"
 
       - c.bottom do
         .serial
-          Serial no.
-          = @device.serial_number
+          = I18n.t('devices.device_card.serial_number', serial_number: @device.serial_number)
         - if @device.site
           .location
-            Device located at
+            = I18n.t('devices.device_card.located_at')
             = link_to @device.site, edit_site_path(@device.site)

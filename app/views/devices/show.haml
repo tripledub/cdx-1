@@ -3,5 +3,5 @@
 .row
   .col
     = cdx_tabs do |t|
-      - t.tab title: 'Performance', url: performance_device_path(@device)
-      - t.tab title: 'Setup', url: setup_device_path(@device)
+      - t.tab title: I18n.t('devices.show.performance'), url: performance_device_path(@device)
+      - t.tab title: I18n.t('devices.show.setup'), url: setup_device_path(@device)
