@@ -33,7 +33,7 @@ class Reports::Dashboard
     Reports::AverageTechnicianTests.new(@current_user, @navigation_context, @options).generate_chart
   end
 
-  def devices_not_reporting
+  def devices_not_responding
     nil
   end
 
