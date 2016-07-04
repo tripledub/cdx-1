@@ -1,5 +1,5 @@
-= form_for([@requested_test, @microscopy_result], url: requested_test_microscopy_result_path(@requested_test, @microscopy_result), html: { autocomplete: 'off' }) do |f|
-  = validation_errors @microscopy_result
+= form_for([@requested_test, @culture_result], url: requested_test_culture_result_path(@requested_test, @culture_result), html: { autocomplete: 'off' }) do |f|
+  = validation_errors @culture_result
   .row
     %table
       %thead
@@ -7,11 +7,9 @@
           %th
             = f.label :sample_collected_on
           %th
-            = f.label :specimen_type
+            = f.label :media_used
           %th
             = f.label :serial_number
-          %th
-            = f.label :appearance
           %th
             = f.label :results_negative
           %th
@@ -22,31 +20,39 @@
             = f.label :results_2plus
           %th
             = f.label :results_3plus
+          %th
+            = f.label :results_ntm
+          %th
+            = f.label :results_contaminated
       %tbody
         %tr
           %td
             = f.date_field :sample_collected_on
           %td
-            = f.text_field :specimen_type
+            = f.collection_select :media_used, CultureResult.media_options, :first, :last
           %td
             = f.text_field :serial_number
           %td
-            = f.collection_select :appearance, MicroscopyResult.visual_appearance_options, :first, :last
-          %td
             = f.check_box :results_negative
-            %label{for: 'microscopy_result_results_negative'} &nbsp;
+            %label{for: 'culture_result_results_negative'} &nbsp;
           %td
             = f.check_box :results_1to9
-            %label{for: 'microscopy_result_results_1to9'} &nbsp;
+            %label{for: 'culture_result_results_1to9'} &nbsp;
           %td
             = f.check_box :results_1plus
-            %label{for: 'microscopy_result_results_1plus'} &nbsp;
+            %label{for: 'culture_result_results_1plus'} &nbsp;
           %td
             = f.check_box :results_2plus
-            %label{for: 'microscopy_result_results_2plus'} &nbsp;
+            %label{for: 'culture_result_results_2plus'} &nbsp;
           %td
             = f.check_box :results_3plus
-            %label{for: 'microscopy_result_results_3plus'} &nbsp;
+            %label{for: 'culture_result_results_3plus'} &nbsp;
+          %td
+            = f.check_box :results_ntm
+            %label{for: 'culture_result_results_ntm'} &nbsp;
+          %td
+            = f.check_box :results_contaminated
+            %label{for: 'culture_result_results_contaminated'} &nbsp;
 
   .row
     .col.pe-2

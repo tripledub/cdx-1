@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'policy_spec_helper'
 
-describe DstLpaResultsController do
+describe CultureResultsController do
   render_views
   let(:user)                { User.make }
   let!(:institution)        { user.institutions.make }
@@ -11,26 +11,21 @@ describe DstLpaResultsController do
   let(:sample)              { Sample.make(institution: institution, patient: patient, encounter: encounter) }
   let!(:sample_identifier1) { SampleIdentifier.make(site: site, entity_id: 'sample-id', sample: sample) }
   let!(:sample_identifier2) { SampleIdentifier.make(site: site, entity_id: 'sample-2', sample: sample) }
-  let(:requested_test) { RequestedTest.make encounter: encounter }
-  let(:default_params) { { context: institution.uuid } }
-  let(:valid_params)   { {
-    sample_collected_on: 4.days.ago,
-    media_used:          'solid',
-    serial_number:       'LO-3434-P',
-    results_h:           'resistant',
-    results_r:           'susceptible',
-    results_e:           'contaminated',
-    results_s:           'not_done',
-    results_amk:         'not_done',
-    results_km:          'susceptible',
-    results_cm:          'resistant',
-    results_fq:          'contaminated',
-    results_other1:      'other 1',
-    results_other2:      'other 2',
-    results_other3:      'other 3',
-    results_other4:      'other 4',
-    examined_by:         'Michael Kiske',
-    result_on:           1.day.ago
+  let(:requested_test)      { RequestedTest.make encounter: encounter }
+  let(:default_params)      { { context: institution.uuid } }
+  let(:valid_params)        { {
+    sample_collected_on:    4.days.ago,
+    media_used:             'solid',
+    serial_number:          'LO-3434-P',
+    results_negative:       1,
+    results_1to9:           0,
+    results_1plus:          1,
+    results_2plus:          1,
+    results_3plus:          0,
+    results_ntm:            0,
+    results_contaminated:   1,
+    examined_by:            'Michael Kiske',
+    result_on:              1.day.ago
   } }
 
   context 'user with test orders permission' do
@@ -48,35 +43,30 @@ describe DstLpaResultsController do
       end
 
       it 'should add test order samples id to laboratory serial numbers' do
-        expect(assigns(:dst_lpa_result).serial_number).to eq("#{sample_identifier1.entity_id}, #{sample_identifier2.entity_id}")
+        expect(assigns(:culture_result).serial_number).to eq("#{sample_identifier1.entity_id}, #{sample_identifier2.entity_id}")
       end
     end
 
     describe 'create' do
       context 'with valid params' do
         before :each do
-          post :create, requested_test_id: requested_test.id, dst_lpa_result: valid_params
+          post :create, requested_test_id: requested_test.id, culture_result: valid_params
           requested_test.reload
         end
 
         it 'should save the comment' do
-          patient_result = requested_test.dst_lpa_result
+          patient_result = requested_test.culture_result
 
           expect(patient_result.media_used).to eq('solid')
           expect(patient_result.uuid).not_to be_empty
           expect(patient_result.serial_number).to eq('LO-3434-P')
-          expect(patient_result.results_h).to eq('resistant')
-          expect(patient_result.results_r).to eq('susceptible')
-          expect(patient_result.results_e).to eq('contaminated')
-          expect(patient_result.results_s).to eq('not_done')
-          expect(patient_result.results_amk).to eq('not_done')
-          expect(patient_result.results_km).to eq('susceptible')
-          expect(patient_result.results_cm).to eq('resistant')
-          expect(patient_result.results_fq).to eq('contaminated')
-          expect(patient_result.results_other1).to eq('other 1')
-          expect(patient_result.results_other2).to eq('other 2')
-          expect(patient_result.results_other3).to eq('other 3')
-          expect(patient_result.results_other4).to eq('other 4')
+          expect(patient_result.results_negative).to be true
+          expect(patient_result.results_1to9).to be false
+          expect(patient_result.results_1plus).to be true
+          expect(patient_result.results_2plus).to be true
+          expect(patient_result.results_3plus).to be false
+          expect(patient_result.results_ntm).to be false
+          expect(patient_result.results_contaminated).to be true
           expect(patient_result.sample_collected_on.strftime("%m/%d/%YYYY")).to eq(4.days.ago.strftime("%m/%d/%YYYY"))
           expect(patient_result.result_on.strftime("%m/%d/%YYYY")).to eq(1.day.ago.strftime("%m/%d/%YYYY"))
         end
@@ -93,7 +83,7 @@ describe DstLpaResultsController do
       context 'with invalid params' do
         it 'should render the new form' do
           invalid_params = valid_params.merge!(examined_by: nil)
-          post :create, requested_test_id: requested_test.id, dst_lpa_result: invalid_params
+          post :create, requested_test_id: requested_test.id, culture_result: invalid_params
 
           expect(request).to render_template('new')
         end
