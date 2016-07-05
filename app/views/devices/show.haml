@@ -1,4 +1,7 @@
-= render 'device_card'
+= render partial: 'dashboards/date_filter', locals: { filter_action: performance_device_path(@device) }
+
+.row
+  = render 'device_card'
 
 .row
   .col

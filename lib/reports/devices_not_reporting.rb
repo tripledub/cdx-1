@@ -12,7 +12,7 @@ module Reports
     protected
 
     def process
-      devices = Policy.authorize Policy::Actions::READ_DEVICE, Device.within(context.entity), current_user
+      devices = Policy.authorize Policy::Actions::READ_DEVICE, ::Device.within(context.entity), current_user
 
       devices.each do |device|
         if device.name.length > 0

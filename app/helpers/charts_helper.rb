@@ -90,28 +90,6 @@ module ChartsHelper
     params['range']['start_time']['lte'].present? ? Date.parse(params['range']['start_time']['lte']) : Date.today
   end
 
-  def options_for_date
-    [
-      {
-        label: I18n.t('dashboard.chart_helper.previous_week'),
-        value: 1.week.ago.strftime('%Y-%m-%d')
-      },
-      {
-        label: I18n.t('dashboard.chart_helper.previous_month'),
-        value: 1.month.ago.strftime('%Y-%m-%d')
-      },
-      {
-        label: I18n.t('dashboard.chart_helper.previous_quarter'),
-
-        value: 3.months.ago.strftime('%Y-%m-%d')
-      },
-      {
-        label: I18n.t('dashboard.chart_helper.previous_year'),
-        value: 1.year.ago.strftime('%Y-%m-%d')
-      }
-    ]
-  end
-
   def query_errors
     results = Reports::Errors.process(current_user, @navigation_context, options)
     return results.sort_by_month if results.number_of_months > 1

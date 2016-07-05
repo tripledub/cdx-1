@@ -15,8 +15,3 @@ en:
       no_chart_information: 'No chart information available'
       devices_not_responding: 'Devices Not Responding'
       device_error_codes: 'Device Error Codes'
-    chart_helper:
-      previous_month: 'Previous month'
-      previous_week: 'Previous week'
-      previous_quarter: 'Previous quartar'
-      previous_year: 'Previous year'
