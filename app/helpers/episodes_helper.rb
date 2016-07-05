@@ -13,7 +13,7 @@ module EpisodesHelper
 
   def hiv_status_name(hiv_status)
     return unless hiv_status.present?
-    Episode.hiv_status_options.select{ |option| option.id == hiv_status.to_sym }.first.name
+    I18n.t("hiv_status.#{hiv_status}")
   end
 
   def history_options_name(initial_history)

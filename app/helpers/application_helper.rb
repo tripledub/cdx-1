@@ -45,6 +45,12 @@ module ApplicationHelper
     current_user.computed_policies.any? &:delegable?
   end
 
+  def form_title(obj, text = nil)
+    action = obj.persisted? ? 'Edit' : 'New'
+    name = text.present? ? text : obj.class.name.humanize
+    "#{action} #{name}"
+  end
+
   def format_date(value, time_zone = nil)
     return nil unless value
 
