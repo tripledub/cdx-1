@@ -174,7 +174,6 @@ describe "create encounter" do
 
     goto_page NewFreshEncounterPage do |page|
       expect(page).to have_button("Add")
-      expect(page).not_to have_link("Add sample")
     end
   end
 
