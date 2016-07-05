@@ -6,27 +6,27 @@
       .row
         .col.pe-4
           %div.tooltip
-            = f.label :institution
-            %div.tooltiptext_r 
-              Institution this Site is part of
+            = f.label I18n.t('sites.form.label.institution')
+            %div.tooltiptext_r
+              = I18n.t('sites.form.tooltip.institution') 
         .col
           .value= f.object.institution
 
       .row
         .col.pe-4
           %div.tooltip
-            = f.label :name
+            = f.label I18n.t('sites.form.label.name')
             %div.tooltiptext_r 
-              Name of the Site
+              = I18n.t('sites.form.tooltip.name')
         .col
           = f.text_field :name, :class => 'input-large'
       - if @site.new_record? || @can_move
         .row
           .col.pe-4
             %div.tooltip
-              = f.label :parent
+              = f.label I18n.t('sites.form.label.parent')
               %div.tooltiptext_r 
-                The Site this Site is a Child of
+                = I18n.t('sites.form.tooltip.parent')
           .col
             = cdx_select form: f, name: :parent_id, class: 'input-x-large' do |select|
               - select.item "", "None"
@@ -35,9 +35,9 @@
         .row
           .col.pe-4
             %div.tooltip
-              = f.label :parent
+              = f.label I18n.t('sites.form.label.parent')
               %div.tooltiptext_r 
-                The Site this Site is a Child of
+                = I18n.t('sites.form.tooltip.parent')
           .col
             = @site.parent.name
 
@@ -49,9 +49,9 @@
   .row
     .col.pe-2
       %div.tooltip
-        = f.label :sample_id_reset_policy, "Sample ID reset policy"
+        = f.label I18n.t('sites.form.label.sample_id_reset_policy')
         %div.tooltiptext_r 
-          Sample ID reset policy Tooltip
+          = I18n.t('sites.form.tooltip.sample_id_reset_policy')
     .col
       = cdx_select form: f, name: :sample_id_reset_policy, class: 'input-large sample-id-reset' do |select|
         - select.item "yearly", "Yearly"
@@ -60,28 +60,38 @@
   .row
     .col.pe-2
       %div.tooltip
-        = f.label :allows_manual_entry, "Allow manual entry"
+        = f.label I18n.t('sites.form.label.allows_manual_entry')
         %div.tooltiptext_r 
-          Does this Site allow Manual Entry of Data?
+          = I18n.t('sites.form.tooltip.allows_manual_entry')
     .col
       = f.check_box :allows_manual_entry
       %label{for: 'site_allows_manual_entry'} &nbsp;
   .row
     .col.pe-2
       %div.tooltip
-        = f.label :main_phone_number
+        = f.label I18n.t('sites.form.label.main_phone_number')
         %div.tooltiptext_r 
-          Site Phone Number
+          = I18n.t('sites.form.tooltip.main_phone_number')
     .col
       = f.text_field :main_phone_number, :class => 'input-large'
   .row
     .col.pe-2
       %div.tooltip
-        = f.label :email_address
+        = f.label I18n.t('sites.form.label.email_address')
         %div.tooltiptext_r 
-          Site Email Contact Address
+          = I18n.t('sites.form.tooltip.email_address')
     .col
       = f.email_field :email_address, :class => 'input-large'
+
+  .row
+    .col.pe-2
+      %div.tooltip
+        = f.label I18n.t('sites.form.label.comment')
+        %div.tooltiptext_r 
+          = I18n.t('sites.form.tooltip.comment')
+    .col
+      = f.text_area :comment, :class => 'input-large', rows: 10, cols: 25
+
 
   .row.button-actions
     .col

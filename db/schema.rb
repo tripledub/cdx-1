@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160630153022) do
+ActiveRecord::Schema.define(version: 20160705092836) do
 
   create_table "alert_condition_results", force: :cascade do |t|
     t.string  "result",   limit: 255
@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(version: 20160630153022) do
   add_index "audit_updates", ["uuid"], name: "index_audit_updates_on_uuid", using: :btree
 
   create_table "comments", force: :cascade do |t|
-    t.date     "commented_on"
+    t.date     "commented_on",                     default: '2016-06-15'
     t.text     "comment",            limit: 65535
     t.string   "description",        limit: 255
     t.string   "uuid",               limit: 255
@@ -616,13 +616,14 @@ ActiveRecord::Schema.define(version: 20160630153022) do
     t.string   "uuid",                             limit: 255
     t.integer  "parent_id",                        limit: 4
     t.string   "prefix",                           limit: 255
-    t.string   "sample_id_reset_policy",           limit: 255, default: "yearly"
+    t.string   "sample_id_reset_policy",           limit: 255,   default: "yearly"
     t.datetime "deleted_at"
     t.string   "main_phone_number",                limit: 255
     t.string   "email_address",                    limit: 255
     t.string   "last_sample_identifier_entity_id", limit: 255
     t.date     "last_sample_identifier_date"
     t.boolean  "allows_manual_entry"
+    t.text     "comment",                          limit: 65535
   end
 
   add_index "sites", ["deleted_at"], name: "index_sites_on_deleted_at", using: :btree

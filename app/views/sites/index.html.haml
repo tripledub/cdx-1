@@ -18,11 +18,13 @@
           %tr
             %th Name
             %th City
+            %th Comment
         - t.tbody do
           - @sites.each do |site|
             %tr{data: {href: edit_site_path(site) }}
               %td= site.name
               %td= site.city !=nil ? site.city : ''
+              %td= site.comment != nil ? site.comment : ''
 
       .pagination
         = render 'shared/pagination'
