@@ -10,7 +10,7 @@ class IncidentsController < ApplicationController
     @page = (params["page"] || 1).to_i
     offset = (@page - 1) * @page_size
 
-    @date_options = date_options_for_filter
+    @date_options = Extras::Dates::Filters.date_options_for_filter
 
     @devices = check_access(Device.within(@navigation_context.entity), READ_DEVICE)
     @alerts = Alert.where({user_id: current_user.id})
