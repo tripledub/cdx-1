@@ -38,6 +38,7 @@ class SitesController < ApplicationController
     @site = Site.new
     @sites = check_access(Site, READ_SITE).within(@navigation_context.institution)
     @site.parent = @navigation_context.site
+    check_name
     prepare_for_institution_and_authorize(@site, CREATE_INSTITUTION_SITE)
   end
 
@@ -46,7 +47,7 @@ class SitesController < ApplicationController
   def create
     @institution = @navigation_context.institution
     return unless authorize_resource(@institution, CREATE_INSTITUTION_SITE)
-
+    check_name
     @site = @institution.sites.new(site_params(true))
     @sites = check_access(@institution.sites, READ_SITE)
 
@@ -58,6 +59,12 @@ class SitesController < ApplicationController
         format.html { render action: 'new' }
         format.json { render json: @site.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def check_name
+    unless params[:name].nil?
+      params[:name] = params[:name].gsub(/[^0-9a-zA-Z\-!_£$&]/i, '')
     end
   end
 
