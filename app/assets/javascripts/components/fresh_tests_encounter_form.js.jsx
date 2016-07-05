@@ -5,6 +5,18 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     $('.test_for_tb').attr('checked', false).parent().hide();
     $('.test_for_hiv').attr('checked', false).parent().hide();
   },
+  validateAndSetManualEntry: function (event) {
+    var sampleId = React.findDOMNode(this.refs.manualSampleEntry).value;
+    if (this.state.encounter.new_samples.filter(function(el){return el.entity_id == sampleId}).length > 0) {
+      // Error handling as done in the ajax responses
+      alert("This sample has already been added");
+    } else {
+      this._ajax_put('/encounters/add/manual_sample_entry', function() {
+        this.refs.addNewSamplesModal.hide();
+      }, {entity_id: sampleId});
+    }
+    event.preventDefault();
+  },
   render: function() {
     var now = new Date();
     var day = ("0" + now.getDate()).slice(-2);
@@ -13,7 +25,15 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
 
     var cancel_url = "/encounters/new_index";
     if (this.props.referer != null) {
-	     cancel_url = this.props.referer;
+      cancel_url = this.props.referer;
+    }
+
+    if (this.props.allows_manual_entry == true) {
+      show_auto_sample = "hidden";
+      show_manual_sample = "";
+    } else {
+      show_auto_sample = "";
+      show_manual_sample = "hidden";
     }
 
     return (
@@ -25,13 +45,16 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
             <label>Samples</label>
           </div>
           <div className="col-6">
+            <SamplesList samples={this.state.encounter.samples}  />
             <NewSamplesList samples={this.state.encounter.new_samples} onRemoveSample={this.removeNewSample}/>
-            <p>
+            <p className={show_auto_sample}>
               <a className="btn-add-link" href='#' onClick={this.addNewSamples}>
                 <span className="icon-circle-plus icon-blue"></span>
                 Add sample
               </a>
             </p>
+            <p className={show_manual_sample}><input type="text" size="54" placeholder="Sample ID" ref="manualSampleEntry" />&nbsp;
+            <button type="button" className="btn-primary" onClick={this.validateAndSetManualEntry}>Add</button></p>
           </div>
         </div>
 
@@ -177,9 +200,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
           </h1>
 
           <p><input type="text" className="input-block" placeholder="Sample ID" ref="manualSampleEntry"/></p>
-          <p>
-            <button type="button" className="btn-primary pull-right" onClick={this.validateAndSetManualEntry}>OK</button>
-          </p>
+          <p><button type="button" className="btn-primary pull-right" onClick={this.validateAndSetManualEntry}>OK</button></p>
         </Modal>
 
       </div>
