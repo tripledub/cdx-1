@@ -126,7 +126,6 @@ class EncountersController < ApplicationController
       @extended_respone = { sample: added_sample }
     end
   end
-  
 
   def add_sample_manually
     perform_encounter_action "adding manual sample" do

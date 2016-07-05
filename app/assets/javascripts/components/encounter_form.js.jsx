@@ -29,6 +29,7 @@ var BaseEncounterForm = {
     this._ajax_put('/encounters/add/new_sample');
     event.preventDefault();
   },
+
   removeNewSample: function(sample) {
     var filtered = _.filter(this.state.encounter.new_samples, function(s) { return s.entity_id != sample.entity_id });
 

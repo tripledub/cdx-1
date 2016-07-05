@@ -5,21 +5,9 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     $('.test_for_tb').attr('checked', false).parent().hide();
     $('.test_for_hiv').attr('checked', false).parent().hide();
   },
-	showAddSamplesModal: function(event) {
-    this.refs.addSamplesModal.show()
-    event.preventDefault()
-  },
-  closeAddSamplesModal: function (event) {
-    this.refs.addSamplesModal.hide();
-    event.preventDefault();
-  },
-  appendSample: function(sample) {
-    this.refs.addSamplesModal.hide();
-    this._ajax_put("/encounters/add/existing_sample/" + sample.uuid);
-  },
   validateAndSetManualEntry: function (event) {
     var sampleId = React.findDOMNode(this.refs.manualSampleEntry).value;
-    if(this.state.encounter.new_samples.filter(function(el){return el.entity_id == sampleId}).length > 0) {
+    if (this.state.encounter.new_samples.filter(function(el){return el.entity_id == sampleId}).length > 0) {
       // Error handling as done in the ajax responses
       alert("This sample has already been added");
     } else {
@@ -65,10 +53,8 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
                 Add sample
               </a>
             </p>
-            <p className={show_manual_sample}>
-              <p><input type="text" size="54" className="input-block" placeholder="Sample ID" ref="manualSampleEntry" /></p>
-              <p><button type="button" className="btn-primary pull-right" onClick={this.validateAndSetManualEntry}>Add</button></p>
-            </p>
+            <p className={show_manual_sample}><input type="text" size="54" placeholder="Sample ID" ref="manualSampleEntry" />&nbsp;
+            <button type="button" className="btn-primary" onClick={this.validateAndSetManualEntry}>Add</button></p>
           </div>
         </div>
 
