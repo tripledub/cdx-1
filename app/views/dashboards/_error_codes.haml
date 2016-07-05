@@ -1,0 +1,7 @@
+%header
+  = image_tag('img/user.png')
+  %h3
+    = I18n.t('dashboard.index.device_error_codes')
+.box-content
+  #chartDeviceErrorCodes{:style => "height: 200px; width: 100%;"}
+    = react_component('DeviceErrorTable', title: "title", allowSorting: "true", orderBy: "-device", data: error_codes_by_device)

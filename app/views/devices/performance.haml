@@ -1,24 +1,5 @@
-.row
-  .col.pe-8
-    %h1 Last 12 months usage
-  .col
-    .explore-link.pull-right
-      %span= link_to 'Explore tests', test_results_path("device.uuid": @device.uuid)
-      or
-      %span= link_to 'Logs', device_messages_path("device.uuid": @device.uuid)
-.row#tests_run
-  .col.pe-7
-    = react_component('BarChart', data: @tests_histogram, height: 300, y_label: "Tests Run")
-  .col
-    = react_component('PieChart', data: @tests_by_name, height: 250, label: "Tests Run")
-
-%hr
-
-.row
-  .col
-    %h1 Last 12 months error rate by operator
-.row
-  .col.pe-7
-    = react_component('BarChart', data: @errors_histogram, height: 300, y_label: "Tests with Errors", x_labels: @error_users)
-  .col
-    = react_component('PieChart', data: @errors_by_code, height: 250, label: "Errors")
+%main
+  = render partial: 'dashboards/total_tests', locals: { total_tests: Extras::Charts::VerticalColumns.new(@device_report.total_tests).render, failed_tests: Extras::Charts::Pie.new(@device_report.failed_tests).render }
+  %section.row
+    .small-12.columns.box
+      = render partial: 'dashboards/error_codes', locals: { error_codes_by_device: @device_report.error_codes_by_device }

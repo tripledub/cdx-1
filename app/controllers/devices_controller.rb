@@ -204,14 +204,10 @@ class DevicesController < ApplicationController
   end
 
   def performance
-    @device = Device.with_deleted.find(params[:id])
-    return unless authorize_resource(@device, READ_DEVICE)
-    since = (Date.today - 1.year).iso8601
+    device = Device.with_deleted.find(params[:id])
+    return unless authorize_resource(device, READ_DEVICE)
 
-    @tests_histogram = query_tests_histogram
-    @tests_by_name = query_tests_by_name
-    @errors_histogram, @error_users = query_errors_histogram
-    @errors_by_code = query_errors_by_code
+    @device_report = Reports::Device.new(current_user, @navigation_context, { device: device.uuid })
 
     render layout: false if request.xhr?
   end
@@ -265,99 +261,13 @@ class DevicesController < ApplicationController
     end
   end
 
-  def query_tests_histogram
-    query = default_performance_query_options.merge({
-      "group_by" => "month(test.start_time)",
-    })
-    result = TestResult.query(query, current_user).execute
-    result = Hash[result["tests"].map { |i| [i["test.start_time"], i["count"]] }]
+  protected
 
-    tests_histogram = []
-    11.downto(0).each do |i|
-      date = Date.today - i.months
-      date_key = date.strftime("%Y-%m")
-      tests_histogram << {
-        label: "#{I18n.t("date.abbr_month_names")[date.month]}#{date.month == 1 ? " #{date.strftime("%y")}" : ""}",
-        values: [result[date_key] || 0]
-      }
-    end
-    tests_histogram
+  def options
+    params.delete('range') if params['range'] && params['range']['start_time']['lte'].empty?
+    params.delete('range') if params['range'] && params['range']['start_time']['gte'].empty?
+    return { 'date_range' => params['range'] } if params['range']
+    return { 'since' => params['since'] } if params['since']
+    {}
   end
-
-  def query_errors_histogram
-    query = default_performance_query_options.merge({
-      "test.status" => "error",
-      "group_by" => "month(test.start_time),test.site_user",
-    })
-    result = TestResult.query(query, current_user).execute
-    users = result["tests"].index_by { |t| t["test.site_user"] }.keys
-    results_by_day = result["tests"].group_by { |t| t["test.start_time"] }
-
-    errors_histogram = []
-    11.downto(0).each do |i|
-      date = Date.today - i.months
-      date_key = date.strftime("%Y-%m")
-      date_results = results_by_day[date_key].try { |r| r.index_by { |t| t["test.site_user"] } }
-      errors_histogram << {
-        label: "#{I18n.t("date.abbr_month_names")[date.month]}#{date.month == 1 ? " #{date.strftime("%y")}" : ""}",
-        values: users.map do |u|
-          user_result = date_results && date_results[u]
-          user_result ? user_result["count"] : 0
-        end
-      }
-    end
-    return errors_histogram, users
-  end
-
-  def query_errors_by_code
-    query = default_performance_query_options.merge({
-      "test.status" => "error",
-    })
-    total_count = TestResult.query(query, current_user).execute["total_count"]
-    no_error_code = total_count
-
-    query = default_performance_query_options.merge({
-      "test.status" => "error",
-      "group_by" => "test.error_code",
-    })
-    result = TestResult.query(query, current_user).execute
-    pie_data = result["tests"].map do |test|
-      no_error_code -= test["count"]
-
-      {
-        label: test["test.error_code"],
-        value: test["count"]
-      }
-    end
-
-    pie_data << {label: 'Unknown', value: no_error_code} if no_error_code > 0
-
-    pie_data
-  end
-
-  def query_tests_by_name
-    query = default_performance_query_options.merge({
-      "group_by" => "test.name",
-    })
-    result = TestResult.query(query, current_user).execute
-    result["tests"].map do |test|
-      {
-        label: test["test.name"],
-        value: test["count"]
-      }
-    end
-  end
-
-  def default_performance_query_options
-    {
-      "since" => (Date.today - 1.year).iso8601,
-      "device.uuid" => @device.uuid,
-      # TODO post mvp: should generate list of all types but qc, or support query by !=
-      "test.type" => "specimen"
-    }.tap do |h|
-      # display only test results of the current site of the device
-      h["site.uuid"] = @device.site.uuid if @device.site
-    end
-  end
-
 end

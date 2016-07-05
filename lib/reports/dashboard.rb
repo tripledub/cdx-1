@@ -34,11 +34,12 @@ class Reports::Dashboard
   end
 
   def devices_not_responding
-    nil
+    Reports::DevicesNotReporting.new(@current_user, @navigation_context, @options).generate_chart
   end
 
   def error_codes_by_device
-    nil
+    data = Reports::DeviceErrorCodes.process(@current_user, @navigation_context, @options)
+    data.get_device_location_details
   end
 
 end
