@@ -92,7 +92,6 @@ class Site < ActiveRecord::Base
       if current_time >= next_window_start
         last_in_time_window = nil
       end
-
       next_entity_id = (last_in_time_window || "99999").succ
 
       while self.sample_identifiers_on_time(current_time).exists?(entity_id: next_entity_id)
@@ -101,7 +100,6 @@ class Site < ActiveRecord::Base
 
       update_attribute(:last_sample_identifier_entity_id, next_entity_id)
       update_attribute(:last_sample_identifier_date, current_time)
-
       next_entity_id
     end
   end

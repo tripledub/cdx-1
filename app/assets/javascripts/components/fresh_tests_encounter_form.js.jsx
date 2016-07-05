@@ -17,6 +17,18 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     this.refs.addSamplesModal.hide();
     this._ajax_put("/encounters/add/existing_sample/" + sample.uuid);
   },
+  validateAndSetManualEntry: function (event) {
+    var sampleId = React.findDOMNode(this.refs.manualSampleEntry).value;
+    if(this.state.encounter.new_samples.filter(function(el){return el.entity_id == sampleId}).length > 0) {
+      // Error handling as done in the ajax responses
+      alert("This sample has already been added");
+    } else {
+      this._ajax_put('/encounters/add/manual_sample_entry', function() {
+        this.refs.addNewSamplesModal.hide();
+      }, {entity_id: sampleId});
+    }
+    event.preventDefault();
+  },
   render: function() {
     var now = new Date();
     var day = ("0" + now.getDate()).slice(-2);
@@ -28,9 +40,12 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
       cancel_url = this.props.referer;
     }
 
-    var external_samples_class="btn-add-link"
-    if (this.props.allows_manual_entry != true) {
-      external_samples_class="hidden"
+    if (this.props.allows_manual_entry == true) {
+      show_auto_sample = "hidden";
+      show_manual_sample = "";
+    } else {
+      show_auto_sample = "";
+      show_manual_sample = "hidden";
     }
 
     return (
@@ -44,28 +59,17 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
           <div className="col-6">
             <SamplesList samples={this.state.encounter.samples}  />
             <NewSamplesList samples={this.state.encounter.new_samples} onRemoveSample={this.removeNewSample}/>
-            <p>
+            <p className={show_auto_sample}>
               <a className="btn-add-link" href='#' onClick={this.addNewSamples}>
                 <span className="icon-circle-plus icon-blue"></span>
                 Add sample
               </a>
             </p>
-            <p>
-            <a className={external_samples_class} href='#' onClick={this.showAddSamplesModal}><span className="icon-circle-plus icon-blue"></span>Append sample</a>
+            <p className={show_manual_sample}>
+              <p><input type="text" size="54" className="input-block" placeholder="Sample ID" ref="manualSampleEntry" /></p>
+              <p><button type="button" className="btn-primary pull-right" onClick={this.validateAndSetManualEntry}>Add</button></p>
             </p>
           </div>
-
-         <Modal ref="addSamplesModal">
-            <h1>
-              <a href="#" className="modal-back" onClick={this.closeAddSamplesModal}></a>
-              Add sample
-            </h1>
-
-            <AddItemSearch callback={"/encounters/search_sample?institution_uuid=" + this.state.encounter.institution.uuid} onItemChosen={this.appendSample}
-              placeholder="Search by sample id"
-              itemTemplate={AddItemSearchSampleTemplate}
-              itemKey="uuid" />
-          </Modal>
         </div>
 
         <div className="row">

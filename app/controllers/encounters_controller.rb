@@ -103,13 +103,6 @@ class EncountersController < ApplicationController
     end
   end
 
-  def add_existing_sample 
-    perform_encounter_action "adding sample" do
-      prepare_encounter_from_json
-      add_sample_by_uuid params[:sample_uuid]
-    end
-  end
-
   def add_test
     perform_encounter_action "adding test result" do
       prepare_encounter_from_json
@@ -133,6 +126,7 @@ class EncountersController < ApplicationController
       @extended_respone = { sample: added_sample }
     end
   end
+  
 
   def add_sample_manually
     perform_encounter_action "adding manual sample" do
