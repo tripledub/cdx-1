@@ -5,7 +5,7 @@ class DeviceMessagesController < ApplicationController
     device_ids = check_access(Device, SUPPORT_DEVICE).within(@navigation_context.entity, @navigation_context.exclude_subsites).pluck(:id)
     @messages = DeviceMessage.where("device_id IN (?)", device_ids).joins(device: :device_model).reverse_order
     apply_filters
-    @date_options = date_options_for_filter
+    @date_options = Extras::Dates::Filters.date_options_for_filter
     @devices = check_access(Device, READ_DEVICE).within(@navigation_context.entity)
     @device_models = DeviceModel.all
   end

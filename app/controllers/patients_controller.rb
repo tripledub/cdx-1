@@ -25,7 +25,7 @@ class PatientsController < ApplicationController
     @patients = @patients.where("location_geoid LIKE concat(?, '%')", params[:location]) unless params[:location].blank?
     @patients = @patients.where(id: Encounter.select(:patient_id).where("encounters.start_time > ?", params["last_encounter"])) if params["last_encounter"].present?
 
-    @date_options = date_options_for_filter
+    @date_options = Extras::Dates::Filters.date_options_for_filter
     @patients = perform_pagination(@patients)
     @patients.preload_locations!
     @patients = @patients.preload_last_encounter!

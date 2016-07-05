@@ -21,7 +21,7 @@ class TestResultsController < ApplicationController
     @test_types = Cdx::Fields.test.core_fields.find { |field| field.name == 'type' }.options
     @test_statuses = ['success','error']
     @conditions = Condition.all.map &:name
-    @date_options = date_options_for_filter
+    @date_options = Extras::Dates::Filters.date_options_for_filter
 
     @page_size = (params["page_size"] || 10).to_i
     @page = (params["page"] || 1).to_i
