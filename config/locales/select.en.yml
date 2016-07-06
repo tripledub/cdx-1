@@ -16,6 +16,10 @@ en:
         susceptible: 'S'
         contaminated: 'C'
         not_done: '--'
+        resistant_long: 'Resistant'
+        susceptible_long: 'Susceptible'
+        contaminated_long: 'Contaminated'
+        not_done_long: 'Not done'
       method_options:
         solid: 'Solid Media DST'
         liquid: 'Liquid Media DST'
