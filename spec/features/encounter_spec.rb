@@ -152,8 +152,8 @@ describe "create encounter" do
       page.find("#requested_lineprobe").trigger("click")
       page.find("#requested_drug_susceptibility").trigger("click")
 
-     click_link('encountersave')
-     click_link('encountersave')
+      click_link('encountersave')
+      click_link('encountersave')
     end
 
     expect_page ShowEncounterPage do |page|
@@ -164,7 +164,14 @@ describe "create encounter" do
       expect(page).to have_link("Update Test Order")
       expect(page.encounter.test_results.count).to eq(0)
       expect(page).to have_css('.icon-pencil', count: 4)
+      expect(page.table.items.count).to eq 4
+      page.table.items[0].root_element.all("td")[7].click
     end
+    
+    expect_page NewCultureResultsPage do |page|
+      expect(page.has_content?('Add Culture Test Result')).to be true
+    end
+    
   end
   
 

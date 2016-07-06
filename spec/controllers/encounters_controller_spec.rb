@@ -38,6 +38,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       get :show, id: encounter.id
       expect(response).to have_http_status(:success)
       expect(assigns[:can_update]).to be_falsy
+      expect(assigns[:associated_tests_to_results]).to eq([])
     end
 
     it "returns http forbidden if not allowed" do
