@@ -4,12 +4,16 @@ class XpertResult < PatientResult
   validates_inclusion_of :rifampicin,   in: ['detected', 'not_detected', 'indeterminate']
 
   class << self
-    def tuberculosis_results
+    def tuberculosis_options
       [['detected', 'Detected'], ['not_detected', 'Not Detected'], ['invalid', 'Invalid / No result / Error']]
     end
 
-    def rifampicin_results
+    def rifampicin_options
       [['detected', 'Detected'], ['not_detected', 'Not Detected'], ['indeterminate', 'Indeterminate result']]
+    end
+
+    def tuberculosis_options_humanize(option)
+
     end
   end
 end

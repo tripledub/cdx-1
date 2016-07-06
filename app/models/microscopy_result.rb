@@ -7,10 +7,5 @@ class MicroscopyResult < PatientResult
     def visual_appearance_options
       [['blood', I18n.t('select.microscopy.visual_appearance.blood')], ['mucopurulent', I18n.t('select.microscopy.visual_appearance.mucopurulent')], ['saliva', I18n.t('select.microscopy.visual_appearance.saliva')]]
     end
-
-    def visual_appearance_options_humanize(option)
-      result = visual_appearance_options.find { |e| e[0] == option }
-      result[1] if result
-    end
   end
 end

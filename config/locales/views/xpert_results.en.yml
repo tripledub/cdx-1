@@ -5,3 +5,5 @@ en:
     create:
       audit: 'Xpert MTB/RIF result added'
       notice: 'Xpert MTB/RIF result was successfully created.'
+    show:
+      header: 'Xpert MTB/RIF results for: %{patient_name}'

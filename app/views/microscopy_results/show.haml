@@ -31,7 +31,7 @@
               .col-12
                 %label
                   = MicroscopyResult.human_attribute_name(:appearance)
-                = MicroscopyResult.visual_appearance_options_humanize(@microscopy_result.appearance)
+                = Extras::Select.find(MicroscopyResult.visual_appearance_options, @microscopy_result.appearance)
           .col-6
             .row
               .col-12

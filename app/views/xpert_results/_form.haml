@@ -11,13 +11,13 @@
     .col.pe-2
       = f.label :tuberculosis
     .col
-      = f.collection_radio_buttons(:tuberculosis, XpertResult.tuberculosis_results, :first, :last)
+      = f.collection_radio_buttons(:tuberculosis, XpertResult.tuberculosis_options, :first, :last)
 
   .row
     .col.pe-2
       = f.label :rifampicin
     .col
-      = f.collection_radio_buttons(:rifampicin, XpertResult.rifampicin_results, :first, :last)
+      = f.collection_radio_buttons(:rifampicin, XpertResult.rifampicin_options, :first, :last)
 
   .row
     .col.pe-2
