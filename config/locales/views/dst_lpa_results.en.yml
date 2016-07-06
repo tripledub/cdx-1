@@ -5,3 +5,5 @@ en:
     create:
       audit: 'DST and LPA result added'
       notice: 'DST and LPA result was successfully created.'
+    show:
+      header: 'DST and LPA test result for: %{patient_name}'

@@ -32,6 +32,16 @@
                 %label
                   = MicroscopyResult.human_attribute_name(:appearance)
                 = Extras::Select.find(MicroscopyResult.visual_appearance_options, @microscopy_result.appearance)
+            .row
+              .col-12
+                %label
+                  = MicroscopyResult.human_attribute_name(:examined_by)
+                = @microscopy_result.examined_by
+            .row
+              .col-12
+                %label
+                  = MicroscopyResult.human_attribute_name(:result_on)
+                = I18n.l(@microscopy_result.result_on, format: :full_date)
           .col-6
             .row
               .col-12
