@@ -13,7 +13,7 @@ var PatientAuditLogs = React.createClass({
       if (results.length > 0) {
         this.setState({ patientLogs: results });
       } else {
-        this.setState({ loadingMessasge: 'There are no logs available.' });
+        this.setState({ loadingMessage: 'There are no logs available.' });
       };
     }.bind(this));
   },

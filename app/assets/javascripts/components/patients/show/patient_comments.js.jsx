@@ -13,7 +13,7 @@ var PatientComments = React.createClass({
       if (results.length > 0) {
         this.setState({ patientComments: results });
       } else {
-        this.setState({ loadingMessasge: 'There are no comments available.' });
+        this.setState({ loadingMessage: 'There are no comments available.' });
       };
     }.bind(this));
   },
