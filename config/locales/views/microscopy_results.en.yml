@@ -5,3 +5,5 @@ en:
     create:
       audit: 'Microscopy result added'
       notice: 'Microscopy result was successfully created.'
+    show:
+      header: 'Microscopy results for: %{patient_name}'
