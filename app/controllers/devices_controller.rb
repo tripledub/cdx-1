@@ -204,12 +204,16 @@ class DevicesController < ApplicationController
   end
 
   def performance
-    device = Device.with_deleted.find(params[:id])
-    return unless authorize_resource(device, READ_DEVICE)
+    @device = Device.with_deleted.find(params[:id])
+    return unless authorize_resource(@device, READ_DEVICE)
 
-    @device_report = Reports::Device.new(current_user, @navigation_context, { device: device.uuid })
+    @device_report = Reports::Device.new(current_user, @navigation_context, { device: @device.uuid })
 
-    render layout: false if request.xhr?
+    if request.xhr?
+      render layout: false
+    else
+      render :show
+    end
   end
 
   def tests
