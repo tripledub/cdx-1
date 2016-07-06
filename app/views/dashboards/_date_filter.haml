@@ -1,0 +1,33 @@
+%section.row
+  .small-12.columns
+    .search
+      %form#filters-form{ action: filter_action }
+        .topdatefrom
+          %label.block
+            = I18n.t('dashboard.index.date_from')
+          = date_field('range','start_time[gte]', value: (params['range'].nil? ? '' : params['range']['start_time']['gte']), max: Date.today)
+
+        .topdateto
+          %label.block
+            = I18n.t('dashboard.index.date_to')
+          = date_field('range','start_time[lte]', value: (params['range'].nil? ? '' : params['range']['start_time']['lte']) )
+
+        .topdateperiod
+          .filter
+            %label.block
+              = I18n.t('dashboard.index.date_period')
+            = cdx_select name: 'since', value: params['since'] do |select|
+              - select.items Extras::Dates::Filters.date_options_for_filter, :value, :label
+
+          .topbutton
+            %input#query_button.btn-primary(type='submit' value="#{I18n.t('dashboard.index.filter_button')}")
+
+:javascript
+  $(document).ready( function()
+  {
+    $('input[name=since]').on('change', function()
+    {
+      $('input#range_start_time\\[gte\\]').val( $(this).val() );
+      $('input#range_start_time\\[lte\\]').val( new Date().toJSON().slice(0,10) );
+    });
+  })

@@ -1,32 +1,4 @@
 module ChartsHelper
-  def query_devices_not_reporting_chart
-    @devices = check_access(Device.within(@navigation_context.entity), Policy::Actions::READ_DEVICE)
-    if options["since"] !=nil
-      since=options["since"]
-    else
-      since = (Time.now - 12.months).strftime('%Y-%m-%d')
-    end
-
-    data=[]
-    @devices.each do |device|
-      if options["date_range"] ==nil
-        day_range =  (Date.parse(Time.now.strftime('%Y-%m-%d')) -  Date.parse(since) ).to_i
-        device_message = DeviceMessage.where(:device_id => device.id).where("created_at > ?", since).order(:created_at).first
-      else
-        day_range = ( Date.parse(options["date_range"]["start_time"]["lte"]) -  Date.parse(options["date_range"]["start_time"]["gte"]) ).to_i
-        device_message = DeviceMessage.where(:device_id => device.id).where("created_at > ? and created_at < ?",options["date_range"]["start_time"]["lge"],options["date_range"]["start_time"]["lte"]).order(:created_at).first
-      end
-
-      if device_message==nil
-        data << {'_label':device.name, '_value':day_range} if device.name.length > 0
-      else
-        days_diff = ( (Time.now - (device_message.created_at) ) / (1.day)).round
-        data << {'_label':device.name.truncate(13), '_value':days_diff} if device.name.length > 0
-      end
-    end
-    data
-  end
-
   def devices_reporting_chart
     results = Reports::Devices.process(current_user, @navigation_context, options)
     return results.sort_by_month if results.number_of_months > 1
@@ -116,28 +88,6 @@ module ChartsHelper
 
   def end_date
     params['range']['start_time']['lte'].present? ? Date.parse(params['range']['start_time']['lte']) : Date.today
-  end
-
-  def options_for_date
-    [
-      {
-        label: I18n.t('dashboard.chart_helper.previous_week'),
-        value: 1.week.ago.strftime('%Y-%m-%d')
-      },
-      {
-        label: I18n.t('dashboard.chart_helper.previous_month'),
-        value: 1.month.ago.strftime('%Y-%m-%d')
-      },
-      {
-        label: I18n.t('dashboard.chart_helper.previous_quarter'),
-
-        value: 3.months.ago.strftime('%Y-%m-%d')
-      },
-      {
-        label: I18n.t('dashboard.chart_helper.previous_year'),
-        value: 1.year.ago.strftime('%Y-%m-%d')
-      }
-    ]
   end
 
   def query_errors

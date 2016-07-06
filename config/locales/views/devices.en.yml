@@ -3,6 +3,10 @@ en:
     show:
       performance: 'Performance'
       setup: 'Setup'
+    performance:
+      explore_tests: 'Explore tests'
+      or: 'or'
+      logs: 'Logs'
     new:
       new_device: 'New Device'
     form:

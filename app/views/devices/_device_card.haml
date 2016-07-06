@@ -12,9 +12,11 @@
   .col.pe-12
     = card image: @device.device_model.picture.url(:card) do |c|
       - c.top do
-        %b= @device.name
+        %b
+          = @device.name
         %br
-        %span= @device.device_model.name
+        %span
+          = @device.device_model.name
         - if @show_institution
           %div
             = I18n.t('devices.device_card.institution', institution_name: @device.institution.name)
