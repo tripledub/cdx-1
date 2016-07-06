@@ -162,13 +162,13 @@ class Encounter < ActiveRecord::Base
       json.name encounter_query_result["site"]["name"]
     end
   end
-  
-  def self.find_associated_tests_to_results(encounter)
-    PatientResult.joins(:requested_test).where('requested_tests.encounter_id' => encounter.id).pluck(:id, :requested_test_id).map do |result| 
+ 
+  def find_associated_tests_to_results
+    PatientResult.joins(:requested_test).where('requested_tests.encounter_id' => self.id).pluck(:id, :requested_test_id).map do |result| 
      {id: result[0], requested_test_id: result[1]}  
     end
   end
-  
+
   protected
 
   def ensure_entity_id

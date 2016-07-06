@@ -314,7 +314,7 @@ describe Encounter do
           result2=XpertResult.new encounter_id: encounter.id, requested_test_id: requested_test2.id
           result2.save(validate: false)
  
-          expect(Encounter.find_associated_tests_to_results(encounter).length).to eq(2)
+          expect(encounter.find_associated_tests_to_results.length).to eq(2)
         end
       end
   
