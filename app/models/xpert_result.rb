@@ -3,6 +3,8 @@ class XpertResult < PatientResult
   validates_inclusion_of :tuberculosis, in: ['detected', 'not_detected', 'invalid']
   validates_inclusion_of :rifampicin,   in: ['detected', 'not_detected', 'indeterminate']
 
+  delegate :patient, to: 'requested_test.encounter'
+
   class << self
     def tuberculosis_options
       [['detected', I18n.t('select.xpert.tuberculosis.detected')], ['not_detected', I18n.t('select.xpert.tuberculosis.not_detected')], ['invalid', I18n.t('select.xpert.tuberculosis.invalid')]]

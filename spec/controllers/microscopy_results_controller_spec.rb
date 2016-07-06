@@ -3,15 +3,16 @@ require 'policy_spec_helper'
 
 describe MicroscopyResultsController do
   render_views
-  let(:user)           { User.make }
-  let!(:institution)   { user.institutions.make }
+  let(:user)                { User.make }
+  let!(:institution)        { user.institutions.make }
   let(:site)                { Site.make institution: institution }
   let(:patient)             { Patient.make institution: institution }
   let(:encounter)           { Encounter.make institution: institution , user: user, patient: patient }
   let(:sample)              { Sample.make(institution: institution, patient: patient, encounter: encounter) }
   let!(:sample_identifier1) { SampleIdentifier.make(site: site, entity_id: 'sample-id', sample: sample) }
   let!(:sample_identifier2) { SampleIdentifier.make(site: site, entity_id: 'sample-2', sample: sample) }
-  let(:requested_test) { RequestedTest.make encounter: encounter }
+  let(:requested_test)      { RequestedTest.make encounter: encounter }
+  let(:microscopy_result)   { MicroscopyResult.make requested_test: requested_test }
   let(:default_params) { { context: institution.uuid } }
   let(:valid_params)   { {
     sample_collected_on: 4.days.ago,
@@ -90,9 +91,40 @@ describe MicroscopyResultsController do
 
     describe 'show' do
       it 'should render the new template' do
+        microscopy_result
         get 'show', requested_test_id: requested_test.id
 
         expect(request).to render_template('show')
+      end
+    end
+
+    describe 'update' do
+      context 'with valid data' do
+        before :each do
+          microscopy_result
+          valid_params.merge!({ appearance: 'blood' })
+          put :update, requested_test_id: requested_test.id, microscopy_result: valid_params
+        end
+
+        it 'should update the content' do
+          expect(requested_test.microscopy_result.appearance).to eq('blood')
+        end
+
+        it 'should redirect to the test order page' do
+          expect(response).to redirect_to encounter_path(requested_test.encounter)
+        end
+      end
+
+      context 'with invalid data' do
+        before :each do
+          microscopy_result
+          valid_params.merge!({ appearance: '' })
+          put :update, requested_test_id: requested_test.id, microscopy_result: valid_params
+        end
+
+        it 'should redirect to the test order page' do
+          expect(request).to render_template('edit')
+        end
       end
     end
   end
