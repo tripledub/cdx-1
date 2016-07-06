@@ -7,9 +7,9 @@
       .row.col-6
         %ul
           %li
-            = link_to 'Save', '#', class: 'button save', title: 'Save'
+            = link_to I18n.t('views.save'), '#', class: 'button save', title: I18n.t('views.save')
           %li
-            = link_to 'Cancel', patient_path(@patient), class: 'button cancel', title: 'Cancel'
+            = link_to I18n.t('views.cancel'), patient_path(@patient), class: 'button cancel', title: I18n.t('views.cancel')
 
     = form_for([@patient, @episode], html: { class: 'zebra' } ) do |f|
       = f.hidden_field :closed, value: @episode.closed
