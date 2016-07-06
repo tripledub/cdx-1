@@ -5,15 +5,11 @@ class XpertResult < PatientResult
 
   class << self
     def tuberculosis_options
-      [['detected', 'Detected'], ['not_detected', 'Not Detected'], ['invalid', 'Invalid / No result / Error']]
+      [['detected', I18n.t('select.xpert.tuberculosis.detected')], ['not_detected', I18n.t('select.xpert.tuberculosis.not_detected')], ['invalid', I18n.t('select.xpert.tuberculosis.invalid')]]
     end
 
     def rifampicin_options
-      [['detected', 'Detected'], ['not_detected', 'Not Detected'], ['indeterminate', 'Indeterminate result']]
-    end
-
-    def tuberculosis_options_humanize(option)
-
+      [['detected', I18n.t('select.xpert.rifampicin.detected')], ['not_detected', I18n.t('select.xpert.rifampicin.not_detected')], ['indeterminate', I18n.t('select.xpert.rifampicin.indeterminate')]]
     end
   end
 end

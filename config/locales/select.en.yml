@@ -21,3 +21,12 @@ en:
         liquid: 'Liquid Media DST'
         direct: 'Direct LPA'
         indirect: 'Indirect LPA'
+    xpert:
+      tuberculosis:
+        detected: 'Detected'
+        not_detected: 'Not Detected'
+        invalid: 'Invalid / No result / Error'
+      rifampicin:
+        detected: 'Detected'
+        not_detected: 'Not Detected'
+        indeterminate:  'Indeterminate result'
