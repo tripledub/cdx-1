@@ -1,3 +1,10 @@
+%row
+  .col
+    .explore-link
+      %span= link_to I18n.t('devices.performance.explore_tests'), test_results_path("device.uuid": @device.uuid)
+      = I18n.t('devices.performance.or')
+      %span= link_to I18n.t('devices.performance.logs'), device_messages_path("device.uuid": @device.uuid)
+
 %main
   = render partial: 'dashboards/total_tests', locals: { total_tests: Extras::Charts::VerticalColumns.new(@device_report.total_tests).render, failed_tests: Extras::Charts::Pie.new(@device_report.failed_tests).render }
   %section.row
