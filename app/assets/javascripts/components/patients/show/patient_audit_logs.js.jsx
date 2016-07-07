@@ -3,7 +3,14 @@ var PatientAuditLogs = React.createClass({
     return {
       patientLogs: [],
       queryOrder: true,
-      loadingMessasge: 'Loading logs...'
+      loadingMessasge: 'Loading logs...',
+      defaultOrder: { 'title': '', 'user': '', 'date': '' },
+      orderedColumns: {},
+      availableColumns: [
+        { title: 'Title',      fieldName: 'title' },
+        { title: 'User',       fieldName: 'user' },
+        { title: 'Date added', fieldName: 'date' }
+      ]
     };
   },
 
@@ -12,6 +19,7 @@ var PatientAuditLogs = React.createClass({
     this.serverRequest = $.get(this.props.patientLogsUrl + this.getParams(field), function (results) {
       if (results.length > 0) {
         this.setState({ patientLogs: results });
+        this.updateOrderIcon(field)
       } else {
         this.setState({ loadingMessage: 'There are no logs available.' });
       };
@@ -19,13 +27,19 @@ var PatientAuditLogs = React.createClass({
   },
 
   getParams: function(field) {
-    var orderField = field === 1 ? 'date' : 'name';
     this.state.queryOrder = !this.state.queryOrder;
-    return '&field='+ orderField + '&order=' + this.state.queryOrder;
+    return '&field='+ field + '&order=' + this.state.queryOrder;
+  },
+
+  updateOrderIcon: function(orderedField) {
+    iconValue                  = (this.state.queryOrder == true) ? '&#x25BC;' : '&#x25B2;';
+    updatedState               = this.state.defaultOrder;
+    updatedState[orderedField] = iconValue;
+    this.setState({ orderedColumns: updatedState });
   },
 
   componentDidMount: function() {
-    this.getPatientLogs(1);
+    this.getPatientLogs('date');
   },
 
   componentWillUnmount: function() {
@@ -33,10 +47,18 @@ var PatientAuditLogs = React.createClass({
   },
 
   render: function(){
-    var rows = [];
+    var rows       = [];
+    var rowHeaders = [];
+    var that       = this;
     this.state.patientLogs.forEach(
       function(patientLog) {
         rows.push(<PatientLog patientLog={patientLog} key={patientLog.id} />);
+      }
+    );
+
+    this.state.availableColumns.forEach(
+      function(availableColumn) {
+        rowHeaders.push(<OrderedColumnHeader key={availableColumn.fieldName} title={availableColumn.title} fieldName={availableColumn.fieldName} orderEvent={that.getPatientLogs} orderIcon={that.state.orderedColumns[availableColumn.fieldName]} />);
       }
     );
 
@@ -47,9 +69,7 @@ var PatientAuditLogs = React.createClass({
           <table className="patient-audit-logs">
             <thead>
               <tr>
-                <th>Title</th>
-                <th><a href="#" onClick={this.getPatientLogs.bind(null, 2)}>User</a></th>
-                <th><a href="#" onClick={this.getPatientLogs.bind(null, 1)}>Date Added</a></th>
+               {rowHeaders}
               </tr>
             </thead>
             <tbody>
