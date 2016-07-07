@@ -28,6 +28,6 @@
   .row.button-actions
     .col
       = f.submit class: "btn-primary"
-      = link_to 'Cancel', filters_path, class: 'btn-link'
+      = link_to I18n.t('views.cancel'), filters_path, class: 'btn-link'
       - if @editing
         = confirm_deletion_button filter, 'filter'

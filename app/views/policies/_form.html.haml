@@ -25,7 +25,7 @@
         = f.text_area :definition, :rows => 5, :class => 'input-block'
   .row.button-actions
     .col
-      = f.submit 'Save', :class => 'btn-primary'
-      = link_to 'Cancel', policies_path, class: 'btn-link'
+      = f.submit I18n.t('views.save'), :class => 'btn-primary'
+      = link_to I18n.t('views.cancel'), policies_path, class: 'btn-link'
       - if @editing
         = confirm_deletion_button @policy, 'policy'

@@ -30,5 +30,5 @@
 
   .row.button-actions
     .col
-      = f.submit 'Save', class: 'btn-primary'
-      = link_to 'Cancel', settings_path, class: 'btn-link'
+      = f.submit I18n.t('views.save'), class: 'btn-primary'
+      = link_to I18n.t('views.cancel'), settings_path, class: 'btn-link'

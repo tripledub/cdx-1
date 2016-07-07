@@ -8,7 +8,7 @@
           .col
             %h2
               - unless @institutions.one?
-                = link_to institutions_path, class: 'side-link', title: 'Back' do
+                = link_to institutions_path, class: 'side-link', title: I18n.t('views.back') do
                   = image_tag "arrow-left.png"
               = @institution.name
 

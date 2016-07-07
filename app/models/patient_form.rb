@@ -91,7 +91,7 @@ class PatientForm
 
   validates_presence_of :name, :entity_id
   GENDER_VALUES = Patient.entity_fields.detect { |f| f.name == 'gender' }.options
-  validates_inclusion_of :gender, in: GENDER_VALUES, allow_blank: true, message: "is not within valid options (should be one of #{GENDER_VALUES.join(', ')})"
+  validates_inclusion_of :gender, in: GENDER_VALUES, allow_blank: true, message: I18n.t('patient.model_form.wrong_gender', gender_values: GENDER_VALUES.join(', '))
 
   # begin dob
   # @dob is Time | Nil | String.
@@ -119,14 +119,10 @@ class PatientForm
     end
   end
 
-  def dob_placeholder
-    I18n.t('date.input_format.placeholder')
-  end
-
   def dob_is_a_date
     return if @dob.blank?
 
-    errors.add(:dob, "should be a date in #{dob_placeholder}") unless @dob.is_a?(Time)
+    errors.add(:dob, I18n.t('patient.model_form.wrong_date', dob_placeholder: I18n.t('date.input_format.placeholder'))) unless @dob.is_a?(Time)
   end
   # end dob
 

@@ -66,9 +66,9 @@
     .row.button-actions
       .col
         - unless @readonly
-          = f.submit 'Save', class: 'btn-primary'
+          = f.submit I18n.t('views.save'), class: 'btn-primary'
 
-        = link_to (@readonly ? 'back' : 'Cancel'), (@institutions.one? ? dashboard_path : institutions_path), class: 'btn-link'
+        = link_to (@readonly ? I18n.t('views.back') : I18n.t('views.cancel')), (@institutions.one? ? dashboard_path : institutions_path), class: 'btn-link'
 
         - if @can_delete
           = confirm_deletion_button @institution

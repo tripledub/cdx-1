@@ -55,5 +55,5 @@
   - if @can_update
     .row.button-actions
       .col
-        = f.submit 'Save', class: 'btn-primary'
-        = link_to 'Cancel', users_path,  class: 'btn-link'
+        = f.submit I18n.t('views.save'), class: 'btn-primary'
+        = link_to I18n.t('views.cancel'), users_path,  class: 'btn-link'

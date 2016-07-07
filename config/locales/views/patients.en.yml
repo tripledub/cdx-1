@@ -13,3 +13,20 @@ en:
       patient_summary: 'Patient Summary'
       patient_history: 'Patient History'
       episode_summary: 'Episode Summary'
+    filters:
+      add_patient: 'Add patient'
+      show_all: 'Show all'
+      name: 'Name'
+      patient_id: 'Patient Id'
+      last_test_order: 'Last test order'
+      patients: 'Patients'
+    new:
+      new_patient: 'New patient'
+    index:
+      no_patients: 'No patients registered'
+      keep_organized: 'Keep your test orders organized under patients medical history'
+      name: 'Name'
+      patient_id: 'Patient Id'
+      birth_date: 'Date of birth'
+      city: 'City'
+      last_test_order: 'Last test order'
