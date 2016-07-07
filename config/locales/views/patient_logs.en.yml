@@ -1,0 +1,4 @@
+en:
+  patient_logs:
+    show:
+      header: 'History logs'
