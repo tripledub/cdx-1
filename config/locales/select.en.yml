@@ -16,8 +16,21 @@ en:
         susceptible: 'S'
         contaminated: 'C'
         not_done: '--'
+        resistant_long: 'Resistant'
+        susceptible_long: 'Susceptible'
+        contaminated_long: 'Contaminated'
+        not_done_long: 'Not done'
       method_options:
         solid: 'Solid Media DST'
         liquid: 'Liquid Media DST'
         direct: 'Direct LPA'
         indirect: 'Indirect LPA'
+    xpert:
+      tuberculosis:
+        detected: 'Detected'
+        not_detected: 'Not Detected'
+        invalid: 'Invalid / No result / Error'
+      rifampicin:
+        detected: 'Detected'
+        not_detected: 'Not Detected'
+        indeterminate:  'Indeterminate result'

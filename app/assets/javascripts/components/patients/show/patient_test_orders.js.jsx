@@ -13,7 +13,7 @@ var PatientTestOrders = React.createClass({
       if (results.length > 0) {
         this.setState({ patientTestOrders: results });
       } else {
-        this.setState({ loadingMessasge: 'There are no test orders.' });
+        this.setState({ loadingMessage: 'There are no test orders.' });
       };
     }.bind(this));
   },

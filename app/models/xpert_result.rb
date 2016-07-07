@@ -3,13 +3,15 @@ class XpertResult < PatientResult
   validates_inclusion_of :tuberculosis, in: ['detected', 'not_detected', 'invalid']
   validates_inclusion_of :rifampicin,   in: ['detected', 'not_detected', 'indeterminate']
 
+  delegate :patient, to: 'requested_test.encounter'
+
   class << self
-    def tuberculosis_results
-      [['detected', 'Detected'], ['not_detected', 'Not Detected'], ['invalid', 'Invalid / No result / Error']]
+    def tuberculosis_options
+      [['detected', I18n.t('select.xpert.tuberculosis.detected')], ['not_detected', I18n.t('select.xpert.tuberculosis.not_detected')], ['invalid', I18n.t('select.xpert.tuberculosis.invalid')]]
     end
 
-    def rifampicin_results
-      [['detected', 'Detected'], ['not_detected', 'Not Detected'], ['indeterminate', 'Indeterminate result']]
+    def rifampicin_options
+      [['detected', I18n.t('select.xpert.rifampicin.detected')], ['not_detected', I18n.t('select.xpert.rifampicin.not_detected')], ['indeterminate', I18n.t('select.xpert.rifampicin.indeterminate')]]
     end
   end
 end

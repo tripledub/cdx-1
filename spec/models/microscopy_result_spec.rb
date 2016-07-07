@@ -11,6 +11,6 @@ describe MicroscopyResult do
     it { should validate_presence_of(:appearance) }
     it { should validate_presence_of(:examined_by) }
     it { should validate_presence_of(:result_on) }
-    it { should validate_inclusion_of(:specimen_type).in_array(visual_appearance_options) }
+    it { should validate_inclusion_of(:appearance).in_array(visual_appearance_options) }
   end
 end

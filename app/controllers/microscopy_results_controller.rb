@@ -1,5 +1,7 @@
 class MicroscopyResultsController < PatientResultsController
 
+  before_filter :find_culture_result, only: [:edit, :update, :show]
+
   def new
     @microscopy_result                     = @requested_test.build_microscopy_result
     @microscopy_result.sample_collected_on = Date.today
@@ -18,10 +20,24 @@ class MicroscopyResultsController < PatientResultsController
   end
 
   def show
-    @microscopy_result = @requested_test.microscopy_result
+  end
+
+  def edit
+  end
+
+  def update
+    if @microscopy_result.update_and_audit(microscopy_result_params, current_user, I18n.t('microscopy_result.update.audit'))
+      redirect_to encounter_path(@requested_test.encounter), notice: I18n.t('microscopy_result.update.notice')
+    else
+      render action: 'edit'
+    end
   end
 
   protected
+
+  def find_culture_result
+    @microscopy_result = @requested_test.microscopy_result
+  end
 
   def microscopy_result_params
     params.require(:microscopy_result).permit(:sample_collected_on, :examined_by, :result_on, :specimen_type, :serial_number, :appearance, :results_negative, :results_1to9, :results_1plus, :results_2plus, :results_3plus)

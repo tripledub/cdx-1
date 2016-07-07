@@ -12,6 +12,7 @@ describe CultureResultsController do
   let!(:sample_identifier1) { SampleIdentifier.make(site: site, entity_id: 'sample-id', sample: sample) }
   let!(:sample_identifier2) { SampleIdentifier.make(site: site, entity_id: 'sample-2', sample: sample) }
   let(:requested_test)      { RequestedTest.make encounter: encounter }
+  let(:culture_result)      { CultureResult.make requested_test: requested_test }
   let(:default_params)      { { context: institution.uuid } }
   let(:valid_params)        { {
     sample_collected_on:    4.days.ago,
@@ -88,13 +89,55 @@ describe CultureResultsController do
           expect(request).to render_template('new')
         end
       end
-     end
+    end
 
     describe 'show' do
-      it 'should render the new template' do
+      it 'should render the show template' do
+        culture_result
         get 'show', requested_test_id: requested_test.id
 
         expect(request).to render_template('show')
+      end
+    end
+
+    describe 'edit' do
+      before :each do
+        culture_result
+        get 'edit', requested_test_id: requested_test.id
+      end
+
+      it 'should render the edit template' do
+        expect(request).to render_template('edit')
+      end
+    end
+
+    describe 'update' do
+      context 'with valid data' do
+        before :each do
+          culture_result
+          valid_params.merge!({ media_used: 'liquid' })
+          put :update, requested_test_id: requested_test.id, culture_result: valid_params
+        end
+
+        it 'should update the content' do
+          expect(requested_test.culture_result.media_used).to eq('liquid')
+        end
+
+        it 'should redirect to the test order page' do
+          expect(response).to redirect_to encounter_path(requested_test.encounter)
+        end
+      end
+
+      context 'with invalid data' do
+        before :each do
+          culture_result
+          valid_params.merge!({ media_used: '' })
+          put :update, requested_test_id: requested_test.id, culture_result: valid_params
+        end
+
+        it 'should redirect to the test order page' do
+          expect(request).to render_template('edit')
+        end
       end
     end
   end

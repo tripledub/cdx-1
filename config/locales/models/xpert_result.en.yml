@@ -1,0 +1,9 @@
+en:
+  activerecord:
+    attributes:
+      xpert_result:
+        sample_collected_on: 'Date sample collected'
+        examined_by: 'Examined by'
+        result_on: 'Date of result'
+        rifampicin: 'Rifampicin resistance'
+        tuberculosis: 'M. tuberculosis'

@@ -9,10 +9,11 @@ describe XpertResultsController do
   let(:encounter)      { Encounter.make institution: institution , user: user, patient: patient }
   let(:requested_test) { RequestedTest.make encounter: encounter }
   let(:default_params) { { context: institution.uuid } }
+  let(:xpert_result)   { XpertResult.make requested_test: requested_test }
   let(:valid_params)   { {
     sample_collected_on: 4.days.ago,
-    tuberculosis:        :not_detected,
-    rifampicin:          :detected,
+    tuberculosis:        'not_detected',
+    rifampicin:          'detected',
     examined_by:         'Michael Kiske',
     result_on:           1.day.ago
   } }
@@ -68,9 +69,51 @@ describe XpertResultsController do
 
     describe 'show' do
       it 'should render the new template' do
+        xpert_result
         get 'show', requested_test_id: requested_test.id
 
         expect(request).to render_template('show')
+      end
+    end
+
+    describe 'edit' do
+      before :each do
+        xpert_result
+        get 'edit', requested_test_id: requested_test.id
+      end
+
+      it 'should render the edit template' do
+        expect(request).to render_template('edit')
+      end
+    end
+
+    describe 'update' do
+      context 'with valid data' do
+        before :each do
+          xpert_result
+          valid_params.merge!({ tuberculosis: 'not_detected' })
+          put :update, requested_test_id: requested_test.id, xpert_result: valid_params
+        end
+
+        it 'should update the content' do
+          expect(requested_test.xpert_result.tuberculosis).to eq('not_detected')
+        end
+
+        it 'should redirect to the test order page' do
+          expect(response).to redirect_to encounter_path(requested_test.encounter)
+        end
+      end
+
+      context 'with invalid data' do
+        before :each do
+          xpert_result
+          valid_params.merge!({ tuberculosis: '' })
+          put :update, requested_test_id: requested_test.id, xpert_result: valid_params
+        end
+
+        it 'should redirect to the test order page' do
+          expect(request).to render_template('edit')
+        end
       end
     end
   end

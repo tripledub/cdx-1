@@ -1,0 +1,56 @@
+#show-culture-result.testflow
+  .container
+    .row.labelHeader
+      .col-6
+        %h3
+          = I18n.t('culture_results.show.header', patient_name: patient_display_name(@culture_result.patient.name))
+      .col-6
+        %ul
+          %li
+            = link_to I18n.t('views.back'), encounter_path(@requested_test.encounter), class: 'button new'
+    .order-details
+      .panel
+        .row
+          .col-6
+            .row
+              .col-12
+                %label
+                  = CultureResult.human_attribute_name(:sample_collected_on)
+                = I18n.l(@culture_result.sample_collected_on, format: :full_date)
+            .row
+              .col-12
+                %label
+                  = CultureResult.human_attribute_name(:media_used)
+                = Extras::Select.find(CultureResult.media_options, @culture_result.media_used)
+            .row
+              .col-12
+                %label
+                  = CultureResult.human_attribute_name(:serial_number)
+                = @culture_result.serial_number
+            .row
+              .col-12
+                %label
+                  = CultureResult.human_attribute_name(:examined_by)
+                = @culture_result.examined_by
+            .row
+              .col-12
+                %label
+                  = CultureResult.human_attribute_name(:result_on)
+                = I18n.l(@culture_result.result_on, format: :full_date)
+
+          .col-6
+            .row
+              .col-12
+                = render partial: 'shared/display_boolean_value', locals: { label_name: CultureResult.human_attribute_name(:results_negative), field_name: 'culture_result_results_negative', field_value: @culture_result.results_negative }
+              .col-12
+                = render partial: 'shared/display_boolean_value', locals: { label_name: CultureResult.human_attribute_name(:results_1to9), field_name: 'culture_result_results_1to9', field_value: @culture_result.results_1to9 }
+              .col-12
+                = render partial: 'shared/display_boolean_value', locals: { label_name: CultureResult.human_attribute_name(:results_1plus), field_name: 'culture_result_results_1plus', field_value: @culture_result.results_1plus }
+              .col-12
+                = render partial: 'shared/display_boolean_value', locals: { label_name: CultureResult.human_attribute_name(:results_2plus), field_name: 'culture_result_results_2plus', field_value: @culture_result.results_2plus }
+              .col-12
+                = render partial: 'shared/display_boolean_value', locals: { label_name: CultureResult.human_attribute_name(:results_3plus), field_name: 'culture_result_results_3plus', field_value: @culture_result.results_3plus }
+              .col-12
+                = render partial: 'shared/display_boolean_value', locals: { label_name: CultureResult.human_attribute_name(:results_ntm), field_name: 'culture_result_results_ntm', field_value: @culture_result.results_ntm }
+              .col-12
+                = render partial: 'shared/display_boolean_value', locals: { label_name: CultureResult.human_attribute_name(:results_contaminated), field_name: 'culture_result_results_contaminated', field_value: @culture_result.results_contaminated }
