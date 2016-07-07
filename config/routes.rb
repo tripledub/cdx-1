@@ -109,6 +109,7 @@ Rails.application.routes.draw do
     resource :microscopy_result, only: [:new, :create, :show, :edit, :update]
     resource :dst_lpa_result, only: [:new, :create, :show, :edit, :update]
     resource :culture_result, only: [:new, :create, :show, :edit, :update]
+    resource :undefined_result, only: [:show]
   end
 
   resources :test_results , only: [:index, :show]

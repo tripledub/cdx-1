@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Encounter do
   it { is_expected.to validate_presence_of :institution }
-
+   
   let(:encounter) { Encounter.make }
 
   it "#human_diagnose" do
@@ -290,18 +290,17 @@ describe Encounter do
     end
   end
   
-  
-   context "add request test" do
-      let(:requested_test1) { RequestedTest.make }
-      let(:requested_test2) { RequestedTest.make }
+  context "add request test" do
+    let(:requested_test1) { RequestedTest.make encounter: encounter}
+    let(:requested_test2) { RequestedTest.make encounter: encounter}
    
-      it "should save requested tests" do
-        requested_test1.encounter = encounter
-        requested_test2.encounter = encounter
-        requested_test1.save!
-        requested_test2.save!
-        expect(encounter.requested_tests.count).to eq(2)
-      end
+    it "should save requested tests" do
+      requested_test1.encounter = encounter
+      requested_test2.encounter = encounter
+      requested_test1.save!
+      requested_test2.save!
+      expect(encounter.requested_tests.count).to eq(2)
     end
+  end
   
 end

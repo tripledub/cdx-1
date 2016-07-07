@@ -162,7 +162,7 @@ class Encounter < ActiveRecord::Base
       json.name encounter_query_result["site"]["name"]
     end
   end
-
+ 
   protected
 
   def ensure_entity_id
