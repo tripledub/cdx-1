@@ -42,6 +42,7 @@ en:
       add_device: 'Add Device'
       show_filters: 'Show filters'
       manufacturer: 'Manufacturer'
+      model: 'Model'
       show_all: 'Show all'
     device_card:
       institution: 'Institution: %{institution_name}'
