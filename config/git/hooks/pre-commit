@@ -1,0 +1,52 @@
+#!/usr/bin/ruby
+
+# https://www.ruby-forum.com/topic/122170#544763
+
+git_files = `git diff --cached --name-only`.lines.map(&:chomp)
+
+offending_lines = {}
+
+def File.binary? name
+  open name do |f|
+    while (b=f.read(256)) do
+      return true if b[ "\0"]
+    end
+  end
+  false
+end
+
+git_files.each do |file|
+
+  next unless File.file?(file)
+  next if File.binary?(file)
+
+  File.open(file) do |f|
+    ln = 1
+    lna = Array.new
+
+    f.each_line do |line|
+
+      lna.push ln  if line.match /\t/
+
+      offending_lines[file] = lna unless lna.empty?
+
+      ln += 1
+    end
+  f.close
+  end
+end
+
+unless offending_lines.empty?
+
+  puts "\n"
+  puts "Pre-Commit Hook Failure (.git/hooks/pre-commit)"
+  puts "Tab characters are illegal in source control and Tabs were found in the following files"
+  puts "\n\n"
+
+  offending_lines.each do |file, line_numbers|
+    puts file
+    line_numbers.each_slice(15).to_a.each { |sub_array| puts "\t" + sub_array.join(', ') }
+    puts "\n"
+  end
+exit 1
+end
