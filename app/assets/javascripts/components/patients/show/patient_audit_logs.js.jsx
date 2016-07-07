@@ -4,7 +4,6 @@ var PatientAuditLogs = React.createClass({
       patientLogs: [],
       queryOrder: true,
       loadingMessasge: 'Loading logs...',
-      defaultOrder: { 'title': '', 'user': '', 'date': '' },
       orderedColumns: {},
       availableColumns: [
         { title: 'Title',      fieldName: 'title' },
@@ -32,8 +31,14 @@ var PatientAuditLogs = React.createClass({
   },
 
   updateOrderIcon: function(orderedField) {
-    iconValue                  = (this.state.queryOrder == true) ? '&#x25BC;' : '&#x25B2;';
-    updatedState               = this.state.defaultOrder;
+    var that                       = this;
+    var updatedState               = {};
+    var iconValue                  = (this.state.queryOrder == true) ? '&#x25BC;' : '&#x25B2;';
+    this.state.availableColumns.forEach(
+      function(column) {
+        updatedState[column.fieldName] = ''
+      }
+    );
     updatedState[orderedField] = iconValue;
     this.setState({ orderedColumns: updatedState });
   },
