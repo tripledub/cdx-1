@@ -15,7 +15,7 @@ class PatientTestOrdersController < ApplicationController
 
   def set_order_from_params
     order = params[:order] == 'true' ? 'asc' : 'desc'
-    case params[:field].to_s == 'name'
+    case params[:field].to_s
     when 'site'
       "sites.name #{order}"
     when 'orderId'

@@ -49,6 +49,13 @@ class CommentsController < ApplicationController
 
   def set_order_from_params
     order = params[:order] == 'true' ? 'asc' : 'desc'
-    params[:field] == 'name' ? "users.first_name #{order}, users.last_name" : "comments.commented_on #{order}"
+    case params[:field].to_s
+    when 'name'
+      "users.first_name #{order}, users.last_name"
+    when 'description'
+      "comments.description #{order}"
+    else
+      "comments.created_at #{order}"
+    end
   end
 end

@@ -46,7 +46,6 @@ var PatientTestOrders = React.createClass({
     this.setState({ orderedColumns: updatedState });
   },
 
-
   componentDidMount: function() {
     this.getData('site');
   },
