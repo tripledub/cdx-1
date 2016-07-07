@@ -290,32 +290,17 @@ describe Encounter do
     end
   end
   
-  
-   context "add request test" do
-      let(:requested_test1) { RequestedTest.make encounter: encounter}
-      let(:requested_test2) { RequestedTest.make encounter: encounter}
+  context "add request test" do
+    let(:requested_test1) { RequestedTest.make encounter: encounter}
+    let(:requested_test2) { RequestedTest.make encounter: encounter}
    
-      it "should save requested tests" do
-        requested_test1.encounter = encounter
-        requested_test2.encounter = encounter
-        requested_test1.save!
-        requested_test2.save!
-        expect(encounter.requested_tests.count).to eq(2)
-      end
+    it "should save requested tests" do
+      requested_test1.encounter = encounter
+      requested_test2.encounter = encounter
+      requested_test1.save!
+      requested_test2.save!
+      expect(encounter.requested_tests.count).to eq(2)
     end
-    
-    context "associated patient results" do
-        let(:requested_test1) { RequestedTest.make encounter: encounter}
-        let(:requested_test2) { RequestedTest.make encounter: encounter}
-
-        it "should find associated patient tests" do
-          result1 = CultureResult.new encounter_id: encounter.id, requested_test_id: requested_test1.id
-          result1.save(validate: false)
-          result2=XpertResult.new encounter_id: encounter.id, requested_test_id: requested_test2.id
-          result2.save(validate: false)
- 
-          expect(encounter.find_associated_tests_to_results.length).to eq(2)
-        end
-      end
+  end
   
 end
