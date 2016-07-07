@@ -13,12 +13,12 @@ var PatientAuditLogs = React.createClass({
     };
   },
 
-  getPatientLogs: function(field, e) {
+  getData: function(field, e) {
     if (e) { e.preventDefault(); }
     this.serverRequest = $.get(this.props.patientLogsUrl + this.getParams(field), function (results) {
       if (results.length > 0) {
         this.setState({ patientLogs: results });
-        this.updateOrderIcon(field)
+        this.updateOrderIcon(field);
       } else {
         this.setState({ loadingMessage: 'There are no logs available.' });
       };
@@ -44,7 +44,7 @@ var PatientAuditLogs = React.createClass({
   },
 
   componentDidMount: function() {
-    this.getPatientLogs('date');
+    this.getData('date');
   },
 
   componentWillUnmount: function() {
@@ -63,7 +63,7 @@ var PatientAuditLogs = React.createClass({
 
     this.state.availableColumns.forEach(
       function(availableColumn) {
-        rowHeaders.push(<OrderedColumnHeader key={availableColumn.fieldName} title={availableColumn.title} fieldName={availableColumn.fieldName} orderEvent={that.getPatientLogs} orderIcon={that.state.orderedColumns[availableColumn.fieldName]} />);
+        rowHeaders.push(<OrderedColumnHeader key={availableColumn.fieldName} title={availableColumn.title} fieldName={availableColumn.fieldName} orderEvent={that.getData} orderIcon={that.state.orderedColumns[availableColumn.fieldName]} />);
       }
     );
 

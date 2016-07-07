@@ -15,18 +15,19 @@ class PatientTestOrdersController < ApplicationController
 
   def set_order_from_params
     order = params[:order] == 'true' ? 'asc' : 'desc'
-    field_name = case params[:field].to_s == 'name'
+    case params[:field].to_s == 'name'
     when 'site'
-      'sites.name'
+      "sites.name #{order}"
     when 'orderId'
-      'encounters.uuid'
+      "encounters.uuid #{order}"
     when 'requester'
-      'users.first_name, users.last_name'
+      "users.first_name #{order}, users.last_name"
     when 'dueDate'
-      'encounters.testdue_date'
-    else 'encounters.start_time'
+      "encounters.testdue_date #{order}"
+    when 'status'
+      "encounters.status #{order}"
+    else
+      "encounters.start_time #{order}"
     end
-
-    "#{field_name} #{order}"
   end
 end
