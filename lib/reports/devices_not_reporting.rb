@@ -39,8 +39,9 @@ module Reports
 
       [
         {
+          bevelEnabled: false,
           type: 'column',
-          color: '#9dce65',
+          color: '#E06023',
           name: 'Device name',
           legendText: 'Device name',
           showInLegend: true,
