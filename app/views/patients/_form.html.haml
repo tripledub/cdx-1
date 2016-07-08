@@ -48,7 +48,8 @@
   .row.button-actions
     .col
       = f.submit I18n.t('views.save'), class: 'btn-primary'
-      = link_to I18n.t('views.cancel'), patients_path, class: 'btn-link'
+      - cancel_path = @patient.persisted? ? patient_path(@patient) : patients_path
+      = link_to I18n.t('views.cancel'), cancel_path, class: 'btn-link'
 
       - if @can_delete
         = confirm_deletion_button @patient, 'patient'
