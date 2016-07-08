@@ -63,16 +63,18 @@ module Reports
     def generate_columns
       [
         {
+          bevelEnabled: false,
           type: "column",
-          color: "#9dce65",
+          color: "#E06023",
           name: "Peak tests",
           legendText: "Peak",
           showInLegend: true,
           dataPoints: data.map { |result| { label: result[:_label], y: result['Peak Tests'] } }
         },
         {
+          bevelEnabled: false,
           type: "column",
-          color: "#069ada",
+          color: "#5C5B82",
           name: "Average tests",
           legendText: "Average",
           axisYType: "secondary",

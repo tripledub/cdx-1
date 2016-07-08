@@ -7,6 +7,11 @@ class Extras::Charts::Pie
     {
       theme: "theme3",
       animationEnabled: true,
+      legend:{
+        fontSize: 12,
+        fontFamily: "Arial",
+        fontColor: "#000"
+      },
       data: [
         {
           type: "doughnut",

@@ -67,16 +67,18 @@ module Reports
     def generate_columns(sorted_data)
       [
         {
+          bevelEnabled: false,
           type: "column",
-          color: "#9dce65",
+          color: "#E06023",
           name: "Tests",
           legendText: "Tests",
           showInLegend: true,
           dataPoints: sorted_data.map { |data_point| { label: data_point[:label], y: data_point[:values][0] } }
         },
         {
+          bevelEnabled: false,
           type: "column",
-          color: "#069ada",
+          color: "#5C5B82",
           name: "Errors",
           legendText: "Errors",
           axisYType: "secondary",
