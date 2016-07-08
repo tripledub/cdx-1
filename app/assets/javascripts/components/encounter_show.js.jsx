@@ -24,7 +24,7 @@ var EncounterShow = React.createClass({
     $('body').scrollTop(0);
   },
   EncounterDeleteHandler: function() {
-    if (this.props.referer != nil) {
+    if (this.props.referer != null) {
       successUrl = this.props.referer;
     } else {
       successUrl = '/test_results?display_as=test_order';

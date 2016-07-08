@@ -21,26 +21,44 @@ var RequestedTestRow = React.createClass({
     });
     this.props.onTestChanged(this.state.test);
   },
-  determineTestResultUrl(id,name) {
+  determineTestResultUrl(id,name, edit, is_associated) {
     var url_path;
+    var view_or_cancel_path;
+    var test_order_page_mode;
+    
+    if (edit == true) {
+      test_order_page_mode = 'edit';
+    } else {
+      test_order_page_mode = 'cancel';
+    }
+
+    if ((is_associated == true) && (edit == true)) {
+      view_or_cancel_path = '/edit?test_order_page_mode='+test_order_page_mode;
+    } else
+    if ((is_associated == true) || (edit == false)) {
+      view_or_cancel_path = '?test_order_page_mode='+test_order_page_mode;
+    } else {
+      view_or_cancel_path = '/new?test_order_page_mode='+test_order_page_mode;
+    }
+
     switch(name) {
       case 'xpertmtb':
-        url_path = "/requested_tests/"+id+"/xpert_result/new";
+        url_path = "/requested_tests/"+id+"/xpert_result"+view_or_cancel_path;
         break;
       case 'microscopy':
-        url_path = "/requested_tests/"+id+"/microscopy_result/new";
+        url_path = "/requested_tests/"+id+"/microscopy_result"+view_or_cancel_path;
         break;
       case 'drugsusceptibility':
-        url_path = "/requested_tests/"+id+"/dst_lpa_result/new";
+        url_path = "/requested_tests/"+id+"/dst_lpa_result"+view_or_cancel_path;
         break;
       case 'culture':
-        url_path = "/requested_tests/"+id+"/culture_result/new";
+        url_path = "/requested_tests/"+id+"/culture_result"+view_or_cancel_path;
         break;
       default:
         url_path=url_path = "/requested_tests/"+id+"/undefined_result";
     }
     return url_path;
-  },
+},
   render: function() {
     var encounter = this.props.encounter;
 
@@ -69,12 +87,25 @@ var RequestedTestRow = React.createClass({
     var test_result_url;
     var test_id=this.state.test.id;
     associated_patient_result = this.props.associated_tests_to_results.filter(function (el) {return el.requested_test_id == test_id;});
+
+    var is_associated;
     if (associated_patient_result.length == 0) {
-     test_result_url = this.determineTestResultUrl(this.state.test.id, this.state.test.name);
-     test_result_text="Add Result";
+      is_associated=false;
     } else {
+      is_associated=true;
+    }
+
+    if ((this.props.edit == true) && (is_associated == false)) {
+      test_result_url = this.determineTestResultUrl(this.state.test.id, this.state.test.name, this.props.edit, is_associated);
+      test_result_text = "Add Result";
+    } 
+    else if (is_associated == false) {
       test_result_url = "#";
-      test_result_text="Associated";
+      test_result_text = "";
+    }
+    else {
+      test_result_url = this.determineTestResultUrl(this.state.test.id, this.state.test.name, this.props.edit,is_associated);
+      test_result_text = "View Result";
     }
 
   return (
@@ -96,7 +127,6 @@ var RequestedTestRow = React.createClass({
           </select></td>
       <td><TextInputModal key={this.state.test.id} comment={this.state.test.comment} commentChanged={this.commentChanged} edit={this.props.edit}/></td>
       <td><a className="btn-add-link" href={test_result_url}>{test_result_text}</a></td>
-
       </tr>);
   }
 });
