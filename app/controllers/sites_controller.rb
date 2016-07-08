@@ -46,7 +46,6 @@ class SitesController < ApplicationController
   def create
     @institution = @navigation_context.institution
     return unless authorize_resource(@institution, CREATE_INSTITUTION_SITE)
-
     @site = @institution.sites.new(site_params(true))
     @sites = check_access(@institution.sites, READ_SITE)
 
