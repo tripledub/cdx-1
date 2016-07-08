@@ -41,7 +41,6 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       expect(assigns[:associated_tests_to_results]).to eq([])
       expect(assigns[:show_edit_encounter]).to be_truthy
       expect(assigns[:show_cancel_encounter]).to be_falsy
-      expect(assigns[:return_path_encounter]).to include('display_as=test_order')
     end
 
     it "returns http forbidden if not allowed" do
