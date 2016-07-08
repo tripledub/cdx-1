@@ -1,6 +1,7 @@
 namespace :import do
   desc 'Import Test Result data from CSV file'
   task :test_results, [:file, :device] => :environment do |_t, args|
+    p args
     raise ArgumentError, 'Please specify filename and device' unless (args[:file] && args[:device])
     begin
       p "Importing Test Result data from #{args[:file]}"
