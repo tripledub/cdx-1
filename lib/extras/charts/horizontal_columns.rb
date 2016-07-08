@@ -11,16 +11,30 @@ class Extras::Charts::HorizontalColumns
       axisX:{
         interval: 1,
         gridThickness: 0,
+        titleFontSize: 12,
+        titleFontFamily: "Arial",
+        titleFontColor: "#000",
         labelFontSize: 10,
-        labelFontStyle: "normal",
-        labelFontWeight: "normal",
-        labelFontFamily: "Lucida Sans Unicode"
+        labelFontFamily: "Arial",
+        labelFontColor: "#000"
+      },
+      axisY: {
+        titleFontSize: 12,
+        titleFontFamily: "Arial",
+        titleFontColor: "#000",
+        labelFontSize: 10,
+        labelFontFamily: "Arial",
+        labelFontColor: "#000"
+      },
+      legend:{
+        fontSize: 12,
+        fontFamily: "Arial",
+        fontColor: "#000"
       },
       axisY2: {
         interlacedColor: "rgba(1,77,101,.2)",
         gridColor: "rgba(1,77,101,.1)"
       },
-
       data: [
         {
           type: "bar",

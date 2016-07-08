@@ -128,7 +128,7 @@ module Reports
     end
 
     def lookup_device(uuid)
-      device = Device.where(uuid: uuid).first
+      device = ::Device.where(uuid: uuid).first
       return device.name if device
     end
 

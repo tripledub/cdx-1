@@ -53,8 +53,8 @@ module Reports
       test_result_data.map do |test_user_data|
         data << {
           _label: test_user_data[:site_user].truncate(12),
-          'Peak Tests': test_user_data[:peak],
-          'Average Tests': test_user_data[:average]
+          peak: test_user_data[:peak],
+          average: test_user_data[:average]
         }
       end
       data
@@ -63,21 +63,23 @@ module Reports
     def generate_columns
       [
         {
+          bevelEnabled: false,
           type: "column",
-          color: "#9dce65",
+          color: "#E06023",
           name: "Peak tests",
           legendText: "Peak",
           showInLegend: true,
-          dataPoints: data.map { |result| { label: result[:_label], y: result['Peak Tests'] } }
+          dataPoints: data.map { |result| { label: result[:_label], y: result[:peak] } }
         },
         {
+          bevelEnabled: false,
           type: "column",
-          color: "#069ada",
+          color: "#5C5B82",
           name: "Average tests",
           legendText: "Average",
           axisYType: "secondary",
           showInLegend: true,
-          dataPoints: data.map { |result| { label: result[:_label], y: result['Average Tests'] } }
+          dataPoints: data.map { |result| { label: result[:_label], y: result[:average] } }
         }
       ]
     end

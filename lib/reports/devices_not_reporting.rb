@@ -2,11 +2,7 @@ module Reports
   class DevicesNotReporting < Base
     def generate_chart
       process
-      {
-        title:   'Devices not reporting',
-        titleY:  'Device name',
-        columns: generate_columns
-      }
+      { titleY2: 'Devices not reporting', columns: data.map { |data_point| { label: data_point[:label], y: data_point[:value] } } }
     end
 
     protected
@@ -26,27 +22,12 @@ module Reports
 
           if device_message
             days_diff = ( (Time.now - (device_message.created_at) ) / (1.day)).round
-            data << { '_label': device.name.truncate(13), '_value': days_diff }
+            data << { label: device.name.truncate(13), value: days_diff }
           else
-            data << { '_label': device.name, '_value': day_range }
+            data << { label: device.name, value: day_range }
           end
         end
       end
-    end
-
-    def generate_columns
-      return [] unless data
-
-      [
-        {
-          type: 'column',
-          color: '#9dce65',
-          name: 'Device name',
-          legendText: 'Device name',
-          showInLegend: true,
-          dataPoints: data.map { |data_point| { label: data_point['_label'], y: data_point['_value'] } }
-        }
-      ]
     end
 
     def get_since
