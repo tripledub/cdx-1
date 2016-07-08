@@ -2,20 +2,17 @@
   .filterbar.filterbartest
     .heading
       .title
-        Devices
+        = I18n.t('devices.filters.header')
 
     .topfilteropt
       %input#query_button.btn-primary.filtershow(type='button' value="#{I18n.t('devices.filters.show_filters')}")
       - if @can_create
-        = link_to "Add Device", new_device_path, class: 'btn-add side-link fix', title: I18n.t('devices.filters.add_device')
+        = link_to I18n.t('devices.filters.add_device'), new_device_path, class: 'btn-add side-link fix', title: I18n.t('devices.filters.add_device')
 
   %form.filteroptions#filters-form{action: devices_path, "data-auto-submit" => true}
     %input{type: "hidden", name: "page_size", value: @page_size}
     .row.center.custom_filters
-      .col.pe-10
-
       .advanced
-
         .row
           .filter
             %label.block

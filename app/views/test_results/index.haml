@@ -5,20 +5,19 @@
     - if @tests.empty?
       = empty_data icon: 'icon-outline-test xx-large' do |c|
         - c.body do
-          %h1 No #{@display_as == "test" ? "tests" : "test results"} have been reported
-          %p Setup your devices first in order to start reporting
+          %h1
+            = I18n.t('test_results.index.header', test_result: @display_as == "test" ? I18n.t('test_results.index.test', count: 0) : I18n.t('test_results.index.test_results'))
+          %p
+            = I18n.t('test_results.index.setup_devices')
     - else
       - if @display_as == "test"
-        = react_component "TestResultsIndexTable", tests: @json, title: pluralize(@total, "test"),
+        = react_component "TestResultsIndexTable", tests: @json, title: I18n.t('test_results.index.test', count: @total),
             orderBy: @order_by, showSites: @show_sites, showDevices: @show_devices,
             downloadCsvPath: test_results_path(@filter.merge(format: :csv).merge(display_as: @display_as))
       - else
-        = react_component "TestOrdersIndexTable", tests: @json, title: pluralize(@total, "test order"),
+        = react_component "TestOrdersIndexTable", tests: @json, title: I18n.t('test_results.index.test_order', count: @total),
             orderBy: @order_by, showSites: @show_sites, showDevices: @show_devices,
             downloadCsvPath: test_results_path(@filter.merge(format: :csv).merge(display_as: @display_as))
 
       .pagination
         = render 'shared/pagination'
-        -# if @display_as == "test"
-        -#  = link_to "Add filter", new_filter_path(query: @filter), class: 'pull-right'
-

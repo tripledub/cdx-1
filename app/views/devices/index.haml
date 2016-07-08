@@ -32,10 +32,14 @@
         - t.tbody do
           - @devices.each do |device|
             %tr{data: (@devices_to_read.include?(device.id) ? {href: device_path(device) } : {})}
-              %td= device.name
-              %td= device.device_model.institution.try :name
-              %td= device.device_model.full_name
-              %td= device.site.try(:name)
+              %td
+                = device.name
+              %td
+                = device.device_model.institution.try :name
+              %td
+                = device.device_model.full_name
+              %td
+                = device.site.try(:name)
 
       .pagination
         = render 'shared/pagination'
