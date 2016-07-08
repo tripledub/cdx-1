@@ -2,12 +2,13 @@
   %section.row.filterHeader
     .small-12.columns
       .search
-        %h1 I18n.t('patients.filters.patients')
+        %h1
+          = I18n.t('patients.filters.patients')
         .btn.add
           - if @can_create
-            = link_to "Add Patient", new_patient_path, class: 'btn-add side-link fix', title: I18n.t('patients.filters.add_patient')
+            = link_to I18n.t('patients.filters.add_patients'), new_patient_path, class: 'btn-add side-link fix', title: I18n.t('patients.filters.add_patient')
 
-            
+
         %form.pageFilters#filters-form{action: patients_path, "data-auto-submit" => true}
           %input{type: "hidden", name: "page_size", value: @page_size}
           .row
