@@ -153,7 +153,7 @@ class EncountersController < ApplicationController
     
     @return_path_encounter = test_results_path(display_as: 'test_order') if params['test_order_page_mode'] !=nil
     
-    if request.referer != nil
+    if request.referer
       referer = URI(request.referer).path
       referer_check = referer =~ /\/patients\/\d/
        if  (referer_check != nil) || (params['test_order_page_mode'] == 'cancel')
