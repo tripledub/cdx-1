@@ -1,6 +1,6 @@
 class PatientResultsController < ApplicationController
 
-  before_filter :find_requested_test, :check_permissions
+  before_filter :find_requested_test, :check_permissions, :check_back_button_mode
 
   protected
 
@@ -10,5 +10,9 @@ class PatientResultsController < ApplicationController
 
   def check_permissions
     redirect_to(encounter_path(@requested_test.encounter), error: "You can't add test results to this test order") unless has_access?(TestResult, Policy::Actions::QUERY_TEST)
+  end
+
+  def check_back_button_mode
+    @return_page_mode = params['test_order_page_mode']
   end
 end

@@ -121,7 +121,7 @@ describe "create encounter" do
       click_link('encountersave')
       click_link('encountersave')
     end
-
+    
     expect_page ShowEncounterPage do |page|
       expect(page.encounter.patient).to eq(patient)
       expect(page.encounter.samples.count).to eq(2)
@@ -169,9 +169,9 @@ describe "create encounter" do
     end
     
     expect_page NewCultureResultsPage do |page|
+      expect(page).to have_link('Back')   
       expect(page.has_content?('Add Culture Test Result')).to be true
     end
-    
   end
   
 

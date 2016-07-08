@@ -147,16 +147,23 @@ class EncountersController < ApplicationController
   private
 
   def determine_referal
-    @show_edit_encounter=true
-    @show_cancel_encounter=false
-    @return_path_encounter=nil
-    if request.referer != nil
+    @show_edit_encounter = true
+    @show_cancel_encounter = false
+    @return_path_encounter = nil
+    
+    @return_path_encounter = test_results_path(display_as: 'test_order') if params['test_order_page_mode'] !=nil
+    
+    if request.referer
       referer = URI(request.referer).path
       referer_check = referer =~ /\/patients\/\d/
-       if  referer_check != nil
+       if  (referer_check != nil) || (params['test_order_page_mode'] == 'cancel')
         @show_edit_encounter=false
-        @show_cancel_encounter=true if (@encounter != nil) && (Encounter.statuses[@encounter.status] != Encounter.statuses["inprogress"]) 
-        @return_path_encounter=referer
+        @show_cancel_encounter=true if (@encounter != nil) && (Encounter.statuses[@encounter.status] != Encounter.statuses["inprogress"])
+        if @encounter && @encounter.patient
+           @return_path_encounter=patient_path(@encounter.patient) 
+        else
+          @return_path_encounter=referer
+        end
       end
     end
   end
@@ -367,7 +374,7 @@ class EncountersController < ApplicationController
       json.(@encounter, :coll_sample_other)
       json.(@encounter, :diag_comment)
       json.(@encounter, :treatment_weeks)
-      json.(@encounter, :status)  
+      json.(@encounter, :status)
       json.(@encounter, :testdue_date)
       json.has_dirty_diagnostic @encounter.has_dirty_diagnostic?
       json.assays (@encounter_blender.core_fields[Encounter::ASSAYS_FIELD] || [])
