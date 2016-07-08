@@ -119,17 +119,6 @@ $(document).ready(function(){
     return url;
   }
 
-  $(document).on('click','.datepicker_single', function(){
-    $(this).daterangepicker({
-      singleDatePicker: true,
-      showDropdowns: true
-    });
-  });
-
-  $(document).on('click','.datepicker', function(){
-    $(this).daterangepicker();
-  });
-
   $(document).on('click', '.tabs .tabs-header a:not(".selected")', function(event) {
     var target = $(event.target);
     var tabsHeader = target.closest('ul');
@@ -231,8 +220,4 @@ $(document).ready(function(){
     $(".custom_filters").toggle();
   });
 
-
-  $('input[type=date]').click(function(){
-    $(this).datepicker({ dateFormat: 'dd-mm-yy' });
-  });
 });
