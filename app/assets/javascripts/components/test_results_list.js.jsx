@@ -93,7 +93,7 @@ var TestResultsList = React.createClass({
           <tr>
             {sortableHeader("Name", "test.name")}
             <th colSpan={totalAssaysColCount} className="text-right">Results</th>
-            { this.props.showSites ? sortableHeader("Site", "site.id") : null }
+            { this.props.showSites ? sortableHeader("Site", "site.name") : null }
             { this.props.showDevices ? sortableHeader("Device", "device.name") : null }
             {sortableHeader("Sample ID", "sample.id")}
             {sortableHeader("Type", "test.type")}
