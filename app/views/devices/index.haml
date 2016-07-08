@@ -10,6 +10,8 @@
           %p
             = I18n.t('devices.index.configuration_steps')
     - else
-      = react_component "DevicesIndexTable", devices: @devices, title: I18n.t('devices.index.device', count: @total),
+      = react_component "DevicesIndexTable", devices: Presenters::Devices.index_table(@devices), title: I18n.t('devices.index.device', count: @total),
           orderBy: params["order_by"] || "devices.name",
           downloadCsvPath: devices_path(filters_params.merge(format: :csv).merge(display_as: I18n.t('devices.index.download_csv')))
+      .pagination
+        = render 'shared/pagination'

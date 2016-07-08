@@ -1,89 +1,63 @@
-var DevicesIndexTable = React.createClass({
-  getInitialState: function() {
-    return {
-      patientComments: [],
-      queryOrder: true,
-      loadingMessasge: 'Loading devices...',
-      orderedColumns: {},
-      availableColumns: [
-        { title: 'Date',        fieldName: 'date' },
-        { title: 'Commenter',   fieldName: 'commenter' },
-        { title: 'Description', fieldName: 'description' }
-      ]
-    };
-  },
-
-  getData: function(field, e) {
-    if (e) { e.preventDefault(); }
-    this.serverRequest = $.get(this.props.commentsUrl + this.getParams(field), function (results) {
-      if (results.length > 0) {
-        this.setState({ patientComments: results });
-        this.updateOrderIcon(field);
-      } else {
-        this.setState({ loadingMessage: 'There are no devices available.' });
-      };
-    }.bind(this));
-  },
-
-  getParams: function(field) {
-    this.state.queryOrder = !this.state.queryOrder;
-    return '&field='+ field + '&order=' + this.state.queryOrder;
-  },
-
-  updateOrderIcon: function(orderedField) {
-    var that                       = this;
-    var updatedState               = {};
-    var iconValue                  = (this.state.queryOrder == true) ? '&#x25BC;' : '&#x25B2;';
-    this.state.availableColumns.forEach(
-      function(column) {
-        updatedState[column.fieldName] = ''
-      }
-    );
-    updatedState[orderedField] = iconValue;
-    this.setState({ orderedColumns: updatedState });
-  },
-
-  componentDidMount: function() {
-    this.getData('date');
-  },
-
-  componentWillUnmount: function() {
-    this.serverRequest.abort();
-  },
-
-  render: function(){
-    var rows       = [];
-    var rowHeaders = [];
-    var that       = this;
-
-    this.state.patientComments.forEach(
-      function(comment) {
-        rows.push(<PatientComment comment={comment} key={comment.id} />);
-      }
-    );
-
-    this.state.availableColumns.forEach(
-      function(availableColumn) {
-        rowHeaders.push(<OrderedColumnHeader key={availableColumn.fieldName} title={availableColumn.title} fieldName={availableColumn.fieldName} orderEvent={that.getData} orderIcon={that.state.orderedColumns[availableColumn.fieldName]} />);
-      }
-    );
+var DeviceResultRow = React.createClass({
+  render: function() {
+    var device = this.props.device;
 
     return (
-      <div className="row">
-        {
-          this.state.patientComments.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> :
-          <table className="patient-history">
-            <thead>
-              <tr>
-                {rowHeaders}
-              </tr>
-            </thead>
-            <tbody>
-              {rows}
-            </tbody>
-          </table>
-        }
-      </div>
+    <tr data-href={device.viewLink}>
+      <td>{device.name}</td>
+      <td>{device.institutionName}</td>
+      <td>{device.modelName}</td>
+      <td>{device.siteName}</td>
+    </tr>);
+  }
+});
+
+var DevicesIndexTable = React.createClass({
+  getDefaultProps: function() {
+    return {
+      title: "Devices",
+      titleClassName: "",
+      downloadCsvPath: null,
+      allowSorting: false,
+      orderBy: "",
+      showSites: true,
+      showDevices: true
+    }
+  },
+
+  render: function() {
+    var sortableHeader = function (title, field) {
+      return <SortableColumnHeader title={title} field={field} orderBy={this.props.orderBy} />
+    }.bind(this);
+
+    return (
+      <table className="table" cellPadding="0" cellSpacing="0">
+        <thead>
+          <tr>
+            <th className="tableheader" colSpan="12">
+              <span className={this.props.titleClassName}>{this.props.title}</span>
+
+              { this.props.downloadCsvPath ? (
+                <span className="table-actions">
+                  <a href={this.props.downloadCsvPath} title="Download CSV">
+                    <span className="icon-download icon-gray" />
+                  </a>
+                </span>) : null }
+            </th>
+          </tr>
+          <tr>
+            {sortableHeader("Name", "devices.name")}
+            {sortableHeader("Manufacturer", "institutions.name")}
+            {sortableHeader("Model", "device_models.name")}
+            {sortableHeader("Site", "sites.name")}
+          </tr>
+        </thead>
+        <tbody>
+          {this.props.devices.map(function(device) {
+             return <DeviceResultRow key={device.id} device={device} />;
+          }.bind(this))}
+        </tbody>
+      </table>
     );
   }
 });
