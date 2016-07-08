@@ -4,7 +4,7 @@ class PatientTestOrdersController < ApplicationController
   before_filter :find_patient
 
   def index
-    render json: Presenters::PatientTestOrders.patient_view(@patient.encounters.order(set_order_from_params).limit(30).offset(params[:page] || 0))
+    render json: Presenters::PatientTestOrders.patient_view(@patient.encounters.joins(:site).order(set_order_from_params).limit(30).offset(params[:page] || 0))
   end
 
   protected
