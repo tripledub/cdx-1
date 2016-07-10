@@ -2,14 +2,14 @@
   .container
     .row.labelHeader
       .col-6
-        %h3 Comment
+        %h3
+          = I18n.t('comments.show.header.comment', patient_name: patient_display_name(@comment.patient.name))
       .col-6
         %ul
           %li
-            = link_to "Back", patient_path(@comment.patient), class: 'button new'
+            = link_to I18n.t('views.back'), patient_path(@comment.patient), class: 'button new'
     .order-details
       .panel
-        / Start of Row
         .row
           .col-6
             .row

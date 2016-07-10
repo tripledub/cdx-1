@@ -19,8 +19,8 @@ class CommentsController < ApplicationController
     @comment              = @patient.comments.new(comment_params)
     @comment.user         = current_user
 
-    if @comment.save_and_audit(current_user, 'New comment added', @comment.comment)
-      redirect_to patient_path(@patient), notice: 'Comment was successfully created.'
+    if @comment.save_and_audit(current_user, I18n.t('comments.create.audit_comment'), @comment.comment)
+      redirect_to patient_path(@patient), notice: I18n.t('comments.create.comment_ok')
     else
       render action: 'new'
     end
@@ -44,7 +44,7 @@ class CommentsController < ApplicationController
   end
 
   def check_permissions
-    redirect_to(patient_path(@patient), error: "You can't add comments to this patient") unless has_access?(@patient, UPDATE_PATIENT)
+    redirect_to(patient_path(@patient), error: I18n.t('comments.permissions.deny')) unless has_access?(@patient, UPDATE_PATIENT)
   end
 
   def set_order_from_params

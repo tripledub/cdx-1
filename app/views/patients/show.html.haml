@@ -6,7 +6,7 @@
           %h2
             = link_to patients_path, class: 'side-link', title: I18n.t('views.back') do
               = image_tag "arrow-left.png"
-            = @patient.name
+            = patient_display_name(@patient.name)
 .testflow
   .container
     = render partial: 'patient_summary', locals: { patient: @patient }
