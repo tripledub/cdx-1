@@ -15,3 +15,5 @@ en:
       no_chart_information: 'No chart information available'
       devices_not_responding: 'Devices Not Responding'
       device_error_codes: 'Device Error Codes'
+      drtb_percentage: 'DR-TB percentage'
+      drug_resistance: 'Drug resistance percentage'

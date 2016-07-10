@@ -42,4 +42,11 @@ class Reports::Dashboard
     data.get_device_location_details
   end
 
+  def drtb_percentage
+    Reports::DrtbPercentage.new(@current_user, @navigation_context, @options).generate_chart
+  end
+
+  def drug_resistance
+    Reports::DrugPercentage.new(@current_user, @navigation_context, @options).generate_chart
+  end
 end

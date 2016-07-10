@@ -177,5 +177,9 @@ module Reports
     def users
       results['tests'].index_by { |t| t['test.site_user'] }.keys
     end
+
+    def slice_colors
+      ["#21C334", "#C90D0D", "#aaaaaa", "#00A8AB", "#B7D6B7", "#D8B49C", "#DE6023", "#47B04B", "#009788", "#A05D56", "#D0743C", "#FF8C00"]
+    end
   end
 end
