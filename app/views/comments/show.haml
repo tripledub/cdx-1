@@ -1,6 +1,5 @@
 .testflow
   .container
-    / Commented Out Spans are for use within CDX using your icon set, where applicable at least
     .row.labelHeader
       .col-6
         %h3 Comment
@@ -32,7 +31,7 @@
               .col-12
                 = simple_format @comment.comment
           .col-6
-            - if @comment.image
+            - if image_not_missing?(@comment.image)
               .row
                 .col-12
                   %label

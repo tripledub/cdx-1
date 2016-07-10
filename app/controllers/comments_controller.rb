@@ -40,7 +40,7 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:comment).permit(:commented_on, :description, :comment)
+    params.require(:comment).permit(:commented_on, :description, :comment, :image)
   end
 
   def check_permissions
