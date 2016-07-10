@@ -3,7 +3,7 @@ module Reports
     attr_reader :total_tests, :failed_tests
 
     def generate_chart
-      @total_tests ||= sum_total
+      @total_tests  ||= sum_total
       @failed_tests ||= sum_failed
       sort_pie
 
@@ -19,10 +19,8 @@ module Reports
     end
 
     def sort_pie
-      im1 = ActionController::Base.helpers.asset_url("chart-box-tick.png", type: :image)
-      im2 = ActionController::Base.helpers.asset_url("chart-box-exclam.png", type: :image)
-      data << { _label: 'Success', _value: total_tests - failed_tests, _img: im1}
-      data << { _label: 'Failed', _value: failed_tests, _img: im2 }
+      data << { _label: 'Success', _value: total_tests - failed_tests }
+      data << { _label: 'Failed', _value: failed_tests }
     end
 
     def sum_total

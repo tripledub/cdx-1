@@ -18,6 +18,7 @@ module Reports
     end
 
     def sum_total
+      setup
       run_query
     end
 

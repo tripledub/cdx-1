@@ -68,13 +68,13 @@ RSpec.describe Reports::Failed, elasticsearch: true do
 
   describe '.sort' do
     before do
-      @failed = Reports::Failed.process(current_user, nav_context)
+      @failed = Reports::Failed.new(current_user, nav_context).generate_chart
     end
 
     it 'returns an array of hashes of failed and successful tests' do
       #expected = [{:_label=>"Success", :_value=>1, :_img=>"chart-box-tick"}, {:_label=>"Failed", :_value=>3, :_img=>"chart-box-exclam"}]
       #expect(@failed.data).to eq(expected)
-      expect(@failed.data.length).to eq(2)
+      expect(@failed[:columns].length).to eq(2)
     end
   end
 end

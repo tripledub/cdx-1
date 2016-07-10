@@ -7,7 +7,6 @@ module Reports
       @context      = context
       @options      = options
       @query_joins  = {}
-      setup
     end
 
     protected
