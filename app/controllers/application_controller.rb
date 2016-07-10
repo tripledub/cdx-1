@@ -91,7 +91,7 @@ class ApplicationController < ActionController::Base
 
   def ensure_context
     return if current_user.nil?
-    
+
     @usenav =  true
     if params['nav'] == 'false'
       @usenav =  false
@@ -160,10 +160,6 @@ class ApplicationController < ActionController::Base
 
   def after_sign_out_path_for(resource_or_scope)
     new_user_session_path
-  end
-
-  def date_options_for_filter
-    [{label: "Previous month", value: 1.month.ago.beginning_of_month}, {label: "Previous week", value: 1.week.ago.beginning_of_week},{label: "Previous year", value: 1.year.ago.beginning_of_year}]
   end
 
   def nndd

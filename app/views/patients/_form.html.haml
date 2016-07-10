@@ -29,10 +29,7 @@
     .col.pe-2
       = f.label :dob
     .col
-      = f.date_field :dob, value: @patient.dob_placeholder
-      -#= f.text_field :dob, placeholder: @patient.dob_placeholder
-
-
+      = f.date_field :dob, value: @patient.dob
 
   = render partial: "shared/address", :locals => { :f => f, model_type: "patient" }
 
@@ -50,8 +47,9 @@
 
   .row.button-actions
     .col
-      = f.submit 'Save', class: 'btn-primary'
-      = link_to 'Cancel', patients_path, class: 'btn-link'
+      = f.submit I18n.t('views.save'), class: 'btn-primary'
+      - cancel_path = @patient.persisted? ? patient_path(@patient) : patients_path
+      = link_to I18n.t('views.cancel'), cancel_path, class: 'btn-link'
 
       - if @can_delete
         = confirm_deletion_button @patient, 'patient'

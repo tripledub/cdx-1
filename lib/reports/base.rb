@@ -128,7 +128,7 @@ module Reports
     end
 
     def lookup_device(uuid)
-      device = Device.where(uuid: uuid).first
+      device = ::Device.where(uuid: uuid).first
       return device.name if device
     end
 
@@ -155,6 +155,7 @@ module Reports
       site_or_institution
       date_constraints
       ignore_qc
+      filter_by_device
     end
 
     def site_or_institution
@@ -162,6 +163,10 @@ module Reports
       filter['site.uuid'] = context.site.uuid if context.site && context.exclude_subsites
       filter['site.path'] = context.site.uuid if context.site && !context.exclude_subsites
       filter.delete('site.uuid') if context.exclude_subsites && !context.site
+    end
+
+    def filter_by_device
+      filter['device.uuid'] = options[:device] if options[:device]
     end
 
     def ignore_qc

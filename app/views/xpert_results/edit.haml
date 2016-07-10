@@ -1,0 +1,11 @@
+#new-xpert-results.testflow
+  .container
+    .row.labelHeader
+      .col-6
+        %h3
+          = I18n.t('xpert_results.edit.header', patient_name: patient_display_name(@xpert_result.patient.name))
+      .col-6
+        %ul
+          %li
+            = link_to I18n.t('views.back'), encounter_path(@requested_test.encounter, :test_order_page_mode => @return_page_mode), class: 'button new'
+    = render 'form'

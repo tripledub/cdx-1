@@ -1,0 +1,97 @@
+#show-dst-lpa-result.testflow
+  .container
+    .row.labelHeader
+      .col-6
+        %h3
+          = I18n.t('dst_lpa_results.show.header', patient_name: patient_display_name(@requested_test.encounter.patient.name))
+      .col-6
+        %ul
+          %li
+            = link_to I18n.t('views.back'), encounter_path(@requested_test.encounter, :test_order_page_mode => @return_page_mode), class: 'button new'
+    .order-details
+      .panel
+        .row
+          .col-4
+            .row
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:sample_collected_on)
+                = I18n.l(@dst_lpa_result.sample_collected_on, format: :full_date)
+            .row
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:media_used)
+                = Extras::Select.find(DstLpaResult.method_options, @dst_lpa_result.media_used)
+            .row
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:serial_number)
+                = @dst_lpa_result.serial_number
+            .row
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:examined_by)
+                = @dst_lpa_result.examined_by
+            .row
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:result_on)
+                = I18n.l(@dst_lpa_result.result_on, format: :full_date)
+
+          .col-4
+            .row
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:results_h)
+                = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_h)
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:results_r)
+                = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_r)
+            .row
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:results_e)
+                = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_e)
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:results_s)
+                = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_s)
+            .row
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:results_amk)
+                = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_amk)
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:results_km)
+                = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_km)
+            .row
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:results_cm)
+                = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_cm)
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:results_fq)
+                = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_fq)
+
+
+          .col-4
+            .row
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:results_other1)
+                = @dst_lpa_result.results_other1
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:results_other2)
+                = @dst_lpa_result.results_other2
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:results_other4)
+                = @dst_lpa_result.results_other4
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:results_other4)
+                = @dst_lpa_result.results_other4

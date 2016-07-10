@@ -1,7 +1,10 @@
-= render 'device_card'
+= render partial: 'dashboards/date_filter', locals: { filter_action: performance_device_path(@device) }
+
+.row
+  = render 'device_card'
 
 .row
   .col
     = cdx_tabs do |t|
-      - t.tab title: 'Performance', url: performance_device_path(@device)
-      - t.tab title: 'Setup', url: setup_device_path(@device)
+      - t.tab title: I18n.t('devices.show.performance'), url: performance_device_path(@device)
+      - t.tab title: I18n.t('devices.show.setup'), url: setup_device_path(@device)

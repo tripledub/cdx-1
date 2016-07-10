@@ -1,0 +1,17 @@
+%section.row
+  .small-8.columns.box
+    %header
+      = image_tag('img/test-tube-rack.png')
+      %h3
+        = I18n.t('dashboard.index.total_tests')
+    .box-content
+      #chartContainer{:style => "height: 200px; width: 100%;"}
+        = react_component 'CanvasJsChart', chartDiv: 'chartContainer', chartData: total_tests
+  .small-4.columns.box
+    %header
+      = image_tag('img/test-tube.png')
+      %h3
+        = I18n.t('dashboard.index.failed_tests')
+    .box-content
+      #failedChartContainer{:style => "height: 200px; width: 100%;"}
+        = react_component 'CanvasJsChart', chartDiv: 'failedChartContainer', chartData: failed_tests

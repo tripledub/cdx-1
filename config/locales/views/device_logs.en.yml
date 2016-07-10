@@ -1,0 +1,7 @@
+en:
+  device_logs:
+    index:
+      logs_header: '%{device_name} - Device logs'
+      date: 'Date'
+      message: 'Message'
+      download: 'Download'

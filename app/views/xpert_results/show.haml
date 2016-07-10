@@ -1,0 +1,37 @@
+#show-xpert-result.testflow
+  .container
+    .row.labelHeader
+      .col-6
+        %h3
+          = I18n.t('xpert_results.show.header', patient_name: patient_display_name(@requested_test.encounter.patient.name))
+      .col-6
+        %ul
+          %li
+            = link_to I18n.t('views.back'), encounter_path(@requested_test.encounter, :test_order_page_mode => @return_page_mode), class: 'button new'
+    .order-details
+      .panel
+        .row
+          .col-12
+            %label
+              = XpertResult.human_attribute_name(:sample_collected_on)
+            = I18n.l(@xpert_result.sample_collected_on, format: :full_date)
+        .row
+          .col-12
+            %label
+              = XpertResult.human_attribute_name(:rifampicin)
+            = Extras::Select.find(XpertResult.rifampicin_options, @xpert_result.rifampicin)
+        .row
+          .col-12
+            %label
+              = XpertResult.human_attribute_name(:tuberculosis)
+            = Extras::Select.find(XpertResult.tuberculosis_options, @xpert_result.tuberculosis)
+        .row
+          .col-12
+            %label
+              = XpertResult.human_attribute_name(:examined_by)
+            = @xpert_result.examined_by
+        .row
+          .col-12
+            %label
+              = XpertResult.human_attribute_name(:result_on)
+            = I18n.l(@xpert_result.result_on, format: :full_date)

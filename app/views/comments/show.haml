@@ -7,7 +7,7 @@
       .col-6
         %ul
           %li
-            = link_to "Back", patient_path(comment.patient), class: 'button new'
+            = link_to "Back", patient_path(@comment.patient), class: 'button new'
     .order-details
       .panel
         / Start of Row
@@ -15,21 +15,27 @@
           .col-6
             .row
               .col-12
-                %label Date:
-                = comment.commented_on.strftime(I18n.t('date.input_format.pattern'))
+                %label
+                  = Comment.human_attribute_name(:created_at)
+                = I18n.l(@comment.created_at, format: :long)
             .row
               .col-12
-                %label User:
-                = comment.user.full_name
+                %label
+                  = Comment.human_attribute_name(:user_id)
+                = @comment.user.full_name
             .row
               .col-12
-                %label Description:
-                = comment.description
+                %label
+                  = Comment.human_attribute_name(:description)
+                = @comment.description
             .row
               .col-12
-                = simple_format comment.comment
+                = simple_format @comment.comment
           .col-6
-            - if comment.image
+            - if @comment.image
               .row
                 .col-12
-                  = image_tag comment.image.url
+                  %label
+                    = Comment.human_attribute_name(:image)
+                  %br
+                  = image_tag @comment.image.url

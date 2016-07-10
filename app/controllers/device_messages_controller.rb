@@ -3,9 +3,9 @@ class DeviceMessagesController < ApplicationController
 
   def index
     device_ids = check_access(Device, SUPPORT_DEVICE).within(@navigation_context.entity, @navigation_context.exclude_subsites).pluck(:id)
-    @messages = DeviceMessage.where("device_id IN (?)", device_ids).joins(device: :device_model).where('devices.site_id = device_messages.site_id OR (devices.site_id IS NULL AND device_messages.site_id IS NULL)').reverse_order
+    @messages = DeviceMessage.where("device_id IN (?)", device_ids).joins(device: :device_model).reverse_order
     apply_filters
-    @date_options = date_options_for_filter
+    @date_options = Extras::Dates::Filters.date_options_for_filter
     @devices = check_access(Device, READ_DEVICE).within(@navigation_context.entity)
     @device_models = DeviceModel.all
   end
@@ -29,8 +29,7 @@ class DeviceMessagesController < ApplicationController
   def reprocess
     return unless authorize_resource(@message.device, READ_DEVICE)
     @message.reprocess
-    redirect_to device_messages_path,
-                notice: 'The message will be reprocessed'
+    redirect_to device_messages_path, notice: I18n.t('device_messages.reprocess.message_reprocess')
   end
 
   private

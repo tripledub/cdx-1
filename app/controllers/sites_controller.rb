@@ -46,7 +46,6 @@ class SitesController < ApplicationController
   def create
     @institution = @navigation_context.institution
     return unless authorize_resource(@institution, CREATE_INSTITUTION_SITE)
-
     @site = @institution.sites.new(site_params(true))
     @sites = check_access(@institution.sites, READ_SITE)
 
@@ -142,15 +141,12 @@ class SitesController < ApplicationController
 
   def devices
     return unless authorize_resource(@site, READ_SITE)
-
     @devices_to_edit = check_access(@site.devices, UPDATE_DEVICE).pluck(:id)
-
     render layout: false
   end
 
   def tests
     return unless authorize_resource(@site, READ_SITE)
-
     render layout: false
   end
 
@@ -167,7 +163,7 @@ class SitesController < ApplicationController
       params[:site][:lng] = location_details.try(:lng)
     end
 
-    allowed_params = [:name, :address, :city, :state, :zip_code, :country, :region, :lat, :lng, :location_geoid, :sample_id_reset_policy, :main_phone_number, :email_address, :allows_manual_entry]
+    allowed_params = [:name, :address, :city, :state, :zip_code, :country, :region, :lat, :lng, :location_geoid, :sample_id_reset_policy, :main_phone_number, :email_address, :allows_manual_entry, :comment]
     allowed_params << :parent_id if with_parent_id
 
     params.require(:site).permit(*allowed_params)

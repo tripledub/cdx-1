@@ -1,0 +1,14 @@
+en:
+  dst_lpa_results:
+    new:
+      header: 'Add Culture Test Result for: %{patient_name}'
+    create:
+      audit: 'DST and LPA result added'
+      notice: 'DST and LPA result was successfully created.'
+    show:
+      header: 'DST and LPA test result for: %{patient_name}'
+    edit:
+      header: 'Editing DST and LPA test Result for: %{patient_name}'
+    update:
+      audit: 'DST and LPA test result has been updated'
+      notice: 'DST and LPA test result was successfully updated.'

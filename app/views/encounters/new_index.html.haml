@@ -1,7 +1,7 @@
 - content_for(:subheader) do
   .row.center.add-new.newtestoptions
     %h2
-      = link_to test_results_path(display_as: "test_order"), class: 'side-link', title: 'Back' do
+      = link_to test_results_path(display_as: "test_order"), class: 'side-link', title: I18n.t('views.back') do
         = image_tag "arrow-left.png"
       New Tests
     .subheading Please select one of the options below.

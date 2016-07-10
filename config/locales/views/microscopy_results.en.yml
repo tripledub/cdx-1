@@ -1,0 +1,14 @@
+en:
+  microscopy_results:
+    new:
+      header: 'Add Microscopy test tesult for: %{patient_name}'
+    create:
+      audit: 'Microscopy result added'
+      notice: 'Microscopy result was successfully created.'
+    edit:
+      header: 'Editing Microscopy test result for: %{patient_name}'
+    show:
+      header: 'Microscopy test result for: %{patient_name}'
+    update:
+      audit: 'Microscopy result has been updated'
+      notice: 'Microscopy result was successfully updated.'

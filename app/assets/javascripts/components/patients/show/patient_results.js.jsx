@@ -13,7 +13,7 @@ var PatientResults = React.createClass({
       if (results.length > 0) {
         this.setState({ patientResults: results });
       } else {
-        this.setState({ loadingMessasge: 'There are no comments available.' });
+        this.setState({ loadingMessage: 'There are no results available.' });
       };
     }.bind(this));
   },
@@ -42,19 +42,21 @@ var PatientResults = React.createClass({
 
     return (
       <div className="row">
-        {this.state.patientResults.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> : null}
-        <table className="patient-results">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Status</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows}
-          </tbody>
-        </table>
+        {
+          this.state.patientResults.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> :
+          <table className="patient-results">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows}
+            </tbody>
+          </table>
+        }
       </div>
     );
   }

@@ -13,16 +13,7 @@ class LocalizationHelper
 
   # formats the value as the initialized time_zone (ie. the current_user time_zone)
   def format_datetime(value)
-    format_datetime_time_zone(value, @time_zone)
-  end
-
-  # formats the value as the specified time_zone
-  def format_datetime_time_zone(value, tz)
-    return nil unless value
-
-    value = Time.parse(value) unless value.is_a?(Time)
-    value = value.in_time_zone(tz) if tz
-    I18n.localize(value, locale: @locale, format: :long)
+    Extras::Dates::Format.datetime_with_time_zone(value, :long, @time_zone)
   end
 
   # formats the value as the device time_zone if timestamps_in_device_time_zone,
@@ -39,6 +30,6 @@ class LocalizationHelper
 
     tz ||= @time_zone
 
-    format_datetime_time_zone(value, tz)
+    Extras::Dates::Format.datetime_with_time_zone(value, :long, tz)
   end
 end

@@ -1,0 +1,36 @@
+en:
+  select:
+    default: Please Select
+    microscopy:
+      visual_appearance:
+        blood: 'Blood-stained'
+        mucopurulent: 'Mucopurulent'
+        saliva: 'Saliva'
+    culture:
+      media_options:
+        liquid: 'Liquid'
+        solid: 'Solid'
+    dst_lpa:
+      dst_lpa_options:
+        resistant: 'R'
+        susceptible: 'S'
+        contaminated: 'C'
+        not_done: '--'
+        resistant_long: 'Resistant'
+        susceptible_long: 'Susceptible'
+        contaminated_long: 'Contaminated'
+        not_done_long: 'Not done'
+      method_options:
+        solid: 'Solid Media DST'
+        liquid: 'Liquid Media DST'
+        direct: 'Direct LPA'
+        indirect: 'Indirect LPA'
+    xpert:
+      tuberculosis:
+        detected: 'Detected'
+        not_detected: 'Not Detected'
+        invalid: 'Invalid / No result / Error'
+      rifampicin:
+        detected: 'Detected'
+        not_detected: 'Not Detected'
+        indeterminate:  'Indeterminate result'

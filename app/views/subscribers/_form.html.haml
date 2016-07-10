@@ -51,6 +51,6 @@
   .row.button-actions
     .col
       = f.submit nil, class: "btn-primary"
-      = link_to 'Cancel', subscribers_path, class: 'btn-link'
+      = link_to I18n.t('views.cancel'), subscribers_path, class: 'btn-link'
       - if @editing
         = confirm_deletion_button subscriber, 'subscriber'

@@ -147,7 +147,8 @@ end
 RequestedTest.blueprint do
   encounter
   name { "CD4" }
-  status {RequestedTest.statuses["pending"]}
+  status { RequestedTest.statuses["pending"] }
+  comment {"this is a  comment for the requested test ......"}
 end
 
 
@@ -203,6 +204,66 @@ TestResult.blueprint do
 
   encounter { object.sample.try(:encounter) }
   patient { object.sample.try(:patient) || object.encounter.try(:patient) }
+end
+
+CultureResult.blueprint do
+  requested_test { RequestedTest.make }
+  sample_collected_on { 23.days.ago}
+  serial_number { 'some random serial numbers' }
+  media_used { 'solid' }
+  results_negative { false }
+  results_1to9 { true }
+  results_1plus { true }
+  results_2plus { true }
+  results_3plus { false }
+  results_ntm { false }
+  results_contaminated { true }
+  examined_by { Faker::Name.name }
+  result_on { 7.days.from_now }
+end
+
+DstLpaResult.blueprint do
+  requested_test { RequestedTest.make }
+  sample_collected_on { 23.days.ago}
+  serial_number { 'some random serial numbers' }
+  media_used { 'solid' }
+  results_h { 'resistant' }
+  results_r  { 'resistant' }
+  results_e { 'susceptible' }
+  results_s { 'contaminated'}
+  results_amk { 'not_done' }
+  results_km { 'contaminated' }
+  results_cm {'not_done' }
+  results_fq { 'susceptible' }
+  results_other1 'Some other things'
+  examined_by { Faker::Name.name }
+  result_on { 7.days.from_now }
+end
+
+MicroscopyResult.blueprint do
+  requested_test { RequestedTest.make }
+  sample_collected_on { 23.days.ago}
+  serial_number { 'some random serial numbers' }
+  appearance { 'blood' }
+  specimen_type { 'some type' }
+  results_negative { false }
+  results_1to9 { true }
+  results_1plus { true }
+  results_2plus { true }
+  results_3plus { false }
+  results_ntm { false }
+  results_contaminated { true }
+  examined_by { Faker::Name.name }
+  result_on { 7.days.from_now }
+end
+
+XpertResult.blueprint do
+  requested_test { RequestedTest.make }
+  sample_collected_on { 23.days.ago}
+  tuberculosis { 'invalid' }
+  rifampicin { 'detected' }
+  examined_by { Faker::Name.name }
+  result_on { 7.days.from_now }
 end
 
 DeviceMessage.blueprint do

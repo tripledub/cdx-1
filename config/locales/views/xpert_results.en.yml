@@ -1,0 +1,14 @@
+en:
+  xpert_results:
+    new:
+      header: 'Add Xpert MTB/RIF test result for: %{patient_name}'
+    create:
+      audit: 'Xpert MTB/RIF result added'
+      notice: 'Xpert MTB/RIF result was successfully created.'
+    edit:
+      header: 'Editing Xpert MTB/RIF  test result for: %{patient_name}'
+    show:
+      header: 'Xpert MTB/RIF test result for: %{patient_name}'
+    update:
+      audit: 'Xpert MTB/RIF  result has been updated'
+      notice: 'Xpert MTB/RIF  result was successfully updated.'

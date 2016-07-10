@@ -8,4 +8,6 @@ class ShowEncounterPage < CdxPageBase
   def encounter
     Encounter.find(self.id)
   end
+  
+  section :table, CdxTable, "table"  
 end

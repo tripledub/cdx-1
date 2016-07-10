@@ -5,15 +5,14 @@ module Reports
       super
     end
 
-    def show
-      results['tests'].each do |result|
-        data << {
-          _label: lookup_site(result['site.uuid']),
-          'Peak Tests': calculate_peak(result['site.uuid']),
-          'Average Tests': calculate_average(result)
-        }
-      end
-      data
+    def generate_chart
+      process
+      {
+        title:   '',
+        titleY:  'Peak Tests',
+        titleY2: 'Average Tests',
+        columns: generate_columns
+      }
     end
 
     private
@@ -43,10 +42,34 @@ module Reports
       site = ::Site.where(uuid: uuid).first
       return site.name.truncate(10) if site
     end
-    
+
     def period_results
       filter.delete('group_by')
       @period_results ||= TestResult.query(filter, current_user).execute
+    end
+
+    def generate_columns
+      [
+        {
+          bevelEnabled: false,
+          type: "column",
+          color: "#E06023",
+          name: "Peak tests",
+          legendText: "Peak",
+          showInLegend: true,
+          dataPoints: results['tests'].map { |result| { label: lookup_site(result['site.uuid']), y: calculate_peak(result['site.uuid']) } }
+        },
+        {
+          bevelEnabled: false,
+          type: "column",
+          color: "#5C5B82",
+          name: "Average tests",
+          legendText: "Average",
+          axisYType: "secondary",
+          showInLegend: true,
+          dataPoints: results['tests'].map { |result| { label: lookup_site(result['site.uuid']), y: calculate_average(result) } }
+        }
+      ]
     end
   end
 end

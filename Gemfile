@@ -29,7 +29,6 @@ gem 'chunky_png'
 gem 'gon'
 gem 'rchardet'
 gem 'therubyracer'
-gem 'd3_rails'
 
 gem 'cdx', path: '.'
 gem 'cdx-api-elasticsearch', path: '.'
@@ -103,6 +102,8 @@ group :development, :test do
   gem 'pry-stack_explorer'
   gem 'pry-clipboard'
   gem 'rspec-rails'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test do

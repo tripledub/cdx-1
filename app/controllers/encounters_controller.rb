@@ -6,8 +6,8 @@ class EncountersController < ApplicationController
   end
 
   def new
-    determine_referal  
-  
+    determine_referal
+
     if params[:patient_id].present?
       @institution = @navigation_context.institution
       @patient_json = Jbuilder.new do |json|
@@ -25,7 +25,7 @@ class EncountersController < ApplicationController
       create_requested_tests
       create_new_samples
       @encounter.user = current_user
-      @blender.save_and_index!   
+      @blender.save_and_index!
       @encounter.updated_diagnostic_timestamp!
     end
   end
@@ -39,6 +39,7 @@ class EncountersController < ApplicationController
     return unless authorize_resource(@encounter, READ_ENCOUNTER)
     determine_referal
     @can_update = has_access?(@encounter, UPDATE_ENCOUNTER)
+    @associated_tests_to_results = PatientResult.find_associated_tests_to_results(@encounter)
   end
 
   def edit
@@ -51,7 +52,7 @@ class EncountersController < ApplicationController
   end
 
   def destroy
-    @encounter = Encounter.find(params[:id])  
+    @encounter = Encounter.find(params[:id])
     return unless authorize_resource(@encounter, DELETE_ENCOUNTER)
     # note: Cannot delete record because dependent samples exist, so just set delated_at
     @encounter.update(deleted_at: Time.now)
@@ -65,7 +66,7 @@ class EncountersController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   def update
     perform_encounter_action "updating encounter" do
       prepare_encounter_from_json
@@ -89,9 +90,9 @@ class EncountersController < ApplicationController
   def search_test
     @institution = institution_by_uuid(params[:institution_uuid])
     test_results = scoped_test_results\
-      .joins("LEFT JOIN encounters ON encounters.id = test_results.encounter_id")\
-      .where("test_results.encounter_id IS NULL OR encounters.is_phantom = TRUE")\
-      .where("test_results.test_id LIKE ?", "%#{params[:q]}%")
+      .joins("LEFT JOIN encounters ON encounters.id = patient_results.encounter_id")\
+      .where("patient_results.encounter_id IS NULL OR encounters.is_phantom = TRUE")\
+      .where("patient_results.test_id LIKE ?", "%#{params[:q]}%")
     render json: as_json_test_results_search(test_results).attributes!
   end
 
@@ -146,16 +147,23 @@ class EncountersController < ApplicationController
   private
 
   def determine_referal
-    @show_edit_encounter=true
-    @show_cancel_encounter=false
-    @return_path_encounter=nil
-    if request.referer != nil
+    @show_edit_encounter = true
+    @show_cancel_encounter = false
+    @return_path_encounter = nil
+    
+    @return_path_encounter = test_results_path(display_as: 'test_order') if params['test_order_page_mode'] !=nil
+    
+    if request.referer
       referer = URI(request.referer).path
       referer_check = referer =~ /\/patients\/\d/
-       if  referer_check != nil
+       if  (referer_check != nil) || (params['test_order_page_mode'] == 'cancel')
         @show_edit_encounter=false
-        @show_cancel_encounter=true if (@encounter != nil) && (Encounter.statuses[@encounter.status] != Encounter.statuses["inprogress"]) 
-        @return_path_encounter=referer
+        @show_cancel_encounter=true if (@encounter != nil) && (Encounter.statuses[@encounter.status] != Encounter.statuses["inprogress"])
+        if @encounter && @encounter.patient
+           @return_path_encounter=patient_path(@encounter.patient) 
+        else
+          @return_path_encounter=referer
+        end
       end
     end
   end
@@ -165,11 +173,11 @@ class EncountersController < ApplicationController
     tests_requested = encounter_param['tests_requested']
     if tests_requested.present?
       tests_requested.split('|').each do |name|
-        @encounter.requested_tests.build(name: name, status: RequestedTest.statuses["pending"]) 
+        @encounter.requested_tests.build(name: name, status: RequestedTest.statuses["pending"])
       end
-   end 
+   end
   end
-  
+
   def perform_encounter_action(action)
     @extended_respone = {}
     begin
@@ -216,7 +224,7 @@ class EncountersController < ApplicationController
     @encounter = encounter_param['id'] ? Encounter.find(encounter_param['id']) : Encounter.new
     @encounter.new_samples = []
     @encounter.is_phantom = false
-    
+
     if @encounter.new_record?
       @institution = institution_by_uuid(encounter_param['institution']['uuid'])
       @encounter.institution = @institution
@@ -228,14 +236,14 @@ class EncountersController < ApplicationController
       @encounter.coll_sample_other = encounter_param['coll_sample_other']
       @encounter.diag_comment = encounter_param['diag_comment']
       @encounter.treatment_weeks = encounter_param['treatment_weeks']
-      @encounter.testdue_date = encounter_param['testdue_date'] 
+      @encounter.testdue_date = encounter_param['testdue_date']
     else
       @institution = @encounter.institution
     end
     @blender = Blender.new(@institution)
 
     @encounter_blender = @blender.load(@encounter)
-  
+
     encounter_param['patient'].tap do |patient_param|
       if patient_param.present? && patient_param['id'].present?
         set_patient_by_id patient_param['id']
@@ -358,7 +366,7 @@ class EncountersController < ApplicationController
   def as_json_edit
     Jbuilder.new do |json|
       json.(@encounter, :id)
-      json.(@encounter, :uuid)   
+      json.(@encounter, :uuid)
       json.(@encounter, :user)
       json.(@encounter, :exam_reason)
       json.(@encounter, :tests_requested)
@@ -366,8 +374,8 @@ class EncountersController < ApplicationController
       json.(@encounter, :coll_sample_other)
       json.(@encounter, :diag_comment)
       json.(@encounter, :treatment_weeks)
-      json.(@encounter, :testdue_date)  
-      json.(@encounter, :status)  
+      json.(@encounter, :status)
+      json.(@encounter, :testdue_date)
       json.has_dirty_diagnostic @encounter.has_dirty_diagnostic?
       json.assays (@encounter_blender.core_fields[Encounter::ASSAYS_FIELD] || [])
       json.observations @encounter_blender.plain_sensitive_data[Encounter::OBSERVATIONS_FIELD]
@@ -378,13 +386,13 @@ class EncountersController < ApplicationController
       json.site do
         as_json_site(json, @encounter.site)
       end
-     
+
      if @encounter.performing_site != nil
       json.performing_site do
         as_json_site(json, @encounter.performing_site)
       end
     end
-    
+
       json.patient do
         if @encounter_blender.patient.blank?
           json.nil!

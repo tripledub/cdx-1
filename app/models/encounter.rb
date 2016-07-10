@@ -13,7 +13,7 @@ class Encounter < ActiveRecord::Base
 
   belongs_to :performing_site, class_name: 'Site'
   
-  enum status: [:pending, :inprogress, :complete]
+  enum status: [:pending, :inprogress, :completed]
   
   belongs_to :patient
   belongs_to :user
@@ -162,7 +162,7 @@ class Encounter < ActiveRecord::Base
       json.name encounter_query_result["site"]["name"]
     end
   end
-
+ 
   protected
 
   def ensure_entity_id

@@ -43,6 +43,15 @@ var SiteSelect = React.createClass({
 
   fireSiteChanged: function(siteUuid) {
     this.props.onChange(_.find(this.state.sites, {uuid: siteUuid}));
+
+    if (this.props.allow_manual_entry_callback != null) {
+      if (this.state.sites != null) {
+        var results = this.state.sites.filter(function (site) { return site.uuid === siteUuid; });
+        if ( (results != null) && (results.length > 0)) {
+          this.props.allow_manual_entry_callback(results[0].allows_manual_entry);
+        }
+      }
+    }
   },
 
   render: function() {

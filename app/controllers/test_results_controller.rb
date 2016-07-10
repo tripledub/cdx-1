@@ -21,7 +21,7 @@ class TestResultsController < ApplicationController
     @test_types = Cdx::Fields.test.core_fields.find { |field| field.name == 'type' }.options
     @test_statuses = ['success','error']
     @conditions = Condition.all.map &:name
-    @date_options = date_options_for_filter
+    @date_options = Extras::Dates::Filters.date_options_for_filter
 
     @page_size = (params["page_size"] || 10).to_i
     @page = (params["page"] || 1).to_i
@@ -62,6 +62,13 @@ class TestResultsController < ApplicationController
 
     @samples = @test_result.sample_identifiers.reject{|identifier| identifier.entity_id.blank?}.map {|identifier| [identifier.entity_id, Barby::Code93.new(identifier.entity_id)]}
     @show_institution = show_institution?(Policy::Actions::QUERY_TEST, TestResult)
+
+    device_messages  = DeviceMessage.where(device_id: @test_result.device_id).joins(device: :device_model).reverse_order
+    @total_messages  = device_messages.count
+    @page_size       = (params["page_size"] || 10).to_i
+    @page            = (params["page"] || 1).to_i
+    offset           = (@page - 1) * @page_size
+    @device_messages = device_messages.limit(@page_size).offset(offset)
   end
 
   private
@@ -88,7 +95,7 @@ class TestResultsController < ApplicationController
     filter["sample.id"] = params["sample.id"] if params["sample.id"].present?
     filter["since"] = params["since"] if params["since"].present?
     filter["test.status"] = params["test.status"] if params["test.status"].present?
-      
+
     filter
   end
 

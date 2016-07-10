@@ -40,8 +40,8 @@ RSpec.describe Episode, type: :model do
       expect(diagnosis_options).to be_a(Array)
     end
 
-    it 'excludes Clinically Diagnosed' do
-      expected = diagnosis_options.select { |o| o.id == :clinically_diagnosed }
+    it 'excludes Presumptive TB' do
+      expected = diagnosis_options.select { |o| o.id == :presumptive_tb }
       expect(expected).to eq([])
     end
   end
@@ -98,8 +98,8 @@ RSpec.describe Episode, type: :model do
 
     it 'includes positive, negative and unkown' do
       expect(hiv_status_options.size).to eq(3)
-      %w(positive negative unknown).each do |status|
-        id = "#{status}_tb".to_sym
+      %w(positive_tb negative_tb unknown).each do |status|
+        id = status.to_sym
         expected = hiv_status_options.select { |st| st.id == id }
         expect(expected.first.id).to eq(id)
       end

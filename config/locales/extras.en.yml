@@ -1,0 +1,8 @@
+en:
+  extras:
+    dates:
+      filters:
+        previous_week: 'Previous week'
+        previous_month: 'Previous month'
+        previous_quarter: 'Previous quarter'
+        previous_year: 'Previous year'

@@ -7,12 +7,12 @@ module Reports
     end
 
     def process
-      filter['test.status'] = 'error'  
-      filter['group_by'] = 'device.uuid,test.error_code,location.id'
+      filter['test.status'] = 'error'
+      filter['group_by'] = 'device.uuid,test.error_code'
       super
     end
-    
-    def get_device_location_details     
+
+    def get_device_location_details
       data = results['tests'].map do |result|
       {
         device: ::Device.where(uuid: result["device.uuid"]).pluck(:name)[0],
@@ -25,7 +25,7 @@ module Reports
     end
 
     private
-      
+
     def latest_error_date(result)
       filter = {}
       filter["device.uuid"] =result["device.uuid"]

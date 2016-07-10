@@ -30,7 +30,7 @@
 //= require react-select
 //= require react-leaflet
 //= require components
-//= require d3
+//= require canvas-js.min
 //= require jquery.custom-file-input
 //= require_tree .
 //= require turbolinks
@@ -118,17 +118,6 @@ $(document).ready(function(){
     var url = action + (action.indexOf('?') === -1 ? '?' : '&') + form.serialize();
     return url;
   }
-
-  $(document).on('click','.datepicker_single', function(){
-    $(this).daterangepicker({
-      singleDatePicker: true,
-      showDropdowns: true
-    });
-  });
-
-  $(document).on('click','.datepicker', function(){
-    $(this).daterangepicker();
-  });
 
   $(document).on('click', '.tabs .tabs-header a:not(".selected")', function(event) {
     var target = $(event.target);
@@ -231,8 +220,4 @@ $(document).ready(function(){
     $(".custom_filters").toggle();
   });
 
-
-  $('input[type=date]').click(function(){
-    $(this).datepicker({ dateFormat: 'dd-mm-yy' });
-  });
 });

@@ -1,28 +1,34 @@
 = render "filters"
 
-.row
+.row.paginationHeader
   .col
     - if @devices.empty?
       = empty_data icon: 'icon-outline-device xx-large' do |c|
         - c.body do
-          %h1 There are no devices reporting at #{truncated_navigation_context_entity_name}
-          %p Follow the configuration steps to connect a device and start reporting
+          %h1
+            = I18n.t('devices.index.no_devices', entity_name: truncated_navigation_context_entity_name)
+          %p
+            = I18n.t('devices.index.configuration_steps')
     - else
-      = cdx_table title: pluralize(@total, "device") do |t|
+      = cdx_table title: I18n.t('devices.index.device', count: @total) do |t|
         - t.columns do
           %col{:width => "25%"}
           %col{:width => "25%"}
           %col{:width => "25%"}
           %col{:width => "25%"}
         - t.actions do
-          = link_to devices_path(filters_params.merge(format: :csv)), title: 'Download CSV' do
+          = link_to devices_path(filters_params.merge(format: :csv)), title: I18n.t('devices.index.download_csv') do
             .icon-download.icon-gray
         - t.thead do
           %tr
-            %th Name
-            %th Manufacturer
-            %th Model
-            %th Site
+            %th
+              = I18n.t('devices.index.name')
+            %th
+              = I18n.t('devices.index.manufacturer')
+            %th
+              = I18n.t('devices.index.model')
+            %th
+              = I18n.t('devices.index.site')
         - t.tbody do
           - @devices.each do |device|
             %tr{data: (@devices_to_read.include?(device.id) ? {href: device_path(device) } : {})}

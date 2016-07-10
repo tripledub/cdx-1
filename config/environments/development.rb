@@ -1,3 +1,12 @@
+Dir["config/git/hooks/*"].each do |commit_hook_template|
+  commit_hook = commit_hook_template.sub(%r|config/git/|,'.git/')
+
+  unless File.symlink?(Rails.root + commit_hook)
+    File.symlink("../../" + commit_hook_template, Rails.root + commit_hook)
+    $stderr.puts "Installed #{commit_hook}"
+  end
+end
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 

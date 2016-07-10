@@ -24,7 +24,7 @@ var EncounterShow = React.createClass({
     $('body').scrollTop(0);
   },
   EncounterDeleteHandler: function() {
-    if (this.props.referer != nil) {
+    if (this.props.referer != null) {
       successUrl = this.props.referer;
     } else {
       successUrl = '/test_results?display_as=test_order';
@@ -41,7 +41,7 @@ var EncounterShow = React.createClass({
    }
 
   if (this.props.requested_tests.length>0) {
-    var urlParam = '/encounter_requested_tests';
+    var urlParam = '/requested_tests';
     urlParam = urlParam + '/' + this.props.encounter.id;
       requested_tests = this.props.requested_tests;
       EncounterRequestTestActions.update(urlParam, requested_tests, successUrl, this.submit_error);
@@ -98,6 +98,15 @@ var EncounterShow = React.createClass({
           </div>
           <div className="col">
             <p>{performing_site}</p>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col pe-2">
+            <label>Order Id:</label>
+          </div>
+          <div className="col">
+            <p>{this.props.encounter.uuid}</p>
           </div>
         </div>
 
@@ -179,7 +188,7 @@ var EncounterShow = React.createClass({
 
         <div className="row">
           <RequestedTestsIndexTable encounter={this.props.encounter} requested_tests={this.state.requested_tests} requested_by={this.props.requested_by}  
-            status_types={this.props.status_types} edit={this.props.show_edit} onTestChanged={this.onTestChanged} disable_all_selects={this.state.disable_all_selects} />
+           status_types={this.props.status_types} edit={this.props.show_edit} onTestChanged={this.onTestChanged} associated_tests_to_results={this.props.associated_tests_to_results}/>
         </div>
 
         <br />

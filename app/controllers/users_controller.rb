@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     apply_filters
     @total = @users.count
 
-    @date_options = date_options_for_filter
+    @date_options = Extras::Dates::Filters.date_options_for_filter
     @status = [{value: "", label: "Show all"}, {value: "1", label: "Active"}, {value: "0", label: "Blocked"}]
 
     respond_to do |format|

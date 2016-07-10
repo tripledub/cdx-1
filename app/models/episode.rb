@@ -18,14 +18,14 @@ class Episode < ActiveRecord::Base
   def self.diagnosis_options
     [
       OpenStruct.new(id: :presumptive_tb,
-                     name: 'Presumptive TB',
-                     anatomical: true),
+                     name: I18n.t('diagnosis.presumptive_tb'),
+                     anatomical: false),
       OpenStruct.new(id: :bacteriologically_confirmed,
-                     name: 'Bacteriologically Confirmed',
+                     name: I18n.t('diagnosis.bacteriologically_confirmed'),
                      anatomical: true),
       OpenStruct.new(id: :clinically_diagnosed,
-                     name: 'Clinically Diagnosed',
-                     anatomical: false)
+                     name: I18n.t('diagnosis.clinically_diagnosed'),
+                     anatomical: true)
     ]
   end
 
@@ -53,9 +53,9 @@ class Episode < ActiveRecord::Base
 
   def self.hiv_status_options
     [
-      OpenStruct.new(id: :positive_tb, name: 'HIV-positive TB patient'),
-      OpenStruct.new(id: :negative_tb, name: 'HIV-negative TB patient'),
-      OpenStruct.new(id: :unknown_tb, name: 'HIV Status Unkown TB patient')
+      OpenStruct.new(id: :positive_tb, name: I18n.t('hiv_status.positive_tb')),
+      OpenStruct.new(id: :negative_tb, name: I18n.t('hiv_status.negative_tb')),
+      OpenStruct.new(id: :unknown, name: I18n.t('hiv_status.unkown'))
     ]
   end
 
