@@ -13,4 +13,4 @@ en:
       my_account: 'My account'
       api_tokens: 'API tokens'
       log_out: 'Log out'
-      log_in 'Log in'
+      log_in: 'Log in'
