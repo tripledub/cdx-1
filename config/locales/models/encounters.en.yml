@@ -1,0 +1,6 @@
+en:
+  encounters:
+    status:
+      pending: 'Pending'
+      in_progress: 'In progress'
+      completed: 'Completed'

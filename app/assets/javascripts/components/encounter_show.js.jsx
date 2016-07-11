@@ -27,7 +27,7 @@ var EncounterShow = React.createClass({
     if (this.props.referer != null) {
       successUrl = this.props.referer;
     } else {
-      successUrl = '/test_results?display_as=test_order';
+      successUrl = '/test_orders';
     }
 
     var  urlParam = this.props.encounter.id
@@ -37,7 +37,7 @@ var EncounterShow = React.createClass({
    if (this.props.referer != null) {
      successUrl = this.props.referer;
    } else {
-     successUrl = '/test_results?display_as=test_order';
+     successUrl = '/test_orders';
    }
 
   if (this.props.requested_tests.length>0) {
@@ -187,7 +187,7 @@ var EncounterShow = React.createClass({
         </FlexFullRow>
 
         <div className="row">
-          <RequestedTestsIndexTable encounter={this.props.encounter} requested_tests={this.state.requested_tests} requested_by={this.props.requested_by}  
+          <RequestedTestsIndexTable encounter={this.props.encounter} requested_tests={this.state.requested_tests} requested_by={this.props.requested_by}
            status_types={this.props.status_types} edit={this.props.show_edit} onTestChanged={this.onTestChanged} associated_tests_to_results={this.props.associated_tests_to_results}/>
         </div>
 

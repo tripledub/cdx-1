@@ -4,25 +4,17 @@
     .heading
       .title
         Tests
-
-    
-	
     .topfilteropt
       %input#query_button.btn-primary.filtershow(type='button' value='Show Filters')
-  
+
   %form.filteroptions#filters-form{action: test_results_path, "data-auto-submit" => true}
     %input{type: "hidden", name: "page_size", value: @page_size}
     .row.center.custom_filters
       .col.pe-10
-	  
+
       .advanced
-	  
+
         .row
-          .filter.nodisplay
-            %label.block Display as
-            = cdx_select name: "display_as", value: @display_as do |select|
-              - select.item "test", "Tests"
-              - select.item "test_order", "Test Orders"
           .filter
             %label.block Condition
             = cdx_select name: "test.assays.condition", value: params["test.assays.condition"] do |select|
@@ -38,27 +30,21 @@
             = cdx_select name: "since", value: params["since"] do |select|
               - select.item "", "Show all"
               - select.items @date_options, :value, :label
-          
-          - if @display_as == "test"
-            .filter
-              %label.block Type
-              = cdx_select name: "test.type", value: params["test.type"] do |select|
-                - select.item "", "Show all"
-                - select.items @test_types
-          - if @display_as == "test"
-            .filter
-              %label.block Status
-              = cdx_select name: "test.status", value: params["test.status"] do |select|
-                - select.item "", "Show all"
-                - select.items @test_statuses
-            .filter
-              %label.block Sample Id
-              %input{type: "text", name: "sample.id", value: params["sample.id"]}
-          - else
-            .filter
-              %label.block Test Order Id
-              %input{type: "text", name: "encounter.id", value: params["encounter.id"]}
-          - if @display_as == "test" && ((@devices.size > 1) || params['device.uuid'])
+
+          .filter
+            %label.block Type
+            = cdx_select name: "test.type", value: params["test.type"] do |select|
+              - select.item "", "Show all"
+              - select.items @test_types
+          .filter
+            %label.block Status
+            = cdx_select name: "test.status", value: params["test.status"] do |select|
+              - select.item "", "Show all"
+              - select.items @test_statuses
+          .filter
+            %label.block Sample Id
+            %input{type: "text", name: "sample.id", value: params["sample.id"]}
+          - if (@devices.size > 1) || params['device.uuid']
             .filter
               %label.block Device
               = cdx_select name: "device.uuid", value: params["device.uuid"] do |select|

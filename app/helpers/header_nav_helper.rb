@@ -6,9 +6,9 @@ module HeaderNavHelper
     when 'patients'
       params[:controller] == 'patients'
     when 'test_orders'
-      params[:controller] == 'test_results' && params[:display_as] == 'test_order'
+      params[:controller] == 'test_orders'
     when 'test_results'
-      params[:controller] == 'test_results' && (!params[:display_as] || params[:display_as] != 'test_order')
+      params[:controller] == 'test_results'
     when 'devices'
       params[:controller] == 'devices'
     when 'settings'

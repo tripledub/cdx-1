@@ -8,7 +8,7 @@ class Presenters::PatientTestOrders
           requester:   requester_name(test_order.user),
           requestDate: Extras::Dates::Format.datetime_with_time_zone(test_order.start_time),
           dueDate:     Extras::Dates::Format.datetime_with_time_zone(test_order.testdue_date),
-          status:      test_order.core_fields['status'],
+          status:      convert_status(test_order.status),
           viewLink:    Rails.application.routes.url_helpers.encounter_path(test_order)
         }
       end
@@ -22,6 +22,17 @@ class Presenters::PatientTestOrders
 
     def requester_name(user)
       user.present? ? user.full_name : '-'
+    end
+
+    def convert_status(status)
+      case status
+      when 'pending'
+        I18n.t('encounters.status.pending')
+      when 'inprogress'
+        I18n.t('encounters.status.in_progress')
+      when 'completed'
+        I18n.t('encounters.status.completed')
+      end
     end
   end
 end
