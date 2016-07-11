@@ -7,6 +7,8 @@ Dir["config/git/hooks/*"].each do |commit_hook_template|
   end
 end
 
+Paperclip.options[:command_path] = "/usr/local/bin/"
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -25,8 +27,8 @@ Rails.application.configure do
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method = ENV['USER'] == 'vagrant' ? :letter_opener_web : :letter_opener
-  
-  
+
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
