@@ -22,9 +22,15 @@ class Episode < ActiveRecord::Base
                      anatomical: false),
       OpenStruct.new(id: :bacteriologically_confirmed,
                      name: I18n.t('diagnosis.bacteriologically_confirmed'),
-                     anatomical: true),
+                     anatomical: false),
       OpenStruct.new(id: :clinically_diagnosed,
                      name: I18n.t('diagnosis.clinically_diagnosed'),
+                     anatomical: false),
+      OpenStruct.new(id: :pulmonary_tuberculosis,
+                     name: I18n.t('diagnosis.pulmonary_tb'),
+                     anatomical: true),
+      OpenStruct.new(id: :extra_pulmonary_tuberculosis,
+                     name: I18n.t('diagnosis.extra_pulmonary_tb'),
                      anatomical: true)
     ]
   end
