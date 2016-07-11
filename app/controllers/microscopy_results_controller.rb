@@ -26,8 +26,8 @@ class MicroscopyResultsController < PatientResultsController
   end
 
   def update
-    if @microscopy_result.update_and_audit(microscopy_result_params, current_user, I18n.t('microscopy_result.update.audit'))
-      redirect_to encounter_path(@requested_test.encounter), notice: I18n.t('microscopy_result.update.notice')
+    if @microscopy_result.update_and_audit(microscopy_result_params, current_user, I18n.t('microscopy_results.update.audit'))
+      redirect_to encounter_path(@requested_test.encounter), notice: I18n.t('microscopy_results.update.notice')
     else
       render action: 'edit'
     end

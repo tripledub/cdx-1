@@ -4,7 +4,7 @@ class PatientTestOrdersController < ApplicationController
   before_filter :find_patient
 
   def index
-    render json: Presenters::PatientTestOrders.patient_view(@patient.encounters.order(set_order_from_params).limit(30).offset(params[:page] || 0))
+    render json: Presenters::PatientTestOrders.patient_view(@patient.encounters.joins(:site).order(set_order_from_params).limit(30).offset(params[:page] || 0))
   end
 
   protected
@@ -15,18 +15,19 @@ class PatientTestOrdersController < ApplicationController
 
   def set_order_from_params
     order = params[:order] == 'true' ? 'asc' : 'desc'
-    field_name = case params[:field].to_s == 'name'
+    case params[:field].to_s
     when 'site'
-      'sites.name'
+      "sites.name #{order}"
     when 'orderId'
-      'encounters.uuid'
+      "encounters.uuid #{order}"
     when 'requester'
-      'users.first_name, users.last_name'
+      "users.first_name #{order}, users.last_name"
     when 'dueDate'
-      'encounters.testdue_date'
-    else 'encounters.start_time'
+      "encounters.testdue_date #{order}"
+    when 'status'
+      "encounters.status #{order}"
+    else
+      "encounters.start_time #{order}"
     end
-
-    "#{field_name} #{order}"
   end
 end

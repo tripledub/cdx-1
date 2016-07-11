@@ -39,9 +39,11 @@ en:
       go_back: 'Ok, understood, go back'
       last_time: 'This is the last time you will be able to view the token. Please keep it safe'
     filters:
+      header: 'Devices'
       add_device: 'Add Device'
       show_filters: 'Show filters'
       manufacturer: 'Manufacturer'
+      model: 'Model'
       show_all: 'Show all'
     device_card:
       institution: 'Institution: %{institution_name}'

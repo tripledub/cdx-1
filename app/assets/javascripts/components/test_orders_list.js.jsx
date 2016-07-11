@@ -74,7 +74,7 @@ var TestOrdersList = React.createClass({
           </tr>
           <tr>
             {sortableHeader("ID", "encounter.uuid")}
-            { this.props.showSites ? <th>Site</th> : null }
+            { this.props.showSites ? sortableHeader("Site", "site.name") : null }
             <th colSpan={totalAssaysColCount} className="text-right">Results</th>
             {sortableHeader("Start time", "encounter.start_time")}
             {sortableHeader("End time", "encounter.end_time")}

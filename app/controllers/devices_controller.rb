@@ -12,19 +12,21 @@ class DevicesController < ApplicationController
 
   def index
     @devices = check_access(Device, READ_DEVICE).joins(:device_model).includes(:site, :institution, device_model: :institution)
-    @devices = @devices.within(@navigation_context.entity, @navigation_context.exclude_subsites)
+    @devices = @devices.joins(:device_model, :institution).includes(:site).within(@navigation_context.entity, @navigation_context.exclude_subsites)
     @manufacturers = Institution.where(id: @devices.select('device_models.institution_id'))
 
     @devices = @devices.where(device_models: { institution_id: params[:manufacturer].to_i}) if params[:manufacturer].presence
     @devices = @devices.where(device_model: params[:device_model].to_i) if params[:device_model].present?
 
-    @page_size = (params["page_size"] || 10).to_i
-    @page = (params["page"] || 1).to_i
+    @page_size = (params['page_size'] || 10).to_i
+    @page_size = 50 if @page_size > 50
+    @page = (params['page'] || 1).to_i
+    @page = 1 if @page < 1
     offset = (@page - 1) * @page_size
 
     @total = @devices.count
 
-    @devices = @devices.limit(@page_size).offset(offset)
+    @devices = @devices.order(params['order_by'] || 'devices.name').limit(@page_size).offset(offset)
 
     @can_create = has_access?(Institution, REGISTER_INSTITUTION_DEVICE)
     @devices_to_read = check_access(Device, READ_DEVICE).pluck(:id)

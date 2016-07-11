@@ -9,8 +9,7 @@ describe CommentsController do
   let(:default_params) { { context: institution.uuid } }
   let(:valid_params)   { {
     description:  'New valid comment',
-    comment:      'For whom the bell tolls',
-    commented_on: Date.today
+    comment:      'For whom the bell tolls'
   } }
 
   context 'user with edit patient permission' do
@@ -30,7 +29,7 @@ describe CommentsController do
       end
 
       it 'should return a json with comments ordered by comment date ascending' do
-        first_comment = patient.comments.order(commented_on: :desc).first
+        first_comment = patient.comments.order(created_at: :desc).first
         get 'index', patient_id: patient.id
 
         expect(JSON.parse(response.body).first['title']).to eq(first_comment.description)
@@ -84,27 +83,6 @@ describe CommentsController do
 
           it 'should audit the comment' do
             expect(@audit_log.comment).to eq('For whom the bell tolls')
-          end
-        end
-      end
-
-      describe 'comment date' do
-        context 'if no date is provided ' do
-          it 'should add today as default date' do
-            post :create, patient_id: patient.id, comment: valid_params
-            comment = patient.comments.where(description: 'New valid comment').first
-
-            expect(comment.commented_on).to eq(Date.today)
-          end
-        end
-
-        context 'if a date is provided' do
-          it 'should be saved' do
-            post :create, patient_id: patient.id, comment: valid_params.merge!({ commented_on: '2016/11/26' })
-
-            comment = patient.comments.where(description: 'New valid comment').first
-
-            expect(comment.commented_on).to eq(Date.new(2016, 11, 26))
           end
         end
       end

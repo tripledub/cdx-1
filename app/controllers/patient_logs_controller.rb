@@ -24,6 +24,13 @@ class PatientLogsController < ApplicationController
 
   def set_order_from_params
     order = params[:order] == 'true' ? 'asc' : 'desc'
-    params[:field] == 'name' ? "users.first_name #{order}, users.last_name" : "audit_logs.created_at #{order}"
+    case params[:field]
+    when 'name'
+      "users.first_name #{order}, users.last_name"
+    when 'title'
+      "audit_logs.title #{order}"
+    else
+      "audit_logs.created_at #{order}"
+    end
   end
 end
