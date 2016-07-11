@@ -11,7 +11,7 @@ var RequestedTestRow = React.createClass({
     this.setState({
       test: temp_test
     });
-    this.props.onTestChanged(this.state.test);
+   this.props.onTestChanged(this.state.test);
   },
   commentChanged: function(new_comment) {
     var temp_test = this.state.test;
@@ -19,7 +19,7 @@ var RequestedTestRow = React.createClass({
     this.setState({
       test: temp_test
     });
-    this.props.onTestChanged(this.state.test);
+   this.props.onTestChanged(this.state.test);
   },
   determineTestResultUrl(id,name, edit, is_associated) {
     var url_path;
@@ -95,11 +95,16 @@ var RequestedTestRow = React.createClass({
       is_associated=true;
     }
 
-    if ((this.props.edit == true) && (is_associated == false)) {
+    if (this.state.test.status=='rejected') {
+      test_result_url = "#";
+      test_result_text = "";
+    } else 
+    if ((this.props.edit == true) && (is_associated == false) && 
+       ((this.state.test.status == 'pending') || (this.state.test.status == 'inprogress')) ) {
       test_result_url = this.determineTestResultUrl(this.state.test.id, this.state.test.name, this.props.edit, is_associated);
       test_result_text = "Add Result";
     } 
-    else if (is_associated == false) {
+    else if ( (is_associated == false) || ((this.props.cancel==true) && (this.state.test.status=='complete')) ) {
       test_result_url = "#";
       test_result_text = "";
     }
@@ -119,7 +124,7 @@ var RequestedTestRow = React.createClass({
             this.statusChanged
            }
           className="input-x-medium"
-          value={this.state.test.status}
+          defaultValue={this.state.test.status}
           disabled = {
             !this.props.edit
            }>
