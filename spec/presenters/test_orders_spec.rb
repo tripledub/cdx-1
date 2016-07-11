@@ -12,18 +12,18 @@ describe Presenters::TestOrders do
       7.times {
         encounter = Encounter.make institution: institution, site: site, patient: patient, start_time: 3.days.ago.to_s, testdue_date: 1.day.from_now.to_s, status: 2, performing_site: performing_site
         sample    = Sample.make(institution: institution, patient: patient, encounter: encounter)
-        SampleIdentifier.make(site: site, entity_id: "sample-#{rand(51..300)}", sample: sample)
-        SampleIdentifier.make(site: site, entity_id: "sample-#{rand(301..600)}", sample: sample)
+        SampleIdentifier.make(site: site, entity_id: "sample-#{rand(1..3000)}", sample: sample)
+        SampleIdentifier.make(site: site, entity_id: "sample-#{rand(3001..6000)}", sample: sample)
       }
-      @tests = Encounter.all.map{|e| { 'encounter' => { 'uuid' => e.uuid } } }
+      @tests = Encounter.all
     end
 
     it 'should return an array of formated comments' do
-      expect(Presenters::TestOrders.index_view(@tests).size).to eq(7)
+      expect(Presenters::TestOrders.index_view(Encounter.all).size).to eq(7)
     end
 
     it 'should return elements formated' do
-      expect(Presenters::TestOrders.index_view(@tests).first).to eq({
+      expect(Presenters::TestOrders.index_view(Encounter.all).first).to eq({
         id:                 Encounter.first.uuid,
         requestedSiteName:  site.name,
         performingSiteName: performing_site.name,
