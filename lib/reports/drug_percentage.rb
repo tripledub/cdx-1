@@ -12,25 +12,21 @@ module Reports
 
     protected
 
-    def query_data
-      XpertResult
-    end
-
     def sum_inh
       setup
-      query_conditions.merge!({ 'patient_results.tuberculosis': 'detected'})
+      @query_conditions.merge!({ 'patient_results.tuberculosis': 'detected'})
       run_query
     end
 
     def sum_rif
       setup
-      query_conditions.merge!({ 'patient_results.rifampicin': 'detected' })
+      @query_conditions.merge!({ 'patient_results.rifampicin': 'detected' })
       run_query
     end
 
     def sum_both_detected
       setup
-      query_conditions.merge!({ 'patient_results.tuberculosis': 'detected', 'patient_results.rifampicin': 'detected' })
+      @query_conditions.merge!({ 'patient_results.tuberculosis': 'detected', 'patient_results.rifampicin': 'detected' })
       run_query
     end
   end

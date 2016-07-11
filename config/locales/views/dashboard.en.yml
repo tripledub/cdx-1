@@ -17,3 +17,4 @@ en:
       device_error_codes: 'Device Error Codes'
       drtb_percentage: 'DR-TB percentage'
       drug_resistance: 'Drug resistance percentage'
+      chart_note: 'This particular charts have been derived from Xpert only results and percentages may not be accurate at a population level unless all TB tests have utilised Xpert.'

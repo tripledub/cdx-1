@@ -13,10 +13,6 @@ module Reports
 
     protected
 
-    def query_data
-      XpertResult
-    end
-
     def sum_total
       setup
       run_query
@@ -24,7 +20,7 @@ module Reports
 
     def sum_detected
       setup
-      query_conditions.merge!({ 'patient_results.tuberculosis': 'detected' })
+      @query_or = [ 'patient_results.tuberculosis = ? OR patient_results.rifampicin = ?', 'detected', 'detected' ]
       run_query
     end
   end
