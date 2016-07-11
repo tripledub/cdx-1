@@ -27,6 +27,7 @@ class EncountersController < ApplicationController
       @encounter.user = current_user
       @blender.save_and_index!
       @encounter.updated_diagnostic_timestamp!
+      Audit::EncounterAuditor.new(@encounter, current_user.id).log_changes("encounter 2 title", "encounter 2 changed comment", @encounter) 
     end
   end
 
