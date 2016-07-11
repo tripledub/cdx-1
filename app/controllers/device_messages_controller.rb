@@ -35,16 +35,19 @@ class DeviceMessagesController < ApplicationController
   private
 
   def apply_filters
-    @messages = @messages.where("devices.uuid = ?", params["device.uuid"]) if params["device.uuid"].present?
-    @messages = @messages.where("device_models.id = ?", params["device_model"]) if params["device_model"].present?
+    @messages = @messages.where("devices.uuid = ?", params["device.uuid"])               if params["device.uuid"].present?
+    @messages = @messages.where("device_models.id = ?", params["device_model"])          if params["device_model"].present?
     @messages = @messages.where("index_failure_reason LIKE ?", "%#{params["message"]}%") if params["message"].present?
-    @messages = @messages.where("device_messages.created_at > ?", params["created_at"]) if params["created_at"].present?
+    @messages = @messages.where("device_messages.created_at > ?", params["created_at"])  if params["created_at"].present?
 
-    @total = @messages.count
-    @page_size = (params["page_size"] || 10).to_i
-    @page = (params["page"] || 1).to_i
-    offset = (@page - 1) * @page_size
-    @messages = @messages.limit(@page_size).offset(offset)
+    @total           = @messages.count
+    @page_size       = (params["page_size"] || 10).to_i
+    @page_size       = 100 if @page_size > 100
+    @page            = (params["page"] || 1).to_i
+    @page            = 1 if @page < 1
+    @order_by        = params["order_by"] || "-device_messages.created_at"
+    offset           = (@page - 1) * @page_size
+    @device_messages = Presenters::DeviceMessages.index_view(@messages.order(@order_by).limit(@page_size).offset(offset))
   end
 
   def load_message

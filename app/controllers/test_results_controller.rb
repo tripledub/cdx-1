@@ -51,21 +51,24 @@ class TestResultsController < TestsController
   end
 
   def show
-    @test_result = TestResult.find_by(uuid: params[:id])
+    @test_result       = TestResult.find_by(uuid: params[:id])
     return unless authorize_resource(@test_result, QUERY_TEST)
 
-    @other_tests = @test_result.sample ? @test_result.sample.test_results.where.not(id: @test_result.id) : TestResult.none
+    @other_tests       = @test_result.sample ? @test_result.sample.test_results.where.not(id: @test_result.id) : TestResult.none
     @core_fields_scope = Cdx::Fields.test.core_field_scopes.detect{|x| x.name == 'test'}
 
-    @samples = @test_result.sample_identifiers.reject{|identifier| identifier.entity_id.blank?}.map {|identifier| [identifier.entity_id, Barby::Code93.new(identifier.entity_id)]}
+    @samples          = @test_result.sample_identifiers.reject{|identifier| identifier.entity_id.blank?}.map {|identifier| [identifier.entity_id, Barby::Code93.new(identifier.entity_id)]}
     @show_institution = show_institution?(Policy::Actions::QUERY_TEST, TestResult)
 
-    device_messages  = DeviceMessage.where(device_id: @test_result.device_id).joins(device: :device_model).reverse_order
-    @total_messages  = device_messages.count
+    device_messages  = DeviceMessage.where(device_id: @test_result.device_id).joins(device: :device_model)
+    @total           = device_messages.count
     @page_size       = (params["page_size"] || 10).to_i
+    @page_size       = 100 if @page_size > 100
     @page            = (params["page"] || 1).to_i
+    @page            = 1 if @page < 1
+    @order_by        = params["order_by"] || "-device_messages.created_at"
     offset           = (@page - 1) * @page_size
-    @device_messages = device_messages.limit(@page_size).offset(offset)
+    @device_messages = Presenters::DeviceMessages.index_view(device_messages.order(@order_by).limit(@page_size).offset(offset))
   end
 
   private

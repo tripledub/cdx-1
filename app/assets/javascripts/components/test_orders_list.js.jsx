@@ -72,7 +72,6 @@ var TestOrdersIndexTable = React.createClass({
     return <TestOrdersList testOrders={this.props.tests}
               downloadCsvPath={this.props.downloadCsvPath}
               title={this.props.title} titleClassName="table-title"
-              allowSorting={true} orderBy={this.props.orderBy}
-              showSites={this.props.showSites} showDevices={this.props.showDevices} />
+              allowSorting={true} orderBy={this.props.orderBy}  />
   }
 });

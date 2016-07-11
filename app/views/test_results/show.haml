@@ -91,7 +91,8 @@
 
 .row
   .col.pe-2
-    %label Other tests
+    %label
+      = I18n.t('test_results.show.other_tests')
   .col
     .value
       - case @other_tests.count
@@ -104,5 +105,8 @@
         = @other_tests.map { |t| link_to t.core_fields[TestResult::NAME_FIELD], test_result_path(t.uuid) }.to_sentence.html_safe
         = I18n.t('test_results.show.were_also_made')
 - if @device_messages
-  .row
-    = render partial: 'device_messages/messages_table', locals: { messages: @device_messages, total: @total_messages }
+  .row.paginationHeader
+    .col
+      = react_component "DeviceMessagesList", deviceMessages: @device_messages, title: I18n.t('test_orders.index.test_order', count: @total), orderBy: @order_by
+      .pagination
+        = render 'shared/pagination'

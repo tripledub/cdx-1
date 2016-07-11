@@ -10,4 +10,8 @@
           %p
             = I18n.t('device_messages.index.connect_device')
     - else
-      = render partial: 'messages_table', locals: { messages: @messages, total: @total }
+      .row.paginationHeader
+        .col
+          = react_component "DeviceMessagesList", deviceMessages: @device_messages, title: I18n.t('test_orders.index.test_order', count: @total), orderBy: @order_by
+          .pagination
+            = render 'shared/pagination'
