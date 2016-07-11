@@ -31,7 +31,7 @@
               .col-12
                 = simple_format @comment.comment
           .col-6
-            - if image_not_missing?(@comment.image)
+            - if image_present?(@comment.image)
               .row
                 .col-12
                   %label

@@ -1,5 +1,5 @@
 module CommentsHelper
-  def image_not_missing?(image)
+  def image_present?(image)
     image.url != '/images/original/missing.png'
   end
 end
