@@ -33,6 +33,7 @@
 //= require components
 //= require canvas-js.min
 //= require jquery.custom-file-input
+//= require jquery-resizable-table-columns.min
 //= require_tree .
 //= require turbolinks
 
