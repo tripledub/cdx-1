@@ -16,7 +16,7 @@ describe RequestedTestsController  do
 
   before(:each) {sign_in user}
   let(:default_params) { {context: institution.uuid} }
-  
+
   context "update" do
     let!(:encounter) { Encounter.make institution: institution, site: site ,patient: patient}
     let(:requested_test1)  {RequestedTest.make encounter: encounter}

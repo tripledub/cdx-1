@@ -55,7 +55,6 @@ class EncountersController < ApplicationController
   def destroy
     @encounter = Encounter.find(params[:id])
     return unless authorize_resource(@encounter, DELETE_ENCOUNTER)
-
     # note: Cannot delete record because dependent samples exist, so just set delated_at
     @encounter.update(deleted_at: Time.now)
     begin
