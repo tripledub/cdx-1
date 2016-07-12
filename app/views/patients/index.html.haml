@@ -5,31 +5,19 @@
     - if @patients.empty?
       = empty_data icon: 'icon-outline-patient xx-large' do |c|
         - c.body do
-          %h1 No patients registered
-          %p Keep your test orders organized under patients medical history
+          %h1
+            = I18n.t('patients.index.no_patients')
+          %p
+            = I18n.t('patients.index.keep_organized')
     - else
-      = cdx_table title: pluralize(@total, "patient") do |t|
-        - t.columns do
-          %col{:width => "25%"}
-          %col{:width => "12%"}
-          %col{:width => "13%"}
-          %col{:width => "18%"}
-          %col{:width => "32%"}
-        - t.thead do
-          %tr
-            %th Name
-            %th Patient Id
-            %th Date of Birth
-            %th City
-            %th Last test order
-        - t.tbody do
-          - @patients.each do |patient|
-            %tr{data: {href: patient_path(patient) }}
-              %td{class: patient.name.blank? ? "unknown-name" : ""}= patient.name || "(Unknown name)"
-              %td= patient.entity_id
-              %td= patient.dob_description(I18n.t('date.input_format.pattern'))
-              %td= patient.city !=nil ? patient.city : ''
-              %td= format_date(patient.last_encounter)
-
-      .pagination
-        = render 'shared/pagination'
+      %section.row
+        .small-12.columns.box
+          %header
+            = image_tag('img/user.png')
+            %h3
+              = I18n.t('patients.index.patient', count: @total)
+          .box-content
+            = react_component "PatientsIndexTable", patients: Presenters::Patients.index_table(@patients),
+                orderBy: params["order_by"] || "patients.name"
+            .pagination
+              = render 'shared/pagination'

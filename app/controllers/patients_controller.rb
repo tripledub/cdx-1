@@ -15,7 +15,7 @@ class PatientsController < ApplicationController
 
   def index
     @can_create = has_access?(@navigation_context.institution, CREATE_INSTITUTION_PATIENT)
-    @patients = check_access(Patient.where(is_phantom: false).where(institution: @navigation_context.institution), READ_PATIENT).order(:name)
+    @patients = check_access(Patient.where(is_phantom: false).where(institution: @navigation_context.institution), READ_PATIENT)
 
     @patients = @patients.within(@navigation_context.entity, @navigation_context.exclude_subsites)
 
@@ -26,9 +26,15 @@ class PatientsController < ApplicationController
     @patients = @patients.where(id: Encounter.select(:patient_id).where("encounters.start_time > ?", params["last_encounter"])) if params["last_encounter"].present?
 
     @date_options = Extras::Dates::Filters.date_options_for_filter
-    @patients = perform_pagination(@patients)
-    @patients.preload_locations!
-    @patients = @patients.preload_last_encounter!
+    @page_size = (params['page_size'] || 10).to_i
+    @page_size = 50 if @page_size > 100
+    @page = (params['page'] || 1).to_i
+    @page = 1 if @page < 1
+    offset = (@page - 1) * @page_size
+
+    @total = @patients.count
+
+    @patients = @patients.order(params['order_by'] || 'patients.name').limit(@page_size).offset(offset)
   end
 
   def show
