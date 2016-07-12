@@ -1,4 +1,3 @@
-web: bundle exec rails s
-csv: rake csv:watch
-csv: rake ftp:start
-sidekiq: bundle exec sidekiq
+web: bin/bundle exec rails s
+puma: bin/bundle exec puma -C config/puma.rb
+nginx: nginx -c /etc/nginx/nginx.conf
