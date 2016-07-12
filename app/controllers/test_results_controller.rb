@@ -1,4 +1,4 @@
-class TestResultsController < ApplicationController
+class TestResultsController < TestsController
   include Policy::Actions
 
   before_filter :load_filter_resources
@@ -8,9 +8,6 @@ class TestResultsController < ApplicationController
   end
 
   def index
-    @display_as = params["display_as"] || "test"
-    @display_as = "test" if @display_as != "test" && @display_as != "test_order"
-
     @results = Cdx::Fields.test.core_fields.find { |field| field.name == 'result' }.options.map do |result|
       if result == "n/a"
         {value: 'n/a', label: 'Not Applicable'}
@@ -27,7 +24,7 @@ class TestResultsController < ApplicationController
     @page = (params["page"] || 1).to_i
     offset = (@page - 1) * @page_size
 
-    @filter = create_filter
+    @filter = create_filter_for_test
     @query = @filter.dup
     @order_by = params["order_by"] || "test.end_time"
     @query["order_by"] = @order_by
@@ -41,14 +38,14 @@ class TestResultsController < ApplicationController
         @query["offset"] = offset
         @filter["device.uuid"] = @devices.first.uuid if @devices.size == 1
         @can_create_encounter = check_access(@navigation_context.institution.sites, CREATE_SITE_ENCOUNTER).size > 0
-        execute_query
+        execute_test_query
       end
 
       format.csv do
-        filename = "#{@display_as.pluralize.capitalize}-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
+        filename = "test_results-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
         headers["Content-Type"] = "text/csv"
         headers["Content-disposition"] = "attachment; filename=#{filename}"
-        self.response_body = execute_csv_query(filename)
+        self.response_body = execute_csv_test_query(filename)
       end
     end
   end
@@ -73,14 +70,6 @@ class TestResultsController < ApplicationController
 
   private
 
-  def create_filter
-    if @display_as == "test"
-      create_filter_for_test
-    else
-      create_filter_for_test_order
-    end
-  end
-
   def create_filter_for_test
     filter = create_filter_for_navigation_context
     if params["device.uuid"].present?
@@ -99,16 +88,7 @@ class TestResultsController < ApplicationController
     filter
   end
 
-  def create_filter_for_test_order
-    filter = create_filter_for_navigation_context
-    filter["encounter.uuid"] = params["encounter.id"] if params["encounter.id"].present?
-    # filter["device.uuid"] = params["device.uuid"] if params["device.uuid"].present?
-    filter["encounter.diagnosis.condition"] = params["test.assays.condition"] if params["test.assays.condition"].present?
-    filter["encounter.diagnosis.result"] = params["test.assays.result"] if params["test.assays.result"].present?
-    # filter["sample.id"] = params["sample.id"] if params["sample.id"].present?
-    filter["since"] = params["since"] if params["since"].present?
-    filter
-  end
+
 
   def create_filter_for_navigation_context
     filter = {}
@@ -124,13 +104,6 @@ class TestResultsController < ApplicationController
     filter
   end
 
-  def execute_query
-    if @display_as == "test"
-      execute_test_query
-    else
-      execute_encounter_query
-    end
-  end
 
   def execute_test_query
     result = TestResult.query(@query, current_user).execute
@@ -142,8 +115,7 @@ class TestResultsController < ApplicationController
   def execute_encounter_query
     result = Encounter.query(@query, current_user).execute
     @total = result["total_count"]
-    @tests = result["encounters"]
-    @json = build_json_array Encounter, @tests
+    build_table_data(result["encounters"])
   end
 
   def build_json_array(entity_class, tests)
@@ -155,28 +127,8 @@ class TestResultsController < ApplicationController
     json.attributes!
   end
 
-  def execute_csv_query(filename)
-    if @display_as == "test"
-      execute_csv_test_query(filename)
-    else
-      execute_csv_test_order_query(filename)
-    end
-  end
-
   def execute_csv_test_query(filename)
     query = TestResult.query(@query, current_user)
     EntityCsvBuilder.new("test", query, filename)
-  end
-
-  def execute_csv_test_order_query(filename)
-    query = Encounter.query(@query, current_user)
-    EntityCsvBuilder.new("encounter", query, filename)
-  end
-
-  def load_filter_resources
-    _institutions, @sites, @devices = Policy.condition_resources_for(QUERY_TEST, TestResult, current_user).values
-    @sites = @sites.within(@navigation_context.entity, @navigation_context.exclude_subsites)
-    @devices = @devices.within(@navigation_context.entity, @navigation_context.exclude_subsites)
-    @localization_helper.devices_by_uuid = @devices_by_uuid = @devices.index_by &:uuid
   end
 end

@@ -6,18 +6,13 @@
       = empty_data icon: 'icon-outline-test xx-large' do |c|
         - c.body do
           %h1
-            = I18n.t('test_results.index.header', test_result: @display_as == "test" ? I18n.t('test_results.index.test', count: 0) : I18n.t('test_results.index.test_results'))
+            = I18n.t('test_results.index.header', test_result: I18n.t('test_results.index.test', count: 0))
           %p
             = I18n.t('test_results.index.setup_devices')
     - else
-      - if @display_as == "test"
-        = react_component "TestResultsIndexTable", tests: @json, title: I18n.t('test_results.index.test', count: @total),
-            orderBy: @order_by, showSites: @show_sites, showDevices: @show_devices,
-            downloadCsvPath: test_results_path(@filter.merge(format: :csv).merge(display_as: @display_as))
-      - else
-        = react_component "TestOrdersIndexTable", tests: @json, title: I18n.t('test_results.index.test_order', count: @total),
-            orderBy: @order_by, showSites: @show_sites, showDevices: @show_devices,
-            downloadCsvPath: test_results_path(@filter.merge(format: :csv).merge(display_as: @display_as))
+      = react_component "TestResultsIndexTable", tests: @json, title: I18n.t('test_results.index.test', count: @total),
+          orderBy: @order_by, showSites: @show_sites, showDevices: @show_devices,
+          downloadCsvPath: test_results_path(@filter.merge(format: :csv).merge(display_as: @display_as))
 
       .pagination
         = render 'shared/pagination'

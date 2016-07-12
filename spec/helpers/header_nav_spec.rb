@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe HeaderNavHelper, type: :helper do
   let(:params_dashboard)      { { controller: 'dashboards' } }
   let(:params_patients)       { { controller: 'patients' } }
-  let(:params_test_orders)    { { controller: 'test_results', display_as: 'test_order' } }
+  let(:params_test_orders)    { { controller: 'test_orders' } }
   let(:params_test_results)   { { controller: 'test_results' } }
   let(:params_devices)        { { controller: 'devices' } }
   let(:params_roles)          { { controller: 'roles' } }

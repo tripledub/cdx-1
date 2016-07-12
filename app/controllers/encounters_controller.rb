@@ -150,9 +150,9 @@ class EncountersController < ApplicationController
     @show_edit_encounter = true
     @show_cancel_encounter = false
     @return_path_encounter = nil
-    
-    @return_path_encounter = test_results_path(display_as: 'test_order') if params['test_order_page_mode'] !=nil
-    
+
+    @return_path_encounter = test_orders_path if params['test_order_page_mode'] !=nil
+
     if request.referer
       referer = URI(request.referer).path
       referer_check = referer =~ /\/patients\/\d/
@@ -160,7 +160,7 @@ class EncountersController < ApplicationController
         @show_edit_encounter=false
         @show_cancel_encounter=true if (@encounter != nil) && (Encounter.statuses[@encounter.status] != Encounter.statuses["inprogress"])
         if @encounter && @encounter.patient
-           @return_path_encounter=patient_path(@encounter.patient) 
+           @return_path_encounter=patient_path(@encounter.patient)
         else
           @return_path_encounter=referer
         end

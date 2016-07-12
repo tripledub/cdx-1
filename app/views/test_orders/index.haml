@@ -1,0 +1,52 @@
+- content_for(:subheader) do
+
+  .filterbar.filterbartest
+    .heading
+      .title
+        Tests
+    .topfilteropt
+      %input#query_button.btn-primary.filtershow(type='button' value="#{I18n.t('test_orders.filters.show_filters')}")
+
+  %form.filteroptions#filters-form{action: test_orders_path, "data-auto-submit" => true}
+    %input{type: "hidden", name: "page_size", value: @page_size}
+    .row.center.custom_filters
+      .col.pe-10
+      .advanced
+        .row
+          .filter
+            %label.block
+              = I18n.t('test_orders.filters.condition')
+            = cdx_select name: "test.assays.condition", value: params["test.assays.condition"] do |select|
+              - select.item "", I18n.t('test_orders.filters.show_all')
+              - select.items(@conditions.map { |name| [name.upcase, name] })
+          .filter
+            %label.block
+              = I18n.t('test_orders.filters.result')
+            = cdx_select name: "test.assays.result", value: params["test.assays.result"] do |select|
+              - select.item "", I18n.t('test_orders.filters.show_all')
+              - select.items @results, :value, :label
+          .filter
+            %label.block
+              = I18n.t('test_orders.filters.date')
+            = cdx_select name: "since", value: params["since"] do |select|
+              - select.item "", I18n.t('test_orders.filters.show_all')
+              - select.items @date_options, :value, :label
+          .filter
+            %label.block
+              = I18n.t('test_orders.filters.test_order_id')
+            %input{type: "text", name: "encounter.id", value: params["encounter.id"]}
+
+
+.row.paginationHeader
+  .col
+    - if @tests.empty?
+      = empty_data icon: 'icon-outline-test xx-large' do |c|
+        - c.body do
+          %h1
+            = I18n.t('test_orders.index.header')
+    - else
+      = react_component "TestOrdersIndexTable", tests: Presenters::TestOrders.index_view(@tests), title: I18n.t('test_orders.index.test_order', count: @total),
+          orderBy: @order_by,
+          downloadCsvPath: test_orders_path(@filter.merge(format: :csv).merge(display_as: @display_as))
+      .pagination
+        = render 'shared/pagination'
