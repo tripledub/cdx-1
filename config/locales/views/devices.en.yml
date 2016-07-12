@@ -26,6 +26,7 @@ en:
       manufacturer: 'Manufacturer'
       model: 'Model'
       site: 'Site'
+      devices: 'Devices'
     setup:
       setup_header: 'Setup'
       setup_text: 'The Device Id and Secure Key allow your device to identify itself with CDx.'
