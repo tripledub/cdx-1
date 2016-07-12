@@ -124,6 +124,7 @@ end
 
 
 Encounter.blueprint do
+  patient { Patient.make }
   institution { object.patient.try(:institution) || Institution.make }
   user { institution.user }
   site { object.institution.sites.first || object.institution.sites.make }
