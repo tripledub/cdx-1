@@ -1,3 +1,3 @@
 class EncounterAuditLog < AuditLog
-  validates_presence_of  :encounter_id
+  validates_presence_of :encounter_id
 end

@@ -27,7 +27,7 @@ class EncountersController < ApplicationController
       @encounter.user = current_user
       @blender.save_and_index!
       @encounter.updated_diagnostic_timestamp!
-      Audit::EncounterAuditor.new(@encounter, current_user.id).log_changes("encounter 2 title", "encounter 2 changed comment", @encounter) 
+      store_create_encounter_audit_log
     end
   end
 
@@ -55,10 +55,12 @@ class EncountersController < ApplicationController
   def destroy
     @encounter = Encounter.find(params[:id])
     return unless authorize_resource(@encounter, DELETE_ENCOUNTER)
+
     # note: Cannot delete record because dependent samples exist, so just set delated_at
     @encounter.update(deleted_at: Time.now)
     begin
        Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: @encounter.uuid
+       Audit::EncounterAuditor.new(@encounter, current_user.id).log_action("Test Order Cancelled", "Test Order #{@encounter.uuid} Cancelled", @encounter)
     rescue => ex
       Rails.logger.error ex.message
     end
@@ -147,11 +149,17 @@ class EncountersController < ApplicationController
 
   private
 
+  def store_create_encounter_audit_log
+    Audit::EncounterAuditor.new(@encounter, current_user.id).log_changes("New Test Order Created", "Test Order created #{@encounter.uuid}", @encounter) 
+    @encounter.requested_tests.each do |test|
+      Audit::EncounterTestAuditor.new(@encounter, current_user.id).log_changes("New #{test.name} Test Created", "Test #{test.name} created for test order #{@encounter.uuid}", @encounter, test)
+    end
+  end
+
   def determine_referal
     @show_edit_encounter = true
     @show_cancel_encounter = false
     @return_path_encounter = nil
-
     @return_path_encounter = test_orders_path if params['test_order_page_mode'] !=nil
 
     if request.referer

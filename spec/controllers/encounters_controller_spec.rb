@@ -203,6 +203,11 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     it "should leave new samples empty" do
       expect(json_response['encounter']['new_samples']).to eq([])
     end
+    
+    it 'should log the changes' do
+      expect(EncounterAuditLog.count).to eq 1
+      expect(EncounterAuditLog.first.title).to eq "New Test Order Created"
+    end                
   end
 
   describe "PUT #update" do
