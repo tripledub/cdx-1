@@ -30,3 +30,9 @@
 
       %footer
         = render "shared/footer"
+        :javascript
+          $(function(){
+            $("table").resizableColumns({
+              store: window.store
+            });
+          });

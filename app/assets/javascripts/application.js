@@ -29,6 +29,7 @@
 //= require react-input-autosize
 //= require react-select
 //= require react-leaflet
+//= require store.min
 //= require components
 //= require canvas-js.min
 //= require jquery.custom-file-input

@@ -71,7 +71,7 @@ var PatientAuditLogs = React.createClass({
       <div className="row">
         {
           this.state.patientLogs.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> :
-          <table className="patient-audit-logs">
+          <table className="patient-audit-logs" data-resizable-columns-id="patient-audit-logs">
             <thead>
               <tr>
                {rowHeaders}

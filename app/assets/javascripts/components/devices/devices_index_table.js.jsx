@@ -25,26 +25,19 @@ var DevicesIndexTable = React.createClass({
     }
   },
 
+  componentDidMount: function() {
+    $("table").resizableColumns({store: window.store});
+  },
+
   render: function() {
     var sortableHeader = function (title, field) {
       return <SortableColumnHeader title={title} field={field} orderBy={this.props.orderBy} />
     }.bind(this);
 
     return (
-      <table className="table" cellPadding="0" cellSpacing="0">
-        <thead>
-          <tr>
-            <th className="tableheader" colSpan="12">
-              <span className={this.props.titleClassName}>{this.props.title}</span>
 
-              { this.props.downloadCsvPath ? (
-                <span className="table-actions">
-                  <a href={this.props.downloadCsvPath} title="Download CSV">
-                    <span className="icon-download icon-gray" />
-                  </a>
-                </span>) : null }
-            </th>
-          </tr>
+      <table className="table" cellPadding="0" ref="sortableTable" cellSpacing="0" data-resizable-columns-id="devices-table">
+        <thead>
           <tr>
             {sortableHeader("Name", "devices.name")}
             {sortableHeader("Manufacturer", "institutions.name")}
