@@ -45,8 +45,16 @@
           %h1
             = I18n.t('test_orders.index.header')
     - else
-      = react_component "TestOrdersIndexTable", tests: Presenters::TestOrders.index_view(@tests), title: I18n.t('test_orders.index.test_order', count: @total),
-          orderBy: @order_by,
-          downloadCsvPath: test_orders_path(@filter.merge(format: :csv).merge(display_as: @display_as))
-      .pagination
-        = render 'shared/pagination'
+      %section.row
+        .small-12.columns.box
+          %header
+            = image_tag('img/test-tube.png')
+            %h3
+              = I18n.t('test_orders.index.test_order', count: @total)
+            %span.table-actions
+              = link_to devices_path(test_orders_path(@filter.merge(format: :csv))), title: I18n.t('devices.index.download_csv') do
+                %span.icon-download.icon-gray
+          .box-content
+            = react_component "TestOrdersIndexTable", tests: Presenters::TestOrders.index_view(@tests), orderBy: @order_by
+            .pagination
+              = render 'shared/pagination'

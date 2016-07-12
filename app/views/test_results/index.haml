@@ -10,9 +10,16 @@
           %p
             = I18n.t('test_results.index.setup_devices')
     - else
-      = react_component "TestResultsIndexTable", tests: @json, title: I18n.t('test_results.index.test', count: @total),
-          orderBy: @order_by, showSites: @show_sites, showDevices: @show_devices,
-          downloadCsvPath: test_results_path(@filter.merge(format: :csv).merge(display_as: @display_as))
-
-      .pagination
-        = render 'shared/pagination'
+      %section.row
+        .small-12.columns.box
+          %header
+            = image_tag('img/test-tube.png')
+            %h3
+              = I18n.t('test_orders.index.test_order', count: @total)
+            %span.table-actions
+              = link_to test_results_path(@filter.merge(format: :csv)), title: I18n.t('test_results.index.test', count: @total) do
+                %span.icon-download.icon-gray
+          .box-content
+            = react_component "TestResultsIndexTable", tests: @json, orderBy: @order_by, showSites: @show_sites, showDevices: @show_devices
+            .pagination
+              = render 'shared/pagination'
