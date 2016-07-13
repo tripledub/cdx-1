@@ -20,15 +20,11 @@ class AlertGroupsController < ApplicationController
   end
 
   def index
-    @page_size = (params['page_size'] || 10).to_i
-    @page_size = 50 if @page_size > 50
-    @page      = (params['page'] || 1).to_i
-    @page      = 1 if @page < 1
-    offset     = (@page - 1) * @page_size
+    order_by, offset = perform_pagination('alerts.name')
 
     @alerts = current_user.alerts
     @total  = @alerts.count
-    @alerts = @alerts.order(params['order_by'] || 'alerts.name').limit(@page_size).offset(offset)
+    @alerts = @alerts.order(order_by).limit(@page_size).offset(offset)
   end
 
   def edit

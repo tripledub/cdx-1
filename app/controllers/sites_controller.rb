@@ -16,7 +16,10 @@ class SitesController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @sites = perform_pagination(@sites)
+        @total = @sites.count
+
+        order_by, offset = perform_pagination('sites.name')
+        @sites = @sites.order(order_by).limit(@page_size).offset(offset)
         @sites.preload_locations!
         render layout: false if request.xhr?
       end

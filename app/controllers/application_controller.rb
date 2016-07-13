@@ -172,12 +172,15 @@ class ApplicationController < ActionController::Base
     request.format.json?
   end
 
-  def perform_pagination(rel)
-    @page_size = (params["page_size"] || 10).to_i
-    @page = (params["page"] || 1).to_i
-    rel = rel.page(@page).per(@page_size)
-    @total = rel.total_count
-    rel
+  def perform_pagination(default_order)
+    @page_size = (params['page_size'] || 10).to_i
+    @page_size = 50 if @page_size > 50
+    @page      = (params['page'] || 1).to_i
+    @page      = 1 if @page < 1
+    @order_by  = params['order_by'] || default_order
+    order_by   =  @order_by[0] == '-' ? @order_by[1..90] + ' desc' : @order_by
+    offset     = (@page - 1) * @page_size
+    [order_by, offset]
   end
 
   def log_authorization_warn(resource, action)
