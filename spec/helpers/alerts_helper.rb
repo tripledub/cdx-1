@@ -4,18 +4,6 @@ require 'policy_spec_helper'
 RSpec.describe AlertsHelper, type: :helper do
   let(:alert) { Alert.make }
 
-  it 'should display empty name' do
-    expect(display_sites(alert)).to eq('')
-  end
-
-  it 'should display site names concatenated' do
-    alert.sites << (site1 = Site.make)
-    alert.sites << (site2 = Site.make)
-    alert.sites << (site3 = Site.make)
-
-    expect(display_sites(alert)).to eq("#{site1.name}, #{site2.name}, #{site3.name}")
-  end
-
   context 'alert history' do
     it 'should display an empty date' do
       expect(display_latest_alert_date(alert)).to eq('never')

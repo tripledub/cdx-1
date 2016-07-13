@@ -20,15 +20,15 @@ class AlertGroupsController < ApplicationController
   end
 
   def index
-    @page_size = (params["page_size"] || 10).to_i
-    @page = (params["page"] || 1).to_i
-    offset = (@page - 1) * @page_size
+    @page_size = (params['page_size'] || 10).to_i
+    @page_size = 50 if @page_size > 50
+    @page      = (params['page'] || 1).to_i
+    @page      = 1 if @page < 1
+    offset     = (@page - 1) * @page_size
 
     @alerts = current_user.alerts
-    @total = @alerts.count
-    @alerts = @alerts.limit(@page_size).offset(offset)
-
-    respond_with @alerts
+    @total  = @alerts.count
+    @alerts = @alerts.order(params['order_by'] || 'alerts.name').limit(@page_size).offset(offset)
   end
 
   def edit
@@ -82,8 +82,8 @@ class AlertGroupsController < ApplicationController
     @alert_condition_results = @alert_condition_results.join(",")
 
     @alert_number_incidents = current_user.alert_histories.where("alert_id=? and for_aggregation_calculation=?", alert_info.id, false).count
-    @alert_last_incident = display_latest_alert_date(alert_info)
-    
+    @alert_last_incident = Presenters::AlertGroups.display_latest_alert_date(alert_info)
+
     @alert_created_at  = alert_info.created_at.to_formatted_s(:long)
     respond_with alert_info, location: alert_path
   end
@@ -95,7 +95,7 @@ class AlertGroupsController < ApplicationController
     error_text=Hash.new
     alert_info.user = current_user
     alert_info.time_last_aggregation_checked = Time.now
-    
+
     alert_saved_ok = alert_info.save
     if alert_saved_ok==false
       error_text = alert_info.errors.messages
@@ -135,7 +135,7 @@ class AlertGroupsController < ApplicationController
       alert_info.query="{}"
       edit = true
       internal_users_ok,external_users_ok,error_text = set_channel_info(params, alert_info, internal_users_ok, external_users_ok, error_text, edit)
-    
+
       condition_result_ok,error_text = set_category(params, alert_info, error_text, condition_result_ok, edit)
       set_sample_id(params, alert_info)
       set_sites_devices_institutions(params, alert_info, edit)
@@ -160,11 +160,11 @@ class AlertGroupsController < ApplicationController
   private
 
   def alert_params
-    params.require(:alert).permit(:name, :description, :devices_info, :users_info, :enabled, :sites_info, :error_code, 
-                                  :message, :sms_message, :sample_id, :site_id, :category_type, :notify_patients, :aggregation_type, 
-                                  :anomalie_type, :aggregation_frequency, :channel_type, :sms_limit, :email_limit, 
-                                  :aggregation_threshold, :roles, :external_users, :conditions_info, :condition_results_info, 
-                                  :condition_result_statuses_info, :test_result_min_threshold, :test_result_max_threshold, 
+    params.require(:alert).permit(:name, :description, :devices_info, :users_info, :enabled, :sites_info, :error_code,
+                                  :message, :sms_message, :sample_id, :site_id, :category_type, :notify_patients, :aggregation_type,
+                                  :anomalie_type, :aggregation_frequency, :channel_type, :sms_limit, :email_limit,
+                                  :aggregation_threshold, :roles, :external_users, :conditions_info, :condition_results_info,
+                                  :condition_result_statuses_info, :test_result_min_threshold, :test_result_max_threshold,
                                   :utilization_efficiency_number, :use_aggregation_percentage, :institution_id,
                                   alert_recipients_attributes: [:user, :user_id, :email, :role, :role_id, :id] )
   end
@@ -177,7 +177,7 @@ class AlertGroupsController < ApplicationController
     @conditions = Condition.all
     @condition_results = Cdx::Fields.test.core_fields.find { |field| field.name == 'result' }.options
     #Note: in case you need to specify the exact N/A:  @condition_result_statuses = Cdx::Fields.test.core_fields.find { |field| field.name == 'status' }.options
-    
+
     #find all users in all roles
     user_ids = @roles.map { |user| user.id }
     user_ids = user_ids.uniq
@@ -201,7 +201,7 @@ class AlertGroupsController < ApplicationController
   def only_allow_specimen_test_type(alert_info)
     alert_info.query=alert_info.query.merge ({"test.type"=>"specimen"})
   end
-  
+
   def set_sites_devices_institutions(params, alert_info, is_edit)
     if is_edit==true
       alert_info.devices.destroy_all
@@ -220,7 +220,7 @@ class AlertGroupsController < ApplicationController
         alert_info.sites << site
         query_sites << site.uuid
       end
-      
+
       alert_info.query=alert_info.query.merge ({"site.uuid"=>query_sites})
     end
 
@@ -239,7 +239,7 @@ class AlertGroupsController < ApplicationController
   end
 
 
-  def set_category(params, alert_info, error_text, condition_result_ok, is_edit)    
+  def set_category(params, alert_info, error_text, condition_result_ok, is_edit)
     if is_edit==true
       alert_info.conditions.destroy_all
     end
@@ -297,7 +297,7 @@ class AlertGroupsController < ApplicationController
 
   def set_channel_info(params, alert_info, internal_users_ok, external_users_ok, error_text, is_edit)
     #destroy all recipients before adding them in again on an update
-   
+
     if (is_edit==true)
       AlertRecipient.destroy_all(alert_id: alert_info.id)
     end
