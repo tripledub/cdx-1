@@ -6,20 +6,18 @@ describe Reports::DrugPercentage do
   let(:patient)            { Patient.make institution: institution }
   let(:encounter)          { Encounter.make institution: institution , user: user, patient: patient }
   let(:requested_test)     { RequestedTest.make encounter: encounter }
+  let(:navigation_context) { NavigationContext.new(user, institution.uuid) }
+  let!(:results)           {
+    XpertResult.make requested_test: requested_test, tuberculosis: 'detected', rifampicin: 'detected', created_at: 2.years.ago
+    XpertResult.make requested_test: requested_test, tuberculosis: 'not_detected', rifampicin: 'detected'
+    XpertResult.make requested_test: requested_test, tuberculosis: 'detected', rifampicin: 'not_detected'
+    XpertResult.make requested_test: requested_test, tuberculosis: 'detected', rifampicin: 'detected'
+    XpertResult.make requested_test: requested_test, tuberculosis: 'invalid', rifampicin: 'indeterminate', created_at: 3.years.ago
+    XpertResult.make requested_test: requested_test, tuberculosis: 'not_detected', rifampicin: 'detected', created_at: 14.months.ago
+    XpertResult.make requested_test: requested_test, tuberculosis: 'not_detected', rifampicin: 'indeterminate'
+  }
 
   describe 'generate_chart' do
-    let(:navigation_context) { NavigationContext.new(user, institution.uuid) }
-
-    before :each do
-      XpertResult.make requested_test: requested_test, tuberculosis: 'detected', rifampicin: 'detected', created_at: 2.years.ago
-      XpertResult.make requested_test: requested_test, tuberculosis: 'not_detected', rifampicin: 'detected'
-      XpertResult.make requested_test: requested_test, tuberculosis: 'detected', rifampicin: 'not_detected'
-      XpertResult.make requested_test: requested_test, tuberculosis: 'detected', rifampicin: 'detected'
-      XpertResult.make requested_test: requested_test, tuberculosis: 'invalid', rifampicin: 'indeterminate', created_at: 3.years.ago
-      XpertResult.make requested_test: requested_test, tuberculosis: 'not_detected', rifampicin: 'detected', created_at: 14.months.ago
-      XpertResult.make requested_test: requested_test, tuberculosis: 'not_detected', rifampicin: 'indeterminate'
-    end
-
     context 'no date filter' do
       it 'should return the total of XpertResult with tuberculosis status detected' do
         expect(Reports::DrugPercentage.new(user, navigation_context,{}).generate_chart[:columns].first[:y]).to eq(2)

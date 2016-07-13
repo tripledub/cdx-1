@@ -2,16 +2,16 @@ require 'spec_helper'
 require 'policy_spec_helper'
 
 RSpec.describe EncountersController, type: :controller, elasticsearch: true do
-  let(:institution) { Institution.make }
-  let(:site) { Site.make institution: institution }
-  let(:user) { institution.user }
-
-  before(:each) { sign_in user }
+  let(:institution)    { Institution.make }
+  let(:site)           { Site.make institution: institution }
+  let(:user)           { institution.user }
+  let(:patient)        { Patient.make institution: institution }
   let(:default_params) { {context: institution.uuid} }
 
+  before(:each) { sign_in user }
 
   context "destroy" do
-    let!(:encounter) { Encounter.make institution: institution, site: site }
+    let!(:encounter) { Encounter.make institution: institution, site: site, patient: patient }
 
     it "should destroy an encounter" do
       delete :destroy, id: encounter.id
@@ -30,11 +30,12 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
   describe "GET #show" do
     it "returns http success if allowed" do
-      i1 = Institution.make
+      i1      = Institution.make
+      patient = Patient.make institution: i1
       grant i1.user, user, {site: i1}, CREATE_SITE_ENCOUNTER
       grant i1.user, user, {encounter: i1}, READ_ENCOUNTER
 
-      encounter = Encounter.make institution: i1
+      encounter = Encounter.make institution: i1, patient: patient
       get :show, id: encounter.id
       expect(response).to have_http_status(:success)
       expect(assigns[:can_update]).to be_falsy
@@ -44,20 +45,22 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     it "returns http forbidden if not allowed" do
-      i1 = Institution.make
-      encounter = Encounter.make institution: i1
+      i1        = Institution.make
+      patient   = Patient.make institution: i1
+      encounter = Encounter.make institution: i1, patient: patient
       get :show, id: encounter.id
 
       expect(response).to have_http_status(:forbidden)
     end
 
     it "redirects to edit if can edit" do
-      i1 = Institution.make
+      i1      = Institution.make
+      patient = Patient.make institution: i1
       grant i1.user, user, {site: i1}, CREATE_SITE_ENCOUNTER
       grant i1.user, user, {encounter: i1}, READ_ENCOUNTER
       grant i1.user, user, {encounter: i1}, UPDATE_ENCOUNTER
 
-      encounter = Encounter.make institution: i1
+      encounter = Encounter.make institution: i1, patient: patient
       get :show, id: encounter.id
 
       expect(response).to have_http_status(:success)
@@ -65,20 +68,20 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     it "should load encounter by uuid" do
-      encounter = Encounter.make institution: institution
+      encounter = Encounter.make institution: institution, patient: patient
       get :show, id: encounter.uuid
       expect(assigns(:encounter)).to eq(encounter)
     end
 
     it "should load encounter by id" do
-      encounter = Encounter.make institution: institution
+      encounter = Encounter.make institution: institution, patient: patient
       get :show, id: encounter.id
       expect(assigns(:encounter)).to eq(encounter)
     end
 
     it "should load encounter first by uuid" do
-      encounter = Encounter.make institution: institution
-      encounter2 = Encounter.make institution: institution, uuid: "#{encounter.id}lorem"
+      encounter = Encounter.make institution: institution, patient: patient
+      encounter2 = Encounter.make institution: institution, uuid: "#{encounter.id}lorem", patient: patient
 
       get :show, id: encounter2.uuid
       expect(assigns(:encounter)).to eq(encounter2)
@@ -87,18 +90,20 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
   describe "GET #edit" do
     it "returns http success if allowed" do
-      i1 = Institution.make
+      i1      = Institution.make
+      patient = Patient.make institution: i1
       grant i1.user, user, {site: i1}, CREATE_SITE_ENCOUNTER
       grant i1.user, user, {encounter: i1}, UPDATE_ENCOUNTER
 
-      encounter = Encounter.make institution: i1
+      encounter = Encounter.make institution: i1, patient: patient
       get :edit, id: encounter.id
       expect(response).to have_http_status(:success)
     end
 
     it "returns http forbidden if not allowed" do
-      i1 = Institution.make
-      encounter = Encounter.make institution: i1
+      i1        = Institution.make
+      patient   = Patient.make institution: i1
+      encounter = Encounter.make institution: i1, patient: patient
       get :edit, id: encounter.id
 
       expect(response).to have_http_status(:forbidden)
@@ -107,9 +112,10 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
   describe "GET #sites" do
     it "returns sites of the context institution if user has access to create them" do
-      i1 = Institution.make
-      s1 = Site.make institution: i1
-      s2 = Site.make institution: i1
+      i1      = Institution.make
+      patient = Patient.make institution: i1
+      s1      = Site.make institution: i1
+      s2      = Site.make institution: i1
 
       grant i1.user, user, i1, READ_INSTITUTION
       grant i1.user, user, s1, READ_SITE
@@ -127,7 +133,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
   describe "POST #create" do
     let(:sample) {
       device = Device.make institution: institution
-      DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(test:{assays:[condition: "flu_a"]}, sample: {id: 'a'}, patient: {id: 'a'})
+      DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(test:{assays:[condition: "flu_a"]}, sample: {id: 'a'}, patient: patient.id)
       Sample.first
     }
 
@@ -140,13 +146,14 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         test_results: [],
         assays: [{condition: 'mtb', result: 'positive', quantitative_result: "3"}],
         observations: 'Lorem ipsum',
+        patient: { id: patient.id }
       }.to_json
 
       sample.reload
     }
 
     let(:json_response) { JSON.parse(response.body) }
-    let(:created_encounter) { 
+    let(:created_encounter) {
       Encounter.find(json_response['encounter']['id']) }
 
     it "succeed" do
@@ -199,17 +206,22 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
   end
 
   describe "PUT #update" do
-    let(:encounter) { Encounter.make institution: institution, site: site }
+    let(:encounter) { Encounter.make institution: institution, site: site, patient: patient }
 
     let(:sample) {
       device = Device.make institution: institution
       DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(test:{assays:[condition: "flu_a"]}, sample: {id: 'a'}, patient: {id: 'a'})
+      Sample.first.update_attribute(:encounter_id, encounter.id)
+      Sample.first.update_attribute(:institution_id, institution.id)
+      Sample.first.update_attribute(:patient_id, patient.id)
       Sample.first
     }
 
     let(:empty_sample) {
       SampleIdentifier.make(site: site).sample.tap do |s|
         s.update_attribute(:encounter_id, encounter.id)
+        s.update_attribute(:institution_id, institution.id)
+        s.update_attribute(:patient_id, patient.id)
       end
     }
 
@@ -217,11 +229,11 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       put :update, id: encounter.id, encounter: {
         id: encounter.id,
         institution: { uuid: 'uuid-to-discard' },
-        samples: [{ uuids: sample.uuids }, { uuids: empty_sample.uuids }],
+        samples: [{ uuids: sample.uuid }, { uuids: empty_sample.uuid }],
         new_samples: [{entity_id: 'eid:1001'}, {entity_id: 'eid:1002'}],
         test_results: [],
         assays: [{condition: 'mtb', result: 'positive', quantitative_result: "3"}],
-        observations: 'Lorem ipsum',
+        observations: 'Lorem ipsum'
       }.to_json
 
       sample.reload
@@ -521,7 +533,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     it "can use existing encounter to add sample" do
-      encounter = Encounter.make institution: institution
+      encounter = Encounter.make institution: institution, patient: patient
       device = Device.make institution: institution
       DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(test:{assays:[condition: "flu_a"]}, sample: {id: 'a'})
       DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(test:{assays:[condition: "flu_a"]}, sample: {id: 'b'})
@@ -630,8 +642,9 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     let(:sample_with_encounter) do
       device = Device.make institution: institution, site: site
       DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(test:{assays:[condition: "flu_a"]}, sample: {id: 'a'}, patient: {id: 'a'})
-      sample_with_encounter = Sample.first
-      sample_with_encounter.encounter = Encounter.make institution: institution
+      sample_with_encounter           = Sample.first
+      sample_with_encounter.encounter = Encounter.make institution: institution, patient: patient
+      sample_with_encounter.patient   = patient
       sample_with_encounter.save!
       sample_with_encounter
     end
@@ -675,7 +688,11 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     it "renders json response with merged samples from the same existing encounter" do
-      encounter = Encounter.make institution: institution, samples: [sample1, sample2], patient: nil
+      encounter = Encounter.make institution: institution, patient: patient
+      sample1.encounter = encounter
+      sample1.save
+      sample2.encounter = encounter
+      sample2.save
       put :merge_samples, sample_uuids: [sample1.uuid, sample2.uuid], encounter: {
         id: encounter.id,
         institution: { uuid: institution.uuid },
@@ -697,7 +714,11 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     it "saves merged samples after a merge sample operation" do
-      encounter = Encounter.make institution: institution, samples: [sample1, sample2], patient: nil
+      encounter = Encounter.make institution: institution, patient: patient
+      sample1.encounter = encounter
+      sample1.save
+      sample2.encounter = encounter
+      sample2.save
       put :merge_samples, sample_uuids: [sample1.uuid, sample2.uuid], encounter: {
         id: encounter.id,
         institution: { uuid: institution.uuid },

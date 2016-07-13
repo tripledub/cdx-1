@@ -12,11 +12,13 @@ class Encounter < ActiveRecord::Base
   has_many :requested_tests, autosave: true, dependent: :destroy
 
   belongs_to :performing_site, class_name: 'Site'
-  
+
   enum status: [:pending, :inprogress, :completed]
-  
+
   belongs_to :patient
   belongs_to :user
+
+  validates_presence_of :patient
 
   validates_presence_of :site, if: Proc.new { |encounter| encounter.institution && !encounter.institution.kind_manufacturer? }
 
@@ -162,7 +164,7 @@ class Encounter < ActiveRecord::Base
       json.name encounter_query_result["site"]["name"]
     end
   end
- 
+
   protected
 
   def ensure_entity_id

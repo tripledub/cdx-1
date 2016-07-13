@@ -77,11 +77,10 @@ describe DeviceMessageProcessor, elasticsearch: true do
     end
   end
 
-  let(:institution) {Institution.make(kind: 'institution')}
-
-  let(:site) {Site.make(institution: institution, location_geoid: 'ne:ARG_1300')}
-
-  let(:device) {Device.make(institution: institution, site: site)}
+  let(:institution) { Institution.make(kind: 'institution') }
+  let(:site)        { Site.make(institution: institution, location_geoid: 'ne:ARG_1300') }
+  let(:device)      { Device.make(institution: institution, site: site) }
+  let(:patient)     { Patient.make institution: institution }
 
   let(:device_message) do
     device_message = DeviceMessage.new(device: device, plain_text_data: '{}')
@@ -1096,9 +1095,10 @@ describe DeviceMessageProcessor, elasticsearch: true do
           uuid: 'ghi', institution: device_message.institution,
           custom_fields: {"existing_field" => "a value"},
           plain_sensitive_data: ENCOUNTER_PII_FIELDS,
+          patient: patient
         )
 
-        TestResult.create_and_index test_id: TEST_ID, encounter: encounter, device: device
+        TestResult.create_and_index test_id: TEST_ID, encounter: encounter, device: device, patient: patient
 
         device_message_processor.process
 
@@ -1130,6 +1130,7 @@ describe DeviceMessageProcessor, elasticsearch: true do
           core_fields: {"existing_indexed_field" => "existing_indexed_field_value"},
           custom_fields: {"existing_custom_field" => "existing_custom_field_value"},
           plain_sensitive_data: {"existing_pii_field" => "existing_pii_field_value"},
+          patient: patient
         )
 
         TestResult.create_and_index test_id: TEST_ID, sample_identifier: nil, device: device, encounter: encounter
@@ -1138,8 +1139,8 @@ describe DeviceMessageProcessor, elasticsearch: true do
 
         expect(TestResult.count).to eq(1)
         expect(Sample.count).to eq(0)
-        expect(Patient.count).to eq(0)
-        
+        expect(Patient.count).to eq(1)
+
         expect(Encounter.count).to eq(1)
 
         encounter = TestResult.first.encounter
@@ -1159,6 +1160,7 @@ describe DeviceMessageProcessor, elasticsearch: true do
           core_fields: {"id" => ENCOUNTER_ID, "existing_indexed_field" => "existing_indexed_field_value"},
           custom_fields: {"existing_custom_field" => "existing_custom_field_value"},
           plain_sensitive_data: {"existing_pii_field" => "existing_pii_field_value"},
+          patient: patient
         )
 
         other_device = Device.make(institution: institution, site: Site.make(institution: institution))
@@ -1168,7 +1170,7 @@ describe DeviceMessageProcessor, elasticsearch: true do
 
         expect(TestResult.count).to eq(2)
         expect(Sample.count).to eq(0)
-        expect(Patient.count).to eq(0)
+        expect(Patient.count).to eq(1)
         expect(Encounter.count).to eq(1)
 
         encounter = TestResult.first.encounter
@@ -1180,9 +1182,10 @@ describe DeviceMessageProcessor, elasticsearch: true do
         old_encounter = Encounter.make(
           uuid: 'ghi', institution: device_message.institution,
           core_fields: {"id" => "ANOTHER ID"},
+          patient: patient
         )
 
-        test = TestResult.create_and_index test_id: TEST_ID, device: device, encounter: old_encounter
+        test = TestResult.create_and_index test_id: TEST_ID, device: device, encounter: old_encounter, patient: patient
 
         device_message_processor.process
 
@@ -1206,7 +1209,7 @@ describe DeviceMessageProcessor, elasticsearch: true do
         test_result = TestResult.first
         expect(test_result.core_fields["start_time"]).to eq(start_time)
         expect(test_result.core_fields["end_time"]).to eq(end_time)
-        
+
       end
 
       it "sets encounter's times to test result times, with two" do
@@ -1233,10 +1236,10 @@ describe DeviceMessageProcessor, elasticsearch: true do
       end
     end
   end
-    
+
    context 'check invalid time' do
       let(:device_message_processor) {DeviceMessageProcessor.new(device_message)}
-     
+
       it "the start time is greater than today and generates and alert" do
         alert = Alert.make(:category_type =>"anomalies", :anomalie_type => "invalid_test_date")
         alert.query = {"test.error_code"=>"155"}
@@ -1250,5 +1253,5 @@ describe DeviceMessageProcessor, elasticsearch: true do
         expect(AlertHistory.count).to equal (1)
       end
     end
-  
+
 end
