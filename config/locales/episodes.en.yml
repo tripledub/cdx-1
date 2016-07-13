@@ -3,6 +3,8 @@ en:
     presumptive_tb: Presumptive TB
     bacteriologically_confirmed: Bacteriologically Confirmed
     clinically_diagnosed: Clinically Diagnosed
+    pulmonary_tb: Pulmonary Tuberculosis (PTB)
+    extra_pulmonary_tb: Extra Pulmonary Tuberculosis (EPTB)
   hiv_status:
     positive_tb: HIV-Positive
     negative_tb: HIV-Negative
