@@ -138,7 +138,7 @@ describe DeviceMessageProcessor, elasticsearch: true do
     expect(Encounter.count).to eq(0)
   end
 
-  it "should create a patient" do
+  xit "should create a patient" do
     device_message_processor.process
 
     expect(Patient.count).to eq(1)
