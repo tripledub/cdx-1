@@ -1,12 +1,10 @@
 - content_for(:subheader) do
-  .row.center.edit
+  .row.center.edit.collapse
     .col.pe-10
-      .row
-        .col
-          %h2
-            = link_to patients_path, class: 'side-link', title: I18n.t('views.back') do
-              = image_tag "arrow-left.png"
-            = patient_display_name(@patient.name)
+      %h2
+        = link_to patients_path, class: 'side-link', title: I18n.t('views.back') do
+          = image_tag "arrow-left-white.png"
+        = patient_display_name(@patient.name)
 .testflow
   .container
     = render partial: 'patient_summary', locals: { patient: @patient }

@@ -52,7 +52,7 @@ padding-top:60px;
 position:fixed;
 width:100%;
 top:0px;
-z-index:99999;
+z-index:1000000;
 }
 
 /*----------- Tooltips -------------*/
@@ -331,6 +331,11 @@ color:#fff !important;
 .testflow .col-3 {max-width: 23.8%;flex:1 0 auto;}
 .testflow .col-2{max-width: 15.33%;flex:1 0 auto;}
 .testflow .col-1 {max-width: 6.866%;flex:1 0 auto;}
+
+.testflow .row.labelHeader .col-6 {max-width:50%;}
+.testflow .panel.patient-summary {height:180px;overflow-y:scroll;}
+.testflow .panel.patient-details .row {border-bottom:1px solid #e2e2e2;}
+.testflow .panel.patientHistory .col-12 {display:block;}
 
 .testflow .box {background:white;}
 .testflow .col {margin:0.5% 0.5%;}
@@ -618,7 +623,7 @@ color:#fff !important;
 }
 
 .testflow li a.button.cancel, .testflow li a.button.edit {
-  background:#555;
+  background:#e06023;
 }
 
 
@@ -663,7 +668,7 @@ flex:3 0 auto;
 padding:15px;
 }
 
-.testflow .patient-details .col-10 {
+.testflow .patient-details .col-12 {
   display:flex;
 }
 

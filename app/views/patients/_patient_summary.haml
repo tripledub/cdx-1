@@ -6,16 +6,7 @@
     %ul
 .panel.patient-details
   .row
-    .col-2.summary.patient
-      .stat
-        .empty-icon.centered
-          %span
-            %i.fa.fa-user
-    .col-10
-      - if has_access?(@patient, Policy::Actions::UPDATE_PATIENT)
-        %ul.button-container
-          %li
-            = link_to(I18n.t('patients.show.edit_patient'), edit_patient_path(patient), class: 'button edit')
+    .col-12
       %ul
         %li
           %label
@@ -23,13 +14,8 @@
           = patient_display_name(patient.name)
         %li
           %label
-            = Patient.human_attribute_name(:entity_id)
-          = patient.entity_id
-        %li
-          %label
             = Patient.human_attribute_name(:gender)
           = patient.gender
-      %ul
         %li
           %label
             = Patient.human_attribute_name(:dob)
@@ -42,13 +28,22 @@
           %label
             = Patient.human_attribute_name(:email)
           = patient.email
-
       %ul
+        %li
+          %label
+            = Patient.human_attribute_name(:entity_id)
+          = patient.entity_id
         %li
           %label
             = Patient.human_attribute_name(:address)
           = patient.address
+
+      %ul
         %li
           %label
             = Patient.human_attribute_name(:created_at)
           = I18n.l(patient.created_at, format: :long)
+        - if has_access?(@patient, Policy::Actions::UPDATE_PATIENT)
+          %ul.button-container
+            %li
+              = link_to(I18n.t('patients.show.edit_patient'), edit_patient_path(patient), class: 'button edit')

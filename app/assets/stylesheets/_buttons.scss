@@ -120,7 +120,7 @@
 
 .btn-link {
   @extend .btn;
-  background: none !important;
+  background: none;
   color: $gray3;
   padding: 5px;
   height: auto;
