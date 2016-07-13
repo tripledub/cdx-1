@@ -129,6 +129,9 @@ describe "create encounter" do
 
     expect_page ShowEncounterPage do |page|
       expect(page.encounter.patient).to eq(patient)
+      expect(page.tests_for.has_text? 'TB').to be_truthy
+      expect(page.encounter.patient.name).to eq("John Doe")
+      expect(page.encounter.patient.entity_id).to eq("1001")
       expect(page.encounter.samples.count).to eq(2)
       expect(page.encounter.test_results.count).to eq(0)
     end

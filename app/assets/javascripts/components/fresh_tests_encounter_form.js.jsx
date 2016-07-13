@@ -314,6 +314,14 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
 
   testing_for_change: function() {
     var xx = $('#testing_for').val();
+    this.setState(React.addons.update(this.state, {
+      encounter: {
+        testing_for: {
+          $set: xx
+        }
+      }
+    }));
+
     $('.test_for_ebola').attr('checked', false).parent().hide();
     $('.test_for_tb').attr('checked', false).parent().hide();
     $('.test_for_hiv').attr('checked', false).parent().hide();

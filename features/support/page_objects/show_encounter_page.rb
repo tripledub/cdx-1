@@ -10,4 +10,5 @@ class ShowEncounterPage < CdxPageBase
   end
   
   section :table, CdxTable, "table"  
+  element :tests_for, 'p#tests_for'
 end

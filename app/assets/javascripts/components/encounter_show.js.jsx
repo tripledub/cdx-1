@@ -115,7 +115,7 @@ var EncounterShow = React.createClass({
             <label>Testing for:</label>
           </div>
           <div className="col">
-            <p>{this.state.user_email}</p>
+            <p id="tests_for">{this.props.encounter.testing_for}</p>
           </div>
         </div>
 
@@ -248,7 +248,7 @@ var EncounterDelete = React.createClass({
       );
     }
     else
-    if (this.props.show_edit) {
+    if (this.props.show_edit && (this.props.encounter.status != 'inprogress')) {
     return (
       <div>
         <a className = "btn-secondary pull-right" onClick={this.clickHandler} id="delete_encounter" href="#">Cancel Test Order</a>
