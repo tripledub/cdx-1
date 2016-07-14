@@ -10,7 +10,7 @@ describe Presenters::TestOrders do
   describe 'patient_view' do
     before :each do
       7.times {
-        encounter = Encounter.make institution: institution, site: site, patient: patient, start_time: 3.days.ago.to_s, testdue_date: 1.day.from_now.to_s, status: 2, performing_site: performing_site
+        encounter = Encounter.make institution: institution, site: site, patient: patient, start_time: 3.days.ago.to_s, testdue_date: 1.day.from_now.to_s, status: 2, testing_for: 'TB', performing_site: performing_site
         sample    = Sample.make(institution: institution, patient: patient, encounter: encounter)
         SampleIdentifier.make(site: site, entity_id: "sample-#{rand(1..3000)}", sample: sample)
         SampleIdentifier.make(site: site, entity_id: "sample-#{rand(3001..6000)}", sample: sample)
@@ -28,7 +28,7 @@ describe Presenters::TestOrders do
         requestedSiteName:  site.name,
         performingSiteName: performing_site.name,
         sampleId:           Encounter.first.samples.map(&:entity_ids).join(', '),
-        testingFor:         patient.name,
+        testingFor:         Encounter.first.testing_for,
         requestedBy:        user.full_name,
         requestDate:        Extras::Dates::Format.datetime_with_time_zone(Encounter.first.start_time),
         dueDate:            Extras::Dates::Format.datetime_with_time_zone(Encounter.first.testdue_date),
