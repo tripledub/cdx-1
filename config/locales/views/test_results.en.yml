@@ -1,5 +1,21 @@
 en:
   test_results:
+    filters:
+      title: 'Tests'
+      display_as: 'Display as'
+      condition: 'Condition'
+      result: 'Result'
+      date: 'Date'
+      date_from: 'Date From'
+      date_to: 'Date To'
+      type: 'Type'
+      status: 'Status'
+      sample_id: 'Sample Id'
+      test_order_id: 'Test Order Id'
+      device: 'Device'
+      tests: 'Tests'
+      test_orders: 'Test Orders'
+      show_all: 'Show All'
     show:
       test_belongs_to: 'This test belongs to an encounter.'
       click_here: 'Click here'
