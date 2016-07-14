@@ -13,6 +13,7 @@ class RequestedTestsController < ApplicationController
 
        requested_tests.each do |test|
          current_test = RequestedTest.find(test[1]["id"])
+         update_audit_log(encounter, current_test, test) if current_test
          saved_ok = current_test.update(status: test[1]["status"], comment: test[1]["comment"]) if current_test
          
          if saved_ok==false
@@ -40,5 +41,17 @@ class RequestedTestsController < ApplicationController
       render json: error_text, status: :unprocessable_entity
     end    
   end
+  
+  private
+
+  def update_audit_log(encounter, current_test, test)
+    if current_test.status != test[1]["status"]
+      Audit::EncounterTestAuditor.new(encounter, current_user.id).log_changes("Test Status Changed","Test Status changed from "+current_test.status+" To "+test[1]["status"], encounter, current_test) 
+    end
+    if current_test.comment != test[1]["comment"] && current_test.comment && test[1]["comment"]
+      Audit::EncounterTestAuditor.new(encounter, current_user.id).log_changes("Test Comment Changed","Test Comment changed To "+test[1]["comment"], encounter, current_test) 
+    end
+  end
+
 end
 

@@ -5,12 +5,20 @@ describe RequestedTestsController  do
   let!(:institution) {Institution.make}
   let!(:user)        {institution.user}
   let!(:site)  { institution.sites.make }
+  let!(:patient) do
+    Patient.make(
+      institution: institution,
+      core_fields: { "gender" => "male" },
+      custom_fields: { "custom" => "patient value" },
+      plain_sensitive_data: { "name": "Doe" }
+    )
+  end
 
   before(:each) {sign_in user}
   let(:default_params) { {context: institution.uuid} }
 
   context "update" do
-    let!(:encounter) { Encounter.make institution: institution, site: site }
+    let!(:encounter) { Encounter.make institution: institution, site: site ,patient: patient}
     let(:requested_test1)  {RequestedTest.make encounter: encounter}
 
     it "should update requestedTests status" do
@@ -22,7 +30,7 @@ describe RequestedTestsController  do
               "comment" => "comment xyz"
             }
           }
-   
+
       post :update,  id: encounter.id, requested_tests: jsondata
       test = RequestedTest.find(requested_test1.id)   
       expect(RequestedTest.statuses[test.status]).to eq RequestedTest.statuses["deleted"]
@@ -78,5 +86,18 @@ describe RequestedTestsController  do
       expect(Encounter.statuses[updated_encounter.status]).to eq Encounter.statuses["inprogress"]
     end
     
+    it "should update audit log" do
+      jsondata = 
+          {
+            "requested_tests" => {
+              "id" => requested_test1.id,
+              "status" => "inprogress"
+            }
+          }
+          
+      post :update,  id: encounter.id, requested_tests: jsondata
+      expect(EncounterTestAuditLog.count).to eq 1
+      expect(EncounterTestAuditLog.first.title).to eq "Test Status Changed"
+    end
   end
 end

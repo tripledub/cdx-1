@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705092836) do
+ActiveRecord::Schema.define(version: 20160711130401) do
 
   create_table "alert_condition_results", force: :cascade do |t|
     t.string  "result",   limit: 255
@@ -109,16 +109,23 @@ ActiveRecord::Schema.define(version: 20160705092836) do
   end
 
   create_table "audit_logs", force: :cascade do |t|
-    t.text     "comment",    limit: 65535
-    t.string   "title",      limit: 255
-    t.string   "uuid",       limit: 255
-    t.integer  "patient_id", limit: 4
-    t.integer  "user_id",    limit: 4
+    t.text     "comment",           limit: 65535
+    t.string   "title",             limit: 255
+    t.string   "uuid",              limit: 255
+    t.integer  "patient_id",        limit: 4
+    t.integer  "user_id",           limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type",              limit: 255
+    t.integer  "encounter_id",      limit: 4
+    t.integer  "requested_test_id", limit: 4
+    t.integer  "patient_result_id", limit: 4
   end
 
+  add_index "audit_logs", ["encounter_id"], name: "fk_rails_242face86a", using: :btree
   add_index "audit_logs", ["patient_id"], name: "index_audit_logs_on_patient_id", using: :btree
+  add_index "audit_logs", ["patient_result_id"], name: "fk_rails_2fc931c99d", using: :btree
+  add_index "audit_logs", ["requested_test_id"], name: "fk_rails_2f852d7fa9", using: :btree
   add_index "audit_logs", ["user_id"], name: "index_audit_logs_on_user_id", using: :btree
   add_index "audit_logs", ["uuid"], name: "index_audit_logs_on_uuid", using: :btree
 
@@ -710,8 +717,9 @@ ActiveRecord::Schema.define(version: 20160705092836) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
-  add_foreign_key "alerts", "institutions"
-  add_foreign_key "device_messages", "sites"
+  add_foreign_key "audit_logs", "encounters"
+  add_foreign_key "audit_logs", "patient_results"
+  add_foreign_key "audit_logs", "requested_tests"
   add_foreign_key "encounters", "sites"
   add_foreign_key "encounters", "users"
   add_foreign_key "episodes", "patients"

@@ -42,4 +42,5 @@ module Audit
       @auditable_model.class.to_s == 'Patient' ? @auditable_model.id : @auditable_model.patient.id
     end
   end
+  
 end
