@@ -85,7 +85,11 @@ class TestResultsController < TestsController
     filter["test.assays.result"] = params["test.assays.result"] if params["test.assays.result"].present?
     filter["test.type"] = params["test.type"] if params["test.type"].present?
     filter["sample.id"] = params["sample.id"] if params["sample.id"].present?
+
     filter["since"] = params["since"] if params["since"].present?
+    filter["since"] = params["from_date"] if params["from_date"].present?
+    filter["until"] = params["to_date"] if params["to_date"].present?
+
     filter["test.status"] = params["test.status"] if params["test.status"].present?
 
     filter
