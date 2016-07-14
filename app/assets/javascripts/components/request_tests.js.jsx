@@ -32,10 +32,7 @@ var RequestedTestRow = React.createClass({
       test_order_page_mode = 'cancel';
     }
 
-    if ((is_associated == true) && (edit == true)) {
-      view_or_cancel_path = '/edit?test_order_page_mode='+test_order_page_mode;
-    } else
-    if ((is_associated == true) || (edit == false)) {
+    if (is_associated == true) {
       view_or_cancel_path = '?test_order_page_mode='+test_order_page_mode;
     } else {
       view_or_cancel_path = '/new?test_order_page_mode='+test_order_page_mode;
