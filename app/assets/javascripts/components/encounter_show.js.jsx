@@ -63,7 +63,7 @@ var EncounterShow = React.createClass({
   },
   render: function() {
     if (this.props.can_update && this.props.show_cancel) {
-      actionButton = <EncounterDelete show_edit={true} onChangeParentLevel={this.EncounterDeleteHandler} />;
+      actionButton = <EncounterDelete show_edit={true} onChangeParentLevel={this.EncounterDeleteHandler} encounter={this.props.encounter} />;
     } else if (this.props.can_update && this.props.show_edit) {
       actionButton = <EncounterUpdate onChangeParentLevel={this.EncounterUpdateHandler} />;
    } else {
