@@ -35,28 +35,27 @@ var DeviceMessagesList = React.createClass({
     }
   },
 
+  componentDidMount: function() {
+    $("table").resizableColumns({store: window.store});
+  },
+
   render: function() {
     var sortableHeader = function (title, field) {
       return <SortableColumnHeader title={title} field={field} orderBy={this.props.orderBy} />
     }.bind(this);
 
     return (
-      <table className="table" cellPadding="0" cellSpacing="0">
+      <table className="table" cellPadding="0" cellSpacing="0" data-resizable-columns-id="test-orders-table">
         <thead>
-          <tr>
-            <th className="tableheader" colSpan="8">
-              <span className={this.props.titleClassName}>{this.props.title}</span>
-            </th>
-          </tr>
           <tr>
             {sortableHeader("Status",  "device_messages.index_failed")}
             {sortableHeader("Message", "device_messages.index_failure_reason")}
             {sortableHeader("Model",   "device_models.name")}
             {sortableHeader("Device",  "devices.name")}
-            <th>Failures</th>
-            <th>Error field</th>
+            <th data-resizable-column-id="failures">Failures</th>
+            <th data-resizable-column-id="error-field">Error field</th>
             {sortableHeader("Date",    "device_messages.created_at")}
-            <th>Raw</th>
+            <th data-resizable-column-id="raw">Raw</th>
           </tr>
         </thead>
         <tbody>
