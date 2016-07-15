@@ -54,12 +54,21 @@ class DeviceModelsController < ApplicationController
   def update
     @device_model = (authorize_resource(DeviceModel.find(params[:id]), UPDATE_DEVICE_MODEL) or return)
     @device_model = (authorize_resource(@device_model, PUBLISH_DEVICE_MODEL) or return) if @device_model.published?
-
     set_published_status(@device_model)
+
+    if params[:device_model][:manifest_attributes] &&
+       (params['deleted_manifest'] == params["device_model"]["manifest_attributes"]["id"]) &&
+       (params[:device_model][:manifest_attributes][:definition]==nil)
+       cannot_delete_manifest = true
+    end
+    
     load_manifest_upload
 
     respond_to do |format|
-      if @device_model.update(device_model_update_params)
+      if cannot_delete_manifest
+         flash.now[:error] = "you must have a manifest uploaded"
+         format.html { render action: 'edit'}
+      elsif @device_model.update(device_model_update_params)
         format.html { redirect_to device_models_path, notice: "Device Model #{@device_model.name} was successfully updated." }
         format.json { render action: 'show', status: :created, device_model: @device_model }
       else
