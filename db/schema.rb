@@ -12,6 +12,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20160712141015) do
+
   create_table "alert_condition_results", force: :cascade do |t|
     t.string  "result",   limit: 255
     t.integer "alert_id", limit: 4
@@ -717,9 +718,11 @@ ActiveRecord::Schema.define(version: 20160712141015) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
+  add_foreign_key "alerts", "institutions"
   add_foreign_key "audit_logs", "encounters"
   add_foreign_key "audit_logs", "patient_results"
   add_foreign_key "audit_logs", "requested_tests"
+  add_foreign_key "device_messages", "sites"
   add_foreign_key "encounters", "sites"
   add_foreign_key "encounters", "users"
   add_foreign_key "episodes", "patients"

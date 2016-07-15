@@ -21,7 +21,7 @@ var SortableColumnHeader = React.createClass({
 
     var sortUrl = URI(window.location.href).setSearch({"order_by": nextOrder});
 
-    return (<th>
+    return (<th data-resizable-column-id={this.props.field}>
         <a href={sortUrl} className={classNames({ordered: orderByThis, ["ordered-" + orderByThisDir]: orderByThis})}>{this.props.title} {appendTitle}</a>
       </th>);
   },

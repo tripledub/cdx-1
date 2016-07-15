@@ -18,12 +18,13 @@ var TestOrdersList = React.createClass({
   getDefaultProps: function() {
     return {
       title: "Test orders",
-      titleClassName: "",
-      downloadCsvPath: null,
-      allowSorting: false,
-      orderBy: "encounters.testdue_date",
-      showSites: true
+      allowSorting: true,
+      orderBy: "encounters.testdue_date"
     }
+  },
+
+  componentDidMount: function() {
+    $("table").resizableColumns({store: window.store});
   },
 
   render: function() {
@@ -32,24 +33,12 @@ var TestOrdersList = React.createClass({
     }.bind(this);
 
     return (
-      <table className="table" cellPadding="0" cellSpacing="0">
+      <table className="table" cellPadding="0" cellSpacing="0"  data-resizable-columns-id="test-orders-table">
         <thead>
           <tr>
-            <th className="tableheader" colSpan="8">
-              <span className={this.props.titleClassName}>{this.props.title}</span>
-
-              { this.props.downloadCsvPath ? (
-                <span className="table-actions">
-                  <a href={this.props.downloadCsvPath} title="Download CSV">
-                    <span className="icon-download icon-gray" />
-                  </a>
-                </span>) : null }
-            </th>
-          </tr>
-          <tr>
             {sortableHeader("Requested site", "sites.name")}
-            <th>Performing site</th>
-            <th>Sample Id</th>
+            <th data-resizable-column-id="performing-site">Performing site</th>
+            <th data-resizable-column-id="sample-id">Sample Id</th>
             {sortableHeader("Testing for",  "patients.name")}
             {sortableHeader("Requested by", "users.first_name")}
             {sortableHeader("Request date", "encounters.start_time")}
@@ -59,7 +48,7 @@ var TestOrdersList = React.createClass({
         </thead>
         <tbody>
           {this.props.testOrders.map(function(testOrder) {
-             return <TestOrderRow key={testOrder.uuid} testOrder={testOrder} />;
+             return <TestOrderRow key={testOrder.id} testOrder={testOrder} />;
           }.bind(this))}
         </tbody>
       </table>
@@ -70,7 +59,6 @@ var TestOrdersList = React.createClass({
 var TestOrdersIndexTable = React.createClass({
   render: function() {
     return <TestOrdersList testOrders={this.props.tests}
-              downloadCsvPath={this.props.downloadCsvPath}
               title={this.props.title} titleClassName="table-title"
               allowSorting={true} orderBy={this.props.orderBy}  />
   }

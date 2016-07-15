@@ -25,26 +25,25 @@ var DevicesIndexTable = React.createClass({
     }
   },
 
+  componentDidMount: function() {
+    $("table").resizableColumns({store: window.store});
+  },
+
   render: function() {
+    var rows           = [];
     var sortableHeader = function (title, field) {
       return <SortableColumnHeader title={title} field={field} orderBy={this.props.orderBy} />
     }.bind(this);
 
-    return (
-      <table className="table" cellPadding="0" cellSpacing="0">
-        <thead>
-          <tr>
-            <th className="tableheader" colSpan="12">
-              <span className={this.props.titleClassName}>{this.props.title}</span>
+    this.props.devices.forEach(
+      function(device) {
+        rows.push(<DeviceResultRow key={device.id} device={device} />);
+      }
+    );
 
-              { this.props.downloadCsvPath ? (
-                <span className="table-actions">
-                  <a href={this.props.downloadCsvPath} title="Download CSV">
-                    <span className="icon-download icon-gray" />
-                  </a>
-                </span>) : null }
-            </th>
-          </tr>
+    return (
+      <table className="table" cellPadding="0" cellSpacing="0" data-resizable-columns-id="devices-table">
+        <thead>
           <tr>
             {sortableHeader("Name", "devices.name")}
             {sortableHeader("Manufacturer", "institutions.name")}
@@ -53,9 +52,7 @@ var DevicesIndexTable = React.createClass({
           </tr>
         </thead>
         <tbody>
-          {this.props.devices.map(function(device) {
-             return <DeviceResultRow key={device.id} device={device} />;
-          }.bind(this))}
+          {rows}
         </tbody>
       </table>
     );

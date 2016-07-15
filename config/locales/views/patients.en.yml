@@ -30,3 +30,7 @@ en:
       birth_date: 'Date of birth'
       city: 'City'
       last_test_order: 'Last test order'
+      patient:
+        zero: 'No patients'
+        one:  'One patient'
+        other: '%{count} patients'

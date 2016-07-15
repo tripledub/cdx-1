@@ -10,7 +10,7 @@ var OrderedColumnHeader = React.createClass({
 
   render: function(){
     return (
-      <th>
+      <th data-resizable-column-id={this.props.fieldName}>
         <a href="#" onClick={this.updateResults}>
           {this.props.title} <span dangerouslySetInnerHTML={{ __html: this.props.orderIcon }}></span>
         </a>
