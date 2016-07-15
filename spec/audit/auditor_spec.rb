@@ -6,15 +6,15 @@ describe Audit::Auditor do
 
   describe 'create' do
     before :each do
-      described_class.new(patient, user.id).log_action('New patient added')
+      described_class.new(patient, user.id).log_action("New patient #{patient.name} added")
     end
 
     it 'should add a new audit log' do
-      expect{ described_class.new(patient, user.id).log_action('New patient added') }.to change{ AuditLog.count }.by(1)
+      expect{ described_class.new(patient, user.id).log_action("New patient #{patient.name} added") }.to change{ AuditLog.count }.by(1)
     end
 
     it 'should add a title' do
-      expect(AuditLog.first.title).to eq('New patient added')
+      expect(AuditLog.first.title).to eq("New patient #{patient.name} added")
     end
 
     it 'should add a patient' do
@@ -29,15 +29,15 @@ describe Audit::Auditor do
   describe 'update' do
     before :each do
       patient.name = 'Graham Hill'
-      described_class.new(patient, user.id).log_changes('Patient details have been updated')
+      described_class.new(patient, user.id).log_changes("#{patient.name} patient details have been updated")
     end
 
     it 'should add a new audit log' do
-      expect{ described_class.new(patient, user.id).log_changes('Patient details have been updated') }.to change{ AuditLog.count }.by(1)
+      expect{ described_class.new(patient, user.id).log_changes("#{patient.name} patient details have been updated") }.to change{ AuditLog.count }.by(1)
     end
 
     it 'should add a title' do
-      expect(AuditLog.first.title).to eq('Patient details have been updated')
+      expect(AuditLog.first.title).to eq("#{patient.name} patient details have been updated")
     end
 
     it 'should add a patient' do
