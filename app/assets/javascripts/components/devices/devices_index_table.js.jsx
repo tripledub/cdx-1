@@ -1,7 +1,7 @@
 var DeviceResultRow = React.createClass({
   render: function() {
     return (
-    <tr data-href={device.viewLink}>
+    <tr data-href={this.props.device.viewLink}>
       <td>{this.props.device.name}</td>
       <td>{this.props.device.institutionName}</td>
       <td>{this.props.device.modelName}</td>

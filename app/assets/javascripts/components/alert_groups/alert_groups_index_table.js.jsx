@@ -1,7 +1,7 @@
 var AlertGroupResultRow = React.createClass({
   render: function() {
     return (
-    <tr data-href={alert.viewLink}>
+    <tr data-href={this.props.alert.viewLink}>
       <td>{this.props.alert.name}</td>
       <td>{this.props.alert.description}</td>
       <td>{this.props.alert.enabled}</td>
