@@ -22,6 +22,7 @@ var PatientTestOrders = React.createClass({
       if (results.length > 0) {
         this.setState({ patientTestOrders: results });
         this.updateOrderIcon(field);
+        $("table").resizableColumns({store: window.store});
       } else {
         this.setState({ loadingMessage: 'There are no test orders.' });
       };
@@ -74,7 +75,7 @@ var PatientTestOrders = React.createClass({
       <div className="row">
         {
           this.state.patientTestOrders.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> :
-          <table className="patient-test-orders">
+          <table className="table patient-test-orders" data-resizable-columns-id="patient-test-orders-table">
             <thead>
               <tr>
                 {rowHeaders}

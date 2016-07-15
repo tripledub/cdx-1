@@ -19,6 +19,7 @@ var PatientComments = React.createClass({
       if (results.length > 0) {
         this.setState({ patientComments: results });
         this.updateOrderIcon(field);
+        $("table").resizableColumns({store: window.store});
       } else {
         this.setState({ loadingMessage: 'There are no comments available.' });
       };
@@ -72,7 +73,7 @@ var PatientComments = React.createClass({
       <div className="row">
         {
           this.state.patientComments.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> :
-          <table className="patient-history">
+          <table className="table patient-history" data-resizable-columns-id="patient-history-table">
             <thead>
               <tr>
                 {rowHeaders}
