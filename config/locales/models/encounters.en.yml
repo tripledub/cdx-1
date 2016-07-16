@@ -4,3 +4,6 @@ en:
       pending: 'Pending'
       in_progress: 'In progress'
       completed: 'Completed'
+      site_id: 'Requested by'
+      performing_site_id: 'Request to'
+      user_id: 'Order by user'

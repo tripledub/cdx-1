@@ -36,11 +36,11 @@ var TestOrdersList = React.createClass({
       <table className="table" cellPadding="0" cellSpacing="0"  data-resizable-columns-id="test-orders-table">
         <thead>
           <tr>
-            {sortableHeader("Requested site", "sites.name")}
-            <th data-resizable-column-id="performing-site">Performing site</th>
+            {sortableHeader("Request by", "sites.name")}
+            <th data-resizable-column-id="performing-site">Request to</th>
             <th data-resizable-column-id="sample-id">Sample Id</th>
             {sortableHeader("Testing for",  "patients.name")}
-            {sortableHeader("Requested by", "users.first_name")}
+            {sortableHeader("Order by user", "users.first_name")}
             {sortableHeader("Request date", "encounters.start_time")}
             {sortableHeader("Due date",     "encounters.testdue_date")}
             {sortableHeader("Status",       "encounters.status")}
