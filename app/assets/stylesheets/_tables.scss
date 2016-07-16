@@ -1,12 +1,12 @@
 table.scroll tbody {
-    overflow-y: auto;
-    overflow-x: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .table_scroll_container {
-    display: inline-block;
-    overflow-y: scroll;
-    max-height:275px;
+  display: inline-block;
+  overflow-y: scroll;
+  max-height:275px;
 }
 
 
@@ -14,104 +14,104 @@ table.scroll tbody {
 // TABLES
 // =============================================================================
 
-  .table {
-    width: 100%;
-    margin: 15px auto;
-    table-layout: fixed;
-    white-space: nowrap;
+.table {
+  width: 100%;
+  margin: 15px auto;
+  table-layout: fixed;
+  white-space: nowrap;
 
-    a {
-      color: $gray4;
-    }
-
-    th {
-      font-weight: 400;
-      color: $gray3;
-      text-align: left;
-      text-transform: uppercase;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      padding: 14px 10px;
-
-      .table-title {
-        font-size: 120%;
-        font-weight: bold;
-        color: $black;
-        vertical-align: baseline;
-        display: inline-block;
-        margin-right: 10px;
-        text-transform:none;
-      }
-
-      .table-actions {
-        display: inline-block;
-        vertical-align: baseline;
-      }
-
-      a {
-        color: inherit;
-
-        &.ordered {
-          color: $black;
-        }
-      }
-    }
-
-    td {
-      padding: 14px 10px;
-      border-bottom: 1px solid $gray1;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-
-      &.empty {
-        padding: 150px;
-        text-align: center;
-
-        .empty-icon {
-          height: 150px;
-        }
-
-        h1 {
-          color: $black;
-        }
-        p {
-          margin-top: -5px;
-        }
-      }
-
-      &.unknown-name {
-        color: $gray2;
-        font-style: italic;
-      }
-    }
-
-    tr:last-child th {
-      border-bottom: 3px solid $black;
-    }
-    tr:last-child td {
-      border-bottom: none;
-    }
+  a {
+    color: $gray4;
   }
 
-  .pagination {
-    .btn-link {
-      color: $gray4;
-      margin: 0;
+  th {
+    font-weight: 400;
+    color: $gray3;
+    text-align: left;
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 14px 10px;
+
+    .table-title {
+      font-size: 120%;
+      font-weight: bold;
+      color: $black;
+      vertical-align: baseline;
+      display: inline-block;
+      margin-right: 10px;
+      text-transform:none;
     }
 
-    a[class^="btn"] {
-      color: $black;
-      font-size: 20px;
-      line-height: 20px;
-      font-weight: 300;
+    .table-actions {
+      display: inline-block;
       vertical-align: baseline;
     }
 
-    > span {
-      padding: 0 18px 0 5px;
+    a {
+      color: inherit;
+
+      &.ordered {
+        color: $black;
+      }
     }
   }
+
+  td {
+    padding: 14px 10px;
+    border-bottom: 1px solid $gray1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+    &.empty {
+      padding: 150px;
+      text-align: center;
+
+      .empty-icon {
+        height: 150px;
+      }
+
+      h1 {
+        color: $black;
+      }
+      p {
+        margin-top: -5px;
+      }
+    }
+
+    &.unknown-name {
+      color: $gray2;
+      font-style: italic;
+    }
+  }
+
+  tr:last-child th {
+    border-bottom: 3px solid $black;
+  }
+  tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.pagination {
+  .btn-link {
+    color: $gray4;
+    margin: 0;
+  }
+
+  a[class^="btn"] {
+    color: $black;
+    font-size: 20px;
+    line-height: 20px;
+    font-weight: 300;
+    vertical-align: baseline;
+  }
+
+  > span {
+    padding: 0 18px 0 5px;
+  }
+}
 
 
 *[data-href] {
