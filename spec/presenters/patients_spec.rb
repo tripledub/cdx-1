@@ -20,7 +20,7 @@ describe Presenters::Patients do
         name:           patient_display_name(Patient.first.name),
         entityId:       Patient.first.entity_id,
         dateOfBirth:    Extras::Dates::Format.datetime_with_time_zone(Patient.first.dob),
-        city:           Patient.first.city,
+        city:           Patient.first.address,
         lastEncounter:  Extras::Dates::Format.datetime_with_time_zone(Patient.first.last_encounter),
         viewLink:       Rails.application.routes.url_helpers.patient_path(Patient.first)
       })
