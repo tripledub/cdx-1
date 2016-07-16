@@ -36,7 +36,7 @@
         %li
           %label
             = Patient.human_attribute_name(:address)
-          = patient.address
+          = Presenters::Patients.show_full_address(patient)
 
       %ul
         %li

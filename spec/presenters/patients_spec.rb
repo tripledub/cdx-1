@@ -20,10 +20,24 @@ describe Presenters::Patients do
         name:           patient_display_name(Patient.first.name),
         entityId:       Patient.first.entity_id,
         dateOfBirth:    Extras::Dates::Format.datetime_with_time_zone(Patient.first.dob),
-        city:           Patient.first.address,
+        address:        "#{Patient.first.address}, #{Patient.first.city}, #{Patient.first.state}, #{Patient.first.zip_code}",
         lastEncounter:  Extras::Dates::Format.datetime_with_time_zone(Patient.first.last_encounter),
         viewLink:       Rails.application.routes.url_helpers.patient_path(Patient.first)
       })
+    end
+  end
+
+  describe 'show_full_address' do
+    it 'should display the full address of a patient' do
+      patient = Patient.make institution: institution
+
+      described_class.show_full_address(patient).should eq("#{patient.address}, #{patient.city}, #{patient.state}, #{patient.zip_code}")
+    end
+
+    it 'should not display the commas if any field is empty' do
+      patient = Patient.make institution: institution, address: '', state: ''
+
+      described_class.show_full_address(patient).should eq("#{patient.city}, #{patient.zip_code}")
     end
   end
 end

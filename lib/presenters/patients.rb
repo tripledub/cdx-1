@@ -16,8 +16,6 @@ class Presenters::Patients
       end
     end
 
-    protected
-
     def show_full_address(patient)
       address = []
       address << patient.address
