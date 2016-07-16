@@ -1,0 +1,5 @@
+en:
+  encounters:
+    new:
+      existing_test: 'Existing test for %{patient_name}'
+      new_test: 'New test for %{patient_name}'

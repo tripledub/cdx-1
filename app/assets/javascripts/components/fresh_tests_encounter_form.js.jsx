@@ -6,6 +6,22 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     $('.test_for_hiv').attr('checked', false).parent().hide();
   },
 
+  reasonClicked: function(clk) {
+    var foo = '';
+
+    if (clk === 0) { foo = 'diag'; }
+
+    if (clk === 1) { foo = 'follow'; }
+
+    this.setState(React.addons.update(this.state, {
+      encounter: {
+        exam_reason: {
+          $set: foo
+        }
+      }
+    }));
+  },
+
   validateAndSetManualEntry: function (event) {
     var sampleId = React.findDOMNode(this.refs.manualSampleEntry).value;
     if (this.state.encounter.new_samples.filter(function(el){return el.entity_id == sampleId}).length > 0) {
@@ -44,15 +60,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
       <div className="newTestOrder">
         <div className="row labelHeader">
           <div className="col-6">
-            <h3>Patient Details</h3>
-          </div>
-          <div className="col-6"></div>
-        </div>
-        <div className="panel">
-          <PatientSelect patient={this.state.encounter.patient} context={this.props.context} onPatientChanged={this.onPatientChanged}/>
-        </div>
-        <div className="row labelHeader">
-          <div className="col-6">
             <h3>Test Order Details</h3>
           </div>
           <div className="col-6">
@@ -82,18 +89,10 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
               <label>Reason for Examination</label>
             </div>
             <div className="col-6">
-              <input type="radio" onChange={this.reason_clicked.bind(this, 0)} checked={this.state.encounter.exam_reason == 'diag'} name="exam_reason" id="exam_reason_diag" value="diag"/>
+              <input type="radio" onChange={this.reasonClicked.bind(this, 0)} checked={this.state.encounter.exam_reason == 'diag'} name="exam_reason" id="exam_reason_diag" value="diag"/>
               <label htmlFor="exam_reason_diag">Diagnosis</label>
-              <input type="radio" onChange={this.reason_clicked.bind(this, 1)} checked={this.state.encounter.exam_reason == 'follow'} name="exam_reason" id="exam_reason_follow" value="follow"/>
+              <input type="radio" onChange={this.reasonClicked.bind(this, 1)} checked={this.state.encounter.exam_reason == 'follow'} name="exam_reason" id="exam_reason_follow" value="follow"/>
               <label htmlFor="exam_reason_follow">Follow-Up</label>
-            </div>
-          </div>
-          <div className="row if_reason_diag">
-            <div className="col-6">
-              <label>Comment</label>
-            </div>
-            <div className="col-6">
-              <textarea name="diag_comment" id="diag_comment" onChange={this.diag_comment_change}></textarea>
             </div>
           </div>
 
@@ -103,7 +102,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
             </div>
             <div className="col-6">
               <label>
-                <select className="input-large" id="testing_for" name="testing_for" onChange={this.testing_for_change} datavalue={this.state.encounter.testing_for}>
+                <select className="input-large" id="testing_for" name="testing_for" onChange={this.testingForChange} datavalue={this.state.encounter.testing_for}>
                   <option value="">Please Select...</option>
                   <option value="TB">TB</option>
                   <option value="HIV">HIV</option>
@@ -156,14 +155,8 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
             </div>
           </div>
 
-          <div className="row if_reason_follow">
-            <div className="col-6">
-              <label>Weeks in Treatment</label>
-            </div>
-            <div className="col-6">
-              <input type="number" min="0" max="52" onChange={this.treatmentdate_change} id="treatment_weeks" name="treatment_weeks"/>
-            </div>
-          </div>
+          { this.state.encounter.exam_reason === 'follow' ? <ReasonFollow treatmentDateChange={this.treatmentDateChange} /> : null }
+
 
           <div className="row">
             <div className="col-6">
@@ -195,9 +188,11 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
               <label>Test Due Date</label>
             </div>
             <div className="col-6">
-              <input type="date" id="testdue_date" min={today} onChange={this.testduedate_change} value={this.state.encounter.testdue_date}/>
+              <input type="date" id="testdue_date" min={today} onChange={this.testDueDateChange} value={this.state.encounter.testdue_date}/>
             </div>
           </div>
+
+          { this.state.encounter.exam_reason === 'diag' ? <ReasonDiag diagCommentChange={this.diagCommentChange} /> : null }
 
           <div className="row labelfooter">
             <div className="col-12">
@@ -280,7 +275,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     }));
   },
 
-  diag_comment_change: function() {
+  diagCommentChange: function() {
     var comment = $('#diag_comment').val();
     this.setState(React.addons.update(this.state, {
       encounter: {
@@ -291,7 +286,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     }));
   },
 
-  treatmentdate_change: function() {
+  treatmentDateChange: function() {
     var treatmentdate = $('#treatment_weeks').val();
     this.setState(React.addons.update(this.state, {
       encounter: {
@@ -302,7 +297,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     }));
   },
 
-  testduedate_change: function() {
+  testDueDateChange: function() {
     var testduedate = $('#testdue_date').val();
     this.setState(React.addons.update(this.state, {
       encounter: {
@@ -314,7 +309,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     this.state.encounter.testdue_date = testduedate;
   },
 
-  testing_for_change: function() {
+  testingForChange: function() {
     var xx = $('#testing_for').val();
     this.setState(React.addons.update(this.state, {
       encounter: {
@@ -370,71 +365,44 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
         }
       }
     }));
-  },
-
-  reason_clicked: function(clk) {
-    var ths = this;
-    var foo = '';
-    if (clk == 0) { // Diagnosis
-      ths.setState({'reasonFollow': false});
-      ths.setState({'reasonDiag': true});
-      $('.if_reason_follow').hide();
-      $('.if_reason_diag').show();
-      foo = 'diag';
-    }
-    if (clk == 1) { // Follow Up
-      ths.setState({'reasonDiag': false});
-      ths.setState({'reasonFollow': true});
-      $('.if_reason_diag').hide();
-      $('.if_reason_follow').show();
-      foo = 'follow';
-    }
-    ths.setState(React.addons.update(this.state, {
-      encounter: {
-        exam_reason: {
-          $set: foo
-        }
-      }
-    }));
-  },
-
-  onPatientChanged: function(patient) {
-    this.setState(React.addons.update(this.state, {
-      encounter: {
-        patient: {
-          $set: patient
-        }
-      }
-    }));
   }
+
 }, BaseEncounterForm));
 
-var ReasonDiag = React.createClass(_.merge({
+var ReasonDiag = React.createClass({
+  updateComment: function (e) {
+    this.props.diagCommentChange();
+  },
+
   render: function() {
     return (
-      <div className="row if_reason_diag">
-        <div className="col pe-2">
+      <div className="row">
+        <div className="col-6">
           <label>Comment</label>
         </div>
-        <div className="col">
-          <textarea name="diag_comment" onChange={onChange}></textarea>
+        <div className="col-6">
+          <textarea name="diag_comment" id="diag_comment" rows="5" cols="60" onChange={this.updateComment}></textarea>
         </div>
       </div>
     );
   }
-}, FreshTestsEncounterForm));
+});
 
-var ReasonFollow = React.createClass(_.merge({
+var ReasonFollow = React.createClass({
+  updateWeeks: function (e) {
+    this.props.treatmentDateChange();
+  },
+
   render: function() {
     return (
       <div className="row if_reason_follow">
-        <div className="col pe-2">
+        <div className="col-6">
           <label>Weeks in Treatment</label>
         </div>
-        <div className="col">
-          <p><input type="date" className="datepicker_single" name="treatment_weeks" onChange={onChange}/></p>
+        <div className="col-6">
+          <input type="number" min="0" max="52" onChange={this.updateWeeks} id="treatment_weeks" name="treatment_weeks"/>
         </div>
       </div>
     );
   }
-}, FreshTestsEncounterForm));
+});

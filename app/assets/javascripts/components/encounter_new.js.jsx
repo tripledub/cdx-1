@@ -4,7 +4,7 @@ var EncounterNew = React.createClass({
       institution: this.props.context.institution,
       site: null,
       performing_site: null,
-      patient: this.props.patient,
+      patient_id: this.props.patient_id,
       samples: [],
       new_samples: [],
       test_results: [],
@@ -26,7 +26,7 @@ var EncounterNew = React.createClass({
       encounter: {
         site: { $set: site },
         performing_site: { $set: site },
-        patient: { $set: this.props.patient },
+        patient_id: { $set: this.props.patient_id },
         samples: { $set: [] },
         new_samples: { $set: [] },
         test_results: { $set: [] },

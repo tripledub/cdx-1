@@ -8,12 +8,8 @@ class EncountersController < ApplicationController
   def new
     determine_referal
 
-    if params[:patient_id].present?
-      @institution = @navigation_context.institution
-      @patient_json = Jbuilder.new do |json|
-        scoped_patients.find(params[:patient_id]).as_json_card(json)
-      end.attributes!
-    end
+    @institution = @navigation_context.institution
+    @patient     = scoped_patients.find(params[:patient_id])
 
     @possible_assay_results = TestResult.possible_results_for_assay
     return unless authorize_resource(Site, CREATE_SITE_ENCOUNTER).empty?
@@ -149,7 +145,7 @@ class EncountersController < ApplicationController
   private
 
   def store_create_encounter_audit_log
-    Audit::EncounterAuditor.new(@encounter, current_user.id).log_changes("New Test Order Created", "Test Order created #{@encounter.uuid}", @encounter) 
+    Audit::EncounterAuditor.new(@encounter, current_user.id).log_changes("New Test Order Created", "Test Order created #{@encounter.uuid}", @encounter)
     @encounter.requested_tests.each do |test|
       Audit::EncounterTestAuditor.new(@encounter, current_user.id).log_changes("New #{test.name} Test Created", "Test #{test.name} created for test order #{@encounter.uuid}", @encounter, test)
     end
@@ -166,7 +162,7 @@ class EncountersController < ApplicationController
       referer_check = referer =~ /\/patients\/\d/
        if  (referer_check != nil) || (params['test_order_page_mode'] == 'cancel')
         @show_edit_encounter=false
-        @show_cancel_encounter=true if (@encounter != nil) && (Encounter.statuses[@encounter.status] != Encounter.statuses["inprogress"])
+        @show_cancel_encounter=true if @encounter && (Encounter.statuses[@encounter.status] != Encounter.statuses["inprogress"])
         if @encounter && @encounter.patient
            @return_path_encounter=patient_path(@encounter.patient)
         else
@@ -253,11 +249,9 @@ class EncountersController < ApplicationController
 
     @encounter_blender = @blender.load(@encounter)
 
-    encounter_param['patient'].tap do |patient_param|
-      if patient_param.present? && patient_param['id'].present?
-        set_patient_by_id patient_param['id']
-      end
-    end
+
+
+    set_patient_by_id encounter_param['patient_id']
 
     encounter_param['samples'].each do |sample_param|
       add_sample_by_uuids sample_param['uuids']
