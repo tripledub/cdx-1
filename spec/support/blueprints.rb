@@ -51,6 +51,18 @@ AlertRecipient.blueprint do
   last_name {'smith'}
 end
 
+AlertHistory.blueprint do
+  user
+  alert
+  test_result
+end
+
+RecipientNotificationHistory.blueprint do
+  user
+  alert
+  message_sent Faker::Lorem.sentence
+end
+
 Comment.blueprint do
   patient       { Patient.make }
   commented_on  { Faker::Date.between(60.days.ago, Date.today) }
@@ -274,7 +286,7 @@ end
 Policy.blueprint do
   name
   granter { Institution.make.user }
-  definition { policy_definition(object.granter.institutions.first, CREATE_INSTITUTION, true) }
+  definition { policy_definition(object.granter.institutions.first, Policy::Actions::CREATE_INSTITUTION, true) }
   user
 end
 

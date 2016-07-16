@@ -1,13 +1,11 @@
 var DeviceResultRow = React.createClass({
   render: function() {
-    var device = this.props.device;
-
     return (
-    <tr data-href={device.viewLink}>
-      <td>{device.name}</td>
-      <td>{device.institutionName}</td>
-      <td>{device.modelName}</td>
-      <td>{device.siteName}</td>
+    <tr data-href={this.props.device.viewLink}>
+      <td>{this.props.device.name}</td>
+      <td>{this.props.device.institutionName}</td>
+      <td>{this.props.device.modelName}</td>
+      <td>{this.props.device.siteName}</td>
     </tr>);
   }
 });
@@ -15,13 +13,8 @@ var DeviceResultRow = React.createClass({
 var DevicesIndexTable = React.createClass({
   getDefaultProps: function() {
     return {
-      title: "Devices",
-      titleClassName: "",
-      downloadCsvPath: null,
-      allowSorting: false,
-      orderBy: "",
-      showSites: true,
-      showDevices: true
+      allowSorting: true,
+      orderBy: "devices.name",
     }
   },
 

@@ -105,8 +105,13 @@
         = @other_tests.map { |t| link_to t.core_fields[TestResult::NAME_FIELD], test_result_path(t.uuid) }.to_sentence.html_safe
         = I18n.t('test_results.show.were_also_made')
 - if @device_messages
-  .row.paginationHeader
-    .col
-      = react_component "DeviceMessagesList", deviceMessages: @device_messages, title: I18n.t('test_orders.index.test_order', count: @total), orderBy: @order_by
-      .pagination
-        = render 'shared/pagination'
+  %section.row
+    .small-12.columns.box
+      %header
+        = image_tag('img/device.png')
+        %h3
+          = I18n.t('test_orders.index.test_order', count: @total)
+      .box-content
+        = react_component "DeviceMessagesList", deviceMessages: @device_messages, orderBy: @order_by
+        .pagination
+          = render 'shared/pagination'
