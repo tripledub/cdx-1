@@ -17,12 +17,14 @@ var EncounterShow = React.createClass({
       disable_all_selects: disable_all_selects
     };
   },
+
   submit_error: function(errorArray) {
     this.setState({
       error_messages: errorArray
     });
     $('body').scrollTop(0);
   },
+
   EncounterDeleteHandler: function() {
     if (this.props.referer != null) {
       successUrl = this.props.referer;
@@ -33,34 +35,37 @@ var EncounterShow = React.createClass({
     var  urlParam = this.props.encounter.id
     EncounterActions.deleteEncounter(urlParam, successUrl, this.submit_error);
   },
- EncounterUpdateHandler: function() {
-   if (this.props.referer != null) {
-     successUrl = this.props.referer;
-   } else {
-     successUrl = '/test_orders';
-   }
 
-  if (this.props.requested_tests.length>0) {
-    var urlParam = '/requested_tests';
-    urlParam = urlParam + '/' + this.props.encounter.id;
+  EncounterUpdateHandler: function() {
+    if (this.props.referer != null) {
+     successUrl = this.props.referer;
+    } else {
+     successUrl = '/test_orders';
+    }
+
+    if (this.props.requested_tests.length>0) {
+      var urlParam = '/requested_tests';
+      urlParam = urlParam + '/' + this.props.encounter.id;
       requested_tests = this.props.requested_tests;
       EncounterRequestTestActions.update(urlParam, requested_tests, successUrl, this.submit_error);
     } else {
       window.location.href = successUrl;
     }
   },
+
   onTestChanged: function(new_test) {
     var len = this.state.requested_tests.length;
-    for (var i=0;i<len; i++) {
+    for (var i=0; i<len; i++) {
       if (this.state.requested_tests[i].id == new_test.id) {
-        temp_requested_tests = this.state.requested_tests;
+        temp_requested_tests    = this.state.requested_tests;
         temp_requested_tests[i] = new_test;
         this.setState({
           requested_tests: temp_requested_tests
         });
       }
-     }
+    }
   },
+
   render: function() {
     if (this.props.can_update && this.props.show_cancel) {
       actionButton = <EncounterDelete show_edit={true} onChangeParentLevel={this.EncounterDeleteHandler} encounter={this.props.encounter} />;

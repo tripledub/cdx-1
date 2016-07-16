@@ -20,6 +20,7 @@ var EncounterNew = React.createClass({
       allows_manual_entry: null
     }};
   },
+
   setSite: function(site) {
     this.setState(React.addons.update(this.state, {
       encounter: {
@@ -41,6 +42,7 @@ var EncounterNew = React.createClass({
       }
     }));
   },
+
   setPerformingSite: function(site) {
     this.setState(React.addons.update(this.state, {
       encounter: {
@@ -48,18 +50,23 @@ var EncounterNew = React.createClass({
       }
     }));
   },
+
   allow_manual_entry_callback: function(manual_entry) {
     this.setState({
       allows_manual_entry: manual_entry
     });
   },
+
   render: function() {
     var sitesUrl = URI("/encounters/sites").query({context: this.props.context.institution.uuid});
     var siteSelect = <SiteSelect onChange={this.setSite} url={sitesUrl} fieldLabel='Requested' defaultSiteUuid={_.get(this.props.context.site, 'uuid')} allow_manual_entry_callback={this.allow_manual_entry_callback} />;
     var performingSiteSelect = <SiteSelect onChange={this.setPerformingSite} url={sitesUrl} fieldLabel='Performing' defaultSiteUuid={_.get(this.props.context.performingsite, 'uuid')} />;
 
-    if (this.state.encounter.site == null)
-      return (<div className="testflow">{siteSelect}</div>);
+    if (this.state.encounter.site == null) {
+      return (
+        <div className="testflow">{siteSelect}</div>
+      );
+    };
 
     return (
       <div className="testflow">
