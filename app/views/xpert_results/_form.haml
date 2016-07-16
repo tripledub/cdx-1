@@ -13,6 +13,12 @@
     .col
       = f.collection_radio_buttons(:tuberculosis, XpertResult.tuberculosis_options, :first, :last)
 
+  .row.tb-trace{:style => ('display: none;' if @xpert_result.tuberculosis != 'detected')}
+    .col.pe-2
+      = f.label :trace
+    .col
+      = f.collection_radio_buttons(:trace, XpertResult.trace_options, :first, :last)
+
   .row
     .col.pe-2
       = f.label :rifampicin
@@ -35,3 +41,16 @@
     .col
       = f.submit I18n.t('views.save'), class: 'btn-primary'
       = link_to I18n.t('views.cancel'), encounter_path(@requested_test.encounter), class: 'btn-link'
+
+:javascript
+  $(function(){
+    $('input[type=radio][name="xpert_result[tuberculosis]"]').change(
+      function () {
+        if (this.value === 'detected') {
+          $('.tb-trace').show();
+        } else {
+          $('.tb-trace').hide();
+        }
+      }
+    );
+  })

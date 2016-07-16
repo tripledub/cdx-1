@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712141015) do
+ActiveRecord::Schema.define(version: 20160715133242) do
 
   create_table "alert_condition_results", force: :cascade do |t|
     t.string  "result",   limit: 255
@@ -480,6 +480,7 @@ ActiveRecord::Schema.define(version: 20160712141015) do
     t.boolean  "results_3plus",                      default: false
     t.boolean  "results_ntm",                        default: false
     t.boolean  "results_contaminated",               default: false
+    t.string   "trace",                limit: 255
   end
 
   add_index "patient_results", ["deleted_at"], name: "index_patient_results_on_deleted_at", using: :btree
