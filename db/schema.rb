@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160715133242) do
+ActiveRecord::Schema.define(version: 20160717142201) do
 
   create_table "alert_condition_results", force: :cascade do |t|
     t.string  "result",   limit: 255
@@ -299,6 +299,7 @@ ActiveRecord::Schema.define(version: 20160715133242) do
     t.integer  "performing_site_id", limit: 4
     t.integer  "status",             limit: 4,     default: 0
     t.string   "testing_for",        limit: 255,   default: ""
+    t.string   "culture_format",     limit: 255
   end
 
   add_index "encounters", ["deleted_at"], name: "index_encounters_on_deleted_at", using: :btree
@@ -480,6 +481,7 @@ ActiveRecord::Schema.define(version: 20160715133242) do
     t.boolean  "results_3plus",                      default: false
     t.boolean  "results_ntm",                        default: false
     t.boolean  "results_contaminated",               default: false
+    t.string   "culture_format",       limit: 255
     t.string   "trace",                limit: 255
   end
 

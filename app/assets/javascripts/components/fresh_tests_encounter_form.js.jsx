@@ -157,6 +157,8 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
 
           { this.state.encounter.exam_reason === 'follow' ? <ReasonFollow treatmentDateChange={this.treatmentDateChange} /> : null }
 
+          { this.state.encounter.tests_requested.indexOf('culture') > -1 ? <CultureFormat cultureFormatChange={this.cultureFormatChange} /> : null }
+
 
           <div className="row">
             <div className="col-6">
@@ -222,8 +224,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
   },
 
   getInitialState: function() {
-    $('.if_reason_diag').hide();
-    $('.if_reason_follow').hide();
     $('#sample_other').hide();
   },
 
@@ -262,7 +262,8 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
   },
 
   reqtests_change: function() {
-    reqtests = '';
+    var reqtests = '';
+
     $('.req_tests_checks input:checked').each(function(dd) {
       reqtests += $(this).attr('name') + '|';
     });
@@ -274,6 +275,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
       }
     }));
   },
+
 
   diagCommentChange: function() {
     var comment = $('#diag_comment').val();
@@ -292,6 +294,17 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
       encounter: {
         treatment_weeks: {
           $set: treatmentdate
+        }
+      }
+    }));
+  },
+
+  cultureFormatChange: function() {
+    var cultureFormat = $('#cultureFormat').val();
+    this.setState(React.addons.update(this.state, {
+      encounter: {
+        culture_format: {
+          $set: cultureFormat
         }
       }
     }));
@@ -395,12 +408,35 @@ var ReasonFollow = React.createClass({
 
   render: function() {
     return (
-      <div className="row if_reason_follow">
+      <div className="row">
         <div className="col-6">
-          <label>Weeks in Treatment</label>
+          <label>Weeks in treatment</label>
         </div>
         <div className="col-6">
           <input type="number" min="0" max="52" onChange={this.updateWeeks} id="treatment_weeks" name="treatment_weeks"/>
+        </div>
+      </div>
+    );
+  }
+});
+
+var CultureFormat = React.createClass({
+  cultureFormatChange: function (e) {
+    this.props.cultureFormatChange();
+  },
+
+  render: function() {
+    return (
+      <div className="row">
+        <div className="col-6">
+          <label>Culture format</label>
+        </div>
+        <div className="col-6">
+          <select className="input-large" id="cultureFormat" name="culture_format" onChange={this.cultureFormatChange}>
+            <option value="">Please Select...</option>
+            <option value="liquid">Liquid culture</option>
+            <option value="solid">Solid culture</option>
+          </select>
         </div>
       </div>
     );

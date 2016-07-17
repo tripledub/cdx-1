@@ -222,32 +222,31 @@ class EncountersController < ApplicationController
   end
 
   def prepare_encounter_from_json
-    encounter_param = @encounter_param = JSON.parse(params[:encounter])
-    @encounter = encounter_param['id'] ? Encounter.find(encounter_param['id']) : Encounter.new
+    encounter_param        = @encounter_param = JSON.parse(params[:encounter])
+    @encounter             = encounter_param['id'] ? Encounter.find(encounter_param['id']) : Encounter.new
     @encounter.new_samples = []
-    @encounter.is_phantom = false
+    @encounter.is_phantom  = false
 
     if @encounter.new_record?
-      @institution = institution_by_uuid(encounter_param['institution']['uuid'])
-      @encounter.institution = @institution
-      @encounter.site = site_by_uuid(@institution, encounter_param['site']['uuid'])
-      @encounter.performing_site = site_by_uuid(@institution, encounter_param['performing_site']['uuid']) if encounter_param['performing_site'] !=nil
-      @encounter.exam_reason = encounter_param['exam_reason']
-      @encounter.tests_requested = encounter_param['tests_requested']
-      @encounter.coll_sample_type = encounter_param['coll_sample_type']
+      @institution                 = institution_by_uuid(encounter_param['institution']['uuid'])
+      @encounter.institution       = @institution
+      @encounter.site              = site_by_uuid(@institution, encounter_param['site']['uuid'])
+      @encounter.performing_site   = site_by_uuid(@institution, encounter_param['performing_site']['uuid']) if encounter_param['performing_site'] !=nil
+      @encounter.exam_reason       = encounter_param['exam_reason']
+      @encounter.tests_requested   = encounter_param['tests_requested']
+      @encounter.coll_sample_type  = encounter_param['coll_sample_type']
       @encounter.coll_sample_other = encounter_param['coll_sample_other']
-      @encounter.diag_comment = encounter_param['diag_comment']
-      @encounter.treatment_weeks = encounter_param['treatment_weeks']
-      @encounter.testdue_date = encounter_param['testdue_date']
-      @encounter.testing_for = encounter_param['testing_for']
+      @encounter.culture_format    = encounter_param['culture_format']
+      @encounter.diag_comment      = encounter_param['diag_comment']
+      @encounter.treatment_weeks   = encounter_param['treatment_weeks']
+      @encounter.testdue_date      = encounter_param['testdue_date']
+      @encounter.testing_for       = encounter_param['testing_for']
     else
-      @institution = @encounter.institution
+      @institution                 = @encounter.institution
     end
+
     @blender = Blender.new(@institution)
-
     @encounter_blender = @blender.load(@encounter)
-
-
 
     set_patient_by_id get_patient_id_from_params(encounter_param)
 
@@ -379,6 +378,7 @@ class EncountersController < ApplicationController
       json.(@encounter, :status)
       json.(@encounter, :testdue_date)
       json.(@encounter, :testing_for)
+      json.culture_format Extras::Select.find(Encounter.culture_format_options, @encounter.culture_format)
       json.has_dirty_diagnostic @encounter.has_dirty_diagnostic?
       json.assays (@encounter_blender.core_fields[Encounter::ASSAYS_FIELD] || [])
       json.observations @encounter_blender.plain_sensitive_data[Encounter::OBSERVATIONS_FIELD]
@@ -390,11 +390,11 @@ class EncountersController < ApplicationController
         as_json_site(json, @encounter.site)
       end
 
-     if @encounter.performing_site != nil
-      json.performing_site do
-        as_json_site(json, @encounter.performing_site)
+      if @encounter.performing_site
+        json.performing_site do
+          as_json_site(json, @encounter.performing_site)
+        end
       end
-    end
 
       json.patient do
         if @encounter_blender.patient.blank?
@@ -416,13 +416,13 @@ class EncountersController < ApplicationController
     end
   end
 
-  def as_json_samples_search(samples)
-    Jbuilder.new do |json|
-      json.array! samples do |sample|
-        as_json_sample(json, sample)
-      end
-    end
-  end
+   def as_json_samples_search(samples)
+     Jbuilder.new do |json|
+       json.array! samples do |sample|
+         as_json_sample(json, sample)
+       end
+     end
+   end
 
   def as_json_site_list(sites)
     Jbuilder.new do |json|

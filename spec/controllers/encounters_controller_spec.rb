@@ -152,6 +152,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [{ uuids: sample.uuids }],
         new_samples: [{entity_id: 'eid:1001'}, {entity_id: 'eid:1002'}],
         test_results: [],
+        culture_format: 'liquid',
         assays: [{condition: 'mtb', result: 'positive', quantitative_result: "3"}],
         observations: 'Lorem ipsum',
         patient_id: patient.id
@@ -187,6 +188,10 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
     it "assigns returns a json with encounter id" do
       expect(created_encounter).to_not be_nil
+    end
+
+    it "assigns culture format" do
+      expect(created_encounter.culture_format).to eq('liquid')
     end
 
     it "creates an encounter as non phantom" do
