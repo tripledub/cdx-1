@@ -26,7 +26,7 @@ class TestOrdersController < TestsController
         filename                       = "test-orders-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
         headers["Content-Type"]        = "text/csv"
         headers["Content-disposition"] = "attachment; filename=#{filename}"
-        self.response_body = execute_csv_test_order_query(filename)
+        self.response_body             = execute_csv_test_order_query(filename)
       end
     end
   end
@@ -38,7 +38,7 @@ class TestOrdersController < TestsController
     build_table_data(result["encounters"])
   end
 
-  def execute_csv_test_order_query(filename)
+  def execute_csv_test_order_query(filename, csv=false)
     query = Encounter.query(@query, current_user)
     EntityCsvBuilder.new("encounter", query, filename)
   end
@@ -53,6 +53,7 @@ class TestOrdersController < TestsController
   def create_filter_for_test_order
     filter = {}
     filter["institution.uuid"] = @navigation_context.institution.uuid if @navigation_context.institution
+
     if @navigation_context.exclude_subsites && @navigation_context.site
       filter["site.uuid"] = @navigation_context.site.uuid
     elsif !@navigation_context.exclude_subsites && @navigation_context.site
@@ -61,6 +62,8 @@ class TestOrdersController < TestsController
     elsif @navigation_context.exclude_subsites
       filter["site.uuid"] = "null"
     end
+
+    filter["encounter.uuid"]                = params['selectedItems'] if params['selectedItems'].present?
     filter["encounter.uuid"]                = params["encounter.id"] if params["encounter.id"].present?
     filter["encounter.diagnosis.condition"] = params["test.assays.condition"] if params["test.assays.condition"].present?
     filter["encounter.diagnosis.result"]    = params["test.assays.result"] if params["test.assays.result"].present?

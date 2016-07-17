@@ -15,10 +15,26 @@ describe TestOrdersController, elasticsearch: true do
     end
 
     describe 'index' do
-      it 'should display the right template' do
-        get :index
+      context 'format html' do
+        it 'should display the right template' do
+          get :index
 
-        expect(response).to render_template('index')
+          expect(response).to render_template('index')
+        end
+      end
+
+      context 'format csv' do
+        before :each do
+          get :index, format: :csv
+        end
+
+        it 'should be a csv response' do
+          expect(response.header["Content-Type"]).to eq('text/csv')
+        end
+
+        it 'should return data as csv' do
+          expect(response.header["Content-Type"]).to eq('text/csv')
+        end
       end
     end
   end
