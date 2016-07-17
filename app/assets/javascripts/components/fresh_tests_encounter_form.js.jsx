@@ -68,19 +68,17 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
         <div className="panel">
           <div className="row">
             <div className="col-6">
-              <label>Samples</label>
+              <label>Testing For</label>
             </div>
             <div className="col-6">
-              <SamplesList samples={this.state.encounter.samples}  />
-              <NewSamplesList samples={this.state.encounter.new_samples} onRemoveSample={this.removeNewSample}/>
-              <p className={show_auto_sample}>
-                <a className="btn-add-link" href='#' onClick={this.addNewSamples}>
-                  <span className="icon-circle-plus icon-blue"></span>
-                  Add sample
-                </a>
-              </p>
-              <p className={show_manual_sample}><input type="text" size="54" placeholder="Sample ID" ref="manualSampleEntry" />&nbsp;
-              <button type="button" className="btn-primary" onClick={this.validateAndSetManualEntry}>Add</button></p>
+              <label>
+                <select className="input-large" id="testing_for" name="testing_for" onChange={this.testingForChange} datavalue={this.state.encounter.testing_for}>
+                  <option value="">Please Select...</option>
+                  <option value="TB">TB</option>
+                  <option value="HIV">HIV</option>
+                  <option value="Ebola">Ebola</option>
+                </select>
+              </label>
             </div>
           </div>
 
@@ -98,17 +96,19 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
 
           <div className="row">
             <div className="col-6">
-              <label>Testing For</label>
+              <label>Samples</label>
             </div>
             <div className="col-6">
-              <label>
-                <select className="input-large" id="testing_for" name="testing_for" onChange={this.testingForChange} datavalue={this.state.encounter.testing_for}>
-                  <option value="">Please Select...</option>
-                  <option value="TB">TB</option>
-                  <option value="HIV">HIV</option>
-                  <option value="Ebola">Ebola</option>
-                </select>
-              </label>
+              <SamplesList samples={this.state.encounter.samples}  />
+              <NewSamplesList samples={this.state.encounter.new_samples} onRemoveSample={this.removeNewSample}/>
+              <p className={show_auto_sample}>
+                <a className="btn-add-link" href='#' onClick={this.addNewSamples}>
+                  <span className="icon-circle-plus icon-blue"></span>
+                  Add sample
+                </a>
+              </p>
+              <p className={show_manual_sample}><input type="text" size="54" placeholder="Sample ID" ref="manualSampleEntry" />&nbsp;
+              <button type="button" className="btn-primary" onClick={this.validateAndSetManualEntry}>Add</button></p>
             </div>
           </div>
 
