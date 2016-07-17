@@ -17,12 +17,14 @@ var EncounterShow = React.createClass({
       disable_all_selects: disable_all_selects
     };
   },
+
   submit_error: function(errorArray) {
     this.setState({
       error_messages: errorArray
     });
     $('body').scrollTop(0);
   },
+
   EncounterDeleteHandler: function() {
     if (this.props.referer != null) {
       successUrl = this.props.referer;
@@ -33,34 +35,37 @@ var EncounterShow = React.createClass({
     var  urlParam = this.props.encounter.id
     EncounterActions.deleteEncounter(urlParam, successUrl, this.submit_error);
   },
- EncounterUpdateHandler: function() {
-   if (this.props.referer != null) {
-     successUrl = this.props.referer;
-   } else {
-     successUrl = '/test_orders';
-   }
 
-  if (this.props.requested_tests.length>0) {
-    var urlParam = '/requested_tests';
-    urlParam = urlParam + '/' + this.props.encounter.id;
+  EncounterUpdateHandler: function() {
+    if (this.props.referer != null) {
+     successUrl = this.props.referer;
+    } else {
+     successUrl = '/test_orders';
+    }
+
+    if (this.props.requested_tests.length>0) {
+      var urlParam = '/requested_tests';
+      urlParam = urlParam + '/' + this.props.encounter.id;
       requested_tests = this.props.requested_tests;
       EncounterRequestTestActions.update(urlParam, requested_tests, successUrl, this.submit_error);
     } else {
       window.location.href = successUrl;
     }
   },
+
   onTestChanged: function(new_test) {
     var len = this.state.requested_tests.length;
-    for (var i=0;i<len; i++) {
+    for (var i=0; i<len; i++) {
       if (this.state.requested_tests[i].id == new_test.id) {
-        temp_requested_tests = this.state.requested_tests;
+        temp_requested_tests    = this.state.requested_tests;
         temp_requested_tests[i] = new_test;
         this.setState({
           requested_tests: temp_requested_tests
         });
       }
-     }
+    }
   },
+
   render: function() {
     if (this.props.can_update && this.props.show_cancel) {
       actionButton = <EncounterDelete show_edit={true} onChangeParentLevel={this.EncounterDeleteHandler} encounter={this.props.encounter} />;
@@ -83,104 +88,20 @@ var EncounterShow = React.createClass({
          </div>
         </div>
 
-        <div className="row">
-          <div className="col pe-2">
-          <label>Requested Site:</label>
-          </div>
-          <div className="col">
-            <p>{this.props.encounter.site.name}</p>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col pe-2">
-          <label>Performing Site:</label>
-          </div>
-          <div className="col">
-            <p>{performing_site}</p>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col pe-2">
-            <label>Order Id:</label>
-          </div>
-          <div className="col">
-            <p>{this.props.encounter.uuid}</p>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col pe-2">
-            <label>Testing for:</label>
-          </div>
-          <div className="col">
-            <p id="tests_for">{this.props.encounter.testing_for}</p>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col pe-2">
-            <label>Comment:</label>
-          </div>
-          <div className="col">
-            <p>{this.props.encounter.diag_comment}</p>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col pe-2">
-            <label>Weeks In Treatment:</label>
-          </div>
-          <div className="col">
-            <p>{this.props.encounter.treatment_weeks}</p>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col pe-2">
-            <label>Samples ID:</label>
-          </div>
-          <div className="col">
-               <SamplesList samples={this.props.encounter.samples}  />
-          </div>
-        </div>
-
-       <div className="row">
-          <div className="col pe-2">
-            <label>Sample Type:</label>
-          </div>
-          <div className="col">
-            <p>{this.props.encounter.coll_sample_type}</p>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col pe-2">
-            <label>Weeks In Treatment:</label>
-          </div>
-          <div className="col">
-            <p>{this.props.encounter.treatment_weeks}</p>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col pe-2">
-            <label>Test Due Date:</label>
-          </div>
-          <div className="col">
-            <p>{this.props.encounter.testdue_date}</p>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col pe-2">
-            <label>Status:</label>
-          </div>
-          <div className="col">
-            <p>{this.props.encounter.status}</p>
-          </div>
-        </div>
+        <DisplayFieldWithLabel fieldLabel='Requested site:' fieldValue={ this.props.encounter.site.name } />
+        <DisplayFieldWithLabel fieldLabel='Performing site:' fieldValue={ performing_site } />
+        <DisplayFieldWithLabel fieldLabel='Order Id:' fieldValue={ this.props.encounter.uuid } />
+        <DisplayFieldWithLabel fieldLabel='Testing for:' fieldValue={ this.props.encounter.testing_for } />
+        {
+          this.props.encounter.testing_for === 'TB' ?
+          <DisplayFieldWithLabel fieldLabel='Culture format:' fieldValue={ this.props.encounter.culture_format } /> : null
+        }
+        <DisplayFieldWithLabel fieldLabel='Comment:' fieldValue={ this.props.encounter.diag_comment } />
+        <DisplayFieldWithLabel fieldLabel='Weeks in treatment:' fieldValue={ this.props.encounter.treatment_weeks } />
+        <DisplayFieldWithLabel fieldLabel='Samples Id:' fieldValue={ <SamplesList samples={this.props.encounter.samples}  /> } />
+        <DisplayFieldWithLabel fieldLabel='Sample type:' fieldValue={ this.props.encounter.coll_sample_type } />
+        <DisplayFieldWithLabel fieldLabel='Test due date:' fieldValue={ this.props.encounter.testdue_date } />
+        <DisplayFieldWithLabel fieldLabel='Status:' fieldValue={ this.props.encounter.status } />
 
         <FlexFullRow>
           <PatientCard patient={this.props.encounter.patient} />
@@ -190,7 +111,6 @@ var EncounterShow = React.createClass({
           <RequestedTestsIndexTable encounter={this.props.encounter} requested_tests={this.state.requested_tests} requested_by={this.props.requested_by}
            status_types={this.props.status_types} edit={this.props.show_edit} onTestChanged={this.onTestChanged} associated_tests_to_results={this.props.associated_tests_to_results}/>
         </div>
-
         <br />
         <div className="row">
           <div className="col pe-2">

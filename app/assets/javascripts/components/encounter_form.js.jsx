@@ -11,16 +11,17 @@ var BaseEncounterForm = {
 
   save: function() {
     var callback = function() {
-	    if (this.props.referer != null) {
+      if (this.props.referer != null) {
         window.location.href = this.props.referer;
       } else {
-	      window.location.href = '/encounters/' + this.state.encounter.id;
-	    }
+        window.location.href = '/encounters/' + this.state.encounter.id;
+      }
     };
 
     if (this.state.encounter.id) {
       this._ajax('PUT', '/encounters/' + this.state.encounter.id, callback);
     } else {
+      console.log('creating encounter');
       this._ajax('POST', '/encounters', callback);
     }
   },
@@ -208,10 +209,6 @@ var EncounterForm = React.createClass(_.merge({
             </div>
           </div>);
         }.bind(this))()}
-
-        <FlexFullRow>
-          <PatientCard patient={this.state.encounter.patient} />
-        </FlexFullRow>
 
         {diagnosisEditor}
 

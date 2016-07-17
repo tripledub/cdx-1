@@ -6,7 +6,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
   let(:site)           { Site.make institution: institution }
   let(:user)           { institution.user }
   let(:patient)        { Patient.make institution: institution }
-  let(:default_params) { {context: institution.uuid} }
+  let(:default_params) { { context: institution.uuid } }
 
   before(:each) { sign_in user }
 
@@ -15,6 +15,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
     it "should destroy an encounter" do
       delete :destroy, id: encounter.id
+
       expect(Encounter.count).to eq 0
       expect(response).to be_redirect
     end
@@ -23,8 +24,15 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
   describe "GET #new" do
     it "returns http success" do
-      get :new
+      get :new, patient_id: patient.id
+
       expect(response).to have_http_status(:success)
+    end
+
+    it 'should redirect to test orders if there is no patient' do
+      get :new
+
+      expect(response).to redirect_to(test_orders_path)
     end
   end
 
@@ -144,9 +152,10 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [{ uuids: sample.uuids }],
         new_samples: [{entity_id: 'eid:1001'}, {entity_id: 'eid:1002'}],
         test_results: [],
+        culture_format: 'liquid',
         assays: [{condition: 'mtb', result: 'positive', quantitative_result: "3"}],
         observations: 'Lorem ipsum',
-        patient: { id: patient.id }
+        patient_id: patient.id
       }.to_json
 
       sample.reload
@@ -181,6 +190,10 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       expect(created_encounter).to_not be_nil
     end
 
+    it "assigns culture format" do
+      expect(created_encounter.culture_format).to eq('liquid')
+    end
+
     it "creates an encounter as non phantom" do
       expect(created_encounter).to_not be_phantom
     end
@@ -203,11 +216,11 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     it "should leave new samples empty" do
       expect(json_response['encounter']['new_samples']).to eq([])
     end
-    
+
     it 'should log the changes' do
       expect(EncounterAuditLog.count).to eq 1
       expect(EncounterAuditLog.first.title).to eq "New Test Order Created"
-    end                
+    end
   end
 
   describe "PUT #update" do
@@ -238,7 +251,8 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         new_samples: [{entity_id: 'eid:1001'}, {entity_id: 'eid:1002'}],
         test_results: [],
         assays: [{condition: 'mtb', result: 'positive', quantitative_result: "3"}],
-        observations: 'Lorem ipsum'
+        observations: 'Lorem ipsum',
+        patient_id: patient.id
       }.to_json
 
       sample.reload
@@ -382,6 +396,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [],
         new_samples: [],
         test_results: [],
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -402,6 +417,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [{uuids: test1.sample.uuids[0]}],
         new_samples: [],
         test_results: [],
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -428,6 +444,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [{uuids: test1.sample.uuids[0]}],
         new_samples: [],
         test_results: [{uuid: test1.uuid}],
+        patient_id: Patient.last.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -455,6 +472,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [{uuids: sample_with_patient1.uuids}],
         new_samples: [],
         test_results: [],
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -477,6 +495,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [{uuids: sample_with_patient1.uuids}],
         new_samples: [],
         test_results: [],
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -500,6 +519,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [{uuids: sample_with_patient1.uuids}],
         new_samples: [],
         test_results: [],
+        patient_id: sample_with_patient1.patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -527,7 +547,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         site: { uuid: i1.sites.first.uuid },
         samples: [{uuids: sample_a.uuids}, {uuids: sample_b.uuids}],
         new_samples: [],
-        test_results: [],
+        test_results: []
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -554,6 +574,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [{uuids: sample_a.uuids}],
         new_samples: [],
         test_results: [],
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -576,7 +597,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         site: { uuid: site.uuid },
         samples: [],
         new_samples: [],
-        test_results: [],
+        test_results: []
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -599,8 +620,8 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       DeviceMessage.create_and_process device: device2, plain_text_data: Oj.dump(test:{assays:[condition: "flu_a"], id: 'dad'})
 
       grant device1.institution.user, user, i1, READ_INSTITUTION
-      grant device1.institution.user, user, {site: device1.institution}, CREATE_SITE_ENCOUNTER
-      grant device1.institution.user, user, {testResult: device1}, QUERY_TEST
+      grant device1.institution.user, user, { site: device1.institution }, CREATE_SITE_ENCOUNTER
+      grant device1.institution.user, user, { testResult: device1 }, QUERY_TEST
 
       test_result_a, test_result_b, test_result_c = TestResult.all.to_a
 
@@ -609,7 +630,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         site: { uuid: i1.sites.first.uuid },
         samples: [],
         new_samples: [],
-        test_results: [{uuid: test_result_a.uuid}, {uuid: test_result_b.uuid}],
+        test_results: [{ uuid: test_result_a.uuid }, { uuid: test_result_b.uuid }]
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -661,6 +682,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [{uuids: sample1.uuids}],
         new_samples: [],
         test_results: [],
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -680,6 +702,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [{uuids: sample1.uuids}, {uuids: sample2.uuids}],
         new_samples: [],
         test_results: [],
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -705,6 +728,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [{uuids: sample1.uuids}, {uuids: sample2.uuids}],
         new_samples: [],
         test_results: [],
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -731,6 +755,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [{uuids: sample1.uuids}, {uuids: sample2.uuids}],
         new_samples: [],
         test_results: [],
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -757,6 +782,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [{uuids: sample1.uuids}],
         new_samples: [],
         test_results: [],
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -774,6 +800,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [{uuids: sample1.uuids}],
         new_samples: [],
         test_results: [],
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -799,6 +826,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [{uuids: sample_with_patient1.uuids}],
         new_samples: [],
         test_results: [],
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -821,6 +849,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [],
         new_samples: [],
         test_results: [],
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -841,6 +870,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [],
         new_samples: [{'entity_id' => 'eid:1003'}],
         test_results: [],
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -861,6 +891,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [],
         new_samples: [],
         test_results: [],
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -880,6 +911,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [],
         new_samples: [],
         test_results: [],
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)
@@ -903,7 +935,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         samples: [],
         new_samples: [],
         test_results: [],
-        patient: { id: patient.id }
+        patient_id: patient.id
       }.to_json
 
       expect(response).to have_http_status(:success)

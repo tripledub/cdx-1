@@ -27,6 +27,9 @@ var SiteSelect = React.createClass({
       }
 
       this.setState(React.addons.update(this.state, changes), function(){
+        if (this.state.selectedSiteUuid == null) {
+          return
+        };
         this.fireSiteChanged(this.state.selectedSiteUuid);
       }.bind(this));
 
@@ -42,7 +45,7 @@ var SiteSelect = React.createClass({
   },
 
   fireSiteChanged: function(siteUuid) {
-    this.props.onChange(_.find(this.state.sites, {uuid: siteUuid}));
+    this.props.onChange(_.find(this.state.sites, { uuid: siteUuid }));
 
     if (this.props.allow_manual_entry_callback != null) {
       if (this.state.sites != null) {
@@ -66,7 +69,7 @@ var SiteSelect = React.createClass({
             value={this.state.selectedSiteUuid}
             onChange={this.handleSiteChange}
             options={this.state.sites.map(function(site) {
-              return {value: site.uuid, label: site.name};
+              return { value: site.uuid, label: site.name };
             })}>
           </Select>
         </div>

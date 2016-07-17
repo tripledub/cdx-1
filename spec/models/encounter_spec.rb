@@ -167,7 +167,6 @@ describe Encounter do
       encounter.core_fields[Encounter::ASSAYS_FIELD] = [{"name"=>"flu_a", "condition"=>"flu_a", "result"=>"indeterminate", "invalid"=>"invalid"}]
       expect(encounter).to_not be_valid
     end
-
   end
 
   context "update diagnostic" do
