@@ -119,7 +119,7 @@ class EncountersController < ApplicationController
   def new_sample
     perform_encounter_action "creating new sample" do
       prepare_encounter_from_json
-      added_sample = new_sample_for_site
+      added_sample      = new_sample_for_site
       @extended_respone = { sample: added_sample }
     end
   end
@@ -249,7 +249,7 @@ class EncountersController < ApplicationController
 
 
 
-    set_patient_by_id encounter_param['patient_id']
+    set_patient_by_id get_patient_id_from_params(encounter_param)
 
     encounter_param['samples'].each do |sample_param|
       add_sample_by_uuids sample_param['uuids']
@@ -458,5 +458,11 @@ class EncountersController < ApplicationController
     @institution = @navigation_context.institution
 
     redirect_to test_orders_path, notice: I18n.t('encounters.new.no_patient') unless @patient = scoped_patients.where(id: params[:patient_id]).first
+  end
+
+  def get_patient_id_from_params(encounter_param)
+    return unless encounter_param['patient'] || encounter_param['patient_id']
+
+    encounter_param['patient'].present? ? encounter_param['patient']['id'] : encounter_param['patient_id']
   end
 end
