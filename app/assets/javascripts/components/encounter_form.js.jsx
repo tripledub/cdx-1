@@ -21,7 +21,6 @@ var BaseEncounterForm = {
     if (this.state.encounter.id) {
       this._ajax('PUT', '/encounters/' + this.state.encounter.id, callback);
     } else {
-      console.log('creating encounter');
       this._ajax('POST', '/encounters', callback);
     }
   },

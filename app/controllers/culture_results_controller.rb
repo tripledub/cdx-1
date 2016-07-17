@@ -10,6 +10,7 @@ class CultureResultsController < PatientResultsController
     @culture_result.sample_collected_on = Date.today
     @culture_result.result_on           = Date.today
     @culture_result.serial_number       = @requested_test.encounter.samples.map(&:entity_ids).join(', ')
+    @culture_result.media_used          = @requested_test.encounter.culture_format
   end
 
   def create
