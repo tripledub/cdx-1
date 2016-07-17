@@ -1,5 +1,5 @@
 class EncountersController < ApplicationController
-  before_filter :load_encounter, only: %W(show edit)
+  before_filter :load_encounter, only: [:show, :edit]
 
   def new_index
     return unless authorize_resource(Site, CREATE_SITE_ENCOUNTER).empty?
@@ -307,7 +307,8 @@ class EncountersController < ApplicationController
   end
 
   def set_patient_by_id(id)
-    patient = scoped_patients.find(id)
+    return unless id
+    patient         = scoped_patients.find(id)
     patient_blender = @blender.load(patient)
     @blender.merge_parent(@encounter_blender, patient_blender)
     patient_blender
@@ -338,7 +339,7 @@ class EncountersController < ApplicationController
   end
 
   def add_test_result_by_uuid(uuid)
-    test_result = scoped_test_results.find_by!(uuid: uuid)
+    test_result         = scoped_test_results.find_by!(uuid: uuid)
     test_result_blender = @blender.load(test_result)
     @blender.merge_parent(test_result_blender, @encounter_blender)
     test_result_blender
@@ -346,7 +347,7 @@ class EncountersController < ApplicationController
 
   def recalculate_diagnostic
     previous_tests_uuids = @encounter_param['test_results'].map{|t| t['uuid']}
-    assays_to_merge = @blender.test_results\
+    assays_to_merge      = @blender.test_results\
       .reject{|tr| (tr.uuids & previous_tests_uuids).any?}\
       .map{|tr| tr.core_fields[TestResult::ASSAYS_FIELD]}
 
