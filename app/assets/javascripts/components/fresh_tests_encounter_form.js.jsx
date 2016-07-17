@@ -42,10 +42,10 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     var today = now.getFullYear() + "-" + (month) + "-" + (day);
     var show_auto_sample = '';
     var show_manual_sample = '';
+    var cancelUrl = "javascript:history.back();";
 
-    var cancel_url = "/encounters/new_index";
     if (this.props.referer != null) {
-      cancel_url = this.props.referer;
+      cancelUrl = this.props.referer;
     }
 
     if (this.props.allows_manual_entry == true) {
@@ -201,7 +201,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
                   <a href="#" id="encountersave" className="button save" onClick={this.save}>Save</a>
                 </li>
                 <li>
-                  <a href={cancel_url} className="button cancel">Cancel</a>
+                  <a href={cancelUrl} className="button cancel">Cancel</a>
                 </li>
               </ul>
             </div>
