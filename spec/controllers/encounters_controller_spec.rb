@@ -6,7 +6,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
   let(:site)           { Site.make institution: institution }
   let(:user)           { institution.user }
   let(:patient)        { Patient.make institution: institution }
-  let(:default_params) { { context: institution.uuid, patient_id: patient.id } }
+  let(:default_params) { { context: institution.uuid } }
 
   before(:each) { sign_in user }
 
@@ -24,9 +24,15 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
   describe "GET #new" do
     it "returns http success" do
-      get :new
+      get :new, patient_id: patient.id
 
       expect(response).to have_http_status(:success)
+    end
+
+    it 'should redirect to test orders if there is no patient' do
+      get :new
+
+      expect(response).to redirect_to(test_orders_path)
     end
   end
 

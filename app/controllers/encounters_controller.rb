@@ -1,5 +1,6 @@
 class EncountersController < ApplicationController
   before_filter :load_encounter, only: [:show, :edit]
+  before_filter :find_institution_and_patient,   only: [:new]
 
   def new_index
     return unless authorize_resource(Site, CREATE_SITE_ENCOUNTER).empty?
@@ -7,9 +8,6 @@ class EncountersController < ApplicationController
 
   def new
     determine_referal
-
-    @institution = @navigation_context.institution
-    @patient     = scoped_patients.find(params[:patient_id])
 
     @possible_assay_results = TestResult.possible_results_for_assay
     return unless authorize_resource(Site, CREATE_SITE_ENCOUNTER).empty?
@@ -454,5 +452,11 @@ class EncountersController < ApplicationController
 
   def as_json_site(json, site)
     json.(site, :uuid, :name, :allows_manual_entry)
+  end
+
+  def find_institution_and_patient
+    @institution = @navigation_context.institution
+
+    redirect_to test_orders_path, notice: I18n.t('encounters.new.no_patient') unless @patient = scoped_patients.where(id: params[:patient_id]).first
   end
 end
