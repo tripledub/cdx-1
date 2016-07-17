@@ -7,16 +7,16 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
   },
 
   reasonClicked: function(clk) {
-    var foo = '';
+    var reason = '';
 
-    if (clk === 0) { foo = 'diag'; }
+    if (clk === 0) { reason = 'diag'; }
 
-    if (clk === 1) { foo = 'follow'; }
+    if (clk === 1) { reason = 'follow'; }
 
     this.setState(React.addons.update(this.state, {
       encounter: {
         exam_reason: {
-          $set: foo
+          $set: reason
         }
       }
     }));
