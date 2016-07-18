@@ -16,8 +16,7 @@
             = image_tag('img/user.png')
             %h3
               = I18n.t('patients.index.patient', count: @total)
-          .box-content
-            = react_component "PatientsIndexTable", patients: Presenters::Patients.index_table(@patients),
-                orderBy: params["order_by"] || "patients.name"
-            .pagination
-              = render 'shared/pagination'
+          = react_component "PatientsIndexTable", patients: Presenters::Patients.index_table(@patients),
+              orderBy: params["order_by"] || "patients.name"
+          .pagination
+            = render 'shared/pagination'

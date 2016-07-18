@@ -1,8 +1,8 @@
 /*  SECTIONS & FLEX CONTAINER */
 .container .section {
-	clear: both;
-	padding: 0px;
-	margin: 0px;
+  clear: both;
+  padding: 0px;
+  margin: 0px;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -21,7 +21,7 @@
     -webkit-flex: 0 0 300px;
     -ms-flex: 0 0 300px;
     flex: 0 0 24.667%;
-	margin-bottom:15px;
+  margin-bottom:15px;
 }
 .container .col:hover {opacity:0.8;cursor: pointer;}
 /* THATS IT */
@@ -46,7 +46,7 @@
 
 .container .box {background:white;margin:0px 10px 0px 10px;}
 .container .col {margin:18px 10px 18px 10px;}
-#contentcontainer .col {margin:0px;}
+#contentcontainer .col {margin:0px;max-width:100%;}
 
 /* BOXES */
 
@@ -110,6 +110,10 @@ body {
   padding: 10px 15px;
   height:40px;
   border:1px solid #c7c7c7;
+
+  h3 {
+    display:inline-block;
+  }
 }
 
 .container h1 {
@@ -218,7 +222,9 @@ body {
 }
 
 .container label {
-  font-size: 0.8em;
+  font-size: 12px;
+  color:#333;
+  font-weight:bold;
 }
 
 .container input[type=text] {
@@ -419,7 +425,7 @@ min-height:auto;
 }
 
 .section .box:first-child {
-	max-width: 700px;
+  max-width: 700px;
 }
 
 .section .box #chart_total_tests{
@@ -641,12 +647,19 @@ form#new_device {
       display:inline-block;
       padding:0.75em 2em;
       min-width:135px;
-      margin-left:13px;
+      margin:0px;
       font-weight:bold;
       font-size:12px!important;
-      margin-right:0px;
+      height:30px;
+      margin-right:10px;
+      line-height:14px;
       background-color:#0d8aee;
       font-weight:bold;
+    }
+  }
+  .row.labelHeader.patientSummaryHeader {
+    li a.button.add {
+      margin-right:28px;
     }
   }
 
@@ -664,8 +677,10 @@ form#new_device {
     label {
       font-size:12px;
       font-weight:bold;
+      color:#333;
+      min-width:80px;
     }
-    .col-10 {position:relative;}
+    .col-12 {position:relative;}
   }
 }
 /* Edit & New Episode Styles */
@@ -720,14 +735,35 @@ form#new_device {
   }
 }
 
+#contentcontainer .episodeDetail {
+  justify-content:flex-start;
+
+  .row {
+    justify-content:flex-start;
+  }
+
+  .right {
+    justify-content:flex-end;
+
+
+    a.button {margin:0px 10px 0px 0px;}
+  }
+  .edit_episode panel row {
+    padding:0 15px;
+  }
+}
+
 /* Edit & New Test Order Styles */
 .testflow.testOrder {
+  padding:0px;
   .container {
     padding:0px;
 
     .row.labelHeader {
       max-width:none;
       margin:0px auto;
+      padding-left:15px!important;
+      background:#e06023;
 
       h3 {
         padding-left:0px;
@@ -799,6 +835,54 @@ form#new_device {
 .newTestOrder {
   .panel {
     max-width:none;
+    p{margin:0px;}
+    label {
+      color:#333;
+      font-weight:bold;
+    }
+    input[type="radio"] + label, .custom-fields-title > input[type="radio"] + .col {
+      font-weight:300;
+    }
+
+    .Select {overflow:visible;}
+  }
+}
+
+/* Test Result Styles */
+#contentsection .row.testResult {
+  .container {
+    width:100%;
+    padding:10px 15px;
+
+    .panel {
+      border:1px solid #e2e2e2;
+
+      .underline span {
+        border:none;
+      }
+
+      .row:nth-child(odd) {
+        background:#dbdae2;
+      }
+
+      .row {
+        padding:5px 15px;
+        .row {
+          padding:0px;
+          background:none;
+        }
+
+        table {
+          padding:0px;
+        }
+      }
+
+      .card {
+        box-shadow:none;
+        border:none;
+        border-bottom:1px solid #e2e2e2;
+      }
+    }
   }
 }
 
@@ -806,10 +890,22 @@ form#new_device {
   font-size:12px!important;
 }
 
-section.newPatientContainer {
+section.newPatientContainer, section.editPatientContainer, .optionsarea {
   padding:10px 20px 10px 15px;
 } 
-form#new_patient {
+.optionsarea {
+  padding:10px 20px 10px 15px;
+
+  header {border:none;}
+  ul.nav-list {
+    display:flex;
+    justify-content:space-around;
+    border:1px solid #e2e2e2;
+    box-shadow:none;
+    height:auto;
+  }
+}
+form#new_patient, form.edit_patient{
   background:#fff;
   border:1px solid #e2e2e2;
   font-size:0.7rem;
@@ -841,20 +937,23 @@ form#new_patient {
   div.row.button-actions {
     position:absolute;
     top:-15px;
-    right:25px;
+    right:31px;
     background:none!important;
     padding:0px;
 
-      input.btn-primary, a.btn-link {
-        margin:0px;padding:0.5em 2em;line-height:15px;height:30px;color:#fff;
+      input.btn-primary, a.btn-link, a.btn-secondary{
+        margin:0px 0px 0px 10px;padding:0.5em 2em;line-height:15px;height:30px;color:#fff;
       }
       input.btn-primary:hover, a.btn-link:hover {opacity:0.8;}
       input.btn-primary {
         background:#9DCE65;
       }
 
-      a.btn-link {
-        background:#555!important;
+      a.btn-link{
+        background:#e06023;
+      }
+      a.btn-secondary {
+        background:#cc443f
       }
   }
 
@@ -893,6 +992,13 @@ form#new_patient {
   }
 }
 
+form.edit_patient div.row:nth-child(odd){
+  background:#dbdae2;
+}
+form.edit_patient div.row:nth-child(even), form.edit_patient div .row {
+  background:#fff;
+}
+
 /* Test Results Styles */ 
 #contentcontainer #contentsection .filterbar {
   height:40px;
@@ -904,6 +1010,7 @@ form#new_patient {
   background:#e06023;
   position:fixed;
   width:100%;
+  z-index:1000000;
 
   .heading {
     display:flex;
@@ -963,6 +1070,9 @@ form#filters-form.filteroptions {
     .advanced {
       padding:0px 15px;
     }
+    .advanced.patientsFilter .filter {
+      flex:1;
+    }
     input {
       margin-left:0px;
     }
@@ -1018,7 +1128,6 @@ form#filters-form.filteroptions {
 
 #contentsection table {
   margin:0px;
-  padding:10px 20px 10px 15px;
   border:none;
 }
 
@@ -1064,11 +1173,14 @@ div.pagination {
 
 /* Tables
      ========================================================================== */
+.rc-handle-container {
+  position:initial!important;
+}
 th.tableheader {
   background:#6d6c8b;
   padding:10px 15px;
 
-  .table-title {
+  .table-title, span {
     color:#fff;
   }
 }
@@ -1080,20 +1192,33 @@ th.tableheader {
 
 tbody {background:#fff;}
 
-.paginationHeader .pagination {
+#contentcontainer .paginationHeader {
+  .box {
+    padding:15px 20px 15px 15px;
+    height:auto;
+    background:#fff;
+  }
+  .pagination {
   position:absolute;
-  top:14px;
+  top:20px;
   right:30px;
   display:flex;
   align-items:center;
   padding:0px;
+  font-size:12px;
+  height:30px;
+
+  a.btn-link {
+    position:relative;
+    bottom:1px;
+  }
 
   a[class^="btn"], .has-value > .Select-control > .Select-placeholder, input[type="text"], span {
     color:#fff;
     opacity:1;
   }
 
-  input-x-small {
+  .input-x-small {
     width:15px;
   }
 
@@ -1101,32 +1226,37 @@ tbody {background:#fff;}
     background:#fff;
     color:#434343;
     border:none;
-    padding:2px;
+    padding:0px;
+    height:20px;
   }
 
   .text-right {
     padding:0px 3px 0px 0px;
+    margin-left:2px;
   }
 
   .Select-control {
     padding:0px;
+    height:20px;
   }
 
   .Select-placeholder {
-    padding:0px 5px;
+    padding:2px 5px;
     border:none;
     color:#434343!important;
+    height:20px;
   }
 
   span.Select-arrow {
-    top:3px;
+    top:5px;
     padding:0px;
     right:5px;
   }
 
   span:nth-child(4) {
-    padding-right:18px;
+    padding-right:10px;
   }
+}
 }
 
 .Select-arrow {
@@ -1371,7 +1501,7 @@ html {
         -ms-flex: 0 0 100%;
             flex: 0 0 100%;
     max-width: 100%; }}
-	
+  
 #contentcontainer header img{
 height:20px;
 width:auto !important;
@@ -1442,7 +1572,7 @@ background:#e06023;
     text-transform: uppercase;
 }
 
-form#new_patient div.row.button-actions input.btn-primary, form#new_patient div.row.button-actions input.btn-danger{
+form#new_patient div.row.button-actions input.btn-primary, form#new_patient div.row.button-actions input.btn-danger, form.edit_patient div.row.button-actions input.btn-primary{
 background: #2196f3;
 font-size:12px;
 }
@@ -1451,4 +1581,4 @@ font-size:12px;
 font-size:12px;
 }
 
-
+th, td { border-left:1px solid #eee; }
