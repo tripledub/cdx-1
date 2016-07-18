@@ -61,7 +61,7 @@
             = react_component 'CanvasJsChart', chartDiv: 'chartAverageTestsTechnician', chartData: Extras::Charts::VerticalColumns.new(@dashboard_report.average_tests_per_technician).render
 
     %section.row
-      .small-8.columns.box
+      .small-7.columns.box
         %header
           =image_tag('img/site.png')
           %h3
@@ -69,7 +69,7 @@
         .box-content
           #chartDevicesNotResponding{:style => "height: 200px; width: 100%;"}
             = react_component 'CanvasJsChart', chartDiv: 'chartDevicesNotResponding', chartData: Extras::Charts::HorizontalColumns.new(@dashboard_report.devices_not_responding).render
-      .small-4.columns.box
+      .small-5.columns.box
         = render partial: 'error_codes', locals: { error_codes_by_device: @dashboard_report.error_codes_by_device }
 
     %section.row
