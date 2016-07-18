@@ -142,7 +142,7 @@ module Reports
     end
 
     def report_since
-      filter['since'] = options['since'] || (Date.today - 1.year).iso8601
+      filter['since'] = options['since'] || (Date.today - 7.days).iso8601
     end
 
     def results_by_period(format = '%Y-%m')
