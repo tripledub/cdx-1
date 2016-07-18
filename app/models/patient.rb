@@ -14,6 +14,7 @@ class Patient < ActiveRecord::Base
   has_many :comments, dependent: :destroy
   has_many :audit_logs, dependent: :destroy
   has_many :episodes, dependent: :destroy
+  has_many :addresses, :as => :addressable, dependent: :destroy
 
   validates_presence_of :institution
   validates_uniqueness_of :entity_id, scope: :institution_id, allow_nil: true

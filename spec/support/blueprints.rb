@@ -185,16 +185,19 @@ end
 
 Patient.blueprint do
   institution
-  address { Faker::Address.street_address }
-  city { Faker::Address.city }
-  state { Faker::Address.state }
-  zip_code { Faker::Address.zip_code }
   plain_sensitive_data {
     {}.tap do |h|
       h["id"] = object.entity_id || "patient-#{Sham.sn}"
       h["name"] = object.name if object.name
     end
   }
+end
+
+Address.blueprint do
+  address  { Faker::Address.street_address }
+  city     { Faker::Address.city }
+  state    { Faker::Address.state }
+  zip_code { Faker::Address.zip_code }
 end
 
 Patient.blueprint :phantom do

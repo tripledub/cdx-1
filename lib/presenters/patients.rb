@@ -17,11 +17,14 @@ class Presenters::Patients
     end
 
     def show_full_address(patient)
+      return '' unless patient.addresses.present?
+
+      patient_address = patient.addresses.first
       address = []
-      address << patient.address
-      address << patient.city
-      address << patient.state
-      address << patient.zip_code
+      address << patient_address.address
+      address << patient_address.city
+      address << patient_address.state
+      address << patient_address.zip_code
       address.reject(&:blank?).join(', ')
     end
   end
