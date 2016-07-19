@@ -1,7 +1,7 @@
 en:
   test_results:
     filters:
-      title: 'Tests'
+      title: 'Test Results'
       display_as: 'Display as'
       condition: 'Condition'
       result: 'Result'
@@ -38,9 +38,9 @@ en:
         zero: 'tests'
         one: 'test'
         other: '%{count} tests'
-      test_order:
-        zero: 'test orders'
-        one: 'test order'
-        other: '%{count} test orders'
+      test_result:
+        zero: 'test results'
+        one: 'test result'
+        other: '%{count} test results'
       test_results: 'test results'
       setup_devices: 'Setup your devices first in order to start reporting'
