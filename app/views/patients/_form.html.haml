@@ -53,7 +53,7 @@
 
   .row.button-actions
     .col
-      = f.submit I18n.t('views.save'), class: 'btn-primary'
+      = f.submit I18n.t('views.save'), class: 'btn-primary save'
       - cancel_path = @patient.persisted? ? patient_path(@patient) : patients_path
       = link_to I18n.t('views.cancel'), cancel_path, class: 'btn-link'
 

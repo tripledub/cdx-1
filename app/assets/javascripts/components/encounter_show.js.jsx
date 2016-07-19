@@ -81,38 +81,66 @@ var EncounterShow = React.createClass({
       performing_site = this.props.encounter.performing_site.name;
     }
     return (
-      <div>
-        <div className="row">
+      <div className="testflow">
+        <div className="row errorMsg">
          <div className="col pe-2">
            <FlashErrorMessages messages={this.state.error_messages} />
          </div>
         </div>
+        <div className="row labelHeader">
+          <div className="col-6">
+            <h3>Site Details</h3>
+          </div>
+          <div className="col-6">
+          </div>
+        </div>
+        <div className="newTestOrder">
+          <div className="panel">
+            <DisplayFieldWithLabel fieldLabel='Requested site:' fieldValue={ this.props.encounter.site.name } />
+            <DisplayFieldWithLabel fieldLabel='Performing site:' fieldValue={ performing_site } />
+          </div>
+        </div>
+        <div className="row labelHeader">
+          <div className="col-6">
+            <h3>Test Details</h3>
+          </div>
+          <div className="col-6">
+          </div>
+        </div>
+        <div className="newTestOrder">
+          <div className="panel">
+            <div className="row collapse">
+              <div className="col-6">
+                <DisplayFieldWithLabel fieldLabel='Order Id:' fieldValue={ this.props.encounter.uuid } />
+                <DisplayFieldWithLabel fieldLabel='Testing for:' fieldValue={ this.props.encounter.testing_for } />
+                {
+                  this.props.encounter.testing_for === 'TB' ?
+                  <DisplayFieldWithLabel fieldLabel='Culture format:' fieldValue={ this.props.encounter.culture_format } /> : null
+                }
+                <DisplayFieldWithLabel fieldLabel='Comment:' fieldValue={ this.props.encounter.diag_comment } />
+                <DisplayFieldWithLabel fieldLabel='Weeks in treatment:' fieldValue={ this.props.encounter.treatment_weeks } />
+                <DisplayFieldWithLabel fieldLabel='Samples Id:' fieldValue={ <SamplesList samples={this.props.encounter.samples}  /> } />
+                <DisplayFieldWithLabel fieldLabel='Sample type:' fieldValue={ this.props.encounter.coll_sample_type } />
+                <DisplayFieldWithLabel fieldLabel='Test due date:' fieldValue={ this.props.encounter.testdue_date } />
+                <DisplayFieldWithLabel fieldLabel='Status:' fieldValue={ this.props.encounter.status } />
+              </div>
 
-        <DisplayFieldWithLabel fieldLabel='Requested site:' fieldValue={ this.props.encounter.site.name } />
-        <DisplayFieldWithLabel fieldLabel='Performing site:' fieldValue={ performing_site } />
-        <DisplayFieldWithLabel fieldLabel='Order Id:' fieldValue={ this.props.encounter.uuid } />
-        <DisplayFieldWithLabel fieldLabel='Testing for:' fieldValue={ this.props.encounter.testing_for } />
-        {
-          this.props.encounter.testing_for === 'TB' ?
-          <DisplayFieldWithLabel fieldLabel='Culture format:' fieldValue={ this.props.encounter.culture_format } /> : null
-        }
-        <DisplayFieldWithLabel fieldLabel='Comment:' fieldValue={ this.props.encounter.diag_comment } />
-        <DisplayFieldWithLabel fieldLabel='Weeks in treatment:' fieldValue={ this.props.encounter.treatment_weeks } />
-        <DisplayFieldWithLabel fieldLabel='Samples Id:' fieldValue={ <SamplesList samples={this.props.encounter.samples}  /> } />
-        <DisplayFieldWithLabel fieldLabel='Sample type:' fieldValue={ this.props.encounter.coll_sample_type } />
-        <DisplayFieldWithLabel fieldLabel='Test due date:' fieldValue={ this.props.encounter.testdue_date } />
-        <DisplayFieldWithLabel fieldLabel='Status:' fieldValue={ this.props.encounter.status } />
+              <div className="col-6 patientCard">
+                <FlexFullRow>
+                  <PatientCard patient={this.props.encounter.patient} />
+                </FlexFullRow>
+              </div>
+            </div>
 
-        <FlexFullRow>
-          <PatientCard patient={this.props.encounter.patient} />
-        </FlexFullRow>
+          </div>
+        </div>
 
         <div className="row">
           <RequestedTestsIndexTable encounter={this.props.encounter} requested_tests={this.state.requested_tests} requested_by={this.props.requested_by}
            status_types={this.props.status_types} edit={this.props.show_edit} onTestChanged={this.onTestChanged} associated_tests_to_results={this.props.associated_tests_to_results}/>
         </div>
         <br />
-        <div className="row">
+        <div className="row buttonActions">
           <div className="col pe-2">
             {actionButton}
           </div>
@@ -129,7 +157,7 @@ var EncounterUpdate = React.createClass({
    },
   render: function() {
     return(
-      <div><a className = "btn-secondary pull-right" onClick={this.clickHandler} id="update_encounter" href="#">Update Test Order</a></div>
+      <div><a className = "btn-secondary " onClick={this.clickHandler} id="update_encounter" href="#">Update Test Order</a></div>
     );
   }
 });

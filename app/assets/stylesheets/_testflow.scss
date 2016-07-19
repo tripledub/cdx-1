@@ -265,9 +265,7 @@ body {
   }
   .panel {
     background: #fff;
-    max-width: 90rem;
     margin: 0 auto;
-    overflow: hidden;
     width: 100%;
     hr {
       border: none;
@@ -427,7 +425,7 @@ body {
   }
   .newTestOrder .panel {
     > div.row {
-      justify-content:center;
+      justify-content: flex-start;
     }
     .row {
       align-items: flex-start;
@@ -500,9 +498,4 @@ height:30px;
 padding-left:10px;
 padding-right:10px;
 padding-top:3px;
-}
-
-.episodelisting{
-	height: 220px;
-    overflow: auto;
 }

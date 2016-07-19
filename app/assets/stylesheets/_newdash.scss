@@ -627,7 +627,7 @@ form#new_device {
 }
 /* Edit Patient Page Styles */
 .testflow {
-  padding:0px 15px;
+  padding:0px 20px 15px 15px;
 
   .row.labelHeader {
     height:40px!important;
@@ -637,7 +637,6 @@ form#new_device {
     }
 
     li a.button.add {
-      margin-right:0px;
       display:inline-block;
       padding:0.75em 2em;
       min-width:135px;
@@ -645,6 +644,9 @@ form#new_device {
       font-weight:bold;
       font-size:12px!important;
       margin-right:0px;
+      height:30px;
+      margin-right:28px;
+      line-height:14px;
       background-color:#0d8aee;
       font-weight:bold;
     }
@@ -661,11 +663,20 @@ form#new_device {
       margin-right:0px;
     }
 
+
     label {
       font-size:12px;
       font-weight:bold;
+      color:#333;
+      min-width:120px;
     }
     .col-10 {position:relative;}
+  }
+
+  .panel.patient-details.no-scroll {
+    li a.button.edit {
+      right:28px;
+    }
   }
 }
 /* Edit & New Episode Styles */
@@ -742,12 +753,14 @@ form#new_device {
         display:flex;
 
         a.cancel {
-          margin-right:0px;
+          margin-right:15px;
           padding:0.75em 2em;
           font-size:12px;
           font-weight:bold;
           display:inline-block;
           background:#555;
+          height:30px;
+          line-height:15px;
         }
       }
     }
@@ -855,6 +868,9 @@ form#new_patient {
 
       a.btn-link {
         background:#555!important;
+      }
+      input.save {
+        margin-right:-3px;
       }
   }
 
@@ -1064,6 +1080,14 @@ div.pagination {
 
 /* Tables
      ========================================================================== */
+.rc-handle-container {
+  width:100%!important;
+}
+
+table.barby-barcode {
+  width:300px!important;
+}
+
 th.tableheader {
   background:#6d6c8b;
   padding:10px 15px;
@@ -1080,7 +1104,14 @@ th.tableheader {
 
 tbody {background:#fff;}
 
-.paginationHeader .pagination {
+#contentcontainer .paginationHeader {
+  .box {
+    padding:15px 20px 15px 15px;
+    height:auto;
+    background:#fff;
+    position:relative;
+  }
+  .pagination {
   position:absolute;
   top:14px;
   right:30px;
@@ -1450,3 +1481,5 @@ font-size:12px;
 .btn, .btn-primary, .btn-danger, .btn-secondary, .btn-link{
 font-size:12px;
 }
+
+.rc-handle { border-left:1px solid #eee; }
