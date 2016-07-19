@@ -99,6 +99,9 @@ entities:
         pii: true
       name:
         pii: true
+      dob:
+        type: date
+        pii: true
       birth_date_on:
         type: date
       gender:
