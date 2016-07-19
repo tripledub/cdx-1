@@ -25,7 +25,7 @@ var RequestedTestRow = React.createClass({
     var url_path;
     var view_or_cancel_path;
     var test_order_page_mode;
-    
+
     if (edit == true) {
       test_order_page_mode = 'edit';
     } else {
@@ -71,7 +71,7 @@ var RequestedTestRow = React.createClass({
     created_at_date=created_at.toISOString().slice(0, 10);
 
     var status_array=[];
-    for (var index in this.props.status_types) { 
+    for (var index in this.props.status_types) {
       status_array.push(index);
     }
 
@@ -95,12 +95,12 @@ var RequestedTestRow = React.createClass({
     if (this.state.test.status=='rejected') {
       test_result_url = "#";
       test_result_text = "";
-    } else 
-    if ((this.props.edit == true) && (is_associated == false) && 
+    } else
+    if ((this.props.edit == true) && (is_associated == false) &&
        ((this.state.test.status == 'pending') || (this.state.test.status == 'inprogress')) ) {
       test_result_url = this.determineTestResultUrl(this.state.test.id, this.state.test.name, this.props.edit, is_associated);
       test_result_text = "Add Result";
-    } 
+    }
     else if ( (is_associated == false) || ((this.props.cancel==true) && (this.state.test.status=='complete')) ) {
       test_result_url = "#";
       test_result_text = "";
@@ -116,6 +116,7 @@ var RequestedTestRow = React.createClass({
       <td>{samples}</td>
       <td>{this.props.requested_by}</td>
       <td>{created_at_date}</td>
+      <td>{encounter.site.name}</td>
       <td>{encounter.testdue_date}</td>
       <td><select key={this.state.test.id} onChange = {
             this.statusChanged
@@ -146,28 +147,19 @@ var RequestedTestsList = React.createClass({
   render: function() {
     return (
       <table className="table" id="test-table" cellPadding="0" cellSpacing="0">
-        <colgroup>
-          <col width="10%" />
-          <col width="10%" />
-          <col width="20%" />
-          <col width="15%" />
-          <col width="10%" />
-          <col width="10%" />
-          <col width="10%" />
-          <col width="10%" />
-        </colgroup>
         <thead>
           <tr>
-            <th className="tableheader" colSpan="8">
+            <th className="tableheader" colSpan="9">
               <span className={this.props.titleClassName}>{this.props.title}</span>
             </th>
           </tr>
           <tr>
-            <td>Name</td>
-            <td>Sample ID</td>
-            <td>Requested By</td>
-            <td>Requested Date</td>
-            <td>Due Date</td>
+            <td>Type</td>
+            <td>Sample Id</td>
+            <td>Order by user</td>
+            <td>Requested date</td>
+            <td>Request by</td>
+            <td>Due date</td>
             <td>Status</td>
             <td>Comment</td>
             <td>Result</td>
@@ -176,7 +168,7 @@ var RequestedTestsList = React.createClass({
         <tbody>
           {this.props.requested_tests.map(function(requested_test) {
              return <RequestedTestRow key={requested_test.id} requested_test={requested_test} onTestChanged={this.onTestChanged}
-              encounter={this.props.encounter} requested_by={this.props.requested_by}  status_types={this.props.status_types} 
+              encounter={this.props.encounter} requested_by={this.props.requested_by}  status_types={this.props.status_types}
               edit={this.props.edit} associated_tests_to_results={this.props.associated_tests_to_results} />;
           }.bind(this))}
         </tbody>
@@ -191,7 +183,7 @@ var RequestedTestsIndexTable = React.createClass({
    },
   render: function() {
     return <RequestedTestsList requested_tests={this.props.requested_tests} encounter={this.props.encounter} onTestChanged={this.onTestChanged}
-              title={this.props.title} requested_by={this.props.requested_by} titleClassName="table-title" status_types={this.props.status_types} 
+              title={this.props.title} requested_by={this.props.requested_by} titleClassName="table-title" status_types={this.props.status_types}
               edit={this.props.edit} associated_tests_to_results={this.props.associated_tests_to_results}/>
   }
 });
