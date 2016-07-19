@@ -98,7 +98,7 @@ var EncounterShow = React.createClass({
         }
         <DisplayFieldWithLabel fieldLabel='Comment:' fieldValue={ this.props.encounter.diag_comment } />
         {
-          this.props.encounter.exam_reason === 'diag' ?
+          this.props.encounter.exam_reason === 'follow' ?
           <DisplayFieldWithLabel fieldLabel='Weeks in treatment:' fieldValue={ this.props.encounter.treatment_weeks } /> : null
         }
         <DisplayFieldWithLabel fieldLabel='Samples Id:' fieldValue={ <SamplesList samples={this.props.encounter.samples}  /> } />
