@@ -131,6 +131,12 @@ var EncounterShow = React.createClass({
                 </FlexFullRow>
               </div>
             </div>
+<<<<<<< fde0b3ff1f35d2e450411633680e8ca39eac2671
+=======
+
+          </div>
+        </div>
+>>>>>>> More style fixes - mainly around the table resize and patient summary
 
           </div>
         </div>
