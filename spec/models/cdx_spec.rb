@@ -21,7 +21,7 @@ describe Cdx do
       "patient.gender",
       "patient.id",
       "patient.name",
-      "patient.birth_date_on",
+      "patient.dob",
       "patient.email",
       "patient.phone",
       "sample.collection_date",

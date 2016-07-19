@@ -23,7 +23,7 @@ describe DeviceMessageProcessor, elasticsearch: true do
   PATIENT_BIRTH_DATE_ON   = "2000-01-01"
   PATIENT_SHIRT_COLOR     = "blue"
   PATIENT_HIV             = "positive"
-  PATIENT_PII_FIELDS      = {"id" => PATIENT_ID, "birth_date_on" => PATIENT_BIRTH_DATE_ON}.freeze
+  PATIENT_PII_FIELDS      = {"id" => PATIENT_ID, "dob" => PATIENT_BIRTH_DATE_ON}.freeze
   PATIENT_CORE_FIELDS     = {"gender" => PATIENT_GENDER}.freeze
   PATIENT_CUSTOM_FIELDS   = {"shirt_color" => PATIENT_SHIRT_COLOR, "hiv" => PATIENT_HIV}.freeze
 
@@ -858,7 +858,7 @@ describe DeviceMessageProcessor, elasticsearch: true do
         test = TestResult.first
 
         expect(test.patient.entity_id).to be_nil
-        expect(test.patient.plain_sensitive_data).to eq("birth_date_on" => PATIENT_BIRTH_DATE_ON)
+        expect(test.patient.plain_sensitive_data).to eq("dob" => PATIENT_BIRTH_DATE_ON)
         expect(test.patient.custom_fields).to eq(PATIENT_CUSTOM_FIELDS)
         expect(test.patient.core_fields).to eq(PATIENT_CORE_FIELDS)
       end
@@ -883,7 +883,7 @@ describe DeviceMessageProcessor, elasticsearch: true do
 
         patient = TestResult.first.sample.patient
 
-        expect(patient.plain_sensitive_data).to eq("birth_date_on" => PATIENT_BIRTH_DATE_ON)
+        expect(patient.plain_sensitive_data).to eq("dob" => PATIENT_BIRTH_DATE_ON)
         expect(patient.custom_fields).to eq(PATIENT_CUSTOM_FIELDS)
         expect(patient.core_fields).to eq(PATIENT_CORE_FIELDS)
       end
