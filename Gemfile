@@ -52,7 +52,7 @@ end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
-gem 'puma'
+gem 'puma', '~>3.5'
 
 # Use Sidekiq for background jobs
 gem 'sidekiq'
