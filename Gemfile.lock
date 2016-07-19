@@ -433,7 +433,7 @@ GEM
     pry-stack_explorer (0.4.9.2)
       binding_of_caller (>= 0.7)
       pry (>= 0.9.11)
-    puma (2.13.4)
+    puma (3.5.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.4)
@@ -690,7 +690,7 @@ DEPENDENCIES
   pry-clipboard
   pry-rescue
   pry-stack_explorer
-  puma
+  puma (~> 3.5)
   quiet_assets
   rails (~> 4.2.5)
   rails-assets-es5-shim!
