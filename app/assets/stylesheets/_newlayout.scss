@@ -493,6 +493,7 @@ color:#fff !important;
   line-height: 30px;
   height:30px;
   display:inline-block;
+  cursor:pointer;
 }
 
 /*  BELOW 768 PIXELS */
@@ -544,6 +545,10 @@ color:#fff !important;
   justify-content:center;
 }
 
+.testflow .row.errorMsg {
+  margin:0 auto;
+}
+
 /* Header Styles! */
 .testflow .row.labelHeader {
     align-items: center;
@@ -579,7 +584,8 @@ color:#fff !important;
 
 .testflow .panel hr {border:none;}
 .testflow .panel .row {
-  margin:1em 0px;
+  margin:0px auto;
+  padding:10px 15px;
   max-width:none;
 }
 .testflow .button:hover {opacity:0.8;}
@@ -752,9 +758,24 @@ padding:15px;
 
 .testflow .newTestOrder .panel > div.row {justify-content:flex-start;}
 .testflow .newTestOrder .panel .row {
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     padding: 0 15px;
+
+    .row {
+      padding:0px;
+    }
+    .buttonActions {
+      justify-content:flex-start;
+    }
+
+    .patientCard {
+      align-self:flex-start;
+    }
+
+    p {
+      font-size:12px;
+    }
 }
 .zebra select, .zebra select option{
   color:#000;
