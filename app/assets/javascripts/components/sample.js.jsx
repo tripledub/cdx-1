@@ -22,6 +22,11 @@ var Sample = React.createClass({
             {_(this.props.sample.entity_ids).rest().map(function(entity_id) {
               return (<li key={entity_id}>{entity_id}</li>);
             }).value()}
+            {
+              this.props.sample.lab_sample_ids.map( function (lab_sample_id) {
+                lab_sample_id ? <li key={lab_sample_id}>Lab. Id: {lab_sample_id}</li> : null;
+              })
+            }
           </ul>
         </div>);
     }
@@ -35,6 +40,10 @@ var Sample = React.createClass({
     <li>
       {unifySampleAction}
       {this.props.sample.entity_ids[0]}
+      {
+        this.props.sample.lab_sample_ids && this.props.sample.lab_sample_ids[0] ?
+        ' # Lab. Id: ' + this.props.sample.lab_sample_ids[0] : null
+      }
       {unifiedSamples}
     </li>);
   }

@@ -42,8 +42,9 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       patient = Patient.make institution: i1
       grant i1.user, user, {site: i1}, CREATE_SITE_ENCOUNTER
       grant i1.user, user, {encounter: i1}, READ_ENCOUNTER
+      encounter         = Encounter.make institution: i1, patient: patient
+      sample_identifier = SampleIdentifier.make(site: site, entity_id: "entity random", lab_sample_id: 'Random lab sample', sample: Sample.make(institution: i1, encounter: encounter, patient: patient))
 
-      encounter = Encounter.make institution: i1, patient: patient
       get :show, id: encounter.id
       expect(response).to have_http_status(:success)
       expect(assigns[:can_update]).to be_falsy
@@ -88,7 +89,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     it "should load encounter first by uuid" do
-      encounter = Encounter.make institution: institution, patient: patient
+      encounter   = Encounter.make institution: institution, patient: patient
       encounter2 = Encounter.make institution: institution, uuid: "#{encounter.id}lorem", patient: patient
 
       get :show, id: encounter2.uuid
@@ -979,9 +980,10 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
   def sample_json(sample)
     return {
-      uuids: sample.uuids,
-      entity_ids: sample.entity_ids,
-      uuid: sample.uuids.first
+      uuids:          sample.uuids,
+      entity_ids:     sample.entity_ids,
+      lab_sample_ids: sample.lab_sample_ids,
+      uuid:           sample.uuids.first
     }
   end
 

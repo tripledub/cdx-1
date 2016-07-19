@@ -438,7 +438,7 @@ class EncountersController < ApplicationController
   end
 
   def as_json_sample(json, sample)
-    json.(sample, :uuids, :entity_ids)
+    json.(sample, :uuids, :entity_ids, :lab_sample_ids)
     json.uuid sample.uuids[0]
   end
 
