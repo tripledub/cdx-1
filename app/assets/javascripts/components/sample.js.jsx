@@ -65,6 +65,7 @@ var NewSamplesList = React.createClass({
 
           return (<li key={sample.entity_id}>
             {sample.entity_id}
+            {sample.lab_sample_id ? ' / ' + sample.lab_sample_id : null}
 
             <a className="unify" href="#" onClick={removeSample}><span className="icon-break icon-gray"></span></a>
           </li>)
