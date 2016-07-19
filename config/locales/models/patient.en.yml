@@ -2,7 +2,7 @@ en:
   activerecord:
     attributes:
       patient:
-        dob: 'Birthday'
+        birth_date_on: 'Date of birth'
         entity_id: 'Patient id'
         name: 'Name'
         gender: 'Gender'
@@ -10,7 +10,8 @@ en:
         email: 'E-mail'
         address: 'Address'
         created_at: 'Created at'
+        nickname: 'Nickname'
   patient:
     model_form:
-      wrong_date: 'should be a date in %{dob_placeholder}'
+      wrong_date: 'should be a date in %{birth_date_on_placeholder}'
       wrong_gender: 'is not within valid options (should be one of %{gender_values})'

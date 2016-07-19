@@ -74,7 +74,7 @@ var PatientNameSearchResult = React.createClass({
       <tr onClick={this.navigateTo.bind(this, this.props.patientNameSearchResult.viewLink)}>
         <td>{this.props.patientNameSearchResult.name}</td>
         <td>{this.props.patientNameSearchResult.gender}</td>
-        <td>{this.props.patientNameSearchResult.dob}</td>
+        <td>{this.props.patientNameSearchResult.birthDate}</td>
       </tr>
     );
   }

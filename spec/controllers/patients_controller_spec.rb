@@ -27,6 +27,7 @@ RSpec.describe PatientsController, type: :controller do
     it "should ignore phantom patients" do
       institution.patients.make :phantom
       get :index
+
       expect(assigns(:patients).count).to eq(0)
     end
 
@@ -201,9 +202,11 @@ RSpec.describe PatientsController, type: :controller do
 
   context "create" do
     let(:patient_form_plan) {
-      { name: 'Lorem', entity_id: '1001', gender: 'female', dob: '2000/1/1', address: "1 street", city: 'london', state: "aa", zip_code: 'sw11' }
+      { name: 'Lorem', entity_id: '1001', gender: 'female', 'birth_date_on(1i)': '2000', 'birth_date_on(2i)': '1', 'birth_date_on(3i)': '18' }
     }
-    let(:patient_form_plan_dob) { Time.parse("2000-01-01") }
+
+    let(:patient_form_plan_birth_date_on) { Date.new(2000, 1, 18) }
+
     def build_patient_form_plan(options)
       patient_form_plan.dup.merge! options
     end
@@ -223,7 +226,7 @@ RSpec.describe PatientsController, type: :controller do
       expect(patient.name).to eq(patient_form_plan[:name])
       expect(patient.entity_id).to eq(patient_form_plan[:entity_id])
       expect(patient.gender).to eq(patient_form_plan[:gender])
-      expect(Time.parse(patient.dob)).to eq(patient_form_plan_dob)
+      expect(patient.birth_date_on).to eq(patient_form_plan_birth_date_on)
 
       expect(patient.address).to eq(patient_form_plan[:address])
       expect(patient.city).to eq(patient_form_plan[:city])
@@ -233,7 +236,6 @@ RSpec.describe PatientsController, type: :controller do
       expect(patient.plain_sensitive_data['name']).to eq(patient_form_plan[:name])
       expect(patient.core_fields['gender']).to eq(patient_form_plan[:gender])
       expect(patient.plain_sensitive_data['id']).to eq(patient_form_plan[:entity_id])
-      expect(Time.parse(patient.plain_sensitive_data['dob'])).to eq(patient_form_plan_dob)
     end
 
     it "should save it as non phantom" do
@@ -280,7 +282,7 @@ RSpec.describe PatientsController, type: :controller do
     end
 
     it "should validate entity_id uniqness" do
-      institution.patients.make entity_id: '1001'
+      institution.patients.make entity_id: '1001', name: 'Bruce McLaren'
 
       expect {
         post :create, patient: build_patient_form_plan(entity_id: '1001')
@@ -290,23 +292,14 @@ RSpec.describe PatientsController, type: :controller do
       expect(response).to render_template("patients/new")
     end
 
-    it "should not require dob" do
+    it "should not require birth_date_on" do
       expect {
-        post :create, patient: build_patient_form_plan(dob: '')
+        post :create, patient: { name: 'Lorem', entity_id: '1001', gender: 'female' }
       }.to change(institution.patients, :count).by(1)
 
       patient = institution.patients.first
-      expect(patient.dob).to be_nil
-      expect(patient.plain_sensitive_data).to_not have_key('dob')
-    end
-
-    it "should validate dob if present" do
-      expect {
-        post :create, patient: build_patient_form_plan(dob: '2000/14/14')
-      }.to change(institution.patients, :count).by(0)
-
-      expect(assigns(:patient).errors).to have_key(:dob)
-      expect(response).to render_template("patients/new")
+      expect(patient.birth_date_on).to be_nil
+      expect(patient.plain_sensitive_data).to_not have_key('birth_date_on')
     end
 
     it "should validate gender" do
@@ -343,7 +336,7 @@ RSpec.describe PatientsController, type: :controller do
       next_url = 'http://example.org/some_next_url'
       post :create, patient: build_patient_form_plan(name: ''), next_url: next_url
 
-      expect(assigns(:patient)).to be_invalid
+      expect(assigns(:patient).errors).to have_key(:name)
       expect(response).to render_template("patients/new")
       expect(response.body).to include(next_url)
     end
@@ -397,13 +390,13 @@ RSpec.describe PatientsController, type: :controller do
     let(:patient) { institution.patients.make }
 
     it "should update existing patient" do
-      post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', dob: '2000/1/18', address: "1 street", city: 'london', state: "aa", zip_code: 'sw11' }
+      post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', 'birth_date_on(1i)': '2000', 'birth_date_on(2i)': '1', 'birth_date_on(3i)': '18', address: "1 street", city: 'london', state: "aa", zip_code: 'sw11' }
       expect(response).to be_redirect
 
       patient.reload
       expect(patient.name).to eq("Lorem")
       expect(patient.gender).to eq("female")
-      expect(Time.parse(patient.dob)).to eq(Time.parse("2000-01-18"))
+      expect(patient.birth_date_on).to eq(Date.new(2000, 1, 18))
       expect(patient.address).to eq("1 street")
       expect(patient.city).to eq("london")
       expect(patient.state).to eq("aa")
@@ -411,15 +404,19 @@ RSpec.describe PatientsController, type: :controller do
     end
 
     it 'should log the updates' do
-      post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', dob: '2000/1/18', address: "1 street", city: 'london', state: "aa", zip_code: 'sw11' }
+      post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', 'birth_date_on(1i)': '2000', 'birth_date_on(2i)': '1', 'birth_date_on(3i)': '18', address: "1 street", city: 'london', state: "aa", zip_code: 'sw11' }
       audit_update = patient.audit_logs.last.audit_updates.first
     end
 
     it "should assign entity_id if previous is blank" do
-      patient = institution.patients.make :phantom
+      patient                = institution.patients.make :phantom
+      patient.entity_id      = nil
+      patient.entity_id_hash = nil
+      patient.save(validate: false)
+
       expect(patient.entity_id).to be_blank
       expect(patient.entity_id_hash).to be_blank
-      post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', dob: '200/1/18', entity_id: 'other-id' }
+      post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', 'birth_date_on(1i)': '2000', 'birth_date_on(2i)': '1', 'birth_date_on(3i)': '18', entity_id: 'other-id' }
       expect(response).to be_redirect
 
       patient.reload
@@ -433,7 +430,7 @@ RSpec.describe PatientsController, type: :controller do
     it "should not change entity_id from previous" do
       old_entity_id = patient.entity_id
       expect(patient.entity_id).to_not be_blank
-      post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', dob: '2000/1/18', entity_id: 'other-id' }
+      post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', 'birth_date_on(1i)': '2000', 'birth_date_on(2i)': '1', 'birth_date_on(3i)': '18', entity_id: 'other-id' }
       expect(assigns(:patient).errors).to have_key(:entity_id)
       expect(response).to render_template("patients/edit")
 
@@ -445,44 +442,44 @@ RSpec.describe PatientsController, type: :controller do
     it "should not remove entity_id from previous" do
       old_entity_id = patient.entity_id
       expect(patient.entity_id).to_not be_blank
-      post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', dob: '2000/1/18', entity_id: '' }
+      post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', 'birth_date_on(1i)': '2000', 'birth_date_on(2i)': '1', 'birth_date_on(3i)': '18', entity_id: '' }
+
       expect(assigns(:patient).errors).to have_key(:entity_id)
       expect(response).to render_template("patients/edit")
-
       expect(patient.entity_id).to eq(old_entity_id)
       expect(patient.plain_sensitive_data['id']).to eq(old_entity_id)
     end
 
     it "should require name" do
-      post :update, id: patient.id, patient: { name: '', dob: '1/1/2000' }
+      post :update, id: patient.id, patient: { name: '', 'birth_date_on(1i)': '2000', 'birth_date_on(2i)': '1', 'birth_date_on(3i)': '18' }
+
       expect(assigns(:patient).errors).to have_key(:name)
       expect(response).to render_template("patients/edit")
     end
 
     it "should require entity_id" do
       patient = institution.patients.make :phantom
-
       post :update, id: patient.id, patient: { entity_id: '' }
-      expect(assigns(:patient).errors).to have_key(:entity_id)
-      expect(response).to render_template("patients/edit")
+
+      expect(assigns(:patient).errors).to_not have_key(:entity_id)
     end
 
     it "should update existing patient if allowed" do
       grant user, other_user, Patient, UPDATE_PATIENT
 
       sign_in other_user
-      post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', dob: '2000/1/1' }
+      post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', 'birth_date_on(1i)': '2000', 'birth_date_on(2i)': '1', 'birth_date_on(3i)': '18' }
       expect(response).to be_redirect
 
       patient.reload
       expect(patient.name).to eq("Lorem")
       expect(patient.gender).to eq("female")
-      expect(Time.parse(patient.dob)).to eq(Time.parse("2000-01-01"))
+      expect(patient.birth_date_on).to eq(Date.new(2000, 1, 18))
     end
 
     it "should not update existing patient if allowed" do
       sign_in other_user
-      post :update, id: patient.id, patient: { name: 'Lorem', dob: '1/1/2000' }
+      post :update, id: patient.id, patient: { name: 'Lorem', 'birth_date_on(1i)': '2000', 'birth_date_on(2i)': '1', 'birth_date_on(3i)': '18' }
       expect(response).to be_forbidden
 
       patient.reload
