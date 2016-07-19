@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160719090046) do
+ActiveRecord::Schema.define(version: 20160719161550) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -596,13 +596,14 @@ ActiveRecord::Schema.define(version: 20160719090046) do
   end
 
   create_table "sample_identifiers", force: :cascade do |t|
-    t.integer  "sample_id",  limit: 4
-    t.string   "entity_id",  limit: 255
-    t.string   "uuid",       limit: 255
-    t.integer  "site_id",    limit: 4
+    t.integer  "sample_id",     limit: 4
+    t.string   "entity_id",     limit: 255
+    t.string   "uuid",          limit: 255
+    t.integer  "site_id",       limit: 4
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "lab_sample_id", limit: 255
   end
 
   add_index "sample_identifiers", ["deleted_at"], name: "index_sample_identifiers_on_deleted_at", using: :btree
