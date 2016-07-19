@@ -101,7 +101,6 @@ entities:
         pii: true
       birth_date_on:
         type: date
-        pii: true
       gender:
         type: enum
         searchable: true
