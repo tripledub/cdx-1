@@ -42,7 +42,7 @@ var PatientsIndexTable = React.createClass({
           <tr>
             {sortableHeader("Name", "patients.name")}
             {sortableHeader("Patient Id", "patients.entity_id")}
-            <th data-resizable-column-id="dob">Date of Birth</th>
+            {sortableHeader("Date of birth", "patients.birth_date_on")}
             {sortableHeader("Address", "patients.address")}
             <th data-resizable-column-id="last_encounter">Last test order</th>
           </tr>

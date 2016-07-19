@@ -59,8 +59,8 @@
                   %ul
                     %li
                       %label
-                        = Patient.human_attribute_name(:dob)
-                      = patient_birth_date(@patient_log.patient.dob)
+                        = Patient.human_attribute_name(:birth_date_on)
+                      = Extras::Dates::Format.patient_birth_date(@patient_log.patient.birth_date_on)
                     %li
                       %label
                         = Patient.human_attribute_name(:phone)

@@ -73,7 +73,7 @@ var PatientComments = React.createClass({
       <div className="row">
         {
           this.state.patientComments.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> :
-          <table className="table patient-history" data-resizable-columns-id="patient-history-table">
+          <table className="table patient-history" data-resizable-columns-id="patient-comments-table">
             <thead>
               <tr>
                 {rowHeaders}

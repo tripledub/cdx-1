@@ -18,8 +18,8 @@
           = patient.gender
         %li
           %label
-            = Patient.human_attribute_name(:dob)
-          = patient_birth_date(patient.dob)
+            = Patient.human_attribute_name(:birth_date_on)
+          = Extras::Dates::Format.patient_birth_date(patient.birth_date_on)
         %li
           %label
             = Patient.human_attribute_name(:phone)
@@ -33,10 +33,11 @@
           %label
             = Patient.human_attribute_name(:entity_id)
           = patient.entity_id
-        %li
-          %label
-            = Patient.human_attribute_name(:address)
-          = Presenters::Patients.show_full_address(patient)
+        - patient.addresses.each do |address|
+          %li
+            %label
+              = Patient.human_attribute_name(:address)
+            = Presenters::Patients.show_full_address(address)
 
       %ul
         %li

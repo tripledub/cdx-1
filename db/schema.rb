@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160717142201) do
+ActiveRecord::Schema.define(version: 20160719090046) do
+
+  create_table "addresses", force: :cascade do |t|
+    t.string   "uuid",             limit: 255
+    t.integer  "addressable_id",   limit: 4
+    t.string   "addressable_type", limit: 255
+    t.string   "address",          limit: 255
+    t.string   "zip_code",         limit: 255
+    t.string   "city",             limit: 255
+    t.string   "state",            limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "addresses", ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type", using: :btree
 
   create_table "alert_condition_results", force: :cascade do |t|
     t.string  "result",   limit: 255
@@ -516,8 +530,11 @@ ActiveRecord::Schema.define(version: 20160717142201) do
     t.string   "state",          limit: 255
     t.string   "city",           limit: 255
     t.string   "zip_code",       limit: 255
+    t.string   "nickname",       limit: 255
+    t.date     "birth_date_on"
   end
 
+  add_index "patients", ["birth_date_on"], name: "index_patients_on_birth_date_on", using: :btree
   add_index "patients", ["deleted_at"], name: "index_patients_on_deleted_at", using: :btree
   add_index "patients", ["institution_id"], name: "index_patients_on_institution_id", using: :btree
   add_index "patients", ["site_id"], name: "index_patients_on_site_id", using: :btree

@@ -9,15 +9,18 @@ class Patient < ActiveRecord::Base
   include Auditable
 
   has_many :test_results, dependent: :restrict_with_error
-  has_many :samples, dependent: :restrict_with_error
-  has_many :encounters, dependent: :restrict_with_error
-  has_many :comments, dependent: :destroy
-  has_many :audit_logs, dependent: :destroy
-  has_many :episodes, dependent: :destroy
+  has_many :samples,      dependent: :restrict_with_error
+  has_many :encounters,   dependent: :restrict_with_error
+  has_many :comments,     dependent: :destroy
+  has_many :audit_logs,   dependent: :destroy
+  has_many :episodes,     dependent: :destroy
+  has_many :addresses,    dependent: :destroy, :as => :addressable
 
-  validates_presence_of :institution
+  validates_presence_of   :institution
   validates_uniqueness_of :entity_id, scope: :institution_id, allow_nil: true
-  validate :entity_id_not_changed
+  validate                :entity_id_not_changed
+
+  accepts_nested_attributes_for :addresses
 
   scope :within, -> (institution_or_site, exclude_subsites = false) {
     if institution_or_site.is_a?(Institution)
@@ -33,33 +36,32 @@ class Patient < ActiveRecord::Base
     end
   }
 
+  class << self
+    def entity_scope
+      "patient"
+    end
+
+    def gender_options
+      [['male', I18n.t('select.patient.gender_options.male')], ['female', I18n.t('select.patient.gender_options.female')], ['other', I18n.t('select.patient.gender_options.other')]]
+    end
+  end
+
+  validates_inclusion_of :gender, in: Patient.gender_options.map(&:first), allow_blank: true, message: I18n.t('patient.model_form.wrong_gender', gender_values: Patient.gender_options.map(&:first))
+
   def has_entity_id?
     entity_id_hash.not_nil?
   end
 
-  def self.entity_scope
-    "patient"
-  end
-
   attribute_field :name, copy: true
   attribute_field :entity_id, field: :id, copy: true
-  attribute_field :gender, :dob, :email, :phone
+  attribute_field :gender, :email, :phone
 
   def age
-    years_between Time.parse(dob), Time.now rescue nil
+    years_between birth_date_on, Time.now rescue nil
   end
 
   def age_months
-    months_between Time.parse(dob), Time.now rescue nil
-  end
-
-
-  def dob_description(date_pattern)
-    if dob && (dob_time = self.dob_time)
-      "#{dob_time.strftime(date_pattern)} (#{age} y/o)"
-    else
-      ""
-    end
+    months_between birth_date_on, Time.now rescue nil
   end
 
   def last_encounter
@@ -72,15 +74,7 @@ class Patient < ActiveRecord::Base
 
   def as_json_card(json)
     json.(self, :id, :name, :age, :age_months, :gender, :address, :phone, :email, :entity_id, :city, :zip_code, :state)
-    json.dob dob_time.try { |d| d.strftime(I18n.t('date.input_format.pattern')) }
-  end
-
-  def name_or_unknown
-    name || "(Unknown name)"
-  end
-
-  def dob_time
-    Time.parse(dob) rescue nil
+    json.birth_date_on Extras::Dates::Format.datetime_with_time_zone(birth_date_on)
   end
 
   private

@@ -1,6 +1,11 @@
 en:
   select:
     default: Please Select
+    patient:
+      gender_options:
+        male: 'Male'
+        female: 'Female'
+        other: 'Other'
     microscopy:
       visual_appearance:
         blood: 'Blood-stained'

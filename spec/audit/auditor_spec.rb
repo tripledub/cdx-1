@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe Audit::Auditor do
-  let(:user)    { User.make }
-  let(:patient) { Patient.make name: 'Ruben Barichello'}
+  let(:user)     { User.make }
+  let(:address1) { Address.make }
+  let(:address2) { Address.make address: '22 Acacia Avenue'}
+  let(:patient)  { Patient.make name: 'Ruben Barichello', addresses: [address1, address2] }
 
   describe 'create' do
     before :each do
@@ -28,7 +30,8 @@ describe Audit::Auditor do
 
   describe 'update' do
     before :each do
-      patient.name = 'Graham Hill'
+      patient.name                    = 'Graham Hill'
+      patient.addresses.first.address = '1428 Elm Street'
       described_class.new(patient, user.id).log_changes("#{patient.name} patient details have been updated")
     end
 
