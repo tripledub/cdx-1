@@ -24,7 +24,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
 
   validateAndSetManualEntry: function (event) {
     var sampleId = React.findDOMNode(this.refs.manualSampleEntry).value;
-    if (this.state.encounter.new_samples.filter(function(el){return el.entity_id == sampleId}).length > 0) {
+    if (this.state.encounter.new_samples.filter(function(el){ return el.entity_id == sampleId }).length > 0) {
       // Error handling as done in the ajax responses
       alert("This sample has already been added");
     } else {
