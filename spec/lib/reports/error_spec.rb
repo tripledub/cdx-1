@@ -30,7 +30,7 @@ RSpec.describe Reports::Errors, elasticsearch: true do
     TestResult.create_and_index(
       core_fields: {
         'assays' => ['condition' => 'mtb', 'result' => :negative],
-        'start_time' => Time.now - 1.month,
+        'start_time' => Time.now - 7.days,
         'name' => 'mtb',
         'status' => 'error',
         'error_code' => 300,
@@ -43,7 +43,7 @@ RSpec.describe Reports::Errors, elasticsearch: true do
     TestResult.create_and_index(
       core_fields: {
         'assays' => ['condition' => 'man_flu', 'result' => :negative],
-        'start_time' => Time.now - 1.month,
+        'start_time' => Time.now - 7.days,
         'name' => 'man_flu',
         'status' => 'error',
         'error_code' => 200,
@@ -53,7 +53,9 @@ RSpec.describe Reports::Errors, elasticsearch: true do
     )
 
     TestResult.create_and_index(
-      core_fields: { 'assays' => ['condition' => 'mtb', 'result' => :negative] },
+      core_fields: {
+        'assays' => ['condition' => 'mtb', 'result' => :negative]
+      },
       device_messages: [DeviceMessage.make(device: user_device_two)]
     )
 
@@ -68,40 +70,39 @@ RSpec.describe Reports::Errors, elasticsearch: true do
       device_messages: [DeviceMessage.make(device: user_device)]
     )
 
-      TestResult.create_and_index(
-        core_fields: {
-          'assays' => ['condition' => 'man_flu1', 'result' => :negative],
-          'start_time' => Time.now - 1.month,
-          'reported_time' => Time.now + 1.hour,
-          'name' => 'man_flu1',
-          'status' => 'no_result'
-        },
-        device_messages: [DeviceMessage.make(device: user_device)]
-      )
+    TestResult.create_and_index(
+      core_fields: {
+        'assays' => ['condition' => 'man_flu1', 'result' => :negative],
+        'start_time' => Time.now - 1.month,
+        'reported_time' => Time.now + 1.hour,
+        'name' => 'man_flu1',
+        'status' => 'no_result'
+      },
+      device_messages: [DeviceMessage.make(device: user_device)]
+    )
 
-      TestResult.create_and_index(
-        core_fields: {
-          'assays' => ['condition' => 'man_flu2', 'result' => :negative],
-          'start_time' => Time.now - 1.month,
-          'reported_time' => Time.now + 1.hour,
-          'name' => 'man_flu2',
-          'status' => 'in_progress'
-        },
-        device_messages:[DeviceMessage.make(device: user_device)]
-      )
+    TestResult.create_and_index(
+      core_fields: {
+        'assays' => ['condition' => 'man_flu2', 'result' => :negative],
+        'start_time' => Time.now - 1.month,
+        'reported_time' => Time.now + 1.hour,
+        'name' => 'man_flu2',
+        'status' => 'in_progress'
+      },
+      device_messages: [DeviceMessage.make(device: user_device)]
+    )
 
-      TestResult.create_and_index(
-        core_fields: {
-          'assays' => ['condition' => 'man_flu4', 'result' => :negative],
-          'start_time' => Time.now - 1.month,
-          'reported_time' => Time.now + 1.hour,
-          'name' => 'man_flu4',
-          'status' => 'invalid'
-        },
-        device_messages:[DeviceMessage.make(device: user_device)]
-      )
-
-      refresh_index
+    TestResult.create_and_index(
+      core_fields: {
+        'assays' => ['condition' => 'man_flu4', 'result' => :negative],
+        'start_time' => Time.now - 1.month,
+        'reported_time' => Time.now + 1.hour,
+        'name' => 'man_flu4',
+        'status' => 'invalid'
+      },
+      device_messages: [DeviceMessage.make(device: user_device)]
+    )
+    refresh_index
   end
 
   describe 'process results' do

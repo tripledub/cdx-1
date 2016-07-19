@@ -44,7 +44,7 @@ RSpec.describe Reports::AllTests, elasticsearch: true do
         'name' => 'mtb',
         'status' => 'success'
       },
-      device_messages:[DeviceMessage.make(device: user_device)]
+      device_messages: [DeviceMessage.make(device: user_device)]
     )
 
     TestResult.create_and_index(
@@ -55,12 +55,15 @@ RSpec.describe Reports::AllTests, elasticsearch: true do
         'name' => 'man_flu',
         'status' => 'error'
       },
-      device_messages:[DeviceMessage.make(device: user_device)]
+      device_messages: [DeviceMessage.make(device: user_device)]
     )
 
     TestResult.create_and_index(
-      core_fields: { 'assays' => ['condition' => 'mtb', 'result' => :negative ], 'type' => 'specimen' },
-      device_messages:[DeviceMessage.make(device: user_device_two)]
+      core_fields: {
+        'assays' => ['condition' => 'mtb', 'result' => :negative],
+        'type' => 'specimen'
+      },
+      device_messages: [DeviceMessage.make(device: user_device_two)]
     )
 
     refresh_index
@@ -72,12 +75,7 @@ RSpec.describe Reports::AllTests, elasticsearch: true do
     end
 
     it 'scopes results by site and user' do
-      expect(@tests.results['total_count']).to eq(4)
-    end
-
-    it 'can sort results by month' do
-      sorted = @tests.sort_by_month.data
-      expect(sorted.size).to eq(12)
+      expect(@tests.results['total_count']).to eq(2)
     end
 
     describe 'statuses' do
@@ -87,6 +85,18 @@ RSpec.describe Reports::AllTests, elasticsearch: true do
 
       it 'includes :success' do
         expect(@tests.statuses).to include('success')
+      end
+    end
+
+    context 'when date range is a year' do
+      before do
+        options['since'] = (Date.today - 1.year).iso8601
+        @tests = Reports::AllTests.process(current_user, nav_context, options)
+      end
+
+      it 'can sort results by month' do
+        sorted = @tests.sort_by_month.data
+        expect(sorted.size).to eq(12)
       end
     end
 

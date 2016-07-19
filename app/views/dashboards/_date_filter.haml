@@ -23,13 +23,21 @@
             %input#clear_button.btn-primary(type='clear' value="#{I18n.t('dashboard.index.filter_button')}")
 
 :javascript
+  // reset to a week ago
+  var weekagodate = new Date();
+  var millisforweekago = weekagodate.getTime() - (7 *24*60*60*1000);
+  weekagodate.setTime(millisforweekago);
+  var wkstr = weekagodate.toJSON().slice(0,10);
+  var todaystr = new Date().toJSON().slice(0,10);
+
   $(document).ready( function()
   {
     $('#clear_button').on('click', function()
     {
-      $('input#range_start_time\\[gte\\]').val( '0000-00-00' );
-      $('input#range_start_time\\[lte\\]').val( '0000-00-00' );
       $(this).hide();
+      $('input#range_start_time\\[gte\\]').val( wkstr );
+      $('input#range_start_time\\[lte\\]').val( todaystr );
+      $('input[name=since]').val( wkstr ).trigger('change');
     });
 
     $('input#range_start_time\\[gte\\]').on('change', function()
@@ -49,13 +57,17 @@
     $('input[name=since]').on('change', function()
     {
       $('input#range_start_time\\[gte\\]').val( $(this).val() );
-      $('input#range_start_time\\[lte\\]').val( new Date().toJSON().slice(0,10) );
+      $('input#range_start_time\\[lte\\]').val( todaystr );
       $('#filters-form').submit();
     });
 
     if( $('input#range_start_time\\[lte\\]').val() || $('input#range_start_time\\[gte\\]').val() )
       $('#clear_button').show();
     else
+    {
       $('#clear_button').hide();
+      $('input#range_start_time\\[gte\\]').val( wkstr );
+      $('input#range_start_time\\[lte\\]').val( todaystr );
+    }
 
   })
