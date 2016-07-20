@@ -32,11 +32,15 @@ var TestResultsList = React.createClass({
       title: "Tests",
       titleClassName: "",
       downloadCsvPath: null,
-      allowSorting: false,
-      orderBy: "",
+      allowSorting: true,
+      orderBy: "site.name",
       showSites: true,
       showDevices: true
     }
+  },
+
+  componentDidMount: function() {
+    $("table").resizableColumns({store: window.store});
   },
 
   render: function() {
@@ -52,49 +56,14 @@ var TestResultsList = React.createClass({
       return Math.max(m, test.assays.length);
     }, 1);
 
-    var timeWidth;
-    if (this.props.showSites && this.props.showDevices) {
-      timeWidth = "15%";
-    } else if (this.props.showSites || this.props.showDevices) {
-      timeWidth = "20%";
-    } else {
-      timeWidth = "25%";
-    }
-
     return (
-      <table className="table" cellPadding="0" cellSpacing="0">
-        <colgroup>
-          <col width="15%" />
-          {_.range(totalAssaysColCount).map(function(i){
-            return (<col key={i} width={(34 / totalAssaysColCount) + "%"} />);
-          }.bind(this))}
-          { this.props.showSites ? <col width="7%" /> : null }
-          { this.props.showDevices ? <col width="7%" /> : null }
-          <col width="7%" />
-          <col width="7%" />
-          <col width="7%" />
-          <col width="10%" />
-          <col width={timeWidth} />
-          <col width={timeWidth} />
-        </colgroup>
+      <table className="table" cellPadding="0" cellSpacing="0" data-resizable-columns-id="test-results-table">
         <thead>
           <tr>
-            <th className="tableheader" colSpan="12">
-              <span className={this.props.titleClassName}>{this.props.title}</span>
-
-              { this.props.downloadCsvPath ? (
-                <span className="table-actions">
-                  <a href={this.props.downloadCsvPath} title="Download CSV">
-                    <span className="icon-download icon-gray" />
-                  </a>
-                </span>) : null }
-            </th>
-          </tr>
-          <tr>
             {sortableHeader("Name", "test.name")}
-            <th colSpan={totalAssaysColCount} className="text-right">Results</th>
-            { this.props.showSites ? <th>Site</th> : null }
-            { this.props.showDevices ? <th>Device</th> : null }
+            <th data-resizable-column-id="results" colSpan={totalAssaysColCount} className="text-right">Results</th>
+            { this.props.showSites ? sortableHeader("Site", "site.name") : null }
+            { this.props.showDevices ? sortableHeader("Device", "device.name") : null }
             {sortableHeader("Sample ID", "sample.id")}
             {sortableHeader("Type", "test.type")}
             {sortableHeader("Status", "test.status")}
@@ -118,8 +87,7 @@ var TestResultsList = React.createClass({
 var TestResultsIndexTable = React.createClass({
   render: function() {
     return <TestResultsList testResults={this.props.tests}
-              downloadCsvPath={this.props.downloadCsvPath}
-              title={this.props.title} titleClassName="table-title"
+              titleClassName="table-title"
               allowSorting={true} orderBy={this.props.orderBy}
               showSites={this.props.showSites} showDevices={this.props.showDevices} />
   }

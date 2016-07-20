@@ -1,7 +1,7 @@
 - content_for(:subheader) do
   .row.center.add-new.newtestoptions
     %h2
-      = link_to test_results_path(display_as: "test_order"), class: 'side-link', title: I18n.t('views.back') do
+      = link_to test_orders_path, class: 'side-link', title: I18n.t('views.back') do
         = image_tag "arrow-left.png"
       New Tests
     .subheading Please select one of the options below.
@@ -17,4 +17,4 @@
       %li{'data-href' => new_encounter_path(mode: 'existing_tests')}
         %span Already reported tests
         .text-small.muted
-          %i Organise and assign test results to patients. Review results and provide diagnosis. 
+          %i Organise and assign test results to patients. Review results and provide diagnosis.

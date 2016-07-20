@@ -142,7 +142,7 @@ module Reports
     end
 
     def report_since
-      filter['since'] = options['since'] || (Date.today - 1.year).iso8601
+      filter['since'] = options['since'] || (Date.today - 7.days).iso8601
     end
 
     def results_by_period(format = '%Y-%m')
@@ -176,6 +176,10 @@ module Reports
 
     def users
       results['tests'].index_by { |t| t['test.site_user'] }.keys
+    end
+
+    def slice_colors
+      ["#21C334", "#C90D0D", "#aaaaaa", "#00A8AB", "#B7D6B7", "#D8B49C", "#DE6023", "#47B04B", "#009788", "#A05D56", "#D0743C", "#FF8C00"]
     end
   end
 end

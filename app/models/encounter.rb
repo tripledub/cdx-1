@@ -12,20 +12,84 @@ class Encounter < ActiveRecord::Base
   has_many :requested_tests, autosave: true, dependent: :destroy
 
   belongs_to :performing_site, class_name: 'Site'
-  
+
   enum status: [:pending, :inprogress, :completed]
-  
+
   belongs_to :patient
   belongs_to :user
 
+  validates_presence_of :patient
+
   validates_presence_of :site, if: Proc.new { |encounter| encounter.institution && !encounter.institution.kind_manufacturer? }
+
+  validates_inclusion_of :culture_format, :allow_nil => true, in: ['solid', 'liquid'], if: Proc.new { |encounter| encounter.testing_for == 'TB' }
 
   validate :validate_patient
 
   before_save :ensure_entity_id
 
-  def self.entity_scope
-    "encounter"
+  class << self
+    def entity_scope
+      "encounter"
+    end
+
+    def culture_format_options
+      [['solid', I18n.t('select.culture.media_options.solid')], ['liquid', I18n.t('select.culture.media_options.liquid')]]
+    end
+
+    def merge_assays(assays1, assays2)
+      return assays2 unless assays1
+      return assays1 unless assays2
+
+      assays1.dup.tap do |res|
+        assays2.each do |assay2|
+          assay = res.find { |a| a["condition"] == assay2["condition"] }
+          if assay.nil?
+            res << assay2.dup
+          else
+            assay.merge! assay2 do |key, v1, v2|
+              if key == "result"
+                if v1 == v2
+                  v1
+                elsif v1 == "indeterminate" || v1.blank? || (v1 == "n/a" && v2 != "indeterminate")
+                  v2
+                elsif v2 == "indeterminate" || v2.blank? || (v2 == "n/a" && v1 != "indeterminate")
+                  v1
+                else
+                  "indeterminate"
+                end
+              else
+                v1
+              end
+            end
+          end
+        end
+      end
+    end
+
+    def merge_assays_without_values(assays1, assays2)
+      return assays2 unless assays1
+      return assays1 unless assays2
+
+      assays1.dup.tap do |res|
+        assays2.each do |assay2|
+          assay = res.find { |a| a["condition"] == assay2["condition"] }
+          if assay.nil?
+            res << (assay2.dup.tap do |h|
+              h["result"] = nil
+            end)
+          end
+        end
+      end
+    end
+
+    def find_by_entity_id(entity_id, opts)
+      find_by(entity_id: entity_id.to_s, institution_id: opts.fetch(:institution_id))
+    end
+
+    def query params, user
+      EncounterQuery.for params, user
+    end
   end
 
   attribute_field :start_time, copy: true
@@ -42,64 +106,6 @@ class Encounter < ActiveRecord::Base
 
   def phantom?
     super && core_fields[ASSAYS_FIELD].blank? && plain_sensitive_data[OBSERVATIONS_FIELD].blank?
-  end
-
-  def self.merge_assays(assays1, assays2)
-    return assays2 unless assays1
-    return assays1 unless assays2
-
-    assays1.dup.tap do |res|
-      assays2.each do |assay2|
-        assay = res.find { |a| a["condition"] == assay2["condition"] }
-        if assay.nil?
-          res << assay2.dup
-        else
-          assay.merge! assay2 do |key, v1, v2|
-            if key == "result"
-              if v1 == v2
-                v1
-              elsif v1 == "indeterminate" || v1.blank? || (v1 == "n/a" && v2 != "indeterminate")
-                v2
-              elsif v2 == "indeterminate" || v2.blank? || (v2 == "n/a" && v1 != "indeterminate")
-                v1
-              else
-                "indeterminate"
-              end
-            else
-              v1
-            end
-          end
-        end
-      end
-    end
-  end
-
-  def self.merge_assays_without_values(assays1, assays2)
-    return assays2 unless assays1
-    return assays1 unless assays2
-
-    assays1.dup.tap do |res|
-      assays2.each do |assay2|
-        assay = res.find { |a| a["condition"] == assay2["condition"] }
-        if assay.nil?
-          res << (assay2.dup.tap do |h|
-            h["result"] = nil
-          end)
-        end
-      end
-    end
-  end
-
-  def self.entity_scope
-    "encounter"
-  end
-
-  def self.find_by_entity_id(entity_id, opts)
-    find_by(entity_id: entity_id.to_s, institution_id: opts.fetch(:institution_id))
-  end
-
-  def self.query params, user
-    EncounterQuery.for params, user
   end
 
   def test_results_not_in_diagnostic
@@ -162,7 +168,7 @@ class Encounter < ActiveRecord::Base
       json.name encounter_query_result["site"]["name"]
     end
   end
- 
+
   protected
 
   def ensure_entity_id

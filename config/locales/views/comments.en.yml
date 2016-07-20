@@ -1,0 +1,12 @@
+en:
+  comments:
+    show:
+      header:
+        comment: 'Comment for patient %{patient_name}'
+    create:
+      audit_comment: 'New comment added'
+      created_ok: 'Comment was successfully created.'
+    permissions:
+      deny: "You can't add comments to this patient"
+    new:
+      new_comment: 'New comment'

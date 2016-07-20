@@ -22,6 +22,7 @@ module Auditable
       with_transaction_returning_status do
         assign_attributes(attributes)
       end
+
       audit_update(current_user, title, comment) if valid?
 
       save

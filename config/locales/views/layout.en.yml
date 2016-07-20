@@ -2,3 +2,15 @@ en:
   layout:
     header:
       meta_title: 'Connected Diagnostics Platform'
+    header_nav:
+      menu_at: 'at'
+      home: 'Home'
+      patients: 'Patients'
+      test_orders: 'Test orders'
+      test_results: 'Test results'
+      devices: 'Devices'
+      settings: 'Settings'
+      my_account: 'My account'
+      api_tokens: 'API tokens'
+      log_out: 'Log out'
+      log_in: 'Log in'

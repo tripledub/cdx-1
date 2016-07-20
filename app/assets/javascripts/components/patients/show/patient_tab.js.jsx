@@ -7,7 +7,7 @@ var PatientTab = React.createClass({
   render: function(){
     return (
       <li className={this.props.isCurrent ? 'active' : null}>
-        <a onClick={this.handleClick} href={this.props.url}>
+        <a onClick={this.handleClick} href="#">
           {this.props.name}
         </a>
       </li>

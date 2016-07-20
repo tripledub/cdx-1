@@ -9,7 +9,7 @@ class XpertResultsController < PatientResultsController
   end
 
   def create
-    @xpert_result           = @requested_test.build_xpert_result(xpert_result_params)
+    @xpert_result = @requested_test.build_xpert_result(xpert_result_params)
 
     if @requested_test.xpert_result.save_and_audit(current_user, I18n.t('xpert_results.create.audit'))
       redirect_to encounter_path(@requested_test.encounter), notice: I18n.t('xpert_results.create.notice')
@@ -39,6 +39,6 @@ class XpertResultsController < PatientResultsController
   end
 
   def xpert_result_params
-    params.require(:xpert_result).permit(:sample_collected_on, :tuberculosis, :rifampicin, :examined_by, :result_on)
+    params.require(:xpert_result).permit(:sample_collected_on, :tuberculosis, :trace, :rifampicin, :examined_by, :result_on)
   end
 end

@@ -52,7 +52,7 @@ padding-top:60px;
 position:fixed;
 width:100%;
 top:0px;
-z-index:99999;
+z-index:1000000;
 }
 
 /*----------- Tooltips -------------*/
@@ -332,6 +332,11 @@ color:#fff !important;
 .testflow .col-2{max-width: 15.33%;flex:1 0 auto;}
 .testflow .col-1 {max-width: 6.866%;flex:1 0 auto;}
 
+.testflow .row.labelHeader .col-6 {max-width:50%;}
+.testflow .panel.patient-summary {height:180px;overflow-y:scroll;}
+.testflow .panel.patient-details .row {border-bottom:1px solid #e2e2e2;}
+.testflow .panel.patientHistory .col-12 {display:block;max-width:100%;}
+
 .testflow .box {background:white;}
 .testflow .col {margin:0.5% 0.5%;}
 
@@ -479,13 +484,16 @@ color:#fff !important;
 }
 
 .testflow input[type=submit] {
-  background-color: #555;
+  background-color: #2196f3;
   color: white;
   border: none;
-  vpadding: 1em 2em;
-  font-size: .9em;
+  padding:1px 2em;
+  font-size: 12px;
   text-transform: uppercase;
-  line-height: 1em;
+  line-height: 30px;
+  height:30px;
+  display:inline-block;
+  cursor:pointer;
 }
 
 /*  BELOW 768 PIXELS */
@@ -537,6 +545,10 @@ color:#fff !important;
   justify-content:center;
 }
 
+.testflow .row.errorMsg {
+  margin:0 auto;
+}
+
 /* Header Styles! */
 .testflow .row.labelHeader {
     align-items: center;
@@ -570,16 +582,10 @@ color:#fff !important;
 
 /* Content Styles! */
 
-.testflow .panel {
-  background:#fff;
-  max-width:90rem;
-  margin:0 auto;
-  overflow:hidden;
-  width:100%;
-}
 .testflow .panel hr {border:none;}
 .testflow .panel .row {
-  margin:1em 0px;
+  margin:0px auto;
+  padding:10px 15px;
   max-width:none;
 }
 .testflow .button:hover {opacity:0.8;}
@@ -589,7 +595,7 @@ color:#fff !important;
 }
 
 .testflow form.zebra .panel .row:nth-child(even) > div {
-  padding:1rem 0.5rem;
+  padding:1rem 0rem;
 }
 .testflow .panel .row:last-child {
   margin-bottom:0px;
@@ -608,7 +614,7 @@ color:#fff !important;
   padding: 0.5em 2em;
   font-size: .9em;
   text-transform: uppercase;
-  line-height: 1em;
+  line-height: 30px;
   text-decoration:none;
   margin-left:5px;
 }
@@ -618,7 +624,7 @@ color:#fff !important;
 }
 
 .testflow li a.button.cancel, .testflow li a.button.edit {
-  background:#555;
+  background:#e06023;
 }
 
 
@@ -639,7 +645,8 @@ color:#fff !important;
     position: absolute;
     top: 5px;
     right: 14px;
-    padding: 0.75em 1.9em;
+    padding:1px 2em;
+    height:30px;
 }
 .testflow .patient-details .row {
   margin:0px;
@@ -663,7 +670,7 @@ flex:3 0 auto;
 padding:15px;
 }
 
-.testflow .patient-details .col-10 {
+.testflow .patient-details .col-12 {
   display:flex;
 }
 
@@ -673,7 +680,11 @@ padding:15px;
 
 .testflow .patient-details ul li {
   list-style-type:none;
-  margin:15px 30px;
+  margin:5px 30px;
+  display:flex;
+  align-items:center;
+  font-size:12px;
+  line-height:12px;
 }
 
 .testflow .patient-details .stat {
@@ -747,9 +758,24 @@ padding:15px;
 
 .testflow .newTestOrder .panel > div.row {justify-content:flex-start;}
 .testflow .newTestOrder .panel .row {
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
-    padding: 0 5px;
+    padding: 0 15px;
+
+    .row {
+      padding:0px;
+    }
+    .buttonActions {
+      justify-content:flex-start;
+    }
+
+    .patientCard {
+      align-self:flex-start;
+    }
+
+    p {
+      font-size:12px;
+    }
 }
 .zebra select, .zebra select option{
   color:#000;

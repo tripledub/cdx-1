@@ -1,10 +1,14 @@
 - content_for(:subheader) do
   .row.center.collapse.edit
     .col.pe-10
-      .row
-        .col
-          %h2
-            = link_to patient_path(@patient), class: 'side-link', title: I18n.t('views.back') do
-              = image_tag "arrow-left.png"
-            = @patient.name
-= render 'form'
+      %h2
+        = link_to patient_path(@patient), class: 'side-link', title: I18n.t('views.back') do
+          = image_tag "arrow-left-white.png"
+        = @patient.name
+
+.row
+  .col.pe-12
+    %section.editPatientContainer
+      %header
+        %h3 Edit Patient Details
+      = render 'form'

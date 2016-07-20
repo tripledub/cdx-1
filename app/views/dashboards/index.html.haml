@@ -20,6 +20,27 @@
         .box-content
           #chartAverageTestsSite{:style => "height: 200px; width: 100%;"}
             = react_component 'CanvasJsChart', chartDiv: 'chartAverageTestsSite', chartData: Extras::Charts::VerticalColumns.new(@dashboard_report.average_test_per_site).render
+    %section
+      .row
+        .small-6.columns.box
+          %header
+            = image_tag('img/test-tube.png')
+            %h3
+              = I18n.t('dashboard.index.drtb_percentage')
+          .box-content
+            #chartDrtbPercentage{:style => "height: 200px; width: 100%;"}
+              = react_component 'CanvasJsChart', chartDiv: 'chartDrtbPercentage', chartData: Extras::Charts::Pie.new(@dashboard_report.drtb_percentage).render
+        .small-6.columns.box
+          %header
+            = image_tag('img/test-tube.png')
+            %h3
+              = I18n.t('dashboard.index.drug_resistance')
+          .box-content
+            #chartDrugResistancePercentage{:style => "height: 200px; width: 100%;"}
+              = react_component 'CanvasJsChart', chartDiv: 'chartDrugResistancePercentage', chartData: Extras::Charts::Pie.new(@dashboard_report.drug_resistance).render
+      .row
+        %p.note
+          = I18n.t('dashboard.index.chart_note')
     %section.row
       .small-4.columns.box
         %header
@@ -40,7 +61,7 @@
             = react_component 'CanvasJsChart', chartDiv: 'chartAverageTestsTechnician', chartData: Extras::Charts::VerticalColumns.new(@dashboard_report.average_tests_per_technician).render
 
     %section.row
-      .small-8.columns.box
+      .small-7.columns.box
         %header
           =image_tag('img/site.png')
           %h3
@@ -48,7 +69,7 @@
         .box-content
           #chartDevicesNotResponding{:style => "height: 200px; width: 100%;"}
             = react_component 'CanvasJsChart', chartDiv: 'chartDevicesNotResponding', chartData: Extras::Charts::HorizontalColumns.new(@dashboard_report.devices_not_responding).render
-      .small-4.columns.box
+      .small-5.columns.box
         = render partial: 'error_codes', locals: { error_codes_by_device: @dashboard_report.error_codes_by_device }
 
     %section.row

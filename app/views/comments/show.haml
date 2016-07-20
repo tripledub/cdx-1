@@ -1,16 +1,15 @@
 .testflow
   .container
-    / Commented Out Spans are for use within CDX using your icon set, where applicable at least
     .row.labelHeader
       .col-6
-        %h3 Comment
+        %h3
+          = I18n.t('comments.show.header.comment', patient_name: patient_display_name(@comment.patient.name))
       .col-6
         %ul
           %li
-            = link_to "Back", patient_path(@comment.patient), class: 'button new'
+            = link_to I18n.t('views.back'), patient_path(@comment.patient), class: 'button new'
     .order-details
       .panel
-        / Start of Row
         .row
           .col-6
             .row
@@ -32,7 +31,7 @@
               .col-12
                 = simple_format @comment.comment
           .col-6
-            - if @comment.image
+            - if image_present?(@comment.image)
               .row
                 .col-12
                   %label

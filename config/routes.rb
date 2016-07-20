@@ -113,6 +113,7 @@ Rails.application.routes.draw do
   end
 
   resources :test_results , only: [:index, :show]
+  resources :test_orders , only: [:index]
   resources :filters, format: 'html'
   resources :subscribers
   resources :policies

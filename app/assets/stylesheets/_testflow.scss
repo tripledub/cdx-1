@@ -265,9 +265,7 @@ body {
   }
   .panel {
     background: #fff;
-    max-width: 90rem;
     margin: 0 auto;
-    overflow: hidden;
     width: 100%;
     hr {
       border: none;
@@ -309,7 +307,7 @@ body {
       background: #2196f3;
     }
     &.cancel, &.edit {
-      background: #555;
+      background: #e06023
     }
   }
   .patient {

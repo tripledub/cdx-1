@@ -28,6 +28,7 @@ module Audit
 
     def update_log(audit_log)
       @auditable_model.changes.each { |key, value| create_log_update(audit_log, key, value) }
+      audit_changes_to_addresses(audit_log, @auditable_model.addresses) if @auditable_model.respond_to? :addresses
     end
 
     def create_log_update(audit_log, field, values)
@@ -41,5 +42,12 @@ module Audit
     def patient_id
       @auditable_model.class.to_s == 'Patient' ? @auditable_model.id : @auditable_model.patient.id
     end
+
+    def audit_changes_to_addresses(audit_log, addresses)
+      addresses.each_with_index do |address, index|
+        address.changes.each { |key, value| create_log_update(audit_log, "#{key} - #{index}", value) }
+      end
+    end
   end
+
 end

@@ -3,11 +3,12 @@
     / Commented Out Spans are for use within CDX using your icon set, where applicable at least
     .row.labelHeader
       .col-6
-        %h3 History
+        %h3
+          = I18n.t('patient_logs.show.header')
       .col-6
         %ul
           %li
-            = link_to "Back", patient_path(@patient_log.patient), class: 'button new'
+            = link_to I18n.t('views.back'), patient_path(@patient_log.patient), class: 'button new'
     .order-details
       .panel
         / Start of Row
@@ -15,19 +16,23 @@
           .col-6
             .row
               .col-12
-                %label Date:
+                %label
+                  = AuditLog.human_attribute_name(:created_at)
                 = I18n.l(@patient_log.created_at, format: :full_time)
             .row
               .col-12
-                %label User:
+                %label
+                  = AuditLog.human_attribute_name(:user_id)
                 = @patient_log.user.full_name
             .row
               .col-12
-                %label Description
+                %label
+                  = AuditLog.human_attribute_name(:title)
                 = @patient_log.title
             .row
               .col-12
-                %label Comment:
+                %label
+                  = AuditLog.human_attribute_name(:comment)
                 = @patient_log.comment
           .col-6
             .panel.patient-details
@@ -40,23 +45,29 @@
                 .col-9
                   %ul
                     %li
-                      %label Patient Name
+                      %label
+                        = Patient.human_attribute_name(:name)
                       = patient_display_name(@patient_log.patient.name)
                     %li
-                      %label Patient ID
+                      %label
+                        = Patient.human_attribute_name(:entity_id)
                       = @patient_log.patient.entity_id
                     %li
-                      %label Sex
+                      %label
+                        = Patient.human_attribute_name(:gender)
                       = @patient_log.patient.gender
                   %ul
                     %li
-                      %label Date of Birth
-                      = patient_birth_date(@patient_log.patient.dob)
+                      %label
+                        = Patient.human_attribute_name(:birth_date_on)
+                      = Extras::Dates::Format.patient_birth_date(@patient_log.patient.birth_date_on)
                     %li
-                      %label Contact Number
+                      %label
+                        = Patient.human_attribute_name(:phone)
                       = @patient_log.patient.phone
                     %li
-                      %label Email Address
+                      %label
+                        = Patient.human_attribute_name(:email)
                       = @patient_log.patient.email
 
         =  react_component 'PatientAuditUpdates', auditUpdatesUrl: patient_patient_log_audit_updates_path(@patient_log.patient, @patient_log)

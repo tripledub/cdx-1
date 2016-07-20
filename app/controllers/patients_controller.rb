@@ -15,7 +15,7 @@ class PatientsController < ApplicationController
 
   def index
     @can_create = has_access?(@navigation_context.institution, CREATE_INSTITUTION_PATIENT)
-    @patients = check_access(Patient.where(is_phantom: false).where(institution: @navigation_context.institution), READ_PATIENT).order(:name)
+    @patients = check_access(Patient.where(is_phantom: false).where(institution: @navigation_context.institution), READ_PATIENT)
 
     @patients = @patients.within(@navigation_context.entity, @navigation_context.exclude_subsites)
 
@@ -26,9 +26,10 @@ class PatientsController < ApplicationController
     @patients = @patients.where(id: Encounter.select(:patient_id).where("encounters.start_time > ?", params["last_encounter"])) if params["last_encounter"].present?
 
     @date_options = Extras::Dates::Filters.date_options_for_filter
-    @patients = perform_pagination(@patients)
-    @patients.preload_locations!
-    @patients = @patients.preload_last_encounter!
+
+    @total            = @patients.count
+    order_by, offset  = perform_pagination('patients.name')
+    @patients         = @patients.order(order_by).limit(@page_size).offset(offset)
   end
 
   def show
@@ -39,19 +40,21 @@ class PatientsController < ApplicationController
   end
 
   def new
-    @patient = PatientForm.new
+    @patient = @navigation_context.institution.patients.new
+
+    add_two_addresses
+
     prepare_for_institution_and_authorize(@patient, CREATE_INSTITUTION_PATIENT)
   end
 
   def create
-    @institution = @navigation_context.institution
+    @institution  = @navigation_context.institution
     return unless authorize_resource(@institution, CREATE_INSTITUTION_PATIENT)
-
-    @patient = PatientForm.new(patient_params)
-    @patient.institution = @institution
+    parse_date_of_birth
+    @patient      = @institution.patients.new(patient_params)
     @patient.site = @navigation_context.site
 
-    if @patient.save_and_audit(current_user, 'New patient added')
+    if validate_name_and_entity_id && @patient.save_and_audit(current_user, "New patient #{@patient.name} added")
       next_url = if params[:next_url].blank?
         patient_path(@patient)
       else
@@ -65,19 +68,19 @@ class PatientsController < ApplicationController
   end
 
   def edit
-    patient  = Patient.find(params[:id])
-    @patient = PatientForm.edit(patient)
-    return unless authorize_resource(patient, UPDATE_PATIENT)
+    @patient  = Patient.find(params[:id])
+    return unless authorize_resource(@patient, UPDATE_PATIENT)
+    add_two_addresses
 
-    @can_delete = has_access?(patient, DELETE_PATIENT)
+    @can_delete = has_access?(@patient, DELETE_PATIENT)
   end
 
   def update
-    patient  = Patient.find(params[:id])
-    @patient = PatientForm.edit(patient)
-    return unless authorize_resource(patient, UPDATE_PATIENT)
+    @patient  = Patient.find(params[:id])
+    return unless authorize_resource(@patient, UPDATE_PATIENT)
+    parse_date_of_birth
 
-    if @patient.update_and_audit(patient_params, current_user, 'Patient details have been updated')
+    if name_is_present? && @patient.update_and_audit(patient_params, current_user, "#{@patient.name} patient details have been updated")
       redirect_to patient_path(@patient), notice: 'Patient was successfully updated.'
     else
       render action: 'edit'
@@ -96,6 +99,33 @@ class PatientsController < ApplicationController
   private
 
   def patient_params
-    params.require(:patient).permit(:name, :entity_id, :gender, :dob, :lat, :lng, :location_geoid, :address, :email, :phone, :city, :state, :zip_code)
+    params.require(:patient).permit(
+      :name, :entity_id, :gender, :nickname, :birth_date_on, :lat, :lng, :location_geoid, :address, :email, :phone, :city, :state, :zip_code,
+      addresses_attributes: [ :id, :address, :city, :state, :zip_code ]
+    )
+  end
+
+  def add_two_addresses
+    (2 - @patient.addresses.size).times { @patient.addresses.build }
+  end
+
+  def validate_name_and_entity_id
+    #Only patients from form need this validation. Phantom patientes don't have name or entity_id
+    @patient.valid?
+    @patient.errors.add(:entity_id, I18n.t('patients.create.no_entity')) if @patient.new_record? && !@patient.entity_id.present?
+    @patient.errors.add(:name, I18n.t('patients.create.no_entity'))      unless @patient.name.present?
+    @patient.errors.empty?
+  end
+
+  def name_is_present?
+    @patient.valid?
+    @patient.errors.add(:name, I18n.t('patients.create.no_entity')) if params['patient'].key?('name') && params['patient']['name'].empty?
+    @patient.errors.empty?
+  end
+
+  def parse_date_of_birth
+    ['birth_date_on(2i)', 'birth_date_on(3i)'].each do |date_part|
+      params['patient'][date_part] = '1' unless params['patient'][date_part].present?
+    end
   end
 end

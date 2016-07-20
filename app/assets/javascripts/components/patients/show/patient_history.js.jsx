@@ -1,19 +1,20 @@
 var tabList = [
-    { 'id': 1, 'name': 'History', 'url': '#' },
-    { 'id': 2, 'name': 'Test Orders', 'url': '#' },
-    { 'id': 3, 'name': 'Results', 'url': '#' },
-    { 'id': 4, 'name': 'Comments', 'url': '#' }
+    { 'id': 1, 'name': 'History' },
+    { 'id': 2, 'name': 'Test Orders' },
+    { 'id': 3, 'name': 'Results' },
+    { 'id': 4, 'name': 'Comments' }
 ];
 
 var PatientHistory = React.createClass({
   getInitialState: function () {
     return {
       tabList: tabList,
-      currentTab: 1
+      currentTab: this.props.defaultTab
     };
   },
 
-  changeTab: function(tab) {
+  changeTab: function(tab, e) {
+    document.cookie = 'defaultTab=' + tab.id;
     this.setState({ currentTab: tab.id });
   },
 

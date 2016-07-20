@@ -18,13 +18,19 @@
         .row
           .col-12
             %label
-              = XpertResult.human_attribute_name(:rifampicin)
-            = Extras::Select.find(XpertResult.rifampicin_options, @xpert_result.rifampicin)
+              = XpertResult.human_attribute_name(:tuberculosis)
+            = Extras::Select.find(XpertResult.tuberculosis_options, @xpert_result.tuberculosis)
+        - if @xpert_result.tuberculosis == 'detected'
+          .row
+            .col-12
+              %label
+                = XpertResult.human_attribute_name(:trace)
+              = Extras::Select.find(XpertResult.trace_options, @xpert_result.trace)
         .row
           .col-12
             %label
-              = XpertResult.human_attribute_name(:tuberculosis)
-            = Extras::Select.find(XpertResult.tuberculosis_options, @xpert_result.tuberculosis)
+              = XpertResult.human_attribute_name(:rifampicin)
+            = Extras::Select.find(XpertResult.rifampicin_options, @xpert_result.rifampicin)
         .row
           .col-12
             %label

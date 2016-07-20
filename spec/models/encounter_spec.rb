@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Encounter do
   it { is_expected.to validate_presence_of :institution }
-   
-  let(:encounter) { Encounter.make }
+  let(:patient)   { Patient.make }
+  let(:encounter) { Encounter.make institution: patient.institution, patient: patient }
 
   it "#human_diagnose" do
     encounter.core_fields[Encounter::ASSAYS_FIELD] = [{"condition" => "flu_a", "name" => "flu_a", "result" => "positive", "quantitative_result" => nil}]
@@ -147,7 +147,7 @@ describe Encounter do
     it "should default status to pending" do
       expect(encounter.status).to eq('pending')
     end
-    
+
     it "should allow observations pii field" do
       encounter.plain_sensitive_data[Encounter::OBSERVATIONS_FIELD] = "Observations"
       expect(encounter).to be_valid
@@ -167,7 +167,6 @@ describe Encounter do
       encounter.core_fields[Encounter::ASSAYS_FIELD] = [{"name"=>"flu_a", "condition"=>"flu_a", "result"=>"indeterminate", "invalid"=>"invalid"}]
       expect(encounter).to_not be_valid
     end
-
   end
 
   context "update diagnostic" do
@@ -289,11 +288,11 @@ describe Encounter do
       end
     end
   end
-  
+
   context "add request test" do
     let(:requested_test1) { RequestedTest.make encounter: encounter}
     let(:requested_test2) { RequestedTest.make encounter: encounter}
-   
+
     it "should save requested tests" do
       requested_test1.encounter = encounter
       requested_test2.encounter = encounter
@@ -302,5 +301,5 @@ describe Encounter do
       expect(encounter.requested_tests.count).to eq(2)
     end
   end
-  
+
 end

@@ -3,15 +3,23 @@ var PatientComments = React.createClass({
     return {
       patientComments: [],
       queryOrder: true,
-      loadingMessasge: 'Loading comments...'
+      loadingMessasge: 'Loading comments...',
+      orderedColumns: {},
+      availableColumns: [
+        { title: 'Date',        fieldName: 'date' },
+        { title: 'Commenter',   fieldName: 'commenter' },
+        { title: 'Description', fieldName: 'description' }
+      ]
     };
   },
 
-  getComments: function(field, e) {
+  getData: function(field, e) {
     if (e) { e.preventDefault(); }
     this.serverRequest = $.get(this.props.commentsUrl + this.getParams(field), function (results) {
       if (results.length > 0) {
         this.setState({ patientComments: results });
+        this.updateOrderIcon(field);
+        $("table").resizableColumns({store: window.store});
       } else {
         this.setState({ loadingMessage: 'There are no comments available.' });
       };
@@ -19,13 +27,25 @@ var PatientComments = React.createClass({
   },
 
   getParams: function(field) {
-    var orderField = field === 1 ? 'date' : 'name';
     this.state.queryOrder = !this.state.queryOrder;
-    return '&field='+ orderField + '&order=' + this.state.queryOrder;
+    return '&field='+ field + '&order=' + this.state.queryOrder;
+  },
+
+  updateOrderIcon: function(orderedField) {
+    var that                       = this;
+    var updatedState               = {};
+    var iconValue                  = (this.state.queryOrder == true) ? '&#x25BC;' : '&#x25B2;';
+    this.state.availableColumns.forEach(
+      function(column) {
+        updatedState[column.fieldName] = ''
+      }
+    );
+    updatedState[orderedField] = iconValue;
+    this.setState({ orderedColumns: updatedState });
   },
 
   componentDidMount: function() {
-    this.getComments(1);
+    this.getData('date');
   },
 
   componentWillUnmount: function() {
@@ -33,10 +53,19 @@ var PatientComments = React.createClass({
   },
 
   render: function(){
-    var rows = [];
+    var rows       = [];
+    var rowHeaders = [];
+    var that       = this;
+
     this.state.patientComments.forEach(
       function(comment) {
         rows.push(<PatientComment comment={comment} key={comment.id} />);
+      }
+    );
+
+    this.state.availableColumns.forEach(
+      function(availableColumn) {
+        rowHeaders.push(<OrderedColumnHeader key={availableColumn.fieldName} title={availableColumn.title} fieldName={availableColumn.fieldName} orderEvent={that.getData} orderIcon={that.state.orderedColumns[availableColumn.fieldName]} />);
       }
     );
 
@@ -44,12 +73,10 @@ var PatientComments = React.createClass({
       <div className="row">
         {
           this.state.patientComments.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> :
-          <table className="patient-history">
+          <table className="table patient-history" data-resizable-columns-id="patient-comments-table">
             <thead>
               <tr>
-                <th><a href="#" onClick={this.getComments.bind(null, 1)}>Date</a></th>
-                <th><a href="#" onClick={this.getComments.bind(null, 2)}>Commenter</a></th>
-                <th>Title</th>
+                {rowHeaders}
               </tr>
             </thead>
             <tbody>

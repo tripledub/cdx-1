@@ -1,6 +1,11 @@
 en:
   select:
     default: Please Select
+    patient:
+      gender_options:
+        male: 'Male'
+        female: 'Female'
+        other: 'Other'
     microscopy:
       visual_appearance:
         blood: 'Blood-stained'
@@ -34,3 +39,13 @@ en:
         detected: 'Detected'
         not_detected: 'Not Detected'
         indeterminate:  'Indeterminate result'
+      trace:
+        very_low: 'Very low'
+        low: 'Low'
+        medium: 'Medium'
+        high: 'High'
+    user:
+      status_options:
+        show_all: 'Show all'
+        active: 'Active'
+        blocked: 'Blocked'

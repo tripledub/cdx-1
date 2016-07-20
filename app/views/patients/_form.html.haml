@@ -4,7 +4,7 @@
 
   = validation_errors @patient
 
-  .row
+  .row.header
     .col.pe-2
       = f.label :institution
     .col
@@ -14,24 +14,30 @@
 
   .row
     .col.pe-2
+      = f.label :nickname
+    .col
+      = f.text_field :nickname, :class => 'input-large'
+
+  .row
+    .col.pe-2
       = f.label :entity_id
     .col
-      = f.text_field :entity_id, :class => 'input-large'
+      = f.text_field :entity_id, :class => 'input-large', readonly: !@patient.new_record?
 
   .row
     .col.pe-2
       = f.label :gender
     .col
-      = cdx_select form: f, name: :gender do |select|
-        - select.items PatientForm::GENDER_VALUES
+      = f.collection_select :gender, Patient.gender_options, :first, :last
 
   .row
     .col.pe-2
-      = f.label :dob
+      = f.label :birth_date_on
     .col
-      = f.date_field :dob, value: @patient.dob
+      = f.date_select :birth_date_on, order: [:day, :month, :year], prompt: { day: I18n.t('patients.form.select_day'), month: I18n.t('patients.form.select_month'), year: I18n.t('patients.form.select_year') }, start_year: Date.today.year, end_year: Date.today.year - 100
 
-  = render partial: "shared/address", :locals => { :f => f, model_type: "patient" }
+  = f.fields_for :addresses do |addresses_form|
+    = render partial: 'addresses/form', locals: { address_form: addresses_form }
 
   .row
     .col.pe-2
@@ -47,7 +53,7 @@
 
   .row.button-actions
     .col
-      = f.submit I18n.t('views.save'), class: 'btn-primary'
+      = f.submit I18n.t('views.save'), class: 'btn-primary save'
       - cancel_path = @patient.persisted? ? patient_path(@patient) : patients_path
       = link_to I18n.t('views.cancel'), cancel_path, class: 'btn-link'
 

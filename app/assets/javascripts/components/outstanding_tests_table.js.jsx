@@ -50,6 +50,11 @@ var OutstandingTestsTable = React.createClass({
       orderBy: ""
     }
   },
+
+  componentDidMount: function() {
+    $("table").resizableColumns({store: window.store});
+  },
+
   setAppendTitleDirection : function(header,value, direction) {
     tempAppendTitle = this.state.appendTitle;
     tempAppendTitleDirection = this.state.appendTitleDirection;
@@ -93,40 +98,24 @@ var OutstandingTestsTable = React.createClass({
             <span className="horizontal-bar-value">There is no data to display</span>
           </div>
           <div className={this.state.shouldHide ? 'hidden' : ''}>
-            <table className="table" cellPadding="0" cellSpacing="0" >
-            <colgroup>
-            <col width="25%" />
-            <col width="25%" />
-            <col width="25%" />
-            <col width="25%" />
-            </colgroup>
-            <thead>
-            <tr>
-              {sortableHeader("Test Order#", "test_order")}
-              {sortableHeader("Date Ordered", "date_ordered")}
-              {sortableHeader("Ordered by", "ordered_by")}
-              {sortableHeader("Outstanding days", "outstanding")}
-            </tr>
-            </thead>
-            </table>
-            <div className="table_scroll_container">
-              <table className="table scroll" cellPadding="0" cellSpacing="0"  id="outstanding_tests_table_chart" >
-              <colgroup>
-              <col width="25%" />
-              <col width="25%" />
-              <col width="25%" />
-              <col width="25%" />
-              </colgroup>
+            <table className="table scroll" cellPadding="0" cellSpacing="0"  data-resizable-columns-id="outstanding-tests-table" id="outstanding_tests_table_chart" >
+              <thead>
+              <tr>
+                {sortableHeader("Test Order#", "test_order")}
+                {sortableHeader("Date Ordered", "date_ordered")}
+                {sortableHeader("Ordered by", "ordered_by")}
+                {sortableHeader("Outstanding days", "outstanding")}
+              </tr>
+              </thead>
               <tbody key={this.randomString()} >
-              {this.state.data.map(function(row_data,index) {
-                                                    return <TestOrdersRow key={index} row_data={row_data} />;
-                                                  }.bind(this))}
+                {this.state.data.map(function(row_data,index) {
+                  return <TestOrdersRow key={index} row_data={row_data} />;
+                }.bind(this))}
               </tbody>
-              </table>
-            </div>
+            </table>
           </div>
         </div>
       </div>
-      );
+    );
   }
 });

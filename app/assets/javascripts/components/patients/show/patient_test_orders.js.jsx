@@ -3,15 +3,26 @@ var PatientTestOrders = React.createClass({
     return {
       patientTestOrders: [],
       queryOrder: true,
-      loadingMessage: 'Loading test orders...'
+      loadingMessage: 'Loading test orders...',
+      orderedColumns: {},
+      availableColumns: [
+        { title: 'Site',         fieldName: 'site' },
+        { title: 'Order Id',     fieldName: 'orderId' },
+        { title: 'Requested by', fieldName: 'requester' },
+        { title: 'Request date', fieldName: 'requestDate' },
+        { title: 'Due date',     fieldName: 'dueDate' },
+        { title: 'status',       fieldName: 'status' }
+      ]
     };
   },
 
-  getTestOrders: function(field, e) {
+  getData: function(field, e) {
     if (e) { e.preventDefault(); }
     this.serverRequest = $.get(this.props.testOrdersUrl + this.getParams(field), function (results) {
       if (results.length > 0) {
         this.setState({ patientTestOrders: results });
+        this.updateOrderIcon(field);
+        $("table").resizableColumns({store: window.store});
       } else {
         this.setState({ loadingMessage: 'There are no test orders.' });
       };
@@ -23,8 +34,21 @@ var PatientTestOrders = React.createClass({
     return '&field='+ field + '&order=' + this.state.queryOrder;
   },
 
+  updateOrderIcon: function(orderedField) {
+    var that                       = this;
+    var updatedState               = {};
+    var iconValue                  = (this.state.queryOrder == true) ? '&#x25BC;' : '&#x25B2;';
+    this.state.availableColumns.forEach(
+      function(column) {
+        updatedState[column.fieldName] = ''
+      }
+    );
+    updatedState[orderedField] = iconValue;
+    this.setState({ orderedColumns: updatedState });
+  },
+
   componentDidMount: function() {
-    this.getTestOrders(1);
+    this.getData('site');
   },
 
   componentWillUnmount: function() {
@@ -33,9 +57,17 @@ var PatientTestOrders = React.createClass({
 
   render: function(){
     var rows = [];
+    var rowHeaders = [];
+    var that       = this;
     this.state.patientTestOrders.forEach(
       function(patientTestOrder) {
         rows.push(<PatientTestOrder patientTestOrder={patientTestOrder} key={patientTestOrder.id} />);
+      }
+    );
+
+    this.state.availableColumns.forEach(
+      function(availableColumn) {
+        rowHeaders.push(<OrderedColumnHeader key={availableColumn.fieldName} title={availableColumn.title} fieldName={availableColumn.fieldName} orderEvent={that.getData} orderIcon={that.state.orderedColumns[availableColumn.fieldName]} />);
       }
     );
 
@@ -43,15 +75,10 @@ var PatientTestOrders = React.createClass({
       <div className="row">
         {
           this.state.patientTestOrders.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> :
-          <table className="patient-test-orders">
+          <table className="table patient-test-orders" data-resizable-columns-id="patient-test-orders-table">
             <thead>
               <tr>
-                <th><a href="#" onClick={this.getTestOrders.bind(null, 'site')}>Site</a></th>
-                <th><a href="#" onClick={this.getTestOrders.bind(null, 'orderId')}>Order ID</a></th>
-                <th><a href="#" onClick={this.getTestOrders.bind(null, 'requester')}>Requested By</a></th>
-                <th><a href="#" onClick={this.getTestOrders.bind(null, 'date')}>Request Date</a></th>
-                <th><a href="#" onClick={this.getTestOrders.bind(null, 'dueDate')}>Due Date</a></th>
-                <th>Status</th>
+                {rowHeaders}
               </tr>
             </thead>
             <tbody>

@@ -5,20 +5,21 @@
     - if @tests.empty?
       = empty_data icon: 'icon-outline-test xx-large' do |c|
         - c.body do
-          %h1 No #{@display_as == "test" ? "tests" : "test results"} have been reported
-          %p Setup your devices first in order to start reporting
+          %h1
+            = I18n.t('test_results.index.header', test_result: I18n.t('test_results.index.test', count: 0))
+          %p
+            = I18n.t('test_results.index.setup_devices')
     - else
-      - if @display_as == "test"
-        = react_component "TestResultsIndexTable", tests: @json, title: pluralize(@total, "test"),
-            orderBy: @order_by, showSites: @show_sites, showDevices: @show_devices,
-            downloadCsvPath: test_results_path(@filter.merge(format: :csv).merge(display_as: @display_as))
-      - else
-        = react_component "TestOrdersIndexTable", tests: @json, title: pluralize(@total, "test order"),
-            orderBy: @order_by, showSites: @show_sites, showDevices: @show_devices,
-            downloadCsvPath: test_results_path(@filter.merge(format: :csv).merge(display_as: @display_as))
-
-      .pagination
-        = render 'shared/pagination'
-        -# if @display_as == "test"
-        -#  = link_to "Add filter", new_filter_path(query: @filter), class: 'pull-right'
-
+      %section.row
+        .small-12.columns.box
+          %header
+            = image_tag('img/test-tube.png')
+            %h3
+              = I18n.t('test_orders.index.test_order', count: @total)
+            %span.table-actions
+              = link_to test_results_path(@filter.merge(format: :csv)), title: I18n.t('test_results.index.test', count: @total) do
+                %span.icon-download.icon-gray
+          .box-content
+            = react_component "TestResultsIndexTable", tests: @json, orderBy: @order_by, showSites: @show_sites, showDevices: @show_devices
+            .pagination
+              = render 'shared/pagination'

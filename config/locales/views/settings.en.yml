@@ -1,0 +1,8 @@
+en:
+  settings:
+    alerts:
+      incidents:
+        incidents: 'Incidents'
+        alert_group: 'Alert Group'
+        date: 'Date'
+        sample_id: 'Sample Id'

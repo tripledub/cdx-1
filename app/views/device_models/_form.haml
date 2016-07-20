@@ -22,13 +22,10 @@
           .col.pe-4
             = manifest_form.label :definition
           .col
+            %input#deleted_manifest_id{:name => "deleted_manifest", :type => "hidden", :value => ""}
             - if !@device_model.new_record? && @device_model.manifest.definition
-              .file-uploaded
-                %label.input.on
-                  = link_to @device_model.manifest.filename, manifest_device_model_path(@device_model)
-                  %a.clear-label{:href => "#"}
-                    = image_tag "ic-cross.png"
-            .upload-new-file
+              = react_component('DisplayManifest', manifest_id: @device_model.manifest.id, manifest_filename: @device_model.manifest.filename, manifest_path: manifest_device_model_path(@device_model) )
+            #upload-new-file-id.upload-new-file
               = manifest_form.file_field :definition, :class => "inputfile"
               %label{:for => 'device_model_manifest_attributes_definition'}
                 %span

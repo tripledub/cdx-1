@@ -3,15 +3,23 @@ var PatientResults = React.createClass({
     return {
       patientResults: [],
       queryOrder: true,
-      loadingMessasge: 'Loading test results...'
+      loadingMessasge: 'Loading test results...',
+      orderedColumns: {},
+      availableColumns: [
+        { title: 'Name',   fieldName: 'name' },
+        { title: 'Status', fieldName: 'status' },
+        { title: 'Date',   fieldName: 'date' }
+      ]
     };
   },
 
-  getPatientResults: function(field, e) {
+  getData: function(field, e) {
     if (e) { e.preventDefault(); }
     this.serverRequest = $.get(this.props.testResultsUrl + this.getParams(field), function (results) {
       if (results.length > 0) {
         this.setState({ patientResults: results });
+        this.updateOrderIcon(field);
+        $("table").resizableColumns({store: window.store});
       } else {
         this.setState({ loadingMessage: 'There are no results available.' });
       };
@@ -19,13 +27,25 @@ var PatientResults = React.createClass({
   },
 
   getParams: function(field) {
-    var orderField = field === 1 ? 'date' : 'name';
     this.state.queryOrder = !this.state.queryOrder;
-    return '&field='+ orderField + '&order=' + this.state.queryOrder;
+    return '&field='+ field + '&order=' + this.state.queryOrder;
+  },
+
+  updateOrderIcon: function(orderedField) {
+    var that                       = this;
+    var updatedState               = {};
+    var iconValue                  = (this.state.queryOrder == true) ? '&#x25BC;' : '&#x25B2;';
+    this.state.availableColumns.forEach(
+      function(column) {
+        updatedState[column.fieldName] = ''
+      }
+    );
+    updatedState[orderedField] = iconValue;
+    this.setState({ orderedColumns: updatedState });
   },
 
   componentDidMount: function() {
-    this.getPatientResults(1);
+    this.getData('date');
   },
 
   componentWillUnmount: function() {
@@ -33,10 +53,18 @@ var PatientResults = React.createClass({
   },
 
   render: function(){
-    var rows = [];
+    var rows       = [];
+    var rowHeaders = [];
+    var that       = this;
     this.state.patientResults.forEach(
       function(patientResult) {
         rows.push(<PatientResult patientResult={patientResult} key={patientResult.id} />);
+      }
+    );
+
+    this.state.availableColumns.forEach(
+      function(availableColumn) {
+        rowHeaders.push(<OrderedColumnHeader key={availableColumn.fieldName} title={availableColumn.title} fieldName={availableColumn.fieldName} orderEvent={that.getData} orderIcon={that.state.orderedColumns[availableColumn.fieldName]} />);
       }
     );
 
@@ -44,12 +72,10 @@ var PatientResults = React.createClass({
       <div className="row">
         {
           this.state.patientResults.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> :
-          <table className="patient-results">
+          <table className="table patient-results" data-resizable-columns-id="patient-results-table">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Date</th>
+                {rowHeaders}
               </tr>
             </thead>
             <tbody>

@@ -3,3 +3,5 @@ en:
     back: 'Back'
     cancel: 'Cancel'
     save: 'Save'
+    say_yes: 'Yes'
+    say_no: 'No'

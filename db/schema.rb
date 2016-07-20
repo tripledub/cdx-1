@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705092836) do
+ActiveRecord::Schema.define(version: 20160719161550) do
+
+  create_table "addresses", force: :cascade do |t|
+    t.string   "uuid",             limit: 255
+    t.integer  "addressable_id",   limit: 4
+    t.string   "addressable_type", limit: 255
+    t.string   "address",          limit: 255
+    t.string   "zip_code",         limit: 255
+    t.string   "city",             limit: 255
+    t.string   "state",            limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "addresses", ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type", using: :btree
 
   create_table "alert_condition_results", force: :cascade do |t|
     t.string  "result",   limit: 255
@@ -109,16 +123,23 @@ ActiveRecord::Schema.define(version: 20160705092836) do
   end
 
   create_table "audit_logs", force: :cascade do |t|
-    t.text     "comment",    limit: 65535
-    t.string   "title",      limit: 255
-    t.string   "uuid",       limit: 255
-    t.integer  "patient_id", limit: 4
-    t.integer  "user_id",    limit: 4
+    t.text     "comment",           limit: 65535
+    t.string   "title",             limit: 255
+    t.string   "uuid",              limit: 255
+    t.integer  "patient_id",        limit: 4
+    t.integer  "user_id",           limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "type",              limit: 255
+    t.integer  "encounter_id",      limit: 4
+    t.integer  "requested_test_id", limit: 4
+    t.integer  "patient_result_id", limit: 4
   end
 
+  add_index "audit_logs", ["encounter_id"], name: "fk_rails_242face86a", using: :btree
   add_index "audit_logs", ["patient_id"], name: "index_audit_logs_on_patient_id", using: :btree
+  add_index "audit_logs", ["patient_result_id"], name: "fk_rails_2fc931c99d", using: :btree
+  add_index "audit_logs", ["requested_test_id"], name: "fk_rails_2f852d7fa9", using: :btree
   add_index "audit_logs", ["user_id"], name: "index_audit_logs_on_user_id", using: :btree
   add_index "audit_logs", ["uuid"], name: "index_audit_logs_on_uuid", using: :btree
 
@@ -136,7 +157,7 @@ ActiveRecord::Schema.define(version: 20160705092836) do
   add_index "audit_updates", ["uuid"], name: "index_audit_updates_on_uuid", using: :btree
 
   create_table "comments", force: :cascade do |t|
-    t.date     "commented_on",                     default: '2016-06-21'
+    t.date     "commented_on"
     t.text     "comment",            limit: 65535
     t.string   "description",        limit: 255
     t.string   "uuid",               limit: 255
@@ -291,6 +312,8 @@ ActiveRecord::Schema.define(version: 20160705092836) do
     t.integer  "treatment_weeks",    limit: 4
     t.integer  "performing_site_id", limit: 4
     t.integer  "status",             limit: 4,     default: 0
+    t.string   "testing_for",        limit: 255,   default: ""
+    t.string   "culture_format",     limit: 255
   end
 
   add_index "encounters", ["deleted_at"], name: "index_encounters_on_deleted_at", using: :btree
@@ -472,6 +495,8 @@ ActiveRecord::Schema.define(version: 20160705092836) do
     t.boolean  "results_3plus",                      default: false
     t.boolean  "results_ntm",                        default: false
     t.boolean  "results_contaminated",               default: false
+    t.string   "culture_format",       limit: 255
+    t.string   "trace",                limit: 255
   end
 
   add_index "patient_results", ["deleted_at"], name: "index_patient_results_on_deleted_at", using: :btree
@@ -505,8 +530,11 @@ ActiveRecord::Schema.define(version: 20160705092836) do
     t.string   "state",          limit: 255
     t.string   "city",           limit: 255
     t.string   "zip_code",       limit: 255
+    t.string   "nickname",       limit: 255
+    t.date     "birth_date_on"
   end
 
+  add_index "patients", ["birth_date_on"], name: "index_patients_on_birth_date_on", using: :btree
   add_index "patients", ["deleted_at"], name: "index_patients_on_deleted_at", using: :btree
   add_index "patients", ["institution_id"], name: "index_patients_on_institution_id", using: :btree
   add_index "patients", ["site_id"], name: "index_patients_on_site_id", using: :btree
@@ -568,13 +596,14 @@ ActiveRecord::Schema.define(version: 20160705092836) do
   end
 
   create_table "sample_identifiers", force: :cascade do |t|
-    t.integer  "sample_id",  limit: 4
-    t.string   "entity_id",  limit: 255
-    t.string   "uuid",       limit: 255
-    t.integer  "site_id",    limit: 4
+    t.integer  "sample_id",     limit: 4
+    t.string   "entity_id",     limit: 255
+    t.string   "uuid",          limit: 255
+    t.integer  "site_id",       limit: 4
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "lab_sample_id", limit: 255
   end
 
   add_index "sample_identifiers", ["deleted_at"], name: "index_sample_identifiers_on_deleted_at", using: :btree
@@ -698,7 +727,6 @@ ActiveRecord::Schema.define(version: 20160705092836) do
     t.boolean  "is_active",                                  default: true
     t.string   "telephone",                      limit: 255
     t.boolean  "sidebar_open",                               default: true
-    t.integer  "timeout_in_seconds",             limit: 4,   default: 180
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
@@ -712,6 +740,9 @@ ActiveRecord::Schema.define(version: 20160705092836) do
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
   add_foreign_key "alerts", "institutions"
+  add_foreign_key "audit_logs", "encounters"
+  add_foreign_key "audit_logs", "patient_results"
+  add_foreign_key "audit_logs", "requested_tests"
   add_foreign_key "device_messages", "sites"
   add_foreign_key "encounters", "sites"
   add_foreign_key "encounters", "users"

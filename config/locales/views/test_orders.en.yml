@@ -1,0 +1,17 @@
+en:
+  test_orders:
+    index:
+      header: ''
+      not_applicable: 'Not Applicable'
+      header: 'No test orders have been created'
+      test_order:
+        zero: 'Test orders'
+        one: 'Test order'
+        other: '%{count} Test orders'
+    filters:
+      show_all: 'Show all'
+      show_filters: 'Show filters'
+      condition: 'Condition'
+      result: 'Result'
+      date: 'Date'
+      test_order_id: 'Test order id'

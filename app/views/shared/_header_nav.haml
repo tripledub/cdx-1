@@ -4,7 +4,7 @@
 
   - if @navigation_context.try(:entity)
     %a#nav-context(href='#'){title: @navigation_context.name}
-      at
+      = I18n.t('layout.header_nav.menu_at')
       = @navigation_context.name
 
   %nav#nav-bar
@@ -12,8 +12,8 @@
       %ul
         -# ------------ HOME
         - if has_access?(TestResult, Policy::Actions::MEDICAL_DASHBOARD)
-          %li{:class => params[:controller] == "dashboards" && params[:action] == "index" && "active"}
-            = link_to "Home", dashboard_path
+          %li{:class => is_menu_item_active?('dashboards', request.params) }
+            = link_to I18n.t('layout.header_nav.home'), dashboard_path
 
         -# ------------ REPORTS (just unindent the lines below to reactivate)
           - if has_access?(TestResult, Policy::Actions::MEDICAL_DASHBOARD)
@@ -22,29 +22,29 @@
 
         -# ------------ PATIENTS
         - if has_access_to_patients_index?
-          %li{:class => params[:controller] == "patients" && "active"}
-            = link_to "Patients", patients_path
+          %li{:class => is_menu_item_active?('patients', request.params) }
+            = link_to I18n.t('layout.header_nav.patients'), patients_path
 
         -# ------------ TEST Orders
         - if has_access_to_test_results_index?
-          %li{:class => ["test_orders", "encounters"].include?(params[:controller]) && "active"}
-            = link_to "Test Orders", test_results_path + '&display_as=test_order'
+          %li{:class => is_menu_item_active?('test_orders', request.params) }
+            = link_to I18n.t('layout.header_nav.test_orders'), test_orders_path
 
         -# ------------ TEST RESULTS
         - if has_access_to_test_results_index?
-          %li{:class => ["test_results", "encounters"].include?(params[:controller]) && "active"}
-            = link_to "Test Results", test_results_path
+          %li{:class => is_menu_item_active?('test_results', request.params) }
+            = link_to I18n.t('layout.header_nav.test_results'), test_results_path
 
 
         -# ------------ DEVICES
         - if has_access_to_devices_index?
-          %li{:class => params[:controller] == "devices" && "active"}
-            = link_to "Devices", devices_path
+          %li{:class => is_menu_item_active?('devices', request.params) }
+            = link_to I18n.t('layout.header_nav.devices'), devices_path
 
         -# ------------ SETTINGS
         - if has_access_to_settings?
-          %li{:class => (["roles", "policies", "alerts", "incidents", "alert_messages"].include?(params[:controller]) || params[:action] == "settings") && "active"}
-            = link_to "Settings", settings_path
+          %li{:class => is_menu_item_active?('settings', request.params) }
+            = link_to I18n.t('layout.header_nav.settings'), settings_path
 
         -# ------------ SITES
           - if has_access_to_sites_index?
@@ -72,10 +72,10 @@
       %span.icon-user.medium.icon-gray-light{title: current_user.email}
       %ul
         - unless @hide_my_account #|| Settings.single_tenant
-          %li= link_to "My Account", edit_user_registration_path
+          %li= link_to I18n.t('layout.header_nav.my_account'), edit_user_registration_path
         - if current_user && !@hide_nav_bar
           %li= link_to institution_name, institutions_path
-          %li= link_to "API tokens", api_tokens_path
-        %li= link_to "Log out", destroy_session_path(:user), method: :delete
+          %li= link_to I18n.t('layout.header_nav.api_tokens'), api_tokens_path
+        %li= link_to I18n.t('layout.header_nav.log_out'), destroy_session_path(:user), method: :delete
     - else
-      = link_to "Log in", new_session_path(:user)
+      = link_to I18n.t('layout.header_nav.log_in'), new_session_path(:user)

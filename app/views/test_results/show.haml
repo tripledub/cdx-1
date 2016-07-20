@@ -31,7 +31,7 @@
       - c.bottom do
         - if @test_result.patient
           = I18n.t('test_results.show.patient')
-          = link_to @test_result.patient.name_or_unknown, @test_result.patient
+          = link_to patient_display_name(@test_result.patient.name), @test_result.patient
           %br
         = I18n.t('test_results.show.test_performed_on')
         = link_to @test_result.device.name, device_path(@test_result.device)
@@ -91,7 +91,8 @@
 
 .row
   .col.pe-2
-    %label Other tests
+    %label
+      = I18n.t('test_results.show.other_tests')
   .col
     .value
       - case @other_tests.count
@@ -104,5 +105,13 @@
         = @other_tests.map { |t| link_to t.core_fields[TestResult::NAME_FIELD], test_result_path(t.uuid) }.to_sentence.html_safe
         = I18n.t('test_results.show.were_also_made')
 - if @device_messages
-  .row
-    = render partial: 'device_messages/messages_table', locals: { messages: @device_messages, total: @total_messages }
+  %section.row
+    .small-12.columns.box
+      %header
+        = image_tag('img/device.png')
+        %h3
+          = I18n.t('test_orders.index.test_order', count: @total)
+      .box-content
+        = react_component "DeviceMessagesList", deviceMessages: @device_messages, orderBy: @order_by
+        .pagination
+          = render 'shared/pagination'

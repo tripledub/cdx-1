@@ -22,11 +22,22 @@ en:
       patients: 'Patients'
     new:
       new_patient: 'New patient'
+    create:
+      no_entity: "Entity Id can't be blank"
+      no_name: "Name can't be blank"
+    form:
+      select_day: 'Select day'
+      select_month: 'Select month'
+      select_year: 'Select year'
     index:
       no_patients: 'No patients registered'
       keep_organized: 'Keep your test orders organized under patients medical history'
       name: 'Name'
       patient_id: 'Patient Id'
-      birth_date: 'Date of birth'
+      birth_date_on: 'Date of birth'
       city: 'City'
       last_test_order: 'Last test order'
+      patient:
+        zero: 'No patients'
+        one:  'One patient'
+        other: '%{count} patients'

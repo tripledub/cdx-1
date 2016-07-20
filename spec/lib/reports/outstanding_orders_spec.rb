@@ -49,7 +49,7 @@ RSpec.describe Reports::OutstandingOrders, elasticsearch: true do
           describe 'process results and sort by month' do
             before do
               options={}
-              options['since'] =nil
+              options['since'] = (Date.today - 1.year).iso8601
               @data = Reports::OutstandingOrders.process(current_user, nav_context, options)
             end
 

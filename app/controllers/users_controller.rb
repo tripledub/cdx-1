@@ -21,11 +21,14 @@ class UsersController < ApplicationController
     @total = @users.count
 
     @date_options = Extras::Dates::Filters.date_options_for_filter
-    @status = [{value: "", label: "Show all"}, {value: "1", label: "Active"}, {value: "0", label: "Blocked"}]
 
     respond_to do |format|
       format.html do
-        @users = perform_pagination(@users)
+        @total = @users.count
+
+        order_by, offset = perform_pagination('users.first_name')
+        order_by         = order_by + ', users.last_name' if order_by.include?('users.first_name')
+        @users = @users.order(order_by).limit(@page_size).offset(offset)
       end
       format.csv do
         filename = "Users-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
@@ -57,7 +60,7 @@ class UsersController < ApplicationController
     (params[:users] || []).each do |email|
       email = email.strip
       if email.length > 0
-        user = User.find_by(email: email)      
+        user = User.find_by(email: email)
         if user.present?
           output_info << "User with Email '#{email}' is already in the System - please edit that User<br>"
         else
@@ -124,7 +127,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # Find a User by their Email address, 
+  # Find a User by their Email address,
   # return a json state of 'success' (if found) or 'fail'.
   # To be used from an Ajax call.
   def find
@@ -136,8 +139,8 @@ class UsersController < ApplicationController
     end
   end
 
-  # Find the User by ID, 
-  # attempt to send the Invite email again to them, 
+  # Find the User by ID,
+  # attempt to send the Invite email again to them,
   # then redirect back to the Users list page.
   def resend_invite
     #user = User.find_by(id: params[:id])
@@ -173,9 +176,8 @@ class UsersController < ApplicationController
   def build_csv
     CSV.generate do |csv|
       csv << ["Full name", "Roles", "Last activity"]
-      @users.each do |u|
-        roles = u.roles.empty? ? nil : "#{u.roles.pluck(:name).join(",")}"
-        csv << [u.full_name, roles, ApplicationController.helpers.last_activity(u)]
+      Presenters::Users.index_table(@users, @navigation_context).map do |u|
+        csv << [u[:name], u[:roles], u[:lastActivity]]
       end
     end
   end

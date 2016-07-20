@@ -7,6 +7,6 @@
             %h2
               = link_to patient_path(@patient), class: 'side-link', title: I18n.t('views.back') do
                 = image_tag "arrow-left-white.png"
-              New Comment
+              = I18n.t('comments.new.new_comment')
 
 = render 'form'

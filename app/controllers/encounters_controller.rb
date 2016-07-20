@@ -1,5 +1,6 @@
 class EncountersController < ApplicationController
-  before_filter :load_encounter, only: %W(show edit)
+  before_filter :load_encounter, only: [:show, :edit]
+  before_filter :find_institution_and_patient,   only: [:new]
 
   def new_index
     return unless authorize_resource(Site, CREATE_SITE_ENCOUNTER).empty?
@@ -7,13 +8,6 @@ class EncountersController < ApplicationController
 
   def new
     determine_referal
-
-    if params[:patient_id].present?
-      @institution = @navigation_context.institution
-      @patient_json = Jbuilder.new do |json|
-        scoped_patients.find(params[:patient_id]).as_json_card(json)
-      end.attributes!
-    end
 
     @possible_assay_results = TestResult.possible_results_for_assay
     return unless authorize_resource(Site, CREATE_SITE_ENCOUNTER).empty?
@@ -27,6 +21,7 @@ class EncountersController < ApplicationController
       @encounter.user = current_user
       @blender.save_and_index!
       @encounter.updated_diagnostic_timestamp!
+      store_create_encounter_audit_log
     end
   end
 
@@ -58,6 +53,7 @@ class EncountersController < ApplicationController
     @encounter.update(deleted_at: Time.now)
     begin
        Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: @encounter.uuid
+       Audit::EncounterAuditor.new(@encounter, current_user.id).log_action("Test Order Cancelled", "Test Order #{@encounter.uuid} Cancelled", @encounter)
     rescue => ex
       Rails.logger.error ex.message
     end
@@ -123,7 +119,7 @@ class EncountersController < ApplicationController
   def new_sample
     perform_encounter_action "creating new sample" do
       prepare_encounter_from_json
-      added_sample = new_sample_for_site
+      added_sample      = new_sample_for_site
       @extended_respone = { sample: added_sample }
     end
   end
@@ -131,7 +127,7 @@ class EncountersController < ApplicationController
   def add_sample_manually
     perform_encounter_action "adding manual sample" do
       prepare_encounter_from_json
-      sample = { entity_id: params[:entity_id] }
+      sample = { entity_id: params[:entity_id], lab_sample_id: params[:lab_sample_id]}
       if validate_manual_sample_non_existant(sample)
         @encounter.new_samples << sample
         @extended_respone = { sample: sample }
@@ -146,23 +142,29 @@ class EncountersController < ApplicationController
 
   private
 
+  def store_create_encounter_audit_log
+    Audit::EncounterAuditor.new(@encounter, current_user.id).log_changes("New Test Order Created", "Test Order created #{@encounter.uuid}", @encounter)
+    @encounter.requested_tests.each do |test|
+      Audit::EncounterTestAuditor.new(@encounter, current_user.id).log_changes("New #{test.name} Test Created", "Test #{test.name} created for test order #{@encounter.uuid}", @encounter, test)
+    end
+  end
+
   def determine_referal
-    @show_edit_encounter = true
+    @show_edit_encounter   = true
     @show_cancel_encounter = false
     @return_path_encounter = nil
-    
-    @return_path_encounter = test_results_path(display_as: 'test_order') if params['test_order_page_mode'] !=nil
-    
+    @return_path_encounter = test_orders_path if params['test_order_page_mode'] !=nil
+
     if request.referer
-      referer = URI(request.referer).path
+      referer       = URI(request.referer).path
       referer_check = referer =~ /\/patients\/\d/
-       if  (referer_check != nil) || (params['test_order_page_mode'] == 'cancel')
-        @show_edit_encounter=false
-        @show_cancel_encounter=true if (@encounter != nil) && (Encounter.statuses[@encounter.status] != Encounter.statuses["inprogress"])
+       if referer_check || (params['test_order_page_mode'] == 'cancel')
+        @show_edit_encounter   = false
+        @show_cancel_encounter = true if @encounter && (Encounter.statuses[@encounter.status] != Encounter.statuses["inprogress"])
         if @encounter && @encounter.patient
-           @return_path_encounter=patient_path(@encounter.patient) 
+           @return_path_encounter = patient_path(@encounter.patient)
         else
-          @return_path_encounter=referer
+          @return_path_encounter = referer
         end
       end
     end
@@ -220,42 +222,40 @@ class EncountersController < ApplicationController
   end
 
   def prepare_encounter_from_json
-    encounter_param = @encounter_param = JSON.parse(params[:encounter])
-    @encounter = encounter_param['id'] ? Encounter.find(encounter_param['id']) : Encounter.new
+    encounter_param        = @encounter_param = JSON.parse(params[:encounter])
+    @encounter             = encounter_param['id'] ? Encounter.find(encounter_param['id']) : Encounter.new
     @encounter.new_samples = []
-    @encounter.is_phantom = false
+    @encounter.is_phantom  = false
 
     if @encounter.new_record?
-      @institution = institution_by_uuid(encounter_param['institution']['uuid'])
-      @encounter.institution = @institution
-      @encounter.site = site_by_uuid(@institution, encounter_param['site']['uuid'])
-      @encounter.performing_site = site_by_uuid(@institution, encounter_param['performing_site']['uuid']) if encounter_param['performing_site'] !=nil
-      @encounter.exam_reason = encounter_param['exam_reason']
-      @encounter.tests_requested = encounter_param['tests_requested']
-      @encounter.coll_sample_type = encounter_param['coll_sample_type']
+      @institution                 = institution_by_uuid(encounter_param['institution']['uuid'])
+      @encounter.institution       = @institution
+      @encounter.site              = site_by_uuid(@institution, encounter_param['site']['uuid'])
+      @encounter.performing_site   = site_by_uuid(@institution, encounter_param['performing_site']['uuid']) if encounter_param['performing_site'] !=nil
+      @encounter.exam_reason       = encounter_param['exam_reason']
+      @encounter.tests_requested   = encounter_param['tests_requested']
+      @encounter.coll_sample_type  = encounter_param['coll_sample_type']
       @encounter.coll_sample_other = encounter_param['coll_sample_other']
-      @encounter.diag_comment = encounter_param['diag_comment']
-      @encounter.treatment_weeks = encounter_param['treatment_weeks']
-      @encounter.testdue_date = encounter_param['testdue_date']
+      @encounter.culture_format    = encounter_param['culture_format']
+      @encounter.diag_comment      = encounter_param['diag_comment']
+      @encounter.treatment_weeks   = encounter_param['treatment_weeks']
+      @encounter.testdue_date      = encounter_param['testdue_date']
+      @encounter.testing_for       = encounter_param['testing_for']
     else
-      @institution = @encounter.institution
+      @institution                 = @encounter.institution
     end
-    @blender = Blender.new(@institution)
 
+    @blender = Blender.new(@institution)
     @encounter_blender = @blender.load(@encounter)
 
-    encounter_param['patient'].tap do |patient_param|
-      if patient_param.present? && patient_param['id'].present?
-        set_patient_by_id patient_param['id']
-      end
-    end
+    set_patient_by_id get_patient_id_from_params(encounter_param)
 
     encounter_param['samples'].each do |sample_param|
       add_sample_by_uuids sample_param['uuids']
     end
 
     encounter_param['new_samples'].each do |new_sample_param|
-      @encounter.new_samples << {entity_id: new_sample_param['entity_id']}
+      @encounter.new_samples << { entity_id: new_sample_param['entity_id'], lab_sample_id: new_sample_param['lab_sample_id'] }
     end
 
     encounter_param['test_results'].each do |test_param|
@@ -270,7 +270,7 @@ class EncountersController < ApplicationController
 
   def create_new_samples
     @encounter.new_samples.each do |new_sample|
-      add_new_sample_by_entity_id new_sample[:entity_id]
+      add_new_sample_by_entity_id new_sample
     end
     @encounter.new_samples = []
   end
@@ -304,15 +304,20 @@ class EncountersController < ApplicationController
   end
 
   def set_patient_by_id(id)
-    patient = scoped_patients.find(id)
+    return unless id
+    patient         = scoped_patients.find(id)
     patient_blender = @blender.load(patient)
     @blender.merge_parent(@encounter_blender, patient_blender)
     patient_blender
   end
 
-  def add_new_sample_by_entity_id(entity_id)
+  def add_new_sample_by_entity_id(sample_identifier)
     sample = Sample.new(institution: @encounter.institution)
-    sample.sample_identifiers.build(site: @encounter.site, entity_id: entity_id)
+    sample.sample_identifiers.build(
+      site: @encounter.site,
+      entity_id: sample_identifier[:entity_id],
+      lab_sample_id: sample_identifier[:lab_sample_id]
+    )
 
     sample_blender = @blender.load(sample)
     @blender.merge_parent(sample_blender, @encounter_blender)
@@ -335,7 +340,7 @@ class EncountersController < ApplicationController
   end
 
   def add_test_result_by_uuid(uuid)
-    test_result = scoped_test_results.find_by!(uuid: uuid)
+    test_result         = scoped_test_results.find_by!(uuid: uuid)
     test_result_blender = @blender.load(test_result)
     @blender.merge_parent(test_result_blender, @encounter_blender)
     test_result_blender
@@ -343,7 +348,7 @@ class EncountersController < ApplicationController
 
   def recalculate_diagnostic
     previous_tests_uuids = @encounter_param['test_results'].map{|t| t['uuid']}
-    assays_to_merge = @blender.test_results\
+    assays_to_merge      = @blender.test_results\
       .reject{|tr| (tr.uuids & previous_tests_uuids).any?}\
       .map{|tr| tr.core_fields[TestResult::ASSAYS_FIELD]}
 
@@ -376,6 +381,8 @@ class EncountersController < ApplicationController
       json.(@encounter, :treatment_weeks)
       json.(@encounter, :status)
       json.(@encounter, :testdue_date)
+      json.(@encounter, :testing_for)
+      json.culture_format Extras::Select.find(Encounter.culture_format_options, @encounter.culture_format)
       json.has_dirty_diagnostic @encounter.has_dirty_diagnostic?
       json.assays (@encounter_blender.core_fields[Encounter::ASSAYS_FIELD] || [])
       json.observations @encounter_blender.plain_sensitive_data[Encounter::OBSERVATIONS_FIELD]
@@ -387,11 +394,11 @@ class EncountersController < ApplicationController
         as_json_site(json, @encounter.site)
       end
 
-     if @encounter.performing_site != nil
-      json.performing_site do
-        as_json_site(json, @encounter.performing_site)
+      if @encounter.performing_site
+        json.performing_site do
+          as_json_site(json, @encounter.performing_site)
+        end
       end
-    end
 
       json.patient do
         if @encounter_blender.patient.blank?
@@ -413,13 +420,13 @@ class EncountersController < ApplicationController
     end
   end
 
-  def as_json_samples_search(samples)
-    Jbuilder.new do |json|
-      json.array! samples do |sample|
-        as_json_sample(json, sample)
-      end
-    end
-  end
+   def as_json_samples_search(samples)
+     Jbuilder.new do |json|
+       json.array! samples do |sample|
+         as_json_sample(json, sample)
+       end
+     end
+   end
 
   def as_json_site_list(sites)
     Jbuilder.new do |json|
@@ -431,7 +438,7 @@ class EncountersController < ApplicationController
   end
 
   def as_json_sample(json, sample)
-    json.(sample, :uuids, :entity_ids)
+    json.(sample, :uuids, :entity_ids, :lab_sample_ids)
     json.uuid sample.uuids[0]
   end
 
@@ -449,5 +456,17 @@ class EncountersController < ApplicationController
 
   def as_json_site(json, site)
     json.(site, :uuid, :name, :allows_manual_entry)
+  end
+
+  def find_institution_and_patient
+    @institution = @navigation_context.institution
+
+    redirect_to test_orders_path, notice: I18n.t('encounters.new.no_patient') unless @patient = scoped_patients.where(id: params[:patient_id]).first
+  end
+
+  def get_patient_id_from_params(encounter_param)
+    return unless encounter_param['patient'] || encounter_param['patient_id']
+
+    encounter_param['patient'].present? ? encounter_param['patient']['id'] : encounter_param['patient_id']
   end
 end
