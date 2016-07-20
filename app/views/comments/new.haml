@@ -1,12 +1,16 @@
 - content_for(:subheader) do
   .commentarea
-    .row.center.add-new
+    .row.center.add-new.collapse
       .col.pe-10
-        .row
-          .col
-            %h2
-              = link_to patient_path(@patient), class: 'side-link', title: I18n.t('views.back') do
-                = image_tag "arrow-left-white.png"
-              = I18n.t('comments.new.new_comment')
+        %h2
+          = link_to patient_path(@patient), class: 'side-link', title: I18n.t('views.back') do
+            = image_tag "arrow-left-white.png"
+          = I18n.t('comments.new.new_comment')
 
-= render 'form'
+    %section.row.paginationHeader
+      .small-12.columns.box
+        %header
+          %h3
+            Comment Details
+        .box-content
+          = render 'form'

@@ -131,15 +131,10 @@ var EncounterShow = React.createClass({
                 </FlexFullRow>
               </div>
             </div>
-<<<<<<< fde0b3ff1f35d2e450411633680e8ca39eac2671
-=======
 
           </div>
         </div>
->>>>>>> More style fixes - mainly around the table resize and patient summary
 
-          </div>
-        </div>
         <div className="row">
           <RequestedTestsIndexTable encounter={this.props.encounter} requested_tests={this.state.requested_tests} requested_by={this.props.requested_by}
            status_types={this.props.status_types} edit={this.props.show_edit} onTestChanged={this.onTestChanged} associated_tests_to_results={this.props.associated_tests_to_results}/>
