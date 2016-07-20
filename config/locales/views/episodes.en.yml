@@ -1,0 +1,5 @@
+en:
+  episodes:
+    form:
+      header: 'Episode (TB) for %{patient_name}'
+      history: 'History of Previous Treatment'

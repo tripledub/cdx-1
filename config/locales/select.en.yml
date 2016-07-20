@@ -49,3 +49,30 @@ en:
         show_all: 'Show all'
         active: 'Active'
         blocked: 'Blocked'
+    episode:
+      hiv_status:
+        positive_tb: 'Positive'
+        negative_tb: 'Negative'
+        unknown: 'Unknown'
+      history:
+        new: 'New Patients'
+        previous: 'Previously Treated'
+        unknown: 'Unknown Previously'
+        relapsed: 'Relapsed Treatment Aft.'
+        loss: 'Loss to follow-up'
+        other: 'Other previous treatments'
+      treatment_outcome:
+        cured: 'Cured'
+        completed: 'Treatment completed'
+        failed: 'Treatment failed'
+        died: 'Died'
+        lost_to_follow_up: 'Lost to follow-up'
+        not_evaluated: 'Not evaluated'
+        success: 'Treatment success'
+      drug_resistance:
+        mono: 'Monoresistance'
+        poly: 'Polydrug resistance'
+        multi: 'Multidrug resistance'
+        extensive: 'Extensive drug resistance'
+        rif: 'Rifampicin resistance'
+        unknown: 'Unknown'
