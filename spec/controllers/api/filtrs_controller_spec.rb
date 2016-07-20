@@ -8,6 +8,7 @@ describe Api::FiltersController do
 
   it "list filters" do
     get :index, format: :json
+
     expect(response.body).to eq([filter].to_json)
   end
 end
