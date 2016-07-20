@@ -71,7 +71,7 @@ var EncounterShow = React.createClass({
       actionButton = <EncounterDelete show_edit={true} onChangeParentLevel={this.EncounterDeleteHandler} encounter={this.props.encounter} />;
     } else if (this.props.can_update && this.props.show_edit) {
       actionButton = <EncounterUpdate onChangeParentLevel={this.EncounterUpdateHandler} />;
-   } else {
+    } else {
       actionButton = <ShowNoButton />;
     }
 
@@ -111,18 +111,23 @@ var EncounterShow = React.createClass({
           <div className="panel">
             <div className="row collapse">
               <div className="col-6">
-                <DisplayFieldWithLabel fieldLabel='Order Id:' fieldValue={ this.props.encounter.uuid } />
+                <DisplayFieldWithLabel fieldLabel='Requested site:'  fieldValue={ this.props.encounter.site.name } />
+                <DisplayFieldWithLabel fieldLabel='Performing site:' fieldValue={ performing_site } />
+                <DisplayFieldWithLabel fieldLabel='Order Id:'    fieldValue={ this.props.encounter.uuid } />
                 <DisplayFieldWithLabel fieldLabel='Testing for:' fieldValue={ this.props.encounter.testing_for } />
                 {
                   this.props.encounter.testing_for === 'TB' ?
                   <DisplayFieldWithLabel fieldLabel='Culture format:' fieldValue={ this.props.encounter.culture_format } /> : null
                 }
                 <DisplayFieldWithLabel fieldLabel='Comment:' fieldValue={ this.props.encounter.diag_comment } />
-                <DisplayFieldWithLabel fieldLabel='Weeks in treatment:' fieldValue={ this.props.encounter.treatment_weeks } />
-                <DisplayFieldWithLabel fieldLabel='Samples Id:' fieldValue={ <SamplesList samples={this.props.encounter.samples}  /> } />
-                <DisplayFieldWithLabel fieldLabel='Sample type:' fieldValue={ this.props.encounter.coll_sample_type } />
+                {
+                  this.props.encounter.exam_reason === 'follow' ?
+                  <DisplayFieldWithLabel fieldLabel='Weeks in treatment:' fieldValue={ this.props.encounter.treatment_weeks } /> : null
+                }
+                <DisplayFieldWithLabel fieldLabel='Samples Id:'    fieldValue={ <LabSamplesList context={this.props.context} samples={this.props.encounter.samples}  /> } />
+                <DisplayFieldWithLabel fieldLabel='Sample type:'   fieldValue={ this.props.encounter.coll_sample_type } />
                 <DisplayFieldWithLabel fieldLabel='Test due date:' fieldValue={ this.props.encounter.testdue_date } />
-                <DisplayFieldWithLabel fieldLabel='Status:' fieldValue={ this.props.encounter.status } />
+                <DisplayFieldWithLabel fieldLabel='Status:'        fieldValue={ this.props.encounter.status } />
               </div>
 
               <div className="col-6 patientCard">
