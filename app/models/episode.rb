@@ -37,31 +37,31 @@ class Episode < ActiveRecord::Base
 
   def self.drug_resistance_options
     [
-      OpenStruct.new(id: :mono, name: 'Monoresistance'),
-      OpenStruct.new(id: :poly, name: 'Polydrug resistance'),
-      OpenStruct.new(id: :multi, name: 'Multidrug resistance'),
-      OpenStruct.new(id: :extensive, name: 'Extensive drug resistance'),
-      OpenStruct.new(id: :rif, name: 'Rifampicin resistance'),
-      OpenStruct.new(id: :unknown, name: 'Unknown')
+      OpenStruct.new(id: :mono, name: I18n.t('select.episode.drug_resistance.mono')),
+      OpenStruct.new(id: :poly, name: I18n.t('select.episode.drug_resistance.poly')),
+      OpenStruct.new(id: :multi, name: I18n.t('select.episode.drug_resistance.multi')),
+      OpenStruct.new(id: :extensive, name: I18n.t('select.episode.drug_resistance.extensive')),
+      OpenStruct.new(id: :rif, name: I18n.t('select.episode.drug_resistance.rif')),
+      OpenStruct.new(id: :unknown, name: I18n.t('select.episode.drug_resistance.unknown'))
     ]
   end
 
   def self.history_options
     [
-      OpenStruct.new(id: :new, name: 'New Patients', initial: true),
-      OpenStruct.new(id: :previous, name: 'Previously Treated', initial: true),
-      OpenStruct.new(id: :unknown, name: 'Unknown Previously', initial: true),
-      OpenStruct.new(id: :relapsed, name: 'Relapsed Treatment Aft..'),
-      OpenStruct.new(id: :loss, name: 'Loss to follow-up'),
-      OpenStruct.new(id: :other, name: 'Other previous treatments')
+      OpenStruct.new(id: :new, name: I18n.t('select.episode.history.new'), initial: true),
+      OpenStruct.new(id: :previous, name: I18n.t('select.episode.history.previous'), initial: true),
+      OpenStruct.new(id: :unknown, name: I18n.t('select.episode.history.unknown'), initial: true),
+      OpenStruct.new(id: :relapsed, name: I18n.t('select.episode.history.relapsed')),
+      OpenStruct.new(id: :loss, name: I18n.t('select.episode.history.loss')),
+      OpenStruct.new(id: :other, name: I18n.t('select.episode.history.other'))
     ]
   end
 
   def self.hiv_status_options
     [
-      OpenStruct.new(id: :positive_tb, name: I18n.t('hiv_status.positive_tb')),
-      OpenStruct.new(id: :negative_tb, name: I18n.t('hiv_status.negative_tb')),
-      OpenStruct.new(id: :unknown, name: I18n.t('hiv_status.unkown'))
+      OpenStruct.new(id: :positive_tb, name: I18n.t('select.episode.hiv_status.positive_tb')),
+      OpenStruct.new(id: :negative_tb, name: I18n.t('select.episode.hiv_status.negative_tb')),
+      OpenStruct.new(id: :unknown, name: I18n.t('select.episode.hiv_status.unknown'))
     ]
   end
 
@@ -71,13 +71,13 @@ class Episode < ActiveRecord::Base
 
   def self.treatment_outcome_options
     [
-      OpenStruct.new(id: :cured, name: 'Cured'),
-      OpenStruct.new(id: :completed, name: 'Treatment completed'),
-      OpenStruct.new(id: :failed, name: 'Treatment failed'),
-      OpenStruct.new(id: :died, name: 'Died'),
-      OpenStruct.new(id: :lost_to_follow_up, name: 'Lost to follow-up'),
-      OpenStruct.new(id: :not_evaluated, name: 'Not evaluated'),
-      OpenStruct.new(id: :success, name: 'Treatment success')
+      OpenStruct.new(id: :cured, name: I18n.t('select.episode.treatment_outcome.cured')),
+      OpenStruct.new(id: :completed, name: I18n.t('select.episode.treatment_outcome.cured')),
+      OpenStruct.new(id: :failed, name: I18n.t('select.episode.treatment_outcome.cured')),
+      OpenStruct.new(id: :died, name: I18n.t('select.episode.treatment_outcome.cured')),
+      OpenStruct.new(id: :lost_to_follow_up, name: I18n.t('select.episode.treatment_outcome.cured')),
+      OpenStruct.new(id: :not_evaluated, name: I18n.t('select.episode.treatment_outcome.cured')),
+      OpenStruct.new(id: :success, name: I18n.t('select.episode.treatment_outcome.cured'))
     ]
   end
 end

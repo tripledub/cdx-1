@@ -3,29 +3,29 @@
   .panel
     .row
       .col-6
-        = f.label :diagnosis, 'Diagnosis'
+        = f.label :diagnosis
       .col-6
         = f.collection_select :diagnosis, Episode.diagnosis_options, :id, :name, include_blank: I18n.t('select.default')
     .row
       .col-6
-        = f.label 'Diagnosis classify by Anatomical site'
+        = f.label :anatomical_site_diagnosis
       .col-6
         = collection_radio_buttons(:anatomical_site_diagnosis, '', Episode.anatomical_diagnosis_options, :id, :name)
     .row
       .col-6
-        = f.label 'History of Previous Treatment'
+        = f.label I18n.t('patients.form.history')
       .col-6
         = f.collection_select :initial_history, Episode.initial_history_options, :id, :name, include_blank: I18n.t('select.default')
         %hr
         = f.collection_select :previous_history, Episode.previous_history_options, :id, :name, include_blank: I18n.t('select.default')
     .row
       .col-6
-        = f.label 'HIV Status'
+        = f.label :hiv_status
       .col-6
         = f.collection_select :hiv_status, Episode.hiv_status_options, :id, :name, include_blank: I18n.t('select.default')
     .row
       .col-6
-        = f.label 'Drug Resistance'
+        = f.label :drug_resistance
       .col-6
         = f.collection_select :drug_resistance, Episode.drug_resistance_options, :id, :name, include_blank: I18n.t('select.default')
     .row
