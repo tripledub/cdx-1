@@ -42,8 +42,9 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       patient = Patient.make institution: i1
       grant i1.user, user, {site: i1}, CREATE_SITE_ENCOUNTER
       grant i1.user, user, {encounter: i1}, READ_ENCOUNTER
+      encounter         = Encounter.make institution: i1, patient: patient
+      sample_identifier = SampleIdentifier.make(site: site, entity_id: "entity random", lab_sample_id: 'Random lab sample', sample: Sample.make(institution: i1, encounter: encounter, patient: patient))
 
-      encounter = Encounter.make institution: i1, patient: patient
       get :show, id: encounter.id
       expect(response).to have_http_status(:success)
       expect(assigns[:can_update]).to be_falsy
@@ -88,7 +89,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     it "should load encounter first by uuid" do
-      encounter = Encounter.make institution: institution, patient: patient
+      encounter   = Encounter.make institution: institution, patient: patient
       encounter2 = Encounter.make institution: institution, uuid: "#{encounter.id}lorem", patient: patient
 
       get :show, id: encounter2.uuid
@@ -150,7 +151,10 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         institution: { uuid: institution.uuid },
         site: { uuid: site.uuid },
         samples: [{ uuids: sample.uuids }],
-        new_samples: [{entity_id: 'eid:1001'}, {entity_id: 'eid:1002'}],
+        new_samples: [
+          { entity_id: 'eid:1001', lab_sample_id: 'Some laboratory Id' },
+          { entity_id: 'eid:1002', lab_sample_id: 'Some other laboratory Id' }
+        ],
         test_results: [],
         culture_format: 'liquid',
         assays: [{condition: 'mtb', result: 'positive', quantitative_result: "3"}],
@@ -204,8 +208,13 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     it "creates new_samples assigned to encounter" do
-      expect(site.sample_identifiers.where(entity_id: 'eid:1001').first.sample.encounter).to eq(created_encounter)
-      expect(site.sample_identifiers.where(entity_id: 'eid:1002').first.sample.encounter).to eq(created_encounter)
+      sample_identifier1 = site.sample_identifiers.where(entity_id: 'eid:1001').first
+      sample_identifier2 = site.sample_identifiers.where(entity_id: 'eid:1002').first
+
+      expect(sample_identifier1.sample.encounter).to eq(created_encounter)
+      expect(sample_identifier1.lab_sample_id).to eq('Some laboratory Id')
+      expect(sample_identifier2.sample.encounter).to eq(created_encounter)
+      expect(sample_identifier2.lab_sample_id).to eq('Some other laboratory Id')
     end
 
     it "should move new samples in samples" do
@@ -248,7 +257,10 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         id: encounter.id,
         institution: { uuid: 'uuid-to-discard' },
         samples: [{ uuids: sample.uuid }, { uuids: empty_sample.uuid }],
-        new_samples: [{entity_id: 'eid:1001'}, {entity_id: 'eid:1002'}],
+        new_samples: [
+          { entity_id: 'eid:1001', lab_sample_id: 'Some updated laboratory Id' },
+          { entity_id: 'eid:1002', lab_sample_id: 'Some other updated laboratory Id' }
+        ],
         test_results: [],
         assays: [{condition: 'mtb', result: 'positive', quantitative_result: "3"}],
         observations: 'Lorem ipsum',
@@ -287,8 +299,13 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     it "creates new_samples assigned to encounter" do
-      expect(site.sample_identifiers.where(entity_id: 'eid:1001').first.sample.encounter).to eq(encounter)
-      expect(site.sample_identifiers.where(entity_id: 'eid:1002').first.sample.encounter).to eq(encounter)
+      sample_identifier1 = site.sample_identifiers.where(entity_id: 'eid:1001').first
+      sample_identifier2 = site.sample_identifiers.where(entity_id: 'eid:1002').first
+
+      expect(sample_identifier1.sample.encounter).to eq(encounter)
+      expect(sample_identifier1.lab_sample_id).to eq('Some updated laboratory Id')
+      expect(sample_identifier2.sample.encounter).to eq(encounter)
+      expect(sample_identifier2.lab_sample_id).to eq('Some other updated laboratory Id')
     end
 
     it "should move new samples in samples" do
@@ -868,7 +885,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         institution: { uuid: institution.uuid },
         site: { uuid: site.uuid },
         samples: [],
-        new_samples: [{'entity_id' => 'eid:1003'}],
+        new_samples: [{ 'entity_id' => 'eid:1003', 'lab_sample_id' => 'Labs work' }],
         test_results: [],
         patient_id: patient.id
       }.to_json
@@ -877,7 +894,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       json_response = JSON.parse(response.body).with_indifferent_access
 
       expect(json_response['status']).to eq('ok')
-      expect(json_response['encounter']['new_samples']).to eq([{'entity_id' => 'eid:1003'},{'entity_id' => new_entity_id}])
+      expect(json_response['encounter']['new_samples']).to eq([{ 'entity_id' => 'eid:1003', 'lab_sample_id' => 'Labs work' },{'entity_id' => new_entity_id}])
       expect(json_response['sample']['entity_id']).to eq(new_entity_id)
     end
 
@@ -905,7 +922,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
   describe "PUT add_sample_manually" do
     it "renders json response of encounter with new sample and status ok" do
-      put :add_sample_manually, entity_id: '12345678', encounter: {
+      put :add_sample_manually, entity_id: '12345678', lab_sample_id: 'Custom lab id', encounter: {
         institution: { uuid: institution.uuid },
         site: { uuid: site.uuid },
         samples: [],
@@ -918,7 +935,8 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       json_response = JSON.parse(response.body).with_indifferent_access
 
       expect(json_response['status']).to eq('ok')
-      expect(json_response['encounter']['new_samples'][0]).to include({entity_id: '12345678'})
+      expect(json_response['encounter']['new_samples'][0]).to include({entity_id:     '12345678'})
+      expect(json_response['encounter']['new_samples'][0]).to include({lab_sample_id: 'Custom lab id'})
       expect(json_response['encounter']['new_samples'].count).to eq(1)
     end
 
@@ -962,9 +980,10 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
   def sample_json(sample)
     return {
-      uuids: sample.uuids,
-      entity_ids: sample.entity_ids,
-      uuid: sample.uuids.first
+      uuids:          sample.uuids,
+      entity_ids:     sample.entity_ids,
+      lab_sample_ids: sample.lab_sample_ids,
+      uuid:           sample.uuids.first
     }
   end
 

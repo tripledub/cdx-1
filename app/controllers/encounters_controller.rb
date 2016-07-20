@@ -127,7 +127,7 @@ class EncountersController < ApplicationController
   def add_sample_manually
     perform_encounter_action "adding manual sample" do
       prepare_encounter_from_json
-      sample = { entity_id: params[:entity_id] }
+      sample = { entity_id: params[:entity_id], lab_sample_id: params[:lab_sample_id]}
       if validate_manual_sample_non_existant(sample)
         @encounter.new_samples << sample
         @extended_respone = { sample: sample }
@@ -255,7 +255,7 @@ class EncountersController < ApplicationController
     end
 
     encounter_param['new_samples'].each do |new_sample_param|
-      @encounter.new_samples << {entity_id: new_sample_param['entity_id']}
+      @encounter.new_samples << { entity_id: new_sample_param['entity_id'], lab_sample_id: new_sample_param['lab_sample_id'] }
     end
 
     encounter_param['test_results'].each do |test_param|
@@ -270,7 +270,7 @@ class EncountersController < ApplicationController
 
   def create_new_samples
     @encounter.new_samples.each do |new_sample|
-      add_new_sample_by_entity_id new_sample[:entity_id]
+      add_new_sample_by_entity_id new_sample
     end
     @encounter.new_samples = []
   end
@@ -311,9 +311,13 @@ class EncountersController < ApplicationController
     patient_blender
   end
 
-  def add_new_sample_by_entity_id(entity_id)
+  def add_new_sample_by_entity_id(sample_identifier)
     sample = Sample.new(institution: @encounter.institution)
-    sample.sample_identifiers.build(site: @encounter.site, entity_id: entity_id)
+    sample.sample_identifiers.build(
+      site: @encounter.site,
+      entity_id: sample_identifier[:entity_id],
+      lab_sample_id: sample_identifier[:lab_sample_id]
+    )
 
     sample_blender = @blender.load(sample)
     @blender.merge_parent(sample_blender, @encounter_blender)
@@ -434,7 +438,7 @@ class EncountersController < ApplicationController
   end
 
   def as_json_sample(json, sample)
-    json.(sample, :uuids, :entity_ids)
+    json.(sample, :uuids, :entity_ids, :lab_sample_ids)
     json.uuid sample.uuids[0]
   end
 

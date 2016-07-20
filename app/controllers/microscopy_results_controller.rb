@@ -7,6 +7,7 @@ class MicroscopyResultsController < PatientResultsController
     @microscopy_result.sample_collected_on = Date.today
     @microscopy_result.result_on           = Date.today
     @microscopy_result.serial_number       = @requested_test.encounter.samples.map(&:entity_ids).join(', ')
+    @microscopy_result.specimen_type       = @requested_test.encounter.coll_sample_type
   end
 
   def create
