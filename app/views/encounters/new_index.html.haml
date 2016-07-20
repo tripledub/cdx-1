@@ -1,14 +1,17 @@
 - content_for(:subheader) do
-  .row.center.add-new.newtestoptions
-    %h2
-      = link_to test_orders_path, class: 'side-link', title: I18n.t('views.back') do
-        = image_tag "arrow-left.png"
-      New Tests
-    .subheading Please select one of the options below.
+  .row.center.add-new.newtestoptions.collapse
+    .col.pe-10
+      %h2
+        = link_to test_orders_path, class: 'side-link', title: I18n.t('views.back') do
+          = image_tag "arrow-left-white.png"
+        New Tests
 
 
 .row
   .optionsarea
+    %header 
+      %h3
+        Please select one of the options below.
     %ul.nav-list
       %li{'data-href' => new_encounter_path(mode: 'fresh_tests')}
         %span New test order

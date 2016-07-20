@@ -134,6 +134,7 @@ var EncounterShow = React.createClass({
 
           </div>
         </div>
+
         <div className="row">
           <RequestedTestsIndexTable encounter={this.props.encounter} requested_tests={this.state.requested_tests} requested_by={this.props.requested_by}
            status_types={this.props.status_types} edit={this.props.show_edit} onTestChanged={this.onTestChanged} associated_tests_to_results={this.props.associated_tests_to_results}/>
