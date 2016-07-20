@@ -8,7 +8,7 @@
         = f.collection_select :diagnosis, Episode.diagnosis_options, :id, :name, include_blank: I18n.t('select.default')
     .row
       .col-6
-        = f.label
+        = f.label :anatomical_site_diagnosis
       .col-6
         = collection_radio_buttons(:anatomical_site_diagnosis, '', Episode.anatomical_diagnosis_options, :id, :name)
     .row
