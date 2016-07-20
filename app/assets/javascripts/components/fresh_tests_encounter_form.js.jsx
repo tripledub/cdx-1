@@ -131,11 +131,11 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
                 <li><input type="checkbox" onChange={this.reqtests_change} name="culture" className="test_for_tb" id="requested_culture"/>
                   <label htmlFor="requested_culture">Culture</label>
                 </li>
-                <li><input type="checkbox" onChange={this.reqtests_change} name="drugsusceptibility" className="test_for_tb" id="requested_drug_susceptibility"/>
-                   <label htmlFor="requested_drug_susceptibility">Drug susceptibility</label>
+                <li><input type="checkbox" onChange={this.reqtests_change} name="drugsusceptibility" className="test_for_tb" id="requested_drug_susceptibility_1line"/>
+                   <label htmlFor="requested_drug_susceptibility">Drug Susceptibility First Line</label>
                  </li>
-                <li><input type="checkbox" onChange={this.reqtests_change} name="dst" className="test_for_tb" id="requested_dst"/>
-                  <label htmlFor="requested_dst">DST</label>
+                <li><input type="checkbox" onChange={this.reqtests_change} name="dst" className="test_for_tb" id="requested_drug_susceptibility_2line"/>
+                  <label htmlFor="requested_dst">Drug Susceptibility Second Line</label>
                 </li>
                 <li><input type="checkbox" onChange={this.reqtests_change} name="lineprobe" className="test_for_tb" id="requested_lineprobe"/>
                   <label htmlFor="requested_lineprobe">Line probe assay</label>
