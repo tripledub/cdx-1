@@ -4,3 +4,5 @@ en:
       existing_test: 'Existing test for %{patient_name}'
       new_test: 'New test for %{patient_name}'
       no_patient: 'Every new encounter must belong to a patient. Please go to a patient page and click on Add test order'
+    show:
+      test_order: 'Test order'

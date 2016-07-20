@@ -6,6 +6,6 @@
           %h2
             = link_to "javascript:history.back();", class: 'side-link', title: I18n.t('views.back') do
               = image_tag "arrow-left-white.png"
-            Test Order
+            = I18n.t('encounters.show.test_order')
 
 = react_component('EncounterShow', encounter: @encounter_as_json, context: @navigation_context, requested_tests: @encounter.requested_tests, requested_by: @encounter.user !=nil ? @encounter.user.email : '', can_update: @can_update, show_edit: @show_edit_encounter, show_cancel: @show_cancel_encounter, referer: @return_path_encounter, status_types: RequestedTest.statuses, associated_tests_to_results: @associated_tests_to_results)
