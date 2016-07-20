@@ -25,6 +25,7 @@ var TestOrderRow = React.createClass({
 
 var TestOrdersIndexTable = React.createClass({
   getDefaultProps: function() {
+    window.store.get('selectedItems') ? null : window.store.set('selectedItems', '');
     return {
       title: "Test orders",
       allowSorting: true,
