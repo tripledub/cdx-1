@@ -99,16 +99,23 @@ module Reports
       manual_query.joins('LEFT OUTER JOIN sites ON sites.id = encounters.site_id')
       manual_query.where({ 'institutions.uuid' => filter['institution.uuid'] }) if filter['institution.uuid']
       manual_query.where({ 'sites.uuid'        => filter['site.uuid'] })        if filter['site.uuid']
-      manual_results = manual_query.where({ 'patient_results.created_at' => since_day..until_day }).where(options).group('date(patient_results.created_at)').count
+      manual_query.where({ 'patient_results.created_at' => since_day..until_day })
+      manual_results = manual_query.group('date(patient_results.created_at)').count
 
       merge_results(test_results, manual_results)
     end
 
     def merge_results(test_results, manual_results)
-      test_results.results['tests'].each do |auto_test|
-        manual_results.each do |key, value|
-          auto_test['count'] += value if auto_test['test.status'] == 'success' && auto_test['test.start_time'] == key.strftime("%Y-%m-%d")
+      manual_results.each do |key, value|
+        result_added = false
+        test_results.results['tests'].each do |auto_test|
+          if auto_test['test.status'] == 'success' && auto_test['test.start_time'] == key.strftime("%Y-%m-%d")
+            auto_test['count'] += value
+            result_added = true
+          end
         end
+
+        test_results.results['tests'] << { 'test.status' => 'success', 'test.start_time' => key.strftime("%Y-%m-%d"), 'count' => value } unless result_added
       end
 
       test_results

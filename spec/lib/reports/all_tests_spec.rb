@@ -12,7 +12,8 @@ RSpec.describe Reports::AllTests, elasticsearch: true do
   let(:patient)             { Patient.make institution: institution }
   let(:encounter)           { Encounter.make institution: institution , user: current_user, patient: patient }
   let(:requested_test)      { RequestedTest.make encounter: encounter }
-  let(:microscopy_result)   { MicroscopyResult.make requested_test: requested_test }
+  let!(:microscopy_result)  { MicroscopyResult.make requested_test: requested_test }
+  let!(:culture_result)     { CultureResult.make requested_test: requested_test }
   let(:nav_context)         { NavigationContext.new(current_user, institution.uuid) }
   let(:options)             { {} }
 
@@ -82,10 +83,9 @@ RSpec.describe Reports::AllTests, elasticsearch: true do
     end
 
     it 'includes manual results' do
-      microscopy_result
-      all_tests = Reports::AllTests.new(current_user, nav_context)
+      all_tests = Reports::AllTests.new(current_user, nav_context).generate_chart
 
-      expect(all_tests.generate_chart).to eq('pepe')
+      expect(all_tests[:columns].last[:dataPoints].last[:y]).to eq(3)
     end
 
     describe 'statuses' do
