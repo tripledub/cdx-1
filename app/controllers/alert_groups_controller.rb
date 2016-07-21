@@ -21,13 +21,11 @@ class AlertGroupsController < ApplicationController
 
   def index
     order_by, offset = perform_pagination('alerts.name')
-    @can_create = has_access?(@navigation_context.institution, CREATE_ALERT)
-    @alerts = check_access(current_user.alerts, READ_ALERT)
+    @can_create = has_access?(Alert, CREATE_ALERT)
+    @alerts = check_access(Alert, READ_ALERT)
     @alerts = @alerts.within(@navigation_context.entity, @navigation_context.exclude_subsites)
-
     @total = @alerts.count
     @alerts = @alerts.order(order_by).limit(@page_size).offset(offset)
-
     respond_with @alerts
   end
 

@@ -32,12 +32,6 @@ RSpec.describe AlertGroupsController, type: :controller do
       get :index
       expect(assigns(:alerts).count).to eq(0)
     end
-
-    it "can not create if not allowed" do
-      sign_in other_user
-      get :index
-      expect(assigns(:can_create)).to be_falsy
-    end
   end
 
 end
