@@ -1,14 +1,21 @@
 require 'spec_helper'
 
 RSpec.describe Reports::Site, elasticsearch: true do
-  let(:current_user) { User.make }
-  let(:site_user) { "#{current_user.first_name} #{current_user.last_name}" }
-  let(:institution) { Institution.make(user_id: current_user.id) }
-  let(:site) { Site.make(institution: institution, name: 'The Site') }
-  let(:site_two) { Site.make(institution: institution, name: 'The Second Site') }
-  let(:user_device) { Device.make institution_id: institution.id, site: site }
-  let(:user_device_two) { Device.make institution_id: institution.id, site: site_two }
-  let(:nav_context) { NavigationContext.new(current_user, institution.uuid) }
+  let(:current_user)        { User.make }
+  let(:site_user)           { "#{current_user.first_name} #{current_user.last_name}" }
+  let(:institution)         { Institution.make(user_id: current_user.id) }
+  let(:site)                { Site.make(institution: institution, name: 'The Site') }
+  let(:site2)               { Site.make(institution: institution, name: 'The Second Site') }
+  let(:user_device)         { Device.make institution_id: institution.id, site: site }
+  let(:user_device_two)     { Device.make institution_id: institution.id, site: site2 }
+  let(:nav_context)         { NavigationContext.new(current_user, institution.uuid) }
+  let(:patient)             { Patient.make institution: institution }
+  let(:encounter)           { Encounter.make institution: institution , user: current_user, patient: patient, site: site }
+  let(:encounter2)          { Encounter.make institution: institution , user: current_user, patient: patient, site: site2 }
+  let(:requested_test)      { RequestedTest.make encounter: encounter }
+  let(:requested_test2)     { RequestedTest.make encounter: encounter2 }
+  let!(:microscopy_result)  { MicroscopyResult.make requested_test: requested_test2 }
+  let!(:culture_result)     { CultureResult.make requested_test: requested_test }
 
   before do
     TestResult.create_and_index(
@@ -53,11 +60,11 @@ RSpec.describe Reports::Site, elasticsearch: true do
   end
 
   describe 'process results' do
-    before do
-      @tests = Reports::Site.process(current_user, nav_context)
-    end
+    subject { Reports::Site.new(current_user, nav_context).generate_chart }
 
     it 'can sort results by site' do
+      expect(subject[:columns].last[:y]).to eq(2)
+      expect(subject[:columns].last[:label]).to eq(site.name)
     end
   end
 end

@@ -181,5 +181,19 @@ module Reports
     def slice_colors
       ["#21C334", "#C90D0D", "#aaaaaa", "#00A8AB", "#B7D6B7", "#D8B49C", "#DE6023", "#47B04B", "#009788", "#A05D56", "#D0743C", "#FF8C00"]
     end
+
+    def get_manual_results_query(test_results)
+      filter       = test_results.filter
+      since_day    = filter['since'] + ' 00:00'
+      until_day    = (filter['until'] || Date.today.strftime("%Y-%m-%d")) + ' 23:59'
+      manual_query = PatientResult.where('patient_results.type != "TestResult"')
+        .joins('LEFT OUTER JOIN requested_tests ON requested_tests.id = patient_results.requested_test_id')
+        .joins('LEFT OUTER JOIN encounters ON encounters.id = requested_tests.encounter_id')
+        .joins('LEFT OUTER JOIN institutions ON institutions.id = encounters.institution_id')
+        .joins('LEFT OUTER JOIN sites ON sites.id = encounters.site_id')
+      manual_query.where({ 'institutions.uuid'          => filter['institution.uuid'] }) if filter['institution.uuid']
+      manual_query.where({ 'sites.uuid'                 => filter['site.uuid'] })        if filter['site.uuid']
+      manual_query.where({ 'patient_results.created_at' => since_day..until_day })
+    end
   end
 end

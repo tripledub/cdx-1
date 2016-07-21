@@ -10,23 +10,23 @@ module Reports
     end
 
     def sort_by_site
-      site_results.each do |uuid, results|
-        data << [sites[uuid], count_total(results)]
+      site_results.map do |uuid, results|
+        {site_name: sites[uuid], count: count_total(results), uuid: uuid }
       end
-      return self
     end
 
     def generate_chart
-      results = process
-      found_data = results.sort_by_site.data
-      all_sites = Policy.authorize Policy::Actions::READ_SITE, ::Site.within(@context.entity), @current_user
-      sites = all_sites.map { | site | [site.name,0] }
-      data = []
+      automatic_results = process
+      manual_results    = get_manual_results_query(automatic_results).group('sites.uuid').count
+      found_data        = automatic_results.sort_by_site
+      results           = merge_results(found_data, manual_results)
+      all_sites         = Policy.authorize Policy::Actions::READ_SITE, ::Site.within(@context.entity), @current_user
+      sites             = all_sites.map { | site | [site.name,0] }
+      data              = []
       sites.each do | site |
         found_data.each do | found_site_data |
-          if site[0].include? found_site_data[0]
-            #site[1] = found_site_data[1]
-            data << {label: site[0], y: found_site_data[1] }
+          if site[0].include? found_site_data[:site_name]
+            data << {label: site[0], y: found_site_data[:count] }
           end
         end
       end
@@ -46,6 +46,23 @@ module Reports
 
     def site_uuids
       site_results.keys
+    end
+
+    def merge_results(test_results, manual_results)
+      manual_results.each do |key, value|
+        result_added = false
+        test_results.each do |auto_test|
+          if auto_test[:uuid] == key
+            auto_test[:count] += value
+            result_added = true
+          end
+        end
+
+        test_results << { :uuid => key, :site_name => lookup_site(key), :count => value } unless result_added
+
+      end
+
+      test_results
     end
   end
 end
