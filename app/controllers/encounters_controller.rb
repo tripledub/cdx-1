@@ -27,7 +27,7 @@ class EncountersController < ApplicationController
 
   def sites
     sites = check_access(@navigation_context.institution.sites, CREATE_SITE_ENCOUNTER)
-    render json: as_json_site_list(sites).attributes!
+    render json: as_json_site_list(sites.sort_by(&:name)).attributes!
   end
 
   def show
