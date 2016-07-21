@@ -132,8 +132,9 @@
   }
 
   &.not-allowed {
-    color: $gray3;
+    color:#fff;
     cursor: default;
+    background:#555;
   }
 }
 
@@ -187,7 +188,6 @@
 }
 
 [class^="btn"] + [class^="btn"] {
-  margin-left: 30px;
 }
 
 .btn-add-link {

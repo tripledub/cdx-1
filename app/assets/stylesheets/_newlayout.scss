@@ -591,12 +591,66 @@ color:#fff !important;
 }
 .testflow .button:hover {opacity:0.8;}
 
-.testflow form.zebra .panel .row:nth-child(even) {
+.testflow form.zebra .panel .row:nth-child(even), .testflow form#new_episode .zebra {
   background:#dbdae2;
 }
 
+.testflow form#new_episode {
+  div.row.button-actions {
+    position:absolute;
+    top:-3px;
+    right:123px;
+    background:none!important;
+    padding:0px;
+
+      input.btn-primary, a.btn-link, a.btn-secondary{
+        margin:0px 0px 0px 10px;padding:0.5em 2em;line-height:15px;height:30px;color:#fff;
+      }
+      input.btn-primary:hover, a.btn-link:hover {opacity:0.8;}
+      input.btn-primary {
+        background:#9DCE65;
+      }
+
+      a.btn-link{
+        background:#e06023;
+      }
+      a.btn-secondary {
+        background:#cc443f
+      }
+  }
+}
+
+form#new_comment {
+  .row {
+    align-items:center;
+
+    .col.pe-2 {
+      align-self:flex-start;
+    }
+  }
+  div.row.button-actions {
+    position:absolute;
+    top:-10px;
+    right:35px;
+    background:none!important;
+    padding:0px;
+
+      input.btn-primary, a.btn-link, a.btn-secondary{
+        margin:0px 0px 0px 10px;padding:0.5em 2em;line-height:15px;height:30px;color:#fff;
+      }
+      input.btn-primary:hover, a.btn-link:hover {opacity:0.8;}
+
+      a.btn-link{
+        background:#e06023;
+      }
+      a.btn-secondary {
+        background:#cc443f
+      }
+  }
+}
+
 .testflow form.zebra .panel .row:nth-child(even) > div {
-  padding:1rem 0rem;
+  
 }
 .testflow .panel .row:last-child {
   margin-bottom:0px;
@@ -718,6 +772,27 @@ padding:15px;
 }
 
 /* Style the tabs area */
+.tabs {
+  padding:0 15px;
+
+  .columns {
+    padding:0px;
+  }
+
+  ul.tabs-header {
+    background-color:#f1f1f1;
+    border:1px solid #e2e2e2;
+
+    li a {
+      padding:10px;
+    }
+
+    li a.selected {
+      border-bottom:none;
+      background:#e2e2e2;
+    }
+  }
+}
 .testflow ul.tab {
     list-style-type: none;
     margin: 0;
@@ -769,6 +844,7 @@ padding:15px;
     }
     .patientCard {
       align-self:flex-start;
+      margin-top:15px;
     }
 
     p {

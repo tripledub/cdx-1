@@ -293,11 +293,13 @@ a[title="Back"] {
 }
 
 .explore-link {
-  background: image-url('ic-search-blue.png') no-repeat left 2px;
+  background: image-url('ic-search-blue.png') no-repeat left 0px;
   font-family: "Titillium Web", sans-serif;
   color: $gray3;
   text-transform: uppercase;
-  padding-left: 22px;
+  padding-left: 50px;
+  background-position-x:22px;
+  margin-bottom:5px;
 }
 
 .hidden {
