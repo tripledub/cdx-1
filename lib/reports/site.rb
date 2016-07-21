@@ -25,9 +25,7 @@ module Reports
       data              = []
       sites.each do | site |
         found_data.each do | found_site_data |
-          if site[0].include? found_site_data[:site_name]
-            data << {label: site[0], y: found_site_data[:count] }
-          end
+          data << { label: site[0], y: found_site_data[:count] } if found_site_data[:uuid] && site[0].include?(found_site_data[:site_name])
         end
       end
       { titleY2: 'Companies', columns: data }
