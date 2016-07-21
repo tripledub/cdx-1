@@ -532,6 +532,15 @@ margin-bottom: 20px;
 .search a.btn-add{width: 100px;height: 30px;line-height: 30px;margin-top: 5px;float: right;border-radius:0px;}
 
 /* New Device Form */
+.deviceDetails {
+  .box-content {
+    height:auto;
+  }
+  margin-top:1em;
+  .card {
+    margin:10px 15px;
+  }
+} 
 form#new_device {
   margin:0px;
   padding:0px;
@@ -635,6 +644,10 @@ form#new_device {
 /* Edit Patient Page Styles */
 .testflow {
   padding:0px 20px 15px 15px;
+
+  .container {
+    position:relative;
+  }
 
   .row.labelHeader {
     height:40px!important;
@@ -1197,8 +1210,9 @@ div.pagination {
   width:100%!important;
 }
 
-table.barby-barcode {
+#contentcontainer table.barby-barcode {
   width:300px!important;
+  margin:0px;
 }
 
 th.tableheader {
