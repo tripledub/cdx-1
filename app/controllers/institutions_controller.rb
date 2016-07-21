@@ -13,6 +13,7 @@ class InstitutionsController < ApplicationController
   end
 
   def edit
+    @usenav = true
     @institution = check_access(Institution.find(params[:id]), READ_INSTITUTION)
     @readonly = !has_access?(@institution, UPDATE_INSTITUTION)
 
@@ -22,6 +23,7 @@ class InstitutionsController < ApplicationController
   end
 
   def new
+    @usenav = true
     @institution = current_user.institutions.new
     @institution.user_id = current_user.id
     return unless authorize_resource(Institution, CREATE_INSTITUTION)
