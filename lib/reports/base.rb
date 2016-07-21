@@ -182,8 +182,7 @@ module Reports
       ["#21C334", "#C90D0D", "#aaaaaa", "#00A8AB", "#B7D6B7", "#D8B49C", "#DE6023", "#47B04B", "#009788", "#A05D56", "#D0743C", "#FF8C00"]
     end
 
-    def get_manual_results_query(test_results)
-      filter       = test_results.filter
+    def get_manual_results_query(filter)
       since_day    = filter['since'] + ' 00:00'
       until_day    = (filter['until'] || Date.today.strftime("%Y-%m-%d")) + ' 23:59'
       manual_query = PatientResult.where('patient_results.type != "TestResult"')

@@ -17,7 +17,7 @@ module Reports
 
     def generate_chart
       automatic_results = process
-      manual_results    = get_manual_results_query(automatic_results).group('sites.uuid').count
+      manual_results    = get_manual_results_query(automatic_results.filter).group('sites.uuid').count
       found_data        = automatic_results.sort_by_site
       results           = merge_results(found_data, manual_results)
       all_sites         = Policy.authorize Policy::Actions::READ_SITE, ::Site.within(@context.entity), @current_user
