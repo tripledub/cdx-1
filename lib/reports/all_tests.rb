@@ -16,7 +16,10 @@ module Reports
     end
 
     def generate_chart
-      results = process
+      automatic_results = process
+      manual_results    = get_manual_results_query(automatic_results.filter).group('date(patient_results.created_at)').count
+      results           = merge_results(automatic_results, manual_results)
+
       if results.number_of_months > 1
         sorted_data = results.sort_by_month.data
       else
@@ -86,6 +89,22 @@ module Reports
           dataPoints: sorted_data.map { |data_point| { label: data_point[:label], y: data_point[:values][1] } }
         }
       ]
+    end
+
+    def merge_results(test_results, manual_results)
+      manual_results.each do |key, value|
+        result_added = false
+        test_results.results['tests'].each do |auto_test|
+          if auto_test['test.status'] == 'success' && auto_test['test.start_time'] == key.strftime("%Y-%m-%d")
+            auto_test['count'] += value
+            result_added = true
+          end
+        end
+
+        test_results.results['tests'] << { 'test.status' => 'success', 'test.start_time' => key.strftime("%Y-%m-%d"), 'count' => value } unless result_added
+      end
+
+      test_results
     end
   end
 end

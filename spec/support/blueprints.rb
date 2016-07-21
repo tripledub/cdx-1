@@ -106,7 +106,7 @@ Device.blueprint do
   site { Site.make(institution: (object.institution || Institution.make)) }
   institution { object.site.try(:institution) || Institution.make }
   name
-  serial_number { name }
+  serial_number { SecureRandom.urlsafe_base64 }
   device_model { Manifest.make.device_model }
   time_zone { "UTC" }
 end
