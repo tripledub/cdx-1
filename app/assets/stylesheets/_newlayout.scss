@@ -58,7 +58,8 @@ z-index:1000000;
 /*----------- Tooltips -------------*/
 .tooltip 
 {
-  outline:none; 
+  outline:none;
+  flex:1 0 100%; 
 }
 
 .tooltip strong 
@@ -333,7 +334,7 @@ color:#fff !important;
 .testflow .col-1 {max-width: 6.866%;flex:1 0 auto;}
 
 .testflow .row.labelHeader .col-6 {max-width:50%;}
-.testflow .panel.patient-summary {height:180px;overflow-y:scroll;}
+.testflow .panel.patient-summary {height:140px;overflow-y:scroll;}
 .testflow .panel.patient-details .row {border-bottom:1px solid #e2e2e2;}
 .testflow .panel.patientHistory .col-12 {display:block;max-width:100%;}
 
@@ -672,6 +673,7 @@ padding:15px;
 
 .testflow .patient-details .col-12 {
   display:flex;
+  flex:1 0 100%;
 }
 
 .testflow .patient-details ul {
@@ -765,10 +767,6 @@ padding:15px;
     .row {
       padding:0px;
     }
-    .buttonActions {
-      justify-content:flex-start;
-    }
-
     .patientCard {
       align-self:flex-start;
     }
@@ -776,6 +774,9 @@ padding:15px;
     p {
       font-size:12px;
     }
+}
+.buttonActions {
+  justify-content:flex-start;
 }
 .zebra select, .zebra select option{
   color:#000;

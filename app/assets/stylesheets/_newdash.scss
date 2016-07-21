@@ -285,6 +285,7 @@ body {
 #contentcontainer td {
   margin: 0;
   font-size:0.7rem;
+  cursor:pointer;
 }
 
 #contentcontainer tr:nth-child(even) {
@@ -645,7 +646,7 @@ form#new_device {
     li a.button.add {
       display:inline-block;
       padding:0.75em 2em;
-      min-width:135px;
+      min-width:140px;
       margin:0px;
       font-weight:bold;
       font-size:12px!important;
@@ -654,6 +655,7 @@ form#new_device {
       line-height:14px;
       background-color:#0d8aee;
       font-weight:bold;
+      text-align:center;
     }
   }
   .row.labelHeader.patientSummaryHeader {
@@ -667,10 +669,11 @@ form#new_device {
 
     li a.button.edit {
       right:10px;
-      min-width:135px;
+      min-width:140px;
       font-weight:bold;
       font-size:12px!important;
       margin-right:0px;
+      text-align:center;
     }
 
 
@@ -678,7 +681,7 @@ form#new_device {
       font-size:12px;
       font-weight:bold;
       color:#333;
-      min-width:120px;
+      min-width:140px;
     }
     .col-12 {position:relative;}
   }
@@ -922,6 +925,18 @@ form#new_patient, form.edit_patient{
     color:#333;
   }
 
+  .col {
+    display:flex;
+    align-items:center;
+    flex-flow:row wrap;
+
+    select {
+      height:30px;
+      border:1px solid #e2e2e2;
+      width:200px;
+    }
+  }
+
   .row.header {
     border-bottom:1px solid #2196f3;
 
@@ -938,7 +953,6 @@ form#new_patient, form.edit_patient{
   
   input.input-large {
     border:1px solid #e2e2e2;
-    margin-top:5px;
     background:#fff;
   }
 
@@ -962,9 +976,6 @@ form#new_patient, form.edit_patient{
       }
       a.btn-secondary {
         background:#cc443f
-      }
-      input.save {
-        margin-right:-3px;
       }
   }
 
@@ -1080,9 +1091,6 @@ form#filters-form.filteroptions {
 
     .advanced {
       padding:0px 15px;
-    }
-    .advanced.patientsFilter .filter {
-      flex:1;
     }
     input {
       margin-left:0px;

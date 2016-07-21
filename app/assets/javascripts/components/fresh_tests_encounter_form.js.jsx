@@ -110,6 +110,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
               </p>
               <p className={show_manual_sample}>
                 <input type="text" size="54" placeholder="Sample Id" ref="manualSampleEntry" />&nbsp;
+                <input type="text" size="54" placeholder="Lab. sample Id" ref="manualLabSampleEntry" />&nbsp;
                 <button type="button" className="btn-primary" onClick={this.validateAndSetManualEntry}>Add</button>
               </p>
             </div>
