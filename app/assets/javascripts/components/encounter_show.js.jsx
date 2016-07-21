@@ -96,7 +96,7 @@ var EncounterShow = React.createClass({
         </div>
         <div className="newTestOrder">
           <div className="panel">
-            <DisplayFieldWithLabel fieldLabel='Requested site:' fieldValue={ this.props.encounter.site.name } />
+            <DisplayFieldWithLabel fieldLabel='Requesting site:' fieldValue={ this.props.encounter.site.name } />
             <DisplayFieldWithLabel fieldLabel='Performing site:' fieldValue={ performing_site } />
           </div>
         </div>
@@ -111,7 +111,7 @@ var EncounterShow = React.createClass({
           <div className="panel">
             <div className="row collapse">
               <div className="col-6">
-                <DisplayFieldWithLabel fieldLabel='Requested site:'  fieldValue={ this.props.encounter.site.name } />
+                <DisplayFieldWithLabel fieldLabel='Requesting site:'  fieldValue={ this.props.encounter.site.name } />
                 <DisplayFieldWithLabel fieldLabel='Performing site:' fieldValue={ performing_site } />
                 <DisplayFieldWithLabel fieldLabel='Order Id:'    fieldValue={ this.props.encounter.uuid } />
                 <DisplayFieldWithLabel fieldLabel='Testing for:' fieldValue={ this.props.encounter.testing_for } />
