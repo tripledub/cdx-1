@@ -62,7 +62,7 @@ var EncounterNew = React.createClass({
 
   render: function() {
     var sitesUrl = URI("/encounters/sites").query({context: this.props.context.institution.uuid});
-    var siteSelect = <SiteSelect onChange={this.setSite} url={sitesUrl} fieldLabel='Requested' defaultSiteUuid={this.state.defaultSiteUuid} allow_manual_entry_callback={this.allow_manual_entry_callback} />;
+    var siteSelect = <SiteSelect onChange={this.setSite} url={sitesUrl} fieldLabel='Requesting' defaultSiteUuid={this.state.defaultSiteUuid} allow_manual_entry_callback={this.allow_manual_entry_callback} />;
     var performingSiteSelect = <SiteSelect onChange={this.setPerformingSite} url={sitesUrl} fieldLabel='Performing' defaultSiteUuid={_.get(this.props.context.performingsite, 'uuid')} />;
 
     if (this.state.encounter.site == null) {
