@@ -36,6 +36,15 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     event.preventDefault();
   },
 
+  validateThenSave: function(event)
+  {
+    event.preventDefault();
+    if( this.state.encounter.testing_for == undefined )  {   alert("Please choose a Test For option.");    return;  }
+    if( this.state.encounter.exam_reason == undefined )  {   alert("Please choose an Examination Reason.");    return;  }
+    if( this.state.encounter.tests_requested == '')  {   alert("Please choose one or more Test types.");    return;  }
+    this.save();
+  },
+
   render: function() {
     var now = new Date();
     var day = ("0" + now.getDate()).slice(-2);
@@ -130,11 +139,11 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
                 <li><input type="checkbox" onChange={this.reqtests_change} name="culture" className="test_for_tb" id="requested_culture"/>
                   <label htmlFor="requested_culture">Culture</label>
                 </li>
-                <li><input type="checkbox" onChange={this.reqtests_change} name="drugsusceptibility" className="test_for_tb" id="requested_drug_susceptibility_1line"/>
-                   <label htmlFor="requested_drug_susceptibility">Drug Susceptibility First Line</label>
+                <li><input type="checkbox" onChange={this.reqtests_change} name="drugsusceptibility1line" className="test_for_tb" id="requested_drugsusceptibility1line"/>
+                   <label htmlFor="requested_drugsusceptibility1line">Drug Susceptibility First Line</label>
                  </li>
-                <li><input type="checkbox" onChange={this.reqtests_change} name="dst" className="test_for_tb" id="requested_drug_susceptibility_2line"/>
-                  <label htmlFor="requested_dst">Drug Susceptibility Second Line</label>
+                <li><input type="checkbox" onChange={this.reqtests_change} name="drugsusceptibility2line" className="test_for_tb" id="requested_drugsusceptibility2line"/>
+                  <label htmlFor="requested_drugsusceptibility2line">Drug Susceptibility Second Line</label>
                 </li>
                 <li><input type="checkbox" onChange={this.reqtests_change} name="lineprobe" className="test_for_tb" id="requested_lineprobe"/>
                   <label htmlFor="requested_lineprobe">Line probe assay</label>
@@ -203,7 +212,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
             <div className="col-12">
               <ul>
                 <li>
-                  <a href="#" id="encountersave" className="button save" onClick={this.save}>Save</a>
+                  <a href="#" id="encountersave" className="button save" onClick={this.validateThenSave}>Save</a>
                 </li>
                 <li>
                   <a href={cancelUrl} className="button cancel">Cancel</a>
