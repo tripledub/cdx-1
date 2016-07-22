@@ -10,7 +10,6 @@
 
     $('#epitabs li').on('click', function() {
     var type = $(this).attr('id').split('_')[1];  // get bit after the 'tab_' in the id
-    console.log('Changing Tab to: '+type);
     $('#epitabs li').removeClass('active');
     $(this).addClass('active');
     $('.panel').hide();
