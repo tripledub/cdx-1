@@ -1,6 +1,47 @@
 = form_for([@patient, @episode], html: { class: 'zebra' } ) do |f|
   = f.hidden_field :closed, value: @episode.closed
-  .panel
+
+  %script
+    $(document).ready( function(){
+    $('.panel').hide();
+
+    $('.panel#episodetype_tb').show();  // default
+    $('span#episodeType').text('TB');
+
+    $('#epitabs li').on('click', function() {
+    var type = $(this).attr('id').split('_')[1];  // get bit after the 'tab_' in the id
+    console.log('Changing Tab to: '+type);
+    $('#epitabs li').removeClass('active');
+    $(this).addClass('active');
+    $('.panel').hide();
+    $('.panel#episodetype_'+type).show();
+    $('span#episodeType').text(type);
+    });
+
+    });
+
+  .testflow
+    %ul.tab#epitabs
+      %li#tab_tb
+        = link_to I18n.t('episodes.episode_type.tb'),'#'
+      %li#tab_hiv
+        = link_to I18n.t('episodes.episode_type.hiv'),'#'
+      %li#tab_ebola
+        = link_to I18n.t('episodes.episode_type.ebola'),'#'
+
+  .panel#episodetype_ebola
+    .row
+      .col-6
+        %b
+          = I18n.t('episodes.form.episode_type_not_available')
+
+  .panel#episodetype_hiv
+    .row
+      .col-6
+        %b
+          = I18n.t('episodes.form.episode_type_not_available')
+
+  .panel#episodetype_tb
     .row
       .col-6
         = f.label :diagnosis
@@ -27,7 +68,7 @@
         = f.label :drug_resistance
       .col-6
         = f.collection_select :drug_resistance, Episode.drug_resistance_options, :id, :name, include_blank: I18n.t('select.default')
-    .zebra  
+    .zebra
       = react_component 'EpisodeSelectOutcome', outcomeOptions: outcome_options, selected: @episode.outcome
     .row.button-actions
       .col
