@@ -136,6 +136,9 @@ Manifest.blueprint do
   definition { DefaultManifest.definition }
 end
 
+PageHeader.blueprint do
+  institution { Institution.make }
+end
 
 Encounter.blueprint do
   patient { Patient.make }
