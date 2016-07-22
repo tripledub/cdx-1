@@ -3,19 +3,20 @@
     %h2
       = link_to patients_path, class: 'side-link', title: 'Back' do
         = image_tag "arrow-left-white.png"
-      = form_title(@episode, 'Episode (TB)')
+      = form_title(@episode, 'Episode')
 
 .testflow
   .container
     .row.labelHeader.episodeDetail
       .row.col-6
         %h3
-          Episode Details
+          = I18n.t('episodes.form.episode_details')
+          &nbsp;(
+          %span#episodeType
+          )
       .row.col-6.right
         %ul
           %li
             = link_to I18n.t('views.save'), '#', class: 'button save', title: I18n.t('views.save')
-          %li
-            = link_to I18n.t('views.cancel'), patient_path(@patient), class: 'button cancel', title: I18n.t('views.cancel')
 
     = render 'form'
