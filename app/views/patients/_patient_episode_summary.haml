@@ -1,4 +1,4 @@
-- if episodes.empty?
+- if total_episodes == 0
   = empty_data icon: 'icon-outline-test xx-large' do |c|
     - c.body do
       %h1
@@ -17,32 +17,5 @@
       %ul
         %li
           = link_to I18n.t('patients.show.add_episode'), new_patient_episode_path(patient), class: 'button add'
-  .panel.patient-details.episodelisting.patient-summary
-    - episodes.each do |episode|
-      .row
-        .col-12
-          %ul
-            %li
-              %label
-                = Episode.human_attribute_name(:diagnosis)
-              = link_to Extras::Select.find_from_struct(Episode.diagnosis_options, episode.diagnosis), edit_patient_episode_path(patient, episode)
-            %li
-              %label
-                = Episode.human_attribute_name(:hiv_status)
-              = Extras::Select.find_from_struct(Episode.hiv_status_options, episode.hiv_status)
-            %li
-              %label
-                = Episode.human_attribute_name(:initial_history)
-              = "#{Extras::Select.find_from_struct(Episode.initial_history_options, episode.initial_history)} - #{Extras::Select.find_from_struct(Episode.previous_history_options, episode.previous_history)}"
-          %ul
-            %li
-              %label
-                = Episode.human_attribute_name(:drug_resistance)
-              = Extras::Select.find_from_struct(Episode.drug_resistance_options, episode.drug_resistance)
-            %li
-              %label
-                = Episode.human_attribute_name(:outcome)
-              = Extras::Select.find_from_struct(Episode.treatment_outcome_options, episode.outcome)
-          %ul
-            %li
-              = link_to I18n.t('patients.show.edit_episode'), edit_patient_episode_path(patient, episode), class: 'button edit'
+
+  = react_component 'PatientEpisodes', episodesUrl: patient_episodes_path(patient)
