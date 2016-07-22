@@ -34,9 +34,9 @@ class PatientsController < ApplicationController
 
   def show
     @patient = Patient.find(params[:id])
-    @patient_json = Jbuilder.new { |json| @patient.as_json_card(json) }.attributes!
     return unless authorize_resource(@patient, READ_PATIENT)
-    @episodes = @patient.episodes.order(id: :desc)
+
+    @patient_json = Jbuilder.new { |json| @patient.as_json_card(json) }.attributes!
   end
 
   def new

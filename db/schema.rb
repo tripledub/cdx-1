@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160719161550) do
+ActiveRecord::Schema.define(version: 20160722112759) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -325,16 +325,18 @@ ActiveRecord::Schema.define(version: 20160719161550) do
   add_index "encounters", ["user_id"], name: "index_encounters_on_user_id", using: :btree
 
   create_table "episodes", force: :cascade do |t|
-    t.string  "diagnosis",                 limit: 255
-    t.integer "patient_id",                limit: 4
-    t.string  "hiv_status",                limit: 255
-    t.string  "drug_resistance",           limit: 255
-    t.string  "outcome",                   limit: 255
-    t.string  "anatomical_site_diagnosis", limit: 255
-    t.string  "initial_history",           limit: 255
-    t.string  "previous_history",          limit: 255
-    t.string  "uuid",                      limit: 255
-    t.boolean "closed"
+    t.string   "diagnosis",                 limit: 255
+    t.integer  "patient_id",                limit: 4
+    t.string   "hiv_status",                limit: 255
+    t.string   "drug_resistance",           limit: 255
+    t.string   "outcome",                   limit: 255
+    t.string   "anatomical_site_diagnosis", limit: 255
+    t.string   "initial_history",           limit: 255
+    t.string   "previous_history",          limit: 255
+    t.string   "uuid",                      limit: 255
+    t.boolean  "closed",                                default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "episodes", ["patient_id"], name: "index_episodes_on_patient_id", using: :btree
