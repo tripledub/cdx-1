@@ -1,4 +1,4 @@
-var PatientContent = React.createClass({
+var PatientHistoryContent = React.createClass({
   render: function(){
     return(
       <div className="row">

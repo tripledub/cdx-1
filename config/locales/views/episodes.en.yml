@@ -3,3 +3,11 @@ en:
     form:
       header: 'Episode (TB) for %{patient_name}'
       history: 'History of Previous Treatment'
+    create:
+      new_episode: 'New episode created'
+      episode_created: 'Episode successfully created.'
+    update:
+      update_episode: 'Episode updated'
+      episode_updated: 'Episode successfully updated.'
+    permission:
+      not_allowed: "You don't have permisson to manage episodes for this patient"

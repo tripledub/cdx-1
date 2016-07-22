@@ -2,6 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Reports::AverageTechnicianTests, elasticsearch: true do
   let(:current_user)        { User.make }
+  let(:user2)               { User.make }
   let(:site_user)           { "#{current_user.first_name} #{current_user.last_name}" }
   let(:site_user2)          { "B. smith" }
   let(:institution)         { Institution.make(user_id: current_user.id) }
@@ -14,7 +15,7 @@ RSpec.describe Reports::AverageTechnicianTests, elasticsearch: true do
   let(:user_device_two)     { Device.make institution_id: institution_two.id, site: site_two }
   let(:patient)             { Patient.make institution: institution }
   let(:encounter)           { Encounter.make institution: institution , user: current_user, patient: patient, site: site }
-  let(:encounter2)          { Encounter.make institution: institution , user: current_user, patient: patient, site: site2 }
+  let(:encounter2)          { Encounter.make institution: institution , user: user2, patient: patient, site: site2 }
   let(:requested_test)      { RequestedTest.make encounter: encounter }
   let(:requested_test2)     { RequestedTest.make encounter: encounter2 }
   let!(:microscopy_result)  { MicroscopyResult.make requested_test: requested_test2 }
@@ -59,7 +60,7 @@ RSpec.describe Reports::AverageTechnicianTests, elasticsearch: true do
     end
 
     it 'returns a value for each user' do
-      expect(subject[:columns].last[:dataPoints].last[:y]).to eq(3)
+      expect(subject[:columns].last[:dataPoints].last[:y]).to eq(1)
     end
   end
 end

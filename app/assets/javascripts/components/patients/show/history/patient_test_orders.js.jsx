@@ -56,7 +56,7 @@ var PatientTestOrders = React.createClass({
   },
 
   render: function(){
-    var rows = [];
+    var rows       = [];
     var rowHeaders = [];
     var that       = this;
     this.state.patientTestOrders.forEach(
