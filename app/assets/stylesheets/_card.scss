@@ -1,6 +1,5 @@
 .card {
   @include flexbox();
-  height: 180px;
   border: 1px solid $gray2;
 
   border-radius: 3px;
@@ -11,8 +10,9 @@
   }
 
   .card-image {
-    background-color: $gray3;
+    background-color:rgb(229, 229, 229);
     @include flex(0 0 180px);
+    align-items:center;
 
     img {
       background-size:cover;

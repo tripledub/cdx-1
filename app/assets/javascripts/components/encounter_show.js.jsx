@@ -146,7 +146,7 @@ var EncounterShow = React.createClass({
         </div>
         <br />
         <div className="row buttonActions">
-          <div className="col pe-2">
+          <div className="col">
             {actionButton}
           </div>
         </div>

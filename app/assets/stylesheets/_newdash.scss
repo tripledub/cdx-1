@@ -23,9 +23,6 @@
     flex: 0 0 24.667%;
   margin-bottom:15px;
 }
-.container .col:hover {opacity:0.8;cursor: pointer;}
-/* THATS IT */
-
 
 
 /*  COLUMN SETUP  */
@@ -1624,3 +1621,54 @@ font-size:12px;
 }
 
 .rc-handle { border-left:1px solid #eee; }
+
+div#new-xpert-results section.row {
+  margin-top:10px;
+
+  .row {
+    align-items:center;
+  }
+
+  .button-actions {
+    position:absolute;
+    top:25px;
+    right:26px;
+
+    a.btn-link {
+      background:#e06023;
+      padding:0 24px;
+      height:30px;
+      line-height:30px;
+      margin-left:7px;
+      color:#fff;
+    }
+  }
+}
+
+form#new_microscopy_result {
+  .row {
+    align-items:center;
+  }
+
+  label {
+    margin-bottom:0px;
+  }
+
+  .button-actions {
+    position:absolute;
+    margin:0px;
+    top:5px;
+    right:10px;
+
+     a.btn-link {
+      background:#e06023;
+      padding:0 24px;
+      height:30px;
+      line-height:30px;
+      margin-left:7px;
+      color:#fff;
+    }
+
+    input:hover, .btn-link:hover {opacity:0.8;cursor:pointer;}
+  }
+}
