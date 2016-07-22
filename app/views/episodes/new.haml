@@ -3,7 +3,7 @@
     %h2
       = link_to patients_path, class: 'side-link', title: 'Back' do
         = image_tag "arrow-left-white.png"
-      = form_title(@episode, 'Episode')
+      = form_title(@episode, I18n.t('episode') )
 
 .testflow
   .container
