@@ -66,7 +66,8 @@ var AlertCategorySelect = React.createClass({
       test_result_max_thresholdField: this.props.alert_info.test_result_max_threshold,
       utilization_efficiency_numberField: this.props.alert_info.utilization_efficiency_number,
       use_aggregation_percentageField: this.props.alert_info.use_aggregation_percentage,
-      institution_idField : this.props.alert_info.institution_id
+      institution_idField : this.props.alert_info.institution_id,
+      site_idField : this.props.alert_info.site_id
     };
   },
   categoryChanged: function(e) {
@@ -193,7 +194,8 @@ var AlertCategorySelect = React.createClass({
       test_result_max_threshold: this.state.test_result_max_thresholdField,
       utilization_efficiency_number: this.state.utilization_efficiency_numberField,
       use_aggregation_percentage: this.state.use_aggregation_percentageField,
-      institution_id: this.state.institution_idField
+      institution_id: this.state.institution_idField,
+      site_id: this.state.site_idField
     };
 
     if (this.props.edit == true) {
@@ -205,6 +207,19 @@ var AlertCategorySelect = React.createClass({
     }
   },
   render: function() {
+    var save_class;
+    if (this.props.can_update) {
+      save_class = "col pe-8";
+    } else {
+      save_class = "col pe-8 hidden";
+    }
+
+    if (this.props.can_delete) {
+      delete_class = "col";
+    } else {
+      delete_class = "col hidden";
+    }
+ 
     return (
       <div>
         <div className="row">
@@ -373,12 +388,12 @@ var AlertCategorySelect = React.createClass({
     />
 
   <div className="row">
-    <div className = "col pe-8">
+    <div className = {save_class}>
       <input type = "submit" value = {this.state.submit_button_text} className = "btn-primary" id="submit" />
       <a className = "btn-link" href = "/alerts">Cancel</a>
     </div>
 
-    <div className = "col">
+    <div className = {delete_class}>
       <AlertDelete edit={this.props.edit} onChangeParentLevel={this.AlertDeleteHandler} />
     </div>
   </div>

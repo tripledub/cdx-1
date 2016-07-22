@@ -5,14 +5,15 @@ class AlertGroupsController < ApplicationController
   #could not name it 'alert' as rails gave a warning as this is a reserved method.
   expose(:alert_info, model: :alert, attributes: :alert_params)
 
-  before_filter do
-    head :forbidden unless has_access_to_test_results_index?
-  end
-
   def new
+    return unless prepare_for_institution_and_authorize(alert_info, CREATE_ALERT)
+
+    @can_update = true
     new_alert_request_variables
     alert_info.sms_limit=100
     alert_info.email_limit=100
+
+    alert_info.site_id = @navigation_context.site.id if @navigation_context.site != nil
     alert_info.institution_id = @navigation_context.institution.id
     alert_info.utilization_efficiency_number=1
     alert_info.alert_recipients.build
@@ -20,15 +21,20 @@ class AlertGroupsController < ApplicationController
 
   def index
     order_by, offset = perform_pagination('alerts.name')
-
-    @alerts = current_user.alerts
-    @total  = @alerts.count
+    @can_create = has_access?(Alert, CREATE_ALERT)
+    @alerts = check_access(Alert, READ_ALERT)
+    @alerts = @alerts.within(@navigation_context.entity, @navigation_context.exclude_subsites)
+    @total = @alerts.count
     @alerts = @alerts.order(order_by).limit(@page_size).offset(offset)
+    respond_with @alerts
   end
 
   def edit
-    new_alert_request_variables
+    return unless authorize_resource(alert_info, READ_ALERT)
+    @can_update = has_access?(@navigation_context.institution, UPDATE_ALERT)
+    @can_delete = has_access?(@navigation_context.institution, DELETE_ALERT)
 
+    new_alert_request_variables
     @alert_sites=[]
     alert_info.sites.each do |site|
       @alert_sites.push(site.id)
@@ -84,12 +90,15 @@ class AlertGroupsController < ApplicationController
   end
 
   def create
+    return unless authorize_resource(alert_info, CREATE_ALERT)
+
     external_users_ok = true
     internal_users_ok = true
     condition_result_ok = true
     error_text=Hash.new
     alert_info.user = current_user
     alert_info.time_last_aggregation_checked = Time.now
+    alert_info.site = Site.find(alert_info.site_id) if alert_info.site_id != nil
 
     alert_saved_ok = alert_info.save
     if alert_saved_ok==false
@@ -113,6 +122,8 @@ class AlertGroupsController < ApplicationController
   end
 
   def update
+    return unless authorize_resource(alert_info, UPDATE_ALERT)
+
     external_users_ok = true
     internal_users_ok = true
     condition_result_ok = true
@@ -145,6 +156,8 @@ class AlertGroupsController < ApplicationController
   end
 
   def destroy
+    return unless authorize_resource(alert_info, DELETE_ALERT)
+
     if alert_info.destroy
       render json: alert_info
     else
@@ -155,12 +168,12 @@ class AlertGroupsController < ApplicationController
   private
 
   def alert_params
-    params.require(:alert).permit(:name, :description, :devices_info, :users_info, :enabled, :sites_info, :error_code,
-                                  :message, :sms_message, :sample_id, :site_id, :category_type, :notify_patients, :aggregation_type,
-                                  :anomalie_type, :aggregation_frequency, :channel_type, :sms_limit, :email_limit,
-                                  :aggregation_threshold, :roles, :external_users, :conditions_info, :condition_results_info,
-                                  :condition_result_statuses_info, :test_result_min_threshold, :test_result_max_threshold,
-                                  :utilization_efficiency_number, :use_aggregation_percentage, :institution_id,
+    params.require(:alert).permit(:name, :description, :devices_info, :users_info, :enabled, :sites_info, :error_code, 
+                                  :message, :sms_message, :sample_id, :site_id, :category_type, :notify_patients, :aggregation_type, 
+                                  :anomalie_type, :aggregation_frequency, :channel_type, :sms_limit, :email_limit, 
+                                  :aggregation_threshold, :roles, :external_users, :conditions_info, :condition_results_info, 
+                                  :condition_result_statuses_info, :test_result_min_threshold, :test_result_max_threshold, 
+                                  :utilization_efficiency_number, :use_aggregation_percentage, :institution_id,:site_id,
                                   alert_recipients_attributes: [:user, :user_id, :email, :role, :role_id, :id] )
   end
 
