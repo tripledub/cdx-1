@@ -190,6 +190,10 @@ describe "Cdx::Api::Elasticsearch::MappingTemplate" do
                 "type"=> "string",
                 "index"=> "not_analyzed"
               },
+              "testing_for"=> {
+                "type"=> "string",
+                "index"=> "not_analyzed"
+              },
               "patient_age" => {
                 "properties" => {
                   "in_millis" => {

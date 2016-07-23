@@ -144,6 +144,8 @@ entities:
         searchable: true
       observations:
         pii: true
+      testing_for:
+        searchable: true
       diagnosis:
         type: nested
         sub_fields:

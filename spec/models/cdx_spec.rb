@@ -53,6 +53,7 @@ describe Cdx do
       "encounter.diagnosis.name",
       "encounter.diagnosis.quantitative_result",
       "encounter.diagnosis.result",
-      "encounter.observations")
+      "encounter.observations",
+      "encounter.testing_for")
   end
 end
