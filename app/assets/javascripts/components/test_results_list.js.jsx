@@ -62,7 +62,7 @@ var TestResultsList = React.createClass({
         <thead>
           <tr>
             {sortableHeader("Test", "test.name")}
-            <th data-resizable-column-id="results" colSpan={totalAssaysColCount} className="text-right">Results</th>
+            <th data-resizable-column-id="results" colSpan={totalAssaysColCount}>Results</th>
             { this.props.showSites ? sortableHeader("Site", "site.name") : null }
             { this.props.showDevices ? sortableHeader("Device name", "device.name") : null }
             { this.props.showDevices ? sortableHeader("Device serial number", "device.serial_number") : null }
