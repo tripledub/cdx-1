@@ -15,18 +15,6 @@
         .row
           .filter
             %label.block
-              = I18n.t('test_orders.filters.condition')
-            = cdx_select name: "test.assays.condition", value: params["test.assays.condition"] do |select|
-              - select.item "", I18n.t('test_orders.filters.show_all')
-              - select.items(@conditions.map { |name| [name.upcase, name] })
-          .filter
-            %label.block
-              = I18n.t('test_orders.filters.result')
-            = cdx_select name: "test.assays.result", value: params["test.assays.result"] do |select|
-              - select.item "", I18n.t('test_orders.filters.show_all')
-              - select.items @results, :value, :label
-          .filter
-            %label.block
               = I18n.t('test_orders.filters.date')
             = cdx_select name: "since", value: params["since"] do |select|
               - select.item "", I18n.t('test_orders.filters.show_all')
