@@ -16,6 +16,7 @@ var TestResultRow = React.createClass({
 
       { this.props.showSites ? <td>{test.site ? test.site.name : null}</td> : null }
       { this.props.showDevices ? <td>{test.device ? test.device.name : null}</td> : null }
+      { this.props.showDevices ? <td>{test.device ? test.device.serial_number : null}</td> : null }
       <td>{test.sample_entity_ids}</td>
       <td>{test.type}</td>
       <td>{test.status}</td>
@@ -63,7 +64,8 @@ var TestResultsList = React.createClass({
             {sortableHeader("Test", "test.name")}
             <th data-resizable-column-id="results" colSpan={totalAssaysColCount} className="text-right">Results</th>
             { this.props.showSites ? sortableHeader("Site", "site.name") : null }
-            { this.props.showDevices ? sortableHeader("Device", "device.name") : null }
+            { this.props.showDevices ? sortableHeader("Device name", "device.name") : null }
+            { this.props.showDevices ? sortableHeader("Device serial number", "device.serial_number") : null }
             {sortableHeader("Sample ID", "sample.id")}
             {sortableHeader("Type", "test.type")}
             {sortableHeader("Status", "test.status")}

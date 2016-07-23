@@ -29,9 +29,9 @@ class TestResultQuery < EntityQuery
     devices      = indexed_model tests, Device, %w(device uuid)
 
     tests.each do |test|
-      test['institution']['name'] = institutions[test['institution']['uuid']].try(:name) if test['institution']
-      test['device']['name']      = devices[test['device']['uuid']].try(:name)           if test['device']
-      test['site']['name']        = sites[test['site']['uuid']].try(:name)               if test['site']
+      test['institution']['name']     = institutions[test['institution']['uuid']].try(:name) if test['institution']
+      test['device']['name']          = devices[test['device']['uuid']].try(:name)           if test['device']
+      test['site']['name']            = sites[test['site']['uuid']].try(:name)               if test['site']
     end
   end
 
