@@ -11,7 +11,7 @@ describe DstLpaResultsController do
   let(:sample)              { Sample.make(institution: institution, patient: patient, encounter: encounter) }
   let!(:sample_identifier1) { SampleIdentifier.make(site: site, entity_id: 'sample-id', sample: sample) }
   let!(:sample_identifier2) { SampleIdentifier.make(site: site, entity_id: 'sample-2', sample: sample) }
-  let(:requested_test)      { RequestedTest.make encounter: encounter }
+  let(:requested_test)      { RequestedTest.make encounter: encounter, name: 'microscopy' }
   let(:dst_lpa_result)      { DstLpaResult.make requested_test: requested_test }
   let(:default_params)      { { context: institution.uuid } }
   let(:valid_params)        { {
@@ -40,16 +40,35 @@ describe DstLpaResultsController do
     end
 
     describe 'new' do
-      before :each do
-        get 'new', requested_test_id: requested_test.id
+      context 'a valid request' do
+        before :each do
+          get 'new', requested_test_id: requested_test.id
+        end
+
+        it 'should render the new template' do
+          expect(request).to render_template('new')
+        end
+
+        it 'should add test order samples id to laboratory serial numbers' do
+          expect(assigns(:dst_lpa_result).serial_number).to eq("#{sample_identifier1.entity_id}, #{sample_identifier2.entity_id}")
+        end
       end
 
-      it 'should render the new template' do
-        expect(request).to render_template('new')
-      end
+      context 'when culture and dst are pending' do
+        before :each do
+          RequestedTest.make name: 'culture', encounter: encounter
+          RequestedTest.make name: 'dst', encounter: encounter
 
-      it 'should add test order samples id to laboratory serial numbers' do
-        expect(assigns(:dst_lpa_result).serial_number).to eq("#{sample_identifier1.entity_id}, #{sample_identifier2.entity_id}")
+          get 'new', requested_test_id: requested_test.id
+        end
+
+        it 'should redirect if adding a dst and no culture is added' do
+          expect(request).to redirect_to(encounter_path(requested_test.encounter))
+        end
+
+        it 'should inform the user' do
+          expect(flash[:notice]).to eq('You must enter Culture results before you can add DST results')
+        end
       end
     end
 
@@ -97,6 +116,23 @@ describe DstLpaResultsController do
           post :create, requested_test_id: requested_test.id, dst_lpa_result: invalid_params
 
           expect(request).to render_template('new')
+        end
+      end
+
+      context 'when culture and dst are pending' do
+        before :each do
+          RequestedTest.make name: 'culture', encounter: encounter
+          RequestedTest.make name: 'dst', encounter: encounter
+
+          post :create, requested_test_id: requested_test.id, dst_lpa_result: valid_params
+        end
+
+        it 'should redirect if adding a dst and no culture is added' do
+          expect(request).to redirect_to(encounter_path(requested_test.encounter))
+        end
+
+        it 'should inform the user' do
+          expect(flash[:notice]).to eq('You must enter Culture results before you can add DST results')
         end
       end
      end
