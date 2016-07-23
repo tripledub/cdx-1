@@ -40,4 +40,26 @@ RSpec.describe RequestedTest, :type => :model do
     end
   end
 
+  describe 'show_dst_warning' do
+    context 'when dst and culture test are requested' do
+      it 'should return true if both are not present' do
+        RequestedTest.make name: 'culture'
+        RequestedTest.make name: 'dst'
+
+        expect(described_class.show_dst_warning).to eq(true)
+      end
+
+      it 'should return false if any of them are present' do
+        expect(described_class.show_dst_warning).to eq(false)
+      end
+    end
+
+    context 'when dst and culture test are notrequested' do
+      it 'should return false' do
+        RequestedTest.make name: 'microscopy'
+
+        expect(described_class.show_dst_warning).to eq(false)
+      end
+    end
+  end
 end
