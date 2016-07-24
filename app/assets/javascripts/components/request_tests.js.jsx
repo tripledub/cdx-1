@@ -55,19 +55,19 @@ var RequestedTestRow = React.createClass({
 
     switch(name) {
       case 'xpertmtb':
-        urlPath = "/requestedTests/"+id+"/xpert_result"+newOrEditPath;
+        urlPath = "/requested_tests/"+id+"/xpert_result"+newOrEditPath;
         break;
       case 'microscopy':
-        urlPath = "/requestedTests/"+id+"/microscopy_result"+newOrEditPath;
+        urlPath = "/requested_tests/"+id+"/microscopy_result"+newOrEditPath;
         break;
       case 'dst':
-        urlPath = "/requestedTests/"+id+"/dst_lpa_result"+newOrEditPath;
+        urlPath = "/requested_tests/"+id+"/dst_lpa_result"+newOrEditPath;
         break;
       case 'culture':
-        urlPath = "/requestedTests/"+id+"/culture_result"+newOrEditPath;
+        urlPath = "/requested_tests/"+id+"/culture_result"+newOrEditPath;
         break;
       default:
-        urlPath = "/requestedTests/"+id+"/undefined_result";
+        urlPath = "/requested_tests/"+id+"/undefined_result";
     }
     return urlPath;
   },
