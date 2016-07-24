@@ -134,6 +134,7 @@ class TestResult < PatientResult
 
     json.device do
       json.name test_result_query_result["device"]["name"]
+      json.serial_number test_result_query_result["device"]["serial_number"]
     end
   end
 
