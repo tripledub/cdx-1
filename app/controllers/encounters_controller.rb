@@ -33,8 +33,6 @@ class EncountersController < ApplicationController
   def show
     return unless authorize_resource(@encounter, READ_ENCOUNTER)
     determine_referal
-    @can_update = has_access?(@encounter, UPDATE_ENCOUNTER)
-    @associated_tests_to_results = PatientResult.find_associated_tests_to_results(@encounter)
   end
 
   def edit

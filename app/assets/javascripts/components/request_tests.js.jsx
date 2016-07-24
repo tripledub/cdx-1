@@ -1,61 +1,85 @@
 var RequestedTestRow = React.createClass({
   getInitialState: function() {
-  return {
-    statusField: '',
-    test: this.props.requested_test
+    return {
+      statusField:    '',
+      test:           this.props.requestedTest,
+      showWarning:    false,
+      testResultUrl:  "#",
+      testResultText: ""
     };
   },
+
+  componentDidMount: function() {
+    if ( (this.props.edit == true) && (this.isAssociated() == false) &&
+      ((this.state.test.status == 'pending') || (this.state.test.status == 'inprogress')) ) {
+      this.setState({ testResultUrl: this.determineTestResultUrl(this.state.test.id, this.state.test.name, this.props.edit) });
+      this.setState({ testResultText: "Add Result" });
+      this.setState({ showWarning: this.props.showDstWarning && this.state.test.name == 'dst' })
+    }
+    else if ( this.isAssociated() == true) {
+      this.setState({ testResultUrl:  this.determineTestResultUrl(this.state.test.id, this.state.test.name, this.props.edit) });
+      this.setState({ testResultText: "View Result" });
+    }
+  },
+
   statusChanged: function(event) {
-    var temp_test = this.state.test;
-    temp_test.status=event.target.value;
-    this.setState({
-      test: temp_test
-    });
-   this.props.onTestChanged(this.state.test);
+    var tempTest    = this.state.test;
+    tempTest.status = event.target.value;
+    this.setState({ test: tempTest });
+    this.props.onTestChanged(this.state.test);
   },
-  commentChanged: function(new_comment) {
-    var temp_test = this.state.test;
-    temp_test.comment=new_comment;
-    this.setState({
-      test: temp_test
-    });
-   this.props.onTestChanged(this.state.test);
+
+  commentChanged: function(newComment) {
+    var tempTest = this.state.test;
+    tempTest.comment=newComment;
+    this.setState({ test: tempTest });
+    this.props.onTestChanged(this.state.test);
   },
-  determineTestResultUrl(id,name, edit, is_associated) {
-    var url_path;
-    var view_or_cancel_path;
-    var test_order_page_mode;
+
+  determineTestResultUrl(id, name, edit) {
+    var urlPath;
+    var newOrEditPath;
+    var testOrderPageMode;
 
     if (edit == true) {
-      test_order_page_mode = 'edit';
+      testOrderPageMode = 'edit';
     } else {
-      test_order_page_mode = 'cancel';
+      testOrderPageMode = 'cancel';
     }
 
-    if (is_associated == true) {
-      view_or_cancel_path = '?test_order_page_mode='+test_order_page_mode;
+    if (this.isAssociated() == true) {
+      newOrEditPath = '?test_order_page_mode='+testOrderPageMode;
     } else {
-      view_or_cancel_path = '/new?test_order_page_mode='+test_order_page_mode;
+      newOrEditPath = '/new?test_order_page_mode='+testOrderPageMode;
     }
 
     switch(name) {
       case 'xpertmtb':
-        url_path = "/requested_tests/"+id+"/xpert_result"+view_or_cancel_path;
+        urlPath = "/requested_tests/"+id+"/xpert_result"+newOrEditPath;
         break;
       case 'microscopy':
-        url_path = "/requested_tests/"+id+"/microscopy_result"+view_or_cancel_path;
+        urlPath = "/requested_tests/"+id+"/microscopy_result"+newOrEditPath;
         break;
-      case 'drugsusceptibility':
-        url_path = "/requested_tests/"+id+"/dst_lpa_result"+view_or_cancel_path;
+      case 'dst':
+        urlPath = "/requested_tests/"+id+"/dst_lpa_result"+newOrEditPath;
         break;
       case 'culture':
-        url_path = "/requested_tests/"+id+"/culture_result"+view_or_cancel_path;
+        urlPath = "/requested_tests/"+id+"/culture_result"+newOrEditPath;
         break;
       default:
-        url_path=url_path = "/requested_tests/"+id+"/undefined_result";
+        urlPath = "/requested_tests/"+id+"/undefined_result";
     }
-    return url_path;
-},
+    return urlPath;
+  },
+
+  isAssociated: function() {
+    var that = this;
+
+    return this.props.associatedTestsToResults.filter(
+      function (el) { return el.requested_test_id == that.state.test.id; }
+    ).length != 0
+  },
+
   render: function() {
     var encounter = this.props.encounter;
 
@@ -67,70 +91,39 @@ var RequestedTestRow = React.createClass({
       samples += encounter.samples[i].entity_ids[0]
     }
 
-    created_at = new Date(Date.parse(this.state.test.created_at));
-    created_at_date=created_at.toISOString().slice(0, 10);
-
-    var status_array=[];
-    for (var index in this.props.status_types) {
-      status_array.push(index);
+    var statusArray=[];
+    for (var index in this.props.statusTypes) {
+      statusArray.push(index);
     }
 
-    var status_data = status_array,
-        MakeItem = function(X) {
-          return <option key={X} value={X}>{X}</option>;
-         };
+    var statusData = statusArray, MakeItem = function(X) {
+      return <option key={X} value={X}>{X}</option>;
+    };
 
-    var test_result_text;
-    var test_result_url;
-    var test_id=this.state.test.id;
-    associated_patient_result = this.props.associated_tests_to_results.filter(function (el) {return el.requested_test_id == test_id;});
-
-    var is_associated;
-    if (associated_patient_result.length == 0) {
-      is_associated=false;
-    } else {
-      is_associated=true;
-    }
-
-    if (this.state.test.status=='rejected') {
-      test_result_url = "#";
-      test_result_text = "";
-    } else
-    if ((this.props.edit == true) && (is_associated == false) &&
-       ((this.state.test.status == 'pending') || (this.state.test.status == 'inprogress')) ) {
-      test_result_url = this.determineTestResultUrl(this.state.test.id, this.state.test.name, this.props.edit, is_associated);
-      test_result_text = "Add Result";
-    }
-    else if ( (is_associated == false) || ((this.props.cancel==true) && (this.state.test.status=='complete')) ) {
-      test_result_url = "#";
-      test_result_text = "";
-    }
-    else {
-      test_result_url = this.determineTestResultUrl(this.state.test.id, this.state.test.name, this.props.edit,is_associated);
-      test_result_text = "View Result";
-    }
-
-  return (
-    <tr>
-      <td>{this.state.test.name}</td>
-      <td>{samples}</td>
-      <td>{this.props.requested_by}</td>
-      <td>{created_at_date}</td>
-      <td>{encounter.site.name}</td>
-      <td>{encounter.testdue_date}</td>
-      <td><select key={this.state.test.id} onChange = {
-            this.statusChanged
-           }
-          className="input-x-medium"
-          defaultValue={this.state.test.status}
-          disabled = {
-            !this.props.edit
-           }>
-          {status_data.map(MakeItem)}
-          </select></td>
-      <td><TextInputModal key={this.state.test.id} comment={this.state.test.comment} commentChanged={this.commentChanged} edit={this.props.edit}/></td>
-      <td><a className="btn-add-link" href={test_result_url}>{test_result_text}</a></td>
-      </tr>);
+    return (
+      <tr>
+        <td>{this.state.test.name}</td>
+        <td>{samples}</td>
+        <td>{this.props.requested_by}</td>
+        <td>{new Date(Date.parse(this.state.test.created_at)).toISOString().slice(0, 10)}</td>
+        <td>{encounter.site.name}</td>
+        <td>{encounter.testdue_date}</td>
+        <td><select key={this.state.test.id} onChange = {
+              this.statusChanged
+             }
+            className="input-x-medium"
+            defaultValue={this.state.test.status}
+            disabled = {
+              !this.props.edit
+             }>
+            {statusData.map(MakeItem)}
+            </select></td>
+        <td><TextInputModal key={this.state.test.id} comment={this.state.test.comment} commentChanged={this.commentChanged} edit={this.props.edit}/></td>
+        <td>
+          <TestResultButton testResultUrl={this.state.testResultUrl} testResultText={this.state.testResultText} showWarning={this.state.showWarning} />
+        </td>
+      </tr>
+    );
   }
 });
 
@@ -141,9 +134,11 @@ var RequestedTestsList = React.createClass({
       titleClassName: ""
     }
   },
+
   onTestChanged: function(new_test) {
     this.props.onTestChanged(new_test)
   },
+
   render: function() {
     return (
       <table className="table" id="test-table" cellPadding="0" cellSpacing="0">
@@ -166,10 +161,10 @@ var RequestedTestsList = React.createClass({
           </tr>
         </thead>
         <tbody>
-          {this.props.requested_tests.map(function(requested_test) {
-             return <RequestedTestRow key={requested_test.id} requested_test={requested_test} onTestChanged={this.onTestChanged}
-              encounter={this.props.encounter} requested_by={this.props.requested_by}  status_types={this.props.status_types}
-              edit={this.props.edit} associated_tests_to_results={this.props.associated_tests_to_results} />;
+          {this.props.requestedTests.map(function(requestedTest) {
+             return <RequestedTestRow key={requestedTest.id} requestedTest={requestedTest} onTestChanged={this.onTestChanged}
+              encounter={this.props.encounter} requested_by={this.props.requested_by}  statusTypes={this.props.statusTypes}
+              edit={this.props.edit} associatedTestsToResults={this.props.associatedTestsToResults} showDstWarning={this.props.showDstWarning} />;
           }.bind(this))}
         </tbody>
       </table>
@@ -181,9 +176,45 @@ var RequestedTestsIndexTable = React.createClass({
   onTestChanged: function(new_test) {
     this.props.onTestChanged(new_test)
    },
+
   render: function() {
-    return <RequestedTestsList requested_tests={this.props.requested_tests} encounter={this.props.encounter} onTestChanged={this.onTestChanged}
-              title={this.props.title} requested_by={this.props.requested_by} titleClassName="table-title" status_types={this.props.status_types}
-              edit={this.props.edit} associated_tests_to_results={this.props.associated_tests_to_results}/>
+    return <RequestedTestsList requestedTests={this.props.requestedTests} encounter={this.props.encounter} onTestChanged={this.onTestChanged}
+              title={this.props.title} requested_by={this.props.requested_by} titleClassName="table-title" statusTypes={this.props.statusTypes}
+              edit={this.props.edit} associatedTestsToResults={this.props.associatedTestsToResults} showDstWarning={this.props.showDstWarning} />
+  }
+});
+
+var TestResultButton = React.createClass({
+  getInitialState: function() {
+    return {
+      displayConfirm:    false
+    };
+  },
+
+  clickHandler: function(e) {
+    e.preventDefault();
+    this.setState({ displayConfirm: true });
+  },
+
+  cancelClickHandler: function() {
+    this.setState({ displayConfirm: false });
+  },
+
+  render: function() {
+    if (this.state.displayConfirm == true) {
+      return (
+        <ConfirmationModalEncounter message={'You must enter Culture results before you can add DST results.'} title= {'Culture result needed.'} cancel_target={this.cancelClickHandler} hideOuterEvent={this.cancelClickHandler} target={this.cancelClickHandler} deletion={false} hideCancel={true} confirmMessage= {'Close'} />
+      );
+    }
+
+    if (this.props.showWarning) {
+      return (
+        <a className="btn-add-link" onClick={this.clickHandler}>Add Result</a>
+      )
+    } else {
+      return(
+        <a className="btn-add-link" href={this.props.testResultUrl}>{this.props.testResultText}</a>
+      )
+    }
   }
 });

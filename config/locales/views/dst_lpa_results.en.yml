@@ -5,6 +5,7 @@ en:
     create:
       audit: 'DST and LPA result added'
       notice: 'DST and LPA result was successfully created.'
+      dst_warning: 'You must enter Culture results before you can add DST results'
     show:
       header: 'DST and LPA test result for: %{patient_name}'
     edit:

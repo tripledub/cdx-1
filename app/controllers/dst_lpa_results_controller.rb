@@ -2,6 +2,8 @@ class DstLpaResultsController < PatientResultsController
 
   before_filter :find_dst_lpa_result, only: [:edit, :update, :show]
 
+  before_filter :validate_culture_is_added, only: [:new, :create]
+
   def new
     @dst_lpa_result                     = @requested_test.build_dst_lpa_result
     @dst_lpa_result.sample_collected_on = Date.today
@@ -41,5 +43,9 @@ class DstLpaResultsController < PatientResultsController
 
   def dst_lpa_result_params
     params.require(:dst_lpa_result).permit(:sample_collected_on, :examined_by, :result_on, :media_used, :serial_number, :results_h, :results_r, :results_e, :results_s, :results_amk, :results_km, :results_cm, :results_fq, :results_other1, :results_other2, :results_other3, :results_other4)
+  end
+
+  def validate_culture_is_added
+    redirect_to(encounter_path(@requested_test.encounter), notice: I18n.t('dst_lpa_results.create.dst_warning')) if @requested_test.encounter.requested_tests.show_dst_warning
   end
 end

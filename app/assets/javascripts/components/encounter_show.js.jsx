@@ -13,12 +13,12 @@ var EncounterShow = React.createClass({
     return {
       user_email: user_email,
       error_messages:[],
-      requested_tests: this.props.requested_tests,
+      requestedTests: this.props.requestedTests,
       disable_all_selects: disable_all_selects
     };
   },
 
-  submit_error: function(errorArray) {
+  submitError: function(errorArray) {
     this.setState({
       error_messages: errorArray
     });
@@ -33,7 +33,7 @@ var EncounterShow = React.createClass({
     }
 
     var  urlParam = this.props.encounter.id
-    EncounterActions.deleteEncounter(urlParam, successUrl, this.submit_error);
+    EncounterActions.deleteEncounter(urlParam, successUrl, this.submitError);
   },
 
   EncounterUpdateHandler: function() {
@@ -43,24 +43,24 @@ var EncounterShow = React.createClass({
      successUrl = '/test_orders';
     }
 
-    if (this.props.requested_tests.length>0) {
-      var urlParam = '/requested_tests';
-      urlParam = urlParam + '/' + this.props.encounter.id;
-      requested_tests = this.props.requested_tests;
-      EncounterRequestTestActions.update(urlParam, requested_tests, successUrl, this.submit_error);
+    if (this.props.requestedTests.length>0) {
+      var urlParam   = '/requestedTests';
+      urlParam       = urlParam + '/' + this.props.encounter.id;
+      requestedTests = this.props.requestedTests;
+      EncounterRequestTestActions.update(urlParam, requestedTests, successUrl, this.submitError);
     } else {
       window.location.href = successUrl;
     }
   },
 
   onTestChanged: function(new_test) {
-    var len = this.state.requested_tests.length;
-    for (var i=0; i<len; i++) {
-      if (this.state.requested_tests[i].id == new_test.id) {
-        temp_requested_tests    = this.state.requested_tests;
-        temp_requested_tests[i] = new_test;
+    var len = this.state.requestedTests.length;
+    for (var i = 0; i<len; i++) {
+      if (this.state.requestedTests[i].id == new_test.id) {
+        tempRequestedTests    = this.state.requestedTests;
+        tempRequestedTests[i] = new_test;
         this.setState({
-          requested_tests: temp_requested_tests
+          requestedTests: tempRequestedTests
         });
       }
     }
@@ -141,8 +141,9 @@ var EncounterShow = React.createClass({
         </div>
 
         <div className="row">
-          <RequestedTestsIndexTable encounter={this.props.encounter} requested_tests={this.state.requested_tests} requested_by={this.props.requested_by}
-           status_types={this.props.status_types} edit={this.props.show_edit} onTestChanged={this.onTestChanged} associated_tests_to_results={this.props.associated_tests_to_results}/>
+          <RequestedTestsIndexTable encounter={this.props.encounter} requestedTests={this.state.requestedTests} requested_by={this.props.requested_by}
+            statusTypes={this.props.statusTypes} edit={this.props.show_edit} onTestChanged={this.onTestChanged} associatedTestsToResults={this.props.associatedTestsToResults}
+            showDstWarning={this.props.showDstWarning} />
         </div>
         <br />
         <div className="row buttonActions">

@@ -32,7 +32,6 @@ var LabSample = React.createClass({
       type: 'PUT',
       data: { sample_identifier: { lab_sample_id: labSampleId }, context: this.props.context.full_context },
       success: function(result) {
-        console.log('success');
       }
     });
   },
