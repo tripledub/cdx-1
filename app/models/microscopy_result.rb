@@ -7,7 +7,11 @@ class MicroscopyResult < PatientResult
 
   class << self
     def visual_appearance_options
-      [['blood', I18n.t('select.microscopy.visual_appearance.blood')], ['mucopurulent', I18n.t('select.microscopy.visual_appearance.mucopurulent')], ['saliva', I18n.t('select.microscopy.visual_appearance.saliva')]]
+      [
+        ['blood', I18n.t('select.microscopy.visual_appearance.blood')],
+        ['mucopurulent', I18n.t('select.microscopy.visual_appearance.mucopurulent')],
+        ['saliva', I18n.t('select.microscopy.visual_appearance.saliva')]
+      ]
     end
 
     def test_result_options

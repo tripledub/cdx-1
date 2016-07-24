@@ -26,6 +26,9 @@ en:
       media_options:
         liquid: 'Liquid'
         solid: 'Solid'
+      test_result_options:
+        ntp: 'Ntp'
+        contaminated: 'Contaminated'
     dst_lpa:
       dst_lpa_options:
         resistant: 'R'
