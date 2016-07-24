@@ -7,7 +7,7 @@
       .col
         = f.date_field :sample_collected_on
     .row
-      .col.pe-2 
+      .col.pe-2
         = f.label :specimen_type
       .col
         = f.text_field :specimen_type
@@ -17,40 +17,29 @@
       .col
         = f.text_field :serial_number
     .row
-      .col.pe-2      
+      .col.pe-2
         = f.label :appearance
       .col
         = f.collection_select :appearance, MicroscopyResult.visual_appearance_options, :first, :last
     .row
-      .col.pe-2          
-        = f.label :results_negative
-      .col
-        = f.check_box :results_negative
-        %label{for: 'microscopy_result_results_negative'} &nbsp;
-    .row
       .col.pe-2
-        = f.label :results_1to9
+        = f.label :test_result
       .col
-        = f.check_box :results_1to9
-        %label{for: 'microscopy_result_results_1to9'} &nbsp;
-    .row
-      .col.pe-2
-        = f.label :results_1plus
-      .col
-        = f.check_box :results_1plus
-        %label{for: 'microscopy_result_results_1plus'} &nbsp;
-    .row
-      .col.pe-2
-        = f.label :results_2plus
-      .col
-        = f.check_box :results_2plus
-        %label{for: 'microscopy_result_results_2plus'} &nbsp;
-    .row
-      .col.pe-2
-        = f.label :results_3plus
-      .col
-        = f.check_box :results_3plus
-        %label{for: 'microscopy_result_results_3plus'} &nbsp;
+        = f.radio_button :test_result, 'negative'
+        %label{for: 'microscopy_result_test_result_negative'}
+          = I18n.t('select.microscopy.test_result_options.negative')
+        = f.radio_button :test_result, '1to9'
+        %label{for: 'microscopy_result_test_result_1to9'}
+          = I18n.t('select.microscopy.test_result_options.1to9')
+        = f.radio_button :test_result, '1plus'
+        %label{for: 'microscopy_result_test_result_1plus'}
+          = I18n.t('select.microscopy.test_result_options.1plus')
+        = f.radio_button :test_result, '2plus'
+        %label{for: 'microscopy_result_test_result_2plus'}
+          = I18n.t('select.microscopy.test_result_options.2plus')
+        = f.radio_button :test_result, '3plus'
+        %label{for: 'microscopy_result_test_result_3plus'}
+          = I18n.t('select.microscopy.test_result_options.3plus')
     .row
       .col.pe-2
         = f.label :examined_by
