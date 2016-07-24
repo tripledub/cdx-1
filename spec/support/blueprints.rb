@@ -267,13 +267,7 @@ MicroscopyResult.blueprint do
   serial_number { 'some random serial numbers' }
   appearance { 'blood' }
   specimen_type { 'some type' }
-  results_negative { false }
-  results_1to9 { true }
-  results_1plus { true }
-  results_2plus { true }
-  results_3plus { false }
-  results_ntm { false }
-  results_contaminated { true }
+  test_result { '1to9' }
   examined_by { Faker::Name.name }
   result_on { 7.days.from_now }
 end

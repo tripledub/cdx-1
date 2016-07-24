@@ -16,6 +16,12 @@ en:
         blood: 'Blood-stained'
         mucopurulent: 'Mucopurulent'
         saliva: 'Saliva'
+      test_result_options:
+        negative: 'Negative'
+        1to9: 'Results 1-9'
+        1plus: 'Results +'
+        2plus: 'Results ++'
+        3plus: 'Results +++'
     culture:
       media_options:
         liquid: 'Liquid'

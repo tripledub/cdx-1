@@ -11,7 +11,7 @@
     .order-details
       .panel
         .row
-          .col-6
+          .col
             .row
               .col-12
                 %label
@@ -35,6 +35,11 @@
             .row
               .col-12
                 %label
+                  = MicroscopyResult.human_attribute_name(:test_result)
+                = Extras::Select.find(MicroscopyResult.test_result_options, @microscopy_result.test_result)
+            .row
+              .col-12
+                %label
                   = MicroscopyResult.human_attribute_name(:examined_by)
                 = @microscopy_result.examined_by
             .row
@@ -42,15 +47,3 @@
                 %label
                   = MicroscopyResult.human_attribute_name(:result_on)
                 = I18n.l(@microscopy_result.result_on, format: :full_date)
-          .col-6
-            .row
-              .col-12
-                = render partial: 'shared/display_boolean_value', locals: { label_name: MicroscopyResult.human_attribute_name(:results_negative), field_name: 'microscopy_result_results_negative', field_value: @microscopy_result.results_negative }
-              .col-12
-                = render partial: 'shared/display_boolean_value', locals: { label_name: MicroscopyResult.human_attribute_name(:results_1to9), field_name: 'microscopy_result_results_1to9', field_value: @microscopy_result.results_1to9 }
-              .col-12
-                = render partial: 'shared/display_boolean_value', locals: { label_name: MicroscopyResult.human_attribute_name(:results_1plus), field_name: 'microscopy_result_results_1plus', field_value: @microscopy_result.results_1plus }
-              .col-12
-                = render partial: 'shared/display_boolean_value', locals: { label_name: MicroscopyResult.human_attribute_name(:results_2plus), field_name: 'microscopy_result_results_2plus', field_value: @microscopy_result.results_2plus }
-              .col-12
-                = render partial: 'shared/display_boolean_value', locals: { label_name: MicroscopyResult.human_attribute_name(:results_3plus), field_name: 'microscopy_result_results_3plus', field_value: @microscopy_result.results_3plus }

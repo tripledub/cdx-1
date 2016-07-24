@@ -19,11 +19,7 @@ describe MicroscopyResultsController do
     specimen_type:       'blood',
     serial_number:       'LO-3434-P',
     appearance:          'saliva',
-    results_negative:    1,
-    results_1to9:        0,
-    results_1plus:       1,
-    results_2plus:       1,
-    results_3plus:       0,
+    test_result:         '3plus',
     examined_by:         'Michael Kiske',
     result_on:           1.day.ago
   } }
@@ -61,11 +57,7 @@ describe MicroscopyResultsController do
           expect(patient_result.uuid).not_to be_empty
           expect(patient_result.serial_number).to eq('LO-3434-P')
           expect(patient_result.appearance).to eq('saliva')
-          expect(patient_result.results_negative).to be true
-          expect(patient_result.results_1to9).to be false
-          expect(patient_result.results_1plus).to be true
-          expect(patient_result.results_2plus).to be true
-          expect(patient_result.results_3plus).to be false
+          expect(patient_result.test_result).to eq('3plus')
           expect(patient_result.sample_collected_on.strftime("%m/%d/%YYYY")).to eq(4.days.ago.strftime("%m/%d/%YYYY"))
           expect(patient_result.result_on.strftime("%m/%d/%YYYY")).to eq(1.day.ago.strftime("%m/%d/%YYYY"))
         end

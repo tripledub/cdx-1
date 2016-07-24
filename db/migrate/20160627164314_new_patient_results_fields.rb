@@ -22,12 +22,5 @@ class NewPatientResultsFields < ActiveRecord::Migration
     add_column    :patient_results, :results_other2,       :string
     add_column    :patient_results, :results_other3,       :string
     add_column    :patient_results, :results_other4,       :string
-    add_column    :patient_results, :results_negative,     :boolean, default: false
-    add_column    :patient_results, :results_1to9,         :boolean, default: false
-    add_column    :patient_results, :results_1plus,        :boolean, default: false
-    add_column    :patient_results, :results_2plus,        :boolean, default: false
-    add_column    :patient_results, :results_3plus,        :boolean, default: false
-    add_column    :patient_results, :results_ntm,          :boolean, default: false
-    add_column    :patient_results, :results_contaminated, :boolean, default: false
   end
 end

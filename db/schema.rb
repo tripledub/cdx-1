@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160722112759) do
+ActiveRecord::Schema.define(version: 20160724151854) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -493,15 +493,9 @@ ActiveRecord::Schema.define(version: 20160722112759) do
     t.string   "results_other2",       limit: 255
     t.string   "results_other3",       limit: 255
     t.string   "results_other4",       limit: 255
-    t.boolean  "results_negative",                   default: false
-    t.boolean  "results_1to9",                       default: false
-    t.boolean  "results_1plus",                      default: false
-    t.boolean  "results_2plus",                      default: false
-    t.boolean  "results_3plus",                      default: false
-    t.boolean  "results_ntm",                        default: false
-    t.boolean  "results_contaminated",               default: false
     t.string   "culture_format",       limit: 255
     t.string   "trace",                limit: 255
+    t.string   "test_result",          limit: 255
   end
 
   add_index "patient_results", ["deleted_at"], name: "index_patient_results_on_deleted_at", using: :btree
@@ -511,6 +505,7 @@ ActiveRecord::Schema.define(version: 20160722112759) do
   add_index "patient_results", ["requested_test_id"], name: "index_patient_results_on_requested_test_id", using: :btree
   add_index "patient_results", ["sample_identifier_id"], name: "index_patient_results_on_sample_identifier_id", using: :btree
   add_index "patient_results", ["site_id"], name: "index_patient_results_on_site_id", using: :btree
+  add_index "patient_results", ["test_result"], name: "index_patient_results_on_test_result", using: :btree
   add_index "patient_results", ["uuid"], name: "index_patient_results_on_uuid", using: :btree
 
   create_table "patients", force: :cascade do |t|
