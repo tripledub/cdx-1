@@ -162,7 +162,7 @@ var EncounterUpdate = React.createClass({
    },
   render: function() {
     return(
-      <div><a className = "btn-secondary " onClick={this.clickHandler} id="update_encounter" href="#">Update Test Order</a></div>
+      <div><a className="btn-secondary" onClick={this.clickHandler} id="update_encounter" href="#">Update Test Order</a></div>
     );
   }
 });
@@ -181,32 +181,36 @@ var EncounterDelete = React.createClass({
       displayConfirm: false
     };
   },
-  clickHandler: function() {
+
+  clickHandler: function(e) {
+    e.preventDefault()
     this.setState({
       displayConfirm: true
     });
   },
+
   cancelDeleteClickHandler: function() {
     this.setState({
       displayConfirm: false
     });
   },
+
   confirmClickHandler: function() {
     this.props.onChangeParentLevel();
   },
+
   render: function() {
-    if (this.state.displayConfirm==true) {
+    if (this.state.displayConfirm == true) {
       return (
-        <ConfirmationModalEncounter message= {'You are about to permanently cancel this test order. Are you sure you want to proceed?'} title= {'Cancel confirmation'} cancel_target= {this.cancelDeleteClickHandler} target= {this.confirmClickHandler} deletion= {true} hideCancel= {false} confirmMessage= {'Delete'} />
+        <ConfirmationModalEncounter message= {'You are about to permanently cancel this test order. Are you sure you want to proceed?'} title= {'Cancel confirmation'} cancelTarget= {this.cancelDeleteClickHandler} target={this.confirmClickHandler} hideOuterEvent={this.cancelDeleteClickHandler} deletion= {true} hideCancel= {false} confirmMessage= {'Delete'} />
       );
     }
-    else
-    if (this.props.show_edit && (this.props.encounter.status != 'inprogress')) {
-    return (
-      <div>
-        <a className = "btn-secondary pull-right" onClick={this.clickHandler} id="delete_encounter" href="#">Cancel Test Order</a>
-     </div>
-     );
+    else if (this.props.show_edit && (this.props.encounter.status != 'inprogress')) {
+      return (
+        <div>
+          <a className = "btn-secondary pull-right" onClick={this.clickHandler} id="delete_encounter" href="#">Cancel Test Order</a>
+        </div>
+      );
     } else {
       return null;
     }
@@ -217,53 +221,65 @@ var ConfirmationModalEncounter = React.createClass({
   modalTitle: function() {
     return this.props.title || (this.props.deletion ? "Cancel confirmation" : "Confirmation");
   },
+
   cancelMessage: function() {
    return this.props.cancelMessage || "Cancel";
   },
+
   confirmMessage: function() {
     return this.props.confirmMessage || (this.props.deletion ? "Cancel" : "Confirm");
   },
+
   componentDidMount: function() {
     this.refs.confirmationModal.show();
   },
+
   onCancel: function() {
-   this.refs.confirmationModal.hide();
-   if (this.props.target instanceof Function ) {
-     this.props.cancel_target();
-   }
+    this.refs.confirmationModal.hide();
+    if (this.props.target instanceof Function ) {
+     this.props.cancelTarget();
+    }
   },
-   onConfirm: function() {
-     if (this.props.target instanceof Function ) {
-       this.props.target();
-     } else {
-      window[this.props.target]();
+
+  onConfirm: function() {
+    if (this.props.target instanceof Function ) {
+     this.props.target();
+    } else {
+    window[this.props.target]();
     }
-      this.refs.confirmationModal.hide();
-    },
-    message: function() {
-      return {__html: this.props.message};
-    },
-    confirmButtonClass: function() {
-      return this.props.deletion ? "btn-primary btn-danger" : "btn-primary";
-    },
-    showCancelButton: function() {
-      return this.props.hideCancel != true;
-    },
-    render: function() {
-      var cancelButton = null;
-      if (this.showCancelButton()) {
-        cancelButton = <button type="button" className="btn-link" onClick={this.onCancel}>{this.cancelMessage()}</button>
-      }
-      return (
-        <Modal ref="confirmationModal" show="true">
-          <h1>{this.modalTitle()}</h1>
-          <div className="modal-content" dangerouslySetInnerHTML={this.message()}>
-          </div>
-          <div className="modal-footer button-actions">
-            <button type="button" className={this.confirmButtonClass()} onClick={this.onConfirm}>{this.confirmMessage()}</button>
-            { cancelButton }
-          </div>
-        </Modal>
-      );
+    this.refs.confirmationModal.hide();
+  },
+
+  hideOuterEvent: function() {
+    this.props.hideOuterEvent();
+  },
+
+  confirmButtonClass: function() {
+    return this.props.deletion ? "btn-primary btn-danger" : "btn-primary";
+  },
+
+  showCancelButton: function() {
+    return this.props.hideCancel != true;
+  },
+
+  render: function() {
+    var cancelButton = null;
+    if (this.showCancelButton()) {
+      cancelButton = <button type="button" className="btn-link" onClick={this.onCancel}>{this.cancelMessage()}</button>
     }
+
+    return (
+      <Modal ref="confirmationModal" show="true" hideOuterEvent={this.hideOuterEvent}>
+        <h1>{this.modalTitle()}</h1>
+        <div className="modal-content">
+          {this.props.message}
+        </div>
+
+        <div className="modal-footer button-actions">
+          <button type="button" className={this.confirmButtonClass()} onClick={this.onConfirm}>{this.confirmMessage()}</button>
+          { cancelButton }
+        </div>
+      </Modal>
+    );
+  }
  });
