@@ -48,7 +48,6 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       get :show, id: encounter.id
       expect(response).to have_http_status(:success)
       expect(assigns[:can_update]).to be_falsy
-      expect(assigns[:associated_tests_to_results]).to eq([])
       expect(assigns[:show_edit_encounter]).to be_truthy
       expect(assigns[:show_cancel_encounter]).to be_falsy
     end
@@ -73,7 +72,6 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       get :show, id: encounter.id
 
       expect(response).to have_http_status(:success)
-      expect(assigns[:can_update]).to be_truthy
     end
 
     it "should load encounter by uuid" do
