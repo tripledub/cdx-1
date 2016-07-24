@@ -1,7 +1,8 @@
 en:
   dst_lpa_results:
     new:
-      header: 'Add Culture Test Result for: %{patient_name}'
+      header: 'Drug Susceptibility Results'
+      add_new: 'Add Dst & LPA Test Result for: %{patient_name}'
     create:
       audit: 'DST and LPA result added'
       notice: 'DST and LPA result was successfully created.'
