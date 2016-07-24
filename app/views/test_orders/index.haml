@@ -15,10 +15,16 @@
         .row
           .filter
             %label.block
+              = I18n.t('test_orders.filters.testing_for')
+            = cdx_select name: "testing_for", value: params["testing_for"] do |select|
+              - select.item "", I18n.t('test_orders.filters.show_all')
+              - select.items Encounter.testing_for_options.map {|e| e.reverse }
+          .filter
+            %label.block
               = I18n.t('test_orders.filters.date')
             = cdx_select name: "since", value: params["since"] do |select|
               - select.item "", I18n.t('test_orders.filters.show_all')
-              - select.items @date_options, :value, :label
+              - select.items Extras::Dates::Filters.date_options_for_filter, :value, :label
           .filter
             %label.block
               = I18n.t('test_orders.filters.test_order_id')

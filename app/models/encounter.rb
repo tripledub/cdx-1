@@ -33,6 +33,10 @@ class Encounter < ActiveRecord::Base
       "encounter"
     end
 
+    def testing_for_options
+      [['TB', I18n.t('select.encounter.testing_for_options.tb')], ['HIV', I18n.t('select.encounter.testing_for_options.hiv')], ['Ebola', I18n.t('select.encounter.testing_for_options.ebola')]]
+    end
+
     def culture_format_options
       [['solid', I18n.t('select.culture.media_options.solid')], ['liquid', I18n.t('select.culture.media_options.liquid')]]
     end

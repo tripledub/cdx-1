@@ -1,19 +1,6 @@
 class TestOrdersController < TestsController
 
   def index
-    @results = Cdx::Fields.test.core_fields.find { |field| field.name == 'result' }.options.map do |result|
-      if result == "n/a"
-        {value: 'n/a', label: I18n.t('test_orders.index.not_applicable')}
-      else
-        {value: result, label: result.capitalize}
-      end
-    end
-    @test_types    = Cdx::Fields.test.core_fields.find { |field| field.name == 'type' }.options
-    @test_statuses = ['success','error']
-    @conditions    = Condition.all.map &:name
-    @date_options  = Extras::Dates::Filters.date_options_for_filter
-
-
     @filter    = create_filter_for_test_order
     @query     = @filter.dup
 
@@ -63,11 +50,12 @@ class TestOrdersController < TestsController
       filter["site.uuid"] = "null"
     end
 
-    filter["encounter.uuid"]                = params['selectedItems'] if params['selectedItems'].present?
-    filter["encounter.uuid"]                = params["encounter.id"] if params["encounter.id"].present?
+    filter["encounter.uuid"]                = params['selectedItems']         if params['selectedItems'].present?
+    filter["encounter.uuid"]                = params["encounter.id"]          if params["encounter.id"].present?
+    filter["encounter.testing_for"]         = params["testing_for"]           if params["testing_for"].present?
     filter["encounter.diagnosis.condition"] = params["test.assays.condition"] if params["test.assays.condition"].present?
-    filter["encounter.diagnosis.result"]    = params["test.assays.result"] if params["test.assays.result"].present?
-    filter["since"]                         = params["since"] if params["since"].present?
+    filter["encounter.diagnosis.result"]    = params["test.assays.result"]    if params["test.assays.result"].present?
+    filter["since"]                         = params["since"]                 if params["since"].present?
     filter
   end
 end

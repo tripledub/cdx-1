@@ -6,6 +6,11 @@ en:
         male: 'Male'
         female: 'Female'
         other: 'Other'
+    encounter:
+      testing_for_options:
+        tb: 'Tuberculosis'
+        hiv: 'H.I.V.'
+        ebola: 'Ebola'
     microscopy:
       visual_appearance:
         blood: 'Blood-stained'
