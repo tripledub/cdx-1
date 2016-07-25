@@ -16,6 +16,8 @@ en:
       tests: 'Tests'
       test_orders: 'Test Orders'
       show_all: 'Show All'
+      test_result: 'Test result'
+      appearance: 'Appearance'
     show:
       test_belongs_to: 'This test belongs to an encounter.'
       click_here: 'Click here'

@@ -6,6 +6,8 @@ class TestResultsController < TestsController
   end
 
   def index
+    @date_options  = Extras::Dates::Filters.date_options_for_filter
+
     respond_to do |format|
       format.html do
         @can_create_encounter = check_access(@navigation_context.institution.sites, CREATE_SITE_ENCOUNTER).size > 0
@@ -38,9 +40,8 @@ class TestResultsController < TestsController
 
     @other_tests       = @test_result.sample ? @test_result.sample.test_results.where.not(id: @test_result.id) : TestResult.none
     @core_fields_scope = Cdx::Fields.test.core_field_scopes.detect{|x| x.name == 'test'}
-
-    @samples          = @test_result.sample_identifiers.reject{|identifier| identifier.entity_id.blank?}.map {|identifier| [identifier.entity_id, Barby::Code93.new(identifier.entity_id)]}
-    @show_institution = show_institution?(Policy::Actions::QUERY_TEST, TestResult)
+    @samples           = @test_result.sample_identifiers.reject{|identifier| identifier.entity_id.blank?}.map {|identifier| [identifier.entity_id, Barby::Code93.new(identifier.entity_id)]}
+    @show_institution  = show_institution?(Policy::Actions::QUERY_TEST, TestResult)
 
     device_messages  = DeviceMessage.where(device_id: @test_result.device_id).joins(device: :device_model)
     @total           = device_messages.count
@@ -73,7 +74,6 @@ class TestResultsController < TestsController
     @test_types    = Cdx::Fields.test.core_fields.find { |field| field.name == 'type' }.options
     @test_statuses = ['success','error']
     @conditions    = Condition.all.map &:name
-    @date_options  = Extras::Dates::Filters.date_options_for_filter
     @show_sites    = @sites.size > 1
     @show_devices  = @devices.size > 1
 
