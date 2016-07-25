@@ -92,8 +92,13 @@ var RequestedTestRow = React.createClass({
     }
 
     var statusArray=[];
+    var current_test_id = this.props.requestedTest.id;
     for (var index in this.props.statusTypes) {
-      statusArray.push(index);
+      var match_test = this.props.associatedTestsToResults.filter(function (test) {return test.requested_test_id === current_test_id;});
+      if ( (match_test.length == 0) && (index == 'completed') ) {
+      } else {
+        statusArray.push(index);
+      }
     }
 
     var statusData = statusArray, MakeItem = function(X) {
