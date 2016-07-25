@@ -16,7 +16,7 @@ class TestResultsController < TestsController
           load_manual_test_results(Finder::XpertResults, Presenters::XpertResults)
         when 'culture'
           load_manual_test_results(Finder::CultureResults, Presenters::CultureResults)
-        when 'dst'
+        when 'dst_lpa'
           load_manual_test_results(Finder::DstLpaResults, Presenters::DstLpaResults)
         else
           load_device_test_results
@@ -63,7 +63,7 @@ class TestResultsController < TestsController
   def load_manual_test_results(results_finder, presenter)
     patient_results   = results_finder.new(params, @navigation_context)
     @total            = patient_results.filter_query.count
-    order_by, offset  = perform_pagination('patient_results.updated_at desc')
+    order_by, offset  = perform_pagination('patient_results.sample_collected_on desc')
     @test_results     = presenter.index_table(patient_results.filter_query.order(order_by).limit(@page_size).offset(offset))
   end
 

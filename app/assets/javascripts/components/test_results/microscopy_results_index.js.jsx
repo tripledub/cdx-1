@@ -21,7 +21,7 @@ var MicroscopyResultsIndex = React.createClass({
 
   render: function() {
     var sortableHeader = function (title, field) {
-      return <SortableColumnHeader title={title} field={field} orderBy='patient_results.updated_at' />
+      return <SortableColumnHeader title={title} field={field} orderBy='patient_results.sample_collected_on' />
     }.bind(this);
 
     return (
