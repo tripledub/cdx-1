@@ -24,7 +24,7 @@ var XpertResultsIndex = React.createClass({
     }.bind(this);
 
     return (
-      <table className="table" cellPadding="0" cellSpacing="0" data-resizable-columns-id="microscopy-test-results-table">
+      <table className="table" cellPadding="0" cellSpacing="0" data-resizable-columns-id="xpert-test-results-table">
         <thead>
           <tr>
             {sortableHeader('Sample collected on', 'patient_results.sample_collected_on')}

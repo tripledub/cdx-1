@@ -14,6 +14,10 @@ class TestResultsController < TestsController
           load_manual_test_results(Finder::MicroscopyResults, Presenters::MicroscopyResults)
         when 'xpert'
           load_manual_test_results(Finder::XpertResults, Presenters::XpertResults)
+        when 'culture'
+          load_manual_test_results(Finder::CultureResults, Presenters::CultureResults)
+        when 'dst'
+          load_manual_test_results(Finder::DstLpaResults, Presenters::DstLpaResults)
         else
           load_device_test_results
         end

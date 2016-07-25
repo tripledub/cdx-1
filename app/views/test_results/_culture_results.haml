@@ -1,0 +1,17 @@
+=# render "filters"
+
+.row.paginationHeader
+  .col
+    - if @test_results.empty?
+      = render 'empty_manual_results'
+    - else
+      %section.row
+        .small-12.columns.box
+          %header
+            = image_tag('img/test-tube.png')
+            %h3
+              = I18n.t('test_results.index.test_result', count: @total)
+          .box-content
+            = react_component 'CultureResultsIndex', testResults: @test_results
+            .pagination
+              = render 'shared/pagination'
