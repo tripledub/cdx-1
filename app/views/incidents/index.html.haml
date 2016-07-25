@@ -1,7 +1,7 @@
 = render "filters"
 
 .row.paginationHeader
-  .col
+  .small-12.columns.box
     - if @incidents.empty?
       = empty_data title: I18n.t('incidents.index.no_incidents'), icon: 'icon-outline-alert xx-large' do |c|
         - c.body do

@@ -275,7 +275,7 @@ body {
   text-transform: uppercase;
   font-weight: 600;
   font-size: 0.75em;
-  padding: 10px;
+  padding: 10px 15px;
   border-bottom: 1px solid #2196f3;
 }
 
@@ -488,6 +488,8 @@ min-width:100% !important;
 #contentcontainer .row .columns div.search {height:40px;background:#e06023;position:fixed;top:0px;width:100%;left:300px;top:60px;z-index:999;}
 #contentcontainer .dashboard main {margin-top:50px;}
 .dashboard {padding:10px;}
+.dashboard .xpertChart{margin:0px;padding:10px 30px;}
+.dashboard p.note {margin:0px;font-size:12px;}
 #contentcontainer .filterHeader {margin-bottom:80px;}
 #contentcontainer {overflow:hidden!important;}
 .wrapper > header, .wrapper #context_side_bar {background:#1b1b1b!important;}
@@ -606,6 +608,9 @@ form#new_device {
 
 /* NEW PATIENT STYLES */
 /* New Patient Top Bar Styles */
+#contentsection .row.settings h2 {
+  padding:0 15px;
+}
 #contentsection .row.collapse.center.add-new, #contentsection .row.collapse.center.edit {
   padding:0px;
   margin:0px;
@@ -1620,7 +1625,7 @@ font-size:12px;
 font-size:12px;
 }
 
-.rc-handle { border-left:1px solid #eee; }
+
 
 div#new-xpert-results section.row {
   margin-top:10px;
@@ -1672,3 +1677,4 @@ form#new_microscopy_result {
     input:hover, .btn-link:hover {opacity:0.8;cursor:pointer;}
   }
 }
+
