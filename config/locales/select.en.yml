@@ -18,7 +18,7 @@ en:
         saliva: 'Saliva'
       test_result_options:
         negative: 'Negative'
-        1to9: 'Results 1-9'
+        1to9: 'Results 1-9/100 HPF'
         1plus: 'Results +'
         2plus: 'Results ++'
         3plus: 'Results +++'
