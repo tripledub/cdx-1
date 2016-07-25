@@ -6,12 +6,14 @@ var PatientTestOrders = React.createClass({
       loadingMessage: 'Loading test orders...',
       orderedColumns: {},
       availableColumns: [
-        { title: 'Site',         fieldName: 'site' },
-        { title: 'Order Id',     fieldName: 'orderId' },
-        { title: 'Requested by', fieldName: 'requester' },
-        { title: 'Request date', fieldName: 'requestDate' },
-        { title: 'Due date',     fieldName: 'dueDate' },
-        { title: 'status',       fieldName: 'status' }
+        { title: 'Request By',    fieldName: 'site' },
+        { title: 'Request To',    fieldName: 'performingSite' },
+        { title: 'Order Id',      fieldName: 'orderId' },
+        { title: 'Order by User', fieldName: 'requester' },
+        { title: 'Request date',  fieldName: 'requestDate' },
+        { title: 'Due date',      fieldName: 'dueDate' },
+        { title: 'Turnaround Time', fieldName: '' },
+        { title: 'status',        fieldName: 'status' }
       ]
     };
   },
@@ -61,6 +63,8 @@ var PatientTestOrders = React.createClass({
     var that       = this;
     this.state.patientTestOrders.forEach(
       function(patientTestOrder) {
+        // Add new on-the-fly field to the output row
+        patientTestOrder.turnaroundTime = 42;
         rows.push(<PatientTestOrder patientTestOrder={patientTestOrder} key={patientTestOrder.id} />);
       }
     );
