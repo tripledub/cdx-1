@@ -27,7 +27,9 @@
             = image_tag('img/test-tube.png')
             %h3
               = I18n.t('dashboard.index.drtb_percentage')
-          .box-content
+          .box-content.xpertChart
+            %p.note
+              = I18n.t('dashboard.index.chart_note')
             #chartDrtbPercentage{:style => "height: 200px; width: 100%;"}
               = react_component 'CanvasJsChart', chartDiv: 'chartDrtbPercentage', chartData: Extras::Charts::Pie.new(@dashboard_report.drtb_percentage).render
         .small-6.columns.box
@@ -38,9 +40,6 @@
           .box-content
             #chartDrugResistancePercentage{:style => "height: 200px; width: 100%;"}
               = react_component 'CanvasJsChart', chartDiv: 'chartDrugResistancePercentage', chartData: Extras::Charts::Pie.new(@dashboard_report.drug_resistance).render
-      .row
-        %p.note
-          = I18n.t('dashboard.index.chart_note')
     %section.row
       .small-4.columns.box
         %header

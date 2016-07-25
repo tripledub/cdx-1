@@ -560,6 +560,11 @@ color:#fff !important;
     max-width:90rem;
 }
 
+.testflow p.text-small.muted {
+    margin:0px;
+    padding:10px 15px;
+  }
+
 .testflow .row.labelHeader h3 {margin:0;}
 
 .testflow .row.labelHeader ul, .testflow .row.labelfooter ul {
@@ -865,4 +870,31 @@ padding:15px;
 
 .field_with_errors select, .field_with_errors input{
   border:2px solid red !important;
+}
+
+.testflow .row.items-editor {
+  align-items:flex-start;
+
+  .items-editor ul li.selected .resource-type {
+    margin-right:0px;
+  }
+  .resource-type {
+    margin-right:0px;
+  }
+  &.selected {
+        .resource-type {
+          margin-right: 0px;
+        }
+      }
+}
+
+.testflow .items-editor .items-content.selected .row {
+  align-items: flex-start;
+  border-bottom: 1px solid #2196f3;
+}
+
+.testflow {
+  input[type="text"]:disabled {
+    background:#ddd;
+  }
 }

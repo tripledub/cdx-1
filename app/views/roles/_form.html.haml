@@ -5,56 +5,61 @@
       %ul
         - @role.errors.full_messages.each do |msg|
           %li= msg
-
-  .row
-    .col.pe-2
-      %div.tooltip
-        = f.label :name
-        %div.tooltiptext_r 
-          Role Name
-    .col
-      = f.text_field :name
-
-  - if @accessible_institutions != 1
+  .row.labelHeader
+    .col-6
+      %h3
+        Role Details
+    .col-6
+  .panel
     .row
-      .col.pe-2
+      .col-2
         %div.tooltip
-          = f.label :institution_id
+          = f.label :name
           %div.tooltiptext_r 
-            Which Institution this Role applies to.
-      .col
-        .value= @institution
+            Role Name
+      .col-10
+        = f.text_field :name
 
-  - if @role.new_record?
-    .row
-      .col.pe-2
-        %div.tooltip
+    - if @accessible_institutions != 1
+      .row
+        .col-2
+          %div.tooltip
+            = f.label :institution_id
+            %div.tooltiptext_r 
+              Which Institution this Role applies to.
+        .col-10
+          .value= @institution
+
+    - if @role.new_record?
+      .row
+        .col-2
+          %div.tooltip
+            = f.label :site_id
+            %div.tooltiptext_r 
+              Which Site within the Institution this Role Applies to.
+        .col-10
+          = cdx_select form: f, name: :site_id, class: 'input-large' do |select|
+            - select.item "", "Choose one"
+            - select.items @sites, :id, :name
+    - elsif @role.site_id
+      .row
+        .col-2
           = f.label :site_id
-          %div.tooltiptext_r 
-            Which Site within the Institution this Role Applies to.
-      .col
-        = cdx_select form: f, name: :site_id, class: 'input-x-large' do |select|
-          - select.item "", "Choose one"
-          - select.items @sites, :id, :name
-  - elsif @role.site_id
-    .row
-      .col.pe-2
-        = f.label :site_id
-      .col
-        .value= @role.site.try(:name)
-  %br
-  %br
-  %hr
-  %br
-  .row
+        .col-10
+          .value= @role.site.try(:name)
+  .row.labelHeader
+    .col-6
+      %h3 
+        Policies
+    .col-6
+  .panel
     .col
       %div.tooltip
-        %h1 Policies
         %div.tooltiptext_r 
           Policies grant users permisions over specific resources
       %p.text-small.muted
         %i Policies grant users permisions over specific resources
-  = react_component 'PolicyDefinition', definition: @role.definition, actions: actions_per_resource_type, context: params['context'], resources: @policy_definition_resources, resourceTypes: resource_types
+      = react_component 'PolicyDefinition', definition: @role.definition, actions: actions_per_resource_type, context: params['context'], resources: @policy_definition_resources, resourceTypes: resource_types
   .row.button-actions
     .col
       = f.submit I18n.t('views.save'), :class => 'btn-primary'
