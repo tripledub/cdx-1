@@ -1,4 +1,9 @@
 en:
+  episode: 'Episode'
+  episode_type:
+    tb: TB
+    ebola: Ebola
+    hiv: HIV
   diagnosis:
     presumptive_tb: Presumptive TB
     bacteriologically_confirmed: Bacteriologically Confirmed
