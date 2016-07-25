@@ -11,6 +11,10 @@ class Episode < ActiveRecord::Base
     diagnosis_options.select { |opt| opt.anatomical == true }
   end
 
+  def self.general_diagnosis_options
+    diagnosis_options.select { |opt| opt.anatomical == false }
+  end
+
   def self.initial_history_options
     history_options.select { |opt| opt.initial == true }
   end
