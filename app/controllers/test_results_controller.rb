@@ -27,7 +27,7 @@ class TestResultsController < TestsController
         filename                       = "test_results-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
         headers["Content-Type"]        = "text/csv"
         headers["Content-disposition"] = "attachment; filename=#{filename}"
-        self.response_body             = execute_csv_test_query(filename)
+        self.response_body             = Finder::TestResults.new(params, current_user, @navigation_context, @localization_helper).csv_query(filename)
       end
     end
   end
@@ -55,11 +55,6 @@ class TestResultsController < TestsController
 
   private
 
-  def execute_csv_test_query(filename)
-    query = TestResult.query(@query, current_user)
-    EntityCsvBuilder.new("test", query, filename)
-  end
-
   def load_manual_test_results(results_finder, presenter)
     patient_results   = results_finder.new(params, @navigation_context)
     @total            = patient_results.filter_query.count
@@ -79,12 +74,14 @@ class TestResultsController < TestsController
     @test_statuses = ['success','error']
     @conditions    = Condition.all.map &:name
     @date_options  = Extras::Dates::Filters.date_options_for_filter
-    @show_sites   = @sites.size > 1
-    @show_devices = @devices.size > 1
+    @show_sites    = @sites.size > 1
+    @show_devices  = @devices.size > 1
 
-    @device_results       = Finder::TestResults.new(params, current_user, @navigation_context, @localization_helper)
-    @page                 = @device_results.page
-    @total                = @device_results.total
-    @page_size            = @device_results.page_size
+    @device_results = Finder::TestResults.new(params, current_user, @navigation_context, @localization_helper)
+    @device_results.get_results
+    @page           = @device_results.page
+    @total          = @device_results.total
+    @page_size      = @device_results.page_size
+
   end
 end

@@ -7,6 +7,9 @@ class Finder::TestResults
     @navigation_context  = navigation_context
     @current_user        = current_user
     @filter              = create_filter_for_test
+  end
+
+  def get_results
     execute_test_query
   end
 
@@ -20,6 +23,12 @@ class Finder::TestResults
 
   def json
     build_json_array TestResult, @result["tests"]
+  end
+
+  def csv_query(filename)
+    query    = filter.dup
+    csv_query = TestResult.query(query, @current_user)
+    EntityCsvBuilder.new("test", csv_query, filename)
   end
 
   protected
