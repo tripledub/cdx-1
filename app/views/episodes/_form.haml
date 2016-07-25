@@ -7,6 +7,7 @@
 
     $('.panel#episodetype_tb').show();  // default
     $('span#episodeType').text('TB');
+    $('#epitabs li#tab_tb').addClass('active');
 
     $('#epitabs li').on('click', function() {
     var type = $(this).attr('id').split('_')[1];  // get bit after the 'tab_' in the id
