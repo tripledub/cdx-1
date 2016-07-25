@@ -1,4 +1,4 @@
-= render "filters"
+=# render "filters"
 
 .row.paginationHeader
   .col
@@ -12,6 +12,6 @@
             %h3
               = I18n.t('test_results.index.test_result', count: @total)
           .box-content
-            = react_component "TestResultsIndexTable", tests: @json, orderBy: @order_by, showSites: @show_sites, showDevices: @show_devices
+            =# react_component "TestResultsIndexTable", tests: @json, orderBy: @order_by, showSites: @show_sites, showDevices: @show_devices
             .pagination
               = render 'shared/pagination'

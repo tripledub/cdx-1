@@ -174,7 +174,7 @@ class ApplicationController < ActionController::Base
 
   def perform_pagination(default_order)
     @page_size = (params['page_size'] || 10).to_i
-    @page_size = 50 if @page_size > 50
+    @page_size = 50 if @page_size > 100
     @page      = (params['page'] || 1).to_i
     @page      = 1 if @page < 1
     @order_by  = params['order_by'] || default_order
