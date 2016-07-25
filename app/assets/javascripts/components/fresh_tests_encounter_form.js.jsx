@@ -104,6 +104,8 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
             </div>
           </div>
 
+          { this.state.encounter.exam_reason === 'follow' ? <ReasonFollow treatmentDateChange={this.treatmentDateChange} /> : null }
+
           <div className="row">
             <div className="col-6">
               <label>Samples</label>
@@ -167,10 +169,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
             </div>
           </div>
 
-          { this.state.encounter.exam_reason === 'follow' ? <ReasonFollow treatmentDateChange={this.treatmentDateChange} /> : null }
-
           { this.state.encounter.tests_requested.indexOf('culture') > -1 ? <CultureFormat cultureFormatChange={this.cultureFormatChange} /> : null }
-
 
           <div className="row">
             <div className="col-6">
