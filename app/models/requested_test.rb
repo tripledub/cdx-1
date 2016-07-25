@@ -9,7 +9,7 @@ class RequestedTest < ActiveRecord::Base
   has_one :culture_result
 
   validates_presence_of :name
-  enum status: [:pending, :inprogress, :completed, :rejected, :deleted]
+  enum status: [:pending, :inprogress, :completed, :rejected]
 
   class << self
     def show_dst_warning
