@@ -2,7 +2,7 @@
 
 .row.paginationHeader
   .col
-    - if @tests.empty?
+    - if @test_results.empty?
       = render 'empty_manual_results'
     - else
       %section.row
@@ -12,6 +12,6 @@
             %h3
               = I18n.t('test_results.index.test_result', count: @total)
           .box-content
-            =# react_component "TestResultsIndexTable", tests: @json, orderBy: @order_by, showSites: @show_sites, showDevices: @show_devices
+            = react_component 'MicroscopyResultsIndex', testResults: @test_results
             .pagination
               = render 'shared/pagination'

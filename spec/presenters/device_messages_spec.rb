@@ -12,11 +12,11 @@ describe Presenters::DeviceMessages do
     end
 
     it 'should return an array of formated devices' do
-      expect(Presenters::DeviceMessages.index_view(DeviceMessage.all).size).to eq(14)
+      expect(described_class.index_view(DeviceMessage.all).size).to eq(14)
     end
 
     it 'should return elements formated' do
-      expect(Presenters::DeviceMessages.index_view(DeviceMessage.all).first).to eq({
+      expect(described_class.index_view(DeviceMessage.all).first).to eq({
         id:                DeviceMessage.first.id,
         indexStatus:       {:failed=>"Failed (reprocess)", :link=>Rails.application.routes.url_helpers.reprocess_device_message_path(DeviceMessage.first)},
         failureReason:     DeviceMessage.first.index_failure_reason,

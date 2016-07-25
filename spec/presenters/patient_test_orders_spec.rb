@@ -13,11 +13,11 @@ describe Presenters::PatientTestOrders do
     end
 
     it 'should return an array of formated comments' do
-      expect(Presenters::PatientTestOrders.patient_view(patient.encounters).size).to eq(7)
+      expect(described_class.patient_view(patient.encounters).size).to eq(7)
     end
 
     it 'should return elements formated' do
-      expect(Presenters::PatientTestOrders.patient_view(patient.encounters).first).to eq({
+      expect(described_class.patient_view(patient.encounters).first).to eq({
         id:          patient.encounters.first.uuid,
         siteName:    patient.encounters.first.site.name,
         requester:   patient.encounters.first.user.full_name,

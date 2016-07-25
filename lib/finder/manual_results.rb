@@ -15,9 +15,10 @@ class Finder::ManualResults
   end
 
   def set_filter
-    results_class.joins('LEFT OUTER JOIN institutions ON institutions.id = patient_results.institution_id')
-      .joins('LEFT OUTER JOIN sites ON sites.id = patient_results.site_id')
-      .joins('LEFT OUTER JOIN sample_identifiers ON sample_identifiers.id = patient_results.sample_identifier_id')
+    results_class.joins('LEFT OUTER JOIN requested_tests ON requested_tests.id = patient_results.requested_test_id')
+      .joins('LEFT OUTER JOIN encounters ON encounters.id = requested_tests.encounter_id')
+      .joins('LEFT OUTER JOIN institutions ON institutions.id = encounters.institution_id')
+      .joins('LEFT OUTER JOIN sites ON sites.id = encounters.site_id')
   end
 
   def apply_filters

@@ -11,9 +11,9 @@ class TestResultsController < TestsController
         @can_create_encounter = check_access(@navigation_context.institution.sites, CREATE_SITE_ENCOUNTER).size > 0
         case params['profile_tabs_selected_tab']
         when 'microscopy'
-          load_manual_test_results(Finder::MicroscopyResults)
+          load_manual_test_results(Finder::MicroscopyResults, Presenters::MicroscopyResults)
         when 'xpert'
-          load_manual_test_results(Finder::XpertResults)
+          load_manual_test_results(Finder::XpertResults, Presenters::XpertResults)
         else
           load_device_test_results
         end
@@ -56,11 +56,11 @@ class TestResultsController < TestsController
     EntityCsvBuilder.new("test", query, filename)
   end
 
-  def load_manual_test_results(results_finder)
+  def load_manual_test_results(results_finder, presenter)
     patient_results   = results_finder.new(params, @navigation_context)
     @total            = patient_results.filter_query.count
     order_by, offset  = perform_pagination('patient_results.updated_at desc')
-    @tests            = patient_results.filter_query.order(order_by).limit(@page_size).offset(offset)
+    @test_results     = presenter.index_table(patient_results.filter_query.order(order_by).limit(@page_size).offset(offset))
   end
 
   def load_device_test_results
