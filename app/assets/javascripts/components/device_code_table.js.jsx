@@ -96,12 +96,18 @@ var DeviceRow = React.createClass({
           }
         }.bind(this);
 
-        return (
-          <div>
-            <div className={this.state.shouldHide ? '' : 'hidden'}>
-            <span className="horizontal-bar-value">There is no data to display</span>
+        if(this.state.shouldHide)
+        {
+          return (
+            <div>
+              <span className="horizontal-bar-value">There is no data to display</span>
             </div>
-            <div className="table_scroll_container">
+          );
+        }
+        else
+        {
+          return (
+            <div className="table_scroll_container {this.state.shouldHide ? 'hidden' : ''}">
               <table className="table scroll" cellPadding="0" cellSpacing="0" data-resizable-columns-id="device-error-codes-table">
                 <thead>
                   <tr>
@@ -119,7 +125,7 @@ var DeviceRow = React.createClass({
                 </tbody>
               </table>
             </div>
-          </div>
-        );
+          );
+        }
       }
     });
