@@ -11,17 +11,23 @@ class TestResultsController < TestsController
     respond_to do |format|
       format.html do
         @can_create_encounter = check_access(@navigation_context.institution.sites, CREATE_SITE_ENCOUNTER).size > 0
-        case params['test_results_tabs_selected_tab']
+        @selected_tab = default_selected_tab
+        case @selected_tab
         when 'microscopy'
           load_manual_test_results(Finder::MicroscopyResults, Presenters::MicroscopyResults)
+          cookies[:test_result_tab] = { value: 'microscopy', expires: 1.year.from_now }
         when 'xpert'
           load_manual_test_results(Finder::XpertResults, Presenters::XpertResults)
+          cookies[:test_result_tab] = { value: 'xpert', expires: 1.year.from_now }
         when 'culture'
           load_manual_test_results(Finder::CultureResults, Presenters::CultureResults)
+          cookies[:test_result_tab] = { value: 'culture', expires: 1.year.from_now }
         when 'dst_lpa'
           load_manual_test_results(Finder::DstLpaResults, Presenters::DstLpaResults)
+          cookies[:test_result_tab] = { value: 'dst_lpa', expires: 1.year.from_now }
         else
           load_device_test_results
+          cookies[:test_result_tab] = { value: 'devices', expires: 1.year.from_now }
         end
       end
 
@@ -71,6 +77,7 @@ class TestResultsController < TestsController
         {value: result, label: result.capitalize}
       end
     end
+
     @test_types    = Cdx::Fields.test.core_fields.find { |field| field.name == 'type' }.options
     @test_statuses = ['success','error']
     @conditions    = Condition.all.map &:name
@@ -82,6 +89,9 @@ class TestResultsController < TestsController
     @page           = @device_results.page
     @total          = @device_results.total
     @page_size      = @device_results.page_size
+  end
 
+  def default_selected_tab
+    params['test_results_tabs_selected_tab'] || cookies[:test_result_tab] || 'devices'
   end
 end

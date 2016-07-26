@@ -1,5 +1,5 @@
 .testflow
-  = bettertabs :test_results_tabs, :selected_tab => :devices do |tab|
+  = bettertabs :test_results_tabs, :selected_tab => @selected_tab do |tab|
     = tab.link :devices do
       = render :partial => 'device_results'
     = tab.link :microscopy do
@@ -13,23 +13,3 @@
 
 :javascript
   $('.bettertabs').bettertabs();
-  var selectedTab = window.store.get('allTestResultsTab') ? window.store.get('allTestResultsTab') : 'devices';
-  if (selectedTab != 'devices') {
-    console.log(selectedTab);
-    $.Bettertabs.select_tab('test_results_tabs', selectedTab);
-  };
-  $("#devices_test_results_tabs_content").bind('bettertabs-after-activate', function(){
-    window.store.set('allTestResultsTab', 'devices');
-  });
-  $("#microscopy_test_results_tabs_content").bind('bettertabs-after-activate', function(){
-    window.store.set('allTestResultsTab', 'microscopy');
-  });
-  $("#xpert_test_results_tabs_content").bind('bettertabs-after-activate', function(){
-    window.store.set('allTestResultsTab', 'xpert');
-  });
-  $("#culture_test_results_tabs_content").bind('bettertabs-before-activate', function(){
-    window.store.set('allTestResultsTab', 'culture');
-  });
-  $("#dst_lpa_test_results_tabs_content").bind('bettertabs-after-activate', function(){
-    window.store.set('allTestResultsTab', 'dst_lpa');
-  });
