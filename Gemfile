@@ -70,6 +70,7 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'quiet_assets'
+  gem 'bullet'
 end
 
 gem 'devise', '~> 3.5.5'
