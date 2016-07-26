@@ -25,14 +25,13 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
 
   validateAndSetManualEntry: function (event) {
     var sampleId    = React.findDOMNode(this.refs.manualSampleEntry).value;
-    var labSampleId = React.findDOMNode(this.refs.manualLabSampleEntry).value;
     if (this.state.encounter.new_samples.filter(function(el){ return el.entity_id == sampleId }).length > 0) {
       // Error handling as done in the ajax responses
       alert("This sample has already been added");
     } else {
       this._ajax_put('/encounters/add/manual_sample_entry', function() {
         this.refs.addNewSamplesModal.hide();
-      }, {entity_id: sampleId, lab_sample_id: labSampleId});
+      }, {entity_id: sampleId});
     }
     event.preventDefault();
   },
