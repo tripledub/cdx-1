@@ -28,7 +28,9 @@ module EntityIndexableFields
     else
       user_email = nil
     end
-    encounter.core_fields.merge('custom_fields' => encounter.custom_fields).merge('uuid' => encounter.uuid, 'user_email' => user_email)
+    encounter.core_fields.merge('custom_fields' => encounter.custom_fields).merge(
+      'uuid' => encounter.uuid, 'user_email' => user_email, 'testing_for' => encounter.testing_for
+    )
   end
 
   def patient_fields(patient)
