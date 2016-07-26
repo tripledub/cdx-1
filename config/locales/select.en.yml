@@ -27,7 +27,7 @@ en:
         liquid: 'Liquid'
         solid: 'Solid'
       test_result_options:
-        ntp: 'Ntp'
+        ntm: 'Ntm'
         contaminated: 'Contaminated'
     dst_lpa:
       dst_lpa_options:

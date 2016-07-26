@@ -26,10 +26,15 @@ class Finder::ManualResults
     filter_by_test_result
     filter_by_sample
     filter_by_date
+    filter_by_media
   end
 
   def filter_by_sample
     @filter_query = filter_query.where("patient_results.serial_number like'%?%'", params["sample.id"]) if params["sample.id"].present?
+  end
+
+  def filter_by_media
+    @filter_query = filter_query.where('patient_results.media_used = ?', params['media']) if params['media'].present?
   end
 
   def filter_by_date

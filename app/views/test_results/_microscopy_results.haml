@@ -16,7 +16,7 @@
         .row
           .filter
             %label.block
-              =I18n.t('test_results.filters.test_result')
+              =I18n.t('test_results.filters.appearance')
             = cdx_select name: 'appearance', value: params["appearance"] do |select|
               - select.item "", I18n.t('test_results.filters.show_all')
               - select.items(MicroscopyResult.visual_appearance_options.map { |option|  [option.last, option.first] })
