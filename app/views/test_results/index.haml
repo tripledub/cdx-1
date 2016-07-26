@@ -12,23 +12,24 @@
       = render :partial => 'dst_lpa_results'
 
 :javascript
-  jQuery('.bettertabs').bettertabs();
-  var selectedTab = window.store.get('testResultsTab') ? window.store.get('testResultsTab') ? : 'devices';
+  $('.bettertabs').bettertabs();
+  var selectedTab = window.store.get('allTestResultsTab') ? window.store.get('allTestResultsTab') : 'devices';
   if (selectedTab != 'devices') {
-    jQuery.Bettertabs.select_tab('test_results_tabs', selectedTab);
+    console.log(selectedTab);
+    $.Bettertabs.select_tab('test_results_tabs', selectedTab);
   };
-  $("#test_results_tabs_devices_content").bind('bettertabs-after-activate', function(){
-    window.store.set('testResultsTab', 'devices');
+  $("#devices_test_results_tabs_content").bind('bettertabs-after-activate', function(){
+    window.store.set('allTestResultsTab', 'devices');
   });
-  $("#test_results_tabs_microscopy_content").bind('bettertabs-after-activate', function(){
-    window.store.set('testResultsTab', 'microscopy');
+  $("#microscopy_test_results_tabs_content").bind('bettertabs-after-activate', function(){
+    window.store.set('allTestResultsTab', 'microscopy');
   });
-  $("#test_results_tabs_xpert_content").bind('bettertabs-after-activate', function(){
-    window.store.set('testResultsTab', 'xpert');
+  $("#xpert_test_results_tabs_content").bind('bettertabs-after-activate', function(){
+    window.store.set('allTestResultsTab', 'xpert');
   });
-  $("#test_results_tabs_culture_content").bind('bettertabs-after-activate', function(){
-    window.store.set('testResultsTab', 'culture');
+  $("#culture_test_results_tabs_content").bind('bettertabs-before-activate', function(){
+    window.store.set('allTestResultsTab', 'culture');
   });
-  $("#test_results_tabs_dst_lpa_content").bind('bettertabs-after-activate', function(){
-    window.store.set('testResultsTab', 'dst_lpa');
+  $("#dst_lpa_test_results_tabs_content").bind('bettertabs-after-activate', function(){
+    window.store.set('allTestResultsTab', 'dst_lpa');
   });

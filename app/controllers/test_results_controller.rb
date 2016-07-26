@@ -11,7 +11,7 @@ class TestResultsController < TestsController
     respond_to do |format|
       format.html do
         @can_create_encounter = check_access(@navigation_context.institution.sites, CREATE_SITE_ENCOUNTER).size > 0
-        case params['profile_tabs_selected_tab']
+        case params['test_results_tabs_selected_tab']
         when 'microscopy'
           load_manual_test_results(Finder::MicroscopyResults, Presenters::MicroscopyResults)
         when 'xpert'

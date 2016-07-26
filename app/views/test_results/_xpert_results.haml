@@ -38,7 +38,7 @@
 
 .row.paginationHeader
   .col
-    - if @test_results.empty?
+    - if @total == 0
       = render 'empty_manual_results'
     - else
       %section.row

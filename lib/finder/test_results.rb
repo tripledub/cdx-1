@@ -22,7 +22,7 @@ class Finder::TestResults
   end
 
   def json
-    build_json_array TestResult, @result["tests"]
+    build_json_array(TestResult, @result["tests"])
   end
 
   def csv_query(filename)
