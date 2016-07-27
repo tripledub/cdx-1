@@ -456,6 +456,10 @@ label.on {
   height:30px;
   font-size:12px;
 
+  .is-open {
+    z-index:999999;
+  }
+
   input {
     color:#434343;
     padding-right:0px;
@@ -475,6 +479,7 @@ label.on {
 
   .Select-control {
     padding:4px 120px 4px 0px;
+    width:200px;
   }
 }
 

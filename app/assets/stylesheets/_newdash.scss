@@ -221,7 +221,6 @@ body {
 .container label {
   font-size: 12px;
   color:#333;
-  font-weight:bold;
 }
 
 .container input[type=text] {
@@ -440,7 +439,7 @@ margin:auto !important;
 }
 
 .Select{
-z-index:99999;
+/*z-index:99999;*/
 position:relative;
 
 }
@@ -566,6 +565,9 @@ form#new_device {
 
     label, div {
       color:#fff;
+      background:none;
+      padding:0px;
+      border:none;
     }
   }
 
@@ -591,8 +593,23 @@ form#new_device {
 .formContainer {
   padding:15px;
 }
-
-form#new_microscopy_result, form#new_site, form.edit_site, form#new_episode, form.edit_episode,  form.edit_device_model, form#new_device_model{
+a#newexternaluser {
+  background:#2196f3;
+  padding:0 24px;
+  height:30px;
+  line-height:30px;
+  color:#fff;
+}
+form#new_alert a.cancel {
+  background:#555;
+  padding:0 24px;
+  height:30px;
+  line-height:30px;
+  color:#fff;
+  margin-left:10px;
+}
+/* Align Form labels to top & align button actions within header */
+form#new_microscopy_result, form#new_site, form.edit_site, form#new_episode, form.edit_episode,  form.edit_device_model, form#new_device_model, form#new_alert{
   .row {
     align-items:flex-start;
   }
@@ -968,7 +985,7 @@ section.newPatientContainer, section.editPatientContainer, .optionsarea {
     height:auto;
   }
 }
-form#new_patient, form.edit_patient{
+form#new_patient, form.edit_patient, form#new_device{
   background:#fff;
   border:1px solid #e2e2e2;
   font-size:0.7rem;
@@ -1044,12 +1061,11 @@ form#new_patient, form.edit_patient{
   }
 
   .Select.is-searchable {
-    margin-top:6px;
     width:200px;
     border:none;
 
     .Select-control {
-      padding:8px 120px 8px 0px;
+      padding:8px 120px 4px 0px;
 
       .Select-placeholder {
         padding:5px 52px 8px 5px;

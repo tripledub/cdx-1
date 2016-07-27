@@ -501,3 +501,22 @@ padding-top:3px;
 #contentcontainer .testflow .container .row.paginationHeader .pagination {
   top:5px;
 }
+
+#test_results_tabs {
+  margin-top:1rem;
+
+  .content {
+    padding:0px;
+
+    .row {
+      margin:0px auto;
+    }
+  }
+  header {
+    width:100%;
+  }
+  .pagination {
+    top:5px;
+    right:15px;
+  }
+}

@@ -209,9 +209,9 @@ var AlertCategorySelect = React.createClass({
   render: function() {
     var save_class;
     if (this.props.can_update) {
-      save_class = "col pe-8";
+      save_class = "col";
     } else {
-      save_class = "col pe-8 hidden";
+      save_class = "col hidden";
     }
 
     if (this.props.can_delete) {
@@ -256,7 +256,7 @@ var AlertCategorySelect = React.createClass({
       <AlertSampleId valueLink={this.linkState('sampleIdField')} edit={false} />
 
       <div className="row">
-        <div className="col pe-3">
+        <div className="col pe-2">
           <label className="tooltip">Categories
             <div className="tooltiptext_r">These are the categories for the Alerts.</div>
           </label>
@@ -271,7 +271,7 @@ var AlertCategorySelect = React.createClass({
         </div>
       </div>
       <div className="row">
-        <div className="col pe-3">
+        <div className="col pe-2">
           &nbsp;
         </div>
         <div className = "col" >
@@ -285,7 +285,7 @@ var AlertCategorySelect = React.createClass({
       </div>
 
       <div className="row">
-        <div className="col pe-3">
+        <div className="col pe-2">
           &nbsp;
         </div>
         <div className = "col" >
@@ -299,7 +299,7 @@ var AlertCategorySelect = React.createClass({
       </div>
 
       <div className="row">
-        <div className="col pe-3">
+        <div className="col pe-2">
           &nbsp;
         </div>
         <div className = "col" >
@@ -390,7 +390,7 @@ var AlertCategorySelect = React.createClass({
   <div className="row">
     <div className = {save_class}>
       <input type = "submit" value = {this.state.submit_button_text} className = "btn-primary" id="submit" />
-      <a className = "btn-link" href = "/alerts">Cancel</a>
+      <a className = "btn-link cancel" href = "/alerts">Cancel</a>
     </div>
 
     <div className = {delete_class}>

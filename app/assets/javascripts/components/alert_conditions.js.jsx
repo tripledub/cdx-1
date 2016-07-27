@@ -33,7 +33,7 @@ var AlertCondition = React.createClass({
 		} = this.props;
 		return (
 			<div className = "row" id = "conditionRow">
-				<div className = "col pe-3" >
+				<div className = "col pe-2" >
 					<label>Conditions</label>
 				</div>
 				<div className = "col" >
@@ -98,7 +98,7 @@ var AlertConditionResults = React.createClass({
 		} = this.props;
 		return (
 			<div className = "row" id = "conditionResultRow">
-				<div className = "col pe-3" >
+				<div className = "col pe-2" >
 					<label>Condition Results</label>
 				</div>
 				<div className = "col" >
@@ -162,7 +162,7 @@ var AlertConditionResultStatuses = React.createClass({
 		} = this.props;
 		return (
 			<div className = "row" id = "conditionresultstatusesrow">
-				<div className = "col pe-3" >
+				<div className = "col pe-2" >
 					<label>Condition Result Statuses</label>
 				</div>
 				<div className = "col" >
@@ -197,7 +197,7 @@ var AlertConditionThreshold = React.createClass({
 	render: function() {
 		return (
 			< div className = "row" id = "thresholdRow" >
-			<div className = "col pe-3" >
+			<div className = "col pe-2" >
 				<label>Threshold</label>
 			</div>
 
