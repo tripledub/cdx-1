@@ -191,7 +191,7 @@ body {
       border-bottom: 1px solid #e2e2e2;
       color: rgb(0, 0, 0);
       padding: 0.25rem;
-      min-width: 200px;
+      width: 200px;
     }
     &[type=submit] {
       background-color: #555;
@@ -496,4 +496,8 @@ height:30px;
 padding-left:10px;
 padding-right:10px;
 padding-top:3px;
+}
+
+#contentcontainer .testflow .container .row.paginationHeader .pagination {
+  top:5px;
 }

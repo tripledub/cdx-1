@@ -8,23 +8,21 @@
 
   .testflow
     .container
-      .row
-        .col
-          - if @device_models.empty?
-            = empty_data title: I18n.t('device_models.index.no_device_models'), icon: 'icon-outline-instructions xx-large' do |c|
-              - c.body do
-                %h1
-                  = I18n.t('device_models.index.there_are_no_device_models')
-                %p
-                  = I18n.t('device_models.index.create_device_models')
-          - else
-            %section.row.paginationHeader
-              .small-12.columns
-                %header
-                  = image_tag('img/user.png')
-                  %h3
-                    = I18n.t('device_models.index.device_model', count: @total)
-                .box-content
-                  = react_component "DeviceModelsIndexTable", deviceModels: Presenters::DeviceModels.index_table(@device_models, current_user), orderBy: @order_by
-                  .pagination
-                    = render 'shared/pagination'
+      .row.paginationHeader
+        - if @device_models.empty?
+          = empty_data title: I18n.t('device_models.index.no_device_models'), icon: 'icon-outline-instructions xx-large' do |c|
+            - c.body do
+              %h1
+                = I18n.t('device_models.index.there_are_no_device_models')
+              %p
+                = I18n.t('device_models.index.create_device_models')
+        - else
+          .small-12.columns
+            %header
+              = image_tag('img/user.png')
+              %h3
+                = I18n.t('device_models.index.device_model', count: @total)
+            .box-content
+              = react_component "DeviceModelsIndexTable", deviceModels: Presenters::DeviceModels.index_table(@device_models, current_user), orderBy: @order_by
+              .pagination
+                = render 'shared/pagination'

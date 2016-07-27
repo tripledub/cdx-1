@@ -106,15 +106,14 @@
                 %br or click to upload a file
             %img{:src => ""}
             = f.file_field :picture, :class => "upload-picture", 'data-remove-checkbox' => '#device_model_delete_picture'
-
+    %br
+    .box.light
+      = render 'publish'
   .row.button-actions
     = f.submit class: 'btn-primary', value: "Save"
     = link_to I18n.t('views.cancel'), device_models_path, class: 'btn-link'
     - if can_delete_device_model?(@device_model)
       = link_to "Delete", @device_model, method: :delete, data: { confirm: 'Are you sure you want to delete this device model? All devices using this device model will be deleted as well, along with any tests they may have uploaded.' }, class: 'btn-danger pull-right'
-  %br
-  .box.light
-    = render 'publish'
 
 :javascript
   custom_input_file( jQuery, window, document );
