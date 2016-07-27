@@ -234,7 +234,7 @@ class EncountersController < ApplicationController
       @encounter.tests_requested   = encounter_param['tests_requested']
       @encounter.coll_sample_type  = encounter_param['coll_sample_type']
       @encounter.coll_sample_other = encounter_param['coll_sample_other']
-      @encounter.culture_format    = encounter_param['culture_format']
+      @encounter.culture_format    = encounter_param['culture_format'] if encounter_param['culture_format'].present?
       @encounter.diag_comment      = encounter_param['diag_comment']
       @encounter.treatment_weeks   = encounter_param['treatment_weeks']
       @encounter.testdue_date      = encounter_param['testdue_date']
