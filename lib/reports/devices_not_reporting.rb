@@ -2,7 +2,11 @@ module Reports
   class DevicesNotReporting < Base
     def generate_chart
       process
-      { titleY2: 'Devices not reporting', columns: data.map { |data_point| { label: data_point[:label], y: data_point[:value] } } }
+      {
+        title:   '',
+        titleY:  'Days',
+        columns: generate_columns
+      }
     end
 
     protected
@@ -38,6 +42,20 @@ module Reports
 
     def get_since
       options["since"] || (Time.now - 12.months).strftime('%Y-%m-%d')
+    end
+
+    def generate_columns
+      [
+        {
+          bevelEnabled: false,
+          type: "column",
+          color: "#E06023",
+          name: "Days",
+          legendText: "Device",
+          showInLegend: true,
+          dataPoints: data.map { |result| { label: result[:label], y: result[:value] } }
+        }
+      ]
     end
   end
 end
