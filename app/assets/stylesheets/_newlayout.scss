@@ -542,7 +542,9 @@ color:#fff !important;
   align-items:center;
   justify-content:center;
 }
-
+.testflow .episodeSummary {
+  margin:0px auto;
+}
 .testflow .row.errorMsg {
   margin:0 auto;
 }
@@ -787,7 +789,7 @@ padding:15px;
     }
   }
 }
-.testflow ul.tab {
+.testflow ul.tabs {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -798,24 +800,24 @@ padding:15px;
 }
 
 /* Float the list items side by side */
-.testflow ul.tab li {float: left;margin:0px;}
+.testflow ul.tabs li {float: left;margin:0px;}
 
 /* Style the links inside the list items */
-.testflow ul.tab li a {
+.testflow ul.tabs li a {
     display: inline-block;
     color: black;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
     transition: 0.3s;
-    font-size: 17px;
+    font-size: 12px;
 }
 
 /* Change background color of links on hover */
-.testflow ul.tab li a:hover {background-color: #ddd;}
+.testflow ul.tabs li a:hover {background-color: #ddd;}
 
 /* Create an active/current tablink class */
-.testflow ul.tab li a:focus, .testflow .active {background-color: #ccc;}
+.testflow ul.tabs li a:focus, .testflow .active {background-color: #ccc;}
 
 /* Style the tab content */
 .testflow .tabcontent {

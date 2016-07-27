@@ -6,7 +6,7 @@ AlertDisplayIncidentInfo = React.createClass({
         <div className="col">
   				<div className="box small gray">
   					<div className = "row">
-    					<div className = "col pe-3">
+    					<div className = "col pe-2">
     						<label>Creation Date</label>
     					</div>
     					<div className = "col">
@@ -15,7 +15,7 @@ AlertDisplayIncidentInfo = React.createClass({
     				</div>
 
     				<div className = "row">
-      				<div className = "col pe-3">
+      				<div className = "col pe-2">
       					<label>Incidents</label>
       				</div>
       				<div className = "col">
@@ -23,7 +23,7 @@ AlertDisplayIncidentInfo = React.createClass({
       				</div>
       			</div>
     			  <div className = "row">
-        			<div className = "col pe-3">
+        			<div className = "col pe-2">
         				<label>Last Incident</label>
         			</div>
         			<div className = "col" id="incidents">
