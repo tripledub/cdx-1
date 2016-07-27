@@ -12,7 +12,7 @@ class Episode < ActiveRecord::Base
 
   def turnaround_time
     return 'Still open' unless closed?
-    distance_of_time_in_words(self.created_at, self.closed_at)
+    distance_of_time_in_words(created_at, closed_at)
   end
 
   def self.anatomical_diagnosis_options
@@ -93,7 +93,7 @@ class Episode < ActiveRecord::Base
     ]
   end
 
-  private 
+  private
 
   def check_closing
     self.closed_at = Time.now if self.closed

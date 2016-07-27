@@ -141,7 +141,7 @@ RSpec.describe Episode, type: :model do
   describe 'turnaround time' do
     let!(:episode) { Episode.make closed: false }
     context 'when the episode has not been closed' do
-      it 'is still open' do
+      it 'returns \'still open\'' do
         expect(episode.turnaround_time).to eq('Still open')
       end
 

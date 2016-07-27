@@ -14,7 +14,7 @@ class Presenters::TestOrders
           requestDate:        Extras::Dates::Format.datetime_with_time_zone(encounter.start_time),
           dueDate:            Extras::Dates::Format.datetime_with_time_zone(encounter.testdue_date),
           status:             convert_status(encounter.status),
-          status_raw:         test_order.status,
+          status_raw:         encounter.status,
           viewLink:           Rails.application.routes.url_helpers.encounter_path(encounter)
         }
       end
