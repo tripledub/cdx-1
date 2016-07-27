@@ -7,6 +7,7 @@ describe CultureResult do
   context "validations" do
     it { should belong_to(:requested_test) }
     it { should validate_presence_of(:sample_collected_on) }
+    it { should validate_presence_of(:requested_test_id) }
     it { should validate_presence_of(:examined_by) }
     it { should validate_presence_of(:result_on) }
     it { should validate_presence_of(:media_used) }

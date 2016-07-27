@@ -14,11 +14,11 @@ describe Presenters::Patients do
     end
 
     it 'should return an array of formated comments' do
-      expect(Presenters::Patients.index_table(institution.patients).size).to eq(7)
+      expect(described_class.index_table(institution.patients).size).to eq(7)
     end
 
     it 'should return elements formated' do
-      expect(Presenters::Patients.index_table(institution.patients).first).to eq({
+      expect(described_class.index_table(institution.patients).first).to eq({
         id:             Patient.first.uuid,
         name:           patient_display_name(Patient.first.name),
         entityId:       Patient.first.entity_id,

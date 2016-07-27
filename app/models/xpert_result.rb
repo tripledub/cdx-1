@@ -1,5 +1,5 @@
 class XpertResult < PatientResult
-  validates_presence_of  :sample_collected_on, :examined_by, :tuberculosis, :rifampicin, :result_on
+  validates_presence_of  :requested_test_id, :sample_collected_on, :examined_by, :tuberculosis, :rifampicin, :result_on
   validates_inclusion_of :tuberculosis, in: ['detected', 'not_detected', 'invalid']
   validates_inclusion_of :rifampicin,   in: ['detected', 'not_detected', 'indeterminate']
 
