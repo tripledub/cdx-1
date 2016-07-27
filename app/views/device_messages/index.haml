@@ -1,22 +1,23 @@
 = render "filters"
 
-.row
-  .col
-    - if @messages.empty?
-      = empty_data icon: 'icon-outline-instructions xx-large' do |c|
-        - c.body do
-          %h1
-            = I18n.t('device_messages.index.no_logs')
-          %p
-            = I18n.t('device_messages.index.connect_device')
-    - else
-      %section.row
-        .small-12.columns.box
-          %header
-            = image_tag('img/device.png')
-            %h3
-              = I18n.t('test_orders.index.test_order', count: @total)
-          .box-content
-            = react_component "DeviceMessagesList", deviceMessages: @device_messages, orderBy: @order_by
-            .pagination
-              = render 'shared/pagination'
+.testflow
+  .row
+    .col
+      - if @messages.empty?
+        = empty_data icon: 'icon-outline-instructions xx-large' do |c|
+          - c.body do
+            %h1
+              = I18n.t('device_messages.index.no_logs')
+            %p
+              = I18n.t('device_messages.index.connect_device')
+      - else
+        %section.row.paginationHeader
+          .small-12.columns
+            %header
+              = image_tag('img/device.png')
+              %h3
+                = I18n.t('test_orders.index.test_order', count: @total)
+            .box-content
+              = react_component "DeviceMessagesList", deviceMessages: @device_messages, orderBy: @order_by
+              .pagination
+                = render 'shared/pagination'

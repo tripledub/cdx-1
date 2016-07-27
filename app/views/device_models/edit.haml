@@ -1,10 +1,10 @@
 - content_for(:subheader) do
-  .row.center.edit
+  .row.center.edit.collapse
     .col.pe-10
-      .row
-        .col
-          %h2
-            = link_to device_models_path, class: 'side-link', title: I18n.t('views.back') do
-              = image_tag "arrow-left.png"
-            Editing Device Model
-= render 'form'
+      %h2
+        = link_to device_models_path, class: 'side-link', title: I18n.t('views.back') do
+          = image_tag "arrow-left-white.png"
+        Editing Device Model
+  .testflow
+    .container
+      = render 'form'

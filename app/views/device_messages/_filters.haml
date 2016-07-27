@@ -1,12 +1,13 @@
 - content_for(:subheader) do
-  .row.center.filters
-    .col.pe-10
-      .row
-        .col
-          %h1
-            = I18n.t('device_messages.filters.device_logs')
-      %form#filters-form{action: device_messages_path, "data-auto-submit" => true}
-        %input{type: "hidden", name: "page_size", value: @page_size}
+  .filterbar.filterbartest
+    .heading
+      .title
+        = I18n.t('device_messages.filters.device_logs')
+      .topfilteropt
+  %form#filters-form.filteroptions{action: device_messages_path, "data-auto-submit" => true}
+    %input{type: "hidden", name: "page_size", value: @page_size}
+    .row.custom_filters
+      .advanced
         .row
           .filter
             %label.block

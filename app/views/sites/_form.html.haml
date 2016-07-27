@@ -1,10 +1,15 @@
 = form_for(@site) do |f|
   = validation_errors @site
 
-  .row
+  .row.labelHeader
+    .col-6
+      %h3
+        Site Details
+    .col-6
+  .panel.box-content
     .col.pe-6
       .row
-        .col.pe-4
+        .col.pe-2
           %div.tooltip
             = f.label I18n.t('sites.form.label.institution')
             %div.tooltiptext_r
@@ -13,7 +18,7 @@
           .value= f.object.institution
 
       .row
-        .col.pe-4
+        .col.pe-2
           %div.tooltip
             = f.label I18n.t('sites.form.label.name')
             %div.tooltiptext_r 
@@ -22,18 +27,18 @@
           = f.text_field :name, :class => 'input-large'
       - if @site.new_record? || @can_move
         .row
-          .col.pe-4
+          .col.pe-2
             %div.tooltip
               = f.label I18n.t('sites.form.label.parent')
               %div.tooltiptext_r 
                 = I18n.t('sites.form.tooltip.parent')
           .col
-            = cdx_select form: f, name: :parent_id, class: 'input-x-large' do |select|
+            = cdx_select form: f, name: :parent_id, class: 'input-large' do |select|
               - select.item "", "None"
               - select.items @sites, :id, :name
       - elsif @site.parent
         .row
-          .col.pe-4
+          .col.pe-2
             %div.tooltip
               = f.label I18n.t('sites.form.label.parent')
               %div.tooltiptext_r 
@@ -41,68 +46,68 @@
           .col
             = @site.parent.name
 
-    .col.pe-4
+    .col.pe-2
       - unless @site.new_record?
         = render 'side'
 
-  = render partial: "shared/address", :locals => { :f => f , model_type: "site"}
-  .row
-    .col.pe-2
-      %div.tooltip
-        = f.label I18n.t('sites.form.label.sample_id_reset_policy')
-        %div.tooltiptext_r 
-          = I18n.t('sites.form.tooltip.sample_id_reset_policy')
-    .col
-      = cdx_select form: f, name: :sample_id_reset_policy, class: 'input-large sample-id-reset' do |select|
-        - select.item "yearly", "Yearly"
-        - select.item "monthly", "Monthly"
-        - select.item "weekly", "Weekly"
-  .row
-    .col.pe-2
-      %div.tooltip
-        = f.label I18n.t('sites.form.label.allows_manual_entry')
-        %div.tooltiptext_r 
-          = I18n.t('sites.form.tooltip.allows_manual_entry')
-    .col
-      = f.check_box :allows_manual_entry
-      %label{for: 'site_allows_manual_entry'} &nbsp;
-  .row
-    .col.pe-2
-      %div.tooltip
-        = f.label I18n.t('sites.form.label.main_phone_number')
-        %div.tooltiptext_r 
-          = I18n.t('sites.form.tooltip.main_phone_number')
-    .col
-      = f.text_field :main_phone_number, :class => 'input-large'
-  .row
-    .col.pe-2
-      %div.tooltip
-        = f.label I18n.t('sites.form.label.email_address')
-        %div.tooltiptext_r 
-          = I18n.t('sites.form.tooltip.email_address')
-    .col
-      = f.email_field :email_address, :class => 'input-large'
+    = render partial: "shared/address", :locals => { :f => f , model_type: "site"}
+    .row
+      .col.pe-2
+        %div.tooltip
+          = f.label I18n.t('sites.form.label.sample_id_reset_policy')
+          %div.tooltiptext_r 
+            = I18n.t('sites.form.tooltip.sample_id_reset_policy')
+      .col
+        = cdx_select form: f, name: :sample_id_reset_policy, class: 'input-large sample-id-reset' do |select|
+          - select.item "yearly", "Yearly"
+          - select.item "monthly", "Monthly"
+          - select.item "weekly", "Weekly"
+    .row
+      .col.pe-2
+        %div.tooltip
+          = f.label I18n.t('sites.form.label.allows_manual_entry')
+          %div.tooltiptext_r 
+            = I18n.t('sites.form.tooltip.allows_manual_entry')
+      .col
+        = f.check_box :allows_manual_entry
+        %label{for: 'site_allows_manual_entry'} &nbsp;
+    .row
+      .col.pe-2
+        %div.tooltip
+          = f.label I18n.t('sites.form.label.main_phone_number')
+          %div.tooltiptext_r 
+            = I18n.t('sites.form.tooltip.main_phone_number')
+      .col
+        = f.text_field :main_phone_number, :class => 'input-large'
+    .row
+      .col.pe-2
+        %div.tooltip
+          = f.label I18n.t('sites.form.label.email_address')
+          %div.tooltiptext_r 
+            = I18n.t('sites.form.tooltip.email_address')
+      .col
+        = f.email_field :email_address, :class => 'input-large'
 
-  .row
-    .col.pe-2
-      %div.tooltip
-        = f.label I18n.t('sites.form.label.comment')
-        %div.tooltiptext_r 
-          = I18n.t('sites.form.tooltip.comment')
-    .col
-      = f.text_area :comment, :class => 'input-large', rows: 10, cols: 25
+    .row
+      .col.pe-2
+        %div.tooltip
+          = f.label I18n.t('sites.form.label.comment')
+          %div.tooltiptext_r 
+            = I18n.t('sites.form.tooltip.comment')
+      .col
+        = f.text_area :comment, rows: 5, cols: 40
 
 
-  .row.button-actions
-    .col
-      = f.submit I18n.t('views.save'), class: 'btn-primary'
-      = link_to I18n.t('views.cancel'), sites_path, class: 'btn-link'
-      - if @can_delete
-        - if @can_be_deleted
-          = confirm_deletion_button @site, 'site'
-        - else
-          - # TODO: link to page with Devices tab always active - it's the current default, but may change
-          = link_to "Delete", '#', data: { confirm: "In order to delete this site you must first reassign the <a href=\"#{edit_site_path(@site)}\">#{@site.devices.count} #{"device".pluralize(@site.devices.count)}</a> assigned to it.", confirm_title: 'Action required', confirm_hide_cancel: 'true', confirm_button_message: 'Understood' }, class: 'btn-secondary pull-right', title: 'Delete Site'
+    .row.button-actions
+      .col
+        = f.submit I18n.t('views.save'), class: 'btn-primary'
+        = link_to I18n.t('views.cancel'), sites_path, class: 'btn-link'
+        - if @can_delete
+          - if @can_be_deleted
+            = confirm_deletion_button @site, 'site'
+          - else
+            - # TODO: link to page with Devices tab always active - it's the current default, but may change
+            = link_to "Delete", '#', data: { confirm: "In order to delete this site you must first reassign the <a href=\"#{edit_site_path(@site)}\">#{@site.devices.count} #{"device".pluralize(@site.devices.count)}</a> assigned to it.", confirm_title: 'Action required', confirm_hide_cancel: 'true', confirm_button_message: 'Understood' }, class: 'btn-secondary pull-right', title: 'Delete Site'
 
 :coffeescript
   $ ->
