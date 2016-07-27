@@ -592,7 +592,7 @@ form#new_device {
   padding:15px;
 }
 
-form#new_microscopy_result, form#new_site, form#edit_site_2, form#new_episode, form#edit_episode_2,  form#edit_device_model_8{
+form#new_microscopy_result, form#new_site, form.edit_site, form#new_episode, form.edit_episode,  form.edit_device_model, form#new_device_model{
   .row {
     align-items:flex-start;
   }
@@ -613,7 +613,7 @@ form#new_microscopy_result, form#new_site, form#edit_site_2, form#new_episode, f
       padding:0 24px;
       height:30px;
       line-height:30px;
-      margin-left:7px;
+      margin-left:10px;
       color:#fff;
     }
 
@@ -1698,8 +1698,15 @@ div#new-xpert-results section.row {
   a {
     position:absolute;
     top:5px;
-    right:10px;
+    right:19px;
     font-weight:bold!important;
     padding:0 24px;
   }
+}
+
+#contentcontainer .testflow .box.light {
+  height:auto;
+  padding:10px 15px;
+
+  .row {margin-bottom:10px;}
 }
