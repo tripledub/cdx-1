@@ -580,6 +580,15 @@ describe Policy do
       end
     end
   end
+  
+  context "Page Header" do
+    let!(:site)  { Site.make institution: institution }
+    it "should not allow page header with no roles" do
+      page_header = PageHeader.make
+      page_header.site = site
+      assert_cannot site, page_header, DISPLAY_TEST_ORDER_HEADER
+    end
+  end
 
   context "Device" do
     context "Create" do

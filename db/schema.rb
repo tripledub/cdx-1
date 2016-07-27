@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160724151854) do
+ActiveRecord::Schema.define(version: 20160726103921) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -160,7 +160,7 @@ ActiveRecord::Schema.define(version: 20160724151854) do
   add_index "audit_updates", ["uuid"], name: "index_audit_updates_on_uuid", using: :btree
 
   create_table "comments", force: :cascade do |t|
-    t.date     "commented_on"
+    t.date     "commented_on",                     default: '2016-06-21'
     t.text     "comment",            limit: 65535
     t.string   "description",        limit: 255
     t.string   "uuid",               limit: 255
@@ -454,6 +454,17 @@ ActiveRecord::Schema.define(version: 20160724151854) do
 
   add_index "old_passwords", ["password_archivable_type", "password_archivable_id"], name: "index_password_archivable", using: :btree
 
+  create_table "page_headers", force: :cascade do |t|
+    t.integer  "institution_id", limit: 4
+    t.integer  "site_id",        limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "site_prefix",    limit: 255
+  end
+
+  add_index "page_headers", ["institution_id"], name: "index_page_headers_on_institution_id", using: :btree
+  add_index "page_headers", ["site_id"], name: "index_page_headers_on_site_id", using: :btree
+
   create_table "patient_results", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -727,6 +738,7 @@ ActiveRecord::Schema.define(version: 20160724151854) do
     t.boolean  "is_active",                                  default: true
     t.string   "telephone",                      limit: 255
     t.boolean  "sidebar_open",                               default: true
+    t.integer  "timeout_in_seconds",             limit: 4,   default: 180
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
