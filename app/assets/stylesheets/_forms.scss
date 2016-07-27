@@ -33,8 +33,7 @@ input[type="number"] {
   background-color: transparent;
   font-family: $sans;
   font-size: 100%;
-  border: none;
-  border-bottom: 1px solid $gray1;
+  border: 1px solid #e2e2e2;
   padding: 0 5px;
   height: 30px;
   outline: 0 !important;
@@ -66,7 +65,13 @@ label {
 }
 
 .value {
-  line-height: 2.9em;
+  line-height:30px;
+  border:1px solid #e2e2e2;
+  max-width:200px;
+  font-size:12px;
+  padding:0px 5px;
+  height:30px;
+  background:#ececec;
 
   &.annotation {
     font-size: 80%;
@@ -107,11 +112,10 @@ input[type="checkbox"] {
       width: 18px;
       height:18px;
       background: none;
-      border: 2px solid $black;
+      border: 1px solid #c1c1c1;
       top: 10px;
       left: -32px;
       position: absolute;
-      border-radius: 2px;
       transition: all 0.4s;
     }
     &.inline {
@@ -442,4 +446,41 @@ label.on {
   input[type="text"], input[type="password"] {
     width: 400px;
   }
+}
+
+
+/* Select Dropdown Styles */ 
+.testflow .container .Select {
+  position:relative;
+  border:1px solid #e2e2e2;
+  height:30px;
+  font-size:12px;
+
+  input {
+    color:#434343;
+    padding-right:0px;
+    margin-left:15px;
+  }
+
+  .Select-placeholder {
+    margin-top:2px;
+    background:#fff;
+    padding:3px 80px 3px 5px;
+    font-size:12px;
+  }
+
+  .Select-arrow {
+    top:8px;
+  }
+
+  .Select-control {
+    padding:4px 120px 4px 0px;
+  }
+}
+
+select {
+  height:30px;
+  font-size:12px;
+  border:1px solid #e2e2e2;
+  color:#555;
 }
