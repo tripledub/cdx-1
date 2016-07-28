@@ -21,7 +21,8 @@ class TestOrdersController < TestsController
   protected
 
   def execute_encounter_query
-    result = Encounter.query(@query, current_user).execute
+    @query['page_size'] = 10000
+    result              = Encounter.query(@query, current_user).execute
     build_table_data(result["encounters"])
   end
 
@@ -31,10 +32,10 @@ class TestOrdersController < TestsController
   end
 
   def build_table_data(results)
-    @total           = Encounter.where(uuid: results.map{|r| r['encounter']['uuid'] if r['encounter'] }).count
+    @total           = Encounter.where(uuid: results.map{|r| r['encounter']['uuid'] }).count
     order_by, offset = perform_pagination('encounters.testdue_date')
     order_by         = order_by + ', users.last_name' if order_by.include?('users.first_name')
-    @tests           = Encounter.includes(:institution, :patient, :site, :user).where(uuid: results.map{|r| r['encounter']['uuid'] if r['encounter'] }).order(order_by).limit(@page_size).offset(offset)
+    @tests           = Encounter.includes(:institution, :patient, :site, :user).where(uuid: results.map{|r| r['encounter']['uuid'] }).order(order_by).limit(@page_size).offset(offset)
   end
 
   def create_filter_for_test_order
