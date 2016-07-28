@@ -53,6 +53,15 @@ var RequestedTestRow = React.createClass({
       newOrEditPath = '/new?test_order_page_mode='+testOrderPageMode;
     }
 
+    if (name.indexOf('drugsusceptibility') !== -1) {
+      if (name.indexOf('liquid') !== -1) {
+        newOrEditPath += '&media=liquid';
+      };
+      if (name.indexOf('solid') !== -1) {
+        newOrEditPath += '&media=solid';
+      };
+      name = 'dst';
+    }
     switch(name) {
       case 'xpertmtb':
         urlPath = "/requested_tests/"+id+"/xpert_result"+newOrEditPath;
