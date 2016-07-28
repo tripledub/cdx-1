@@ -34,7 +34,7 @@ module Reports
             else
               device_days = day_range
             end
-           data << { label: device.name, value: device_days}
+           data << { label: device.name, value: device_days} if device_days.to_i > 0
           end
         end
       end
@@ -53,7 +53,7 @@ module Reports
           name: "Days",
           legendText: "Device",
           showInLegend: true,
-          dataPoints: data.map { |result| { label: result[:label], y: result[:value] } }
+          dataPoints: data.map { |result| { label: result[:label].to_s, y: result[:value].to_i } }
         }
       ]
     end
