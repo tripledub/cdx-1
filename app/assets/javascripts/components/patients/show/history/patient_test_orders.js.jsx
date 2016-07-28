@@ -6,14 +6,14 @@ var PatientTestOrders = React.createClass({
       loadingMessage: 'Loading test orders...',
       orderedColumns: {},
       availableColumns: [
-        { title: 'Request By',    fieldName: 'site' },
-        { title: 'Request To',    fieldName: 'performingSite' },
-        { title: 'Order Id',      fieldName: 'orderId' },
-        { title: 'Order by User', fieldName: 'requester' },
-        { title: 'Request date',  fieldName: 'requestDate' },
-        { title: 'Due date',      fieldName: 'dueDate' },
+        { title: 'Request By',      fieldName: 'site' },
+        { title: 'Request To',      fieldName: 'performingSite' },
+        { title: 'Order Id',        fieldName: 'orderId' },
+        { title: 'Order by User',   fieldName: 'requester' },
+        { title: 'Request date',    fieldName: 'requestDate' },
+        { title: 'Due date',        fieldName: 'dueDate' },
         { title: 'Turnaround Time', fieldName: '' },
-        { title: 'status',        fieldName: 'status' }
+        { title: 'status',          fieldName: 'status' }
       ]
     };
   },
