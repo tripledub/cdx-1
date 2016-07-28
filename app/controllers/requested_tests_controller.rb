@@ -11,7 +11,7 @@ class RequestedTestsController < ApplicationController
     end
 
     if error_text.empty?
-      render json: 'ok'
+      render json: { updated: :ok }
     else
       render json: error_text, status: :unprocessable_entity
     end
