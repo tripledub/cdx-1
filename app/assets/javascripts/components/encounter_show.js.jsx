@@ -44,7 +44,7 @@ var EncounterShow = React.createClass({
     }
 
     if (this.props.requestedTests.length>0) {
-      var urlParam   = '/requestedTests';
+      var urlParam   = '/requested_tests';
       urlParam       = urlParam + '/' + this.props.encounter.id;
       requestedTests = this.props.requestedTests;
       EncounterRequestTestActions.update(urlParam, requestedTests, successUrl, this.submitError);
@@ -124,7 +124,11 @@ var EncounterShow = React.createClass({
                   this.props.encounter.exam_reason === 'follow' ?
                   <DisplayFieldWithLabel fieldLabel='Weeks in treatment:' fieldValue={ this.props.encounter.treatment_weeks } /> : null
                 }
-                <DisplayFieldWithLabel fieldLabel='Samples Id:'    fieldValue={ <LabSamplesList context={this.props.context} samples={this.props.encounter.samples}  /> } />
+                {
+                  this.props.show_edit ?
+                  <DisplayFieldWithLabel fieldLabel='Samples Id:'    fieldValue={ <LabSamplesList context={this.props.context} samples={this.props.encounter.samples}  /> } /> : null
+                }
+
                 <DisplayFieldWithLabel fieldLabel='Sample type:'   fieldValue={ this.props.encounter.coll_sample_type } />
                 <DisplayFieldWithLabel fieldLabel='Test due date:' fieldValue={ this.props.encounter.testdue_date } />
                 <DisplayFieldWithLabel fieldLabel='Status:'        fieldValue={ this.props.encounter.status } />

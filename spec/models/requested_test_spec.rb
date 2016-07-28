@@ -22,6 +22,24 @@ RSpec.describe RequestedTest, :type => :model do
       requested_test.name=nil
       expect(requested_test).to_not be_valid
     end
+
+    context 'when status is rejected' do
+      it 'should not validate if comment is empty' do
+        requested_test        =  RequestedTest.make
+        requested_test.status = :rejected
+        requested_test.comment = ' '
+
+        expect(requested_test).to_not be_valid
+      end
+
+      it 'should validate if comment has content' do
+        requested_test        =  RequestedTest.make
+        requested_test.status = :rejected
+        requested_test.comment = 'For whom the bell tolls'
+
+        expect(requested_test).to be_valid
+      end
+    end
   end
 
   context "validate soft delete" do
