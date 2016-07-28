@@ -105,7 +105,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
           </div>
 
           { this.state.encounter.exam_reason === 'follow' ? <ReasonFollow treatmentDateChange={this.treatmentDateChange} /> : null }
-          { this.state.encounter.exam_reason === 'diag' ? <PresumptiveRR /> : null }
+          { this.state.encounter.exam_reason === 'diag' ? <PresumptiveRR  presumptiveRRChange={this.presumptiveRRChange}/> : null }
 
           <div className="row">
             <div className="col-6">
@@ -333,6 +333,17 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     }));
   },
 
+  presumptiveRRChange: function() {
+    var presumptive = $('#presumptive_rr').prop('checked');
+    this.setState(React.addons.update(this.state, {
+      encounter: {
+        presumptive_rr: {
+          $set: presumptive
+        }
+      }
+    }));
+  },
+
   treatmentDateChange: function() {
     var treatmentdate = $('#treatment_weeks').val();
     this.setState(React.addons.update(this.state, {
@@ -448,7 +459,7 @@ var ReasonDiag = React.createClass({
 
 var PresumptiveRR = React.createClass({
   updatePresumptiveRR: function(e){
-    alert('its changed');
+    this.props.presumptiveRRChange();
   },
 
   render: function() {
@@ -457,7 +468,7 @@ var PresumptiveRR = React.createClass({
         <div className="col-6">
         </div>
         <div className="col-6">
-          <input type="checkbox" onChnage={this.updatePresumptiveRR} className="presumptive_rr" id="presumptive_rr" name="presumptive_rr"/>
+          <input type="checkbox" onChange={this.updatePresumptiveRR} className="presumptive_rr" id="presumptive_rr" name="presumptive_rr"/>
           <label htmlFor="presumptive_rr">Presumptive RR-TB/MDR-TB</label>
         </div>
       </div>

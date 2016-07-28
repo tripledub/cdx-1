@@ -239,6 +239,7 @@ class EncountersController < ApplicationController
       @encounter.treatment_weeks   = encounter_param['treatment_weeks']
       @encounter.testdue_date      = encounter_param['testdue_date']
       @encounter.testing_for       = encounter_param['testing_for']
+      @encounter.presumptive_rr    = encounter_param['presumptive_rr']
     else
       @institution                 = @encounter.institution
     end
