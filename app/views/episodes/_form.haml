@@ -49,7 +49,7 @@
       .col-6
         = f.label :anatomical_site_diagnosis
       .col-6
-        = collection_radio_buttons(:anatomical_site_diagnosis, '', Episode.anatomical_diagnosis_options, :id, :name)
+        = collection_radio_buttons(:episode, :anatomical_site_diagnosis, Episode.anatomical_diagnosis_options, :id, :name)
     .row
       .col-6
         = f.label I18n.t('patients.form.history')

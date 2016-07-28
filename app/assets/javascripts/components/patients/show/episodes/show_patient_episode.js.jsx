@@ -36,6 +36,12 @@ var ShowPatientEpisode = React.createClass({
               </label>
               {this.props.episode.outcome}
             </li>
+            <li>
+              <label>
+                Diagnosis classify by Anatomical site
+              </label>
+              &nbsp;{this.props.episode.anatomicalSiteDiagnosis}
+            </li>
           </ul>
           <ul>
             <li>

@@ -22,6 +22,7 @@ describe Presenters::Episodes do
         initialHistory: "#{Extras::Select.find_from_struct(Episode.initial_history_options, patient.episodes.first.initial_history)} - #{Extras::Select.find_from_struct(Episode.previous_history_options, patient.episodes.first.previous_history)}",
         drugResistance: Extras::Select.find_from_struct(Episode.drug_resistance_options, patient.episodes.first.drug_resistance),
         outcome:        Extras::Select.find_from_struct(Episode.treatment_outcome_options, patient.episodes.first.outcome),
+        anatomicalSiteDiagnosis: Extras::Select.find_from_struct(Episode.diagnosis_options, patient.episodes.first.anatomical_site_diagnosis),
         editLink:       Rails.application.routes.url_helpers.edit_patient_episode_path(patient, patient.episodes.first)
       })
     end

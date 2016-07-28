@@ -9,6 +9,7 @@ class Presenters::Episodes
           initialHistory: "#{Extras::Select.find_from_struct(Episode.initial_history_options, episode.initial_history)} - #{Extras::Select.find_from_struct(Episode.previous_history_options, episode.previous_history)}",
           drugResistance: Extras::Select.find_from_struct(Episode.drug_resistance_options, episode.drug_resistance),
           outcome:        Extras::Select.find_from_struct(Episode.treatment_outcome_options, episode.outcome),
+          anatomicalSiteDiagnosis: Extras::Select.find_from_struct(Episode.diagnosis_options, episode.anatomical_site_diagnosis),
           editLink:       Rails.application.routes.url_helpers.edit_patient_episode_path(episode.patient, episode)
         }
       end
