@@ -523,7 +523,6 @@ color:#fff !important;
 }
 
 .testflow td {
-  padding: 0.8em 0.5em;
   margin: 0;
 }
 
@@ -817,7 +816,7 @@ padding:15px;
 .testflow ul.tabs li a:hover {background-color: #ddd;}
 
 /* Create an active/current tablink class */
-.testflow ul.tabs li a:focus, .testflow .active {background-color: #ccc;}
+.testflow ul.tabs li a:focus, .testflow .active {background-color: #dbdae2;}
 
 /* Style the tab content */
 .testflow .tabcontent {

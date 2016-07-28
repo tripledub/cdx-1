@@ -1,11 +1,11 @@
 - content_for(:subheader) do
-  .row.center.edit
+  .row.center.edit.collapse
     .col.pe-10
-      .row
-        .col
-          %h2
-            = link_to users_path, class: 'side-link', title: I18n.t('views.back') do
-              = image_tag "arrow-left.png"
-            = @user.email
+      %h2
+        = link_to users_path, class: 'side-link', title: I18n.t('views.back') do
+          = image_tag "arrow-left-white.png"
+        = @user.email
 
-= render 'form'
+  .testflow
+    .container
+      = render 'form'

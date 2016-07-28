@@ -82,7 +82,7 @@
 
       - @samples.each do |sample_id, sample_id_barcode|
         .row
-          .col.pe-2
+          .col.pe-2.flexStart
             %label
               = I18n.t('test_results.show.sample')
 
@@ -90,7 +90,6 @@
             -# TODO add print button
             .value
               = sample_id
-            %br
             %br
             = raw sample_id_barcode.to_html
 

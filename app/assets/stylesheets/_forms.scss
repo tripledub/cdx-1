@@ -67,10 +67,10 @@ label {
 .value {
   line-height:30px;
   border:1px solid #e2e2e2;
-  max-width:200px;
+  min-width:200px;
   font-size:12px;
   padding:0px 5px;
-  height:30px;
+  min-height:30px;
   background:#ececec;
 
   &.annotation {

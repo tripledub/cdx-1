@@ -12,7 +12,7 @@
   justify-content:flex-start;
 }
 
-/*  SETTINGS STYLES START HEREEEEEEEE */
+/*  SETTINGS STYLES START HERE */
 .container .settings {justify-content:center;}
 .container .centered {text-align:center;}
 #contentcontainer .container .col.px-4 {
@@ -44,6 +44,7 @@
 .container .box {background:white;margin:0px 10px 0px 10px;}
 .container .col {margin:18px 10px 18px 10px;}
 #contentcontainer .col {margin:0px;max-width:100%;}
+.flexStart {align-self:flex-start;}
 
 /* BOXES */
 
@@ -609,7 +610,7 @@ form#new_alert a.cancel {
   margin-left:10px;
 }
 /* Align Form labels to top & align button actions within header */
-form#new_microscopy_result, form#new_site, form.edit_site, form#new_episode, form.edit_episode,  form.edit_device_model, form#new_device_model, form#new_alert{
+form#new_microscopy_result, form#new_site, form.edit_site, form#new_episode, form.edit_episode,  form.edit_device_model, form#new_device_model, form#new_alert, form#edit_episode_2{
   .row {
     align-items:flex-start;
   }
@@ -947,6 +948,7 @@ form#new_microscopy_result, form#new_site, form.edit_site, form#new_episode, for
 
       .row {
         padding:5px 15px;
+        align-items:center;
         .row {
           padding:0px;
           background:none;
@@ -1015,8 +1017,7 @@ form#new_patient, form.edit_patient, form#new_device{
 
     label, .value {
       font-weight:600;
-      color:rgba(0, 0, 0, 0.4);
-      font-size:11px;
+      font-size:12px;
     }
   }
 
@@ -1053,6 +1054,9 @@ form#new_patient, form.edit_patient, form#new_device{
       }
       span.btn-link.not-allowed {
         margin-left:10px;
+        padding:0 24px;
+        height:30px;
+        line-height:30px;
       }
   }
 
@@ -1191,7 +1195,7 @@ form#filters-form.filteroptions {
       }
 
       input, .Select.is-searchable {height:20px;}
-      input {width:100%!important;background:#fff;}
+      input {width:100%!important;background:#fff;border:1px solid #e2e2e2;}
       input[type="text"] {border-bottom:none;}
 
     }
@@ -1261,7 +1265,9 @@ div.pagination {
 
 /* Tables
      ========================================================================== */
-
+.testOrdersTable td {
+  padding:0px 15px;
+}
 .rc-handle-container {
   width:100%!important;
 }
