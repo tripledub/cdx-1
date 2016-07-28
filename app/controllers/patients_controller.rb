@@ -19,6 +19,19 @@ class PatientsController < ApplicationController
 
     @patients = @patients.within(@navigation_context.entity, @navigation_context.exclude_subsites)
 
+    params[:name] = session[:patients_filter_name] if params[:name].nil?
+    session[:patients_filter_name] = params[:name]
+    
+    params[:entity_id] = session[:patients_filter_entity_id] if params[:entity_id].nil?
+    session[:patients_filter_entity_id] = params[:entity_id]
+
+    params[:location] = session[:patients_filter_location] if params[:location].nil?
+    session[:patients_filter_location] = params[:location]
+
+    params["last_encounter"] = session[:patients_filter_lastencounter] if params["last_encounter"].nil?
+    session[:patients_filter_lastencounter] = params["last_encounter"]
+
+
     @patients = @patients.where("name LIKE concat('%', ?, '%')", params[:name]) unless params[:name].blank?
     @patients = @patients.where("entity_id LIKE concat('%', ?, '%')", params[:entity_id]) unless params[:entity_id].blank?
     # location_geoid is hierarchical so a prefix search works
