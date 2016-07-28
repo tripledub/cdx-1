@@ -216,7 +216,6 @@ body {
     border-bottom: 1px solid #05a8aa;
   }
   td {
-    padding: 0.8em 0.5em;
     margin: 0;
   }
   tr:nth-child(even) {
@@ -379,7 +378,7 @@ body {
   .patient-details.panel .row:nth-child(even) {
     background: #fff;
   }
-  ul.tab {
+  ul.tabs {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -407,7 +406,7 @@ body {
       }
     }
   }
-  .tab table a { color:#000; }
+  .tabs table a { color:#000; }
   .active {
     background-color: #ccc;
   }
@@ -502,7 +501,7 @@ padding-top:3px;
   top:5px;
 }
 
-#test_results_tabs {
+#contentcontainer #test_results_tabs {
   margin-top:1rem;
 
   .content {
