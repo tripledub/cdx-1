@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe TestStatus do
+RSpec.describe EncounterStatus do
   let(:institution)            { Institution.make }
   let(:user)                   { institution.user }
   let(:site)                   { institution.sites.make }
@@ -18,15 +18,26 @@ RSpec.describe TestStatus do
   let(:culture_result)         { CultureResult.make requested_test: culture_requested_test }
 
   describe 'change_status' do
-    context 'when a new test result is added its status should be completed' do
+    context 'if some requested tests are pending or in progress' do
       before :each do
-        new_test_result = DstLpaResult.make
-        new_requested_test.dst_lpa_result = new_test_result
-        new_requested_test.reload
+        culture_requested_test.update(status: :pending)
+        described_class.change_status(encounter)
+        encounter.reload
+      end
+
+      it 'should change the test order status to In progress' do
+        expect(encounter.status).to eq('inprogress')
+      end
+    end
+
+    context 'if all requested tests are completed or rejected' do
+      before :each do
+        described_class.change_status(encounter)
+        encounter.reload
       end
 
       it 'should change the request order status to Completed' do
-        expect(new_requested_test.status).to eq('completed')
+        expect(encounter.status).to eq('completed')
       end
     end
   end

@@ -44,7 +44,7 @@ var EncounterShow = React.createClass({
     }
 
     if (this.props.requestedTests.length>0) {
-      var urlParam   = '/requestedTests';
+      var urlParam   = '/requested_tests';
       urlParam       = urlParam + '/' + this.props.encounter.id;
       requestedTests = this.props.requestedTests;
       EncounterRequestTestActions.update(urlParam, requestedTests, successUrl, this.submitError);
