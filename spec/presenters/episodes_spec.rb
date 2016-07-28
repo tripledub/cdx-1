@@ -18,10 +18,10 @@ describe Presenters::Episodes do
       expect(described_class.patient_episodes(patient.episodes).first).to eq({
         id:             patient.episodes.first.uuid,
         diagnosis:      Extras::Select.find_from_struct(Episode.diagnosis_options, patient.episodes.first.diagnosis),
-        hivStatus:      Extras::Select.find_from_struct(Episode.hiv_status_options, patient.episodes.first.diagnosis),
+        hivStatus:      Extras::Select.find_from_struct(Episode.hiv_status_options, patient.episodes.first.hiv_status),
         initialHistory: "#{Extras::Select.find_from_struct(Episode.initial_history_options, patient.episodes.first.initial_history)} - #{Extras::Select.find_from_struct(Episode.previous_history_options, patient.episodes.first.previous_history)}",
-        drugResistance: Extras::Select.find_from_struct(Episode.drug_resistance_options, patient.episodes.first.diagnosis),
-        outcome:        Extras::Select.find_from_struct(Episode.treatment_outcome_options, patient.episodes.first.diagnosis),
+        drugResistance: Extras::Select.find_from_struct(Episode.drug_resistance_options, patient.episodes.first.drug_resistance),
+        outcome:        Extras::Select.find_from_struct(Episode.treatment_outcome_options, patient.episodes.first.outcome),
         editLink:       Rails.application.routes.url_helpers.edit_patient_episode_path(patient, patient.episodes.first)
       })
     end
