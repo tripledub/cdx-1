@@ -28,16 +28,6 @@ $(document).on('ready', function(){
       initializeContext();
     }
   }
-  /*
-  $(document).on('click', "#nav-context", function(event){
-    initializeContext();
-    $.ajax({
-      url: '/users/update_setting',
-      method: 'POST',
-      data: { sidebar_open: $("body").hasClass("show-navigation-context-picker") }
-    });
-  });
-  */
 
   // preserve the #context_side_bar element
   // and preserve the status of the body.show-navigation-context-picker css class
@@ -66,7 +56,15 @@ $(document).on('ready', function(){
 
 var NavigationContextPicker = React.createClass({
   buildState: function(props) {
-    return { context: props.context, subsitesIncluded: !props.context.full_context.endsWith("-!") }
+  var ssi = localStorage.getItem('sidebar_subsites_included');
+  var ssi_boolean;
+
+  if (  (ssi == 'true') || (ssi==null) ) {
+     ssi_boolean = true;
+   } else {
+     ssi_boolean = false;
+   }
+  return { context: props.context, subsitesIncluded: ssi_boolean}
   },
 
   getInitialState: function() {
