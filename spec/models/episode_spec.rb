@@ -48,7 +48,7 @@ RSpec.describe Episode, type: :model do
 
   describe 'treament history options' do
     context 'initial treatment' do
-      let(:initial_history_options) { described_class.initial_history_options } 
+      let(:initial_history_options) { described_class.initial_history_options }
       it 'has an array of initial history options' do
         expect(initial_history_options).to be_a(Array)
       end
@@ -69,7 +69,7 @@ RSpec.describe Episode, type: :model do
     end
 
     context 'previous treatment' do
-      let(:previous_history_options) { described_class.previous_history_options } 
+      let(:previous_history_options) { described_class.previous_history_options }
       it 'has an array of initial history options' do
         expect(previous_history_options).to be_a(Array)
       end
@@ -134,6 +134,34 @@ RSpec.describe Episode, type: :model do
         id = status.to_sym
         expected = treatment_outcome_options.select { |st| st.id == id }
         expect(expected.first.id).to eq(id)
+      end
+    end
+  end
+
+  describe 'turnaround time' do
+    let!(:episode) { Episode.make closed: false }
+    context 'when the episode has not been closed' do
+      it 'returns \'still open\'' do
+        expect(episode.turnaround_time).to eq('Still open')
+      end
+
+      it 'does not have a closed_at time' do
+        expect(episode.closed_at).to be_falsey
+      end
+    end
+
+    context 'when the episode is closed' do
+      before do
+        Timecop.travel(episode.created_at + 3.days)
+        episode.update_attribute(:closed, true)
+      end
+
+      it 'timestamps the closure time' do
+        expect(episode.closed_at).to be_truthy
+      end
+
+      it 'gives the turnaround time in words' do
+        expect(episode.turnaround_time).to eq('3 days')
       end
     end
   end

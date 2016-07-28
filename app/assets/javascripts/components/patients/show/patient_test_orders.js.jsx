@@ -10,8 +10,8 @@ var PatientTestOrders = React.createClass({
         { title: 'Request To',    fieldName: 'performingSite' },
         { title: 'Order Id',      fieldName: 'orderId' },
         { title: 'Order by User', fieldName: 'requester' },
-        { title: 'Request date',  fieldName: 'requestDate' },
-        { title: 'Due date',      fieldName: 'dueDate' },
+        { title: 'Request Date',  fieldName: 'requestDate' },
+        { title: 'Due Date',      fieldName: 'dueDate' },
         { title: 'Turnaround Time', fieldName: '' },
         { title: 'status',        fieldName: 'status' }
       ]
@@ -58,13 +58,24 @@ var PatientTestOrders = React.createClass({
   },
 
   render: function(){
-    var rows       = [];
+    var rows = [];
     var rowHeaders = [];
     var that       = this;
     this.state.patientTestOrders.forEach(
       function(patientTestOrder) {
-        // Add new on-the-fly field to the output row
-        patientTestOrder.turnaroundTime = 42;
+        // Add any on-the-fly field values to the output row
+        patientTestOrder._highlight_overdue = '';
+        var today = new Date();
+        if(patientTestOrder.status_raw != 'completed' && patientTestOrder.dueDate)
+        {
+          var dd = Date.parse(patientTestOrder.dueDate);
+          if(dd < today )
+          {
+            patientTestOrder._highlight_overdue = 'overdueHightlight';
+          }
+        }
+        // NEXT LINE IS NOT CORRECT AT PRESENT - NO COMPLETED DATE EXISTS YET
+        patientTestOrder.turnaroundTime = today - Date.parse(patientTestOrder.requestedDate);
         rows.push(<PatientTestOrder patientTestOrder={patientTestOrder} key={patientTestOrder.id} />);
       }
     );

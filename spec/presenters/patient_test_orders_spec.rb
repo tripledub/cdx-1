@@ -20,10 +20,12 @@ describe Presenters::PatientTestOrders do
       expect(described_class.patient_view(patient.encounters).first).to eq({
         id:          patient.encounters.first.uuid,
         siteName:    patient.encounters.first.site.name,
+        performingSiteName:  patient.encounters.first.site.name,
         requester:   patient.encounters.first.user.full_name,
         requestDate: I18n.l(Time.parse(patient.encounters.first.start_time), format: :long),
         dueDate:     I18n.l(patient.encounters.first.testdue_date, format: :long),
         status:      'In progress',
+        status_raw:  'inprogress',
         viewLink:    Rails.application.routes.url_helpers.encounter_path(patient.encounters.first)
       })
     end

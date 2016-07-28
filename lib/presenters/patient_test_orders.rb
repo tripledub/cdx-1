@@ -5,10 +5,12 @@ class Presenters::PatientTestOrders
         {
           id:          test_order.uuid,
           siteName:    site_name(test_order.site),
+          performingSiteName:    site_name(test_order.performing_site),
           requester:   requester_name(test_order.user),
           requestDate: Extras::Dates::Format.datetime_with_time_zone(test_order.start_time),
           dueDate:     Extras::Dates::Format.datetime_with_time_zone(test_order.testdue_date),
           status:      convert_status(test_order.status),
+          status_raw:  test_order.status,
           viewLink:    Rails.application.routes.url_helpers.encounter_path(test_order)
         }
       end

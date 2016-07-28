@@ -1,11 +1,19 @@
 class Episode < ActiveRecord::Base
   include AutoUUID
   include Auditable
+  include ActionView::Helpers::DateHelper
 
   belongs_to :patient
 
   validates_presence_of :diagnosis, :hiv_status, :drug_resistance, :initial_history
   validates :previous_history, presence: true, if: Proc.new { |a| a.initial_history == 'previous' }
+
+  before_save :check_closing
+
+  def turnaround_time
+    return 'Still open' unless closed?
+    distance_of_time_in_words(created_at, closed_at)
+  end
 
   def self.anatomical_diagnosis_options
     diagnosis_options.select { |opt| opt.anatomical == true }
@@ -83,5 +91,11 @@ class Episode < ActiveRecord::Base
       OpenStruct.new(id: :not_evaluated, name: I18n.t('select.episode.treatment_outcome.not_evaluated')),
       OpenStruct.new(id: :success, name: I18n.t('select.episode.treatment_outcome.success'))
     ]
+  end
+
+  private
+
+  def check_closing
+    self.closed_at = Time.now if self.closed
   end
 end
