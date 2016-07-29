@@ -462,7 +462,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         patient_id: Patient.last.id
       }.to_json
 
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:unprocessable_entity)
       json_response = JSON.parse(response.body).with_indifferent_access
 
       expect(json_response['status']).to eq('error')
@@ -490,7 +490,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         patient_id: patient.id
       }.to_json
 
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:unprocessable_entity)
       json_response = JSON.parse(response.body).with_indifferent_access
 
       expect(json_response['status']).to eq('error')
@@ -565,7 +565,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         test_results: []
       }.to_json
 
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:unprocessable_entity)
       json_response = JSON.parse(response.body).with_indifferent_access
 
       expect(json_response['encounter']['samples'][0]).to include(sample_json(sample_a))
@@ -648,7 +648,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         test_results: [{ uuid: test_result_a.uuid }, { uuid: test_result_b.uuid }]
       }.to_json
 
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:unprocessable_entity)
       json_response = JSON.parse(response.body).with_indifferent_access
       expect(json_response['encounter']['test_results'][0]).to include(test_result_json(test_result_a))
       expect(json_response['encounter']['test_results'].count).to eq(1)
@@ -818,7 +818,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         patient_id: patient.id
       }.to_json
 
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:unprocessable_entity)
       json_response = JSON.parse(response.body).with_indifferent_access
 
       expect(json_response['message']).to eq('Cannot add a test or sample that belongs to a different encounter')
@@ -844,7 +844,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         patient_id: patient.id
       }.to_json
 
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:unprocessable_entity)
       json_response = JSON.parse(response.body).with_indifferent_access
 
       expect(json_response['message']).to eq('Cannot add a test or sample that belongs to a different patient')
