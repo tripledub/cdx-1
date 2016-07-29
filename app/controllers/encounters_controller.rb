@@ -14,6 +14,8 @@ class EncountersController < ApplicationController
   end
 
   def create
+
+fdsafdsaf
     perform_encounter_action 'creating encounter' do
       prepare_encounter_from_json
       create_requested_tests
@@ -171,6 +173,7 @@ class EncountersController < ApplicationController
   def create_requested_tests
     encounter_param = @encounter_param = JSON.parse(params[:encounter])
     tests_requested = encounter_param['tests_requested']
+
     if tests_requested.present?
       tests_requested.split('|').each do |name|
         @encounter.requested_tests.build(name: name, status: RequestedTest.statuses["pending"])
@@ -183,10 +186,10 @@ class EncountersController < ApplicationController
     begin
       yield
     rescue Blender::MergeNonPhantomError => e
-      render json: { status: :error, message: "Cannot add a test or sample that belongs to a different #{e.entity_type.model_name.singular}", encounter: as_json_edit.attributes! }
+      render json: { status: :error, message: "Cannot add a test or sample that belongs to a different #{e.entity_type.model_name.singular}", encounter: as_json_edit.attributes! }, status: :unprocessable_entity
     rescue => e
       Rails.logger.error(e.backtrace.unshift(e.message).join("\n"))
-      render json: { status: :error, message: "Error #{action} #{e.class}", encounter: as_json_edit.attributes! }
+      render json: { status: :error, message: "Error #{action} #{e.class}", encounter: as_json_edit.attributes! }, status: :unprocessable_entity
     else
       render json: { status: :ok, encounter: as_json_edit.attributes! }.merge(@extended_respone)
     end
