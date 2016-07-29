@@ -73,7 +73,7 @@ var TestOrdersIndexTable = React.createClass({
           </span>
         </header>
         <div className="box-content">
-          <table className="table" cellPadding="0" cellSpacing="0"  data-resizable-columns-id="test-orders-table">
+          <table className="table testOrdersTable" cellPadding="0" cellSpacing="0"  data-resizable-columns-id="test-orders-table">
             <thead>
               <tr>
                 <CsvCheckboxColumnHeader columnId="test-orders-table" selectedTestOrders={this.selectedTestOrders} />

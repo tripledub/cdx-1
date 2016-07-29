@@ -6,7 +6,7 @@
     .col-6
   .panel.box-content
     .row
-      .col
+      .col.flexStart
         .row
           .col.pe-2
             = f.label :name
@@ -33,12 +33,11 @@
           - if @can_update
             .row
               .col.pe-2
-                .value= f.label :is_active
+                = f.label :is_active
               .col
-                .value
-                  = f.check_box :is_active, class: 'power'
-                  %label{:for => 'user_is_active'}
-                    = I18n.t('users.form.can_access')
+                = f.check_box :is_active, class: 'power'
+                %label{:for => 'user_is_active'}
+                  = I18n.t('users.form.can_access')
           .row
             .col.pe-2
               = f.label :last_sign_in_at
@@ -48,17 +47,15 @@
           - if @can_update
             .row
               .col.pe-2
-                .value
-                  %label
-                    = I18n.t('users.form.resend_invite')
+                %label
+                  = I18n.t('users.form.resend_invite')
               .col
                 .value
                   = link_to I18n.t('users.form.send'), 'resend_invite', class: 'btn-link'
             .row
               .col.pe-2
-                .value
-                  %label
-                    = I18n.t('users.form.remove_user')
+                %label
+                  = I18n.t('users.form.remove_user')
               .col
                 .value
                   = link_to I18n.t('users.form.remove'), 'remove', class: 'btn-link'

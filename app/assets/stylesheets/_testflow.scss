@@ -1,7 +1,4 @@
 .testflow {
-  .overdueHightlight {
-    background-color: #F4B350;
-  }
   .section {
     clear: both;
     padding: 0px;
@@ -266,9 +263,6 @@ body {
       margin-left: 0px;
     }
   }
-  .episodeSummary {
-    margin:0px auto;
-  }
   .panel {
     background: #fff;
     margin: 0 auto;
@@ -431,7 +425,6 @@ body {
       justify-content: flex-start;
     }
     .row {
-      align-items: flex-start;
       justify-content: flex-start;
       padding: 0 5px;
     }

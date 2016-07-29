@@ -46,7 +46,7 @@
       .col-6
         = f.collection_select :diagnosis, Episode.general_diagnosis_options, :id, :name, include_blank: I18n.t('select.default')
     .row
-      .col-6
+      .col-6.flexStart
         = f.label :anatomical_site_diagnosis
       .col-6
         = collection_radio_buttons(:episode, :anatomical_site_diagnosis, Episode.anatomical_diagnosis_options, :id, :name)

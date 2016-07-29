@@ -223,11 +223,11 @@ var TestResultButton = React.createClass({
 
     if (this.props.showWarning) {
       return (
-        <a className="btn-add-link" onClick={this.clickHandler}>Add Result</a>
+        <a className="btn-add-link btn-primary" onClick={this.clickHandler}>Add Result</a>
       )
     } else {
       return(
-        <a className="btn-add-link" href={this.props.testResultUrl}>{this.props.testResultText}</a>
+        <a className="btn-add-link btn-primary" href={this.props.testResultUrl}>{this.props.testResultText}</a>
       )
     }
   }

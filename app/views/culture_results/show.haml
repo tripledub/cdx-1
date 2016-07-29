@@ -13,32 +13,38 @@
         .row
           .col
             .row
-              .col-12
+              .col-6
                 %label
                   = CultureResult.human_attribute_name(:sample_collected_on)
+              .col-6
                 = I18n.l(@culture_result.sample_collected_on, format: :full_date)
             .row
-              .col-12
+              .col-6
                 %label
                   = CultureResult.human_attribute_name(:media_used)
+              .col-6
                 = Extras::Select.find(CultureResult.media_options, @culture_result.media_used)
             .row
-              .col-12
+              .col-6
                 %label
                   = CultureResult.human_attribute_name(:serial_number)
+              .col-6
                 = @culture_result.serial_number
             .row
-              .col-12
+              .col-6
                 %label
                   = MicroscopyResult.human_attribute_name(:test_result)
+              .col-6
                 = Extras::Select.find(CultureResult.test_result_options, @culture_result.test_result)
             .row
-              .col-12
+              .col-6
                 %label
                   = CultureResult.human_attribute_name(:examined_by)
+              .col-6
                 = @culture_result.examined_by
             .row
-              .col-12
+              .col-6
                 %label
                   = CultureResult.human_attribute_name(:result_on)
+              .col-6
                 = I18n.l(@culture_result.result_on, format: :full_date)
