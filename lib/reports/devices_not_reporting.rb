@@ -5,6 +5,9 @@ module Reports
       {
         title:   '',
         titleY:  'Days',
+        axisX: {
+          interval: 1
+        },
         columns: generate_columns
       }
     end
@@ -20,7 +23,7 @@ module Reports
             day_range      = ( Date.parse(options["date_range"]["start_time"]["lte"]) -  Date.parse(options["date_range"]["start_time"]["gte"]) ).to_i
             device_message = DeviceMessage.where(:device_id => device.id).where("created_at > ? and created_at < ?",options["date_range"]["start_time"]["lge"],options["date_range"]["start_time"]["lte"]).order(:created_at).first
           else
-            day_range = (Date.parse(Time.now.strftime('%Y-%m-%d')) -  Date.parse(filter['since'])).to_i
+            day_range      = (Date.parse(Time.now.strftime('%Y-%m-%d')) -  Date.parse(filter['since'])).to_i
             device_message = DeviceMessage.where(:device_id => device.id).where("created_at > ?", get_since).order(:created_at).first
           end
 
