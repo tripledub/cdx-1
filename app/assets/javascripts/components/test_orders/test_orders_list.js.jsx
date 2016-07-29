@@ -78,13 +78,13 @@ var TestOrdersIndexTable = React.createClass({
               <tr>
                 <CsvCheckboxColumnHeader columnId="test-orders-table" selectedTestOrders={this.selectedTestOrders} />
                 <th data-resizable-column-id="sample-id">Sample Id</th>
-                {sortableHeader("Status",       "encounters.status")}
-                {sortableHeader("Request by", "sites.name")}
-                <th data-resizable-column-id="performing-site">Request to</th>
-                {sortableHeader("Testing for",  "patients.name")}
+                {sortableHeader("Status",        "encounters.status")}
+                {sortableHeader("Request by",    "sites.name")}
+                {sortableHeader("Request to",    "performing_sites.name")}
+                {sortableHeader("Testing for",   "patients.name")}
                 {sortableHeader("Order by user", "users.first_name")}
-                {sortableHeader("Request date", "encounters.start_time")}
-                {sortableHeader("Due date",     "encounters.testdue_date")}
+                {sortableHeader("Request date",  "encounters.start_time")}
+                {sortableHeader("Due date",      "encounters.testdue_date")}
 
               </tr>
             </thead>
