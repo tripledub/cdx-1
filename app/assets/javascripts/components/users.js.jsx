@@ -13,9 +13,9 @@ var AddUserLink = React.createClass({
       <a className="btn-add icon side-link" href='#' title="Invite users" onClick={this.openInviteModal} ><span className="icon-mail icon-white"></span></a>
 
       <Modal ref="inviteModal">
-        <h1>Invite users</h1>
+        <header><h3>Invite users</h3></header>
 
-        <UserInviteForm onFinished={this.closeInviteModal} roles={this.props.roles} context={this.props.context} />
+        <div className="panel"><UserInviteForm onFinished={this.closeInviteModal} roles={this.props.roles} context={this.props.context} /></div>
       </Modal>
     </div>);
   }
@@ -93,12 +93,12 @@ var UserInviteForm = React.createClass({
   render: function() {
     return (<div>
       <div className="row">
-        <div className="col pe-3"><label>Role</label></div>
+        <div className="col pe-2"><label>Role</label></div>
         <div className="col"><CdxSelect name="role" items={this.props.roles} value={this.state.role} onChange={this.changeRole} /></div>
       </div>
 
       <div className="row">
-        <div className="col pe-3"><label>Users</label></div>
+        <div className="col pe-2"><label>Users</label></div>
         <div className="col"><OptionList ref="usersList"
           callback={this.addUser}
           autocompleteCallback="/users/autocomplete"
@@ -117,7 +117,7 @@ var UserInviteForm = React.createClass({
 
       { this.state.includeMessage ?
         <div className="row">
-          <div className="col pe-3"><label>Message</label></div>
+          <div className="col pe-2"><label>Message</label></div>
           <div className="col"><textarea value={this.state.message} onChange={this.writeMessage} className="input-block resizeable" rows="1" /></div>
         </div> : null }
 

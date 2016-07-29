@@ -13,85 +13,109 @@
         .row
           .col-4
             .row
-              .col-12
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:sample_collected_on)
+              .col-6
                 = I18n.l(@dst_lpa_result.sample_collected_on, format: :full_date)
             .row
-              .col-12
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:media_used)
+              .col-6
                 = Extras::Select.find(DstLpaResult.method_options, @dst_lpa_result.media_used)
             .row
-              .col-12
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:serial_number)
+              .col-6
                 = @dst_lpa_result.serial_number
             .row
-              .col-12
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:examined_by)
+              .col-6
                 = @dst_lpa_result.examined_by
             .row
-              .col-12
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:result_on)
+              .col-6
                 = I18n.l(@dst_lpa_result.result_on, format: :full_date)
 
           .col-4
             .row
-              .col-12
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:results_h)
+              .col-6
                 = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_h)
-              .col-12
+            .row
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:results_r)
+              .col-6
                 = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_r)
             .row
-              .col-12
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:results_e)
+              .col-6
                 = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_e)
-              .col-12
+            .row
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:results_s)
+              .col-6
                 = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_s)
             .row
-              .col-12
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:results_amk)
+              .col-6
                 = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_amk)
-              .col-12
+            .row
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:results_km)
+              .col-6
                 = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_km)
             .row
-              .col-12
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:results_cm)
+              .col-6
                 = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_cm)
-              .col-12
+            .row
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:results_fq)
+              .col-6
                 = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_fq)
 
 
           .col-4
             .row
-              .col-12
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:results_other1)
+              .col-6
                 = @dst_lpa_result.results_other1
-              .col-12
+            .row
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:results_other2)
+              .col-6
                 = @dst_lpa_result.results_other2
-              .col-12
+            .row
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:results_other4)
+              .col-6
                 = @dst_lpa_result.results_other4
-              .col-12
+            .row
+              .col-6
                 %label
                   = DstLpaResult.human_attribute_name(:results_other4)
+              .col-6
                 = @dst_lpa_result.results_other4

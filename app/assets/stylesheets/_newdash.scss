@@ -578,11 +578,6 @@ form#new_device {
     color:#434343!important;
   }
 
-  div.row:nth-child(even) {
-    background:#dbdae2;
-    padding:0 15px;
-  }
-
   input.btn-primary {
     padding:0 24px;
     height:30px;
@@ -610,10 +605,7 @@ form#new_alert a.cancel {
   margin-left:10px;
 }
 /* Align Form labels to top & align button actions within header */
-form#new_microscopy_result, form#new_site, form.edit_site, form#new_episode, form.edit_episode,  form.edit_device_model, form#new_device_model, form#new_alert, form#edit_episode_2{
-  .row {
-    align-items:flex-start;
-  }
+form#new_microscopy_result, form#new_site, form.edit_site, form#new_episode, form.edit_episode,  form.edit_device_model, form#new_device_model, form#new_alert, form#edit_episode_2, form#new_culture_result, form#new_dst_lpa_result, form#new_expert_result, form#new_miscroscopy_result {
   .row.labelHeader {align-items:center;}
 
   label {
@@ -942,10 +934,6 @@ form#new_microscopy_result, form#new_site, form.edit_site, form#new_episode, for
         border:none;
       }
 
-      .row:nth-child(odd) {
-        background:#dbdae2;
-      }
-
       .row {
         padding:5px 15px;
         align-items:center;
@@ -987,7 +975,8 @@ section.newPatientContainer, section.editPatientContainer, .optionsarea {
     height:auto;
   }
 }
-form#new_patient, form.edit_patient, form#new_device{
+
+form#new_patient, form.edit_patient, form#new_device, form#edit_device{
   background:#fff;
   border:1px solid #e2e2e2;
   font-size:0.7rem;
@@ -1066,7 +1055,7 @@ form#new_patient, form.edit_patient, form#new_device{
 
   .Select.is-searchable {
     width:200px;
-    border:none;
+    border:1px solid #e2e2e2;
 
     .Select-control {
       padding:8px 120px 4px 0px;
@@ -1265,8 +1254,22 @@ div.pagination {
 
 /* Tables
      ========================================================================== */
-.testOrdersTable td {
-  padding:0px 15px;
+#test-table td a.btn-primary {
+  color:#fff!important;
+}
+.testOrdersTable {
+  td {
+    padding:0px 15px;
+  }
+  th {
+    padding:0px 15px;
+  }
+  input[type="checkbox"] + label {
+    margin-bottom:0px;
+  }
+  .rc-handle {
+    height:100%!important;
+  }
 }
 .rc-handle-container {
   width:100%!important;
@@ -1630,8 +1633,9 @@ background:#fff;
 }
 
 .box-content{
-height:100%;
-   overflow-y: auto;
+  height:100%;
+  overflow-y: auto;
+  overflow-x:hidden;
 }
 
 .box-content .hidden{
@@ -1731,4 +1735,45 @@ div#new-xpert-results section.row {
   padding:10px 15px;
 
   .row {margin-bottom:10px;}
+}
+
+/* User invite modal styles */
+.modal-wrapper {
+  .Select {
+    height:30px;
+    border:1px solid #e2e2e2;
+    width:100%;
+    font-size:12px;
+  }
+  .row {
+    align-items:center;
+  }
+  .Select.is-searchable {
+    
+
+    .Select-control {
+      padding:4px 120px 4px 0px;
+
+      .Select-placeholder {
+        padding:4px 52px 8px 5px;
+        background:#fff;
+        height:30px;
+        font-size:12px;
+      }
+      span.Select-arrow {
+        top:8px;
+      }
+    }
+  }
+  .item-search {
+    width:200px;
+    font-size:12px;
+    max-width:none;
+  }
+  .close-modal {
+    top:42px;
+  }
+  .panel {
+    padding:0 15px;
+  }
 }

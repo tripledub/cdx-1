@@ -11,33 +11,39 @@
     .order-details
       .panel
         .row
-          .col-12
+          .col-6
             %label
               = XpertResult.human_attribute_name(:sample_collected_on)
+          .col-6
             = I18n.l(@xpert_result.sample_collected_on, format: :full_date)
         .row
-          .col-12
+          .col-6
             %label
               = XpertResult.human_attribute_name(:tuberculosis)
+          .col-6
             = Extras::Select.find(XpertResult.tuberculosis_options, @xpert_result.tuberculosis)
         - if @xpert_result.tuberculosis == 'detected'
           .row
-            .col-12
+            .col-6
               %label
                 = XpertResult.human_attribute_name(:trace)
+            .col-6
               = Extras::Select.find(XpertResult.trace_options, @xpert_result.trace)
         .row
-          .col-12
+          .col-6
             %label
               = XpertResult.human_attribute_name(:rifampicin)
+          .col-6
             = Extras::Select.find(XpertResult.rifampicin_options, @xpert_result.rifampicin)
         .row
-          .col-12
+          .col-6
             %label
               = XpertResult.human_attribute_name(:examined_by)
+          .col-6
             = @xpert_result.examined_by
         .row
-          .col-12
+          .col-6
             %label
               = XpertResult.human_attribute_name(:result_on)
+          .col-6
             = I18n.l(@xpert_result.result_on, format: :full_date)

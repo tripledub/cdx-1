@@ -562,7 +562,7 @@ color:#fff !important;
 
 .testflow p.text-small.muted {
     margin:0px;
-    padding:10px 15px;
+    padding:10px 0px;
   }
 
 .testflow .row.labelHeader h3 {margin:0;}
@@ -654,6 +654,7 @@ form#new_comment {
   padding:0.25rem;
   border:1px solid #ccc;
   width:200px;
+  color:#434343;
 }
 
 .testflow div a.button,
@@ -825,6 +826,13 @@ padding:15px;
 }
 
 /* Test Order Styles */ 
+ul.samples li {
+  display:inline-block;
+  margin-right:5px;
+}
+ul.samples button.btn-primary {
+  margin-left:10px;
+}
 .testflow .right {float:right;}
 .testflow .left {float:left;}
 
@@ -883,7 +891,9 @@ padding:15px;
   align-items: flex-start;
   border-bottom: 1px solid #2196f3;
 }
-
+.testflow .items-editor .items-content.selected .row:last-child {
+  border-bottom:none;
+}
 .testflow {
   input[type="text"]:disabled {
     background:#ddd;
