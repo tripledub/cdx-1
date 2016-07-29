@@ -14,8 +14,6 @@ class EncountersController < ApplicationController
   end
 
   def create
-
-fdsafdsaf
     perform_encounter_action 'creating encounter' do
       prepare_encounter_from_json
       create_requested_tests
