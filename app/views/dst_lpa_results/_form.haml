@@ -9,7 +9,12 @@
     .col.pe-2
       = f.label :media_used
     .col
-      = f.collection_select :media_used, DstLpaResult.method_options, :first, :last
+      = f.collection_select :media_used, DstLpaResult.media_options, :first, :last
+  .row
+    .col.pe-2
+      = f.label :method_used
+    .col
+      = f.collection_select :method_used, DstLpaResult.method_options, :first, :last
   .row
     .col.pe-2
       = f.label :serial_number
