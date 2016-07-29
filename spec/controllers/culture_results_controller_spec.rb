@@ -14,14 +14,17 @@ describe CultureResultsController do
   let(:requested_test)      { RequestedTest.make encounter: encounter }
   let(:culture_result)      { CultureResult.make requested_test: requested_test }
   let(:default_params)      { { context: institution.uuid } }
-  let(:valid_params)        { {
-    sample_collected_on:    4.days.ago,
-    media_used:             'solid',
-    serial_number:          'LO-3434-P',
-    test_result:            'contaminated',
-    examined_by:            'Michael Kiske',
-    result_on:              1.day.ago
-  } }
+  let(:valid_params) do
+    {
+      sample_collected_on:    4.days.ago,
+      media_used:             'solid',
+      method_used:            'direct',
+      serial_number:          'LO-3434-P',
+      test_result:            'contaminated',
+      examined_by:            'Michael Kiske',
+      result_on:              1.day.ago
+    }
+  end
 
   context 'user with test orders permission' do
     before(:each) do
@@ -53,6 +56,7 @@ describe CultureResultsController do
           patient_result = requested_test.culture_result
 
           expect(patient_result.media_used).to eq('solid')
+          expect(patient_result.method_used).to eq('direct')
           expect(patient_result.uuid).not_to be_empty
           expect(patient_result.serial_number).to eq('LO-3434-P')
           expect(patient_result.test_result).to eq('contaminated')

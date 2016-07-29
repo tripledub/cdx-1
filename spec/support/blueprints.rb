@@ -249,6 +249,7 @@ DstLpaResult.blueprint do
   sample_collected_on { 23.days.ago}
   serial_number { 'some random serial numbers' }
   media_used { 'solid' }
+  method_used { 'direct' }
   results_h { 'resistant' }
   results_r  { 'resistant' }
   results_e { 'susceptible' }
