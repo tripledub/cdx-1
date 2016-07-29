@@ -28,3 +28,17 @@
             = cdx_select name: "last_encounter", value: params["last_encounter"] do |select|
               - select.item "", I18n.t('patients.filters.show_all')
               - select.items @date_options, :value, :label
+          .filter
+            %input#clear_button.btn-primary(type='clear' value="#{I18n.t('patients.filters.clear_button')}")
+
+  :javascript
+    $(document).ready( function()
+    { 
+      $('#clear_button').on('click', function()
+      {
+        $('input#name').val('');
+        $('input#entity_id').val('');
+        $('input#last_encounter').val('');
+        $('#filters-form').submit();
+      });
+    });

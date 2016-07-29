@@ -20,6 +20,7 @@ en:
       patient_id: 'Patient Id'
       last_test_order: 'Last test order'
       patients: 'Patients'
+      clear_button:  'Clear'
     new:
       new_patient: 'New patient'
     create:
