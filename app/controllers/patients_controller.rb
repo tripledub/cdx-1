@@ -28,8 +28,14 @@ class PatientsController < ApplicationController
     params[:location] = session[:patients_filter_location] if params[:location].nil?
     session[:patients_filter_location] = params[:location]
 
-    params["last_encounter"] = session[:patients_filter_lastencounter] if params["last_encounter"].nil?
-    session[:patients_filter_lastencounter] = params["last_encounter"]
+    params[:last_encounter] = session[:patients_filter_lastencounter] if params[:last_encounter].nil?
+    session[:patients_filter_lastencounter] = params[:last_encounter]
+
+    params[:page] = session[:patients_filter_page] if params[:page].nil?
+    session[:patients_filter_page] = params[:page]
+
+    params[:page_size] = session[:patients_filter_pagesize] if params[:page_size].nil?
+    session[:patients_filter_pagesize] = params[:page_size] 
 
 
     @patients = @patients.where("name LIKE concat('%', ?, '%')", params[:name]) unless params[:name].blank?
