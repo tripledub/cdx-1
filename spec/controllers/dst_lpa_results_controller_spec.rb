@@ -17,6 +17,7 @@ describe DstLpaResultsController do
   let(:valid_params)        { {
     sample_collected_on: 4.days.ago,
     media_used:          'solid',
+    method_used:         'direct',
     serial_number:       'LO-3434-P',
     results_h:           'resistant',
     results_r:           'susceptible',
@@ -165,12 +166,12 @@ describe DstLpaResultsController do
 
       context 'with invalid data' do
         before :each do
-          dst_lpa_result
-          valid_params.merge!({ media_used: '' })
-          put :update, requested_test_id: requested_test.id, dst_lpa_result: valid_params
         end
 
         it 'should redirect to the test order page' do
+          dst_lpa_result
+          valid_params.merge!({ media_used: '' })
+          put :update, requested_test_id: requested_test.id, dst_lpa_result: valid_params
           expect(request).to render_template('edit')
         end
       end
