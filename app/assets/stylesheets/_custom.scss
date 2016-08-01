@@ -359,11 +359,11 @@ text-align:center;
 }
 
 .custom_filters .filter {
-  -webkit-box-flex: 0 0 10%;
-  -moz-box-flex: 0 0 10%;
-  -webkit-flex: 0 0 10%;
-  -ms-flex: 0 0 10%;
-  flex: 0 0 10%;
+  -webkit-box-flex: 0 0 140px;
+  -moz-box-flex: 0 0 140px;
+  -webkit-flex: 0 0 140px;
+  -ms-flex: 0 0 140px;
+  flex: 0 0 140px;
   margin: 0 2%;
   margin-top:14px;
 }
@@ -378,8 +378,8 @@ text-align:center;
 }
 
 .side-link{
-  margin-left:10px !important;
-  margin-right:20px !important;
+  margin-left:10px;
+  margin-right:20px;
 }
 
 .newtestoptions .side-link {

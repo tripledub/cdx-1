@@ -75,6 +75,18 @@ class Policy < ActiveRecord::Base
     REMOVE_USER_ROLE = "role:removeUser"
 
     UPDATE_USER = 'user:update'
+
+    READ_ALERT   =  "alert:read"
+    UPDATE_ALERT =  "alert:update"
+    DELETE_ALERT =  "alert:delete"
+    CREATE_ALERT =  "alert:create"
+
+    DISPLAY_TEST_ORDER_HEADER  = "pageHeader:displayTestOrder"
+    DISPLAY_TEST_RESULT_HEADER = "pageHeader:displayTestResult"
+    DISPLAY_DEVICES_HEADER     = "pageHeader:displayDevices"
+    DISPLAY_SETTINGS_HEADER    = "pageHeader:displaySettings"
+
+    DISPLAY_SETTINGS_PAGE_ROLE = "settingsPage:displayRole"
   end
 
   ACTIONS = Actions.constants.map{|action| Actions.const_get(action)}

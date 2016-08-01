@@ -1,6 +1,6 @@
 class DashboardsController < ApplicationController
   def index
-  	@institution_name = @navigation_context.name if @navigation_context.try(:entity)
+    @institution_name = @navigation_context.name if @navigation_context.try(:entity)
     @dashboard_report = Reports::Dashboard.new(current_user, @navigation_context, options)
   end
 

@@ -4,6 +4,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     $('.test_for_ebola').attr('checked', false).parent().hide();
     $('.test_for_tb').attr('checked', false).parent().hide();
     $('.test_for_hiv').attr('checked', false).parent().hide();
+    $('.cformatIndented').hide();
   },
 
   reasonClicked: function(clk) {
@@ -34,6 +35,15 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
       }, {entity_id: sampleId, lab_sample_id: labSampleId});
     }
     event.preventDefault();
+  },
+
+  validateThenSave: function(event)
+  {
+    event.preventDefault();
+    if( this.state.encounter.testing_for == undefined )  {   alert("Please choose a Test For option.");    return;  }
+    if( this.state.encounter.exam_reason == undefined )  {   alert("Please choose an Examination Reason.");    return;  }
+    if( this.state.encounter.tests_requested == '')  {   alert("Please choose one or more Test types.");    return;  }
+    this.save();
   },
 
   render: function() {
@@ -84,10 +94,10 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
           </div>
 
           <div className="row">
-            <div className="col-6">
+            <div className="col-6 flexStart">
               <label>Reason for Examination</label>
             </div>
-            <div className="col-6">
+            <div className="col-6 flexStart">
               <input type="radio" onChange={this.reasonClicked.bind(this, 0)} checked={this.state.encounter.exam_reason == 'diag'} name="exam_reason" id="exam_reason_diag" value="diag"/>
               <label htmlFor="exam_reason_diag">Diagnosis</label>
               <input type="radio" onChange={this.reasonClicked.bind(this, 1)} checked={this.state.encounter.exam_reason == 'follow'} name="exam_reason" id="exam_reason_follow" value="follow"/>
@@ -95,8 +105,11 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
             </div>
           </div>
 
+          { this.state.encounter.exam_reason === 'follow' ? <ReasonFollow treatmentDateChange={this.treatmentDateChange} /> : null }
+          { this.state.encounter.exam_reason === 'diag' ? <PresumptiveRR /> : null }
+
           <div className="row">
-            <div className="col-6">
+            <div className="col-6 flexStart">
               <label>Samples</label>
             </div>
             <div className="col-6">
@@ -110,59 +123,12 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
               </p>
               <p className={show_manual_sample}>
                 <input type="text" size="54" placeholder="Sample Id" ref="manualSampleEntry" />&nbsp;
-                <input type="text" size="54" placeholder="Lab. sample Id" ref="manualLabSampleEntry" />&nbsp;
                 <button type="button" className="btn-primary" onClick={this.validateAndSetManualEntry}>Add</button>
               </p>
             </div>
           </div>
 
-          <div className="row">
-            <div className="col-6">
-              <label>Tests Requested</label>
-            </div>
-            <div className="col-6 req_tests_checks">
-              <ul>
-                <li><input type="checkbox" onChange={this.reqtests_change} name="microscopy" className="test_for_tb" id="requested_microscopy"/>
-                  <label htmlFor="requested_microscopy">Microscopy</label>
-                </li>
-                <li><input type="checkbox" onChange={this.reqtests_change} name="xpertmtb" className="test_for_tb" id="requested_xpertmtb"/>
-                  <label htmlFor="requested_xpertmtb">Xpert MTB/RIF</label>
-                </li>
-                <li><input type="checkbox" onChange={this.reqtests_change} name="culture" className="test_for_tb" id="requested_culture"/>
-                  <label htmlFor="requested_culture">Culture</label>
-                </li>
-                <li><input type="checkbox" onChange={this.reqtests_change} name="drugsusceptibility" className="test_for_tb" id="requested_drug_susceptibility"/>
-                   <label htmlFor="requested_drug_susceptibility">Drug susceptibility</label>
-                 </li>
-                <li><input type="checkbox" onChange={this.reqtests_change} name="dst" className="test_for_tb" id="requested_dst"/>
-                  <label htmlFor="requested_dst">DST</label>
-                </li>
-                <li><input type="checkbox" onChange={this.reqtests_change} name="lineprobe" className="test_for_tb" id="requested_lineprobe"/>
-                  <label htmlFor="requested_lineprobe">Line probe assay</label>
-                </li>
-                <li><input type="checkbox" onChange={this.reqtests_change} name="cd4" className="test_for_hiv" id="requested_cd4"/>
-                  <label htmlFor="requested_cd4">CD4 Count</label>
-                </li>
-                <li><input type="checkbox" onChange={this.reqtests_change} name="viral" className="test_for_hiv" id="requested_viral"/>
-                  <label htmlFor="requested_viral">Viral Load Count</label>
-                </li>
-                <li><input type="checkbox" onChange={this.reqtests_change} name="hiv" className="test_for_hiv" id="requested_hiv"/>
-                  <label htmlFor="requested_hiv">HIV 1/2 Detect</label>
-                </li>
-                <li><input type="checkbox" onChange={this.reqtests_change} name="rdt" className="test_for_hiv" id="requested_rdt"/>
-                  <label htmlFor="requested_rdt">RDT</label>
-                </li>
-                <li><input type="checkbox" onChange={this.reqtests_change} name="xpertebola" className="test_for_ebola" id="requested_xpertebola"/>
-                  <label htmlFor="requested_xpertebola">Xpert Ebola</label>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          { this.state.encounter.exam_reason === 'follow' ? <ReasonFollow treatmentDateChange={this.treatmentDateChange} /> : null }
-
-          { this.state.encounter.tests_requested.indexOf('culture') > -1 ? <CultureFormat cultureFormatChange={this.cultureFormatChange} /> : null }
-
+          <RequestedTests reqtestsChange={this.reqtestsChange} />
 
           <div className="row">
             <div className="col-6">
@@ -204,7 +170,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
             <div className="col-12">
               <ul>
                 <li>
-                  <a href="#" id="encountersave" className="button save" onClick={this.save}>Save</a>
+                  <a href="#" id="encountersave" className="button save" onClick={this.validateThenSave}>Save</a>
                 </li>
                 <li>
                   <a href={cancelUrl} className="button cancel">Cancel</a>
@@ -237,44 +203,11 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     return '';
   },
 
-  tests_list: function() {
-    var tests = [];
-    tests['microscopy'] = 'Microscopy';
-    tests['xpert'] = 'Xpert MTB/RIF';
-    tests['culture'] = 'Culture';
-    tests['drugsusceptibility'] = 'Culture Drug susceptibility';
-    tests['lineprobe'] = 'Line probe assay';
-    tests['cd4'] = 'CD4 Count';
-    tests['viral'] = 'Viral Load Count';
-    tests['hiv'] = 'HIV 1/2 Detect';
-    var tout = '';
-    for (var i in tests) {
-      tout += '<li><input type="checkbox" onChange={this.reqtests_change} name="';
-      tout += i;
-      tout += '" ';
-      if (this.state.encounter.tests_requested.indexOf(i) != false)
-        tout += 'selected ';
-      tout += 'id="requested_';
-      tout += i;
-      tout += '"/><label htmlFor="requested_';
-      tout += i;
-      tout += '">';
-      tout += tests[i];
-      tout += '</label></li>';
-    }
-    return {__html: tout};
-  },
-
-  reqtests_change: function() {
-    var reqtests = '';
-
-    $('.req_tests_checks input:checked').each(function(dd) {
-      reqtests += $(this).attr('name') + '|';
-    });
+  reqtestsChange: function(requestedTests) {
     this.setState(React.addons.update(this.state, {
       encounter: {
         tests_requested: {
-          $set: reqtests
+          $set: requestedTests
         }
       }
     }));
@@ -405,6 +338,25 @@ var ReasonDiag = React.createClass({
   }
 });
 
+var PresumptiveRR = React.createClass({
+  updatePresumptiveRR: function(e){
+    alert('its changed');
+  },
+
+  render: function() {
+    return (
+      <div className="row">
+        <div className="col-6">
+        </div>
+        <div className="col-6">
+          <input type="checkbox" onChnage={this.updatePresumptiveRR} className="presumptive_rr" id="presumptive_rr" name="presumptive_rr"/>
+          <label htmlFor="presumptive_rr">Presumptive RR-TB/MDR-TB</label>
+        </div>
+      </div>
+    )
+  }
+});
+
 var ReasonFollow = React.createClass({
   updateWeeks: function (e) {
     this.props.treatmentDateChange();
@@ -418,29 +370,6 @@ var ReasonFollow = React.createClass({
         </div>
         <div className="col-6">
           <input type="number" min="0" max="52" onChange={this.updateWeeks} id="treatment_weeks" name="treatment_weeks"/>
-        </div>
-      </div>
-    );
-  }
-});
-
-var CultureFormat = React.createClass({
-  cultureFormatChange: function (e) {
-    this.props.cultureFormatChange();
-  },
-
-  render: function() {
-    return (
-      <div className="row">
-        <div className="col-6">
-          <label>Culture format</label>
-        </div>
-        <div className="col-6">
-          <select className="input-large" id="cultureFormat" name="culture_format" onChange={this.cultureFormatChange}>
-            <option value="">Please Select...</option>
-            <option value="liquid">Liquid culture</option>
-            <option value="solid">Solid culture</option>
-          </select>
         </div>
       </div>
     );

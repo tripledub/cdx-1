@@ -41,6 +41,6 @@ class CultureResultsController < PatientResultsController
   end
 
   def culture_result_params
-    params.require(:culture_result).permit(:sample_collected_on, :examined_by, :result_on, :media_used, :serial_number, :results_negative, :results_1to9, :results_1plus, :results_2plus, :results_3plus, :results_ntm, :results_contaminated)
+    params.require(:culture_result).permit(:sample_collected_on, :examined_by, :result_on, :media_used, :serial_number, :test_result, :method_used)
   end
 end

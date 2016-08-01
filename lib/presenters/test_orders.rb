@@ -9,11 +9,12 @@ class Presenters::TestOrders
           requestedSiteName:  site_name(encounter.site),
           performingSiteName: site_name(encounter.performing_site),
           sampleId:           encounter.samples.map(&:entity_ids).join(', '),
-          testingFor:         patient_display_name(encounter.testing_for),
+          testingFor:         encounter.testing_for,
           requestedBy:        encounter.user.full_name,
           requestDate:        Extras::Dates::Format.datetime_with_time_zone(encounter.start_time),
           dueDate:            Extras::Dates::Format.datetime_with_time_zone(encounter.testdue_date),
           status:             convert_status(encounter.status),
+          status_raw:         encounter.status,
           viewLink:           Rails.application.routes.url_helpers.encounter_path(encounter)
         }
       end

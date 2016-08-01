@@ -36,9 +36,10 @@ describe EncounterIndexer, elasticsearch: true do
           "path" => [site.uuid]
         },
         "encounter" => {
-          'start_time' => DateTime.new(2015,1,1,0,0,0).utc.iso8601,
-          'user_email' => institution.user.email,
-          'diagnosis' => [
+          'start_time'  => DateTime.new(2015,1,1,0,0,0).utc.iso8601,
+          'user_email'  => institution.user.email,
+          'testing_for' => encounter.testing_for,
+          'diagnosis'   => [
             { "condition" => "mtb", "name" => "mtb", "result" => "negative", "quantitative_result" => "20"}
           ],
           'custom_fields' => {

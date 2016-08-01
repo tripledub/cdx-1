@@ -1,0 +1,114 @@
+- content_for(:subheader) do
+  .filterbar.filterbartest
+    .heading
+      .title
+        =I18n.t('test_results.filters.title')
+
+    .topfilteropt
+      %input#query_button.btn-primary.filtershow(type='button' value='Show Filters')
+
+  %form.filteroptions#filters-form{ action: test_results_path, "data-auto-submit" => true }
+    %input{ type: "hidden", name: "page_size", value: @page_size }
+    %input{ type: "hidden", name: "profile_tabs_selected_tab", value: 'dst_lpa' }
+    .row.center.custom_filters
+      .col.pe-10
+      .advanced
+        .row
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.media')
+            = cdx_select name: 'media', value: params["media"] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items(DstLpaResult.method_options.map { |option|  [option.last, option.first] })
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.results_h')
+            = cdx_select name: 'results_h', value: params['results_h'] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items(DstLpaResult.dst_lpa_options.map { |option|  [option[1], option.first] })
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.results_r')
+            = cdx_select name: 'results_r', value: params['results_r'] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items(DstLpaResult.dst_lpa_options.map { |option|  [option[1], option.first] })
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.results_e')
+            = cdx_select name: 'results_e', value: params['results_e'] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items(DstLpaResult.dst_lpa_options.map { |option|  [option[1], option.first] })
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.results_s')
+            = cdx_select name: 'results_s', value: params['results_s'] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items(DstLpaResult.dst_lpa_options.map { |option|  [option[1], option.first] })
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.results_amk')
+            = cdx_select name: 'results_amk', value: params['results_amk'] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items(DstLpaResult.dst_lpa_options.map { |option|  [option[1], option.first] })
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.results_km')
+            = cdx_select name: 'results_km', value: params['results_km'] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items(DstLpaResult.dst_lpa_options.map { |option|  [option[1], option.first] })
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.results_cm')
+            = cdx_select name: 'results_cm', value: params['results_cm'] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items(DstLpaResult.dst_lpa_options.map { |option|  [option[1], option.first] })
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.results_fq')
+            = cdx_select name: 'results_fq', value: params['results_fq'] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items(DstLpaResult.dst_lpa_options.map { |option|  [option[1], option.first] })
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.date')
+            = cdx_select name: "since", value: params["since"] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items @date_options, :value, :label
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.date_from')
+            %input#from_date{type: "date", name: "from_date", value: params["from_date"]}
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.date_to')
+            %input#to_date{type: "date", name: "to_date", value: params["to_date"]}
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.sample_id')
+            %input{type: "text", name: "sample.id", value: params["sample.id"]}
+
+.row.paginationHeader
+  .col
+    - if @total == 0
+      = render 'empty_manual_results'
+    - else
+      %section.row
+        %header
+          = image_tag('img/test-tube.png')
+          %h3
+            = I18n.t('test_results.index.test_result', count: @total)
+        .box-content
+          = react_component 'DstLpaResultsIndex', testResults: @test_results
+          .pagination
+            = render 'shared/pagination'

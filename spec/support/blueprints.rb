@@ -38,7 +38,9 @@ Alert.blueprint do
   message { 'test message' }
   category_type {"anomalies"}
   sms_limit {10000}
-  user
+  institution { object.site.try(:institution) || Institution.make }
+  site { Site.make(institution: (object.institution || Institution.make)) }
+  user { institution.user }
 end
 
 AlertRecipient.blueprint do
@@ -106,7 +108,7 @@ Device.blueprint do
   site { Site.make(institution: (object.institution || Institution.make)) }
   institution { object.site.try(:institution) || Institution.make }
   name
-  serial_number { name }
+  serial_number { SecureRandom.urlsafe_base64 }
   device_model { Manifest.make.device_model }
   time_zone { "UTC" }
 end
@@ -134,6 +136,13 @@ Manifest.blueprint do
   definition { DefaultManifest.definition }
 end
 
+PageHeader.blueprint do
+  institution { Institution.make }
+end
+
+SettingsPage.blueprint do
+  institution { Institution.make }
+end
 
 Encounter.blueprint do
   patient { Patient.make }
@@ -230,13 +239,7 @@ CultureResult.blueprint do
   sample_collected_on { 23.days.ago}
   serial_number { 'some random serial numbers' }
   media_used { 'solid' }
-  results_negative { false }
-  results_1to9 { true }
-  results_1plus { true }
-  results_2plus { true }
-  results_3plus { false }
-  results_ntm { false }
-  results_contaminated { true }
+  test_result { 'contaminated' }
   examined_by { Faker::Name.name }
   result_on { 7.days.from_now }
 end
@@ -246,6 +249,7 @@ DstLpaResult.blueprint do
   sample_collected_on { 23.days.ago}
   serial_number { 'some random serial numbers' }
   media_used { 'solid' }
+  method_used { 'direct' }
   results_h { 'resistant' }
   results_r  { 'resistant' }
   results_e { 'susceptible' }
@@ -265,13 +269,7 @@ MicroscopyResult.blueprint do
   serial_number { 'some random serial numbers' }
   appearance { 'blood' }
   specimen_type { 'some type' }
-  results_negative { false }
-  results_1to9 { true }
-  results_1plus { true }
-  results_2plus { true }
-  results_3plus { false }
-  results_ntm { false }
-  results_contaminated { true }
+  test_result { '1to9' }
   examined_by { Faker::Name.name }
   result_on { 7.days.from_now }
 end

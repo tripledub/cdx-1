@@ -14,20 +14,17 @@ describe CultureResultsController do
   let(:requested_test)      { RequestedTest.make encounter: encounter }
   let(:culture_result)      { CultureResult.make requested_test: requested_test }
   let(:default_params)      { { context: institution.uuid } }
-  let(:valid_params)        { {
-    sample_collected_on:    4.days.ago,
-    media_used:             'solid',
-    serial_number:          'LO-3434-P',
-    results_negative:       1,
-    results_1to9:           0,
-    results_1plus:          1,
-    results_2plus:          1,
-    results_3plus:          0,
-    results_ntm:            0,
-    results_contaminated:   1,
-    examined_by:            'Michael Kiske',
-    result_on:              1.day.ago
-  } }
+  let(:valid_params) do
+    {
+      sample_collected_on:    4.days.ago,
+      media_used:             'solid',
+      method_used:            'direct',
+      serial_number:          'LO-3434-P',
+      test_result:            'contaminated',
+      examined_by:            'Michael Kiske',
+      result_on:              1.day.ago
+    }
+  end
 
   context 'user with test orders permission' do
     before(:each) do
@@ -59,15 +56,10 @@ describe CultureResultsController do
           patient_result = requested_test.culture_result
 
           expect(patient_result.media_used).to eq('solid')
+          expect(patient_result.method_used).to eq('direct')
           expect(patient_result.uuid).not_to be_empty
           expect(patient_result.serial_number).to eq('LO-3434-P')
-          expect(patient_result.results_negative).to be true
-          expect(patient_result.results_1to9).to be false
-          expect(patient_result.results_1plus).to be true
-          expect(patient_result.results_2plus).to be true
-          expect(patient_result.results_3plus).to be false
-          expect(patient_result.results_ntm).to be false
-          expect(patient_result.results_contaminated).to be true
+          expect(patient_result.test_result).to eq('contaminated')
           expect(patient_result.sample_collected_on.strftime("%m/%d/%YYYY")).to eq(4.days.ago.strftime("%m/%d/%YYYY"))
           expect(patient_result.result_on.strftime("%m/%d/%YYYY")).to eq(1.day.ago.strftime("%m/%d/%YYYY"))
         end

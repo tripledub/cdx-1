@@ -8,7 +8,7 @@ class Cdx::Api::Elasticsearch::Query
   end
 
   DEFAULT_PAGE_SIZE = 50
-  MAX_PAGE_SIZE = 100
+  MAX_PAGE_SIZE = 10000
 
   def initialize(params, fields, api = Cdx::Api)
     @params = params
@@ -249,7 +249,7 @@ class Cdx::Api::Elasticsearch::Query
   end
 
   def process_order
-    order = @params['order_by'] || @fields.default_sort 
+    order = @params['order_by'] || @fields.default_sort
     all_orders = self.class.extract_multi_values(order)
     all_orders.map do |order|
       if order[0] == '-'

@@ -1,0 +1,67 @@
+- content_for(:subheader) do
+  .filterbar.filterbartest
+    .heading
+      .title
+        =I18n.t('test_results.filters.title')
+
+    .topfilteropt
+      %input#query_button.btn-primary.filtershow(type='button' value='Show Filters')
+
+  %form.filteroptions#filters-form{ action: test_results_path, "data-auto-submit" => true }
+    %input{ type: "hidden", name: "page_size", value: @page_size }
+    %input{ type: "hidden", name: "profile_tabs_selected_tab", value: 'microscopy' }
+    .row.center.custom_filters
+      .col.pe-10
+      .advanced
+        .row
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.appearance')
+            = cdx_select name: 'appearance', value: params["appearance"] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items(MicroscopyResult.visual_appearance_options.map { |option|  [option.last, option.first] })
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.test_result')
+            = cdx_select name: 'test_result', value: params["test_result"] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items(MicroscopyResult.test_result_options.map { |option|  [option.last, option.first] })
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.date')
+            = cdx_select name: "since", value: params["since"] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items @date_options, :value, :label
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.date_from')
+            %input#from_date{type: "date", name: "from_date", value: params["from_date"]}
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.date_to')
+            %input#to_date{type: "date", name: "to_date", value: params["to_date"]}
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.sample_id')
+            %input{type: "text", name: "sample.id", value: params["sample.id"]}
+
+.row.paginationHeader
+  .col
+    - if @test_results.empty?
+      = render 'empty_manual_results'
+    - else
+      %section.row
+        .small-12.columns.box
+          %header
+            = image_tag('img/test-tube.png')
+            %h3
+              = I18n.t('test_results.index.test_result', count: @total)
+          .box-content
+            = react_component 'MicroscopyResultsIndex', testResults: @test_results
+            .pagination
+              = render 'shared/pagination'

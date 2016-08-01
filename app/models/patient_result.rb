@@ -7,10 +7,10 @@ class PatientResult < ActiveRecord::Base
   after_save :update_requested_test
 
   before_save :convert_string_to_dates
-  
+
   def self.find_associated_tests_to_results(encounter)
-    PatientResult.joins(:requested_test).where('requested_tests.encounter_id' => encounter.id).pluck(:id, :requested_test_id).map do |result| 
-     {id: result[0], requested_test_id: result[1]}  
+    PatientResult.joins(:requested_test).where('requested_tests.encounter_id' => encounter.id).pluck(:id, :requested_test_id).map do |result|
+     { id: result[0], requested_test_id: result[1] }
     end
   end
 
@@ -24,7 +24,6 @@ class PatientResult < ActiveRecord::Base
   def update_requested_test
     return unless requested_test.present?
 
-    requested_test.update(status: :completed)
+    TestStatus.change_status(self)
   end
-  
 end

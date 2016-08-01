@@ -13,11 +13,11 @@ describe Presenters::PatientTestResults do
     end
 
     it 'should return an array of formated comments' do
-      expect(Presenters::PatientTestResults.patient_view(patient.test_results).size).to eq(7)
+      expect(described_class.patient_view(patient.test_results).size).to eq(7)
     end
 
     it 'should return elements formated' do
-      expect(Presenters::PatientTestResults.patient_view(patient.test_results).first).to eq({
+      expect(described_class.patient_view(patient.test_results).first).to eq({
         id:              patient.test_results.first.uuid,
         name:            patient.test_results.first.core_fields[TestResult::NAME_FIELD],
         date:            Extras::Dates::Format.datetime_with_time_zone(patient.test_results.first.core_fields[TestResult::START_TIME_FIELD]),

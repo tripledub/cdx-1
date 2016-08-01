@@ -15,22 +15,16 @@
         .row
           .filter
             %label.block
-              = I18n.t('test_orders.filters.condition')
-            = cdx_select name: "test.assays.condition", value: params["test.assays.condition"] do |select|
+              = I18n.t('test_orders.filters.testing_for')
+            = cdx_select name: "testing_for", value: params["testing_for"] do |select|
               - select.item "", I18n.t('test_orders.filters.show_all')
-              - select.items(@conditions.map { |name| [name.upcase, name] })
-          .filter
-            %label.block
-              = I18n.t('test_orders.filters.result')
-            = cdx_select name: "test.assays.result", value: params["test.assays.result"] do |select|
-              - select.item "", I18n.t('test_orders.filters.show_all')
-              - select.items @results, :value, :label
+              - select.items Encounter.testing_for_options.map {|e| e.reverse }
           .filter
             %label.block
               = I18n.t('test_orders.filters.date')
             = cdx_select name: "since", value: params["since"] do |select|
               - select.item "", I18n.t('test_orders.filters.show_all')
-              - select.items @date_options, :value, :label
+              - select.items Extras::Dates::Filters.date_options_for_filter, :value, :label
           .filter
             %label.block
               = I18n.t('test_orders.filters.test_order_id')
@@ -46,9 +40,8 @@
             = I18n.t('test_orders.index.header')
     - else
       %section.row
-        .small-12.columns.box
-          = react_component "TestOrdersIndexTable", testOrders: Presenters::TestOrders.index_view(@tests), orderBy: @order_by,
-            imageUrl: image_url('img/test-tube.png'), headerTitle: I18n.t('test_orders.index.test_order', count: @total),
-            csvUrl: test_orders_path, csvTitle: I18n.t('devices.index.download_csv')
-          .pagination
-            = render 'shared/pagination'
+        = react_component "TestOrdersIndexTable", testOrders: Presenters::TestOrders.index_view(@tests), orderBy: @order_by,
+          imageUrl: image_url('img/test-tube.png'), headerTitle: I18n.t('test_orders.index.test_order', count: @total),
+          csvUrl: test_orders_path, csvTitle: I18n.t('devices.index.download_csv')
+        .pagination
+          = render 'shared/pagination'

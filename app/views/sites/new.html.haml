@@ -1,11 +1,10 @@
 - content_for(:subheader) do
-  .row.center.add-new
+  .row.center.add-new.collapse
     .col.pe-10
-      .row
-        .col
-          %h2
-            = link_to sites_path, class: 'side-link', title: I18n.t('views.back') do
-              = image_tag "arrow-left-white.png"
-            New Site
-
-= render 'form'
+      %h2
+        = link_to sites_path, class: 'side-link', title: I18n.t('views.back') do
+          = image_tag "arrow-left-white.png"
+        New Site
+  .testflow
+    .container
+      = render 'form'

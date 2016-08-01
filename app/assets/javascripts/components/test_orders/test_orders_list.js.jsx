@@ -11,20 +11,21 @@ var TestOrderRow = React.createClass({
     return (
     <tr>
       <CsvCheckboxColumn columnId={this.props.testOrder.id} selectedTestOrders={this.selectedTestOrders} />
+      <td onClick={this.visitLink}>{this.props.testOrder.sampleId}</td>
+      <td onClick={this.visitLink}>{this.props.testOrder.status}</td>
       <td onClick={this.visitLink}>{this.props.testOrder.requestedSiteName}</td>
       <td onClick={this.visitLink}>{this.props.testOrder.performingSiteName}</td>
-      <td onClick={this.visitLink}>{this.props.testOrder.sampleId}</td>
       <td onClick={this.visitLink}>{this.props.testOrder.testingFor}</td>
       <td onClick={this.visitLink}>{this.props.testOrder.requestedBy}</td>
       <td onClick={this.visitLink}>{this.props.testOrder.requestDate}</td>
       <td onClick={this.visitLink}>{this.props.testOrder.dueDate}</td>
-      <td onClick={this.visitLink}>{this.props.testOrder.status}</td>
     </tr>);
   }
 });
 
 var TestOrdersIndexTable = React.createClass({
   getDefaultProps: function() {
+    window.store.get('selectedItems') ? null : window.store.set('selectedItems', '');
     return {
       title: "Test orders",
       allowSorting: true,
@@ -72,18 +73,19 @@ var TestOrdersIndexTable = React.createClass({
           </span>
         </header>
         <div className="box-content">
-          <table className="table" cellPadding="0" cellSpacing="0"  data-resizable-columns-id="test-orders-table">
+          <table className="table testOrdersTable" cellPadding="0" cellSpacing="0"  data-resizable-columns-id="test-orders-table">
             <thead>
               <tr>
                 <CsvCheckboxColumnHeader columnId="test-orders-table" selectedTestOrders={this.selectedTestOrders} />
-                {sortableHeader("Request by", "sites.name")}
-                <th data-resizable-column-id="performing-site">Request to</th>
                 <th data-resizable-column-id="sample-id">Sample Id</th>
-                {sortableHeader("Testing for",  "patients.name")}
+                {sortableHeader("Status",        "encounters.status")}
+                {sortableHeader("Request by",    "sites.name")}
+                {sortableHeader("Request to",    "performing_sites.name")}
+                {sortableHeader("Testing for",   "patients.name")}
                 {sortableHeader("Order by user", "users.first_name")}
-                {sortableHeader("Request date", "encounters.start_time")}
-                {sortableHeader("Due date",     "encounters.testdue_date")}
-                {sortableHeader("Status",       "encounters.status")}
+                {sortableHeader("Request date",  "encounters.start_time")}
+                {sortableHeader("Due date",      "encounters.testdue_date")}
+
               </tr>
             </thead>
             <tbody>

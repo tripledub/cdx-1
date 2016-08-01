@@ -19,6 +19,25 @@ class PatientsController < ApplicationController
 
     @patients = @patients.within(@navigation_context.entity, @navigation_context.exclude_subsites)
 
+    params[:name] = session[:patients_filter_name] if params[:name].nil?
+    session[:patients_filter_name] = params[:name]
+    
+    params[:entity_id] = session[:patients_filter_entity_id] if params[:entity_id].nil?
+    session[:patients_filter_entity_id] = params[:entity_id]
+
+    params[:location] = session[:patients_filter_location] if params[:location].nil?
+    session[:patients_filter_location] = params[:location]
+
+    params[:last_encounter] = session[:patients_filter_lastencounter] if params[:last_encounter].nil?
+    session[:patients_filter_lastencounter] = params[:last_encounter]
+
+    params[:page] = session[:patients_filter_page] if params[:page].nil?
+    session[:patients_filter_page] = params[:page]
+
+    params[:page_size] = session[:patients_filter_pagesize] if params[:page_size].nil?
+    session[:patients_filter_pagesize] = params[:page_size] 
+
+
     @patients = @patients.where("name LIKE concat('%', ?, '%')", params[:name]) unless params[:name].blank?
     @patients = @patients.where("entity_id LIKE concat('%', ?, '%')", params[:entity_id]) unless params[:entity_id].blank?
     # location_geoid is hierarchical so a prefix search works
@@ -34,9 +53,9 @@ class PatientsController < ApplicationController
 
   def show
     @patient = Patient.find(params[:id])
-    @patient_json = Jbuilder.new { |json| @patient.as_json_card(json) }.attributes!
     return unless authorize_resource(@patient, READ_PATIENT)
-    @episodes = @patient.episodes.order(id: :desc)
+
+    @patient_json = Jbuilder.new { |json| @patient.as_json_card(json) }.attributes!
   end
 
   def new

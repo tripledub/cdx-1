@@ -1,7 +1,11 @@
 = render 'device_card' unless request.xhr?
 
-.row
-  .col
+%section.row
+  .small-12.columns
+    %header 
+      %h3
+        Setup Details
+  .col.box-content
     %h4
       = I18n.t('devices.setup.setup_header')
 
@@ -12,13 +16,13 @@
 
 
 - if @device.device_model.supports_activation?
-  .row
+  .row.box-content
     .col.pe-2
       = I18n.t('devices.setup.activation_token')
     #activation-token.col
       = render 'activation_token'
 - else
-  .row
+  .row.box-content
     .col.pe-2
       = I18n.t('devices.setup.device_id')
     .col

@@ -1,6 +1,5 @@
 .card {
   @include flexbox();
-  height: 180px;
   border: 1px solid $gray2;
 
   border-radius: 3px;
@@ -11,8 +10,9 @@
   }
 
   .card-image {
-    background-color: $gray3;
+    background-color:rgb(229, 229, 229);
     @include flex(0 0 180px);
+    align-items:center;
 
     img {
       background-size:cover;
@@ -28,6 +28,15 @@
     padding: 15px 0 10px 15px;
     width: 100%;
     position: relative;
+    display:flex;
+
+    ul {
+    padding:0 15px;
+
+      label {
+        min-width:120px;
+      }
+    }
 
     .card-actions {
       position: absolute;

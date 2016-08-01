@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160719161550) do
+ActiveRecord::Schema.define(version: 20160729125611) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -95,10 +95,13 @@ ActiveRecord::Schema.define(version: 20160719161550) do
     t.boolean  "use_aggregation_percentage",                        default: false
     t.integer  "institution_id",                      limit: 4
     t.datetime "time_last_aggregation_checked"
+    t.string   "site_prefix",                         limit: 255
+    t.integer  "site_id",                             limit: 4
   end
 
   add_index "alerts", ["deleted_at"], name: "index_alerts_on_deleted_at", using: :btree
   add_index "alerts", ["institution_id"], name: "index_alerts_on_institution_id", using: :btree
+  add_index "alerts", ["site_id"], name: "index_alerts_on_site_id", using: :btree
   add_index "alerts", ["user_id"], name: "index_alerts_on_user_id", using: :btree
 
   create_table "alerts_conditions", id: false, force: :cascade do |t|
@@ -314,6 +317,7 @@ ActiveRecord::Schema.define(version: 20160719161550) do
     t.integer  "status",             limit: 4,     default: 0
     t.string   "testing_for",        limit: 255,   default: ""
     t.string   "culture_format",     limit: 255
+    t.boolean  "presumptive_rr"
   end
 
   add_index "encounters", ["deleted_at"], name: "index_encounters_on_deleted_at", using: :btree
@@ -322,16 +326,19 @@ ActiveRecord::Schema.define(version: 20160719161550) do
   add_index "encounters", ["user_id"], name: "index_encounters_on_user_id", using: :btree
 
   create_table "episodes", force: :cascade do |t|
-    t.string  "diagnosis",                 limit: 255
-    t.integer "patient_id",                limit: 4
-    t.string  "hiv_status",                limit: 255
-    t.string  "drug_resistance",           limit: 255
-    t.string  "outcome",                   limit: 255
-    t.string  "anatomical_site_diagnosis", limit: 255
-    t.string  "initial_history",           limit: 255
-    t.string  "previous_history",          limit: 255
-    t.string  "uuid",                      limit: 255
-    t.boolean "closed"
+    t.string   "diagnosis",                 limit: 255
+    t.integer  "patient_id",                limit: 4
+    t.string   "hiv_status",                limit: 255
+    t.string   "drug_resistance",           limit: 255
+    t.string   "outcome",                   limit: 255
+    t.string   "anatomical_site_diagnosis", limit: 255
+    t.string   "initial_history",           limit: 255
+    t.string   "previous_history",          limit: 255
+    t.string   "uuid",                      limit: 255
+    t.boolean  "closed",                                default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "closed_at"
   end
 
   add_index "episodes", ["patient_id"], name: "index_episodes_on_patient_id", using: :btree
@@ -449,6 +456,17 @@ ActiveRecord::Schema.define(version: 20160719161550) do
 
   add_index "old_passwords", ["password_archivable_type", "password_archivable_id"], name: "index_password_archivable", using: :btree
 
+  create_table "page_headers", force: :cascade do |t|
+    t.integer  "institution_id", limit: 4
+    t.integer  "site_id",        limit: 4
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "site_prefix",    limit: 255
+  end
+
+  add_index "page_headers", ["institution_id"], name: "index_page_headers_on_institution_id", using: :btree
+  add_index "page_headers", ["site_id"], name: "index_page_headers_on_site_id", using: :btree
+
   create_table "patient_results", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -488,24 +506,21 @@ ActiveRecord::Schema.define(version: 20160719161550) do
     t.string   "results_other2",       limit: 255
     t.string   "results_other3",       limit: 255
     t.string   "results_other4",       limit: 255
-    t.boolean  "results_negative",                   default: false
-    t.boolean  "results_1to9",                       default: false
-    t.boolean  "results_1plus",                      default: false
-    t.boolean  "results_2plus",                      default: false
-    t.boolean  "results_3plus",                      default: false
-    t.boolean  "results_ntm",                        default: false
-    t.boolean  "results_contaminated",               default: false
     t.string   "culture_format",       limit: 255
     t.string   "trace",                limit: 255
+    t.string   "test_result",          limit: 255
+    t.string   "method_used",          limit: 255
   end
 
   add_index "patient_results", ["deleted_at"], name: "index_patient_results_on_deleted_at", using: :btree
   add_index "patient_results", ["device_id"], name: "index_patient_results_on_device_id", using: :btree
   add_index "patient_results", ["institution_id"], name: "index_patient_results_on_institution_id", using: :btree
+  add_index "patient_results", ["method_used"], name: "index_patient_results_on_method_used", using: :btree
   add_index "patient_results", ["patient_id"], name: "index_patient_results_on_patient_id", using: :btree
   add_index "patient_results", ["requested_test_id"], name: "index_patient_results_on_requested_test_id", using: :btree
   add_index "patient_results", ["sample_identifier_id"], name: "index_patient_results_on_sample_identifier_id", using: :btree
   add_index "patient_results", ["site_id"], name: "index_patient_results_on_site_id", using: :btree
+  add_index "patient_results", ["test_result"], name: "index_patient_results_on_test_result", using: :btree
   add_index "patient_results", ["uuid"], name: "index_patient_results_on_uuid", using: :btree
 
   create_table "patients", force: :cascade do |t|
@@ -628,6 +643,17 @@ ActiveRecord::Schema.define(version: 20160719161550) do
   add_index "samples", ["institution_id"], name: "index_samples_on_institution_id_and_entity_id", using: :btree
   add_index "samples", ["patient_id"], name: "index_samples_on_patient_id", using: :btree
 
+  create_table "settings_pages", force: :cascade do |t|
+    t.integer  "institution_id", limit: 4
+    t.integer  "site_id",        limit: 4
+    t.string   "site_prefix",    limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "settings_pages", ["institution_id"], name: "index_settings_pages_on_institution_id", using: :btree
+  add_index "settings_pages", ["site_id"], name: "index_settings_pages_on_site_id", using: :btree
+
   create_table "sites", force: :cascade do |t|
     t.string   "name",                             limit: 255
     t.integer  "institution_id",                   limit: 4
@@ -740,6 +766,7 @@ ActiveRecord::Schema.define(version: 20160719161550) do
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
   add_foreign_key "alerts", "institutions"
+  add_foreign_key "alerts", "sites"
   add_foreign_key "audit_logs", "encounters"
   add_foreign_key "audit_logs", "patient_results"
   add_foreign_key "audit_logs", "requested_tests"

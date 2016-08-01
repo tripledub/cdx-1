@@ -6,15 +6,29 @@ en:
         male: 'Male'
         female: 'Female'
         other: 'Other'
+    encounter:
+      testing_for_options:
+        tb: 'Tuberculosis'
+        hiv: 'H.I.V.'
+        ebola: 'Ebola'
     microscopy:
       visual_appearance:
         blood: 'Blood-stained'
         mucopurulent: 'Mucopurulent'
         saliva: 'Saliva'
+      test_result_options:
+        negative: 'Negative'
+        1to9: 'Results 1-9/100 HPF'
+        1plus: 'Results +'
+        2plus: 'Results ++'
+        3plus: 'Results +++'
     culture:
       media_options:
         liquid: 'Liquid'
         solid: 'Solid'
+      test_result_options:
+        ntm: 'Ntm'
+        contaminated: 'Contaminated'
     dst_lpa:
       dst_lpa_options:
         resistant: 'R'
@@ -49,3 +63,30 @@ en:
         show_all: 'Show all'
         active: 'Active'
         blocked: 'Blocked'
+    episode:
+      hiv_status:
+        positive_tb: 'Positive'
+        negative_tb: 'Negative'
+        unknown: 'Unknown'
+      history:
+        new: 'New Patients'
+        previous: 'Previously Treated'
+        unknown: 'Unknown Previously'
+        relapsed: 'Relapsed Treatment Aft.'
+        loss: 'Loss to follow-up'
+        other: 'Other previous treatments'
+      treatment_outcome:
+        cured: 'Cured'
+        completed: 'Treatment completed'
+        failed: 'Treatment failed'
+        died: 'Died'
+        lost_to_follow_up: 'Lost to follow-up'
+        not_evaluated: 'Not evaluated'
+        success: 'Treatment success'
+      drug_resistance:
+        mono: 'Monoresistance'
+        poly: 'Polydrug resistance'
+        multi: 'Multidrug resistance'
+        extensive: 'Extensive drug resistance'
+        rif: 'Rifampicin resistance'
+        unknown: 'Unknown'

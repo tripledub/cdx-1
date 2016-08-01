@@ -12,7 +12,10 @@ module Resource
       Encounter,
       Role,
       User,
-      Patient
+      Patient,
+      Alert,
+      PageHeader,
+      SettingsPage
     ].freeze
   end
 

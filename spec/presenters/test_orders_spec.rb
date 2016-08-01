@@ -33,6 +33,7 @@ describe Presenters::TestOrders do
         requestDate:        Extras::Dates::Format.datetime_with_time_zone(Encounter.first.start_time),
         dueDate:            Extras::Dates::Format.datetime_with_time_zone(Encounter.first.testdue_date),
         status:             'Completed',
+        status_raw:         'completed',
         viewLink:           Rails.application.routes.url_helpers.encounter_path(Encounter.first)
       })
     end

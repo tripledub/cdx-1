@@ -11,46 +11,46 @@
     .order-details
       .panel
         .row
-          .col-6
+          .col
             .row
-              .col-12
+              .col-6
                 %label
                   = MicroscopyResult.human_attribute_name(:sample_collected_on)
+              .col-6
                 = I18n.l(@microscopy_result.sample_collected_on, format: :full_date)
             .row
-              .col-12
+              .col-6
                 %label
                   = MicroscopyResult.human_attribute_name(:specimen_type)
+              .col-6
                 = @microscopy_result.specimen_type
             .row
-              .col-12
+              .col-6
                 %label
                   = MicroscopyResult.human_attribute_name(:serial_number)
+              .col-6
                 = @microscopy_result.serial_number
             .row
-              .col-12
+              .col-6
                 %label
                   = MicroscopyResult.human_attribute_name(:appearance)
+              .col-6
                 = Extras::Select.find(MicroscopyResult.visual_appearance_options, @microscopy_result.appearance)
             .row
-              .col-12
+              .col-6
+                %label
+                  = MicroscopyResult.human_attribute_name(:test_result)
+              .col-6
+                = Extras::Select.find(MicroscopyResult.test_result_options, @microscopy_result.test_result)
+            .row
+              .col-6
                 %label
                   = MicroscopyResult.human_attribute_name(:examined_by)
+              .col-6
                 = @microscopy_result.examined_by
             .row
-              .col-12
+              .col-6
                 %label
                   = MicroscopyResult.human_attribute_name(:result_on)
+              .col-6
                 = I18n.l(@microscopy_result.result_on, format: :full_date)
-          .col-6
-            .row
-              .col-12
-                = render partial: 'shared/display_boolean_value', locals: { label_name: MicroscopyResult.human_attribute_name(:results_negative), field_name: 'microscopy_result_results_negative', field_value: @microscopy_result.results_negative }
-              .col-12
-                = render partial: 'shared/display_boolean_value', locals: { label_name: MicroscopyResult.human_attribute_name(:results_1to9), field_name: 'microscopy_result_results_1to9', field_value: @microscopy_result.results_1to9 }
-              .col-12
-                = render partial: 'shared/display_boolean_value', locals: { label_name: MicroscopyResult.human_attribute_name(:results_1plus), field_name: 'microscopy_result_results_1plus', field_value: @microscopy_result.results_1plus }
-              .col-12
-                = render partial: 'shared/display_boolean_value', locals: { label_name: MicroscopyResult.human_attribute_name(:results_2plus), field_name: 'microscopy_result_results_2plus', field_value: @microscopy_result.results_2plus }
-              .col-12
-                = render partial: 'shared/display_boolean_value', locals: { label_name: MicroscopyResult.human_attribute_name(:results_3plus), field_name: 'microscopy_result_results_3plus', field_value: @microscopy_result.results_3plus }

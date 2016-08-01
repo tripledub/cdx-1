@@ -15,6 +15,7 @@
         .topdateperiod
           .filter
             %label.block
+              OR 
               = I18n.t('dashboard.index.date_period')
             = cdx_select name: 'since', value: params['since'] do |select|
               - select.items Extras::Dates::Filters.date_options_for_filter, :value, :label

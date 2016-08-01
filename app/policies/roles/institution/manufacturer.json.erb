@@ -36,6 +36,21 @@
           "action": "deviceModel:read",
           "delegable": true
         },
+       {
+          "resource": "alert",
+          "action": "alert:read",
+          "delegable": true
+        },
+        {
+          "resource": "pageHeader?institution=<%= institution_id %>",
+          "action": "*",
+          "delegable": true
+        },
+        {
+          "resource": "settingsPage?institution=<%= institution_id %>",
+          "action": "settingsPage:displayRole",
+          "delegable": true
+        },
         {
           "resource": "role?institution=<%= institution_id %>",
           "action": "*",
@@ -67,6 +82,10 @@
         {
           "resource": "deviceModel",
           "action": "deviceModel:read"
+        },
+       {
+          "resource": "alert?institution=<%= institution_id %>",
+          "action": "alert:read"
         }
       ]
     }

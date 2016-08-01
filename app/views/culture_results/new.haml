@@ -1,3 +1,10 @@
+.row.center.add-new.collapse
+  .col.pe-10
+    %h2
+      = link_to encounter_path(@requested_test.encounter), :test_order_page_mode => @return_page_mode, class: 'side-link', title: 'Back' do
+        = image_tag "arrow-left-white.png"
+      Culture Test Results
+      
 #new-culture-result.testflow
   .container
     .row.labelHeader
@@ -5,7 +12,5 @@
         %h3
           = I18n.t('culture_results.new.header', patient_name: patient_display_name(@culture_result.patient.name))
       .col-6
-        %ul
-          %li
-            = link_to I18n.t('views.back'), encounter_path(@requested_test.encounter), :test_order_page_mode => @return_page_mode, class: 'button new'
-    = render 'form'
+    .box-content
+      = render 'form'

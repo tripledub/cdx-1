@@ -1,4 +1,4 @@
-- if episodes.empty?
+- if total_episodes == 0
   = empty_data icon: 'icon-outline-test xx-large' do |c|
     - c.body do
       %h1
@@ -17,32 +17,5 @@
       %ul
         %li
           = link_to I18n.t('patients.show.add_episode'), new_patient_episode_path(patient), class: 'button add'
-  .panel.patient-details.episodelisting.patient-summary
-    - episodes.each do |episode|
-      .row
-        .col-12
-          %ul
-            %li
-              %label
-                = Episode.human_attribute_name(:diagnosis)
-              = link_to diagnosis_name(episode.diagnosis), edit_patient_episode_path(patient, episode)
-            %li
-              %label
-                = Episode.human_attribute_name(:hiv_status)
-              = episode.hiv_status
-            %li
-              %label
-                = Episode.human_attribute_name(:initial_history)
-              = "#{history_options_name(episode.initial_history)} - #{previous_history_options_name(episode.previous_history)}"
-          %ul
-            %li
-              %label
-                = Episode.human_attribute_name(:drug_resistance)
-              = drug_resistance_name(episode.drug_resistance)
-            %li
-              %label
-                = Episode.human_attribute_name(:outcome)
-              = treatment_outcome_name(episode.outcome)
-          %ul
-            %li
-              = link_to I18n.t('patients.show.edit_episode'), edit_patient_episode_path(patient, episode), class: 'button edit'
+
+  = react_component 'PatientEpisodes', episodesUrl: patient_episodes_path(patient)

@@ -12,7 +12,7 @@
   justify-content:flex-start;
 }
 
-/*  SETTINGS STYLES START HEREEEEEEEE */
+/*  SETTINGS STYLES START HERE */
 .container .settings {justify-content:center;}
 .container .centered {text-align:center;}
 #contentcontainer .container .col.px-4 {
@@ -23,9 +23,6 @@
     flex: 0 0 24.667%;
   margin-bottom:15px;
 }
-.container .col:hover {opacity:0.8;cursor: pointer;}
-/* THATS IT */
-
 
 
 /*  COLUMN SETUP  */
@@ -47,6 +44,7 @@
 .container .box {background:white;margin:0px 10px 0px 10px;}
 .container .col {margin:18px 10px 18px 10px;}
 #contentcontainer .col {margin:0px;max-width:100%;}
+.flexStart {align-self:flex-start;}
 
 /* BOXES */
 
@@ -224,7 +222,6 @@ body {
 .container label {
   font-size: 12px;
   color:#333;
-  font-weight:bold;
 }
 
 .container input[type=text] {
@@ -257,7 +254,6 @@ body {
   border: none;
   border-bottom: 1px solid white;
   border-radius: 0;
-  -webkit-appearance: none;
   color: rgba(255,255,255,0.6);
    padding: 0 0 0.5em 0.9em;
 }
@@ -278,13 +274,14 @@ body {
   text-transform: uppercase;
   font-weight: 600;
   font-size: 0.75em;
-  padding: 10px;
+  padding: 10px 15px;
   border-bottom: 1px solid #2196f3;
 }
 
 #contentcontainer td {
   margin: 0;
   font-size:0.7rem;
+  cursor:pointer;
 }
 
 #contentcontainer tr:nth-child(even) {
@@ -443,7 +440,7 @@ margin:auto !important;
 }
 
 .Select{
-z-index:99999;
+/*z-index:99999;*/
 position:relative;
 
 }
@@ -465,11 +462,15 @@ padding:3px 80px 3px 5px;
 }
 
 #filters-form .Select {
-  border-bottom:none;
+  border:none;
 }
 
 #filters-form .Select-arrow {
   top:10px;
+}
+
+#filters-form .Select-control {
+  padding:8px 120px 8px 0px;
 }
 
 .section #filters-form fieldset {
@@ -490,6 +491,8 @@ min-width:100% !important;
 #contentcontainer .row .columns div.search {height:40px;background:#e06023;position:fixed;top:0px;width:100%;left:300px;top:60px;z-index:999;}
 #contentcontainer .dashboard main {margin-top:50px;}
 .dashboard {padding:10px;}
+.dashboard .xpertChart{margin:0px;padding:10px 30px;}
+.dashboard p.note {margin:0px;font-size:12px;}
 #contentcontainer .filterHeader {margin-bottom:80px;}
 #contentcontainer {overflow:hidden!important;}
 .wrapper > header, .wrapper #context_side_bar {background:#1b1b1b!important;}
@@ -531,6 +534,15 @@ margin-bottom: 20px;
 .search a.btn-add{width: 100px;height: 30px;line-height: 30px;margin-top: 5px;float: right;border-radius:0px;}
 
 /* New Device Form */
+.deviceDetails {
+  .box-content {
+    height:auto;
+  }
+  margin-top:1em;
+  .card {
+    margin:10px 15px;
+  }
+} 
 form#new_device {
   margin:0px;
   padding:0px;
@@ -554,6 +566,9 @@ form#new_device {
 
     label, div {
       color:#fff;
+      background:none;
+      padding:0px;
+      border:none;
     }
   }
 
@@ -561,11 +576,6 @@ form#new_device {
 
   .Select-placeholder {
     color:#434343!important;
-  }
-
-  div.row:nth-child(even) {
-    background:#dbdae2;
-    padding:0 15px;
   }
 
   input.btn-primary {
@@ -578,6 +588,52 @@ form#new_device {
 
 .formContainer {
   padding:15px;
+}
+a#newexternaluser {
+  background:#2196f3;
+  padding:0 24px;
+  height:30px;
+  line-height:30px;
+  color:#fff;
+}
+form#new_alert a.cancel {
+  background:#555;
+  padding:0 24px;
+  height:30px;
+  line-height:30px;
+  color:#fff;
+  margin-left:10px;
+}
+/* Align Form labels to top & align button actions within header */
+form#new_microscopy_result, form#new_site, form.edit_site, form#new_episode, form.edit_episode,  form.edit_device_model, form#new_device_model, form#new_alert, form#edit_episode_2, form#new_culture_result, form#new_dst_lpa_result, form#new_expert_result, form#new_miscroscopy_result {
+  .row.labelHeader {align-items:center;}
+
+  label {
+    margin-bottom:0px;
+  }
+
+  .button-actions {
+    position:absolute;
+    margin:0px;
+    top:5px;
+    right:10px;
+
+     a.btn-link {
+      background:#e06023;
+      padding:0 24px;
+      height:30px;
+      line-height:30px;
+      margin-left:10px;
+      color:#fff;
+    }
+
+    a.pull-right {
+      margin-left:10px;
+      background:#333;
+    }
+
+    input:hover, .btn-link:hover {opacity:0.8;cursor:pointer;}
+  }
 }
 
 /* Side Nav */
@@ -599,6 +655,9 @@ form#new_device {
 
 /* NEW PATIENT STYLES */
 /* New Patient Top Bar Styles */
+#contentsection .row.settings h2 {
+  padding:0 15px;
+}
 #contentsection .row.collapse.center.add-new, #contentsection .row.collapse.center.edit {
   padding:0px;
   margin:0px;
@@ -635,6 +694,10 @@ form#new_device {
 .testflow {
   padding:0px 20px 15px 15px;
 
+  .container {
+    position:relative;
+  }
+
   .row.labelHeader {
     height:40px!important;
 
@@ -645,7 +708,7 @@ form#new_device {
     li a.button.add {
       display:inline-block;
       padding:0.75em 2em;
-      min-width:135px;
+      min-width:140px;
       margin:0px;
       font-weight:bold;
       font-size:12px!important;
@@ -654,6 +717,7 @@ form#new_device {
       line-height:14px;
       background-color:#0d8aee;
       font-weight:bold;
+      text-align:center;
     }
   }
   .row.labelHeader.patientSummaryHeader {
@@ -667,10 +731,11 @@ form#new_device {
 
     li a.button.edit {
       right:10px;
-      min-width:135px;
+      min-width:140px;
       font-weight:bold;
       font-size:12px!important;
       margin-right:0px;
+      text-align:center;
     }
 
 
@@ -678,7 +743,7 @@ form#new_device {
       font-size:12px;
       font-weight:bold;
       color:#333;
-      min-width:120px;
+      min-width:140px;
     }
     .col-12 {position:relative;}
   }
@@ -869,12 +934,9 @@ form#new_device {
         border:none;
       }
 
-      .row:nth-child(odd) {
-        background:#dbdae2;
-      }
-
       .row {
         padding:5px 15px;
+        align-items:center;
         .row {
           padding:0px;
           background:none;
@@ -913,7 +975,8 @@ section.newPatientContainer, section.editPatientContainer, .optionsarea {
     height:auto;
   }
 }
-form#new_patient, form.edit_patient{
+
+form#new_patient, form.edit_patient, form#new_device, form#edit_device{
   background:#fff;
   border:1px solid #e2e2e2;
   font-size:0.7rem;
@@ -922,23 +985,38 @@ form#new_patient, form.edit_patient{
     color:#333;
   }
 
+  .col {
+    display:flex;
+    align-items:center;
+    flex-flow:row wrap;
+
+    select {
+      height:30px;
+      border:1px solid #e2e2e2;
+      width:200px;
+    }
+    select#patient_birth_date_on_3i, select#patient_birth_date_on_2i, select#patient_birth_date_on_1i {
+      width:auto;
+      margin-right:5px;
+    } 
+  }
+
   .row.header {
     border-bottom:1px solid #2196f3;
 
     label, .value {
       font-weight:600;
-      color:rgba(0, 0, 0, 0.4);
-      font-size:11px;
+      font-size:12px;
     }
   }
 
   .value {
-    line-height:40px;
+    line-height:30px;
+    width:200px;
   }
   
   input.input-large {
     border:1px solid #e2e2e2;
-    margin-top:5px;
     background:#fff;
   }
 
@@ -963,13 +1041,12 @@ form#new_patient, form.edit_patient{
       a.btn-secondary {
         background:#cc443f
       }
-      input.save {
-        margin-right:-3px;
+      span.btn-link.not-allowed {
+        margin-left:10px;
+        padding:0 24px;
+        height:30px;
+        line-height:30px;
       }
-  }
-
-  div.row:nth-child(even), div .row {
-    background:#dbdae2;
   }
 
   div.row {
@@ -977,12 +1054,11 @@ form#new_patient, form.edit_patient{
   }
 
   .Select.is-searchable {
-    margin-top:6px;
     width:200px;
-    border:none;
+    border:1px solid #e2e2e2;
 
     .Select-control {
-      padding:8px 120px 8px 0px;
+      padding:8px 120px 4px 0px;
 
       .Select-placeholder {
         padding:5px 52px 8px 5px;
@@ -1003,9 +1079,6 @@ form#new_patient, form.edit_patient{
   }
 }
 
-form.edit_patient div.row:nth-child(odd){
-  background:#dbdae2;
-}
 form.edit_patient div.row:nth-child(even), form.edit_patient div .row {
   background:#fff;
 }
@@ -1081,9 +1154,6 @@ form#filters-form.filteroptions {
     .advanced {
       padding:0px 15px;
     }
-    .advanced.patientsFilter .filter {
-      flex:1;
-    }
     input {
       margin-left:0px;
     }
@@ -1114,7 +1184,7 @@ form#filters-form.filteroptions {
       }
 
       input, .Select.is-searchable {height:20px;}
-      input {width:100%!important;background:#fff;}
+      input {width:100%!important;background:#fff;border:1px solid #e2e2e2;}
       input[type="text"] {border-bottom:none;}
 
     }
@@ -1184,13 +1254,30 @@ div.pagination {
 
 /* Tables
      ========================================================================== */
-
+#test-table td a.btn-primary {
+  color:#fff!important;
+}
+.testOrdersTable {
+  td {
+    padding:0px 15px;
+  }
+  th {
+    padding:0px 15px;
+  }
+  input[type="checkbox"] + label {
+    margin-bottom:0px;
+  }
+  .rc-handle {
+    height:100%!important;
+  }
+}
 .rc-handle-container {
   width:100%!important;
 }
 
-table.barby-barcode {
+#contentcontainer table.barby-barcode {
   width:300px!important;
+  margin:0px;
 }
 
 th.tableheader {
@@ -1236,6 +1323,7 @@ tbody {background:#fff;}
   a[class^="btn"], .has-value > .Select-control > .Select-placeholder, input[type="text"], span {
     color:#fff;
     opacity:1;
+    border:none;
   }
 
   .input-x-small {
@@ -1253,6 +1341,7 @@ tbody {background:#fff;}
   .text-right {
     padding:0px 3px 0px 0px;
     margin-left:2px;
+    width:15px;
   }
 
   .Select-control {
@@ -1544,8 +1633,9 @@ background:#fff;
 }
 
 .box-content{
-height:100%;
-   overflow-y: auto;
+  height:100%;
+  overflow-y: auto;
+  overflow-x:hidden;
 }
 
 .box-content .hidden{
@@ -1601,4 +1691,89 @@ font-size:12px;
 font-size:12px;
 }
 
-.rc-handle { border-left:1px solid #eee; }
+
+
+div#new-xpert-results section.row {
+  margin-top:10px;
+
+  .row {
+    align-items:center;
+  }
+
+  .button-actions {
+    position:absolute;
+    top:25px;
+    right:26px;
+
+    a.btn-link {
+      background:#e06023;
+      padding:0 24px;
+      height:30px;
+      line-height:30px;
+      margin-left:7px;
+      color:#fff;
+    }
+  }
+}
+
+
+#contentcontainer .deviceModels {
+  h2 {
+    padding-left:15px;
+  }
+  a {
+    position:absolute;
+    top:5px;
+    right:19px;
+    font-weight:bold!important;
+    padding:0 24px;
+  }
+}
+
+#contentcontainer .testflow .box.light {
+  height:auto;
+  padding:10px 15px;
+
+  .row {margin-bottom:10px;}
+}
+
+/* User invite modal styles */
+.modal-wrapper {
+  .Select {
+    height:30px;
+    border:1px solid #e2e2e2;
+    width:100%;
+    font-size:12px;
+  }
+  .row {
+    align-items:center;
+  }
+  .Select.is-searchable {
+    
+
+    .Select-control {
+      padding:4px 120px 4px 0px;
+
+      .Select-placeholder {
+        padding:4px 52px 8px 5px;
+        background:#fff;
+        height:30px;
+        font-size:12px;
+      }
+      span.Select-arrow {
+        top:8px;
+      }
+    }
+  }
+  .item-search {
+    width:200px;
+    font-size:12px;
+    max-width:none;
+  }
+  .close-modal {
+    top:42px;
+  }
+  .panel {
+    padding:0 15px;
+  }
+}

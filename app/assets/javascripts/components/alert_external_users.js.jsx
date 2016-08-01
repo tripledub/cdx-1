@@ -45,13 +45,13 @@ var AlertExternalUser = React.createClass({
 			return (
 				<div>
 					<div className = "row" id = "newuserrow" >
-					<div className = "col pe-3" >
+					<div className = "col pe-2" >
 						<label className="tooltip">Ad-hoc Recipient
 							<div className="tooltiptext_r">Ad-hoc Recipient Tooltip.</div> 
 						</label>
 					</div>
 
-					<div className = "col" >
+					<div className = "col " >
 						<AlertCreateExternalUser firstnameLink={this.linkState('first_name')}  lastnameLink={this.linkState('last_name')} emailLink={this.linkState('email')} telephoneLink={this.linkState('telephone')} onClick={this.clickHandler}  />
 					</div>
 				</div>
@@ -94,19 +94,19 @@ var AlertCreateExternalUser = React.createClass({
 					id="externaluser_firstname" />
 			</div>
 
-			<div className = "col pe-3"  >
+			<div className = "col pe-2"  >
 				<input type = "text" placeholder = {this.state.last_name_paceholder} 
 					valueLink = {this.props.lastnameLink}
 					id="externaluser_lastname" />
 			</div>
 
-			<div className = "col pe-4" >
+			<div className = "col pe-2" >
 				<input type = "text" placeholder = "email"
 					valueLink = {this.props.emailLink}
 					id="externaluser_email" />
 			</div>
 
-			<div className = "col pe-2" >
+			<div className = "col pe-2 " >
 				<input type = "text" placeholder = "telephone"
 					valueLink = {this.props.telephoneLink}
 					id="externaluser_telephone" />
@@ -154,16 +154,16 @@ var ExternalUser = React.createClass({
 	render: function() {
 		return (
 			<div className = "row" id = "namerow">
-			<div className = "col pe-3">
+			<div className = "col pe-2">
 				&nbsp;
 			</div>
 			<div className = "col" >
 				{this.props.first_name}
 			</div>
-			<div className = "col pe-2" >
+			<div className = "col " >
 				{this.props.last_name}
 			</div>
-			<div className = "col pe-4" >
+			<div className = "col " >
 				{this.props.email}
 			</div>
 			<div className = "col" >

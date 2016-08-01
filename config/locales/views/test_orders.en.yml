@@ -11,7 +11,6 @@ en:
     filters:
       show_all: 'Show all'
       show_filters: 'Show filters'
-      condition: 'Condition'
-      result: 'Result'
+      testing_for: 'Testing for'
       date: 'Date'
       test_order_id: 'Test order id'

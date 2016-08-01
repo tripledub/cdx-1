@@ -21,6 +21,11 @@
               .col-12
                 %label
                   = DstLpaResult.human_attribute_name(:media_used)
+                = Extras::Select.find(DstLpaResult.media_options, @dst_lpa_result.method_used)
+            .row
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:method_used)
                 = Extras::Select.find(DstLpaResult.method_options, @dst_lpa_result.media_used)
             .row
               .col-12

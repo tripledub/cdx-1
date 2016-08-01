@@ -1,7 +1,7 @@
 en:
   microscopy_results:
     new:
-      header: 'Add Microscopy test tesult for: %{patient_name}'
+      header: 'Add Microscopy test result for: %{patient_name}'
     create:
       audit: 'Microscopy result added'
       notice: 'Microscopy result was successfully created.'

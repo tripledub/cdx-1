@@ -27,14 +27,12 @@ class EncountersController < ApplicationController
 
   def sites
     sites = check_access(@navigation_context.institution.sites, CREATE_SITE_ENCOUNTER)
-    render json: as_json_site_list(sites).attributes!
+    render json: as_json_site_list(sites.sort_by(&:name)).attributes!
   end
 
   def show
     return unless authorize_resource(@encounter, READ_ENCOUNTER)
     determine_referal
-    @can_update = has_access?(@encounter, UPDATE_ENCOUNTER)
-    @associated_tests_to_results = PatientResult.find_associated_tests_to_results(@encounter)
   end
 
   def edit
@@ -173,6 +171,7 @@ class EncountersController < ApplicationController
   def create_requested_tests
     encounter_param = @encounter_param = JSON.parse(params[:encounter])
     tests_requested = encounter_param['tests_requested']
+
     if tests_requested.present?
       tests_requested.split('|').each do |name|
         @encounter.requested_tests.build(name: name, status: RequestedTest.statuses["pending"])
@@ -185,10 +184,10 @@ class EncountersController < ApplicationController
     begin
       yield
     rescue Blender::MergeNonPhantomError => e
-      render json: { status: :error, message: "Cannot add a test or sample that belongs to a different #{e.entity_type.model_name.singular}", encounter: as_json_edit.attributes! }
+      render json: { status: :error, message: "Cannot add a test or sample that belongs to a different #{e.entity_type.model_name.singular}", encounter: as_json_edit.attributes! }, status: :unprocessable_entity
     rescue => e
       Rails.logger.error(e.backtrace.unshift(e.message).join("\n"))
-      render json: { status: :error, message: "Error #{action} #{e.class}", encounter: as_json_edit.attributes! }
+      render json: { status: :error, message: "Error #{action} #{e.class}", encounter: as_json_edit.attributes! }, status: :unprocessable_entity
     else
       render json: { status: :ok, encounter: as_json_edit.attributes! }.merge(@extended_respone)
     end
@@ -236,11 +235,12 @@ class EncountersController < ApplicationController
       @encounter.tests_requested   = encounter_param['tests_requested']
       @encounter.coll_sample_type  = encounter_param['coll_sample_type']
       @encounter.coll_sample_other = encounter_param['coll_sample_other']
-      @encounter.culture_format    = encounter_param['culture_format']
+      @encounter.culture_format    = encounter_param['culture_format'] if encounter_param['culture_format'].present?
       @encounter.diag_comment      = encounter_param['diag_comment']
       @encounter.treatment_weeks   = encounter_param['treatment_weeks']
       @encounter.testdue_date      = encounter_param['testdue_date']
       @encounter.testing_for       = encounter_param['testing_for']
+      @encounter.presumptive_rr    = encounter_param['presumptive_rr']
     else
       @institution                 = @encounter.institution
     end

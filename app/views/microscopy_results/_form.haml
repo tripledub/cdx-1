@@ -1,66 +1,58 @@
 = form_for([@requested_test, @microscopy_result], url: requested_test_microscopy_result_path(@requested_test, @microscopy_result), html: { autocomplete: 'off' }) do |f|
   = validation_errors @microscopy_result
-  .row
-    %table
-      %thead
-        %tr
-          %th
-            = f.label :sample_collected_on
-          %th
-            = f.label :specimen_type
-          %th
-            = f.label :serial_number
-          %th
-            = f.label :appearance
-          %th
-            = f.label :results_negative
-          %th
-            = f.label :results_1to9
-          %th
-            = f.label :results_1plus
-          %th
-            = f.label :results_2plus
-          %th
-            = f.label :results_3plus
-      %tbody
-        %tr
-          %td
-            = f.date_field :sample_collected_on
-          %td
-            = f.text_field :specimen_type
-          %td
-            = f.text_field :serial_number
-          %td
-            = f.collection_select :appearance, MicroscopyResult.visual_appearance_options, :first, :last
-          %td
-            = f.check_box :results_negative
-            %label{for: 'microscopy_result_results_negative'} &nbsp;
-          %td
-            = f.check_box :results_1to9
-            %label{for: 'microscopy_result_results_1to9'} &nbsp;
-          %td
-            = f.check_box :results_1plus
-            %label{for: 'microscopy_result_results_1plus'} &nbsp;
-          %td
-            = f.check_box :results_2plus
-            %label{for: 'microscopy_result_results_2plus'} &nbsp;
-          %td
-            = f.check_box :results_3plus
-            %label{for: 'microscopy_result_results_3plus'} &nbsp;
+  .box-content
+    .row
+      .col.pe-2
+        = f.label :sample_collected_on
+      .col
+        = f.date_field :sample_collected_on
+    .row
+      .col.pe-2
+        = f.label :specimen_type
+      .col
+        = f.text_field :specimen_type
+    .row
+      .col.pe-2
+        = f.label :serial_number
+      .col
+        = f.text_field :serial_number
+    .row
+      .col.pe-2
+        = f.label :appearance
+      .col
+        = f.collection_select :appearance, MicroscopyResult.visual_appearance_options, :first, :last
+    .row
+      .col.pe-2
+        = f.label :test_result
+      .col
+        = f.radio_button :test_result, 'negative'
+        %label{for: 'microscopy_result_test_result_negative'}
+          = I18n.t('select.microscopy.test_result_options.negative')
+        = f.radio_button :test_result, '1to9'
+        %label{for: 'microscopy_result_test_result_1to9'}
+          = I18n.t('select.microscopy.test_result_options.1to9')
+        = f.radio_button :test_result, '1plus'
+        %label{for: 'microscopy_result_test_result_1plus'}
+          = I18n.t('select.microscopy.test_result_options.1plus')
+        = f.radio_button :test_result, '2plus'
+        %label{for: 'microscopy_result_test_result_2plus'}
+          = I18n.t('select.microscopy.test_result_options.2plus')
+        = f.radio_button :test_result, '3plus'
+        %label{for: 'microscopy_result_test_result_3plus'}
+          = I18n.t('select.microscopy.test_result_options.3plus')
+    .row
+      .col.pe-2
+        = f.label :examined_by
+      .col
+        = f.text_field :examined_by
 
-  .row
-    .col.pe-2
-      = f.label :examined_by
-    .col
-      = f.text_field :examined_by
+    .row
+      .col.pe-2
+        = f.label :result_on
+      .col
+        = f.date_field :result_on
 
-  .row
-    .col.pe-2
-      = f.label :result_on
-    .col
-      = f.date_field :result_on
-
-  .row.button-actions
-    .col
-      = f.submit I18n.t('views.save'), class: 'btn-primary'
-      = link_to I18n.t('views.cancel'), encounter_path(@requested_test.encounter), class: 'btn-link'
+    .row.button-actions
+      .col
+        = f.submit I18n.t('views.save'), class: 'btn-primary'
+        = link_to I18n.t('views.cancel'), encounter_path(@requested_test.encounter), class: 'btn-link'

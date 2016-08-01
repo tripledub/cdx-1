@@ -1,10 +1,12 @@
 require 'spec_helper'
 
 describe DstLpaResult do
-  let(:dst_lpa_options) { ['resistant', 'susceptible', 'contaminated', 'not_done'] }
-  let(:method_options)  { ['solid', 'liquid', 'direct', 'indirect'] }
-  context "validations" do
+  let(:dst_lpa_options) { %w(resistant susceptible contaminated not_done) }
+  let(:media_options) { %w(solid liquid) }
+  let(:method_options) { %w(direct indirect) }
+  describe 'validations' do
     it { should belong_to(:requested_test) }
+    it { should validate_presence_of(:requested_test_id) }
     it { should validate_presence_of(:sample_collected_on) }
     it { should validate_presence_of(:examined_by) }
     it { should validate_presence_of(:result_on) }
@@ -26,6 +28,7 @@ describe DstLpaResult do
     it { should validate_inclusion_of(:results_km).in_array(dst_lpa_options) }
     it { should validate_inclusion_of(:results_cm).in_array(dst_lpa_options) }
     it { should validate_inclusion_of(:results_fq).in_array(dst_lpa_options) }
-    it { should validate_inclusion_of(:media_used).in_array(method_options) }
+    it { should validate_inclusion_of(:media_used).in_array(media_options) }
+    it { should validate_inclusion_of(:method_used).in_array(method_options) }
   end
 end

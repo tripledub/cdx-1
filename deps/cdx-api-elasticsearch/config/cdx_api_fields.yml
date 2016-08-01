@@ -86,3 +86,5 @@ encounter:
     filter_parameter_definition:
       - type: match
     group_parameter_definition: none
+  - name: encounter.testing_for
+    group_parameter_definition: none

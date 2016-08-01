@@ -58,7 +58,8 @@ z-index:1000000;
 /*----------- Tooltips -------------*/
 .tooltip 
 {
-  outline:none; 
+  outline:none;
+  flex:1 0 100%; 
 }
 
 .tooltip strong 
@@ -79,9 +80,9 @@ z-index:1000000;
   box-shadow: 5px 5px 8px #CCC;
   opacity: 0.9;
 
-  z-index:10;
+  z-index:999;
   display:none; 
-  padding:14px 20px;
+  padding:10px 15px;
 
   width:300px; 
   line-height:16px;
@@ -91,13 +92,11 @@ z-index:1000000;
 /* Tooltip positioning */
 .tooltip .tooltiptext_b 
 {
-  margin-top:20px; 
   margin-left:-160px;
 }
 
 .tooltip .tooltiptext_r 
 {
-  margin-top:-20px; 
   margin-left:28px;
 }
 
@@ -303,7 +302,7 @@ color:#fff !important;
   flex-flow:row wrap;
   justify-content:flex-start;
 }
-/*  SETTINGS STYLES START HEREEEEEEEE */
+/*  SETTINGS STYLES START HERE */
 .testflow .settings {justify-content:center;}
 .testflow .centered {text-align:center;}
 .testflow .col.px-4 {
@@ -313,8 +312,6 @@ color:#fff !important;
     -ms-flex: 0 0 300px;
     flex: 0 0 24.667%;
 }
-.testflow .col:hover {opacity:0.8;cursor: pointer;}
-/* THATS IT */
 
 /*  COLUMN SETUP  */
 
@@ -333,7 +330,7 @@ color:#fff !important;
 .testflow .col-1 {max-width: 6.866%;flex:1 0 auto;}
 
 .testflow .row.labelHeader .col-6 {max-width:50%;}
-.testflow .panel.patient-summary {height:180px;overflow-y:scroll;}
+.testflow .panel.patient-summary {height:140px;overflow-y:scroll;}
 .testflow .panel.patient-details .row {border-bottom:1px solid #e2e2e2;}
 .testflow .panel.patientHistory .col-12 {display:block;max-width:100%;}
 
@@ -480,7 +477,8 @@ color:#fff !important;
     border-bottom: 1px solid #e2e2e2;
     color: rgb(0, 0, 0);
     padding:0.25rem;
-    min-width:200px;
+    width:200px;
+    font-size:12px;
 }
 
 .testflow input[type=submit] {
@@ -525,7 +523,6 @@ color:#fff !important;
 }
 
 .testflow td {
-  padding: 0.8em 0.5em;
   margin: 0;
 }
 
@@ -544,7 +541,9 @@ color:#fff !important;
   align-items:center;
   justify-content:center;
 }
-
+.testflow .episodeSummary {
+  margin:0px auto;
+}
 .testflow .row.errorMsg {
   margin:0 auto;
 }
@@ -560,6 +559,11 @@ color:#fff !important;
     margin-bottom:0px;
     max-width:90rem;
 }
+
+.testflow p.text-small.muted {
+    margin:0px;
+    padding:10px 0px;
+  }
 
 .testflow .row.labelHeader h3 {margin:0;}
 
@@ -585,25 +589,72 @@ color:#fff !important;
 .testflow .panel hr {border:none;}
 .testflow .panel .row {
   margin:0px auto;
-  padding:10px 15px;
+  padding:0px;
   max-width:none;
 }
 .testflow .button:hover {opacity:0.8;}
 
-.testflow form.zebra .panel .row:nth-child(even) {
+.testflow form.zebra .panel .row:nth-child(even), .testflow form#new_episode .zebra {
   background:#dbdae2;
 }
 
-.testflow form.zebra .panel .row:nth-child(even) > div {
-  padding:1rem 0rem;
+.testflow form#new_episode {
+  div.row.button-actions {
+
+      input.btn-primary, a.btn-link, a.btn-secondary{
+        margin:0px 0px 0px 10px;padding:0.5em 2em;line-height:15px;height:30px;color:#fff;
+      }
+      input.btn-primary:hover, a.btn-link:hover {opacity:0.8;}
+      input.btn-primary {
+        background:#9DCE65;
+      }
+
+      a.btn-link{
+        background:#e06023;
+      }
+      a.btn-secondary {
+        background:#cc443f
+      }
+  }
 }
+
+form#new_comment {
+  .row {
+    align-items:center;
+
+    .col.pe-2 {
+      align-self:flex-start;
+    }
+  }
+  div.row.button-actions {
+    position:absolute;
+    top:-10px;
+    right:35px;
+    background:none!important;
+    padding:0px;
+
+      input.btn-primary, a.btn-link, a.btn-secondary{
+        margin:0px 0px 0px 10px;padding:0.5em 2em;line-height:15px;height:30px;color:#fff;
+      }
+      input.btn-primary:hover, a.btn-link:hover {opacity:0.8;}
+
+      a.btn-link{
+        background:#e06023;
+      }
+      a.btn-secondary {
+        background:#cc443f
+      }
+  }
+}
+
 .testflow .panel .row:last-child {
   margin-bottom:0px;
 }
 .testflow form select {
   padding:0.25rem;
   border:1px solid #ccc;
-  min-width:200px;
+  width:200px;
+  color:#434343;
 }
 
 .testflow div a.button,
@@ -672,6 +723,7 @@ padding:15px;
 
 .testflow .patient-details .col-12 {
   display:flex;
+  flex:1 0 100%;
 }
 
 .testflow .patient-details ul {
@@ -716,7 +768,28 @@ padding:15px;
 }
 
 /* Style the tabs area */
-.testflow ul.tab {
+.tabs {
+  padding:0 15px;
+
+  .columns {
+    padding:0px;
+  }
+
+  ul.tabs-header {
+    background-color:#f1f1f1;
+    border:1px solid #e2e2e2;
+
+    li a {
+      padding:10px;
+    }
+
+    li a.selected {
+      border-bottom:none;
+      background:#e2e2e2;
+    }
+  }
+}
+.testflow ul.tabs {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -727,24 +800,24 @@ padding:15px;
 }
 
 /* Float the list items side by side */
-.testflow ul.tab li {float: left;margin:0px;}
+.testflow ul.tabs li {float: left;margin:0px;}
 
 /* Style the links inside the list items */
-.testflow ul.tab li a {
+.testflow ul.tabs li a {
     display: inline-block;
     color: black;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
     transition: 0.3s;
-    font-size: 17px;
+    font-size: 12px;
 }
 
 /* Change background color of links on hover */
-.testflow ul.tab li a:hover {background-color: #ddd;}
+.testflow ul.tabs li a:hover {background-color: #ddd;}
 
 /* Create an active/current tablink class */
-.testflow ul.tab li a:focus, .testflow .active {background-color: #ccc;}
+.testflow ul.tabs li a:focus, .testflow .active {background-color: #dbdae2;}
 
 /* Style the tab content */
 .testflow .tabcontent {
@@ -753,29 +826,37 @@ padding:15px;
 }
 
 /* Test Order Styles */ 
+ul.samples li {
+  display:inline-block;
+  margin-right:5px;
+}
+ul.samples button.btn-primary {
+  margin-left:10px;
+}
 .testflow .right {float:right;}
 .testflow .left {float:left;}
 
 .testflow .newTestOrder .panel > div.row {justify-content:flex-start;}
 .testflow .newTestOrder .panel .row {
-    align-items: center;
     justify-content: flex-start;
     padding: 0 15px;
 
     .row {
       padding:0px;
     }
-    .buttonActions {
-      justify-content:flex-start;
-    }
-
     .patientCard {
       align-self:flex-start;
+      margin-top:15px;
     }
 
     p {
       font-size:12px;
+      line-height:12px;
+      text-transform:capitalize;
     }
+}
+.buttonActions {
+  justify-content:flex-start;
 }
 .zebra select, .zebra select option{
   color:#000;
@@ -788,4 +869,33 @@ padding:15px;
 
 .field_with_errors select, .field_with_errors input{
   border:2px solid red !important;
+}
+
+.testflow .row.items-editor {
+  align-items:flex-start;
+
+  .items-editor ul li.selected .resource-type {
+    margin-right:0px;
+  }
+  .resource-type {
+    margin-right:0px;
+  }
+  &.selected {
+        .resource-type {
+          margin-right: 0px;
+        }
+      }
+}
+
+.testflow .items-editor .items-content.selected .row {
+  align-items: flex-start;
+  border-bottom: 1px solid #2196f3;
+}
+.testflow .items-editor .items-content.selected .row:last-child {
+  border-bottom:none;
+}
+.testflow {
+  input[type="text"]:disabled {
+    background:#ddd;
+  }
 }

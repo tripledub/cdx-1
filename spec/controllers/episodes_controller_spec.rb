@@ -23,6 +23,33 @@ RSpec.describe EpisodesController, type: :controller do
     sign_in user
   end
 
+  describe '#index' do
+    before :each do
+      2.times { Episode.make patient: patient }
+      5.times { Episode.make patient: patient, closed: true }
+    end
+
+    context 'open episodes' do
+      before :each do
+        get :index, patient_id: patient.id, status: '0'
+      end
+
+      it 'should return a json with all open episodes' do
+        expect(JSON.parse(response.body).size).to eq(2)
+      end
+    end
+
+    context 'closed episodes' do
+      before :each do
+        get :index, patient_id: patient.id, status: '1'
+      end
+
+      it 'should return a json with all open episodes' do
+        expect(JSON.parse(response.body).size).to eq(5)
+      end
+    end
+  end
+
   describe '#new' do
     before do
       get :new, patient_id: patient.id

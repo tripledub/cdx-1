@@ -150,6 +150,12 @@ var SitePicker = React.createClass({
       subsites_selected: { $set: !oldValue },
     }));
     this.props.onSubsitesToggled(!oldValue);
+
+    if (oldValue == false) {
+      localStorage.setItem('sidebar_subsites_included','true');
+    } else {
+      localStorage.setItem('sidebar_subsites_included','false');
+    }
   },
 
   render: function() {

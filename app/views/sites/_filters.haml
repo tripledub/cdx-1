@@ -1,14 +1,15 @@
 - content_for(:subheader) do
-  .row.center.filters
-    .col.pe-10
-      .row
-        .col
-          %h1
-            - if @can_create
-              = link_to "+", new_site_path, class: 'btn-add side-link fix', title: 'Add Site'
-            Sites
-      %form#filters-form{action: sites_path, "data-auto-submit" => true}
-        %input{type: "hidden", name: "page_size", value: @page_size}
+  .filterbar.filterbartest
+    .heading
+      .title
+        Sites
+      .topfilteropt
+        - if @can_create
+          = link_to "Add Site", new_site_path, class: 'btn-add side-link fix', title: 'Add Site'
+  %form#filters-form.filteroptions{action: sites_path, "data-auto-submit" => true}
+    %input{type: "hidden", name: "page_size", value: @page_size}
+    .row.custom_filters
+      .advanced
         .row
           .filter
             %label.block Name

@@ -2,28 +2,26 @@ require 'spec_helper'
 require 'policy_spec_helper'
 
 describe TestResultsController, elasticsearch: true do
-  let!(:user)        {User.make}
-  let!(:institution) { user.create Institution.make_unsaved }
-
-  let(:root_location) { Location.make }
-  let(:location) { Location.make parent: root_location }
-  let(:site)     { Site.make institution: institution, location: location }
-  let(:subsite)  { Site.make institution: institution, location: location, parent: site }
-  let(:device)   { Device.make institution_id: institution.id, site: site }
-
-  let(:site2)    { Site.make institution: institution, location: location }
-  let(:device2)  { Device.make institution_id: institution.id, site: site2 }
-
-  before(:each) {sign_in user}
-  let(:default_params) { {context: institution.uuid} }
-
+  let!(:user)             { User.make }
+  let!(:institution)      { user.create Institution.make_unsaved }
+  let(:root_location)     { Location.make }
+  let(:location)          { Location.make parent: root_location }
+  let(:site)              { Site.make institution: institution, location: location }
+  let(:subsite)           { Site.make institution: institution, location: location, parent: site }
+  let(:device)            { Device.make institution_id: institution.id, site: site }
+  let(:site2)             { Site.make institution: institution, location: location }
+  let(:device2)           { Device.make institution_id: institution.id, site: site2 }
   let(:other_user)        { User.make }
   let(:other_institution) { Institution.make user_id: other_user.id }
-  let(:other_site)  { Site.make institution: other_institution }
+  let(:other_site)        { Site.make institution: other_institution }
   let(:other_device)      { Device.make institution_id: other_institution.id, site: other_site }
+  let(:default_params)    { {context: institution.uuid} }
+
+  before(:each)           { sign_in user }
 
   it "should display an empty page when there are no test results" do
     response = get :index
+
     expect(response.status).to eq(200)
   end
 
@@ -31,50 +29,47 @@ describe TestResultsController, elasticsearch: true do
     test_result = TestResult.create_and_index(
       core_fields: {"assays" =>["condition" => "mtb", "result" => :positive]},
       device_messages: [ DeviceMessage.make(device: device) ])
-
     get :index
+
     expect(response).to be_success
-    expect(assigns(:tests).map{|t| t['test']['uuid']}).to contain_exactly(test_result.uuid)
+    expect(assigns(:total)).to eq(1)
   end
 
   context "scoping" do
     it "should show all tests for institution" do
       user.update_attribute(:last_navigation_context, institution.uuid)
-
       test_result = TestResult.create_and_index(
       core_fields: {"assays" =>["condition" => "mtb", "result" => :positive]},
       device_messages: [ DeviceMessage.make(device: device) ])
-
       get :index, context: site.uuid
-      expect(assigns(:tests).map{|t| t['test']['uuid']}).to contain_exactly(test_result.uuid)
+
+      expect(assigns(:total)).to eq(1)
     end
 
     it "with exclusion should show no tests (devices with no site can't have tests)" do
       test_result = TestResult.create_and_index device: device
-
       get :index, context: institution.uuid+"-!"
-      expect(assigns(:tests)).to be_empty
+
+      expect(assigns(:total)).to eq(0)
     end
 
     it "should show all tests for site" do
       user.update_attribute(:last_navigation_context, site.uuid)
       device2 = Device.make institution_id: institution.id, site: subsite
-
       test_result = TestResult.create_and_index device: device
       test_result_subsite = TestResult.create_and_index device: device2
-
       get :index, context: site.uuid+"-*"
-      expect(assigns(:tests).map{|t| t['test']['uuid']}).to eq([test_result.uuid, test_result_subsite.uuid])
+
+      expect(assigns(:total)).to eq(2)
     end
 
     it "with exclusion should show only tests for site, not subsites" do
       device2 = Device.make institution_id: institution.id, site: subsite
-
       test_result = TestResult.create_and_index device: device
       test_result_subsite = TestResult.create_and_index device: device2
-
       get :index, context: site.uuid+"-!"
-      expect(assigns(:tests).map{|t| t['test']['uuid']}).to contain_exactly(test_result.uuid)
+
+      expect(assigns(:total)).to eq(1)
     end
   end
 
@@ -89,6 +84,7 @@ describe TestResultsController, elasticsearch: true do
 
     it "should load for filters" do
       get :index
+
       expect(response).to be_success
       expect(assigns(:sites).to_a).to contain_exactly(site, site2, subsite)
       expect(assigns(:devices).to_a).to contain_exactly(device, device2)
@@ -96,6 +92,7 @@ describe TestResultsController, elasticsearch: true do
 
     it "should load for filters scoped by context" do
       get :index, context: site.uuid
+
       expect(response).to be_success
       expect(assigns(:sites).to_a).to contain_exactly(site, subsite)
       expect(assigns(:devices).to_a).to contain_exactly(device)
@@ -184,7 +181,7 @@ describe TestResultsController, elasticsearch: true do
         fields = { "Test uuid" => test.uuid, "Test name" => "test1", "Device uuid" => device.uuid,
           "Institution name" => institution.name, "Site name" => site.name, "Sample type" => "blood",
           "Encounter uuid" => encounter.uuid, "Patient gender" => "male" }
-    
+
         fields.each do |name, value|
           expect(csv[0]).to contain_field(name, value)
         end

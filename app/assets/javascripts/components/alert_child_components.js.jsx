@@ -42,7 +42,7 @@ var AlertEnabled = React.createClass({
   render: function() {
     return (
       <div className = "row">
-      <div className = "col pe-3">
+      <div className = "col pe-2">
         <label className="tooltip">Enabled
           <div className="tooltiptext_r">Is this Alert Enabled?</div>
         </label>
@@ -67,7 +67,7 @@ var AlertName = React.createClass({
   render: function() {
     return (
       <div className = "row" id = "namerow" >
-      <div className = "col pe-3" >
+      <div className = "col pe-2" >
         <label className="tooltip">Name
           <div className="tooltiptext_r">Descriptive Name for this Alert</div>
         </label>
@@ -88,12 +88,12 @@ var AlertDescription = React.createClass({
   render: function() {
     return (
       <div className = "row" >
-      <div className = "col pe-3" >
+      <div className = "col pe-2" >
         <label className="tooltip">Description
           <div className="tooltiptext_r">Short description of the purpose of this Alert</div>
         </label>
       </div>
-      <div className = "col pe-4" >
+      <div className = "col" >
         <input type = "text" size="34" placeholder = "Description" valueLink = {
             this.props.valueLink
           }
@@ -109,7 +109,7 @@ var AlertErrorCode = React.createClass({
   render: function() {
     return (
       <div className = "row" id="errorCodeRow">
-      <div className = "col pe-3">
+      <div className = "col pe-2">
         <label className="tooltip">Errors
           <div className="tooltiptext_r">Range of Error Codes</div>
         </label>
@@ -161,7 +161,7 @@ var AlertSite = React.createClass({
     } = this.props;
     return (
       < div className = "row">
-      <div className = "col pe-3">
+      <div className = "col pe-2">
         <label className="tooltip">Sites
           <div className="tooltiptext_r">Sites using this Alert.</div>
         </label>
@@ -226,7 +226,7 @@ var AlertDevice = React.createClass({
     } = this.props;
     return (
       <div className = "row" >
-        <div className = "col pe-3" >
+        <div className = "col pe-2" >
           <label className="tooltip">Devices
           <div className="tooltiptext_r">Which Device provides this Alert.</div>
         </label>
@@ -287,7 +287,7 @@ var AlertAnomalieType = React.createClass({
     } = this.props;
     return (
       < div className = "row" id = "anomalieRow">
-      <div className = "col pe-3" >
+      <div className = "col pe-2" >
         <label className="tooltip">Anomalie Type
           <div className="tooltiptext_r">Anomalie Type Tooltip</div>
         </label>
@@ -348,12 +348,12 @@ var AlertChannel = React.createClass({
     } = this.props;
     return (
       < div className = "row" id = "channelrow" >
-      <div className = "col pe-3" >
+      <div className = "col pe-2" >
         <label className="tooltip">Channel
           <div className="tooltiptext_r">How the Alert is delivered</div>
         </label>
       </div>
-      <div className = "col pe-2" >
+      <div className = "col" >
         <Select
           name = "channel"
           value = {
@@ -414,7 +414,7 @@ var AlertRole = React.createClass({
     } = this.props;
     return (
       < div className = "row" >
-      <div className = "col pe-3" >
+      <div className = "col pe-2" >
         <label className="tooltip">Roles
           <div className="tooltiptext_r">Roles this Alert applies to</div>
         </label>
@@ -479,7 +479,7 @@ var AlertUser = React.createClass({
     } = this.props;
     return (
       <div className = "row">
-        <div className = "col pe-3">
+        <div className = "col pe-2">
           <label className="tooltip">Internal Recipient
             <div className="tooltiptext_r">Internal Recipient Tooltip</div>
           </label>
@@ -540,7 +540,7 @@ var AlertSampleId = React.createClass({
   render: function() {
     return (
       < div className = "row" id = "sampleidrow" >
-      <div className = "col pe-3" >
+      <div className = "col pe-2" >
         <label className="tooltip">Sample Id
           <div className="tooltiptext_r">ID of the Sample that produced this Alert</div>
         </label>
@@ -563,7 +563,7 @@ var AlertSmsLimit = React.createClass({
   render: function() {
     return (
       < div className = "row" id = "smslimitrow" >
-      <div className = "col pe-3" >
+      <div className = "col pe-2" >
         <label className="tooltip">Daily SMS Limit
           <div className="tooltiptext_r">Maximum number of SMS messages per day this alert can send</div>
         </label>
@@ -585,7 +585,7 @@ var AlertEmailLimit = React.createClass({
   render: function() {
     return (
       < div className = "row" id = "emaillimitrow" >
-      <div className = "col pe-3" >
+      <div className = "col pe-2" >
         <label className="tooltip">Daily Email Limit
           <div className="tooltiptext_r">Maximum number of Email messages per day this alert can send</div>
         </label>
@@ -607,14 +607,14 @@ var AlertEmailMessage = React.createClass({
   render: function() {
     return (
       <div className = "row" id = "messagerow">
-        <div className = "col pe-3">
+        <div className = "col pe-2">
           <label className="tooltip">Email Message
             <div className="tooltiptext_r">Email Content used when sending Alert</div>
           </label>
         </div>
 
-        <div className = "col pe-4" >
-          <textarea rows="6" cols="35" placeholder = "Email message" valueLink = {
+        <div className = "col" >
+          <textarea rows="4" cols="35" placeholder = "Email message" valueLink = {
               this.props.valueLink
             }
             id = "alertmessage" pattern=".{5,1024}" disabled={this.props.edit} />
@@ -629,13 +629,13 @@ var AlertSmsMessage = React.createClass({
   render: function() {
     return (
       <div className = "row" id = "smsmessagerow" >
-        <div className = "col pe-3" >
+        <div className = "col pe-2" >
           <label className="tooltip">SMS Message
             <div className="tooltiptext_r">SMS Content used when sending Alert</div>
           </label>
         </div>
 
-        <div className = "col pe-2" >
+        <div className = "col" >
           <textarea rows="4" cols="35" placeholder = "SMS message" valueLink = {
               this.props.valueLink
             }

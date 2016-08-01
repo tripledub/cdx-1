@@ -7,3 +7,4 @@ en:
         initial_history: 'History'
         drug_resistance: 'Drug resistance'
         outcome: 'Outcome'
+        anatomical_site_diagnosis: 'Diagnosis classify by Anatomical site'

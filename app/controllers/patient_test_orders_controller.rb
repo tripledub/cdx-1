@@ -4,7 +4,10 @@ class PatientTestOrdersController < ApplicationController
   before_filter :find_patient
 
   def index
-    render json: Presenters::PatientTestOrders.patient_view(@patient.encounters.joins(:site).order(set_order_from_params).limit(30).offset(params[:page] || 0))
+    render json: Presenters::PatientTestOrders.patient_view(@patient.encounters
+      .includes(:institution, :patient, :site, :user)
+      .joins('LEFT OUTER JOIN sites as performing_sites ON performing_sites.id=encounters.performing_site_id')
+      .order(set_order_from_params).limit(30).offset(params[:page].to_i || 0))
   end
 
   protected
@@ -26,6 +29,8 @@ class PatientTestOrdersController < ApplicationController
       "encounters.testdue_date #{order}"
     when 'status'
       "encounters.status #{order}"
+    when 'performingSite'
+      "performing_sites.name #{order}"
     else
       "encounters.start_time #{order}"
     end

@@ -25,10 +25,6 @@
       -ms-flex: 0 0 300px;
       flex: 0 0 24.667%;
     }
-    &:hover {
-      opacity: 0.8;
-      cursor: pointer;
-    }
   }
   .col-12 {
     flex: 1 0 auto;
@@ -112,6 +108,11 @@
   }
 }
 
+.cformatIndented
+{
+  margin-left: 40px;
+}
+
 body {
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
@@ -190,7 +191,7 @@ body {
       border-bottom: 1px solid #e2e2e2;
       color: rgb(0, 0, 0);
       padding: 0.25rem;
-      min-width: 200px;
+      width: 200px;
     }
     &[type=submit] {
       background-color: #555;
@@ -215,7 +216,6 @@ body {
     border-bottom: 1px solid #05a8aa;
   }
   td {
-    padding: 0.8em 0.5em;
     margin: 0;
   }
   tr:nth-child(even) {
@@ -278,11 +278,8 @@ body {
   .button:hover {
     opacity: 0.8;
   }
-  form.zebra .panel .row:nth-child(even) {
-    background: #dbdae2;
-    > div {
-      padding: 1rem 0.5rem;
-    }
+  form.zebra .panel .row > div{
+      padding: 0.5rem 0rem;
   }
   .panel .row:last-child {
     margin-bottom: 0px;
@@ -381,7 +378,7 @@ body {
   .patient-details.panel .row:nth-child(even) {
     background: #fff;
   }
-  ul.tab {
+  ul.tabs {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -409,7 +406,7 @@ body {
       }
     }
   }
-  .tab table a { color:#000; }
+  .tabs table a { color:#000; }
   .active {
     background-color: #ccc;
   }
@@ -428,7 +425,6 @@ body {
       justify-content: flex-start;
     }
     .row {
-      align-items: flex-start;
       justify-content: flex-start;
       padding: 0 5px;
     }
@@ -498,4 +494,27 @@ height:30px;
 padding-left:10px;
 padding-right:10px;
 padding-top:3px;
+}
+
+#contentcontainer .testflow .container .row.paginationHeader .pagination {
+  top:5px;
+}
+
+#contentcontainer #test_results_tabs {
+  margin-top:1rem;
+
+  .content {
+    padding:0px;
+
+    .row {
+      margin:0px auto;
+    }
+  }
+  header {
+    width:100%;
+  }
+  .pagination {
+    top:5px;
+    right:15px;
+  }
 }

@@ -12,13 +12,13 @@
   bottom: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 99999;
+  z-index: 9999999;
 
   .modal {
     background: $white;
     min-width: 500px;
     min-height: 400px;
-    padding: 0px 50px 100px 50px;
+    padding:30px;
     box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.6);
     margin-top: -5%;
     position: relative;
@@ -364,7 +364,7 @@
 ul.samples {
   > li {
     box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
-    padding: 15px;
+    padding: 10px;
     width: 400px;
     margin-bottom: 5px;
     .unify {
@@ -396,17 +396,19 @@ ul.samples {
 .items-editor {
 
   ul {
-    border-right: 1px solid $gray1;
-    padding-bottom: 25px;
+    background:#ececec;
+    border:1px solid #e2e2e2;
+    margin-left:15px;
 
     li {
       display: block;
       vertical-align: baseline;
-      padding-bottom: 15px;
-      margin-bottom: 10px;
+      padding:10px 15px;
+      border-bottom:1px solid #e2e2e2;
 
       &.selected {
-        border-right: 4px solid $black;
+        background:#ffffff;
+        color:#333;
       }
       .resource-type {
         font-weight: 700;
@@ -426,7 +428,6 @@ ul.samples {
         font-size: 80%;
         color: $gray3;
         font-style: italic;
-        padding-left: 30px;
       }
     }
 
@@ -437,6 +438,10 @@ ul.samples {
 
     &.selected {
       display: inherit;
+      background:#ffffff;
+      border:1px solid #e2e2e2;
+      padding:0px 15px;
+      margin:0px 15px 15px 15px;
     }
   }
 

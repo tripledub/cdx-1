@@ -20,7 +20,7 @@ module Reports
 
     def sort_pie
       data << { _label: 'Success', _value: total_tests - failed_tests }
-      data << { _label: 'Failed', _value: failed_tests }
+      data << { _label: 'Fail', _value: failed_tests }
     end
 
     def sum_total

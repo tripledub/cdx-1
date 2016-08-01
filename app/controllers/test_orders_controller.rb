@@ -1,19 +1,6 @@
 class TestOrdersController < TestsController
 
   def index
-    @results = Cdx::Fields.test.core_fields.find { |field| field.name == 'result' }.options.map do |result|
-      if result == "n/a"
-        {value: 'n/a', label: I18n.t('test_orders.index.not_applicable')}
-      else
-        {value: result, label: result.capitalize}
-      end
-    end
-    @test_types    = Cdx::Fields.test.core_fields.find { |field| field.name == 'type' }.options
-    @test_statuses = ['success','error']
-    @conditions    = Condition.all.map &:name
-    @date_options  = Extras::Dates::Filters.date_options_for_filter
-
-
     @filter    = create_filter_for_test_order
     @query     = @filter.dup
 
@@ -34,7 +21,8 @@ class TestOrdersController < TestsController
   protected
 
   def execute_encounter_query
-    result = Encounter.query(@query, current_user).execute
+    @query['page_size'] = 10000
+    result              = Encounter.query(@query, current_user).execute
     build_table_data(result["encounters"])
   end
 
@@ -44,10 +32,13 @@ class TestOrdersController < TestsController
   end
 
   def build_table_data(results)
-    @total           = Encounter.where(uuid: results.map{|r| r['encounter']['uuid'] if r['encounter'] }).count
+    @total           = Encounter.where(uuid: results.map{|r| r['encounter']['uuid'] }).count
     order_by, offset = perform_pagination('encounters.testdue_date')
     order_by         = order_by + ', users.last_name' if order_by.include?('users.first_name')
-    @tests           = Encounter.includes(:institution, :patient, :site, :user).where(uuid: results.map{|r| r['encounter']['uuid'] if r['encounter'] }).order(order_by).limit(@page_size).offset(offset)
+    @tests = Encounter.includes(:institution, :patient, :site, :user)
+                      .includes(:institution, :patient, :site, :user)
+                      .joins('LEFT OUTER JOIN sites as performing_sites ON performing_sites.id=encounters.performing_site_id')
+                      .where(uuid: results.map{|r| r['encounter']['uuid'] }).order(order_by).limit(@page_size).offset(offset)
   end
 
   def create_filter_for_test_order
@@ -63,11 +54,12 @@ class TestOrdersController < TestsController
       filter["site.uuid"] = "null"
     end
 
-    filter["encounter.uuid"]                = params['selectedItems'] if params['selectedItems'].present?
-    filter["encounter.uuid"]                = params["encounter.id"] if params["encounter.id"].present?
+    filter["encounter.uuid"]                = params['selectedItems']         if params['selectedItems'].present?
+    filter["encounter.uuid"]                = params["encounter.id"]          if params["encounter.id"].present?
+    filter["encounter.testing_for"]         = params["testing_for"]           if params["testing_for"].present?
     filter["encounter.diagnosis.condition"] = params["test.assays.condition"] if params["test.assays.condition"].present?
-    filter["encounter.diagnosis.result"]    = params["test.assays.result"] if params["test.assays.result"].present?
-    filter["since"]                         = params["since"] if params["since"].present?
+    filter["encounter.diagnosis.result"]    = params["test.assays.result"]    if params["test.assays.result"].present?
+    filter["since"]                         = params["since"]                 if params["since"].present?
     filter
   end
 end

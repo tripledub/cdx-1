@@ -1,17 +1,21 @@
 require 'spec_helper'
 
 RSpec.describe Reports::AllTests, elasticsearch: true do
-  let(:current_user) { User.make }
-  let(:institution) { Institution.make(user_id: current_user.id) }
-  let(:site) { Site.make(institution: institution) }
-  let(:current_user_two) { User.make }
-  let(:institution_two) { Institution.make(user_id: current_user_two.id) }
-  let(:site_two) { Site.make(institution: institution_two) }
-  let(:user_device) { Device.make institution_id: institution.id, site: site }
-  let(:user_device_two) { Device.make institution_id: institution_two.id, site: site_two }
-
-  let(:nav_context) { NavigationContext.new(current_user, institution.uuid) }
-  let(:options) { {} }
+  let(:current_user)        { User.make }
+  let(:institution)         { Institution.make(user_id: current_user.id) }
+  let(:site)                { Site.make(institution: institution) }
+  let(:current_user_two)    { User.make }
+  let(:institution_two)     { Institution.make(user_id: current_user_two.id) }
+  let(:site_two)            { Site.make(institution: institution_two) }
+  let(:user_device)         { Device.make institution_id: institution.id, site: site }
+  let(:user_device_two)     { Device.make institution_id: institution_two.id, site: site_two }
+  let(:patient)             { Patient.make institution: institution }
+  let(:encounter)           { Encounter.make institution: institution , user: current_user, patient: patient }
+  let(:requested_test)      { RequestedTest.make encounter: encounter }
+  let!(:microscopy_result)  { MicroscopyResult.make requested_test: requested_test }
+  let!(:culture_result)     { CultureResult.make requested_test: requested_test }
+  let(:nav_context)         { NavigationContext.new(current_user, institution.uuid) }
+  let(:options)             { {} }
 
   before do
     TestResult.create_and_index(
@@ -76,6 +80,12 @@ RSpec.describe Reports::AllTests, elasticsearch: true do
 
     it 'scopes results by site and user' do
       expect(@tests.results['total_count']).to eq(2)
+    end
+
+    it 'includes manual results' do
+      all_tests = Reports::AllTests.new(current_user, nav_context).generate_chart
+
+      expect(all_tests[:columns].last[:dataPoints].last[:y]).to eq(3)
     end
 
     describe 'statuses' do

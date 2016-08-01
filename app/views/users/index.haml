@@ -1,13 +1,14 @@
 - content_for(:subheader) do
-  .row.center.filters
-    .col.pe-10
-      .row
-        .col
-          = react_component "AddUserLink", roles: @available_roles_hash, context: @navigation_context.to_hash
-          %h1
-            = I18n.t('users.index.users')
-      %form#filters-form{action: users_path, "data-auto-submit" => true}
-        %input{type: "hidden", name: "page_size", value: @page_size}
+  .filterbar.filterbartest
+    .heading
+      .title
+        = I18n.t('users.index.users')
+      .topfilteropt
+        = react_component "AddUserLink", roles: @available_roles_hash, context: @navigation_context.to_hash
+  %form#filters-form.filteroptions{action: users_path, "data-auto-submit" => true}
+    %input{type: "hidden", name: "page_size", value: @page_size}
+    .row.custom_filters
+      .advanced
         .row
           .filter
             %label.block

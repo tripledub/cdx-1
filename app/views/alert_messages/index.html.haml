@@ -1,13 +1,11 @@
 - content_for(:subheader) do
-  .row.center.filters
+  .row.center.add-new.collapse.settings
     .col.pe-10
-      .row
-        .col
-          %h1
-            Alert messages
+      %h2
+        Alert messages
 
 .row.paginationHeader
-  .col
+  .small-12.columns.box
     - if @alert_messages.empty?
       = empty_data title: I18n.t('alert_messages.index.no_alerts'), icon: 'icon-outline-alert xx-large' do |c|
         - c.body do

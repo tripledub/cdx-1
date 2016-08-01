@@ -16,8 +16,10 @@ var Modal = React.createClass({
   },
 
   hideOnOuterClick: function(event) {
-    if (this.getDOMNode() == event.target)
-      this.hide();
+    if (this.props.hideOuterEvent instanceof Function ) {
+     this.props.hideOuterEvent();
+   } else if (this.getDOMNode() == event.target)
+     this.hide();
   },
 
   handleKeyDown: function(event) {

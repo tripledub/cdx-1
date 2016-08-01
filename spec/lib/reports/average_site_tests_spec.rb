@@ -1,15 +1,23 @@
 require 'spec_helper'
 RSpec.describe Reports::AverageSiteTests, elasticsearch: true do
   let(:current_user) { User.make }
-  let(:institution) { Institution.make(user_id: current_user.id) }
-  let(:site) { Site.make(institution: institution) }
-  let(:site_two) { Site.make(institution: institution) }
-  let(:user_device) { Device.make institution_id: institution.id, site: site }
+  let(:institution)  { Institution.make(user_id: current_user.id) }
+  let(:site)         { Site.make(institution: institution) }
+  let(:site2)        { Site.make(institution: institution) }
+  let(:user_device)  { Device.make institution_id: institution.id, site: site }
   let(:user_device_two) do
-    Device.make institution_id: institution.id, site: site_two
+    Device.make institution_id: institution.id, site: site2
   end
-  let(:nav_context) { NavigationContext.new(current_user, institution.uuid) }
-  let(:options) { {} }
+
+  let(:patient)             { Patient.make institution: institution }
+  let(:encounter)           { Encounter.make institution: institution , user: current_user, patient: patient, site: site }
+  let(:encounter2)          { Encounter.make institution: institution , user: current_user, patient: patient, site: site2 }
+  let(:requested_test)      { RequestedTest.make encounter: encounter }
+  let(:requested_test2)     { RequestedTest.make encounter: encounter2 }
+  let!(:microscopy_result)  { MicroscopyResult.make requested_test: requested_test2 }
+  let!(:culture_result)     { CultureResult.make requested_test: requested_test }
+  let(:nav_context)         { NavigationContext.new(current_user, institution.uuid) }
+  let(:options)             { {} }
 
   before do
     50.times do
@@ -28,6 +36,7 @@ RSpec.describe Reports::AverageSiteTests, elasticsearch: true do
         },
         device_messages: [DeviceMessage.make(device: user_device)]
       )
+      MicroscopyResult.make requested_test: requested_test2, created_at: start_time
     end
 
     30.times do
@@ -51,12 +60,12 @@ RSpec.describe Reports::AverageSiteTests, elasticsearch: true do
   end
 
   describe '.show' do
-    it 'is an array of hashes grouped by site' do
-      data = described_class.new(current_user, nav_context).generate_chart
+    subject { described_class.new(current_user, nav_context).generate_chart }
 
-      expect(data).to be_a(Hash)
-      expect(data[:columns]).to be_a(Array)
-      expect(data[:columns].first).to be_a(Hash)
+    it 'is an array of hashes grouped by site' do
+      expect(subject).to be_a(Hash)
+      expect(subject[:columns]).to be_a(Array)
+      expect(subject[:columns].first).to be_a(Hash)
     end
   end
 

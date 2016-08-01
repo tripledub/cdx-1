@@ -11,11 +11,11 @@ describe Presenters::PatientLogs do
     end
 
     it 'should return an array of formated comments' do
-      expect(Presenters::PatientLogs.patient_view(patient.audit_logs).size).to eq(7)
+      expect(described_class.patient_view(patient.audit_logs).size).to eq(7)
     end
 
     it 'should return elements formated' do
-      expect(Presenters::PatientLogs.patient_view(patient.audit_logs).first).to eq({
+      expect(described_class.patient_view(patient.audit_logs).first).to eq({
         id:       patient.audit_logs.first.uuid,
         date:     I18n.l(patient.audit_logs.first.created_at, format: :short),
         user:     patient.audit_logs.first.user.full_name,

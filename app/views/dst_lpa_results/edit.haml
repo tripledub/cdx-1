@@ -8,4 +8,5 @@
         %ul
           %li
             = link_to I18n.t('views.back'), encounter_path(@requested_test.encounter, :test_order_page_mode => @return_page_mode), class: 'button new'
-    = render 'form'
+    .box-content
+      = render 'form'

@@ -1,14 +1,13 @@
 - content_for(:subheader) do
-  .row.center.edit
+  .row.center.edit.collapse
     .col.pe-10
-      .row
-        .col
-          %h2{entity_html_options(@site)}
-            = link_to sites_path, class: 'side-link', title: I18n.t('views.back') do
-              = image_tag "arrow-left.png"
-            = @site.name
-
-- if @can_move
-  = render 'form'
-- else
-  = render 'show'
+      %h2{entity_html_options(@site)}
+        = link_to sites_path, class: 'side-link', title: I18n.t('views.back') do
+          = image_tag "arrow-left-white.png"
+        = @site.name
+  .testflow
+    .container
+      - if @can_move
+        = render 'form'
+      - else
+        = render 'show'
