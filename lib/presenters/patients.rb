@@ -10,7 +10,6 @@ class Presenters::Patients
           entityId:       patient.entity_id,
           dateOfBirth:    Extras::Dates::Format.datetime_with_time_zone(patient.birth_date_on),
           address:        show_first_address(patient),
-          lastEncounter:  Extras::Dates::Format.datetime_with_time_zone(patient.last_encounter),
           viewLink:       Rails.application.routes.url_helpers.patient_path(patient)
         }
       end

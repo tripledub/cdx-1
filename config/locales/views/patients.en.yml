@@ -23,6 +23,9 @@ en:
       clear_button:  'Clear'
     new:
       new_patient: 'New patient'
+      new_patient_details: 'New patient details'
+    edit:
+      patient_details: 'Edit patient details'
     create:
       no_entity: "Entity Id can't be blank"
       no_name: "Name can't be blank"

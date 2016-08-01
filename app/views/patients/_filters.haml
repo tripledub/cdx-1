@@ -2,14 +2,14 @@
   %div.filterbar.filterbartest
     .heading
       .title
-        Patients
+        = I18n.t('patients.filters.patients')
       .topfilteropt
-        - if @can_create
-          = link_to "Add Patient", new_patient_path, class: 'btn-add side-link fix', title: I18n.t('patients.filters.add_patient')
-          
+        - if has_access?(@navigation_context.institution, Policy::Actions::CREATE_INSTITUTION_PATIENT)
+          = link_to I18n.t('patients.filters.add_patient'), new_patient_path, class: 'btn-add side-link fix', title: I18n.t('patients.filters.add_patient')
 
-            
-  %form.filteroptions#filters-form{action: patients_path, "data-auto-submit" => true}
+
+
+  %form.filteroptions#filters-form{ action: patients_path, "data-auto-submit" => true }
     %input{type: "hidden", name: "page_size", value: @page_size}
     .row.custom_filters.center
       .advanced.patientsFilter
@@ -17,23 +17,17 @@
           .filter
             %label.block
               = I18n.t('patients.filters.name')
-            %input.input-block{type: "text", name: "name", value: params["name"]}
+            %input.input-block{ type: "text", name: "name", value: params["name"] }
           .filter
             %label.block
               = I18n.t('patients.filters.patient_id')
-            %input.input-block{type: "text", name: "entity_id", value: params["entity_id"]}
-          .filter
-            %label.block
-              = I18n.t('patients.filters.last_test_order')
-            = cdx_select name: "last_encounter", value: params["last_encounter"] do |select|
-              - select.item "", I18n.t('patients.filters.show_all')
-              - select.items @date_options, :value, :label
+            %input.input-block{ type: "text", name: "entity_id", value: params["entity_id"] }
           .filter
             %input#clear_button.btn-primary(type='clear' value="#{I18n.t('patients.filters.clear_button')}")
 
   :javascript
     $(document).ready( function()
-    { 
+    {
       $('#clear_button').on('click', function()
       {
         $('input#name').val('');

@@ -6,7 +6,6 @@ var PatientResultRow = React.createClass({
       <td>{this.props.patient.entityId}</td>
       <td>{this.props.patient.dateOfBirth}</td>
       <td>{this.props.patient.address}</td>
-      <td>{this.props.patient.lastEncounter}</td>
     </tr>);
   }
 });
@@ -44,7 +43,6 @@ var PatientsIndexTable = React.createClass({
             {sortableHeader("Patient Id", "patients.entity_id")}
             {sortableHeader("Date of birth", "patients.birth_date_on")}
             {sortableHeader("Address", "patients.address")}
-            <th data-resizable-column-id="last_encounter">Last test order</th>
           </tr>
         </thead>
         <tbody>
