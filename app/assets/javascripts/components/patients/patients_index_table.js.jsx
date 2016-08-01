@@ -1,11 +1,29 @@
 var PatientResultRow = React.createClass({
   render: function() {
+    var that = this;
+
     return (
     <tr data-href={this.props.patient.viewLink}>
       <td>{this.props.patient.name}</td>
       <td>{this.props.patient.entityId}</td>
       <td>{this.props.patient.dateOfBirth}</td>
-      <td>{this.props.patient.address}</td>
+      <td>
+        {
+          this.props.searchTerm ?
+            this.props.patient.address.map( function(address, index) {
+              return(
+                <TextHighlight highlight={that.props.searchTerm} text={address} key={index} />
+              )
+            }) :
+            this.props.patient.address.map( function(address, index) {
+              return(
+                <p className="text-highlight">
+                  {address}
+                </p>
+              )
+            })
+        }
+      </td>
     </tr>);
   }
 });
@@ -31,8 +49,9 @@ var PatientsIndexTable = React.createClass({
 
     this.props.patients.forEach(
       function(patient) {
-        rows.push(<PatientResultRow key={patient.id} patient={patient} />);
-      }
+        console.log(this.props.searchTerm);
+        rows.push(<PatientResultRow key={patient.id} patient={patient} searchTerm={this.props.searchTerm} />);
+      }.bind(this)
     );
 
     return (

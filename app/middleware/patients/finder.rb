@@ -44,7 +44,7 @@ class Patients::Finder
     return unless @params[:address].present?
 
     @filter_query = filter_query.joins(:addresses)
-      .where("addresses.address LIKE concat('%', ?, '%') or addresses.zip_code LIKE concat('%', ?, '%') or addresses.city LIKE concat('%', ?, '%') or addresses.state LIKE concat('%', ?, '%')", @params[:address], @params[:address], @params[:address], @params[:address])
+      .where("addresses.address LIKE concat('%', ?, '%') or addresses.zip_code LIKE concat('%', ?, '%') or addresses.city LIKE concat('%', ?, '%') or addresses.state LIKE concat('%', ?, '%')", @params[:address], @params[:address], @params[:address], @params[:address]).distinct
   end
 
   def filter_by_birth_date

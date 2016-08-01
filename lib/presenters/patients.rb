@@ -32,7 +32,7 @@ class Presenters::Patients
       return '' unless patient.addresses.present?
       patient.addresses.map do |address|
         show_full_address(address)
-      end.join('\n')
+      end.compact.reject(&:blank?)
     end
   end
 end
