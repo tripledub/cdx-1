@@ -49,7 +49,6 @@ var PatientsIndexTable = React.createClass({
 
     this.props.patients.forEach(
       function(patient) {
-        console.log(this.props.searchTerm);
         rows.push(<PatientResultRow key={patient.id} patient={patient} searchTerm={this.props.searchTerm} />);
       }.bind(this)
     );
