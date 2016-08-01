@@ -14,20 +14,12 @@ class PatientsController < ApplicationController
   end
 
   def index
-    @patients   = check_access(Patient.where(is_phantom: false).where(institution: @navigation_context.institution), READ_PATIENT)
-    @patients   = @patients.within(@navigation_context.entity, @navigation_context.exclude_subsites)
-
     set_session_from_params
+    patients = Patients::Finder.new(current_user, @navigation_context, params).filter_query
 
-
-    @patients = @patients.where("name LIKE concat('%', ?, '%')", params[:name]) unless params[:name].blank?
-    @patients = @patients.where("entity_id LIKE concat('%', ?, '%')", params[:entity_id]) unless params[:entity_id].blank?
-    # location_geoid is hierarchical so a prefix search works
-    @patients = @patients.where("location_geoid LIKE concat(?, '%')", params[:location]) unless params[:location].blank?
-
-    @total            = @patients.count
+    @total            = patients.count
     order_by, offset  = perform_pagination('patients.name')
-    @patients         = @patients.order(order_by).limit(@page_size).offset(offset)
+    @patients         = patients.order(order_by).limit(@page_size).offset(offset)
   end
 
   def show
