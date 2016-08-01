@@ -15,8 +15,7 @@ class PatientsController < ApplicationController
 
   def index
     set_session_from_params
-    patients = Patients::Finder.new(current_user, @navigation_context, params).filter_query
-
+    patients          = Patients::Finder.new(current_user, @navigation_context, params).filter_query
     @total            = patients.count
     order_by, offset  = perform_pagination('patients.name')
     @patients         = patients.order(order_by).limit(@page_size).offset(offset)

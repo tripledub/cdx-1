@@ -30,7 +30,9 @@ class Presenters::Patients
 
     def show_first_address(patient)
       return '' unless patient.addresses.present?
-      show_full_address(patient.addresses.first)
+      patient.addresses.map do |address|
+        show_full_address(address)
+      end.join('\n')
     end
   end
 end

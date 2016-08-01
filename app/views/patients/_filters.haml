@@ -23,16 +23,30 @@
               = I18n.t('patients.filters.patient_id')
             %input.input-block{ type: "text", name: "entity_id", value: params["entity_id"] }
           .filter
-            %input#clear_button.btn-primary(type='clear' value="#{I18n.t('patients.filters.clear_button')}")
+            %label.block
+              = I18n.t('test_results.filters.date_from')
+            %input#from_date{type: "date", name: "since_dob", value: params['since_dob']}
+          .filter
+            %label.block
+              = I18n.t('test_results.filters.date_to')
+            %input#to_date{type: "date", name: "until_dob", value: params['until_dob']}
+          .filter
+            %label.block
+              = I18n.t('patients.filters.address')
+            %input.input-block{ type: "text", name: "address", value: params["address"] }
+          .filter
+            %input#clear_button.btn-primary(type='button' value="#{I18n.t('patients.filters.clear_button')}")
 
   :javascript
     $(document).ready( function()
     {
       $('#clear_button').on('click', function()
       {
-        $('input#name').val('');
-        $('input#entity_id').val('');
-        $('input#last_encounter').val('');
+        $('input[name=name]').val('');
+        $('input[name=entity_id]').val('');
+        $('input[name=since_dob]').val('');
+        $('input[name=until_dob]').val('');
+        $('input[name=address]').val('');
         $('#filters-form').submit();
       });
     });
