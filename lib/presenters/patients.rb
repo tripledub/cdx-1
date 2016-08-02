@@ -9,7 +9,7 @@ class Presenters::Patients
           name:           patient_display_name(patient.name),
           entityId:       patient.entity_id,
           dateOfBirth:    Extras::Dates::Format.datetime_with_time_zone(patient.birth_date_on),
-          address:        show_first_address(patient),
+          addresses:      show_first_address(patient),
           viewLink:       Rails.application.routes.url_helpers.patient_path(patient)
         }
       end

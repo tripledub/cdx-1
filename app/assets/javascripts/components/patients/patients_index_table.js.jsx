@@ -10,12 +10,12 @@ var PatientResultRow = React.createClass({
       <td>
         {
           this.props.searchTerm ?
-            this.props.patient.address.map( function(address, index) {
+            this.props.patient.addresses.map( function(address, index) {
               return(
                 <TextHighlight highlight={that.props.searchTerm} text={address} key={index} />
               )
             }) :
-            this.props.patient.address.map( function(address, index) {
+            this.props.patient.addresses.map( function(address, index) {
               return(
                 <p className="text-highlight">
                   {address}
