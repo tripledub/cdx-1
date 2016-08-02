@@ -27,6 +27,9 @@ var RequestedTestRow = React.createClass({
     tempTest.status = event.target.value;
     this.setState({ test: tempTest });
     this.props.onTestChanged(this.state.test);
+    if (tempTest.status == 'rejected') {
+      this.refs.inviteModal.openInviteModal();
+    }
   },
 
   commentChanged: function(newComment) {
@@ -132,7 +135,7 @@ var RequestedTestRow = React.createClass({
              }>
             {statusData.map(MakeItem)}
             </select></td>
-        <td><TextInputModal key={this.state.test.id} comment={this.state.test.comment} commentChanged={this.commentChanged} edit={this.props.edit}/></td>
+          <td><TextInputModal key={this.state.test.id} comment={this.state.test.comment} commentChanged={this.commentChanged} edit={this.props.edit} ref='inviteModal'/></td>
         <td>
           <TestResultButton testResultUrl={this.state.testResultUrl} testResultText={this.state.testResultText} showWarning={this.state.showWarning} />
         </td>

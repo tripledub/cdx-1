@@ -2,7 +2,7 @@ var TextInputModal = React.createClass({
   getInitialState: function() {
     var button_text="Save";
     if (this.props.edit==false) {
-      button_text="Close"; 
+      button_text="Close";
     }
 
     var new_comment = this.props.comment;
@@ -33,12 +33,15 @@ var TextInputModal = React.createClass({
   },
   render: function() {
     return (<div>
-      <a className="btn-add icon side-link" href='#' title="Add Comment" onClick={this.openInviteModal} ><span className="icon-pencil icon-white"></span></a>
+      <a className="btn-add side-link" href='#' title="Add Comment" onClick={this.openInviteModal} ><span className="icon-pencil icon-white"></span></a>
       <Modal ref="inviteModal">
         <h1>Test Comment</h1>
-        <a className = "btn-link" href = "#" onClick={this.handleSave}>{this.state.button_text}</a><br />
-        <textarea rows="10" cols="50" placeholder="Add Comment" value={this.state.new_comment} onChange={this.handleChange}
-         id = "testcomment" disabled={!this.props.edit} />
+        <p>
+          <textarea rows="10" cols="50" placeholder="Add Comment" value={this.state.new_comment} onChange={this.handleChange} id="testcomment" disabled={!this.props.edit} />
+        </p>
+        <p>
+          <a className = "btn-add-link btn-primary" href = "#" onClick={this.handleSave}>{this.state.button_text}</a>
+        </p>
       </Modal>
     </div>);
   }
