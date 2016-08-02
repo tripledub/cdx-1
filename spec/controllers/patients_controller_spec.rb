@@ -40,20 +40,23 @@ RSpec.describe PatientsController, type: :controller do
 
     it "can create if admin" do
       get :index
-      expect(assigns(:can_create)).to be_truthy
+
+      expect(response.body).to include 'Add patient'
     end
 
     it "can create if allowed" do
       grant user, other_user, institution, CREATE_INSTITUTION_PATIENT
       sign_in other_user
       get :index
-      expect(assigns(:can_create)).to be_truthy
+
+      expect(response.body).to include 'Add patient'
     end
 
     it "can not create if not allowed" do
       sign_in other_user
       get :index
-      expect(assigns(:can_create)).to be_falsy
+
+      expect(response.body).to_not include 'Add patient'
     end
 
     it "should filter by name" do
@@ -115,32 +118,6 @@ RSpec.describe PatientsController, type: :controller do
 
       expect(response).to be_success
       expect(assigns(:patients).to_a).to eq([patient1])
-    end
-
-    it "should filter based con last encounter date" do
-      patient1 = institution.patients.make
-      patient2 = institution.patients.make
-
-      patient1.encounters.make start_time: Time.new(2016, 1, 14, 0, 0, 0)
-      patient2.encounters.make start_time: Time.new(2016, 1, 7, 0, 0, 0)
-
-      get :index, last_encounter: '2016-01-10 00:00:00 UTC'
-
-      expect(response).to be_success
-      expect(assigns(:patients).to_a).to eq([patient1])
-    end
-
-    it "should filter based con last encounter date" do
-      patient1 = institution.patients.make
-
-      patient1.encounters.make start_time: Time.new(2016, 1, 14, 0, 0, 0)
-      patient1.encounters.make start_time: Time.new(2016, 1, 11, 0, 0, 0)
-
-      get :index, last_encounter: '2016-01-10 00:00:00 UTC'
-
-      expect(response).to be_success
-      expect(assigns(:patients).to_a).to eq([patient1])
-      expect(assigns(:patients)[0].last_encounter).to eq(Time.new(2016, 1, 14, 0, 0, 0))
     end
   end
 
