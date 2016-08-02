@@ -11,7 +11,7 @@ module Reports
 
     def sort_by_site
       site_results.map do |uuid, results|
-        {site_name: sites[uuid], count: count_total(results), uuid: uuid }
+        { site_name: sites[uuid], count: count_total(results), uuid: uuid } if uuid.present?
       end
     end
 
