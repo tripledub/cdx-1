@@ -17,7 +17,7 @@ var PatientResultRow = React.createClass({
             }) :
             this.props.patient.addresses.map( function(address, index) {
               return(
-                <p className="text-highlight">
+                <p key={index} className="text-highlight">
                   {address}
                 </p>
               )

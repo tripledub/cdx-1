@@ -38,12 +38,13 @@ var LabSample = React.createClass({
 
   render: function () {
     return (
-      <span>
+      <p className="lab-sample-id">
         <Sample key={this.props.sample.uuid} sample={this.props.sample} onUnifySample={this.props.onUnifySample} />
+        <br />
         <input type="text" size="20" placeholder="Lab. sample Id" ref="manualLabSampleEntry" />
         <input type="hidden" ref="sampleId" value={this.props.sample.uuid} />
         <button type="button" className="btn-primary" onClick={this.addLabId}>Save lab. Id</button>
-      </span>
+      </p>
     );
   }
 });
