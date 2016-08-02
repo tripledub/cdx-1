@@ -53,12 +53,12 @@ var EncounterShow = React.createClass({
     }
   },
 
-  onTestChanged: function(new_test) {
+  onTestChanged: function(newTest) {
     var len = this.state.requestedTests.length;
     for (var i = 0; i<len; i++) {
-      if (this.state.requestedTests[i].id == new_test.id) {
+      if (this.state.requestedTests[i].id == newTest.id) {
         tempRequestedTests    = this.state.requestedTests;
-        tempRequestedTests[i] = new_test;
+        tempRequestedTests[i] = newTest;
         this.setState({
           requestedTests: tempRequestedTests
         });
@@ -145,7 +145,7 @@ var EncounterShow = React.createClass({
         </div>
 
         <div className="row">
-          <RequestedTestsIndexTable encounter={this.props.encounter} requestedTests={this.state.requestedTests} requested_by={this.props.requested_by}
+          <RequestedTestsIndexTable encounter={this.props.encounter} requestedTests={this.state.requestedTests} requestedBy={this.props.requested_by}
             statusTypes={this.props.statusTypes} edit={this.props.showEdit} onTestChanged={this.onTestChanged} associatedTestsToResults={this.props.associatedTestsToResults}
             showDstWarning={this.props.showDstWarning} />
         </div>
