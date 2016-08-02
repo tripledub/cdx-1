@@ -189,7 +189,8 @@ module Reports
         .joins('LEFT OUTER JOIN requested_tests ON requested_tests.id = patient_results.requested_test_id')
         .joins('LEFT OUTER JOIN encounters ON encounters.id = requested_tests.encounter_id')
         .joins('LEFT OUTER JOIN institutions ON institutions.id = encounters.institution_id')
-        .joins('LEFT OUTER JOIN sites ON sites.id = encounters.site_id')
+        .joins('INNER JOIN sites ON sites.id = encounters.site_id')
+        .where('sites.deleted_at IS NULL')
       manual_query.where({ 'institutions.uuid'          => filter['institution.uuid'] }) if filter['institution.uuid']
       manual_query.where({ 'sites.uuid'                 => filter['site.uuid'] })        if filter['site.uuid']
       manual_query.where({ 'patient_results.created_at' => since_day..until_day })
