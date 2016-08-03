@@ -54,9 +54,9 @@ class UsersController < ApplicationController
   end
 
   def create
-    if params[:users] && role = Role.find(role_id)
+    if params[:users] && role = Role.find(params[:role])
       add_users = Persistence::Users.new(current_user)
-      add_users.add_and_invite(params[:users], params[:message], params[:role])
+      add_users.add_and_invite(params[:users], params[:message], role)
       status_message = add_users.status_message
     else
       status_message = I18n.t('users.create.role_not_found')

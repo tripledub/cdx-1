@@ -6,7 +6,7 @@ class Persistence::Users
     @current_user   = current_user
   end
 
-  def add_and_invite(new_users, message, role_id)
+  def add_and_invite(new_users, message, role)
     new_users.each do |email|
       create(email, message, role) if email.strip.length > 0
     end
@@ -18,7 +18,6 @@ class Persistence::Users
     user = User.find_by(email: email)
     if user.present?
       @status_message << I18n.t('users.persistence.create.user_alread_present', email: email)
-      )
     else
       user = User.new(email: email)
       invite_user(user, message, role) unless user.persisted?

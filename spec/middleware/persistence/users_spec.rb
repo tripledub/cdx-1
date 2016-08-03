@@ -1,18 +1,18 @@
 require 'spec_helper'
 
 RSpec.describe Persistence::Users do
-  let(:institution)   { Institution.make }
-  let(:user)          { institution.user }
-  let(:site)          { institution.sites.make }
-  let(:role)          { institution.roles.first }
+  let(:institution)    { Institution.make }
+  let(:user)           { institution.user }
+  let(:site)           { institution.sites.make }
+  let(:role)           { institution.roles.first }
   let!(:existant_user) { User.make email: 'existant@user.com'}
-  let(:new_users)     { ['new@example.com', 'new@tester.com', 'existant@user.com'] }
-  let(:message)       { 'Welcome to the test institution.'}
+  let(:new_users)      { ['new@example.com', 'new@tester.com', 'existant@user.com'] }
+  let(:message)        { 'Welcome to the test institution.'}
 
   before :each do
     user.grant_superadmin_policy
     existant_user.roles << role
-    described_class.new(user).add_and_invite(new_users, message, role.id)
+    described_class.new(user).add_and_invite(new_users, message, role)
   end
 
   describe 'add_and_invite' do
