@@ -11,8 +11,8 @@ class DevicesController < ApplicationController
   end
 
   def index
-    @devices = check_access(Device, READ_DEVICE).joins(:device_model).includes(:site, :institution, device_model: :institution)
-    @devices = @devices.joins(:device_model, :institution).includes(:site).within(@navigation_context.entity, @navigation_context.exclude_subsites)
+    @devices       = check_access(Device, READ_DEVICE)
+    @devices       = @devices.joins(:device_model, :institution).includes(:site).within(@navigation_context.entity, @navigation_context.exclude_subsites)
     @manufacturers = Institution.where(id: @devices.select('device_models.institution_id'))
 
     @devices = @devices.where(device_models: { institution_id: params[:manufacturer].to_i}) if params[:manufacturer].presence
