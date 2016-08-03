@@ -25,3 +25,18 @@ en:
       remove_user: 'Remove user'
       remove: 'Remove'
       can_access: 'Can access Cdx?'
+    create:
+      role_not_found: 'Role not found'
+    persistence:
+      create:
+        user_already_present: 'The user with email: %{email} is already in the system - Please edit that user'
+      update:
+        user_updated: 'User updated'
+        user_not_updated: 'There was a problem updating this user'
+      remove:
+        user_removed: 'User deleted'
+        user_not_found: 'User not found'
+      resend_invite:
+        resending: 'Resending invite'
+        resending_ok: 'Resent Invite Ok'
+        resending_failed: 'Failed to resend invite'

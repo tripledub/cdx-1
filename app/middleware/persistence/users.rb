@@ -7,11 +7,6 @@ class Persistence::Users
   end
 
   def add_and_invite(new_users, message, role_id)
-    if !role = Role.find(role_id)
-      @status_message = 'Role not found'
-      return false
-    end
-
     new_users.each do |email|
       create(email, message, role) if email.strip.length > 0
     end
@@ -22,7 +17,8 @@ class Persistence::Users
   def create(email, message, role)
     user = User.find_by(email: email)
     if user.present?
-      @status_message << "User with Email '#{email}' is already in the System - please edit that User<br>"
+      @status_message << I18n.t('users.persistence.create.user_alread_present', email: email)
+      )
     else
       user = User.new(email: email)
       invite_user(user, message, role) unless user.persisted?
