@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe UsersController, type: :controller do
-  let(:user) { User.make }
-  let!(:institution) { user.institutions.make }
+  let(:user)           { User.make }
+  let!(:institution)   { user.institutions.make }
   let(:default_params) { { context: institution.uuid } }
 
   before do

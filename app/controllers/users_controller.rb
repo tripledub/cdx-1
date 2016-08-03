@@ -54,31 +54,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    output_info = ' '
-    @role = Role.find(params[:role])
-    message = params[:message]
-    (params[:users] || []).each do |email|
-      email = email.strip
-      if email.length > 0
-        user = User.find_by(email: email)
-        if user.present?
-          output_info << "User with Email '#{email}' is already in the System - please edit that User<br>"
-        else
-          user = User.new(email: email)
-          unless user.persisted?
-            user.invite! do |u|
-              u.skip_invitation = true
-            end
-            user.invitation_sent_at = Time.now.utc # mark invitation as delivered
-            user.invited_by_id = current_user.id
-            InvitationMailer.invite_message(user, @role, message).deliver_now
-          end
-          user.roles << @role unless user.roles.include?(@role)
-          ComputedPolicy.update_user(user)
-        end
-      end
-    end
-    render text:{'info' => output_info}.to_json, layout:false
+    add_users = Persistence::Users.new(current_user)
+    add_users.add_and_invite(params[:users], params[:message], params[:role])
+
+    render text: { 'info' => add_users.status_message }.to_json, layout: false
   end
 
   def assign_role
