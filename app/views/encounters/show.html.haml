@@ -11,7 +11,7 @@
 = react_component('EncounterShow',
   encounter: @encounter_as_json,
   context: @navigation_context,
-  requestedTests: @encounter.requested_tests,
+  requestedTests: Presenters::RequestedTests.index_view(@encounter),
   requested_by: @encounter.user !=nil ? @encounter.user.email : '',
   can_update: has_access?(@encounter, Policy::Actions::UPDATE_ENCOUNTER),
   showEdit: @show_edit_encounter,

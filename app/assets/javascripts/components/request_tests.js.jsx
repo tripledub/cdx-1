@@ -137,7 +137,7 @@ var RequestedTestRow = React.createClass({
             { statusData.map(MakeItem) }
           </select>
         </td>
-        <td>00000</td>
+        <td>{this.state.test.turnaround}</td>
         <td>
           <TextInputModal key={this.state.test.id} comment={this.state.test.comment} commentChanged={this.commentChanged} edit={this.props.edit} ref='inviteModal' />
         </td>
