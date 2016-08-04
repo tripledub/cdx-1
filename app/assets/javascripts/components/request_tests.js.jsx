@@ -137,6 +137,7 @@ var RequestedTestRow = React.createClass({
             { statusData.map(MakeItem) }
           </select>
         </td>
+        <td>00000</td>
         <td>
           <TextInputModal key={this.state.test.id} comment={this.state.test.comment} commentChanged={this.commentChanged} edit={this.props.edit} ref='inviteModal' />
         </td>
@@ -165,7 +166,7 @@ var RequestedTestsList = React.createClass({
       <table className="table" id="test-table" cellPadding="0" cellSpacing="0">
         <thead>
           <tr>
-            <th className="tableheader" colSpan="9">
+            <th className="tableheader" colSpan="10">
               <span className={this.props.titleClassName}>{this.props.title}</span>
             </th>
           </tr>
@@ -177,6 +178,7 @@ var RequestedTestsList = React.createClass({
             <td>Request by</td>
             <td>Due date</td>
             <td>Status</td>
+            <td>Turnaround</td>
             <td>Comment</td>
             <td>Result</td>
           </tr>
