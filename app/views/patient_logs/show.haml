@@ -9,7 +9,7 @@
         %ul
           %li
             = link_to I18n.t('views.back'), patient_path(@patient_log.patient), class: 'button new'
-    .order-details
+    .order-details.commentbox
       .panel
         / Start of Row
         .row
@@ -33,16 +33,12 @@
               .col-12
                 %label
                   = AuditLog.human_attribute_name(:comment)
-                = @patient_log.comment
+                %a{:href => "/encounters/=@patient_log.comment"} Click here to view the test order.
+				
           .col-6
             .panel.patient-details
               .row
-                .col-3.summary.patient
-                  .stat
-                    .empty-icon.centered
-                      %span
-                        %i.fa.fa-user
-                .col-9
+                .col-12
                   %ul
                     %li
                       %label

@@ -80,6 +80,19 @@ var EncounterShow = React.createClass({
     } else {
       performing_site = this.props.encounter.performing_site.name;
     }
+
+    if (this.props.encounter.coll_sample_type == "other") {
+      sample_type = this.props.encounter.coll_sample_other;
+    } else {
+      sample_type = this.props.encounter.coll_sample_type;
+    }
+
+    if (this.props.encounter.exam_reason == "diag") {
+      examreason = "Diagnosis";
+    } else {
+      examreason = "Follow-Up";
+    }
+
     return (
       <div className="testflow">
         <div className="row errorMsg">
@@ -114,6 +127,7 @@ var EncounterShow = React.createClass({
                 <DisplayFieldWithLabel fieldLabel='Requesting site:'  fieldValue={ this.props.encounter.site.name } />
                 <DisplayFieldWithLabel fieldLabel='Performing site:' fieldValue={ performing_site } />
                 <DisplayFieldWithLabel fieldLabel='Order Id:'    fieldValue={ this.props.encounter.uuid } />
+                <DisplayFieldWithLabel fieldLabel='Reason for examination:'    fieldValue={ examreason } />
                 <DisplayFieldWithLabel fieldLabel='Testing for:' fieldValue={ this.props.encounter.testing_for } />
                 {
                   this.props.encounter.testing_for === 'TB' ?
@@ -129,7 +143,8 @@ var EncounterShow = React.createClass({
                   <DisplayFieldWithLabel fieldLabel='Samples Id:'    fieldValue={ <LabSamplesList context={this.props.context} samples={this.props.encounter.samples}  /> } /> : null
                 }
 
-                <DisplayFieldWithLabel fieldLabel='Sample type:'   fieldValue={ this.props.encounter.coll_sample_type } />
+                <DisplayFieldWithLabel fieldLabel='Sample type:'   fieldValue={ sample_type } />
+
                 <DisplayFieldWithLabel fieldLabel='Test due date:' fieldValue={ this.props.encounter.testdue_date } />
                 <DisplayFieldWithLabel fieldLabel='Status:'        fieldValue={ this.props.encounter.status } />
               </div>

@@ -141,7 +141,7 @@ class EncountersController < ApplicationController
   private
 
   def store_create_encounter_audit_log
-    Audit::EncounterAuditor.new(@encounter, current_user.id).log_changes("New Test Order Created", "Test Order created #{@encounter.uuid}", @encounter)
+    Audit::EncounterAuditor.new(@encounter, current_user.id).log_changes("New Test Order Created - #{@encounter.uuid}", "#{@encounter.id}", @encounter)
     @encounter.requested_tests.each do |test|
       Audit::EncounterTestAuditor.new(@encounter, current_user.id).log_changes("New #{test.name} Test Created", "Test #{test.name} created for test order #{@encounter.uuid}", @encounter, test)
     end
