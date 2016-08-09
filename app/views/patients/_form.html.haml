@@ -35,6 +35,17 @@
       = f.label :birth_date_on
     .col
       = f.date_select :birth_date_on, order: [:day, :month, :year], prompt: { day: I18n.t('patients.form.select_day'), month: I18n.t('patients.form.select_month'), year: I18n.t('patients.form.select_year') }, start_year: Date.today.year, end_year: Date.today.year - 100
+      = f.label 'Estimate Age'
+      = f.text_field 'age', :class=>'input-large'
+      %script
+        $('#patient_age').on('blur', function(){
+        var cyear = new Date().getFullYear();
+        var tyear = cyear - $(this).val();
+        console.log('Setting Year to: '+tyear);
+        $('#patient_birth_date_on_1i').val(tyear);
+        $('#patient_birth_date_on_2i').val(new Date().getMonth());
+        $('#patient_birth_date_on_3i').val(new Date().getDate());
+        });
 
   = f.fields_for :addresses do |addresses_form|
     = render partial: 'addresses/form', locals: { address_form: addresses_form }

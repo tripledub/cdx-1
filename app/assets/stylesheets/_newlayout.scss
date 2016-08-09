@@ -899,3 +899,22 @@ ul.samples button.btn-primary {
     background:#ddd;
   }
 }
+
+
+.commentbox .col-6 {
+align-self: flex-start;
+}
+
+.commentbox label {
+width:100%;
+font-weight:bold;
+margin-top:30px;
+line-height:25px !important;
+min-height:25px !important;
+}
+
+.commentbox .col-12 {
+flex: 1 1 0;
+padding-right:10px;
+}
+
