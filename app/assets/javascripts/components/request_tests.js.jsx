@@ -66,7 +66,7 @@ var RequestedTestRow = React.createClass({
       name = 'dst';
     }
 	
-	if (name.indexOf('lineprobe') !== -1) {
+    if (name.indexOf('lineprobe') !== -1) {
       if (name.indexOf('liquid') !== -1) {
         newOrEditPath += '&media=liquid';
       };
@@ -76,7 +76,7 @@ var RequestedTestRow = React.createClass({
       name = 'dst';
     }
 	
-	if (name.indexOf('culture') !== -1) {
+    if (name.indexOf('culture') !== -1) {
       if (name.indexOf('liquid') !== -1) {
         newOrEditPath += '&media=liquid';
       };
