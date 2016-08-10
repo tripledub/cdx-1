@@ -918,3 +918,56 @@ flex: 1 1 0;
 padding-right:10px;
 }
 
+
+
+
+.testflow label{
+line-height:35px;
+margin-top:0px;
+margin-bottom:0px;
+}
+
+
+.testflow .pe-2 label{
+font-weight:bold;
+}
+
+
+.testflow .pe-2{
+align-self: flex-start;
+}
+
+.testflow .row{
+margin-bottom:30px;
+}
+
+.btn-add-link:empty {
+   display: none;
+}
+
+.newTestOrder .pe-2{
+flex: 0 0 25%;
+}
+
+.commentbox .col-6 .row {
+margin-bottom:20px;
+}
+
+.commentbox .col-6{
+padding:10px 5px 15px 5px;
+}
+
+.commentbox .patient-details ul{
+width:50%;
+}
+
+
+.commentbox .patient-details ul label{
+min-width:35%;
+width:35%;
+}
+
+.commentbox .patient-details ul{
+margin-top:10px;
+margin-bottom:10px;
+}
