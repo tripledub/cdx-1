@@ -971,3 +971,18 @@ width:35%;
 margin-top:10px;
 margin-bottom:10px;
 }
+
+form#filters-form.filteroptions #clear_button{
+line-height:15px;
+height:19px;
+padding:0;
+margin-top:15px;
+background:#2196f3;
+color:#fff;
+border:0px;
+border-radius:0px;
+}
+
+form#filters-form.filteroptions #clear_button:hover{
+background:#478BC9;
+}
