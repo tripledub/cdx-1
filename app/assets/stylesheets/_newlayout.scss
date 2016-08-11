@@ -950,7 +950,7 @@ flex: 0 0 25%;
 }
 
 .commentbox .col-6 .row {
-margin-bottom:20px;
+margin-bottom:10px;
 }
 
 .commentbox .col-6{
@@ -970,6 +970,12 @@ width:35%;
 .commentbox .patient-details ul{
 margin-top:10px;
 margin-bottom:10px;
+}
+
+.commentbox label {
+    line-height: 35px !important;
+    margin-top: 0px !important;
+    min-height: 35px !important;
 }
 
 form#filters-form.filteroptions #clear_button{
