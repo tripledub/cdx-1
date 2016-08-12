@@ -124,19 +124,26 @@ var EncounterShow = React.createClass({
           <div className="panel">
             <div className="row collapse">
               <div className="col-6">
-                <DisplayFieldWithLabel fieldLabel='Requesting site:'  fieldValue={ this.props.encounter.site.name } />
-                <DisplayFieldWithLabel fieldLabel='Performing site:' fieldValue={ performing_site } />
                 <DisplayFieldWithLabel fieldLabel='Order Id:'    fieldValue={ this.props.encounter.uuid } />
                 <DisplayFieldWithLabel fieldLabel='Reason for examination:'    fieldValue={ examreason } />
                 <DisplayFieldWithLabel fieldLabel='Testing for:' fieldValue={ this.props.encounter.testing_for } />
                 {
                   this.props.encounter.testing_for === 'TB' ?
-                  <DisplayFieldWithLabel fieldLabel='Culture format:' fieldValue={ this.props.encounter.culture_format } /> : null
+                  this.props.encounter.culture_format != '' ?
+                  <DisplayFieldWithLabel fieldLabel='Culture format:' fieldValue={ this.props.encounter.culture_format } /> 
+                  : null
+                  : null
                 }
                 <DisplayFieldWithLabel fieldLabel='Comment:' fieldValue={ this.props.encounter.diag_comment } />
                 {
                   this.props.encounter.exam_reason === 'follow' ?
-                  <DisplayFieldWithLabel fieldLabel='Weeks in treatment:' fieldValue={ this.props.encounter.treatment_weeks } /> : null
+                  <DisplayFieldWithLabel fieldLabel='Weeks in treatment:' fieldValue={ this.props.encounter.treatment_weeks } /> 
+                  : null
+                }
+                {
+                  this.props.encounter.presumptive_rr ? 
+                  <DisplayFieldWithLabel fieldLabel='Presumptive TB RR:' fieldValue={ this.props.encounter.presumptive_rr } /> 
+                  : null
                 }
                 {
                   this.props.showEdit ?
