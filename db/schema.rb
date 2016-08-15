@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160729125611) do
+ActiveRecord::Schema.define(version: 20160803112450) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -588,8 +588,10 @@ ActiveRecord::Schema.define(version: 20160729125611) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "comment",      limit: 65535
+    t.datetime "completed_at"
   end
 
+  add_index "requested_tests", ["completed_at"], name: "index_requested_tests_on_completed_at", using: :btree
   add_index "requested_tests", ["datetime"], name: "index_requested_tests_on_datetime", using: :btree
   add_index "requested_tests", ["deleted_at"], name: "index_requested_tests_on_deleted_at", using: :btree
   add_index "requested_tests", ["encounter_id"], name: "index_requested_tests_on_encounter_id", using: :btree

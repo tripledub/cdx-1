@@ -1,25 +1,24 @@
 require 'spec_helper'
 
-RSpec.describe RequestedTest, :type => :model do
+RSpec.describe RequestedTest, type: :model do
   it { should have_one(:xpert_result) }
   it { should have_one(:microscopy_result) }
   it { should have_one(:dst_lpa_result) }
   it { should have_one(:culture_result) }
 
-  context "validates fields" do
-    it "cannot create for missing fields" do
+  describe 'validates fields' do
+    it 'cannot create for missing fields' do
       requested_test = RequestedTest.create
       expect(requested_test).to_not be_valid
     end
 
-    it "can create requested test" do
-      requested_test =  RequestedTest.make
+    it 'can create requested test' do
+      requested_test = RequestedTest.make
       expect(requested_test).to be_valid
     end
 
-    it "cannot create for missing name field" do
-      requested_test =  RequestedTest.make
-      requested_test.name=nil
+    it 'cannot create for missing name field' do
+      requested_test = RequestedTest.make_unsaved(name: nil)
       expect(requested_test).to_not be_valid
     end
 
@@ -28,32 +27,32 @@ RSpec.describe RequestedTest, :type => :model do
         requested_test        =  RequestedTest.make
         requested_test.status = :rejected
         requested_test.comment = ' '
-
         expect(requested_test).to_not be_valid
       end
 
       it 'should validate if comment has content' do
-        requested_test        =  RequestedTest.make
+        requested_test = RequestedTest.make
         requested_test.status = :rejected
         requested_test.comment = 'For whom the bell tolls'
-
         expect(requested_test).to be_valid
       end
     end
   end
 
-  context "validate soft delete" do
-    it "soft deletes a requested test" do
-      requested_test =  RequestedTest.make
+  describe 'validate soft delete' do
+    it 'soft deletes a requested test' do
+      requested_test = RequestedTest.make
       requested_test.destroy
-      deleted_requested_test_id = RequestedTest.where(id: requested_test.id).pluck(:id)
-      expect(deleted_requested_test_id).to eq([])
+      deleted_test_id = RequestedTest.where(id: requested_test.id).pluck(:id)
+      expect(deleted_test_id).to eq([])
     end
 
-    it "soft deletes a requested test and verfiy requested test still exists" do
-      requested_test =  RequestedTest.make
+    it 'soft deletes a requested test and verfiy requested test still exists' do
+      requested_test = RequestedTest.make
       requested_test.destroy
-      deleted_requested_test_id = RequestedTest.with_deleted.where(id: requested_test.id).pluck(:id)
+      deleted_requested_test_id = RequestedTest.with_deleted
+                                               .where(id: requested_test.id)
+                                               .pluck(:id)
       expect(deleted_requested_test_id).to eq([requested_test.id])
     end
   end
@@ -77,6 +76,23 @@ RSpec.describe RequestedTest, :type => :model do
         RequestedTest.make name: 'microscopy'
 
         expect(described_class.show_dst_warning).to eq(false)
+      end
+    end
+  end
+
+  describe 'turnaround time' do
+    let!(:requested_test) { RequestedTest.make completed_at: nil }
+    context 'when the test is incomplete' do
+      it 'says incomplete' do
+        expect(requested_test.turnaround).to eq(I18n.t('requested_test.incomplete'))
+      end
+    end
+
+    context 'when the test is complete' do
+      it 'gives the turnaround time in words' do
+        Timecop.travel(requested_test.created_at + 3.days)
+        requested_test.update_attribute(:status, 'completed')
+        expect(requested_test.turnaround).to eq('3 days')
       end
     end
   end
