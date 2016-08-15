@@ -9,7 +9,6 @@ var EncounterShow = React.createClass({
     if (this.props.showCancel==true || this.props.showEdit==false) {
       disable_all_selects=true;
     }
-
     return {
       user_email: user_email,
       error_messages:[],

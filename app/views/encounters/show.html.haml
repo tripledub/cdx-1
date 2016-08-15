@@ -7,7 +7,6 @@
             = link_to "javascript:history.back();", class: 'side-link', title: I18n.t('views.back') do
               = image_tag "arrow-left-white.png"
             = I18n.t('encounters.show.test_order')
-
 = react_component('EncounterShow',
   encounter: @encounter_as_json,
   context: @navigation_context,
