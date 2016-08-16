@@ -4,7 +4,6 @@ en:
       col_name: "Name"
       col_city: "City"
       col_comment: "Comment"
-
   
     device_messages_table:
       col_status: "Status"
@@ -15,7 +14,6 @@ en:
       col_error_field: "Field"
       col_date: "Date"
       col_raw: "Raw"
-
     
       click_to_process: "Click to reprocess this message again"
       download_raw_file: "Download raw file"
@@ -45,18 +43,15 @@ en:
       error_tooltip: "Range of Error Codes"
       error_placeholder: "Error code (range)"
 
-
       site_option_label: "All"
       site_label: "Sites"
       site_tootip: "Sites using this Alert."
       site_placeholder: "All"
 
-
       device_option_label: "All"
       device_label: "Devices"
       device_tooltip: "Which Device provides this Alert."
       device_placeholder: "All"
-
 
       anomalie_label: "Anomalie Type"
       anomalie_tooltip: "Anomalie Type Tooltip"
@@ -74,12 +69,10 @@ en:
       internal_recipient_tooltip: "Internal Recipient Tooltip"
       internal_recipient_placeholder: "None"
 
-
       patient_label: "All Patients"
 
       sample_id_label: "Sample Id"
       sample_id_tooltip: "ID of the Sample that produced this Alert"
-
 
       sms_limit_label: "Daily SMS Limit"
       sms_limit_tooltip: "Maximum number of SMS messages per day this alert can send"
@@ -97,14 +90,10 @@ en:
       sms_message_tooltip: "SMS Content used when sending Alert"
       sms_message_placeholder: "SMS message"
 
-
-
-
     alert_conditions:
       condition_option_label: "All"
       condition_row_label: "Conditions"
       condition_row_placeholder: "All"
-
 
       condition_result_label: "Condition Results"
       condition_result_placeholder: "All"
@@ -123,7 +112,6 @@ en:
       email_placeholder: "email"
       telephone_placeholder: "telephone"
 
-
       create_user_btn: "Create User"
       delete_user_btn: "Delete"
 
@@ -140,7 +128,6 @@ en:
     cdx_select:
       select_box_placeholder: "Choose one"
 
-
     confirmation_modal:
       delete_confirmation_btn: "Delete confirmation"
       confirmation_btn: "Confirmation"
@@ -155,20 +142,5 @@ en:
       error_code_col: "Error Code"
       error_count_col: "Error Count"
       last_eror_col: "Last Error"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

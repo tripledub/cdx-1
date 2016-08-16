@@ -161,7 +161,7 @@ var AlertSite = React.createClass({
       onChange
     } = this.props;
     return (
-      < div className = "row">
+      <div className = "row">
       <div className = "col pe-2">
         <label className="tooltip">I18n.t("components.alert_child_components.site_label")
           <div className="tooltiptext_r">I18n.t("components.alert_child_components.site_tootip")</div>
@@ -287,7 +287,7 @@ var AlertAnomalieType = React.createClass({
       onChange
     } = this.props;
     return (
-      < div className = "row" id = "anomalieRow">
+      <div className = "row" id = "anomalieRow">
       <div className = "col pe-2" >
         <label className="tooltip">I18n.t("components.alert_child_components.anomalie_label")
           <div className="tooltiptext_r">I18n.t("components.alert_child_components.anomalie_tooltip")</div>
@@ -348,7 +348,7 @@ var AlertChannel = React.createClass({
       onChange
     } = this.props;
     return (
-      < div className = "row" id = "channelrow" >
+      <div className = "row" id = "channelrow">
       <div className = "col pe-2" >
         <label className="tooltip">I18n.t("components.alert_child_components.channel_label")
           <div className="tooltiptext_r">I18n.t("components.alert_child_components.channel_tooltip")</div>
@@ -414,8 +414,8 @@ var AlertRole = React.createClass({
       onChange
     } = this.props;
     return (
-      < div className = "row" >
-      <div className = "col pe-2" >
+      <div className = "row">
+      <div className = "col pe-2">
         <label className="tooltip">I18n.t("components.alert_child_components.role_label")
           <div className="tooltiptext_r">I18n.t("components.alert_child_components.role_tooltip")</div>
         </label>
@@ -540,7 +540,7 @@ id="alertpatient"
 var AlertSampleId = React.createClass({
   render: function() {
     return (
-      < div className = "row" id = "sampleidrow" >
+      <div className = "row" id = "sampleidrow" >
       <div className = "col pe-2" >
         <label className="tooltip"> I18n.t("components.alert_child_components.sample_id_label")
           <div className="tooltiptext_r"> I18n.t("components.alert_child_components.sample_id_tooltip")</div>
@@ -563,7 +563,7 @@ var AlertSampleId = React.createClass({
 var AlertSmsLimit = React.createClass({
   render: function() {
     return (
-      < div className = "row" id = "smslimitrow" >
+      <div className = "row" id = "smslimitrow" >
       <div className = "col pe-2" >
         <label className="tooltip">I18n.t("components.alert_child_components.sms_limit_label")
           <div className="tooltiptext_r">I18n.t("components.alert_child_components.sms_limit_tooltip")</div>
@@ -585,7 +585,7 @@ var AlertSmsLimit = React.createClass({
 var AlertEmailLimit = React.createClass({
   render: function() {
     return (
-      < div className = "row" id = "emaillimitrow" >
+      <div className = "row" id = "emaillimitrow">
       <div className = "col pe-2" >
         <label className="tooltip">I18n.t("components.alert_child_components.email_limit_label")
           <div className="tooltiptext_r">I18n.t("components.alert_child_components.email_limit_tooltip")</div>

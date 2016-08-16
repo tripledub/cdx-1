@@ -338,6 +338,7 @@ ActiveRecord::Schema.define(version: 20160816140022) do
     t.boolean  "closed",                                default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "closed_at"
   end
 
   add_index "episodes", ["patient_id"], name: "index_episodes_on_patient_id", using: :btree
