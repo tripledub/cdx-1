@@ -30,3 +30,6 @@
 
       %footer
         = render "shared/footer"
+:javascript
+  I18n.locale = I18n.locale = "#{params[:language].present? ? params[:language].to_sym : :en}"
+
