@@ -60,6 +60,14 @@ class Patient < ActiveRecord::Base
     years_between birth_date_on, Time.now rescue nil
   end
 
+  def multi_address
+    address_array = []
+    addresses.each do |address|
+      address_array << Presenters::Patients.show_full_address(address)
+    end
+    address_array
+  end
+
   def age_months
     months_between birth_date_on, Time.now rescue nil
   end
@@ -73,7 +81,7 @@ class Patient < ActiveRecord::Base
   end
 
   def as_json_card(json)
-    json.(self, :id, :name, :age, :age_months, :gender, :address, :phone, :email, :entity_id, :city, :zip_code, :state)
+    json.(self, :id, :name, :age, :age_months, :gender, :address, :multi_address, :phone, :email, :entity_id, :city, :zip_code, :state)
     json.birth_date_on Extras::Dates::Format.datetime_with_time_zone(birth_date_on)
   end
 
