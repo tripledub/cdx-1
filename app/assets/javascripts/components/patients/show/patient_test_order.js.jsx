@@ -12,7 +12,6 @@ var PatientTestOrder = React.createClass({
         <td>{this.props.patientTestOrder.requester}</td>
         <td>{this.props.patientTestOrder.requestDate}</td>
         <td className={this.props.patientTestOrder._highlight_overdue}>{this.props.patientTestOrder.dueDate}</td>
-        <td>{this.props.patientTestOrder.turnaroundTime}</td>
         <td>{this.props.patientTestOrder.status}</td>
       </tr>
     );
