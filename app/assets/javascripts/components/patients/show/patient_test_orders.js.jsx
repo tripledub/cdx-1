@@ -12,7 +12,6 @@ var PatientTestOrders = React.createClass({
         { title: 'Order by User', fieldName: 'requester' },
         { title: 'Request Date',  fieldName: 'requestDate' },
         { title: 'Due Date',      fieldName: 'dueDate' },
-        { title: 'Turnaround Time', fieldName: 'turnaroundTime' },
         { title: 'status',        fieldName: 'status' }
       ]
     };
@@ -74,7 +73,6 @@ var PatientTestOrders = React.createClass({
             patientTestOrder._highlight_overdue = 'overdueHightlight';
           }
         }
-        // patientTestOrder.turnaroundTime = 1;
         rows.push(<PatientTestOrder patientTestOrder={patientTestOrder} key={patientTestOrder.id} />);
       }
     );
