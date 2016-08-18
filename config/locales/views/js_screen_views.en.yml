@@ -175,6 +175,7 @@ en:
       requesting_label: "Requesting"
       performing_label: "Performing"
       site_detail_heading: "Site Details"
+      message_label: "Site Details"
 
     encounter_show:
       site_detail_heading: "Site Details"

@@ -173,7 +173,10 @@ vi:
       save_btn: "Lưu"
 
     encounter_new:
-      site_details_heading: "Chi tiết trang"
+      requesting_label: "Yêu cầu"
+      performing_label: "Thực hiện"
+      site_detail_heading: "Trang chi tiết"
+      message_label: "Trang chi tiết"
 
     encounter_show:
       site_detail_heading: "Chi tiết trang"
