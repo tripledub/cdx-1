@@ -542,18 +542,8 @@ var AlertSampleId = React.createClass({
     return (
       <div className = "row" id = "sampleidrow" >
       <div className = "col pe-2" >
-<<<<<<< HEAD
-<<<<<<< HEAD
         <label className="tooltip"> {I18n.t("components.alert_child_components.sample_id_label")}
           <div className="tooltiptext_r"> {I18n.t("components.alert_child_components.sample_id_tooltip")}</div>
-=======
-        <label className="tooltip">{I18n.t("components.alert_child_components.sample_id_label")}
-          <div className="tooltiptext_r">{I18n.t("components.alert_child_components.sample_id_tooltip")}</div>
->>>>>>> Fixes 2117 cannot create alert group
-=======
-        <label className="tooltip">{I18n.t("components.alert_child_components.sample_id_label")}
-          <div className="tooltiptext_r">{I18n.t("components.alert_child_components.sample_id_tooltip")}</div>
->>>>>>> Fixes 2117 cannot create alert group
         </label>
       </div>
 
