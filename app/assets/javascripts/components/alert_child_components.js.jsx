@@ -464,7 +464,6 @@ var AlertUser = React.createClass({
     userOption = {};
     userOption["value"] = "";
     userOption["label"] = I18n.t("components.alert_child_components.user_option_label")
-
     userOptions.push(userOption);
 
     for (var i = 0; i < this.props.users.length; i++) {
@@ -543,8 +542,13 @@ var AlertSampleId = React.createClass({
     return (
       <div className = "row" id = "sampleidrow" >
       <div className = "col pe-2" >
+<<<<<<< HEAD
         <label className="tooltip"> {I18n.t("components.alert_child_components.sample_id_label")}
           <div className="tooltiptext_r"> {I18n.t("components.alert_child_components.sample_id_tooltip")}</div>
+=======
+        <label className="tooltip">{I18n.t("components.alert_child_components.sample_id_label")}
+          <div className="tooltiptext_r">{I18n.t("components.alert_child_components.sample_id_tooltip")}</div>
+>>>>>>> Fixes 2117 cannot create alert group
         </label>
       </div>
 
