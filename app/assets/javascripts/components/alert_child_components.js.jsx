@@ -28,7 +28,7 @@ var AlertDelete = React.createClass({
       return (
 
         <div>
-          <a className = "btn-secondary pull-right" onClick={this.clickHandler} id="delete_alert" href="#">I18n.t("components.alert_child_components.delete_alert")</a>
+          <a className = "btn-secondary pull-right" onClick={this.clickHandler} id="delete_alert" href="#">{I18n.t("components.alert_child_components.delete_alert")}</a>
         </div>
     );
   } else {
@@ -210,7 +210,7 @@ var AlertDevice = React.createClass({
 
     deviceOption = {};
     deviceOption["value"] = "";
-    deviceOption["label"] = I18n.t("components.alert_child_components.device_option_label")
+    deviceOption["label"] = I18n.t("components.alert_child_components.device_option_label");
     deviceOptions.push(deviceOption);
 
     for (var i = 0; i < this.props.devices.length; i++) {
@@ -398,7 +398,7 @@ var AlertRole = React.createClass({
 
     roleOption = {};
     roleOption["value"] = "";
-    roleOption["label"] = I18n.t("components.alert_child_components.role_option_label")
+    roleOption["label"] = I18n.t("components.alert_child_components.role_option_label");
     roleOptions.push(roleOption);
 
     for (var i = 0; i < this.props.roles.length; i++) {
@@ -463,7 +463,8 @@ var AlertUser = React.createClass({
 
     userOption = {};
     userOption["value"] = "";
-    userOption["label"] = I18n.t('components.alert_child_components.user_option_label')
+    userOption["label"] = I18n.t("components.alert_child_components.user_option_label")
+
     userOptions.push(userOption);
 
     for (var i = 0; i < this.props.users.length; i++) {
@@ -518,7 +519,7 @@ render: function() {
 return (
 <div className="row">
 <div className="col pe-2">
-<label>I18n.t("components.alert_child_components.patient_label")</label >
+<label>{I18n.t("components.alert_child_components.patient_label")}</label >
 </div>
 <div className="col">
 <input
@@ -542,8 +543,8 @@ var AlertSampleId = React.createClass({
     return (
       <div className = "row" id = "sampleidrow" >
       <div className = "col pe-2" >
-        <label className="tooltip">{I18n.t("components.alert_child_components.sample_id_label")}
-          <div className="tooltiptext_r">{I18n.t("components.alert_child_components.sample_id_tooltip")}</div>
+        <label className="tooltip"> {I18n.t("components.alert_child_components.sample_id_label")}
+          <div className="tooltiptext_r"> {I18n.t("components.alert_child_components.sample_id_tooltip")}</div>
         </label>
       </div>
 
