@@ -186,7 +186,7 @@ en:
       testing_for_label: "Testing for:"
       culture_format_label: "Culture format:"
       comment_label: "Comment:"
-      ưeeks_in_treatment_label: "Weeks in treatment:"
+      weeks_in_treatment_label: "Weeks in treatment:"
       samples_id_label: "Samples Id:"
       sample_type_label: "Sample type:"
       test_due_date_label: "Test due date:" 
@@ -200,6 +200,8 @@ en:
       confirmation_btn: "Confirmation"
       cancel_btn: "Cancel"
       confirm_btn: "Confirm"
+      reason_exam_label: "Reason for examination:"
+      presumptive: "Presumptive TB RR:"
 
     fresh_tests_encounter_form:
       alert_new_sample: "This sample has already been added"
@@ -295,6 +297,7 @@ en:
       confirm_title: "Culture result needed."
       close_btn: "Close"
       add_result_btn:  "Add Result"
+      turnaround_col: "Turnaround"
 
     resource_list:
       add_element_btn1: "Add elements to the exception list"

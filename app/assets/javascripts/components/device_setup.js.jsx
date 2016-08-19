@@ -53,21 +53,21 @@ var DeviceSetup = React.createClass({
     var setup_instructions_url_node = null;
 
     if (setup_instructions_url != null && setup_instructions_url != '') {
-      setup_instructions_url_node = (<p>{I18n.t("components.device_setup.text_1")} <a href={this.props.device_model.setup_instructions_url} target="_blank">{I18n.t("components.device_setup.text_2")}</a></p>)
+      setup_instructions_url_node = (<p>{I18n.t("components.device_setup.download")} <a href={this.props.device_model.setup_instructions_url} target="_blank">{I18n.t("components.device_setup.pdf_file")}</a></p>)
     }
 
     var support_url = this.props.device_model.support_url;
     var support_url_node = null;
 
     if (support_url != null && support_url != '') {
-      support_url_node = (<p>{I18n.t("components.device_setup.text_3")} <a href={this.props.device_model.support_url} target="_blank">{I18n.t("components.device_setup.text_4")}</a></p>)
+      support_url_node = (<p>{I18n.t("components.device_setup.visit")} <a href={this.props.device_model.support_url} target="_blank">{I18n.t("components.device_setup.online_support")}</a></p>)
     } else {
-      support_url_node = (<p>{I18n.t("components.device_setup.text_5")}</p>)
+      support_url_node = (<p>{I18n.t("components.device_setup.manufacturer")}</p>)
     }
 
     return (
       <p>
-        <a href='#' onClick={this.showInstructionsModal}>{I18n.t("components.device_setup.text_6")}</a> {I18n.t("components.device_setup.text_7")} <a href='#' onClick={this.showEmailModal}>{I18n.t("components.device_setup.text_8")}</a>.
+        <a href='#' onClick={this.showInstructionsModal}>{I18n.t("components.device_setup.view")}</a> {I18n.t("components.device_setup.how_to_setup")} <a href='#' onClick={this.showEmailModal}>{I18n.t("components.device_setup.email_setup")}</a>.
 
         <Modal ref="instructionsModal">
           <h1>

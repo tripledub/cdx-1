@@ -14,7 +14,7 @@ vi:
       patient_history: 'Lịch sử bệnh nhân'
       episode_summary: 'Tóm tắt tập'
     filters:
-      add_patient: 'Tất cả bệnh nhân'
+      add_patient: 'Thêm bệnh nhân'
       show_all: 'Hiển thị tất cả'
       name: 'Tên'
       patient_id: 'Mã bệnh nhân'
