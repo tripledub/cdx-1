@@ -12,7 +12,6 @@ var PatientTestOrders = React.createClass({
         { title: 'Order by User', fieldName: 'requester' },
         { title: 'Request Date',  fieldName: 'requestDate' },
         { title: 'Due Date',      fieldName: 'dueDate' },
-        { title: 'Turnaround Time', fieldName: '' },
         { title: 'status',        fieldName: 'status' }
       ]
     };
@@ -74,8 +73,6 @@ var PatientTestOrders = React.createClass({
             patientTestOrder._highlight_overdue = 'overdueHightlight';
           }
         }
-        // NEXT LINE IS NOT CORRECT AT PRESENT - NO COMPLETED DATE EXISTS YET
-        patientTestOrder.turnaroundTime = today - Date.parse(patientTestOrder.requestedDate);
         rows.push(<PatientTestOrder patientTestOrder={patientTestOrder} key={patientTestOrder.id} />);
       }
     );

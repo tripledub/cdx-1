@@ -9,8 +9,7 @@ class Presenters::Patients
           name:           patient_display_name(patient.name),
           entityId:       patient.entity_id,
           dateOfBirth:    Extras::Dates::Format.datetime_with_time_zone(patient.birth_date_on),
-          address:        show_first_address(patient),
-          lastEncounter:  Extras::Dates::Format.datetime_with_time_zone(patient.last_encounter),
+          addresses:      show_addresses(patient),
           viewLink:       Rails.application.routes.url_helpers.patient_path(patient)
         }
       end
@@ -29,9 +28,10 @@ class Presenters::Patients
 
     protected
 
-    def show_first_address(patient)
-      return '' unless patient.addresses.present?
-      show_full_address(patient.addresses.first)
+    def show_addresses(patient)
+      patient.addresses.map do |address|
+        show_full_address(address)
+      end.compact.reject(&:blank?)
     end
   end
 end

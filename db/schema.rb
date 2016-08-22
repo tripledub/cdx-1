@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160729125611) do
+ActiveRecord::Schema.define(version: 20160816140022) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -160,7 +160,7 @@ ActiveRecord::Schema.define(version: 20160729125611) do
   add_index "audit_updates", ["uuid"], name: "index_audit_updates_on_uuid", using: :btree
 
   create_table "comments", force: :cascade do |t|
-    t.date     "commented_on"
+    t.date     "commented_on",                     default: '2016-06-16'
     t.text     "comment",            limit: 65535
     t.string   "description",        limit: 255
     t.string   "uuid",               limit: 255
@@ -506,7 +506,6 @@ ActiveRecord::Schema.define(version: 20160729125611) do
     t.string   "results_other2",       limit: 255
     t.string   "results_other3",       limit: 255
     t.string   "results_other4",       limit: 255
-    t.string   "culture_format",       limit: 255
     t.string   "trace",                limit: 255
     t.string   "test_result",          limit: 255
     t.string   "method_used",          limit: 255
@@ -588,8 +587,10 @@ ActiveRecord::Schema.define(version: 20160729125611) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "comment",      limit: 65535
+    t.datetime "completed_at"
   end
 
+  add_index "requested_tests", ["completed_at"], name: "index_requested_tests_on_completed_at", using: :btree
   add_index "requested_tests", ["datetime"], name: "index_requested_tests_on_datetime", using: :btree
   add_index "requested_tests", ["deleted_at"], name: "index_requested_tests_on_deleted_at", using: :btree
   add_index "requested_tests", ["encounter_id"], name: "index_requested_tests_on_encounter_id", using: :btree

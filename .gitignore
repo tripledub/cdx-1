@@ -44,3 +44,5 @@ Cheffile.lock
 .vagrant
 .rbenv-vars
 .rbenv-vars
+public/javascripts/translations.js
+public/javascripts/i18n.js

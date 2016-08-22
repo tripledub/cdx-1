@@ -14,41 +14,11 @@ class PatientsController < ApplicationController
   end
 
   def index
-    @can_create = has_access?(@navigation_context.institution, CREATE_INSTITUTION_PATIENT)
-    @patients = check_access(Patient.where(is_phantom: false).where(institution: @navigation_context.institution), READ_PATIENT)
-
-    @patients = @patients.within(@navigation_context.entity, @navigation_context.exclude_subsites)
-
-    params[:name] = session[:patients_filter_name] if params[:name].nil?
-    session[:patients_filter_name] = params[:name]
-    
-    params[:entity_id] = session[:patients_filter_entity_id] if params[:entity_id].nil?
-    session[:patients_filter_entity_id] = params[:entity_id]
-
-    params[:location] = session[:patients_filter_location] if params[:location].nil?
-    session[:patients_filter_location] = params[:location]
-
-    params[:last_encounter] = session[:patients_filter_lastencounter] if params[:last_encounter].nil?
-    session[:patients_filter_lastencounter] = params[:last_encounter]
-
-    params[:page] = session[:patients_filter_page] if params[:page].nil?
-    session[:patients_filter_page] = params[:page]
-
-    params[:page_size] = session[:patients_filter_pagesize] if params[:page_size].nil?
-    session[:patients_filter_pagesize] = params[:page_size] 
-
-
-    @patients = @patients.where("name LIKE concat('%', ?, '%')", params[:name]) unless params[:name].blank?
-    @patients = @patients.where("entity_id LIKE concat('%', ?, '%')", params[:entity_id]) unless params[:entity_id].blank?
-    # location_geoid is hierarchical so a prefix search works
-    @patients = @patients.where("location_geoid LIKE concat(?, '%')", params[:location]) unless params[:location].blank?
-    @patients = @patients.where(id: Encounter.select(:patient_id).where("encounters.start_time > ?", params["last_encounter"])) if params["last_encounter"].present?
-
-    @date_options = Extras::Dates::Filters.date_options_for_filter
-
-    @total            = @patients.count
+    set_session_from_params
+    patients          = Patients::Finder.new(current_user, @navigation_context, params).filter_query
+    @total            = patients.count
     order_by, offset  = perform_pagination('patients.name')
-    @patients         = @patients.order(order_by).limit(@page_size).offset(offset)
+    @patients         = patients.order(order_by).limit(@page_size).offset(offset)
   end
 
   def show
@@ -146,5 +116,22 @@ class PatientsController < ApplicationController
     ['birth_date_on(2i)', 'birth_date_on(3i)'].each do |date_part|
       params['patient'][date_part] = '1' unless params['patient'][date_part].present?
     end
+  end
+
+  def set_session_from_params
+    params[:name]                  = session[:patients_filter_name] if params[:name].nil?
+    session[:patients_filter_name] = params[:name]
+
+    params[:entity_id]                  = session[:patients_filter_entity_id] if params[:entity_id].nil?
+    session[:patients_filter_entity_id] = params[:entity_id]
+
+    params[:location]                  = session[:patients_filter_location] if params[:location].nil?
+    session[:patients_filter_location] = params[:location]
+
+    params[:page]                  = session[:patients_filter_page] if params[:page].nil?
+    session[:patients_filter_page] = params[:page]
+
+    params[:page_size]                 = session[:patients_filter_pagesize] if params[:page_size].nil?
+    session[:patients_filter_pagesize] = params[:page_size]
   end
 end

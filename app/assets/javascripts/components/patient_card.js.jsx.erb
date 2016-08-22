@@ -1,3 +1,11 @@
+var PatientAddress = React.createClass({
+  render: function() {
+    return (
+      <span>{this.props.address}<br /></span>
+    );
+  }
+});
+
 var PatientCard = React.createClass({
   getDefaultProps: function() {
     return {
@@ -59,7 +67,7 @@ var PatientCard = React.createClass({
                 </li>
                 <li>
                   <label>Address</label>
-                  {patient.address}<br/>
+                  {this.props.patient.multi_address.map(function(addr){ return <PatientAddress address={addr} /> })}
                 </li>
                 <li>
                   <label>Phone</label>

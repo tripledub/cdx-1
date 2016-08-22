@@ -23,8 +23,7 @@ describe Presenters::Patients do
         name:           patient_display_name(Patient.first.name),
         entityId:       Patient.first.entity_id,
         dateOfBirth:    Extras::Dates::Format.datetime_with_time_zone(Patient.first.birth_date_on),
-        address:        "#{Patient.first.addresses.first.address}, #{Patient.first.addresses.first.city}, #{Patient.first.addresses.first.state}, #{Patient.first.addresses.first.zip_code}",
-        lastEncounter:  Extras::Dates::Format.datetime_with_time_zone(Patient.first.last_encounter),
+        addresses:      ["#{Patient.first.addresses.first.address}, #{Patient.first.addresses.first.city}, #{Patient.first.addresses.first.state}, #{Patient.first.addresses.first.zip_code}"],
         viewLink:       Rails.application.routes.url_helpers.patient_path(Patient.first)
       })
     end

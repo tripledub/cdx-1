@@ -3,17 +3,17 @@
 
   %script
     $(document).ready( function(){
-    $('.panel').hide();
+    $('.panel-tab').hide();
 
-    $('.panel#episodetype_tb').show();  // default
+    $('.panel-tab#episodetype_tb').show();  // default
     $('span#episodeType').text('TB');
 
     $('#epitabs li').on('click', function() {
     var type = $(this).attr('id').split('_')[1];  // get bit after the 'tab_' in the id
     $('#epitabs li').removeClass('active');
     $(this).addClass('active');
-    $('.panel').hide();
-    $('.panel#episodetype_'+type).show();
+    $('.panel-tab').hide();
+    $('.panel-tab#episodetype_'+type).show();
     $('span#episodeType').text(type);
     });
 
@@ -27,19 +27,19 @@
     %li#tab_ebola
       = link_to I18n.t('episode_type.ebola'),'#'
 
-  .panel#episodetype_ebola
+  .panel.panel-tab#episodetype_ebola
     .row
       .col-6
         %b
           = I18n.t('episodes.form.episode_type_not_available')
 
-  .panel#episodetype_hiv
+  .panel.panel-tab#episodetype_hiv
     .row
       .col-6
         %b
           = I18n.t('episodes.form.episode_type_not_available')
 
-  .panel#episodetype_tb
+  .panel.panel-tab#episodetype_tb
     .row
       .col-6
         = f.label :diagnosis

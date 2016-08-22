@@ -27,11 +27,14 @@ var RequestedTestRow = React.createClass({
     tempTest.status = event.target.value;
     this.setState({ test: tempTest });
     this.props.onTestChanged(this.state.test);
+    if (tempTest.status == 'rejected') {
+      this.refs.inviteModal.openInviteModal();
+    }
   },
 
   commentChanged: function(newComment) {
-    var tempTest = this.state.test;
-    tempTest.comment=newComment;
+    var tempTest     = this.state.test;
+    tempTest.comment = newComment;
     this.setState({ test: tempTest });
     this.props.onTestChanged(this.state.test);
   },
@@ -62,6 +65,27 @@ var RequestedTestRow = React.createClass({
       };
       name = 'dst';
     }
+	
+    if (name.indexOf('lineprobe') !== -1) {
+      if (name.indexOf('liquid') !== -1) {
+        newOrEditPath += '&media=liquid';
+      };
+      if (name.indexOf('solid') !== -1) {
+        newOrEditPath += '&media=solid';
+      };
+      name = 'dst';
+    }
+	
+    if (name.indexOf('culture') !== -1) {
+      if (name.indexOf('liquid') !== -1) {
+        newOrEditPath += '&media=liquid';
+      };
+      if (name.indexOf('culture') !== -1) {
+        newOrEditPath += '&media=solid';
+      };
+      name = 'culture';
+    }
+	
     switch(name) {
       case 'xpertmtb':
         urlPath = "/requested_tests/"+id+"/xpert_result"+newOrEditPath;
@@ -118,21 +142,26 @@ var RequestedTestRow = React.createClass({
       <tr>
         <td>{this.state.test.name}</td>
         <td>{samples}</td>
-        <td>{this.props.requested_by}</td>
+        <td>{this.props.requestedBy}</td>
         <td>{new Date(Date.parse(this.state.test.created_at)).toISOString().slice(0, 10)}</td>
         <td>{encounter.site.name}</td>
         <td>{encounter.testdue_date}</td>
-        <td><select key={this.state.test.id} onChange = {
+        <td>
+          <select key={this.state.test.id} onChange = {
               this.statusChanged
-             }
+            }
             className="input-x-medium"
             defaultValue={this.state.test.status}
             disabled = {
               !this.props.edit
              }>
-            {statusData.map(MakeItem)}
-            </select></td>
-        <td><TextInputModal key={this.state.test.id} comment={this.state.test.comment} commentChanged={this.commentChanged} edit={this.props.edit}/></td>
+            { statusData.map(MakeItem) }
+          </select>
+        </td>
+        <td>{this.state.test.turnaround}</td>
+        <td>
+          <TextInputModal key={this.state.test.id} comment={this.state.test.comment} commentChanged={this.commentChanged} edit={this.props.edit} ref='inviteModal' />
+        </td>
         <td>
           <TestResultButton testResultUrl={this.state.testResultUrl} testResultText={this.state.testResultText} showWarning={this.state.showWarning} />
         </td>
@@ -149,8 +178,8 @@ var RequestedTestsList = React.createClass({
     }
   },
 
-  onTestChanged: function(new_test) {
-    this.props.onTestChanged(new_test)
+  onTestChanged: function(newTest) {
+    this.props.onTestChanged(newTest)
   },
 
   render: function() {
@@ -158,7 +187,7 @@ var RequestedTestsList = React.createClass({
       <table className="table" id="test-table" cellPadding="0" cellSpacing="0">
         <thead>
           <tr>
-            <th className="tableheader" colSpan="9">
+            <th className="tableheader" colSpan="10">
               <span className={this.props.titleClassName}>{this.props.title}</span>
             </th>
           </tr>
@@ -170,6 +199,7 @@ var RequestedTestsList = React.createClass({
             <td>Request by</td>
             <td>Due date</td>
             <td>Status</td>
+            <td>Turnaround</td>
             <td>Comment</td>
             <td>Result</td>
           </tr>
@@ -177,7 +207,7 @@ var RequestedTestsList = React.createClass({
         <tbody>
           {this.props.requestedTests.map(function(requestedTest) {
              return <RequestedTestRow key={requestedTest.id} requestedTest={requestedTest} onTestChanged={this.onTestChanged}
-              encounter={this.props.encounter} requested_by={this.props.requested_by}  statusTypes={this.props.statusTypes}
+              encounter={this.props.encounter} requestedBy={this.props.requestedBy}  statusTypes={this.props.statusTypes}
               edit={this.props.edit} associatedTestsToResults={this.props.associatedTestsToResults} showDstWarning={this.props.showDstWarning} />;
           }.bind(this))}
         </tbody>
@@ -187,13 +217,13 @@ var RequestedTestsList = React.createClass({
 });
 
 var RequestedTestsIndexTable = React.createClass({
-  onTestChanged: function(new_test) {
-    this.props.onTestChanged(new_test)
+  onTestChanged: function(newTest) {
+    this.props.onTestChanged(newTest)
    },
 
   render: function() {
     return <RequestedTestsList requestedTests={this.props.requestedTests} encounter={this.props.encounter} onTestChanged={this.onTestChanged}
-              title={this.props.title} requested_by={this.props.requested_by} titleClassName="table-title" statusTypes={this.props.statusTypes}
+              title={this.props.title} requestedBy={this.props.requestedBy} titleClassName="table-title" statusTypes={this.props.statusTypes}
               edit={this.props.edit} associatedTestsToResults={this.props.associatedTestsToResults} showDstWarning={this.props.showDstWarning} />
   }
 });

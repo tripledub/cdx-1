@@ -17,6 +17,6 @@
             %h3
               = I18n.t('patients.index.patient', count: @total)
           = react_component "PatientsIndexTable", patients: Presenters::Patients.index_table(@patients),
-              orderBy: params["order_by"] || "patients.name"
+              orderBy: params["order_by"] || "patients.name", searchTerm: params['address']
           .pagination
             = render 'shared/pagination'

@@ -2,15 +2,16 @@
   .row.center.add-new.collapse
     .col.pe-10
       %h2
-        = link_to patients_path, class: 'side-link', title: 'Back' do
+        = link_to patients_path, class: 'side-link', title: I18n.t('views.back') do
           = image_tag "arrow-left-white.png"
-        New Patient
+        = I18n.t('patients.new.new_patient')
 
 .row
   .col.pe-12
     %section.newPatientContainer
       %header
-        %h3 New Patient Details
+        %h3
+          = I18n.t('patients.new.new_patient_details')
       = render 'form'
   .col.pe-12
     = react_component 'PatientNameSearch'

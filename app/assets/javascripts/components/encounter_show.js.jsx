@@ -6,10 +6,9 @@ var EncounterShow = React.createClass({
     };
 
     var disable_all_selects=false;
-    if (this.props.show_cancel==true || this.props.show_edit==false) {
+    if (this.props.showCancel==true || this.props.showEdit==false) {
       disable_all_selects=true;
     }
-
     return {
       user_email: user_email,
       error_messages:[],
@@ -53,12 +52,12 @@ var EncounterShow = React.createClass({
     }
   },
 
-  onTestChanged: function(new_test) {
+  onTestChanged: function(newTest) {
     var len = this.state.requestedTests.length;
     for (var i = 0; i<len; i++) {
-      if (this.state.requestedTests[i].id == new_test.id) {
+      if (this.state.requestedTests[i].id == newTest.id) {
         tempRequestedTests    = this.state.requestedTests;
-        tempRequestedTests[i] = new_test;
+        tempRequestedTests[i] = newTest;
         this.setState({
           requestedTests: tempRequestedTests
         });
@@ -67,9 +66,9 @@ var EncounterShow = React.createClass({
   },
 
   render: function() {
-    if (this.props.can_update && this.props.show_cancel) {
-      actionButton = <EncounterDelete show_edit={true} onChangeParentLevel={this.EncounterDeleteHandler} encounter={this.props.encounter} />;
-    } else if (this.props.can_update && this.props.show_edit) {
+    if (this.props.can_update && this.props.showCancel) {
+      actionButton = <EncounterDelete showEdit={true} onChangeParentLevel={this.EncounterDeleteHandler} encounter={this.props.encounter} />;
+    } else if (this.props.can_update && this.props.showEdit) {
       actionButton = <EncounterUpdate onChangeParentLevel={this.EncounterUpdateHandler} />;
     } else {
       actionButton = <ShowNoButton />;
@@ -80,6 +79,19 @@ var EncounterShow = React.createClass({
     } else {
       performing_site = this.props.encounter.performing_site.name;
     }
+
+    if (this.props.encounter.coll_sample_type == "other") {
+      sample_type = this.props.encounter.coll_sample_other;
+    } else {
+      sample_type = this.props.encounter.coll_sample_type;
+    }
+
+    if (this.props.encounter.exam_reason == "diag") {
+      examreason = "Diagnosis";
+    } else {
+      examreason = "Follow-Up";
+    }
+
     return (
       <div className="testflow">
         <div className="row errorMsg">
@@ -111,25 +123,34 @@ var EncounterShow = React.createClass({
           <div className="panel">
             <div className="row collapse">
               <div className="col-6">
-                <DisplayFieldWithLabel fieldLabel='Requesting site:'  fieldValue={ this.props.encounter.site.name } />
-                <DisplayFieldWithLabel fieldLabel='Performing site:' fieldValue={ performing_site } />
                 <DisplayFieldWithLabel fieldLabel='Order Id:'    fieldValue={ this.props.encounter.uuid } />
+                <DisplayFieldWithLabel fieldLabel='Reason for examination:'    fieldValue={ examreason } />
                 <DisplayFieldWithLabel fieldLabel='Testing for:' fieldValue={ this.props.encounter.testing_for } />
                 {
                   this.props.encounter.testing_for === 'TB' ?
-                  <DisplayFieldWithLabel fieldLabel='Culture format:' fieldValue={ this.props.encounter.culture_format } /> : null
+                  this.props.encounter.culture_format != '' ?
+                  <DisplayFieldWithLabel fieldLabel='Culture format:' fieldValue={ this.props.encounter.culture_format } /> 
+                  : null
+                  : null
                 }
                 <DisplayFieldWithLabel fieldLabel='Comment:' fieldValue={ this.props.encounter.diag_comment } />
                 {
                   this.props.encounter.exam_reason === 'follow' ?
-                  <DisplayFieldWithLabel fieldLabel='Weeks in treatment:' fieldValue={ this.props.encounter.treatment_weeks } /> : null
+                  <DisplayFieldWithLabel fieldLabel='Weeks in treatment:' fieldValue={ this.props.encounter.treatment_weeks } /> 
+                  : null
                 }
                 {
-                  this.props.show_edit ?
+                  this.props.encounter.presumptive_rr ? 
+                  <DisplayFieldWithLabel fieldLabel='Presumptive TB RR:' fieldValue={ this.props.encounter.presumptive_rr } /> 
+                  : null
+                }
+                {
+                  this.props.showEdit ?
                   <DisplayFieldWithLabel fieldLabel='Samples Id:'    fieldValue={ <LabSamplesList context={this.props.context} samples={this.props.encounter.samples}  /> } /> : null
                 }
 
-                <DisplayFieldWithLabel fieldLabel='Sample type:'   fieldValue={ this.props.encounter.coll_sample_type } />
+                <DisplayFieldWithLabel fieldLabel='Sample type:'   fieldValue={ sample_type } />
+
                 <DisplayFieldWithLabel fieldLabel='Test due date:' fieldValue={ this.props.encounter.testdue_date } />
                 <DisplayFieldWithLabel fieldLabel='Status:'        fieldValue={ this.props.encounter.status } />
               </div>
@@ -145,8 +166,8 @@ var EncounterShow = React.createClass({
         </div>
 
         <div className="row">
-          <RequestedTestsIndexTable encounter={this.props.encounter} requestedTests={this.state.requestedTests} requested_by={this.props.requested_by}
-            statusTypes={this.props.statusTypes} edit={this.props.show_edit} onTestChanged={this.onTestChanged} associatedTestsToResults={this.props.associatedTestsToResults}
+          <RequestedTestsIndexTable encounter={this.props.encounter} requestedTests={this.state.requestedTests} requestedBy={this.props.requested_by}
+            statusTypes={this.props.statusTypes} edit={this.props.showEdit} onTestChanged={this.onTestChanged} associatedTestsToResults={this.props.associatedTestsToResults}
             showDstWarning={this.props.showDstWarning} />
         </div>
         <br />
@@ -210,7 +231,7 @@ var EncounterDelete = React.createClass({
         <ConfirmationModalEncounter message= {'You are about to permanently cancel this test order. Are you sure you want to proceed?'} title= {'Cancel confirmation'} cancelTarget= {this.cancelDeleteClickHandler} target={this.confirmClickHandler} hideOuterEvent={this.cancelDeleteClickHandler} deletion= {true} hideCancel= {false} confirmMessage= {'Delete'} />
       );
     }
-    else if (this.props.show_edit && (this.props.encounter.status != 'inprogress')) {
+    else if (this.props.showEdit && (this.props.encounter.status != 'inprogress')) {
       return (
         <div>
           <a className = "btn-secondary pull-right" onClick={this.clickHandler} id="delete_encounter" href="#">Cancel Test Order</a>

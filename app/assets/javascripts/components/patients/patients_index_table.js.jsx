@@ -1,12 +1,29 @@
 var PatientResultRow = React.createClass({
   render: function() {
+    var that = this;
+
     return (
     <tr data-href={this.props.patient.viewLink}>
       <td>{this.props.patient.name}</td>
       <td>{this.props.patient.entityId}</td>
       <td>{this.props.patient.dateOfBirth}</td>
-      <td>{this.props.patient.address}</td>
-      <td>{this.props.patient.lastEncounter}</td>
+      <td>
+        {
+          this.props.searchTerm ?
+            this.props.patient.addresses.map( function(address, index) {
+              return(
+                <TextHighlight highlight={that.props.searchTerm} text={address} key={index} />
+              )
+            }) :
+            this.props.patient.addresses.map( function(address, index) {
+              return(
+                <p key={index} className="text-highlight">
+                  {address}
+                </p>
+              )
+            })
+        }
+      </td>
     </tr>);
   }
 });
@@ -32,8 +49,8 @@ var PatientsIndexTable = React.createClass({
 
     this.props.patients.forEach(
       function(patient) {
-        rows.push(<PatientResultRow key={patient.id} patient={patient} />);
-      }
+        rows.push(<PatientResultRow key={patient.id} patient={patient} searchTerm={this.props.searchTerm} />);
+      }.bind(this)
     );
 
     return (
@@ -44,7 +61,6 @@ var PatientsIndexTable = React.createClass({
             {sortableHeader("Patient Id", "patients.entity_id")}
             {sortableHeader("Date of birth", "patients.birth_date_on")}
             {sortableHeader("Address", "patients.address")}
-            <th data-resizable-column-id="last_encounter">Last test order</th>
           </tr>
         </thead>
         <tbody>

@@ -1,5 +1,6 @@
 class RequestedTest < ActiveRecord::Base
   include Auditable
+  include ActionView::Helpers::DateHelper
 
   belongs_to :encounter
 
@@ -17,6 +18,7 @@ class RequestedTest < ActiveRecord::Base
 
   delegate :patient, to: :encounter
 
+  before_save :update_completed_status
   after_save :update_encounter_status
 
   class << self
@@ -31,6 +33,15 @@ class RequestedTest < ActiveRecord::Base
 
       dst_new && culture_new
     end
+  end
+
+  def turnaround
+    return I18n.t('requested_test.incomplete') unless completed_at
+    distance_of_time_in_words(created_at, completed_at)
+  end
+
+  def update_completed_status
+    self.completed_at = Time.now if status == 'completed'
   end
 
   def update_encounter_status

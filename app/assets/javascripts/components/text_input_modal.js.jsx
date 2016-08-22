@@ -1,45 +1,50 @@
 var TextInputModal = React.createClass({
   getInitialState: function() {
-    var button_text="Save";
-    if (this.props.edit==false) {
-      button_text="Close"; 
-    }
-
-    var new_comment = this.props.comment;
-    if ( this.props.comment==null) {
-       new_comment='';
+    var buttonText = "Save";
+    if (this.props.edit == false) {
+      buttonText = "Close";
     }
 
     return {
-      new_comment: new_comment,
-      button_text: button_text
+      newComment: this.props.comment,
+      buttonText: buttonText
     };
   },
+
   openInviteModal: function() {
     this.refs.inviteModal.show();
     event.preventDefault();
   },
-  closeInviteModal: function() {
-    this.refs.inviteModal.hide();
+
+  hideOuterEvent: function () {
+    event.preventDefault();
+    this.setState({ newComment: this.props.comment });
   },
+
   handleChange: function(e) {
-    this.setState({
-      new_comment: e.currentTarget.value
-    });
+    this.setState({ newComment: e.currentTarget.value });
   },
+
   handleSave: function() {
+    event.preventDefault();
+    this.props.commentChanged(this.state.newComment);
     this.refs.inviteModal.hide();
-    this.props.commentChanged(this.state.new_comment);
   },
+
   render: function() {
-    return (<div>
-      <a className="btn-add icon side-link" href='#' title="Add Comment" onClick={this.openInviteModal} ><span className="icon-pencil icon-white"></span></a>
-      <Modal ref="inviteModal">
-        <h1>Test Comment</h1>
-        <a className = "btn-link" href = "#" onClick={this.handleSave}>{this.state.button_text}</a><br />
-        <textarea rows="10" cols="50" placeholder="Add Comment" value={this.state.new_comment} onChange={this.handleChange}
-         id = "testcomment" disabled={!this.props.edit} />
-      </Modal>
-    </div>);
+    return (
+      <div>
+        <a className="btn-add side-link" href='#' title="Add Comment" onClick={this.openInviteModal} ><span className="icon-pencil icon-white"></span></a>
+        <Modal ref="inviteModal" hideOuterEvent={this.hideOuterEvent}>
+          <h1>Test Comment</h1>
+          <p>
+            <textarea rows="10" cols="50" placeholder="Add Comment" value={this.state.newComment} onChange={this.handleChange} id="testcomment" disabled={!this.props.edit} />
+          </p>
+          <p>
+            <a className = "btn-add-link btn-primary" href = "#" onClick={this.handleSave}>{this.state.buttonText}</a>
+          </p>
+        </Modal>
+      </div>
+    );
   }
 });

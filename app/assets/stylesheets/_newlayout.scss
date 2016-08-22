@@ -899,3 +899,136 @@ ul.samples button.btn-primary {
     background:#ddd;
   }
 }
+
+
+.commentbox .col-6 {
+align-self: flex-start;
+}
+
+.commentbox label {
+width:100%;
+font-weight:bold;
+margin-top:30px;
+line-height:25px !important;
+min-height:25px !important;
+}
+
+.commentbox .col-12 {
+flex: 1 1 0;
+padding-right:10px;
+}
+
+
+
+
+.resultsforms label{
+line-height:35px;
+margin-top:0px;
+margin-bottom:0px;
+}
+
+
+.resultsforms .pe-2 label{
+font-weight:bold;
+}
+
+
+.resultsforms .pe-2{
+align-self: flex-start;
+}
+
+.resultsforms .row{
+margin-bottom:30px;
+}
+
+.btn-add-link:empty {
+   display: none;
+}
+
+.newTestOrder .pe-2{
+flex: 0 0 25%;
+}
+
+.commentbox .col-6 .row {
+margin-bottom:10px;
+}
+
+.commentbox .col-6{
+padding:10px 5px 15px 5px;
+}
+
+.commentbox .patient-details ul{
+width:50%;
+}
+
+
+.commentbox .patient-details ul label{
+min-width:35%;
+width:35%;
+}
+
+.commentbox .patient-details ul{
+margin-top:10px;
+margin-bottom:10px;
+}
+
+.commentbox label {
+    line-height: 35px !important;
+    margin-top: 0px !important;
+    min-height: 35px !important;
+}
+
+form#filters-form.filteroptions #clear_button{
+line-height:15px;
+height:19px;
+padding:0;
+margin-top:15px;
+background:#2196f3;
+color:#fff;
+border:0px;
+border-radius:0px;
+}
+
+form#filters-form.filteroptions #clear_button:hover{
+background:#478BC9;
+}
+
+
+.audit_presenter{
+padding:10px;
+padding-left:15px;
+text-transform: capitalize;
+}
+
+
+
+.add2 label:before{
+    content: "Alternative "
+}
+
+.nickname .pe-2{
+    max-width:144px !important;
+    width:144px !important;
+}
+
+.add2 .pe-2 .tooltip{
+    max-width:145px !important;
+    width:145px !important;
+}
+
+.input-large, #patient_gender {
+    width: 283px;
+}
+
+.add2 {
+    left: 580px;
+    position: absolute;
+    top: 135px;
+}
+
+#contentcontainer .nickname {
+    left: 580px;
+    position: absolute;
+    top: 92px;
+    width: 100%;
+}
