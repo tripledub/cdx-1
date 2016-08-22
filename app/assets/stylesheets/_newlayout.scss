@@ -999,3 +999,36 @@ padding:10px;
 padding-left:15px;
 text-transform: capitalize;
 }
+
+
+
+.add2 label:before{
+    content: "Alternative "
+}
+
+.nickname .pe-2{
+    max-width:144px !important;
+    width:144px !important;
+}
+
+.add2 .pe-2 .tooltip{
+    max-width:145px !important;
+    width:145px !important;
+}
+
+.input-large, #patient_gender {
+    width: 283px;
+}
+
+.add2 {
+    left: 580px;
+    position: absolute;
+    top: 135px;
+}
+
+#contentcontainer .nickname {
+    left: 580px;
+    position: absolute;
+    top: 92px;
+    width: 100%;
+}
