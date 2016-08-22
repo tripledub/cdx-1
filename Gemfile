@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.5'
+gem 'rails', '~> 4.2'
 gem 'mysql2'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 2.7.2'
@@ -58,7 +58,7 @@ gem 'puma', '~>3.5'
 gem 'sidekiq'
 gem 'sinatra'
 gem 'sidekiq-cron', '~> 0.3.1'
-
+gem 'i18n-js',">= 3.0.0.rc13"
 group :development do
   gem 'letter_opener'
   gem 'letter_opener_web'

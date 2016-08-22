@@ -9,7 +9,6 @@ var EncounterShow = React.createClass({
     if (this.props.showCancel==true || this.props.showEdit==false) {
       disable_all_selects=true;
     }
-
     return {
       user_email: user_email,
       error_messages:[],
@@ -80,6 +79,19 @@ var EncounterShow = React.createClass({
     } else {
       performing_site = this.props.encounter.performing_site.name;
     }
+
+    if (this.props.encounter.coll_sample_type == "other") {
+      sample_type = this.props.encounter.coll_sample_other;
+    } else {
+      sample_type = this.props.encounter.coll_sample_type;
+    }
+
+    if (this.props.encounter.exam_reason == "diag") {
+      examreason = "Diagnosis";
+    } else {
+      examreason = "Follow-Up";
+    }
+
     return (
       <div className="testflow">
         <div className="row errorMsg">
@@ -111,25 +123,34 @@ var EncounterShow = React.createClass({
           <div className="panel">
             <div className="row collapse">
               <div className="col-6">
-                <DisplayFieldWithLabel fieldLabel='Requesting site:'  fieldValue={ this.props.encounter.site.name } />
-                <DisplayFieldWithLabel fieldLabel='Performing site:' fieldValue={ performing_site } />
                 <DisplayFieldWithLabel fieldLabel='Order Id:'    fieldValue={ this.props.encounter.uuid } />
+                <DisplayFieldWithLabel fieldLabel='Reason for examination:'    fieldValue={ examreason } />
                 <DisplayFieldWithLabel fieldLabel='Testing for:' fieldValue={ this.props.encounter.testing_for } />
                 {
                   this.props.encounter.testing_for === 'TB' ?
-                  <DisplayFieldWithLabel fieldLabel='Culture format:' fieldValue={ this.props.encounter.culture_format } /> : null
+                  this.props.encounter.culture_format != '' ?
+                  <DisplayFieldWithLabel fieldLabel='Culture format:' fieldValue={ this.props.encounter.culture_format } /> 
+                  : null
+                  : null
                 }
                 <DisplayFieldWithLabel fieldLabel='Comment:' fieldValue={ this.props.encounter.diag_comment } />
                 {
                   this.props.encounter.exam_reason === 'follow' ?
-                  <DisplayFieldWithLabel fieldLabel='Weeks in treatment:' fieldValue={ this.props.encounter.treatment_weeks } /> : null
+                  <DisplayFieldWithLabel fieldLabel='Weeks in treatment:' fieldValue={ this.props.encounter.treatment_weeks } /> 
+                  : null
+                }
+                {
+                  this.props.encounter.presumptive_rr ? 
+                  <DisplayFieldWithLabel fieldLabel='Presumptive TB RR:' fieldValue={ this.props.encounter.presumptive_rr } /> 
+                  : null
                 }
                 {
                   this.props.showEdit ?
                   <DisplayFieldWithLabel fieldLabel='Samples Id:'    fieldValue={ <LabSamplesList context={this.props.context} samples={this.props.encounter.samples}  /> } /> : null
                 }
 
-                <DisplayFieldWithLabel fieldLabel='Sample type:'   fieldValue={ this.props.encounter.coll_sample_type } />
+                <DisplayFieldWithLabel fieldLabel='Sample type:'   fieldValue={ sample_type } />
+
                 <DisplayFieldWithLabel fieldLabel='Test due date:' fieldValue={ this.props.encounter.testdue_date } />
                 <DisplayFieldWithLabel fieldLabel='Status:'        fieldValue={ this.props.encounter.status } />
               </div>

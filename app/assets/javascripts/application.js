@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
+//= require i18n
+//= require i18n/translations
 //= require jquery.are-you-sure
 //= require urijs
 //= require lodash

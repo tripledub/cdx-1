@@ -1777,3 +1777,39 @@ div#new-xpert-results section.row {
     padding:0 15px;
   }
 }
+
+@media (min-width: 1200px) {
+  #contentcontainer .nickname {
+    position:absolute;
+    top:92px;
+    left:480px;
+    width:100%;
+
+    .col.pe-2 {
+    }
+  }
+
+  .add2 {
+   position:absolute;
+   top:135px;
+   left:480px;
+  }
+}
+
+@media (min-width: 1400px) {
+  #contentcontainer .nickname {
+    position:absolute;
+    top:92px;
+    left:650px;
+    width:100%;
+
+    .col.pe-2 {
+    }
+  }
+
+  .add2 {
+   position:absolute;
+   top:135px;
+   left:650px;
+  }
+}

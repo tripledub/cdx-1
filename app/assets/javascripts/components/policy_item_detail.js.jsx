@@ -32,11 +32,13 @@ var PolicyItemDetail = React.createClass({
       actions: {
         $apply: (function(actions) {
           actions = actions.slice(); // clone the list - so we don't modify the original one
-          var actionIndex = actions.indexOf(function(anAction) { return anAction.id == action.id });
+          var actionIndex = actions.indexOf( actions.find(function(anAction) { return anAction.id == action.id }) );
           if(actionIndex < 0) {
-            actions.push(action);
+            actions.push(action); // add
+            $('[key!="all"]').prop('enabled',false);
           } else {
-            actions.splice(actionIndex, 1);
+            actions.splice(actionIndex, 1); // remove
+            $('[key!="all"]').prop('enabled',true);
           }
           return actions;
         }).bind(this)
@@ -127,9 +129,10 @@ var PolicyItemDetail = React.createClass({
           </div>
           <div className="col">
             <div className="section-content">
-              <input type="checkbox" id={this.idFor("action-all")} checked={hasAllAction} onChange={this.toggleAction.bind(this, allAction)} />
-              <label htmlFor={this.idFor("action-all")}>All</label>
-
+              <div key="all">
+                <input type="checkbox" id={this.idFor("action-all")} checked={hasAllAction} onChange={this.toggleAction.bind(this, allAction)} />
+                <label htmlFor={this.idFor("action-all")}>All</label>
+              </div>
               { Object.keys(actions).map(function(actionKey, index) {
                 var action = actions[actionKey];
                 return (

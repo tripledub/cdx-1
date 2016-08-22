@@ -2,3 +2,4 @@ en:
   requested_test:
     validations:
       rejected_no_comment: 'You need to add a comment explaining why the test is rejected.'
+    incomplete: 'Incomplete'

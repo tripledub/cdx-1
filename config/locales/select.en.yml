@@ -31,10 +31,10 @@ en:
         contaminated: 'Contaminated'
     dst_lpa:
       dst_lpa_options:
-        resistant: 'R'
-        susceptible: 'S'
-        contaminated: 'C'
-        not_done: '--'
+        resistant: 'Resistant'
+        susceptible: 'Susceptible'
+        contaminated: 'Contaminated'
+        not_done: Not Done
         resistant_long: 'Resistant'
         susceptible_long: 'Susceptible'
         contaminated_long: 'Contaminated'
