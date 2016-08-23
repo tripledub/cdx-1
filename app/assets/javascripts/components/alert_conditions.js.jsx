@@ -33,7 +33,7 @@ var AlertCondition = React.createClass({
     return (
       <div className = "row" id = "conditionRow">
         <div className = "col pe-2" >
-          <label>I18n.t("components.alert_conditions.condition_row_label")</label>
+          <label>{I18n.t("components.alert_conditions.condition_row_label")}</label>
         </div>
         <div className = "col" >
           <Select
@@ -96,7 +96,7 @@ var AlertConditionResults = React.createClass({
     return (
       <div className = "row" id = "conditionResultRow">
         <div className = "col pe-2" >
-          <label>I18n.t("components.alert_conditions.condition_result_label")</label>
+          <label>{I18n.t("components.alert_conditions.condition_result_label")}</label>
         </div>
         <div className = "col" >
           <Select
@@ -159,7 +159,7 @@ var AlertConditionResultStatuses = React.createClass({
     return (
       <div className = "row" id = "conditionresultstatusesrow">
         <div className = "col pe-2" >
-          <label>I18n.t("components.alert_conditions.condition_status_label")</label>
+          <label>{I18n.t("components.alert_conditions.condition_status_label")}</label>
         </div>
         <div className = "col" >
           <Select
@@ -192,7 +192,7 @@ var AlertConditionThreshold = React.createClass({
     return (
       <div className = "row" id = "thresholdRow">
         <div className = "col pe-2" >
-          <label>I18n.t("components.alert_conditions.Threshold_label")</label>
+          <label>{I18n.t("components.alert_conditions.Threshold_label")}</label>
         </div>
 
         <div className = "col" >

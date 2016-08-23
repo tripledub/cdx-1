@@ -184,7 +184,7 @@ var PolicyDefinition = React.createClass({
                   var selectedClass = this.state.activeTab == index ? "selected" : "";
                   return <li key={index} onClick={this.setActiveTab.bind(this,index)} className={selectedClass}><PolicyItem statement={statement} onRemove={this._removeStatement} /></li>;
                 }.bind(this))}
-                <li><a onClick={this.newPolicy} href="javascript:" className="btn-add-link"><span className="icon-circle-plus icon-blue"></span>Add policy</a></li>
+                <li><a onClick={this.newPolicy} href="javascript:" className="btn-add-link"><span className="icon-circle-plus icon-blue"></span>{I18n.t("components.policy_definition.add_policy_btn")}</a></li>
               </ul>
             </div>
           </div>
