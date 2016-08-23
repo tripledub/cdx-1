@@ -1,7 +1,14 @@
 var PatientAddress = React.createClass({
   render: function() {
+    if( this.props.addresscount == 1 ) 
+      addr_label = 'components.patient_card.address_col'; 
+    else 
+      addr_label = 'components.patient_card.alt_address_col';
     return (
+      <span>
+      <label>{I18n.t(addr_label)}</label>
       <span>{this.props.address}<br /></span>
+      </span>
     );
   }
 });
@@ -48,6 +55,7 @@ var PatientCard = React.createClass({
     }
     else
     {
+      addresscount = 0
       return (
         <%= to_jsx(card(image: asset_url('card-unkown.png')) do |c|
           c.top do
@@ -66,8 +74,12 @@ var PatientCard = React.createClass({
                   {patientInfo(patient)}
                 </li>
                 <li>
-                  <label>{I18n.t("components.patient_card.address_col")}</label>
-                  {this.props.patient.multi_address.map(function(addr){ return <PatientAddress address={addr} /> })}
+                  { this.props.patient.multi_address.map(function(addr)
+                    { 
+                      addresscount++
+                      return <PatientAddress address={addr} addresscount={addresscount}/>
+                    })
+                  }
                 </li>
                 <li>
                   <label>{I18n.t("components.patient_card.phone_col")}</label>
