@@ -6,3 +6,6 @@ en:
       no_patient: 'Every new encounter must belong to a patient. Please go to a patient page and click on Add test order'
     show:
       test_order: 'Test order'
+    perform_encounter_action:
+      merge: 'Cannot add a test or sample that belongs to a different %{entity_type}'
+      error: 'Error %{action_name} %{class_name}'

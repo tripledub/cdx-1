@@ -18,9 +18,9 @@ RSpec.describe EncounterStatus do
   let(:culture_result)         { CultureResult.make requested_test: culture_requested_test }
 
   describe 'change_status' do
-    context 'if some requested tests are pending or in progress' do
+    context 'if some requested tests are in progress' do
       before :each do
-        culture_requested_test.update(status: :pending)
+        culture_requested_test.update(status: :inprogress)
         described_class.change_status(encounter)
         encounter.reload
       end
@@ -29,6 +29,19 @@ RSpec.describe EncounterStatus do
         expect(encounter.status).to eq('inprogress')
       end
     end
+
+    context 'if requested tests are pending' do
+      before :each do
+        culture_requested_test.update(status: :pending)
+        described_class.change_status(encounter)
+        encounter.reload
+      end
+
+      it 'should change the test order status to pending' do
+        expect(encounter.status).to eq('pending')
+      end
+    end
+
 
     context 'if all requested tests are completed or rejected' do
       before :each do
