@@ -43,7 +43,7 @@ class RolesController < ApplicationController
     end
 
     if @role.save
-      redirect_to roles_path, notice: 'Role was successfully created.'
+      redirect_to roles_path, notice: I18n.t('roles.create.success')
     else
       render_with_definitions 'new'
     end
@@ -88,7 +88,7 @@ class RolesController < ApplicationController
           end
         end
 
-        redirect_to roles_path, notice: 'Role was successfully updated.'
+        redirect_to roles_path, notice: I18n.t('roles.update.success')
       end
     rescue
       @role.definition = role_params[:definition]
@@ -101,7 +101,7 @@ class RolesController < ApplicationController
     return unless authorize_resource(@role, DELETE_ROLE)
 
     @role.destroy
-    redirect_to roles_path, notice: 'Role was successfully deleted.'
+    redirect_to roles_path, notice: I18n.t('roles.destroy.success')
   end
 
   def autocomplete

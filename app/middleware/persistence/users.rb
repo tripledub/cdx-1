@@ -36,6 +36,23 @@ class Persistence::Users
   end
 
   def add_role(user, role)
+    add_default_institution_read(user)
     user.roles << role unless user.roles.include?(role)
+  end
+
+  def add_default_institution_read(user)
+    return unless institution = find_from_user_context
+    role = Role.find_by_name("Institution #{institution.name} Reader")
+    user.roles << role unless user.roles.include?(role)
+  end
+
+  def find_from_user_context
+    institution = Institution.find_by_uuid(@current_user.last_navigation_context)
+    if !institution
+      site        = Site.find_by_uuid(@current_user.last_navigation_context)
+      institution = site.institution if site
+    end
+
+    institution
   end
 end

@@ -43,6 +43,7 @@ cookbooks
 Cheffile.lock
 .vagrant
 .rbenv-vars
-.rbenv-vars
+.ruby-version
+.byebug_history
 public/javascripts/translations.js
 public/javascripts/i18n.js

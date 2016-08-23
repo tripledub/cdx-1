@@ -242,14 +242,14 @@ class DevicesController < ApplicationController
   end
 
   def load_device_models_for_create
-    gon.device_models = @device_models = \
-      (DeviceModel.includes(:institution).published.to_a + \
+    gon.device_models = @device_models =
+      (DeviceModel.includes(:institution).published.to_a +
        DeviceModel.includes(:institution).unpublished.where(institution_id: @navigation_context.institution.id).to_a)
   end
 
   def load_device_models_for_update
-    @device_models = \
-      (DeviceModel.includes(:institution).published.to_a + \
+    @device_models =
+      (DeviceModel.includes(:institution).published.to_a +
        DeviceModel.includes(:institution).unpublished.where(institution_id: @device.institution_id).to_a)
   end
 

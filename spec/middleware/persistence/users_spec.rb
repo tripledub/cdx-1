@@ -10,6 +10,8 @@ RSpec.describe Persistence::Users do
   let(:message)        { 'Welcome to the test institution.'}
 
   before :each do
+    user.last_navigation_context = institution.uuid
+    user.save!
     user.grant_superadmin_policy
     existant_user.roles << role
     described_class.new(user).add_and_invite(new_users, message, role)
@@ -27,12 +29,33 @@ RSpec.describe Persistence::Users do
 
     it "adds role to new user" do
       new_user = User.find_by_email('new@example.com')
-      expect(new_user.roles.count).to eq(1)
-      expect(new_user.roles.first).to eq(role)
+
+      expect(new_user.roles.count).to eq(2)
+      expect(new_user.roles).to include(role)
     end
 
-    it "does not add duplicate roles to user if already present" do
-      expect(existant_user.roles.count).to eq(1)
+    it "adds default institution read permision to user" do
+      new_user = User.find_by_email('new@example.com')
+      role     = Role.where(name: "Institution #{institution.name} Reader").first
+
+      expect(new_user.roles).to include(role)
+    end
+  end
+
+  context 'when context is a site not an institution' do
+    before :each do
+      user.last_navigation_context = site.uuid
+      user.save!
+      user.grant_superadmin_policy
+      existant_user.roles << role
+      described_class.new(user).add_and_invite(new_users, message, role)
+    end
+
+    it "adds default institution read permision to user when context is a site" do
+      new_user = User.find_by_email('new@example.com')
+      role     = Role.where(name: "Institution #{institution.name} Reader").first
+
+      expect(new_user.roles).to include(role)
     end
   end
 end

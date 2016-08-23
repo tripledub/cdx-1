@@ -27,6 +27,9 @@ en:
       can_access: 'Can access Cdx?'
     create:
       role_not_found: 'Role not found'
+    update:
+      user_updated: 'User info updated successfully.'
+      user_not_updated: 'User info can not be updated.'
     persistence:
       create:
         user_already_present: 'The user with email: %{email} is already in the system - Please edit that user'
