@@ -113,9 +113,7 @@ class ApplicationController < ActionController::Base
         default_context = some_institution_uuid
       end
 
-      if default_context
-        redirect_to url_for(params.merge({context: default_context}))
-      end
+      redirect_to url_for(params.merge({context: default_context})) if default_context
 
     elsif !params[:context].blank?
       # if there is an explicit context try to use it.

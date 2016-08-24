@@ -36,21 +36,21 @@ namespace :policy do
 
     module NewActions
       CREATE_INSTITUTION = "institution:create"
-      READ_INSTITUTION =   "institution:read"
+      READ_INSTITUTION   = "institution:read"
       UPDATE_INSTITUTION = "institution:update"
       DELETE_INSTITUTION = "institution:delete"
 
-      CREATE_INSTITUTION_SITE = "institution:createSite"
-      CREATE_INSTITUTION_ENCOUNTER =  "institution:createEncounter"
-      REGISTER_INSTITUTION_DEVICE =   "institution:registerDevice"
+      CREATE_INSTITUTION_SITE      = "institution:createSite"
+      CREATE_INSTITUTION_ENCOUNTER = "institution:createEncounter"
+      REGISTER_INSTITUTION_DEVICE  = "institution:registerDevice"
 
-      READ_SITE =   "site:read"
+      READ_SITE   = "site:read"
       UPDATE_SITE = "site:update"
       DELETE_SITE = "site:delete"
 
       ASSIGN_DEVICE_SITE = "site:assignDevice"
 
-      READ_DEVICE =   "device:read"
+      READ_DEVICE   = "device:read"
       UPDATE_DEVICE = "device:update"
       DELETE_DEVICE = "device:delete"
 
@@ -66,9 +66,9 @@ namespace :policy do
 
       DISPLAY_SETTINGS_PAGE_ROLE =  "settingsPage:displayRole"
 
-      REGENERATE_DEVICE_KEY =     "device:regenerateKey"
+      REGENERATE_DEVICE_KEY     = "device:regenerateKey"
       GENERATE_ACTIVATION_TOKEN = "device:generateActivationToken"
-      REPORT_MESSAGE =            "device:reportMessage"
+      REPORT_MESSAGE            = "device:reportMessage"
 
       QUERY_TEST = "test:query"
     end
@@ -102,7 +102,7 @@ namespace :policy do
       "#{PREFIX}:updateAlert" => NewActions::UPDATE_ALERT,
       "#{PREFIX}:deleteAlert" => NewActions::DELETE_ALERT,
       "#{PREFIX}:createAlert" => NewActions::CREATE_ALERT,
-      
+
       "#{PREFIX}:displayTestOrderHeader" => NewActions::DISPLAY_TEST_ORDER_HEADER,
       "#{PREFIX}:displayTestResultHeader" => NewActions::DISPLAY_TEST_RESULT_HEADER,
      "#{PREFIX}:displayDevicesHeader" => NewActions::DISPLAY_DEVICES_HEADER,

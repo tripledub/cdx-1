@@ -5,3 +5,9 @@ en:
         zero: 'No roles created yet'
         one: '1 Role'
         other: '%{count} Roles'
+    create:
+      success: 'Role was successfully created.'
+    update:
+      success: 'Role was successfully updated.'
+    destroy:
+      success: 'Role was successfully deleted.'

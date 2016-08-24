@@ -49,36 +49,20 @@ class UsersController < ApplicationController
     return unless authorize_resource(@user, UPDATE_USER)
     return head :forbidden unless can_edit?
 
-    message = 'User updated' if @user.update(user_params)
-    redirect_to users_path, notice: message || 'There was a problem updating this user'
+    message = I18n.t('users.update.user_updated') if @user.update(user_params)
+    redirect_to users_path, notice: message || I18n.t('users.update.user_not_updated')
   end
 
   def create
-    output_info = ' '
-    @role = Role.find(params[:role])
-    message = params[:message]
-    (params[:users] || []).each do |email|
-      email = email.strip
-      if email.length > 0
-        user = User.find_by(email: email)
-        if user.present?
-          output_info << "User with Email '#{email}' is already in the System - please edit that User<br>"
-        else
-          user = User.new(email: email)
-          unless user.persisted?
-            user.invite! do |u|
-              u.skip_invitation = true
-            end
-            user.invitation_sent_at = Time.now.utc # mark invitation as delivered
-            user.invited_by_id = current_user.id
-            InvitationMailer.invite_message(user, @role, message).deliver_now
-          end
-          user.roles << @role unless user.roles.include?(@role)
-          ComputedPolicy.update_user(user)
-        end
-      end
+    if params[:users] && role = Role.find(params[:role])
+      add_users = Persistence::Users.new(current_user)
+      add_users.add_and_invite(params[:users], params[:message], role)
+      status_message = add_users.status_message
+    else
+      status_message = I18n.t('users.create.role_not_found')
     end
-    render text:{'info' => output_info}.to_json, layout:false
+
+    render text: { 'info' => status_message }.to_json, layout: false
   end
 
   def assign_role
@@ -121,9 +105,9 @@ class UsersController < ApplicationController
     #user = User.find_by(id: params[:id])
     if @user.present?
       @user.destroy
-      redirect_to users_path, notice: "User Removed"
+      redirect_to users_path, notice: I18n.t('users.remove.user_removed')
     else
-      redirect_to users_path, notice: "User Not Found"
+      redirect_to users_path, notice: I18n.t('users.remove.user_not_found')
     end
   end
 
@@ -133,9 +117,9 @@ class UsersController < ApplicationController
   def find
     user = User.find_by(email: params[:email])
     if user.present?
-      render json:'success'.to_json
+      render json: 'success'.to_json
     else
-      render json:'fail'.to_json
+      render json: 'fail'.to_json
     end
   end
 
@@ -145,7 +129,7 @@ class UsersController < ApplicationController
   def resend_invite
     #user = User.find_by(id: params[:id])
     @role = @user.roles.first
-    message = 'Resending Invite'
+    message = I18n.t('users.resend_invite.resending')
     if @user.present?
       @user.invite! do |u|
         u.skip_invitation = true
@@ -153,13 +137,13 @@ class UsersController < ApplicationController
       @user.invitation_sent_at = Time.now.utc # mark invitation as delivered
       @user.invited_by_id = current_user.id
       InvitationMailer.invite_message(@user, @role, message).deliver_now
-      redirect_to users_path, notice: "Resent Invite Ok"
+      redirect_to users_path, notice: I18n.t('users.resend_invite.resending_ok')
     else
-      redirect_to users_path, notice: "Failed to Resend Invite"
+      redirect_to users_path, notice: I18n.t('users.resend_invite.resending_failed')
     end
   end
 
-  private
+  protected
 
   def user_params
     params.require(:user).permit(:is_active)

@@ -23,9 +23,7 @@ class ComputedPolicy < ActiveRecord::Base
   end
 
   def self.can?(action, resource, user, opts={})
-    return resource.kind_of?(Resource)\
-      ? !!authorize(action, resource, user, opts)\
-      : applicable_policies(action, resource, user, opts).any?
+    resource.kind_of?(Resource) ? !!authorize(action, resource, user, opts) : applicable_policies(action, resource, user, opts).any?
   end
 
   def self.can_delegate?(action, resource, user)
@@ -33,9 +31,7 @@ class ComputedPolicy < ActiveRecord::Base
   end
 
   def self.authorize(action, resource, user, opts={})
-    return resource.kind_of?(Resource)\
-      ? authorize_instance(action, resource, user, opts)\
-      : authorize_scope(action, resource, user, opts)
+    resource.kind_of?(Resource) ? authorize_instance(action, resource, user, opts) : authorize_scope(action, resource, user, opts)
   end
 
   def self.authorize_instance(action, resource, user, opts={})
