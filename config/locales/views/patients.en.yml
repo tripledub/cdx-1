@@ -13,6 +13,8 @@ en:
       patient_summary: 'Patient Summary'
       patient_history: 'Patient History'
       episode_summary: 'Episode Summary'
+      address: 'Address'
+      alt_address: 'Alternative Address'
     filters:
       add_patient: 'Add patient'
       show_all: 'Show all'
