@@ -169,7 +169,6 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
     it "succeed" do
       expect(response).to have_http_status(:success)
-      expect(json_response['status']).to eq('ok')
     end
 
     it "assigns samples" do
@@ -227,6 +226,10 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     it 'should log the changes' do
       expect(EncounterAuditLog.count).to eq 1
       expect(EncounterAuditLog.first.title).to eq "New Test Order Created"
+    end
+
+    it 'should set the encounter status to pending' do
+      expect(created_encounter.status).to eq('pending')
     end
   end
 

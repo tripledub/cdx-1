@@ -184,10 +184,10 @@ class EncountersController < ApplicationController
     begin
       yield
     rescue Blender::MergeNonPhantomError => e
-      render json: { status: :error, message: "Cannot add a test or sample that belongs to a different #{e.entity_type.model_name.singular}", encounter: as_json_edit.attributes! }, status: :unprocessable_entity
+      render json: { status: :error, message: I18n.t('encounters.perform_encounter_action.merge', entity_type: e.entity_type.model_name.singular), encounter: as_json_edit.attributes! }, status: :unprocessable_entity
     rescue => e
       Rails.logger.error(e.backtrace.unshift(e.message).join("\n"))
-      render json: { status: :error, message: "Error #{action} #{e.class}", encounter: as_json_edit.attributes! }, status: :unprocessable_entity
+      render json: { status: :error, message: I18n.t('encounters.perform_encounter_action.error', action_name: action, class_name: e.class), encounter: as_json_edit.attributes! }, status: :unprocessable_entity
     else
       render json: { status: :ok, encounter: as_json_edit.attributes! }.merge(@extended_respone)
     end
@@ -196,9 +196,7 @@ class EncountersController < ApplicationController
   def load_encounter
     @encounter = Encounter.where('uuid = :id', params).first ||
                  Encounter.where('id = :id', params).first
-    return head(:not_found) unless @encounter.present? &&
-                                   (@encounter.id == params[:id].to_i ||
-                                   @encounter.uuid == params[:id])
+    return head(:not_found) unless @encounter.present? && (@encounter.id == params[:id].to_i || @encounter.uuid == params[:id])
 
     @encounter.new_samples = []
     @institution = @encounter.institution
