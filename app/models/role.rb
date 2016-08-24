@@ -27,5 +27,4 @@ class Role < ActiveRecord::Base
   def update_user_computed_policies(user)
     user.update_computed_policies
   end
-
 end

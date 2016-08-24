@@ -76,9 +76,9 @@ class User < ActiveRecord::Base
   end
 
   def grant_predefined_policy(name, args={})
-    predefined = Policy.predefined_policy(name, self, args)
+    predefined         = Policy.predefined_policy(name, self, args)
     predefined.granter = nil
-    predefined.user = self
+    predefined.user    = self
     predefined.save!
   end
 
@@ -87,9 +87,9 @@ class User < ActiveRecord::Base
   def default_oauth2_application
     app = Doorkeeper::Application.where(owner_id: id, owner_type: self.class.name, name: DEFAULT_OAUTH2_APPLICATION_NAME).first
     unless app
-      app = Doorkeeper::Application.new
-      app.owner = self
-      app.name = DEFAULT_OAUTH2_APPLICATION_NAME
+      app              = Doorkeeper::Application.new
+      app.owner        = self
+      app.name         = DEFAULT_OAUTH2_APPLICATION_NAME
       app.redirect_uri = "urn:ietf:wg:oauth:2.0:oob"
       app.save!
     end

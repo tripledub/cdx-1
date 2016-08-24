@@ -12,7 +12,7 @@ class EpisodesController < ApplicationController
 
   def create
     @episode = @patient.episodes.new(episode_params)
-    if @episode.save_and_audit(current_user, I18n.t('episodes.create.new_episode'), @episode)
+    if @episode.save_and_audit(current_user, I18n.t('episodes.create.new_episode'))
       redirect_to patient_path(@patient), notice: I18n.t('episodes.create.episode_created')
     else
       render action: 'new'

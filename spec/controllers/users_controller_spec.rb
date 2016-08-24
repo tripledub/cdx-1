@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe UsersController, type: :controller do
-  let(:user) { User.make }
-  let!(:institution) { user.institutions.make }
+  let(:user)           { User.make }
+  let!(:institution)   { user.institutions.make }
   let(:default_params) { { context: institution.uuid } }
 
   before do
@@ -70,7 +70,7 @@ describe UsersController, type: :controller do
     it "adds role to new user" do
       post :create, {users: ['new@example.com'], role: role.id}
       new_user = User.find_by_email('new@example.com')
-      expect(new_user.roles.count).to eq(1)
+      expect(new_user.roles.count).to eq(2)
       expect(new_user.roles.first).to eq(role)
     end
 

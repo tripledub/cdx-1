@@ -37,10 +37,12 @@
           %label
             = Patient.human_attribute_name(:entity_id)
           = patient.entity_id
+        - patient_address_label = "patients.show.address"
         - patient.addresses.each do |address|
           %li
             %label
-              = Patient.human_attribute_name(:address)
+              = I18n.t(patient_address_label)
+            - if patient_address_label == "patients.show.address" then patient_address_label = "patients.show.alt_address" end
             = Presenters::Patients.show_full_address(address)
         %li
           %label

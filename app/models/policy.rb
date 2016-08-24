@@ -19,58 +19,58 @@ class Policy < ActiveRecord::Base
 
   module Actions
     CREATE_INSTITUTION = "institution:create"
-    READ_INSTITUTION =   "institution:read"
+    READ_INSTITUTION   = "institution:read"
     UPDATE_INSTITUTION = "institution:update"
     DELETE_INSTITUTION = "institution:delete"
 
-    CREATE_INSTITUTION_SITE =           "institution:createSite"
-    REGISTER_INSTITUTION_DEVICE =       "institution:registerDevice"
+    CREATE_INSTITUTION_SITE           = "institution:createSite"
+    REGISTER_INSTITUTION_DEVICE       = "institution:registerDevice"
     REGISTER_INSTITUTION_DEVICE_MODEL = "institution:registerDeviceModel"
-    CREATE_INSTITUTION_ROLE =           "institution:createRole"
-    CREATE_INSTITUTION_PATIENT =        "institution:createPatient"
+    CREATE_INSTITUTION_ROLE           = "institution:createRole"
+    CREATE_INSTITUTION_PATIENT        = "institution:createPatient"
 
     READ_INSTITUTION_USERS = "institution:readUsers"
 
-    READ_DEVICE_MODEL =      "deviceModel:read"
-    UPDATE_DEVICE_MODEL =    "deviceModel:update"
-    DELETE_DEVICE_MODEL =    "deviceModel:delete"
-    PUBLISH_DEVICE_MODEL =   "deviceModel:publish"
+    READ_DEVICE_MODEL    = "deviceModel:read"
+    UPDATE_DEVICE_MODEL  = "deviceModel:update"
+    DELETE_DEVICE_MODEL  = "deviceModel:delete"
+    PUBLISH_DEVICE_MODEL = "deviceModel:publish"
 
-    READ_PATIENT =   "patient:read"
+    READ_PATIENT   = "patient:read"
     UPDATE_PATIENT = "patient:update"
     DELETE_PATIENT = "patient:delete"
 
-    READ_SITE =   "site:read"
+    READ_SITE   = "site:read"
     UPDATE_SITE = "site:update"
     DELETE_SITE = "site:delete"
 
-    ASSIGN_DEVICE_SITE = "site:assignDevice" # This is not tested.
-    CREATE_SITE_ROLE = "site:createRole"
+    ASSIGN_DEVICE_SITE    = "site:assignDevice" # This is not tested.
+    CREATE_SITE_ROLE      = "site:createRole"
     CREATE_SITE_ENCOUNTER = "site:createEncounter"
-    READ_SITE_USERS = "site:readUsers"
+    READ_SITE_USERS       = "site:readUsers"
 
-    READ_DEVICE =   "device:read"
-    UPDATE_DEVICE = "device:update"
-    DELETE_DEVICE = "device:delete"
+    READ_DEVICE    = "device:read"
+    UPDATE_DEVICE  = "device:update"
+    DELETE_DEVICE  = "device:delete"
     SUPPORT_DEVICE = "device:support"
 
-    REGENERATE_DEVICE_KEY =     "device:regenerateKey" # This is not tested.
+    REGENERATE_DEVICE_KEY     = "device:regenerateKey" # This is not tested.
     GENERATE_ACTIVATION_TOKEN = "device:generateActivationToken" # This is not tested.
-    REPORT_MESSAGE =            "device:reportMessage"
+    REPORT_MESSAGE            = "device:reportMessage"
 
     QUERY_TEST = "testResult:query"
-    PII_TEST =   "testResult:pii"
+    PII_TEST   = "testResult:pii"
 
-    READ_ENCOUNTER =   "encounter:read"
+    READ_ENCOUNTER   = "encounter:read"
     UPDATE_ENCOUNTER = "encounter:update"
     DELETE_ENCOUNTER = "encounter:delete"
-    PII_ENCOUNTER =    "encounter:pii"
+    PII_ENCOUNTER    = "encounter:pii"
 
     MEDICAL_DASHBOARD = "testResult:medicalDashboard"
 
-    READ_ROLE = "role:read"
-    UPDATE_ROLE = "role:update"
-    DELETE_ROLE = "role:delete"
+    READ_ROLE        = "role:read"
+    UPDATE_ROLE      = "role:update"
+    DELETE_ROLE      = "role:delete"
     ASSIGN_USER_ROLE = "role:assignUser"
     REMOVE_USER_ROLE = "role:removeUser"
 
@@ -234,33 +234,33 @@ class Policy < ActiveRecord::Base
   end
 
   def self.predefined_policy(name, user, args={})
-    policy = Policy.new
+    policy                 = Policy.new
     policy.allows_implicit = true
-    policy.name = name.titleize
-    policy.definition = JSON.load(Erubis::Eruby.new(predefined_policy_template(name)).result(args))
-    policy.user = user
+    policy.name            = name.titleize
+    policy.definition      = JSON.load(Erubis::Eruby.new(predefined_policy_template(name)).result(args))
+    policy.user            = user
     policy
   end
 
   def self.predefined_roles(name, args={})
     roles_json = JSON.load(Erubis::Eruby.new(predefined_policy_template("roles/#{name}")).result(args))
     roles_json.map do |role_json|
-      role = Role.new
+      role      = Role.new
       role.name = role_json["name"]
-      role.key = role_json["key"]
+      role.key  = role_json["key"]
 
-      policy = Policy.new
+      policy                 = Policy.new
       policy.allows_implicit = true
-      policy.name = name.titleize
-      policy.definition = role_json["policy"]
-      role.policy = policy
+      policy.name            = name.titleize
+      policy.definition      = role_json["policy"]
+      role.policy            = policy
 
       role
     end
   end
 
   def self.predefined_policy_template(name)
-    @templates ||= {}
+    @templates       ||= {}
     @templates[name] ||= File.read("#{Rails.root}/app/policies/#{name}.json.erb")
   end
 end
