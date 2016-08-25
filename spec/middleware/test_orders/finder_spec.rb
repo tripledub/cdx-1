@@ -31,7 +31,7 @@ RSpec.describe TestOrders::Finder do
 
     context 'filter params' do
       context 'Single encounter Id' do
-        subject { described_class.new(navigation_context, { 'encounter_id' => test_order2.id }) }
+        subject { described_class.new(navigation_context, { 'encounter_id' => test_order2.uuid }) }
 
         it 'should return a single encounter when filter by id' do
           expect(subject.filter_query.count).to eq(1)
