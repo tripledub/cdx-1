@@ -80,6 +80,42 @@ RSpec.describe RequestedTest, type: :model do
     end
   end
 
+  describe 'result_type' do
+    let(:encounter) { Encounter.make }
+
+    context 'Culture result' do
+      let(:culture_result) { CultureResult.make requested_test: RequestedTest.make(encounter: encounter, status: :inprogress) }
+
+      it 'should return Culture as result type' do
+        expect(culture_result.requested_test.result_type).to eq('Culture')
+      end
+    end
+
+    context 'Xpert result' do
+      let(:xpert_result) { XpertResult.make requested_test: RequestedTest.make(encounter: encounter, status: :inprogress) }
+
+      it 'should return Culture as result type' do
+        expect(xpert_result.requested_test.result_type).to eq('Xpert')
+      end
+    end
+
+    context 'Microscopy result' do
+      let(:microscopy_result) { MicroscopyResult.make requested_test: RequestedTest.make(encounter: encounter, status: :inprogress) }
+
+      it 'should return Culture as result type' do
+        expect(microscopy_result.requested_test.result_type).to eq('Microscopy')
+      end
+    end
+
+    context 'DST/LPA result' do
+      let(:dst_lpa_result) { DstLpaResult.make requested_test: RequestedTest.make(encounter: encounter, status: :inprogress) }
+
+      it 'should return Culture as result type' do
+        expect(dst_lpa_result.requested_test.result_type).to eq('Dst/Lpa')
+      end
+    end
+  end
+
   describe 'turnaround time' do
     let!(:requested_test) { RequestedTest.make completed_at: nil }
     context 'when the test is incomplete' do

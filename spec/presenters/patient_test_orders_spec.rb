@@ -25,7 +25,7 @@ describe Presenters::PatientTestOrders do
         requestDate: I18n.l(Time.parse(patient.encounters.first.start_time), format: :long),
         dueDate:     I18n.l(patient.encounters.first.testdue_date, format: :long),
         status:      'In progress',
-        status_raw:  'inprogress',
+        statusRaw:  'inprogress',
         viewLink:    Rails.application.routes.url_helpers.encounter_path(patient.encounters.first)
       })
     end

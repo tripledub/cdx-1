@@ -35,6 +35,18 @@ class RequestedTest < ActiveRecord::Base
     end
   end
 
+  def result_type
+    if culture_result.present?
+      return I18n.t('requested_test.result.culture')
+    elsif xpert_result.present?
+      return I18n.t('requested_test.result.xpert')
+    elsif microscopy_result.present?
+      return I18n.t('requested_test.result.microscopy')
+    elsif dst_lpa_result.present?
+      return I18n.t('requested_test.result.dst_lpa')
+    end
+  end
+
   def turnaround
     return I18n.t('requested_test.incomplete') unless completed_at
     distance_of_time_in_words(created_at, completed_at)
