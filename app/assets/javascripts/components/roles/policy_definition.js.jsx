@@ -16,7 +16,7 @@ var PolicyDefinition = React.createClass({
 
     definition = JSON.parse(definition);
 
-    var statements = definition.statement.map(function(definitionStatement) {
+    var statements = definition.statement.map(function(definitionStatement, index) {
 
       // ensure delegable is a boolean, and action, resource and except are arrays
       var statement = {
@@ -109,6 +109,7 @@ var PolicyDefinition = React.createClass({
       }
 
       return {
+        id: index,
         delegable: statement.delegable == true,
         includeSubsites: statement.includeSubsites == true,
         actions: statement.action.map(_hydratateAction.bind(this, props.actions)),
@@ -126,8 +127,10 @@ var PolicyDefinition = React.createClass({
   },
 
   newPolicy: function() {
+    var newEmptyPolicy = { delegable: false, resourceType: null, includeSubsites: false, actions: [], resourceList: {'except': [], 'only': []} };
+    newEmptyPolicy.id  = this.state.statements.length;
     this.setState(React.addons.update(this.state, {
-      statements: { $push: [this.emptyPolicy] },
+      statements: { $push: [newEmptyPolicy] },
       activeTab: { $set: this.state.statements.length } // the new statement isn't on the array yet
     }));
   },
@@ -148,28 +151,11 @@ var PolicyDefinition = React.createClass({
   },
 
   _removeStatement: function(statement) {
+    var currentStatements = this.state.statements;
     var index = _.indexOf(this.state.statements, statement);
-    var activeTab = this.state.activeTab;
 
-    if (activeTab == index) {
-      var lengthAfter = this.state.statements.length - 1;
-      if (activeTab >= lengthAfter) {
-        activeTab--; // the last item was selected, so select the previous one
-        if (activeTab == -1) {
-          // last policy was removed
-          this.setState(React.addons.update(this.state, {
-            statements: { $set: [this.emptyPolicy] },
-            activeTab: { $set : 0 },
-          }));
-          return
-        }
-      }
-    }
-
-    this.setState(React.addons.update(this.state, {
-      statements : { $splice : [[index, 1]] },
-      activeTab : { $set : activeTab }
-    }));
+    currentStatements.splice(index, 1);
+    this.setState({statements: currentStatements, activeTab: 0});
   },
 
   render: function() {
@@ -181,6 +167,7 @@ var PolicyDefinition = React.createClass({
             <div className="fix">
               <ul>
                 {this.state.statements.map(function(statement, index){
+
                   var selectedClass = this.state.activeTab == index ? "selected" : "";
                   return <li key={index} onClick={this.setActiveTab.bind(this,index)} className={selectedClass}><PolicyItem statement={statement} onRemove={this._removeStatement} /></li>;
                 }.bind(this))}
@@ -190,7 +177,10 @@ var PolicyDefinition = React.createClass({
           </div>
           <div className="col">
             <div className="items-content selected">
-              <PolicyItemDetail statement={this.state.statements[this.state.activeTab]} index={this.state.activeTab} updateStatement={this.updateStatement.bind(this, this.state.activeTab)} actions={this.props.actions} resourceTypes={this.props.resourceTypes} context={this.props.context} />
+              { this.state.statements[this.state.activeTab] != null ?
+                <PolicyItemDetail statement={this.state.statements[this.state.activeTab]} index={this.state.activeTab} updateStatement={this.updateStatement.bind(this, this.state.activeTab)} actions={this.props.actions} resourceTypes={this.props.resourceTypes} context={this.props.context} />
+                : null
+              }
             </div>
           </div>
         </div>

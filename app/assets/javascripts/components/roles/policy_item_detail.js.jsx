@@ -75,7 +75,7 @@ var PolicyItemDetail = React.createClass({
     }
     var ifResourceTypeSelected = <div className="without-resource-type" />;
     var ifResourcesSelectable = "";
-    if(statement.resourceType != null) {
+    if (statement.resourceType != null) {
       var actions = this.props.actions[statement.resourceType];
       var resourcesLabel = this.resourcesLabel();
 
