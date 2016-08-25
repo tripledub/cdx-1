@@ -8,7 +8,7 @@ class DstLpaResult < PatientResult
 
   class << self
     def dst_lpa_options
-      [['resistant', I18n.t('select.dst_lpa.dst_lpa_options.resistant_long'), I18n.t('select.dst_lpa.dst_lpa_options.resistant')], ['susceptible', I18n.t('select.dst_lpa.dst_lpa_options.susceptible_long'), I18n.t('select.dst_lpa.dst_lpa_options.susceptible')], ['contaminated', I18n.t('select.dst_lpa.dst_lpa_options.contaminated_long'), I18n.t('select.dst_lpa.dst_lpa_options.contaminated')], ['not_done', I18n.t('select.dst_lpa.dst_lpa_options.not_done_long'), I18n.t('select.dst_lpa.dst_lpa_options.not_done')]]
+      [['resistant', I18n.t('select.dst_lpa.dst_lpa_options.not_selected_long'), I18n.t('select.dst_lpa.dst_lpa_options.not_selected')], ['resistant', I18n.t('select.dst_lpa.dst_lpa_options.resistant_long'), I18n.t('select.dst_lpa.dst_lpa_options.resistant')], ['susceptible', I18n.t('select.dst_lpa.dst_lpa_options.susceptible_long'), I18n.t('select.dst_lpa.dst_lpa_options.susceptible')], ['contaminated', I18n.t('select.dst_lpa.dst_lpa_options.contaminated_long'), I18n.t('select.dst_lpa.dst_lpa_options.contaminated')], ['not_done', I18n.t('select.dst_lpa.dst_lpa_options.not_done_long'), I18n.t('select.dst_lpa.dst_lpa_options.not_done')]]
     end
 
     def media_options
