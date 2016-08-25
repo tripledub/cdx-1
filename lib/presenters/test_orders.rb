@@ -13,8 +13,7 @@ class Presenters::TestOrders
           requestedBy:        encounter.user.full_name,
           requestDate:        Extras::Dates::Format.datetime_with_time_zone(encounter.start_time),
           dueDate:            Extras::Dates::Format.datetime_with_time_zone(encounter.testdue_date),
-          status:             convert_status(encounter.status),
-          status_raw:         encounter.status,
+          status:             generate_status(encounter),
           viewLink:           Rails.application.routes.url_helpers.encounter_path(encounter)
         }
       end
@@ -28,8 +27,8 @@ class Presenters::TestOrders
       site.name
     end
 
-    def convert_status(status)
-      case status
+    def generate_status(encounter)
+      encounter_status = case encounter.status
       when 'pending'
         I18n.t('encounters.status.pending')
       when 'inprogress'
@@ -37,6 +36,13 @@ class Presenters::TestOrders
       when 'completed'
         I18n.t('encounters.status.completed')
       end
+      encounter_status += ': '
+
+      encounter_status += encounter.requested_tests.map do |requested_test|
+        "#{requested_test.result_type} (#{I18n.t('requested_test.status.'+requested_test.status)})"
+      end.join(' - ')
+
+      encounter_status
     end
   end
 end

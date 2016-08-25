@@ -11,14 +11,15 @@ var TestOrderRow = React.createClass({
     return (
     <tr>
       <CsvCheckboxColumn columnId={this.props.testOrder.id} selectedTestOrders={this.selectedTestOrders} />
-      <td onClick={this.visitLink}>{this.props.testOrder.sampleId}</td>
-      <td onClick={this.visitLink}>{this.props.testOrder.status}</td>
-      <td onClick={this.visitLink}>{this.props.testOrder.requestedSiteName}</td>
-      <td onClick={this.visitLink}>{this.props.testOrder.performingSiteName}</td>
-      <td onClick={this.visitLink}>{this.props.testOrder.testingFor}</td>
-      <td onClick={this.visitLink}>{this.props.testOrder.requestedBy}</td>
-      <td onClick={this.visitLink}>{this.props.testOrder.requestDate}</td>
-      <td onClick={this.visitLink}>{this.props.testOrder.dueDate}</td>
+      <td title={this.props.testOrder.sampleId} onClick={this.visitLink}>{this.props.testOrder.sampleId}</td>
+      <td title={this.props.testOrder.status} onClick={this.visitLink}>{this.props.testOrder.status}</td>
+      <td title={this.props.testOrder.requestedSiteName} onClick={this.visitLink}>{this.props.testOrder.requestedSiteName}</td>
+      <td title={this.props.testOrder.performingSiteName} onClick={this.visitLink}>{this.props.testOrder.performingSiteName}</td>
+      <td title={this.props.testOrder.testingFor} onClick={this.visitLink}>{this.props.testOrder.testingFor}</td>
+      <td title={this.props.testOrder.requestedBy} onClick={this.visitLink}>{this.props.testOrder.requestedBy}</td>
+      <td title={this.props.testOrder.requestDate} onClick={this.visitLink}>{this.props.testOrder.requestDate}</td>
+      <td title={this.props.testOrder.dueDate} onClick={this.visitLink}>{this.props.testOrder.dueDate}</td>
+      <td title={this.props.testOrder.id} onClick={this.visitLink}>{this.props.testOrder.id}</td>
     </tr>);
   }
 });
@@ -85,6 +86,7 @@ var TestOrdersIndexTable = React.createClass({
                 {sortableHeader(I18n.t("components.test_orders.col_order_by"), "users.first_name")}
                 {sortableHeader(I18n.t("components.test_orders.col_request_date"),  "encounters.start_time")}
                 {sortableHeader(I18n.t("components.test_orders.col_due_date"),      "encounters.testdue_date")}
+                {sortableHeader(I18n.t("components.test_orders.col_id"),      "encounters.uuid")}
 
               </tr>
             </thead>

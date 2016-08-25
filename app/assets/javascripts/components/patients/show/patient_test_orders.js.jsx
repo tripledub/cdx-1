@@ -65,7 +65,7 @@ var PatientTestOrders = React.createClass({
         // Add any on-the-fly field values to the output row
         patientTestOrder._highlight_overdue = '';
         var today = new Date();
-        if(patientTestOrder.status_raw != 'completed' && patientTestOrder.dueDate)
+        if(patientTestOrder.statusRaw != 'completed' && patientTestOrder.dueDate)
         {
           var dd = Date.parse(patientTestOrder.dueDate);
           if(dd < today )

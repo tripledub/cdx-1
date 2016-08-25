@@ -39,7 +39,7 @@ class TestOrders::Finder
   end
 
   def filter_by_encounter_id
-    @filter_query = filter_query.where("encounters.id = ?", @params['encounter_id']) if @params['encounter_id'].present?
+    @filter_query = filter_query.where("encounters.uuid = ?", @params['encounter_id']) if @params['encounter_id'].present?
   end
 
   def filter_by_testing_for

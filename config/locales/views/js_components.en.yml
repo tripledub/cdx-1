@@ -22,7 +22,7 @@ en:
 
     canvas-charts:
       err_chart_msg: "There was an error displaying the graph."
-    
+
     device_models:
       col_name: "Name"
       col_ver: "Version"
@@ -156,6 +156,7 @@ en:
       col_order_by: "Order by user"
       col_request_date: "Request date"
       col_due_date: "Due date"
+      col_id: "Order Id"
 
     test_results:
       col_sample: "Sample collected on"
@@ -195,20 +196,3 @@ en:
       col_role: "Roles"
       col_status: "Status"
       col_last_activity: "Last activity"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
