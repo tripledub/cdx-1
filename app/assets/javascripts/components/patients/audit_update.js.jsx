@@ -6,9 +6,9 @@ var AuditUpdate = React.createClass({
   render: function(){
     return (
       <tr>
-        <td>{this.props.auditUpdate.fieldName}</td>
-        <td>{this.props.auditUpdate.oldValue}</td>
-        <td>{this.props.auditUpdate.newValue}</td>
+        <td className="audit_presenter">{this.props.auditUpdate.fieldName}</td>
+        <td className="audit_presenter">{this.props.auditUpdate.oldValue}</td>
+        <td className="audit_presenter">{this.props.auditUpdate.newValue}</td>
       </tr>
     );
   }
