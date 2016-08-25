@@ -19,7 +19,7 @@ var DisplayManifest = React.createClass({
         <label className="input on">
         <a href={this.props.manifest_path}>{this.props.manifest_filename}</a>
         <a className="clear-label" onClick={this.clickHandler}>
-          <img src="<%= asset_url('ic-cross.png') %>"/>
+          <Img src="/assets/ic-cross.png" />
         </a>
         </label>
       </div>

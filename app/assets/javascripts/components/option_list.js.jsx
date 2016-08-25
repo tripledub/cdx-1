@@ -87,7 +87,9 @@ var OptionList = React.createClass({
           {this.state.chosenOnes.map(function(item) {
             return (<li key={item.value}>
               <span>{item.label}</span>
-              <a className="remove" href="#" onClick={this.removeItem.bind(this, item)}><img src="<%= asset_url('ic-cross.png') %>"/></a>
+              <a className="remove" href="#" onClick={this.removeItem.bind(this, item)}>
+                <Img src="/assets/ic-cross.png" />
+              </a>
             </li>);
           }.bind(this))}
         </ul>
