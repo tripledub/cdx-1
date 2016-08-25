@@ -11,5 +11,5 @@ en:
     result:
       culture:    'Culture'
       microscopy: 'Microscopy'
-      dst:        'Dst/Lpa'
+      dst_lpa:    'Dst/Lpa'
       xpert:      'Xpert'

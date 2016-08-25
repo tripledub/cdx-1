@@ -39,7 +39,7 @@ class Presenters::TestOrders
       encounter_status += ': '
 
       encounter_status += encounter.requested_tests.map do |requested_test|
-        "#{I18n.t('requested_test.result.'+requested_test.name)} (#{I18n.t('requested_test.status.'+requested_test.status)})"
+        "#{requested_test.result_type} (#{I18n.t('requested_test.status.'+requested_test.status)})"
       end.join(' - ')
 
       encounter_status

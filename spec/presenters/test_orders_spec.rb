@@ -17,8 +17,11 @@ describe Presenters::TestOrders do
   let(:requested_tests)     {
     encounter = Encounter.first
     RequestedTest.make(encounter: encounter, status: :pending,    name: 'microscopy')
+    encounter.reload
     RequestedTest.make(encounter: encounter, status: :inprogress, name: 'culture')
+    encounter.reload
     RequestedTest.make(encounter: encounter, status: :completed,  name: 'dst')
+    encounter.reload
     RequestedTest.make(encounter: encounter, status: :rejected,   name: 'xpert')
     encounter.reload
   }

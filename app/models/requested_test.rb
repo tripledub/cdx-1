@@ -36,13 +36,13 @@ class RequestedTest < ActiveRecord::Base
   end
 
   def result_type
-    if culture_result.present?
+    if name.include? 'culture'
       return I18n.t('requested_test.result.culture')
-    elsif xpert_result.present?
+    elsif name.include? 'xpert'
       return I18n.t('requested_test.result.xpert')
-    elsif microscopy_result.present?
+    elsif name.include? 'microscopy'
       return I18n.t('requested_test.result.microscopy')
-    elsif dst_lpa_result.present?
+    elsif name.include? 'dst'
       return I18n.t('requested_test.result.dst_lpa')
     end
   end

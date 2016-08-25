@@ -84,34 +84,34 @@ RSpec.describe RequestedTest, type: :model do
     let(:encounter) { Encounter.make }
 
     context 'Culture result' do
-      let(:culture_result) { CultureResult.make requested_test: RequestedTest.make(encounter: encounter, status: :inprogress) }
+      let(:culture_result) { RequestedTest.make(encounter: encounter, name: 'culturehiv') }
 
       it 'should return Culture as result type' do
-        expect(culture_result.requested_test.result_type).to eq('Culture')
+        expect(culture_result.result_type).to eq('Culture')
       end
     end
 
     context 'Xpert result' do
-      let(:xpert_result) { XpertResult.make requested_test: RequestedTest.make(encounter: encounter, status: :inprogress) }
+      let(:xpert_result) { RequestedTest.make(encounter: encounter, name: 'xpertmtb') }
 
-      it 'should return Culture as result type' do
-        expect(xpert_result.requested_test.result_type).to eq('Xpert')
+      it 'should return Xpert as result type' do
+        expect(xpert_result.result_type).to eq('Xpert')
       end
     end
 
     context 'Microscopy result' do
-      let(:microscopy_result) { MicroscopyResult.make requested_test: RequestedTest.make(encounter: encounter, status: :inprogress) }
+      let(:microscopy_result) { RequestedTest.make(encounter: encounter, name: 'microscopyhiv') }
 
-      it 'should return Culture as result type' do
-        expect(microscopy_result.requested_test.result_type).to eq('Microscopy')
+      it 'should return Microscopy as result type' do
+        expect(microscopy_result.result_type).to eq('Microscopy')
       end
     end
 
     context 'DST/LPA result' do
-      let(:dst_lpa_result) { DstLpaResult.make requested_test: RequestedTest.make(encounter: encounter, status: :inprogress) }
+      let(:dst_lpa_result) { RequestedTest.make(encounter: encounter, name: 'dstebola') }
 
       it 'should return Culture as result type' do
-        expect(dst_lpa_result.requested_test.result_type).to eq('Dst/Lpa')
+        expect(dst_lpa_result.result_type).to eq('Dst/Lpa')
       end
     end
   end
