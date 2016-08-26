@@ -114,6 +114,14 @@ RSpec.describe RequestedTest, type: :model do
         expect(dst_lpa_result.result_type).to eq('Dst/Lpa')
       end
     end
+
+    context 'Drug susceptibility result' do
+      let(:dst_lpa_result) { RequestedTest.make(encounter: encounter, name: 'drugsusceptibility2line_cformat_solid') }
+
+      it 'should return Culture as result type' do
+        expect(dst_lpa_result.result_type).to eq('Dst/Lpa')
+      end
+    end
   end
 
   describe 'turnaround time' do
