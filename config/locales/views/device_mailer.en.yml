@@ -1,0 +1,10 @@
+en:
+  setup_instructions:
+    setup_for: 'Setup instructions for #{@device.name}'
+    contact_for: 'Please, contact the administrator for the'
+    activation_code: 'activation code'
+    secret_key: 'secret key'
+    device_id: 'Device Id'
+    support: 'Online support'
+    download: 'Download instructions as a'
+    pdf: 'pdf file'

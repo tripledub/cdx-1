@@ -56,7 +56,7 @@ class EncountersController < ApplicationController
       Rails.logger.error ex.message
     end
     respond_to do |format|
-       format.html { redirect_to encounters_path, notice: 'Encounter was successfully deleted.' }
+       format.html { redirect_to encounters_path, notice: I18n.t('encounters_controller.encounter_deleted') }
       format.json { head :no_content }
     end
   end

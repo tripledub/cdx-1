@@ -1,0 +1,19 @@
+en:
+  policies:
+    new:
+      new_policy: 'New Policy'
+    index:
+      policies_header: 'Policies'
+      no_user_access: 'There are no users with access to'
+      invite_other_user: "Invite other users to join this site's team"
+      name_col: 'Name'
+      policy_name-col: 'Policy Name'
+      user_col: 'User'
+      last_activity_col: 'Last Activity'
+      add_policy: 'Add Policy'
+      no_policies: 'No Policies'
+    form:
+      error: 'error'
+      prohibited: 'prohibited this policy from being saved:'
+      name: 'Name'
+      definition: 'Definition'

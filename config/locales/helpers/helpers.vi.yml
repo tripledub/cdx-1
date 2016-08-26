@@ -1,0 +1,7 @@
+vi:
+  paging_helper:
+    row:
+      zero: '0 dòng'
+      one: '1 dòng'
+      other: '%{count} dòng'
+    per_page: 'trên trang'

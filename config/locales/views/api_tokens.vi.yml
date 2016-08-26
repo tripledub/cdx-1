@@ -1,0 +1,11 @@
+vi:
+  api_tokens:
+    index:
+      btn_add_api_token: 'Thêm mã API'
+      lbl_api_token: 'Mã API'
+      no_api_token: 'Không có mã API'
+      no_api_token_msg: 'Không có mã API'
+      api_token: 'Mã API'
+      token: 'Mã'
+      lnk_delete: 'Xóa'
+      delete_msg: 'Bạn có chắc bạn muốn xóa mã này không?\n#{token.token}'

@@ -1,0 +1,15 @@
+vi:
+  subscribers:
+    form: 
+      error: 'lỗi'
+      prohibited: 'khiến cho Thuê bao đăng ký nhận tin này không được lưu'
+      user_label: 'Người dùng (Không bắt buộc)'
+      password_label: 'Mật khẩu (Không bắt buộc)'
+    index:
+      first: 'Đầu tiên bạn cần phải tạo ra một bộ lọc '
+      go_to: 'Đến'
+      apply: 'áp dụng một bộ lọc và tạo ra 1 thuê bao đăng ký nhận tin'
+      add_subscriber_title: 'Thêm Thuê bao đăng ký nhận tin'
+      no_subscriber: 'Không có thuê bao đăng ký nhận tin nào'
+      subscribers_title: 'Thuê bao đăng ký nhận tin'
+      name: 'Name'

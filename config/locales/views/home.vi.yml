@@ -1,0 +1,63 @@
+vi:
+  home:
+    design:
+      grid: 'Lưới'
+      divided_row: '12 cột chia cho hàng.'
+      use: 'dùng'
+      distribute_space: 'lớp để phân phối khoảng trống so với trọng lượng'
+      first_col: 'cột đầu tiên với'
+      third_col: 'cột thứ ba với khoảng trống còn lại'
+      nested_col: 'Cột lồng nhau'
+      pixel_fix: 'Điểm ảnh cố định chiều rộng và phân bố đều'
+      300px_width: 'chiều rộng 300px'
+      plex_col: 'bẻ cong cột đã chia đều'
+      400px_width: 'chiều rộng 400px'
+      control: 'Điều khiển'
+      checkbox: 'Hộp chọn'
+      checkbox_can_be_used: 'Hộp chọn có thể được sử dụng tại vị trí có nhãn tương ứng hoặc trước'
+      input: 'đầu vào'
+      always_include: '. Luôn bao gồm'
+      for_id: 'cho/mã'
+      make_response: 'thuộc tính để phản ứng khi nhấn sự kiện.'
+      if_positioned: 'Nếu đã có vị trí từ trước, như ví dụ sau, thêm một khoảng trắng.'
+      radio_button: 'Nút chọn'
+      male: 'Nam'
+      female: 'Nữ'
+      other: 'Khác'
+
+    index:
+      cdp_home: "Đây là nơi của CDP."
+      pls: 'Vui lòng'
+      sign_in: 'Đăng nhập'
+
+    join:
+      invite_join: 'Cristopher Gates đã mời bạn tham gia vào nhóm với vai trò quản trị viên của Bệnh viện Fort Grey TB'
+      btn_create_acc: 'Tạo tài khoản'
+      link_not_work: 'Liên kết không hoạt động? Dán nó vào trình duyệt:'
+      copy_right: '©2015 Conected Diagnostics'
+      policy: 'Chính sách bảo mật'
+      term: 'Điều khoản và điều kiện'
+
+    settings:
+      header_settings: 'Cài đặt'
+      alert: 'Cảnh báo'
+      alert_body: 'Thông báo cho nhóm của bạn về những chuyện quan trọng.'
+      role:
+        zero: 'Không có vai trò'
+        one: "1 Vai trò"
+        other: "%{count} Vai trò"
+      role_body: 'Quản lý quyền hạn của người dùng với chính sách tái sử dụng'
+      sites: 'Trang'
+      sites_body: 'Quản lý trang'
+      messages: 'Thông điệp'
+      messages_body: 'Quản lý nhật ký'
+      models: 'Kiểu thiết bị'
+      models_body: 'Quản lý kiểu thiết bị'
+      users: 'Người dùng'
+      users_body: 'Quản lý người dùng'
+      ftp: 'Giao thức truyền tập tin'
+      ftp_body: 'Cài đặt thiết bị giao thức truyền tập tin'
+
+    verify:
+      check_email: 'Kiểm tra email của bạn để xác thực tài khoản'
+      look_email: 'Tìm email với tiêu đề "Xác thực tài khoản CDX"'

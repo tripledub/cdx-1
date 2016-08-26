@@ -34,7 +34,7 @@ class PoliciesController < ApplicationController
       if @policy.errors.empty? && @policy.save
         format.html do
           redirect_to policies_path,
-                      notice: @_notice || 'Policy was successfully created.'
+                      notice: @_notice || I18n.t('policies_controller.policy_created')
         end
         format.json { render action: 'show', status: :created, policy: @policy }
       else
@@ -75,7 +75,7 @@ class PoliciesController < ApplicationController
 
     respond_to do |format|
       if @policy.errors.empty? && @policy.save
-        format.html { redirect_to policies_path, notice: 'Policy was successfully updated.' }
+        format.html { redirect_to policies_path, notice: I18n.t('policies_controller.policy_updated') }
         format.json { head :no_content }
       else
         if has_definition_error
@@ -110,7 +110,7 @@ class PoliciesController < ApplicationController
     @user = User.find_or_initialize_by(email: policy_params[:user_id])
     unless @user.persisted?
       @user.invite!
-      @_notice = "An invitation email has been sent to #{@user.email}"
+      @_notice = "#{I18n.t('policies_controller.invitation_sent_to')} #{@user.email}"
     end
   end
 end

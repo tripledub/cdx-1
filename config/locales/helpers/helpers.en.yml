@@ -1,0 +1,7 @@
+en:
+  paging_helper:
+    row:
+      zero: 'No rows'
+      one: '1 row'
+      other: '%{count} rows'
+    per_page: 'per page'

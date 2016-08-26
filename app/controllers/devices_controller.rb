@@ -57,7 +57,7 @@ class DevicesController < ApplicationController
 
     respond_to do |format|
       if @device.save
-        format.html { redirect_to setup_device_path(@device), notice: 'Device was successfully created.' }
+        format.html { redirect_to setup_device_path(@device), notice: I18n.t('devices_controller.device_created') }
         format.json { render action: 'show', status: :created, location: @device }
       else
         format.html do

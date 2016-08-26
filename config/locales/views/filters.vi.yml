@@ -1,0 +1,14 @@
+vi:
+  filters:
+    form:
+      error_explan: ' không cho lưu bộ lọc này:'
+      lbl_site: 'Trang'
+      lbl_condition: 'Điều kiện'
+
+    index:
+      title_filters: 'Bộ lọc'
+      filter_msg: 'Không có bộ lọc đã lưu'
+      col_name: 'Tên'
+
+    new:
+      new_filter: 'Bộ lọc mới'

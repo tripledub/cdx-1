@@ -1,0 +1,11 @@
+vi:
+  ftp_settings:
+    edit:
+      setting_msg: 'Cấu hình giao thức truyền tập tin cho: '
+      host: 'Tên máy chủ'
+      port: 'Cổng'
+      lbl_passive: 'Trình chủ'
+      folder: 'Thư mục'
+      lbl_login: 'Đăng nhập'
+      username: 'Tên đăng nhập'
+      password: 'Mật khẩu'

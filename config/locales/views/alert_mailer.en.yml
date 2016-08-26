@@ -1,0 +1,6 @@
+en:
+  alert_mailer:
+    alert_email:
+      h1: 'Alert notification for #{@alert.name}'
+      msg: "Raised at #{@alert.created_at.strftime('%m/%d/%Y %H:%M')}"
+      email_text: 'Alert occurred #{@alert.name}. Time occurred #{@alert.created_at}. #{@alert_body_text}'

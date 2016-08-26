@@ -1,0 +1,73 @@
+en:
+  devise:
+    confirmations:
+      new:
+        resend_confirmation: 'Resend confirmation instructions'
+        btn_resend: 'Resend confirmation instructions'
+        lnk_login: 'Have an account? Log in'
+
+    mailer:
+      confirmation_instructions:
+        welcome: 'Welcome'
+        confirm_email: 'Confirm your email and start using our platform'
+        btn_confirm: 'Confirm email'
+
+      reset_password_instructions:
+        hello_txt: 'Hello <%= @resource.email %>!'
+        msg_request_link: 'Someone has requested a link to change your password. You can do this through the link below.'
+        lnk_change_password: 'Change my password'
+        ignore_email: "If you didn't request this, please ignore this email."
+        msg_change_password: "Your password won't change until you access the link above and create a new one."
+
+      unlock_instructions:
+        hello_txt: 'Hello <%= @resource.email %>!'
+        msg_acc_locked: 'Your account has been locked due to an excessive number of unsuccessful sign in attempts.'
+        msg_unlock: 'Click the link below to unlock your account:'
+        lnk_unlock: 'Unlock my account'
+
+    passwords:
+      edit:
+        pass_reset: 'Password reset'
+        choose_pass: "Choose a strong password and don't reuse it for other accounts."
+        pass_place_holder: 'Password'
+        btn_reset_pass: 'Reset my password'
+
+      new:
+        login_problems: 'Login problems?'
+        enter_email: "Enter your email and we'll send you a link to reset your password"
+        btn_request_pass_reset: 'Request a password reset'
+        lnk_remembered_pass: "I've remembered my password"
+        lnk_didnt_receive_instruction: "Didn't receive confirmation instructions?"
+        lnk_didnt_receive_unlock: "Didn't receive unlock instructions?"
+
+    registrations:
+      edit:
+        my_acc: 'My Account'
+        lbl_new_pass: 'New password'
+        lbl_retype_new_pass: 'Retype new password'
+        lbl_test_timestamps: 'Test timestamps'
+        select_my_timezone: 'Relative to my time zone'
+        select_device_timezone: 'Relative to the device time zone'
+
+      new:
+        sign_up: 'Sign up'
+        first_name: 'First name'
+        last_name: 'Last name'
+        password: 'Password'
+        btn_sign_up: 'Sign up'
+        lnk_login: 'Have an account? Log in'
+        lnk_login_problem: 'Login problems?'
+
+    shared:
+      links:
+        login: 'Log in'
+        sign_up: 'Sign up'
+        forgot_pass: 'Forgot your password?'
+        lnk_didnt_receive_instruction: "Didn't receive confirmation instructions?"
+        lnk_didnt_receive_unlock: "Didn't receive unlock instructions?"
+        sign_in_with: 'Sign in with #{provider.to_s.titleize}'
+
+    unlocks:
+      new:
+        resend_unlock: 'Resend unlock instructions'
+        btn_resend: 'Resend unlock instructions'

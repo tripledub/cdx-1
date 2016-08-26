@@ -1,0 +1,36 @@
+en:
+  institutions:
+    form:
+      health_org: 'Health organization'
+      work_for_health_org: 'I work for a Health Organization that wants to have access to shared diagnostic results to do disease surveillance.'
+      institution: 'Institution'
+      work_in_institution: 'I work in an institution that performs diagnostics and want to connect our devices to this platform.'
+      manufacturer: 'Manufacturer'
+      work_for_manufacturer: 'I work for a device manufacturer and want to test the integration of our devices and provide support to our customers.'
+      type: 'Type'
+      ftp: 'FTP'
+      host: 'Hostname'
+      port: 'Port'
+      passive: 'Passive'
+      folder: 'Folder'
+      login: 'Login'
+      username: 'Username'
+      password: 'Password'
+
+    edit:
+      btn_create: 'Create Institution'
+
+    index:
+      btn_add: 'Add Institution'  
+      institution: 'Institutions'
+      name: 'Name'
+
+    new:
+      new_institution: 'New Institution'
+
+    no_data_allowed:
+      no_access_to_data: 'You have no access to data of the selected institution.'
+
+    pending_approval:
+      contact_admin: "Please contact your system's administrator"
+      acc_need_active: 'Your account needs to be activated in order to have access to the system'

@@ -1,0 +1,20 @@
+vi:
+  policies:
+    new: 
+      new_policy: 'Chính sách mới'
+    index:
+      policies_header: 'Chính sách'
+      no_user_access: 'Không có người dùng nào truy cập vào'
+      invite_other_user: 'Mời người dùng khác tham gia nhóm của trang này'
+      name_col: 'Tên'
+      policy_name-col: 'Tên chính sách'
+      user_col: 'Người dùng'
+      last_activity_col: 'Hoạt động cuối cùng'
+      add_policy: 'Thêm chính sách'
+      no_policies: 'Không có chính sách nào'
+    form:
+      error: 'lỗi'
+      prohibited: 'khiến cho Chính sách này không được lưu:'
+      name: 'Tên'
+      definition: 'Định nghĩa'
+

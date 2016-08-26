@@ -1,0 +1,11 @@
+en:
+  api_tokens:
+    index:
+      btn_add_api_token: 'Add API Token'
+      lbl_api_token: 'API tokens'
+      no_api_token: 'No API tokens'
+      no_api_token_msg: 'There are no api tokens'
+      api_token: 'API token'
+      token: 'Token'
+      lnk_delete: 'Delete'
+      delete_msg: 'Are you sure you want to delete the following token?\n#{token.token}'

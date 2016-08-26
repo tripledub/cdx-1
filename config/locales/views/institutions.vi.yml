@@ -1,0 +1,36 @@
+vi:
+  institutions:
+    form:
+      health_org: 'Tổ chức y tế'
+      work_for_health_org: 'Tôi làm việc cho một tổ chức y tế mà muốn có quyền truy cập vào kết quả chẩn đoán đã được chia sẻ để giám sát bệnh.'
+      institution: 'Tổ chức'
+      work_in_institution: 'Tôi làm việc trong một tổ chức thực hiện chẩn đoán và tôi muốn kết nối thiết bị của chúng tôi đến nền tảng này.'
+      manufacturer: 'Nhà sản xuất'
+      work_for_manufacturer: 'Tôi làm việc cho một nhà máy sản xuất thiết bị và tôi muốn kiểm tra sự tích hợp của thiết bị của chúng tôi và hỗ trợ cho khách hàng.'
+      type: 'Loại'
+      ftp: 'Giao thức truyền tập tin'
+      host: 'Tên máy chủ'
+      port: 'Cổng'
+      passive: 'Trình chủ'
+      folder: 'Thư mục'
+      login: 'Đăng nhập'
+      username: 'Tên đăng nhập'
+      password: 'Mật khẩu'
+
+    edit:
+      btn_create: 'Tạo tổ chức'
+
+    index:
+      btn_add: 'Thêm tổ chức'  
+      institution: 'Tổ chức'
+      name: 'Tên'
+
+    new:
+      new_institution: 'Tổ chức mới'
+
+    no_data_allowed:
+      no_access_to_data: 'Bạn không có quyền truy cập vào dữ liệu của tổ chức này.'
+
+    pending_approval:
+      contact_admin: 'Vui lòng liên hệ với ban quản trị hệ thống của bạn'
+      acc_need_active: 'Tài khoản của bạn cần được kích hoạt để có quyền truy cập vào hệ thống'
