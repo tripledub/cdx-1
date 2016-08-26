@@ -45,17 +45,22 @@ class EncountersController < ApplicationController
   end
 
   def destroy
-    return unless can_delete_encounter?
-    # note: Cannot delete record because dependent samples exist, so just set delated_at
-    @encounter.update(deleted_at: Time.now)
-    begin
-       Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: @encounter.uuid
-       Audit::EncounterAuditor.new(@encounter, current_user.id).log_action(I18n.t('encounters.destroy.cancelled'), I18n.t('encounters.destroy.log_action', uuid: @encounter.uuid), @encounter)
-    rescue => ex
-      Rails.logger.error ex.message
+    if can_delete_encounter?
+      # note: Cannot delete record because dependent samples exist, so just set delated_at
+      @encounter.update(deleted_at: Time.now)
+      begin
+         Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: @encounter.uuid
+         Audit::EncounterAuditor.new(@encounter, current_user.id).log_action(I18n.t('encounters.destroy.cancelled'), I18n.t('encounters.destroy.log_action', uuid: @encounter.uuid), @encounter)
+         message = I18n.t('encounters.destroy.success')
+      rescue => ex
+        Rails.logger.error ex.message
+      end
+    else
+      message = I18n.t('encounters.destroy.not_allowed')
     end
+
     respond_to do |format|
-      format.html { redirect_to encounters_path, notice: I18n.t('encounters.destroy.success') }
+      format.html { redirect_to encounters_path, notice: message }
       format.json { head :no_content }
     end
   end
@@ -467,12 +472,6 @@ class EncountersController < ApplicationController
   end
 
   def can_delete_encounter?
-    if has_access?(Institution, Policy::Actions::UPDATE_INSTITUTION)
-      #is an admin.
-      authorize_resource(@encounter, DELETE_ENCOUNTER)
-    else
-      #standard users can only delete encounters where status is pending
-      @encounter.status == 'pending' && authorize_resource(@encounter, DELETE_ENCOUNTER)
-    end
+    @encounter.status == 'pending' && has_access?(@encounter, DELETE_ENCOUNTER)
   end
 end

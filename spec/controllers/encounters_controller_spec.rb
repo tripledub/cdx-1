@@ -8,11 +8,14 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
   let(:patient)        { Patient.make institution: institution }
   let(:default_params) { { context: institution.uuid } }
 
-  before(:each) { sign_in user }
+  before(:each) do
+    grant nil, user, Encounter,  [DELETE_ENCOUNTER]
+    sign_in user
+  end
 
   describe "destroy" do
     context 'an admin user' do
-      let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, status: 2 }
+      let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, status: 0 }
 
       it "should destroy an encounter no matter in which status is" do
         delete :destroy, id: encounter.id
@@ -28,10 +31,10 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       before(:each) do
         sign_out user
         clinician.institutions << institution
-        grant nil, clinician, institution, [CREATE_INSTITUTION, READ_INSTITUTION]
-        grant clinician, user, Encounter,   [READ_ENCOUNTER]
-        grant clinician, user, Encounter,   [UPDATE_ENCOUNTER]
-        grant clinician, user, Encounter,   [DELETE_ENCOUNTER]
+        grant nil, clinician, institution, READ_INSTITUTION
+        grant clinician, user, Encounter,  [READ_ENCOUNTER]
+        grant clinician, user, Encounter,  [UPDATE_ENCOUNTER]
+        grant clinician, user, Encounter,  [DELETE_ENCOUNTER]
 
         sign_in clinician
         delete :destroy, id: encounter.id
@@ -42,6 +45,10 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
         it 'should not be able to destroy it' do
           expect(Encounter.count).to eq 1
+        end
+
+        it 'should inform the user' do
+          expect(flash.notice).to eq 'You can not delete this test order.'
         end
       end
 

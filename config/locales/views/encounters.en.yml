@@ -10,6 +10,7 @@ en:
       merge: 'Cannot add a test or sample that belongs to a different %{entity_type}'
       error: 'Error %{action_name} %{class_name}'
     destroy:
-      success: 'Encounter was successfully deleted.'
-      log_action: 'Test Order %{uuid} Cancelled'
-      cancelled: 'Test Order Cancelled'
+      success: 'Test order was successfully deleted.'
+      log_action: 'Test order %{uuid} Cancelled'
+      cancelled: 'Test order Cancelled'
+      not_allowed: 'You can not delete this test order.'
