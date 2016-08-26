@@ -31,6 +31,7 @@
 //= require react-input-autosize
 //= require react-select
 //= require react-leaflet
+//= require react_rails_img
 //= require store.min
 //= require components
 //= require canvas-js.min

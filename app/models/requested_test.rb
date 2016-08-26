@@ -42,7 +42,7 @@ class RequestedTest < ActiveRecord::Base
       return I18n.t('requested_test.result.xpert')
     elsif name.include? 'microscopy'
       return I18n.t('requested_test.result.microscopy')
-    elsif name.include? 'dst'
+    elsif name.include?('dst') || name.include?('drugsusceptibility')
       return I18n.t('requested_test.result.dst_lpa')
     end
   end
