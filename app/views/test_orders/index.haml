@@ -21,6 +21,12 @@
               - select.items Encounter.testing_for_options.map {|e| e.reverse }
           .filter
             %label.block
+              = I18n.t('test_orders.filters.status')
+            = cdx_select name: "status", value: params["status"] do |select|
+              - select.item "", I18n.t('test_orders.filters.show_all')
+              - select.items Encounter.status_options.map {|e| e.reverse }
+          .filter
+            %label.block
               = I18n.t('test_orders.filters.date')
             = cdx_select name: "since", value: params["since"] do |select|
               - select.item "", I18n.t('test_orders.filters.show_all')

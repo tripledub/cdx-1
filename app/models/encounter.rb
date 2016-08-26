@@ -41,6 +41,10 @@ class Encounter < ActiveRecord::Base
       [['solid', I18n.t('select.culture.media_options.solid')], ['liquid', I18n.t('select.culture.media_options.liquid')]]
     end
 
+    def status_options
+      [['0', I18n.t('select.encounter.status_options.pending')], ['1', I18n.t('select.encounter.status_options.inprogress')], ['2', I18n.t('select.encounter.status_options.completed')]]
+    end
+
     def merge_assays(assays1, assays2)
       return assays2 unless assays1
       return assays1 unless assays2
