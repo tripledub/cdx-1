@@ -50,7 +50,7 @@ class EncountersController < ApplicationController
     @encounter.update(deleted_at: Time.now)
     begin
        Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: @encounter.uuid
-       Audit::EncounterAuditor.new(@encounter, current_user.id).log_action("Test Order Cancelled", "Test Order #{@encounter.uuid} Cancelled", @encounter)
+       Audit::EncounterAuditor.new(@encounter, current_user.id).log_action(I18n.t('encounters.destroy.cancelled'), I18n.t('encounters.destroy.log_action', uuid: @encounter.uuid), @encounter)
     rescue => ex
       Rails.logger.error ex.message
     end

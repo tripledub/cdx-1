@@ -11,3 +11,5 @@ en:
       error: 'Error %{action_name} %{class_name}'
     destroy:
       success: 'Encounter was successfully deleted.'
+      log_action: 'Test Order %{uuid} Cancelled'
+      cancelled: 'Test Order Cancelled'
