@@ -51,7 +51,7 @@ var UserInviteForm = React.createClass({
       success: function (d) {
         d = $.parseJSON(d);
         if(d.info.trim().length > 0)
-          $('.flashmessage').hide().html(d.info).fadeIn('fast').delay(3000).fadeOut('fast');
+          $('.flashmessage').hide().html(d.info).fadeIn('fast').delay(30000).fadeOut('fast');
         else
         {
           this.closeModal();
@@ -98,14 +98,20 @@ var UserInviteForm = React.createClass({
       </div>
 
       <div className="row">
-        <div className="col pe-2"><label>{I18n.t("components.users.users_label")}</label></div>
-        <div className="col"><OptionList ref="usersList"
+        <div className="col pe-2">
+          <label>{I18n.t("components.users.users_label")}</label>
+        </div>
+        <div className="col">
+          <OptionList ref="usersList"
           callback={this.addUser}
           autocompleteCallback="/users/autocomplete"
           context={this.props.context}
           allowNonExistent={true}
           showInput={true}
-          placeholder= {I18n.t("components.users.type_email_placeholder")} /></div>
+          placeholder= {I18n.t("components.users.type_email_placeholder")} />
+        </div>
+        <div className="row flashmessage">
+        </div>
       </div>
 
       <div className="row">
@@ -120,9 +126,6 @@ var UserInviteForm = React.createClass({
           <div className="col pe-2"><label>{I18n.t("components.users.message_label")}</label></div>
           <div className="col"><textarea value={this.state.message} onChange={this.writeMessage} className="input-block resizeable" rows="1" /></div>
         </div> : null }
-
-      <div className="row flashmessage">
-      </div>
 
       <div className="modal-footer">
         <button className="btn btn-primary" onClick={this.sendInvitation}>{I18n.t("components.users.send_btn")}</button>
