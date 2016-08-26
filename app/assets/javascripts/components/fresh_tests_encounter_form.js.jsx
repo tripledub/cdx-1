@@ -331,7 +331,7 @@ var ReasonDiag = React.createClass({
           <label>Comment</label>
         </div>
         <div className="col-6">
-          <textarea name="diag_comment" id="diag_comment" rows="5" cols="60" onChange={this.updateComment}></textarea>
+          <textarea name="diag_comment" maxLength="200" id="diag_comment" rows="5" cols="60" onChange={this.updateComment}></textarea>
         </div>
       </div>
     );
