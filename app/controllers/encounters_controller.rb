@@ -1,5 +1,5 @@
 class EncountersController < ApplicationController
-  before_filter :load_encounter, only: [:show, :edit]
+  before_filter :load_encounter, only: [:show, :edit, :destroy]
   before_filter :find_institution_and_patient,   only: [:new]
 
   def new_index
@@ -45,8 +45,7 @@ class EncountersController < ApplicationController
   end
 
   def destroy
-    @encounter = Encounter.find(params[:id])
-    return unless authorize_resource(@encounter, DELETE_ENCOUNTER)
+    return unless can_delete_encounter?
     # note: Cannot delete record because dependent samples exist, so just set delated_at
     @encounter.update(deleted_at: Time.now)
     begin
@@ -56,7 +55,7 @@ class EncountersController < ApplicationController
       Rails.logger.error ex.message
     end
     respond_to do |format|
-       format.html { redirect_to encounters_path, notice: 'Encounter was successfully deleted.' }
+      format.html { redirect_to encounters_path, notice: I18n.t('encounters.destroy.success') }
       format.json { head :no_content }
     end
   end
@@ -465,5 +464,15 @@ class EncountersController < ApplicationController
     return unless encounter_param['patient'] || encounter_param['patient_id']
 
     encounter_param['patient'].present? ? encounter_param['patient']['id'] : encounter_param['patient_id']
+  end
+
+  def can_delete_encounter?
+    if has_access?(Institution, Policy::Actions::UPDATE_INSTITUTION)
+      #is an admin.
+      authorize_resource(@encounter, DELETE_ENCOUNTER)
+    else
+      #standard users can only delete encounters where status is pending
+      @encounter.status == 'pending' && authorize_resource(@encounter, DELETE_ENCOUNTER)
+    end
   end
 end

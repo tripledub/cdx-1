@@ -10,14 +10,49 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
   before(:each) { sign_in user }
 
-  context "destroy" do
-    let!(:encounter) { Encounter.make institution: institution, site: site, patient: patient }
+  describe "destroy" do
+    context 'an admin user' do
+      let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, status: 2 }
 
-    it "should destroy an encounter" do
-      delete :destroy, id: encounter.id
+      it "should destroy an encounter no matter in which status is" do
+        delete :destroy, id: encounter.id
 
-      expect(Encounter.count).to eq 0
-      expect(response).to be_redirect
+        expect(Encounter.count).to eq 0
+        expect(response).to be_redirect
+      end
+    end
+
+    context 'a clinician' do
+      let(:clinician) { User.make }
+
+      before(:each) do
+        sign_out user
+        clinician.institutions << institution
+        grant nil, clinician, institution, [CREATE_INSTITUTION, READ_INSTITUTION]
+        grant clinician, user, Encounter,   [READ_ENCOUNTER]
+        grant clinician, user, Encounter,   [UPDATE_ENCOUNTER]
+        grant clinician, user, Encounter,   [DELETE_ENCOUNTER]
+
+        sign_in clinician
+        delete :destroy, id: encounter.id
+      end
+
+      context 'if encounter is not pending' do
+        let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, status: 1 }
+
+        it 'should not be able to destroy it' do
+          expect(Encounter.count).to eq 1
+        end
+      end
+
+      context 'if encounter status is pending' do
+        let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, status: 0 }
+
+        it 'should be able to destroy it' do
+          expect(Encounter.count).to eq 0
+          expect(response).to be_redirect
+        end
+      end
     end
   end
 
