@@ -1,5 +1,5 @@
 class EncountersController < ApplicationController
-  before_filter :load_encounter, only: [:show, :edit]
+  before_filter :load_encounter, only: [:show, :edit, :destroy]
   before_filter :find_institution_and_patient,   only: [:new]
 
   def new_index
@@ -45,18 +45,22 @@ class EncountersController < ApplicationController
   end
 
   def destroy
-    @encounter = Encounter.find(params[:id])
-    return unless authorize_resource(@encounter, DELETE_ENCOUNTER)
-    # note: Cannot delete record because dependent samples exist, so just set delated_at
-    @encounter.update(deleted_at: Time.now)
-    begin
-       Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: @encounter.uuid
-       Audit::EncounterAuditor.new(@encounter, current_user.id).log_action("Test Order Cancelled", "Test Order #{@encounter.uuid} Cancelled", @encounter)
-    rescue => ex
-      Rails.logger.error ex.message
+    if can_delete_encounter?
+      # note: Cannot delete record because dependent samples exist, so just set delated_at
+      @encounter.update(deleted_at: Time.now)
+      begin
+         Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: @encounter.uuid
+         Audit::EncounterAuditor.new(@encounter, current_user.id).log_action(I18n.t('encounters.destroy.cancelled'), I18n.t('encounters.destroy.log_action', uuid: @encounter.uuid), @encounter)
+         message = I18n.t('encounters.destroy.success')
+      rescue => ex
+        Rails.logger.error ex.message
+      end
+    else
+      message = I18n.t('encounters.destroy.not_allowed')
     end
+
     respond_to do |format|
-       format.html { redirect_to encounters_path, notice: 'Encounter was successfully deleted.' }
+      format.html { redirect_to encounters_path, notice: message }
       format.json { head :no_content }
     end
   end
@@ -465,5 +469,9 @@ class EncountersController < ApplicationController
     return unless encounter_param['patient'] || encounter_param['patient_id']
 
     encounter_param['patient'].present? ? encounter_param['patient']['id'] : encounter_param['patient_id']
+  end
+
+  def can_delete_encounter?
+    @encounter.status == 'pending' && has_access?(@encounter, DELETE_ENCOUNTER)
   end
 end
