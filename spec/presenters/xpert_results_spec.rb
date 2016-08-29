@@ -28,7 +28,7 @@ describe Presenters::XpertResults do
         tuberculosis:      Extras::Select.find(XpertResult.tuberculosis_options, XpertResult.first.specimen_type),
         rifampicin:        Extras::Select.find(XpertResult.rifampicin_options, XpertResult.first.serial_number),
         trace:             Extras::Select.find(XpertResult.trace_options, XpertResult.first.trace),
-        viewLink:          Rails.application.routes.url_helpers.requested_test_microscopy_result_path(requested_test_id: XpertResult.first.requested_test.id)
+        viewLink:          Rails.application.routes.url_helpers.requested_test_xpert_result_path(requested_test_id: XpertResult.first.requested_test.id)
       })
     end
   end
