@@ -28,7 +28,7 @@ describe Presenters::CultureResults do
         mediaUsed:         Extras::Select.find(CultureResult.media_options, CultureResult.first.media_used),
         serialNumber:      CultureResult.first.serial_number,
         testResult:        Extras::Select.find(CultureResult.test_result_options, CultureResult.first.test_result),
-        viewLink:          Rails.application.routes.url_helpers.requested_test_microscopy_result_path(requested_test_id: CultureResult.first.requested_test.id)
+        viewLink:          Rails.application.routes.url_helpers.requested_test_culture_result_path(requested_test_id: CultureResult.first.requested_test.id)
       })
     end
   end
