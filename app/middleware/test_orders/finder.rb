@@ -14,6 +14,7 @@ class TestOrders::Finder
     filter_by_navigation_context
     filter_by_checkboxes
     filter_by_encounter_id
+    filter_by_status
     filter_by_testing_for
     filter_by_start_time
   end
@@ -40,6 +41,14 @@ class TestOrders::Finder
 
   def filter_by_encounter_id
     @filter_query = filter_query.where("encounters.uuid = ?", @params['encounter_id']) if @params['encounter_id'].present?
+  end
+
+  def filter_by_status
+    if @params['status'].present?
+      @filter_query = filter_query.where("encounters.status = ?", @params['status'])
+    else
+      @filter_query = filter_query.where("encounters.status IN (0,1)")
+    end
   end
 
   def filter_by_testing_for

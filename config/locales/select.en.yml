@@ -11,6 +11,10 @@ en:
         tb: 'Tuberculosis'
         hiv: 'H.I.V.'
         ebola: 'Ebola'
+      status_options:
+        pending: 'Pending'
+        inprogress: 'In progress'
+        completed: 'Completed'
     microscopy:
       visual_appearance:
         blood: 'Blood-stained'

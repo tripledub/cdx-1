@@ -34,8 +34,9 @@ describe TestOrdersController, elasticsearch: true do
             expect(response).to render_template('index')
           end
 
-          it 'should display the test orders' do
-            expect(assigns(:total)).to eq(8)
+          it 'should display the outstanding test orders' do
+            outstanding_test_orders = Encounter.where('encounters.status IN (0,1)').count
+            expect(assigns(:total)).to eq(outstanding_test_orders)
           end
         end
 
