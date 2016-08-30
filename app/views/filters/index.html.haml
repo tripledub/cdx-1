@@ -1,16 +1,18 @@
 .row
   .col
     - if filters.empty?
-      = empty_data title: 'Filters' do |c|
+      = empty_data title: I18n.t('filters.index.title_filters') do |c|
         - c.body do
-          %h1 There are no saved filters
+          %h1
+            = I18n.t('filters.index.filter_msg')
     - else
-      = cdx_table title: 'Filters' do |t|
+      = cdx_table title: I18n.t('filters.index.title_filters') do |t|
         - t.columns do
           %col{:width => "100%"}
         - t.thead do
           %tr
-            %th Name
+            %th
+              = I18n.t('filters.index.col_name')
         - t.tbody do
           - filters.each do |filter|
             %tr

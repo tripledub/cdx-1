@@ -1,7 +1,7 @@
 .row.center.add-new.collapse
   .col.pe-10
     %h2
-      = link_to encounter_path(@requested_test.encounter, :test_order_page_mode => @return_page_mode), class: 'side-link', title: 'Back' do
+      = link_to encounter_path(@requested_test.encounter, :test_order_page_mode => @return_page_mode), class: 'side-link', title: I18n.t('dst_lpa_results.new.back') do
         = image_tag "arrow-left-white.png"
       = I18n.t('dst_lpa_results.new.header')
 

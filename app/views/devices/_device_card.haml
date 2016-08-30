@@ -12,7 +12,7 @@
     .small-12.columns
       %header 
         %h3 
-          Device Details            
+          = I18n.t('devices.device_card.device_details')
       .col.pe-12.box-content
         = card image: @device.device_model.picture.url(:card) do |c|
           - c.top do

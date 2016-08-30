@@ -6,8 +6,10 @@
         = f.radio_button :kind, "health_organization", checked: @institution.kind == "health_organization", class: 'institution'
         .institution-option
           = image_tag "ic-health-organization.png"
-          %h4 Health organization
-          %p I work for a Health Organization that wants to have access to shared diagnostic results to do disease surveillance.
+          %h4
+            = I18n.t('institutions.form.health_org')
+          %p
+            = I18n.t('institutions.form.work_for_health_org')
           .institution-radio
             %label{for: "institution_kind_health_organization"}
               .btn-add
@@ -16,8 +18,10 @@
         = f.radio_button :kind, "institution", checked: @institution.kind == "institution", class: 'institution'
         .institution-option
           = image_tag "ic-institution.png"
-          %h4 Institution
-          %p I work in an institution that performs diagnostics and want to connect our devices to this platform.
+          %h4
+            = I18n.t('institutions.form.institution')
+          %p
+            = I18n.t('institutions.form.work_in_institution')
           .institution-radio
             %label{for: "institution_kind_institution"}
               .btn-add
@@ -26,8 +30,10 @@
         = f.radio_button :kind, "manufacturer", checked: @institution.kind == "manufacturer", class: 'institution'
         .institution-option
           = image_tag "ic-manufacturer.png"
-          %h4 Manufacturer
-          %p I work for a device manufacturer and want to test the integration of our devices and provide support to our customers.
+          %h4
+            = I18n.t('institutions.form.manufacturer')
+          %p
+            = I18n.t('institutions.form.work_for_manufacturer')
           .institution-radio
             %label{for: "institution_kind_manufacturer"}
               .btn-add
@@ -41,27 +47,27 @@
     - if not f.object.new_record?
       .row
         .col.px-1
-          = label_tag "kind", "Type", :class => 'block'
+          = label_tag "kind", I18n.t('institutions.form.type'), :class => 'block'
         .col
           .value= f.object.kind.humanize.titleize
     .row
-      .col.pe-2= f.label :ftp_hostname, 'FTP'
-      .col.pe-2= f.text_field :ftp_hostname, placeholder: 'Hostname'
-      .col.pe-2= f.number_field :ftp_port, min: 0, max: 65535, placeholder: 'Port'
+      .col.pe-2= f.label :ftp_hostname, I18n.t('institutions.form.ftp')
+      .col.pe-2= f.text_field :ftp_hostname, placeholder: I18n.t('institutions.form.host')
+      .col.pe-2= f.number_field :ftp_port, min: 0, max: 65535, placeholder: I18n.t('institutions.form.port')
       .col.pe-1
-        = f.label :ftp_passive, "Passive"
+        = f.label :ftp_passive, I18n.t('institutions.form.passive')
       .col.pe-1
         = f.check_box :ftp_passive
         = f.label :ftp_passive, "&nbsp;".html_safe
-      .col.pe-2= f.text_field :ftp_directory, placeholder: 'Folder'
+      .col.pe-2= f.text_field :ftp_directory, placeholder: I18n.t('institutions.form.folder')
     .row{style: 'visibility:hidden; height: 1px'}
-      .col.pe-2= f.label :fake_username, 'Login'
-      .col.pe-2= text_field :fake_username, placeholder: 'Username', autocomplete: 'on'
-      .col.pe-2= f.password_field :fake_password, value: '', placeholder: 'Password', autocomplete: 'off'
+      .col.pe-2= f.label :fake_username, I18n.t('institutions.form.login')
+      .col.pe-2= text_field :fake_username, placeholder: I18n.t('institutions.form.username'), autocomplete: 'on'
+      .col.pe-2= f.password_field :fake_password, value: '', placeholder: I18n.t('institutions.form.password'), autocomplete: 'off'
     .row
-      .col.pe-2= f.label :ftp_username, 'Login'
-      .col.pe-2= f.text_field :ftp_username, placeholder: 'Username', autocomplete: 'off'
-      .col.pe-2= f.password_field :ftp_password, value: @institution.ftp_password, placeholder: 'Password', autocomplete: 'off'
+      .col.pe-2= f.label :ftp_username, I18n.t('institutions.form.login')
+      .col.pe-2= f.text_field :ftp_username, placeholder: I18n.t('institutions.form.username'), autocomplete: 'off'
+      .col.pe-2= f.password_field :ftp_password, value: @institution.ftp_password, placeholder: I18n.t('institutions.form.password'), autocomplete: 'off'
 
     .row.button-actions
       .col

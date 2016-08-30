@@ -1,6 +1,7 @@
 .row
   .col
-    %h1 Resend unlock instructions
+    %h1
+      = I18n.t('devise.unlocks.new.resend_unlock')
 = form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|
   .row
     .col
@@ -8,5 +9,5 @@
   %br
   .row
     .col
-      = f.submit "Resend unlock instructions", class: "btn-secondary input-block"
+      = f.submit I18n.t('devise.unlocks.new.btn_resend'), class: "btn-secondary input-block"
 = devise_error_messages!

@@ -7,6 +7,6 @@
             - unless @institutions.size == 0
               = link_to institutions_path, class: 'side-link', title: I18n.t('views.back') do
                 = image_tag "arrow-left-white.png"
-            New Institution
+            = I18n.t('institutions.new.new_institution')
 
 = render 'form'

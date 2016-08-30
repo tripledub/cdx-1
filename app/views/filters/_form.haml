@@ -1,7 +1,8 @@
 = form_for(filter) do |f|
   - if filter.errors.any?
     #error_explanation
-      %p= "#{pluralize(filter.errors.count, "error")} prohibited this filter from being saved:"
+      %p
+        = "#{I18n.t('filters.form.error', count: filter.errors.count)} #{I18n.t('filters.form.error_explan')}"
       %ul
         - filter.errors.full_messages.each do |msg|
           %li= msg
@@ -12,12 +13,14 @@
 
   .row
     .col.pe-2
-      %label Site
+      %label
+        = I18n.t('filters.form.lbl_site')
     .col
       #{site.try(:name)}
   .row
     .col.pe-2
-      %label Condition
+      %label
+        = I18n.t('filters.form.lbl_condition')
     .col
       #{condition}
   .row

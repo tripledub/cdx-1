@@ -4,21 +4,23 @@
   .box.big.centered
     = image_tag "user-invite.png"
     %h2
-      Cristopher Gates has invited you to join the team as Fort Grey TB Hospital administrator
+      = I18n.t('home.join.invite_join')
     .button-actions
       %a.btn-primary{:href => "#"}
-        Create account
+        = I18n.t('home.join.btn_create_acc')
 
   .bottom-links.centered
     .row
       .col
-        Link not working? Paste this into your browser:
+        = I18n.t('home.join.link_not_work')
         %a.block{:href => "#"} http://cdx.org/confirm-email/809832498754
 
     .row
       .col
-        ©2015 Conected Diagnostics
+        = I18n.t('home.join.copy_right')
         %br
-        %a{:href => "#"} Privacy Policy
+        %a{:href => "#"}
+          = I18n.t('home.join.policy')
         |
-        %a{:href => "#"} Terms and conditions
+        %a{:href => "#"}
+          = I18n.t('home.join.term')

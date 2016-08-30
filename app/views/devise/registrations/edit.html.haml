@@ -1,18 +1,19 @@
 .row
   .col
-    %h1 My Account
+    %h1
+      = I18n.t('devise.registrations.edit.my_acc')
 
 = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
   = validation_errors resource
 
   .row
     .col.pe-2
-      = f.label :first_name
+      = f.label :first_name, I18n.t('devise.registrations.edit.lbl_first_name')
     .col
       = f.text_field :first_name, autofocus: true
   .row
     .col.pe-2
-      = f.label :last_name
+      = f.label :last_name, I18n.t('devise.registrations.edit.lbl_last_name')
     .col
       = f.text_field :last_name
   .row
@@ -27,33 +28,33 @@
       = f.text_field :telephone
   .row
     .col.pe-2
-      = f.label :password, "New password"
+      = f.label :password, I18n.t('devise.registrations.edit.lbl_new_pass')
     .col
       = f.password_field :password, autocomplete: "off"
   .row
     .col.pe-2
-      = f.label :password_confirmation, "Retype new password"
+      = f.label :password_confirmation, I18n.t('devise.registrations.edit.lbl_retype_new_pass')
     .col
       = f.password_field :password_confirmation
   .row
     .col.pe-2
-      = f.label :locale
+      = f.label :locale, I18n.t('devise.registrations.edit.lbl_locale')
     .col
       = cdx_select form: f, name: :locale, class: 'input-xx-large' do |select|
         - select.items(@locales, :second, :first)
   .row
     .col.pe-2
-      = f.label :time_zone
+      = f.label :time_zone, I18n.t('devise.registrations.edit.lbl_time_zone')
     .col
       = cdx_select form: f, name: :time_zone, class: 'input-xx-large' do |select|
         - select.items(ActiveSupport::TimeZone.all, :name, :to_s)
   .row
     .col.pe-2
-      = f.label :timestamps_in_device_time_zone, "Test timestamps"
+      = f.label :timestamps_in_device_time_zone, I18n.t('devise.registrations.edit.lbl_test_timestamps')
     .col
       = cdx_select form: f, name: :timestamps_in_device_time_zone, class: 'input-xx-large' do |select|
-        - select.item false, "Relative to my time zone"
-        - select.item true, "Relative to the device time zone"
+        - select.item false, I18n.t('devise.registrations.edit.select_my_timezone')
+        - select.item true, I18n.t('devise.registrations.edit.select_device_timezone')
 
   .row.button-actions
     .col

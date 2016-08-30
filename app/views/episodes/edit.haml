@@ -1,7 +1,7 @@
 .row.center.collapse.edit
   .col.pe-10
     %h2
-      = link_to patients_path, class: 'side-link', title: 'Back' do
+      = link_to patients_path, class: 'side-link', title: I18n.t('episodes.edit.back') do
         = image_tag "arrow-left-white.png"
       = form_title(@episode, I18n.t('episode') )
 
