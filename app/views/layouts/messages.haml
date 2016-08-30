@@ -1,7 +1,8 @@
 !!!
 %html
   %head
-    %title Connected Diagnostics Platform
+    %title
+      = I18n.t('layout.header.meta_title')
     = Gon::Base.render_data({})
     = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag "es5-shim" if Rails.env.test?

@@ -26,7 +26,7 @@
             = label_tag :parent
           .col
             = cdx_select form: f, name: :parent_id, class: 'input-x-large' do |select|
-              - select.item "", "None"
+              - select.item "", I18n.t('sites.show.none') 
               - select.items @sites, :id, :name
   .col
     = render 'side'
@@ -54,7 +54,7 @@
 
 .row
   .col.pe-2
-    = label_tag :sample_id_reset_policy, "Sample ID reset policy"
+    = label_tag :sample_id_reset_policy, I18n.t('sites.form.label.sample_id_reset_policy') 
   .col
     .value= @site.sample_id_reset_policy
 .row

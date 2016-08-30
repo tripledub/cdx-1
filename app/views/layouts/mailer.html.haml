@@ -19,8 +19,10 @@
         .row
           .col
             .footer
-              ©2015 Conected Diagnostics
+              = I18n.t('layout.mailer.copy_right')
               %br
-              %a{:href => "#"} Privacy Policy
+              %a{:href => "#"}
+                = I18n.t('layout.mailer.policy')
               |
-              %a{:href => "#"} Terms and conditions
+              %a{:href => "#"}
+                = I18n.t('layout.mailer.term')

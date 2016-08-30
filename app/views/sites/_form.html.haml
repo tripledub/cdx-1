@@ -4,7 +4,7 @@
   .row.labelHeader
     .col-6
       %h3
-        Site Details
+        = I18n.t('sites.form.site_details_header') 
     .col-6
   .panel.box-content
     .col.pe-6
@@ -34,7 +34,7 @@
                 = I18n.t('sites.form.tooltip.parent')
           .col
             = cdx_select form: f, name: :parent_id, class: 'input-large' do |select|
-              - select.item "", "None"
+              - select.item "", I18n.t('sites.form.none')
               - select.items @sites, :id, :name
       - elsif @site.parent
         .row
@@ -59,9 +59,9 @@
             = I18n.t('sites.form.tooltip.sample_id_reset_policy')
       .col
         = cdx_select form: f, name: :sample_id_reset_policy, class: 'input-large sample-id-reset' do |select|
-          - select.item "yearly", "Yearly"
-          - select.item "monthly", "Monthly"
-          - select.item "weekly", "Weekly"
+          - select.item "yearly", I18n.t('sites.form.yearly')
+          - select.item "monthly", I18n.t('sites.form.monthly')
+          - select.item "weekly", I18n.t('sites.form.weekly')
     .row
       .col.pe-2
         %div.tooltip
@@ -107,7 +107,7 @@
             = confirm_deletion_button @site, 'site'
           - else
             - # TODO: link to page with Devices tab always active - it's the current default, but may change
-            = link_to "Delete", '#', data: { confirm: "In order to delete this site you must first reassign the <a href=\"#{edit_site_path(@site)}\">#{@site.devices.count} #{"device".pluralize(@site.devices.count)}</a> assigned to it.", confirm_title: 'Action required', confirm_hide_cancel: 'true', confirm_button_message: 'Understood' }, class: 'btn-secondary pull-right', title: 'Delete Site'
+            = link_to I18n.t('sites.form.delete'), '#', data: { confirm: "#{I18n.t('sites.form.in_order_to_delete')} <a href=\"#{edit_site_path(@site)}\"> #{I18n.t('sites.form.device_count', count: @site.devices.count)}</a> #{I18n.t('sites.form.assigned')}", confirm_title: I18n.t('sites.form.action_required'), confirm_hide_cancel: 'true', confirm_button_message: I18n.t('sites.form.understood') }, class: 'btn-secondary pull-right', title: 'Delete Site'
 
 :coffeescript
   $ ->

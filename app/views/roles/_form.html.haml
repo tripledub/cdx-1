@@ -1,22 +1,23 @@
 = form_for @role do |f|
   - if @role.errors.any?
     #error_explanation
-      %p= "#{pluralize(@role.errors.count, "error")} prohibited this role from being saved:"
+      %p
+        = "#{I18n.t('roles.form.error_count', count: @role.errors.count)} #{I18n.t('roles.form.prohibited')}"
       %ul
         - @role.errors.full_messages.each do |msg|
           %li= msg
   .row.labelHeader
     .col-6
       %h3
-        Role Details
+        =I18n.t('roles.form.role_details')
     .col-6
   .panel
     .row
       .col-2
         %div.tooltip
-          = f.label :name
+          = f.label I18n.t('roles.form.name')
           %div.tooltiptext_r 
-            Role Name
+            =I18n.t('roles.form.role_name')
       .col-10
         = f.text_field :name
 
@@ -24,9 +25,9 @@
       .row
         .col-2
           %div.tooltip
-            = f.label :institution_id
+            = f.label :institution_id, I18n.t('roles.form.institution')
             %div.tooltiptext_r 
-              Which Institution this Role applies to.
+              =I18n.t('roles.form.accessible_institution_tooltip')
         .col-10
           .value= @institution
 
@@ -34,12 +35,12 @@
       .row
         .col-2
           %div.tooltip
-            = f.label :site_id
+            = f.label :site_id, I18n.t('roles.form.sites')
             %div.tooltiptext_r 
-              Which Site within the Institution this Role Applies to.
+              =I18n.t('roles.form.accessible_site_tooltip')
         .col-10
           = cdx_select form: f, name: :site_id, class: 'input-large' do |select|
-            - select.item "", "Choose one"
+            - select.item "", I18n.t('roles.form.choose_one')
             - select.items @sites, :id, :name
     - elsif @role.site_id
       .row
@@ -50,15 +51,16 @@
   .row.labelHeader
     .col-6
       %h3 
-        Policies
+        =I18n.t('roles.form.policies')
     .col-6
   .panel
     .col
       %div.tooltip
         %div.tooltiptext_r 
-          Policies grant users permisions over specific resources
+          =I18n.t('roles.form.policies_tooltip')
       %p.text-small.muted
-        %i Policies grant users permisions over specific resources
+        %i 
+          =I18n.t('roles.form.policies_small_muted')
       = react_component 'PolicyDefinition', definition: @role.definition, actions: actions_per_resource_type, context: params['context'], resources: @policy_definition_resources, resourceTypes: resource_types
   .row.button-actions
     .col

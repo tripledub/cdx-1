@@ -8,9 +8,12 @@
       %col{:width => "20%"}
     - t.thead do
       %tr
-        %th Name
-        %th Model
-        %th Site
+        %th 
+          = I18n.t('sites.devices.name')
+        %th 
+          = I18n.t('sites.devices.model')
+        %th 
+          = I18n.t('sites.devices.site')
     - t.tbody do
       - @site.devices.each do |device|
         %tr{data: (@devices_to_edit.include?(device.id) ? {href: edit_device_path(device) } : {})}
