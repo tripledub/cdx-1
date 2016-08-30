@@ -8,7 +8,7 @@
 </p>
 
 <p>
-	<%= link_to "Create account", accept_invitation_url(@user, :invitation_token => @token), class: "btn-primary" %>
+  <%= link_to "Create account", accept_invitation_url(@user, :invitation_token => @token), class: "btn-primary" %>
 </p>
 
 <% content_for :footer do %>
@@ -17,6 +17,6 @@
     <%= link_to accept_invitation_url(@user, :invitation_token => @token), accept_invitation_url(@user, :invitation_token => @token) %>
   </p>
   <p class="footer">
-  	<%= t("devise.mailer.invitation_instructions.ignore").html_safe %>
+    <%= t("devise.mailer.invitation_instructions.ignore").html_safe %>
   </p>
 <% end %>

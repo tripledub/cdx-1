@@ -22,6 +22,8 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'paranoia'
 gem 'paperclip', '~> 4.3.6'
+gem 'barby'
+gem 'chunky_png'
 
 group :development do
   gem 'letter_opener'
