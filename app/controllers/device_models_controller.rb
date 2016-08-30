@@ -37,7 +37,7 @@ class DeviceModelsController < ApplicationController
 
     respond_to do |format|
       if @device_model.save
-        format.html { redirect_to device_models_path, notice: 'Device Model was successfully created.' }
+        format.html { redirect_to device_models_path, notice: I18n.t('device_models_controller.model_created') }
         format.json { render action: 'show', status: :created, device_model: @device_model }
       else
         @device_model.published_at = @device_model.published_at_was
@@ -67,10 +67,10 @@ class DeviceModelsController < ApplicationController
 
     respond_to do |format|
       if cannot_delete_manifest
-         flash.now[:error] = "you must have a manifest uploaded"
+         flash.now[:error] = I18n.t('device_models_controller.must_have_manifest')
          format.html { render action: 'edit'}
       elsif @device_model.update(device_model_update_params)
-        format.html { redirect_to device_models_path, notice: "Device Model #{@device_model.name} was successfully updated." }
+        format.html { redirect_to device_models_path, notice: "#{I18n.t('device_models_controller.device_model')} #{@device_model.name} #{I18n.t('device_models_controller.was_updated')}" }
         format.json { render action: 'show', status: :created, device_model: @device_model }
       else
         @device_model.published_at = @device_model.published_at_was
@@ -87,7 +87,7 @@ class DeviceModelsController < ApplicationController
     @device_model.save!
 
     respond_to do |format|
-      format.html { redirect_to device_models_path, notice: "Device Model #{@device_model.name} was successfully #{params[:publish] ? 'published' : 'withdrawn'}." }
+      format.html { redirect_to device_models_path, notice: "#{I18n.t('device_models_controller.device_model')} #{@device_model.name} #{I18n.t('device_models_controller.was_successfully')} #{params[:publish] ? I18n.t('device_models_controller.published') : I18n.t('device_models_controller.withdrawn')}." }
       format.json { render action: 'show', status: :created, device_model: @device_model }
     end
   end

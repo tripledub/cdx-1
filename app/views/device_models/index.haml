@@ -4,7 +4,7 @@
       %h2
         = I18n.t('device_models.index.device_models')
       - if has_access?(@navigation_context.institution, Policy::Actions::REGISTER_INSTITUTION_DEVICE_MODEL)
-        = link_to "New Device Model", new_device_model_path, class: 'btn-add side-link fix', title: I18n.t('device_models.index.add_device_model')
+        = link_to I18n.t('device_models.index.lnk_new_device'), new_device_model_path, class: 'btn-add side-link fix', title: I18n.t('device_models.index.add_device_model')
 
   .testflow
     .container

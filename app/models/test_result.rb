@@ -146,7 +146,7 @@ class TestResult < PatientResult
 
   def same_patient_in_sample
     if self.sample && self.sample.patient != self.patient
-      errors.add(:patient_id, "should match sample's patient")
+      errors.add(:patient_id, I18n.t('models.test_result.match'))
     end
   end
 

@@ -22,9 +22,9 @@ class LocalizationHelper
     tz = nil
 
     if @timestamps_in_device_time_zone
-      raise "devices_by_uuid cache for time formatting not initialized" unless @devices_by_uuid
+      raise I18n.t('localization_helper.cache_for_time') unless @devices_by_uuid
       device = @devices_by_uuid[device_uuid]
-      raise "Unable to find device in devices_by_uuid cache for time formatting" unless device
+      raise I18n.t('localization_helper.unable_to_find') unless device
       tz = device.time_zone
     end
 

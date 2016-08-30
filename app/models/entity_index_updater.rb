@@ -43,7 +43,7 @@ class EntityIndexUpdater
     when Sample then sample_fields(entity)
     when Encounter then encounter_fields(entity)
     when Patient then patient_fields(entity)
-    else raise "Unsupported entity for update: #{entity}"
+    else raise "#{I18n.t('entity_index_updater.unsupported')} #{entity}"
     end
   end
 

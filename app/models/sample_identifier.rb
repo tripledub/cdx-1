@@ -33,14 +33,14 @@ class SampleIdentifier < ActiveRecord::Base
     return if sample.institution.kind_manufacturer?
 
     unless site
-      errors.add(:site, "can't be blank")
+      errors.add(:site, I18n.t('models.sample_identifier.cant_be_blank'))
       return
     end
 
     sample_ident_date = created_at || Time.now.utc
 
     if site.sample_identifiers_on_time(sample_ident_date).where(entity_id: entity_id).where.not(id: id).exists?
-      errors.add(:entity_id, "#{entity_id} is already used within #{site.time_window(sample_ident_date)}")
+      errors.add(:entity_id, "#{entity_id} #{I18n.t('models.sample_identifier.is_already')} #{site.time_window(sample_ident_date)}")
     end
   end
 end

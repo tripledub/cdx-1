@@ -30,7 +30,7 @@ module SiteContained
 
     def same_institution_of_site
       if self.site && self.site.institution != self.institution
-        errors.add(:site, "must belong to the institution")
+        errors.add(:site, I18n.t('models.concerns.site_contained.must_belong_to_institution'))
       end
     end
   end

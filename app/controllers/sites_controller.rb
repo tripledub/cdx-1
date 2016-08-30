@@ -54,7 +54,7 @@ class SitesController < ApplicationController
 
     respond_to do |format|
       if @site.save
-        format.html { redirect_to sites_path, notice: 'Site was successfully created.' }
+        format.html { redirect_to sites_path, notice: I18n.t('sites_controller.site_created') }
         format.json { render action: 'show', status: :created, location: @site }
       else
         format.html { render action: 'new' }
@@ -118,7 +118,7 @@ class SitesController < ApplicationController
       end
 
       if update_or_save
-        format.html { redirect_to sites_path(redirect_options), notice: 'Site was successfully updated.' }
+        format.html { redirect_to sites_path(redirect_options), notice: I18n.t('sites_controller.site_updated') }
         format.json { head :no_content }
       else
         @sites = check_access(institution.sites, READ_SITE) if @can_move
@@ -137,7 +137,7 @@ class SitesController < ApplicationController
     @site.destroy
 
     respond_to do |format|
-      format.html { redirect_to sites_path, notice: 'Site was successfully deleted.' }
+      format.html { redirect_to sites_path, notice: I18n.t('sites_controller.site_deleted') }
       format.json { head :no_content }
     end
   end
@@ -179,7 +179,7 @@ class SitesController < ApplicationController
 
   def build_csv
     CSV.generate do |csv|
-      csv << ["Name", "Address","City", "State", "Zipcode"]
+      csv << [I18n.t('sites_controller.col_name'), I18n.t('sites_controller.col_address'),I18n.t('sites_controller.col_city'), I18n.t('sites_controller.col_state'), I18n.t('sites_controller.col_zipcode')]
       @sites.each do |s|
         csv << [s.name, s.address, s.city, s.state, s.zip_code]
       end

@@ -58,7 +58,7 @@ module ApplicationHelper
   end
 
   def form_title(obj, text = nil)
-    action = obj.persisted? ? 'Edit' : 'New'
+    action = obj.persisted? ? I18n.t('application_helper.edit') : I18n.t('application_helper.new')
     name = text.present? ? text : obj.class.name.humanize
     "#{action} #{name}"
   end
@@ -198,9 +198,9 @@ module ApplicationHelper
     if institutions.one?
       institutions.first.name
     elsif has_access?(Institution, CREATE_INSTITUTION)
-      'Edit institutions'
+      I18n.t('application_helper.edit_institution')
     else
-      'Show institutions'
+      I18n.t('application_helper.show_institution')
     end
   end
 
