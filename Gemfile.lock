@@ -47,6 +47,12 @@ PATH
       cdx
       elasticsearch
 
+PATH
+  remote: cdx_core
+  specs:
+    cdx_core (0.0.1)
+      rails (~> 4.2.7.1)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -652,6 +658,7 @@ DEPENDENCIES
   cdx!
   cdx-api-elasticsearch!
   cdx-sync-server!
+  cdx_core!
   chunky_png
   config
   csv_builder

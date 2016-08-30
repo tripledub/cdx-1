@@ -129,7 +129,7 @@ Rails.application.routes.draw do
     end
     resources :patient_test_results , only: [:index]
     resources :patient_test_orders ,  only: [:index]
-    resources :episodes
+    #resources :episodes
   end
 
   resources :patient_search, only: [:index]
