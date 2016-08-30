@@ -13,14 +13,14 @@ en:
         btn_confirm: 'Confirm email'
 
       reset_password_instructions:
-        hello_txt: 'Hello <%= @resource.email %>!'
+        hello_txt: 'Hello'
         msg_request_link: 'Someone has requested a link to change your password. You can do this through the link below.'
         lnk_change_password: 'Change my password'
         ignore_email: "If you didn't request this, please ignore this email."
         msg_change_password: "Your password won't change until you access the link above and create a new one."
 
       unlock_instructions:
-        hello_txt: 'Hello <%= @resource.email %>!'
+        hello_txt: 'Hello'
         msg_acc_locked: 'Your account has been locked due to an excessive number of unsuccessful sign in attempts.'
         msg_unlock: 'Click the link below to unlock your account:'
         lnk_unlock: 'Unlock my account'
@@ -43,8 +43,12 @@ en:
     registrations:
       edit:
         my_acc: 'My Account'
+        lbl_first_name: 'First name'
+        lbl_last_name: 'Last name'
         lbl_new_pass: 'New password'
         lbl_retype_new_pass: 'Retype new password'
+        lbl_locale: 'Locale'
+        lbl_time_zone: 'Time zone'
         lbl_test_timestamps: 'Test timestamps'
         select_my_timezone: 'Relative to my time zone'
         select_device_timezone: 'Relative to the device time zone'
@@ -57,6 +61,7 @@ en:
         btn_sign_up: 'Sign up'
         lnk_login: 'Have an account? Log in'
         lnk_login_problem: 'Login problems?'
+        characters: 'characters minimum'
 
     shared:
       links:
@@ -65,7 +70,7 @@ en:
         forgot_pass: 'Forgot your password?'
         lnk_didnt_receive_instruction: "Didn't receive confirmation instructions?"
         lnk_didnt_receive_unlock: "Didn't receive unlock instructions?"
-        sign_in_with: 'Sign in with #{provider.to_s.titleize}'
+        sign_in_with: 'Sign in with'
 
     unlocks:
       new:

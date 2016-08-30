@@ -1,7 +1,31 @@
 vi:
   roles:
+    filters:
+      roles_title: 'Vai trò'
+      add_roles: "Thêm Vai trò"
+      add_role_title: "Thêm Vai trò"
+      name: 'Tên'
     index:
       role:
         zero: 'Không có vai trò nào được tạo'
         one: '1 Vai trò'
         other: '%{count} Vai trò'
+    form:
+      sites: 'Trang'
+      institution: 'Tổ chức'
+      role_details: 'Thông tin chi tiết vai trò'
+      role_name: 'Tên vai trò'
+      accessible_institution_tooltip: 'Tổ chức mà vai trò này áp dụng.'
+      accessible_site_tooltip: 'Trang web trong tổ chức mà vai trò này áp dụng.'
+      policies: 'Chính sách'
+      policies_tooltip: 'Những chính sách cấp quyền cho những người dùng đối với tài nguyên cụ thể'
+      policies_small_muted: 'Những chính sách cấp quyền cho những người dùng đối với tài nguyên cụ thể'
+      prohibited: 'khiến cho Vai trò này không được lưu:'
+      choose_one: "Chọn một"
+      error: 'lỗi'
+      name: 'Tên'
+      error_count:
+        one: '1 lỗi'
+        other: '%{count} lỗi'
+    new:
+      new_role: 'Vai trò mới'

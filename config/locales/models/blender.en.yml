@@ -1,0 +1,18 @@
+en:
+  models: 
+    blender:
+      not_null: 'Entity cannot be null'
+      not_mathch: 'Entity institution does not match'
+      unknown_entity_type: 'Unknown entity type'
+      cannot_set: 'Cannot set'
+      from_a_different_institution: 'from a different institution'
+      Cannot_merge_two_identified: 'Cannot merge two identified'
+      cannot_add_child: "Cannot add child from a different institution"
+      entity_blender_add_child: "Entity blender add child must receive an entity blender"
+      cannot_merge_different_institution: "Cannot merge entity blender from a different institution"
+      cannot_merge_different_type: "Cannot merge entity blender from a different type"
+      Multiple_entities: "Multiple entities found on call to single entity"
+      cannot_change: "Cannot change entity id of"
+      from: "from"
+      to: "to"
+      test_result: "Test result has no children entities"

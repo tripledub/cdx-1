@@ -1,0 +1,7 @@
+en:
+  device_model:
+    must_be_pdf: 'must be a pdf file'
+    cannot_destroy_publish_device: 'Cannot destroy a published device model'
+    cannot_destroy_device: 'Cannot destroy a device model with devices outside its institution'
+    must_capture: "must capture device serial number as 'sn', for example:"
+    must_be_valid_pattern: 'must be a valid pattern'

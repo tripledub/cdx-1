@@ -17,3 +17,7 @@ en:
       select_type_of_episode: 'Select Type of Episode'
       episode_details: 'Episode Details'
       episode_type_not_available: 'This Episode Type is not currently available'
+    edit:
+      back: 'Back'
+    new:
+      back: 'Back'

@@ -1,0 +1,4 @@
+en:
+  models:
+    manifest_field_mapping:
+      cant_concat: "Can't concat array values - use collect instead"

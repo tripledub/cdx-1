@@ -1,0 +1,4 @@
+en:
+  models:
+    test_result:
+      match: "should match sample's patient"

@@ -8,3 +8,4 @@ vi:
         one: '1 thông báo'
         other: '%{count} thông báo'
       no_alerts: 'không có thông báo'
+      title: 'Tin nhắn cảnh báo'

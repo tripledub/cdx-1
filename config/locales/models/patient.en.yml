@@ -15,3 +15,4 @@ en:
     model_form:
       wrong_date: 'should be a date in %{birth_date_on_placeholder}'
       wrong_gender: 'is not within valid options (should be one of %{gender_values})'
+      cant_change: "không thể thay đổi sau khi đã được phân công"

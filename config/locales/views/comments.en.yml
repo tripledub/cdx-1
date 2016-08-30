@@ -10,3 +10,4 @@ en:
       deny: "You can't add comments to this patient"
     new:
       new_comment: 'New comment'
+      comment_detail: 'Comment Details'

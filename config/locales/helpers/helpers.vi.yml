@@ -5,3 +5,14 @@ vi:
       one: '1 dòng'
       other: '%{count} dòng'
     per_page: 'trên trang'
+  confirmation_helper:
+    btn_delete: 'Xóa'
+    confirm_msg: "Bạn đang xóa vĩnh viễn"
+    confirm_question: 'Hành động này KHÔNG ĐƯỢC khôi phục lại. Bạn có chắc bạn muốn tiếp tục không?'
+    cannot_delete: 'Không thể xóa'
+    has_associated: 'này đã được liên kết với'
+  application_helper:
+    new: 'Tạo Mới'
+    edit: 'Chỉnh Sửa'
+    edit_institution: 'Chỉnh sửa tổ chức'
+    show_institution: 'Hiện tổ chức'

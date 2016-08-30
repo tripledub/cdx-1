@@ -17,4 +17,7 @@ vi:
       prohibited: 'khiến cho Chính sách này không được lưu:'
       name: 'Tên'
       definition: 'Định nghĩa'
+      error_count:
+        one: '1 lỗi'
+        other: '%{count} lỗi'
 

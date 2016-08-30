@@ -1,0 +1,26 @@
+vi:
+  models: 
+    concerns:
+      resource:
+        institution_option: 'Tổ chức'
+        site_option:  'Trang web'
+        device_option: 'Thiết bị'
+        deviceModel_option: 'Kiểu thiết bị'
+        testResult_option: 'Kết quả thử nghiệm'
+        encounter_option: 'Cuộc gặp'
+        role_option: 'Vai trò'
+        user_option: 'Người dùng'
+        patient_option: 'Bệnh nhân'
+        alert_option: 'Thông báo'
+        pageHeader_option: 'Tiêu đề trang'
+        settingsPage_option: 'Cài đặt trang'
+        resource_not_found: 'Tài nguyên không được tìm thấy:'
+      entity:
+        belong_to_institution: 'phải thuộc về tổ chức giống như'
+        belong_to_encounter: 'phải thuộc về cuộc gặp giống như'
+        belong_to_patient: 'phải thuộc về bệnh nhân giống như'
+        is_not_supported: 'không được hỗ trợ cho các thực thể'
+        is_marked_as: 'được đánh dấu là'
+        sensitive: 'nhạy'
+      site_contained:
+        must_belong_to_institution: 'phải thuộc về tổ chức'

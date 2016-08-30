@@ -1,0 +1,14 @@
+en:
+  models:
+    policy:
+      cant_delegate: "can't delegate permission over"
+      permission_cant_be_self_granted: "permission can't be self granted"
+      is_missing_a_statement: "is missing a statement"
+      has_an_unknown_action: "has an unknown action:"
+      is_missing_action: "is missing action in statemenet"
+      is_missing_resource: "is missing resource in statement"
+      has_an_invalid: "has an invalid"
+      value: "value:"
+      has_an_unknown_resource: "has an unknown resource:"
+      has_an_invalid_condition: "has an invalid condition in resource:"
+      has_unsupported: "has unsupported identifier in resource:"

@@ -3,6 +3,7 @@ vi:
     new:
       header: 'Kết quả tính nhạy cảm với thuốc'
       add_new: 'Thêm kết quả thử nghiệm Dst & LPA cho: %{patient_name}'
+      back: 'Quay lại'
     create:
       audit: 'Kết quả thử nghiệm DST and LPA đã được thêm'
       notice: 'Kết quả thử nghiệm DST and LPA đã được tạo thành công.'

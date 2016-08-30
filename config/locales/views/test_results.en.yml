@@ -2,6 +2,7 @@ en:
   test_results:
     filters:
       title: 'Test Results'
+      show_filters: 'Show Filters'
       display_as: 'Display as'
       condition: 'Condition'
       result: 'Result'
@@ -31,6 +32,7 @@ en:
       test_belongs_to: 'This test belongs to an encounter.'
       click_here: 'Click here'
       to_view_it: 'to view it.'
+      test_details: 'Test Details'
       institution_name: 'Institution: %{institution_name}'
       patient: 'Patient'
       test_performed_on: 'Test performed on'
@@ -56,3 +58,8 @@ en:
       test_results: 'test results'
       setup_devices: 'Setup your devices first in order to start reporting.'
       manual_results: 'You can add requested tests in your test orders.'
+      tab_device: 'Devices'
+      tab_microscopy: 'Microscopy'
+      tab_xpert: 'Xpert'
+      tab_culture: 'Culture'
+      tab_dst_lpa: 'Dst_Lpa'

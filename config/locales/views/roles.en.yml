@@ -17,6 +17,8 @@ en:
     destroy:
       success: 'Role was successfully deleted.'
     form:
+      sites: 'Site'
+      institution: 'Institution'
       role_details: 'Role Details'
       role_name: 'Role Name'
       accessible_institution_tooltip: 'Which Institution this Role applies to.'
@@ -28,5 +30,8 @@ en:
       choose_one: "Choose one"
       error: 'error'
       name: 'Name'
+      error_count:
+        one: '1 error'
+        other: '%{count} errors'
     new:
       new_role: 'New Role'

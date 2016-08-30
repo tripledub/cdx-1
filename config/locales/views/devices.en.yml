@@ -10,6 +10,12 @@ en:
     new:
       new_device: 'New Device'
     form:
+      title_institution: 'Institution'
+      lbl_device_model: 'Device model'
+      lbl_site: 'Site'
+      lbl_name: 'Name'
+      lbl_serial_number: 'Serial number'
+      lbl_time_zone: 'Time zone'
       none: 'None'
       save: 'Save'
       delete: 'Delete'
@@ -33,6 +39,7 @@ en:
       activation_token: 'Activation token'
       device_id: 'Device Id'
       secret_key: 'Secret key'
+      setup_details: 'Setup Details'
     token:
       token_header: 'Activation token generated'
       token: 'Token:'
@@ -51,6 +58,7 @@ en:
       edit: 'Edit'
       serial_number: 'Serial no. %{serial_number}'
       located_at: 'Device located at '
+      device_details: 'Device Details            '
     activation_token:
       reactivate: 'Reactivate'
       confirm: 'Are you sure?'

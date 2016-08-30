@@ -5,6 +5,9 @@ en:
       prohibited: 'prohibited this subscriber from being saved:'
       user_label: 'User (optional)'
       password_label: 'Password (optional)'
+      error_count:
+        one: '1 error'
+        other: '%{count} errors'
     index:
       first: 'You first need to create a filter to create a subscriber.'
       go_to: 'Go to'

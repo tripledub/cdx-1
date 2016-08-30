@@ -5,7 +5,10 @@ vi:
       lbl_api_token: 'Mã API'
       no_api_token: 'Không có mã API'
       no_api_token_msg: 'Không có mã API'
-      api_token: 'Mã API'
+      api_token:
+        zero: 'Không có mã API'
+        one: '1 mã API'
+        other: '%{count} mã API'
       token: 'Mã'
       lnk_delete: 'Xóa'
-      delete_msg: 'Bạn có chắc bạn muốn xóa mã này không?\n#{token.token}'
+      delete_msg: 'Bạn có chắc bạn muốn xóa mã này không?'

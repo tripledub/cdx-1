@@ -5,4 +5,7 @@ en:
       city_tooltip:     'A City name'
       state_tooltip:    'A State / County name'
       zip_code_tooltip: 'A Postal / Zip Code'
-      address_tooltip: 'Address'
+      address: 'Address'
+      city: 'City'
+      state: 'State'
+      zip_code: 'Zip Code'

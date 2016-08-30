@@ -8,3 +8,6 @@ vi:
         drug_resistance: 'Kháng thuốc'
         outcome: 'Kết quả'
         anatomical_site_diagnosis: 'Chẩn đoán phân loại bởi trang web giải phẫu'
+  models:
+    episode:
+      still_open: 'Vẫn mở'

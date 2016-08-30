@@ -2,6 +2,7 @@ vi:
   test_results:
     filters:
       title: 'Kết quả thử nghiệm'
+      show_filters: 'Hiển thị bộ lọc'
       display_as: 'Hiển thị như là'
       condition: 'Tình trạng'
       result: 'Kết quả'
@@ -18,7 +19,7 @@ vi:
       show_all: 'Hiển thị tất cả'
       test_result: 'Kết quả thử nghiệm'
       appearance: 'Xuất hiện'
-      media: 'Phương tiện truyền thông sử dụng'
+      media: 'Phương tiện sử dụng'
       results_h: 'Kết quả H'
       results_r: 'Kết quả R'
       results_e: 'Kết quả E'
@@ -31,6 +32,7 @@ vi:
       test_belongs_to: 'Thử nghiệm này thuộc về một cuộc gặp gỡ.'
       click_here: 'Nhấn ở đây'
       to_view_it: 'để xem nó.'
+      test_details: 'Thông tin chi tiết thử nghiệm'
       institution_name: 'Tổ chức: %{institution_name}'
       patient: 'Bệnh nhân'
       test_performed_on: 'Thử nghiệm thực thi trên'
@@ -56,3 +58,8 @@ vi:
       test_results: 'kết quả thử nghiệm'
       setup_devices: 'Cài đặt các thiết bị của bạn trước tiên để bắt đầu báo cáo.'
       manual_results: 'Bạn có thể thêm các thử nghiệm theo yêu cầu trong Yêu cầu thử nghiệm của bạn.'
+      tab_device: 'Thiết bị'
+      tab_microscopy: 'Kính hiển vi'
+      tab_xpert: 'Xpert'
+      tab_culture: 'Nuôi cấy'
+      tab_dst_lpa: 'Dst_Lpa'

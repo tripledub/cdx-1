@@ -10,3 +10,11 @@ en:
         other: '%{count} Alert groups'
       ago: ' ago'
       never: 'never'
+
+    filters:
+      title: 'Alert groups'
+      btn_add_alert: 'Add Alert'
+
+    new:
+      new_alert: 'New Alert'
+      title: 'Alert Details'

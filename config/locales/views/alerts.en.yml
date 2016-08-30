@@ -5,3 +5,10 @@ en:
       your_team: 'Keep your team notified about important stuff.'
       messages_sent: 'Alert messages sent'
       incidents: 'Incidents'
+
+    filters:
+      btn_add_alert: 'Add Alert'
+      alert_group: 'Alert groups'
+
+    new:
+      new_alert: 'New Alert'

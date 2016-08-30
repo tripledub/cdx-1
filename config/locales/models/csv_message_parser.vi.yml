@@ -1,0 +1,4 @@
+vi:
+  models: 
+    csv_message_parser:
+      path_nesting: 'path nesting không hỗ trợ cho tin nhắn CSV'

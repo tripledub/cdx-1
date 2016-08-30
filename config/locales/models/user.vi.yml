@@ -8,3 +8,6 @@ vi:
         roles: 'Chức vụ'
         is_active: 'Trạng thái'
         last_sign_in_at: 'Hoạt động'
+  models:
+    user:
+      default: "Ứng dụng OAuth2 mặc định"

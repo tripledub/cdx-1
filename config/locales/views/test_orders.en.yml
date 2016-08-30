@@ -2,6 +2,7 @@ en:
   test_orders:
     index:
       header: ''
+      tests: 'Tests'
       not_applicable: 'Not Applicable'
       header: 'No test orders have been created'
       test_order:

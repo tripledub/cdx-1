@@ -1,0 +1,14 @@
+vi:
+  models:
+    policy:
+      cant_delegate: "không có thể ủy quyền qua"
+      permission_cant_be_self_granted: "không thể tự cấp phép"
+      is_missing_a_statement: "thiếu một câu lệnh"
+      has_an_unknown_action: "có một hoạt động không rõ:"
+      is_missing_action: "thiếu hoạt động trong câu lệnh"
+      is_missing_resource: "thiếu tài nguyên trong câu lệnh"
+      has_an_invalid: "không hợp lệ "
+      value: "giá trị:"
+      has_an_unknown_resource: "có một tài nguyên không rõ:"
+      has_an_invalid_condition: "có một điều kiện không hợp lệ trong tài nguyên:"
+      has_unsupported: "có định danh được hỗ trợ trong tài nguyên:"

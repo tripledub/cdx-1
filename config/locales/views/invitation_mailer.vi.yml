@@ -1,0 +1,7 @@
+vi:
+  invitation_mailer:
+    invite_message:
+      invite_join: 'đã mời bạn tham gia vào nhóm với vai trò'
+      complete_sign_up: 'Hãy làm theo hướng dẫn để hoàn tất việc đăng ký.'
+      create_acc: 'Tạo tài khoản'
+      footer: 'Nếu liên kết trên không hoạt động thì dán URL này vào trình duyệt:'

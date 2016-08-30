@@ -3,6 +3,7 @@ en:
     new:
       header: 'Drug Susceptibility Results'
       add_new: 'Add Dst & LPA Test Result for: %{patient_name}'
+      back: 'Back'
     create:
       audit: 'DST and LPA result added'
       notice: 'DST and LPA result was successfully created.'

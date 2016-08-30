@@ -10,7 +10,7 @@ vi:
       add_test_order: 'Thêm yêu cầu thử nghiệm'
       add_comment: 'Thêm bình luận'
       edit_patient: 'Chỉnh sửa bệnh nhân'
-      patient_summary: 'Tóm tắt bệnh nhân'
+      patient_summary: 'Hồ sơ bệnh nhân'
       patient_history: 'Lịch sử bệnh nhân'
       episode_summary: 'Tóm tắt tập'
     filters:
@@ -31,9 +31,12 @@ vi:
       no_entity: "Mã thực thể không được để trống"
       no_name: "Tên không được để trống"
     form:
+      institution: 'Tổ chức'
       select_day: 'Chọn ngày'
       select_month: 'Chọn tháng'
       select_year: 'Chọn năm'
+      estimate_age: 'Ước tính tuổi'
+      history: 'Lịch sử'
     index:
       no_patients: 'Không có bệnh nhân nào đăng ký'
       keep_organized: 'Giữ cho yêu cầu thử nghiệm của bạn được tổ chức theo lịch sử y tế của bệnh nhân'

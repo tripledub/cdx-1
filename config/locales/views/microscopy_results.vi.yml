@@ -2,6 +2,8 @@ vi:
   microscopy_results:
     new:
       header: 'Thêm kết quả xét nghiệm kính hiển vi cho: %{patient_name}'
+      back: 'Quay lại'
+      title: 'Kết Quả Xét Nghiệm Kính Hiển Vi'
     create:
       audit: 'Kết quả xét nghiệm kính hiển vi đã được thêm.'
       notice: 'Kết quả xét nghiệm kính hiển vi đã được tạo thành công.'

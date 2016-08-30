@@ -1,0 +1,14 @@
+en:
+  api:
+    activations_controller:
+      invalid_token: 'Invalid activation token'
+      device_activated: 'Device activated'
+      invalid_key: 'Invalid public key'
+      missing_key: 'Missing public_key or generate_key parameter'
+      response: 'Response for activation request'
+
+    encounters_controller:
+      file_name: 'Encounters-'
+
+    tests_controller:
+      file_name: 'Tests-'

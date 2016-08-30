@@ -2,6 +2,7 @@ vi:
   test_orders:
     index:
       header: ''
+      tests: 'Thử nghiệm'
       not_applicable: 'Không thể áp dụng'
       header: 'Không có yêu cầu thử nghiệm nào được tạo'
       test_order:

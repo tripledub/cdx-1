@@ -1,0 +1,117 @@
+en:
+  api_tokens_controller:
+    api_token_deleted: 'API Token deleted'
+
+  application_controller:
+    authorization_failed: 'Authorization failed.'
+    requested_by: 'requested by'
+    in: 'in'
+
+  device_logs_controller:
+    logs: 'logs -'
+
+  device_messages_controller:
+    file_name: 'message_'
+
+  device_models_controller:
+    model_created: 'Device Model was successfully created.'
+    must_have_manifest: 'you must have a manifest uploaded'
+    device_model: 'Device Model'
+    was_updated: 'was successfully updated.'
+    was_successfully: 'was successfully'
+    published: 'published'
+    withdrawn: 'withdrawn'
+
+  devices_controller:
+    file_name: 'Devices-'
+    device_created: 'Device was successfully created.'
+    device_updated: 'Device was successfully updated.'
+    device_deleted: 'Device was successfully deleted.'
+    setup_sent_to: 'Setup instructions sent to'
+    logs_requested: 'Client logs requested'
+
+  encounters_controller:
+    test_order_cancelled: 'Test Order Cancelled'
+    test_order: 'Test Order'
+    cancelled: 'Cancelled'
+    encounter_deleted: 'Encounter was successfully deleted.'
+    sample_id_used: 'This sample ID has already been used for another patient'
+    test_order_created: 'New Test Order Created'
+    new: 'New'
+    test_created: 'Test Created'
+    test: 'Test'
+    created_for: 'created for test order'
+    cannot_add_test: 'Cannot add a test or sample that belongs to a different'
+    error: 'Error'
+
+  filters_controller:
+    filter_created: 'Filter was successfully created'
+    filter_updated: 'Filter was successfully updated'
+    filter_deleted: 'Filter was successfully deleted'
+
+  ftp_settings_controller:
+    setting_updated: 'FTP settings were successfully updated.'
+    dont_have_permission: "You don't have permission to change the FTP settings."
+
+  institutions_controller:
+    institution_created: 'Institution was successfully created.'
+    institution_updated: 'Institution was successfully updated.'
+
+  patient_results_controller:
+    cannot_add: "You can't add test results to this test order"
+
+  patients_controller:
+    new_patient: 'New patient'
+    added: 'added'
+    patient_created: 'Patient was successfully created.'
+    patient_detail_updated: 'patient details have been updated'
+    patient_updated: 'Patient was successfully updated.'
+    patient_deleted: 'Patient was successfully deleted.'
+
+  policies_controller:
+    policy_created: 'Policy was successfully created.'
+    policy_updated: 'Policy was successfully updated.'
+    invitation_sent_to: 'An invitation email has been sent to'
+
+  roles_controller:
+    role_created: 'Role was successfully created.'
+    role_updated: 'Role was successfully updated.'
+    role_deleted: 'Role was successfully deleted.'
+
+  sites_controller:
+    file_name: 'Sites-'
+    site_created: 'Site was successfully created.'
+    site_updated: 'Site was successfully updated.'
+    site_deleted: 'Site was successfully deleted.'
+    col_name: 'Name'
+    col_address: 'Address'
+    col_city: 'City'
+    col_state: 'State'
+    col_zipcode: 'Zipcode'
+
+  subscribers_controller:
+    subscriber_created: 'Subscriber was successfully created'
+    subscriber_updated: 'Subscriber was successfully updated'
+
+  test_orders_controller:
+    file_name: 'test-orders-'
+
+  test_results_controller:
+    file_name: 'test_results-'
+    not_applicable: 'Not Applicable'
+
+  users_controller:
+    file_name: 'Users-'
+    user_updated: 'User updated'
+    problem_updating_user: 'There was a problem updating this user'
+    user_with_email: 'User with Email'
+    already_existed: 'is already in the System - please edit that User'
+    user_removed: 'User Removed'
+    user_not_found: 'User Not Found'
+    resending_invite: 'Resending Invite'
+    resent_invite_ok: 'Resent Invite Ok'
+    resent_invite_failed: 'Failed to Resend Invite'
+    col_name: 'Full name'
+    col_roles: 'Roles'
+    col_last_activity: 'Last activity'
+    

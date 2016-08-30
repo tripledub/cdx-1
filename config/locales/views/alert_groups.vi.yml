@@ -10,3 +10,11 @@ vi:
         other: '%{count} nhóm thông báo'
       ago: ' trước'
       never: 'không bao giờ'
+
+    filters:
+      title: 'Nhóm cảnh báo'
+      btn_add_alert: 'Thêm cảnh báo'
+
+    new:
+      new_alert: 'Cảnh báo mới'
+      title: 'Chi tiết cảnh báo'

@@ -2,6 +2,8 @@ en:
   culture_results:
     new:
       header: 'Add Culture test result for: %{patient_name}'
+      back: 'Back'
+      culture_test_result: 'Culture Test Results'
     create:
       audit: 'Culture result added'
       notice: 'Culture result was successfully created.'

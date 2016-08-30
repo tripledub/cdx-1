@@ -3,6 +3,7 @@ en:
     index:
       date_to: 'Date To'
       date_from: 'Date From'
+      or: 'OR '
       date_period: 'Date Period'
       filter_button: 'Reset Filter'
       total_tests: 'Total Tests'

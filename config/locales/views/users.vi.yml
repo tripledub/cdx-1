@@ -20,8 +20,12 @@ vi:
       sent_at: 'Lời mời đã được gửi %{sent_at}'
       never_logged_in: 'Không bao giờ đăng nhập'
     form:
+      user_details_header: 'Thông tin chi tiết người dùng'
       resend_invite: 'Gửi lại lời mời'
       send: 'Gửi'
       remove_user: 'Gõ bỏ người dùng'
       remove: 'Gỡ bỏ'
       can_access: 'Có thể truy cập Cdx?'
+    no_data_allowed:
+      users_header: 'Người dùng'
+      no_access: 'Bạn không có quyền truy cập tới người dùng của các tổ chức được lựa chọn.'

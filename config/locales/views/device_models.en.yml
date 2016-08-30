@@ -10,3 +10,41 @@ en:
       no_device_models: 'No device models'
       there_are_no_device_models: 'There are no device models'
       create_device_models: 'Create device models and publish manifests that will allow test reporting on CDx platform.'
+      lnk_new_device: 'New Device Model'
+
+    form:
+      header_device_model: 'Device Model Details'
+      icon_upload: 'Choose a file to upload'
+      lnk_download: 'download'
+      upload_msg: 'Only PDF files below 5MB are allowed'
+      drop_picture: 'Drop a picture here'
+      upload_file: 'or click to upload a file'
+      btn_save: 'Save'
+      btn_delete: 'Delete'
+      delete_msg: 'Are you sure you want to delete this device model? All devices using this device model will be deleted as well, along with any tests they may have uploaded.'
+      lbl_institution: 'Institution'
+      lbl_name: 'Name'
+      lbl_setup: 'Setup instructions'
+      lbl_support: 'Supports activation'
+      lbl_support_url: 'Support URL'
+      lbl_support_ftp: 'Supports FTP'
+      lbl_filename: 'Filename pattern'
+
+    publish:
+      is_published: 'This device model is published; all institutions in CDX may register devices using it.'
+      can_publish: 'You may withdraw it as long as there are no devices outside this institution using this device model.'
+      btn_withdraw: 'Withdraw'
+      not_yet_published: 'This device model is not yet published; only devices from its manufacturer can be created using this model.'
+      can_publish_msg: 'Publishing it will make it available to all institutions in CDX.'
+      btn_publish: 'Publish'
+
+    edit:
+      edit_device: 'Editing Device Model'
+
+    new:
+      new_device: 'New Device Model'
+
+    show:
+      version: 'Version:'
+      manufacturer: 'Manufacturer:'
+      definition: 'Definition:'

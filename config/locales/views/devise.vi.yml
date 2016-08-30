@@ -13,14 +13,14 @@ vi:
         btn_confirm: 'Email xác nhận'
 
       reset_password_instructions:
-        hello_txt: 'Xin chào '
+        hello_txt: 'Xin chào'
         msg_request_link: 'Một người nào đó đã yêu cầu một liên kết để thay đổi mật khẩu của bạn. Bạn có thể làm điều này thông qua liên hết dưới đây.'
         lnk_change_password: 'Thay đổi mật khẩu của tôi'
         ignore_email: 'Nếu bạn không yêu cầu điều này, vui lòng bỏ qua email này.'
         msg_change_password: 'Mật khẩu của bạn sẽ không thay đổi cho đến khi bạn truy cập liên kết ở trên và tạo một cái mới.'
 
       unlock_instructions:
-        hello_txt: 'Xin chào '
+        hello_txt: 'Xin chào'
         msg_acc_locked: 'Tài khoản của bạn đã bị khóa do đăng nhập không thành công nhiều lần.'
         msg_unlock: 'Nhấp vào liên kết bên dưới để mở khóa tài khoản của bạn:'
         lnk_unlock: 'Mở khóa tài khoản của tôi'
@@ -43,8 +43,12 @@ vi:
     registrations:
       edit:
         my_acc: 'Tài khoản của tôi'
+        lbl_first_name: 'Tên'
+        lbl_last_name: 'Họ'
         lbl_new_pass: 'Mật khẩu mới'
         lbl_retype_new_pass: 'Gõ lại mật khẩu mới'
+        lbl_locale: 'Nước'
+        lbl_time_zone: 'Múi giờ'
         lbl_test_timestamps: 'Thử nghiệm mốc thời gian'
         select_my_timezone: 'So với múi giờ của tôi'
         select_device_timezone: 'So với múi giờ của thiết bị'
@@ -57,6 +61,7 @@ vi:
         btn_sign_up: 'Đăng ký'
         lnk_login: 'Đã có tài khoản? Đăng nhập'
         lnk_login_problem: 'Có vấn đề về đăng nhập?'
+        characters: 'ký tự tối thiểu'
 
     shared:
       links:
@@ -65,7 +70,7 @@ vi:
         forgot_pass: 'Quên mật khẩu?'
         lnk_didnt_receive_instruction: 'Không nhận được hướng dẫn xác nhận?'
         lnk_didnt_receive_unlock: 'Không nhận được hướng dẫn mở khóa?'
-        sign_in_with: 'Đăng nhập với #{provider.to_s.titleize}'
+        sign_in_with: 'Đăng nhập với'
 
     unlocks:
       new:

@@ -14,3 +14,7 @@ vi:
       api_tokens: 'API tokens'
       log_out: 'Đăng xuất'
       log_in: 'Đăng nhập'
+    mailer:
+      copy_right: '©2015 Conected Diagnostics'
+      policy: 'Chính sách bảo mật'
+      term: 'Điều khoản và điều kiện'

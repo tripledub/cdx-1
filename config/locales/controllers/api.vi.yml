@@ -1,0 +1,14 @@
+vi:
+  api:
+    activations_controller:
+      invalid_token: 'Mã kích hoạt không hợp lệ'
+      device_activated: 'Thiết bị đã kích hoạt'
+      invalid_key: 'Khóa chung không hợp lệ'
+      missing_key: 'Thiếu tham số public_key hoặc generate_key'
+      response: 'Phản hồi cho yêu cầu kích hoạt'
+
+    encounters_controller:
+      file_name: 'Encounters-'
+
+    tests_controller:
+      file_name: 'Thu-nghiem-'

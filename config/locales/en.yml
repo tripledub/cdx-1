@@ -172,6 +172,10 @@ en:
     select:
       prompt: Please select
     submit:
+      episode:
+        create: Create episode
+        submit: Save episode
+        update: Update episode
       create: Create %{model}
       submit: Save %{model}
       update: Update %{model}

@@ -17,3 +17,6 @@ en:
       prohibited: 'prohibited this policy from being saved:'
       name: 'Name'
       definition: 'Definition'
+      error_count:
+        one: '1 error'
+        other: '%{count} errors'

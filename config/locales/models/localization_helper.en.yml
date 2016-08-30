@@ -1,0 +1,4 @@
+en:
+  localization_helper:
+    cache_for_time: 'devices_by_uuid cache for time formatting not initialized'
+    unable_to_find: 'Unable to find device in devices_by_uuid cache for time formatting'

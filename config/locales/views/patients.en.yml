@@ -33,9 +33,12 @@ en:
       no_entity: "Entity Id can't be blank"
       no_name: "Name can't be blank"
     form:
+      institution: 'Institution'
       select_day: 'Select day'
       select_month: 'Select month'
       select_year: 'Select year'
+      estimate_age: 'Estimate Age'
+      history: 'History'
     index:
       no_patients: 'No patients registered'
       keep_organized: 'Keep your test orders organized under patients medical history'

@@ -3,7 +3,7 @@ vi:
     sites_index_table:
       col_name: "Tên"
       col_city: "Thành phố"
-      col_comment: "Bình luận"
+      col_comment: "Nhận xét"
 
     device_messages_table:
       col_status: "Tình trạng"
@@ -38,6 +38,8 @@ vi:
       test_results_label: "Kết quả thử nghiệm"
       utilization_efficiency_label: "Hiệu quả sử dụng"
       cancel_btn: "Hủy bỏ"
+      update_alert_btn: "Chỉnh Sửa Cảnh Báo"
+      save_btn: "Lưu"
 
     alert_child_components:
       delete_message: "Bạn muốn xóa vĩnh viễn thông báo này. Bạn có chắc muốn tiếp tục?"
@@ -247,12 +249,13 @@ vi:
       no_patient_information: "Không có thông tin bệnh nhân"
       name_col: "Tên"
       gender_col: "Giới tính"
-      date_of_birth_col: "Ngày sinh nhật"
+      date_of_birth_col: "Ngày sinh"
       address_col: "Địa chỉ"
       phone_col: "Số điện thoại"
       email_col: "Email"
       edit: "Sửa"
       create_test_order: "Tạo mới yêu cầu thử nghiệm"
+      alt_address_col: "Địa chỉ"
 
     patient_select:
       search_patient_placeholder: "Tìm bằng tên hoặc Mã bệnh nhân"
@@ -268,6 +271,10 @@ vi:
 
     policy_item:
       description_msg: "Loại, tài nguyên, và hoạt động chưa được xác định rõ"
+      and_subsites: " và những trang con"
+      at_site_and_subsites: " tại trang và những trang con"
+      no_actions_granted: "Không có hoạt động nào được phép"
+      new_policy: "Chính sách mới"
 
     policy_item_detail: 
       resources_label: "Tài nguyên"
@@ -283,11 +290,16 @@ vi:
       delegate_permissions_on_this_policy: " có quyền ủy quyền chính sách này"
 
     request_tests:
+      stt_pending: 'Chờ xử lý'
+      stt_inprogress: 'Đang tiến hành'
+      stt_completed: 'Hoàn tất'
+      stt_rejected: 'Từ chối'
+      title: 'Yêu Cầu Thử Nghiệm'
       add_result: "Thêm kết quả"
       view_result: "Xem kết quả"
       type_col: "Loại"
       sample_id_col: "Mã mẫu"
-      order_by_user_col: "Order by user"
+      order_by_user_col: "Người yêu cầu"
       requested_date: "Ngày yêu cầu"
       request_by_col: "Yêu cầu bởi"
       due_date_col: "Ngày hết hạn"
@@ -326,12 +338,12 @@ vi:
       cancel_btn: "Hủy bỏ"
       type_email_placeholder: "Nhập email và nhấn Enter"
 
-  stores: 
+  stores:
     device_model:
       publishing: "Công bố kiểu thiết bị này sẽ làm cho nó sẵn sàng sử dụng cho tất cả các tổ chức."
       withdrawing: "Thu hồi kiểu thiết bị này sẽ làm ẩn nó với tất cả các tổ chức."
       sure: " Bạn có chắc bạn muốn tiếp tục?"
-      pending_changes: "\n\nBất kỳ thay đổi đang chờ nào sẽ được lưu lại trước khi tiến hành."
+      pending_changes: "Bất kỳ thay đổi đang chờ nào sẽ được lưu lại trước khi tiến hành."
 
     playground:
       create_another_message: "Tạo mới một thông báo khác"

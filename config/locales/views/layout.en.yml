@@ -14,3 +14,7 @@ en:
       api_tokens: 'API tokens'
       log_out: 'Log out'
       log_in: 'Log in'
+    mailer:
+      copy_right: '©2015 Conected Diagnostics'
+      policy: 'Privacy Policy'
+      term: 'Terms and conditions'
