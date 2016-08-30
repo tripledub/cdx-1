@@ -24,6 +24,13 @@ gem 'paranoia'
 gem 'paperclip', '~> 4.3.6'
 gem 'barby'
 gem 'chunky_png'
+gem 'cdx', path: '../'
+gem 'cdx-api-elasticsearch', path: '../'
+gem 'geojson_import', git: 'https://github.com/instedd/geojson_import', branch: 'master'
+gem 'location_service', git: 'https://github.com/instedd/ruby-location_service.git', branch: 'master'
+gem 'guid'
+gem 'oj'
+gem 'encryptor'
 
 group :development do
   gem 'letter_opener'
@@ -51,4 +58,13 @@ end
 
 group :test do
   gem 'machinist', '~> 1.0'
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'capybara-mechanize'
+  gem 'shoulda'
+  gem 'timecop'
+  gem 'poltergeist'
+  gem 'capybara-screenshot'
+  gem 'webmock', require: false
+  gem 'site_prism'
 end
