@@ -767,12 +767,6 @@ ActiveRecord::Schema.define(version: 20160816140022) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
-  add_foreign_key "alerts", "institutions"
-  add_foreign_key "alerts", "sites"
-  add_foreign_key "audit_logs", "encounters"
-  add_foreign_key "audit_logs", "patient_results"
-  add_foreign_key "audit_logs", "requested_tests"
-  add_foreign_key "device_messages", "sites"
   add_foreign_key "encounters", "sites"
   add_foreign_key "encounters", "users"
   add_foreign_key "episodes", "patients"

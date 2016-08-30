@@ -1,0 +1,890 @@
+  [1m[36m (31.0ms)[0m  [1mDROP TABLE `addresses` CASCADE[0m
+  [1m[35m (39.4ms)[0m  CREATE TABLE `addresses` (`id` int(11) auto_increment PRIMARY KEY, `uuid` varchar(255), `addressable_id` int(11), `addressable_type` varchar(255), `address` varchar(255), `zip_code` varchar(255), `city` varchar(255), `state` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (53.0ms)[0m  [1mCREATE  INDEX `index_addresses_on_addressable_id_and_addressable_type` USING btree ON `addresses` (`addressable_id`, `addressable_type`) [0m
+  [1m[35m (3.8ms)[0m  DROP TABLE `alert_condition_results` CASCADE
+  [1m[36m (24.9ms)[0m  [1mCREATE TABLE `alert_condition_results` (`id` int(11) auto_increment PRIMARY KEY, `result` varchar(255), `alert_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (8.3ms)[0m  DROP TABLE `alert_histories` CASCADE
+  [1m[36m (7.8ms)[0m  [1mCREATE TABLE `alert_histories` (`id` int(11) auto_increment PRIMARY KEY, `read` tinyint(1) DEFAULT 0, `user_id` int(11), `alert_id` int(11), `test_result_id` int(11), `created_at` datetime, `updated_at` datetime, `for_aggregation_calculation` tinyint(1) DEFAULT 0, `test_result_updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (3.5ms)[0m  CREATE  INDEX `index_alert_histories_on_alert_id` USING btree ON `alert_histories` (`alert_id`) 
+  [1m[36m (2.3ms)[0m  [1mCREATE  INDEX `index_alert_histories_on_user_id` USING btree ON `alert_histories` (`user_id`) [0m
+  [1m[35m (5.0ms)[0m  DROP TABLE `alert_recipients` CASCADE
+  [1m[36m (10.5ms)[0m  [1mCREATE TABLE `alert_recipients` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `alert_id` int(11), `created_at` datetime, `updated_at` datetime, `email` varchar(255), `role_id` int(11), `recipient_type` int(11) DEFAULT 0, `telephone` varchar(255), `first_name` varchar(255), `last_name` varchar(255), `deleted_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (2.1ms)[0m  CREATE  INDEX `index_alert_recipients_on_alert_id` USING btree ON `alert_recipients` (`alert_id`) 
+  [1m[36m (1.8ms)[0m  [1mCREATE  INDEX `index_alert_recipients_on_deleted_at` USING btree ON `alert_recipients` (`deleted_at`) [0m
+  [1m[35m (2.6ms)[0m  CREATE  INDEX `index_alert_recipients_on_user_id` USING btree ON `alert_recipients` (`user_id`) 
+  [1m[36m (8.0ms)[0m  [1mDROP TABLE `alerts` CASCADE[0m
+  [1m[35m (10.4ms)[0m  CREATE TABLE `alerts` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `name` varchar(255), `description` varchar(255), `enabled` tinyint(1) DEFAULT 1, `last_alert` datetime, `created_at` datetime, `updated_at` datetime, `error_code` varchar(255), `category_type` int(11), `aggregation_type` int(11) DEFAULT 0, `query` text, `message` text, `channel_type` int(11) DEFAULT 0, `aggregation_frequency` int(11) DEFAULT 0, `sms_limit` int(11) DEFAULT 0, `anomalie_type` int(11) DEFAULT 0, `notify_patients` tinyint(1) DEFAULT 0, `sms_message` text, `deleted_at` datetime, `test_result_min_threshold` int(11), `test_result_max_threshold` int(11), `aggregation_threshold` int(11) DEFAULT 0, `sample_id` varchar(255), `utilization_efficiency_type` int(11) DEFAULT 0, `utilization_efficiency_number` int(11) DEFAULT 0, `utilization_efficiency_last_checked` datetime, `email_limit` int(11) DEFAULT 0, `use_aggregation_percentage` tinyint(1) DEFAULT 0, `institution_id` int(11), `time_last_aggregation_checked` datetime, `site_prefix` varchar(255), `site_id` int(11)) ENGINE=InnoDB
+  [1m[36m (2.6ms)[0m  [1mCREATE  INDEX `index_alerts_on_deleted_at` USING btree ON `alerts` (`deleted_at`) [0m
+  [1m[35m (2.5ms)[0m  CREATE  INDEX `index_alerts_on_institution_id` USING btree ON `alerts` (`institution_id`) 
+  [1m[36m (3.2ms)[0m  [1mCREATE  INDEX `index_alerts_on_site_id` USING btree ON `alerts` (`site_id`) [0m
+  [1m[35m (3.4ms)[0m  CREATE  INDEX `index_alerts_on_user_id` USING btree ON `alerts` (`user_id`) 
+  [1m[36m (5.6ms)[0m  [1mDROP TABLE `alerts_conditions` CASCADE[0m
+  [1m[35m (12.7ms)[0m  CREATE TABLE `alerts_conditions` (`alert_id` int(11) NOT NULL, `condition_id` int(11) NOT NULL) ENGINE=InnoDB
+  [1m[36m (2.8ms)[0m  [1mCREATE  INDEX `index_alerts_conditions_on_alert_id_and_condition_id` USING btree ON `alerts_conditions` (`alert_id`, `condition_id`) [0m
+  [1m[35m (5.7ms)[0m  CREATE  INDEX `index_alerts_conditions_on_condition_id_and_alert_id` USING btree ON `alerts_conditions` (`condition_id`, `alert_id`) 
+  [1m[36m (5.7ms)[0m  [1mDROP TABLE `alerts_devices` CASCADE[0m
+  [1m[35m (13.8ms)[0m  CREATE TABLE `alerts_devices` (`alert_id` int(11) NOT NULL, `device_id` int(11) NOT NULL) ENGINE=InnoDB
+  [1m[36m (5.0ms)[0m  [1mCREATE  INDEX `index_alerts_devices_on_alert_id_and_device_id` USING btree ON `alerts_devices` (`alert_id`, `device_id`) [0m
+  [1m[35m (9.3ms)[0m  CREATE  INDEX `index_alerts_devices_on_device_id_and_alert_id` USING btree ON `alerts_devices` (`device_id`, `alert_id`) 
+  [1m[36m (3.8ms)[0m  [1mDROP TABLE `alerts_sites` CASCADE[0m
+  [1m[35m (16.5ms)[0m  CREATE TABLE `alerts_sites` (`alert_id` int(11) NOT NULL, `site_id` int(11) NOT NULL) ENGINE=InnoDB
+  [1m[36m (7.2ms)[0m  [1mDROP TABLE `audit_logs` CASCADE[0m
+  [1m[35m (22.9ms)[0m  CREATE TABLE `audit_logs` (`id` int(11) auto_increment PRIMARY KEY, `comment` text, `title` varchar(255), `uuid` varchar(255), `patient_id` int(11), `user_id` int(11), `created_at` datetime, `updated_at` datetime, `type` varchar(255), `encounter_id` int(11), `requested_test_id` int(11), `patient_result_id` int(11)) ENGINE=InnoDB
+  [1m[36m (2.5ms)[0m  [1mCREATE  INDEX `fk_rails_242face86a` USING btree ON `audit_logs` (`encounter_id`) [0m
+  [1m[35m (2.3ms)[0m  CREATE  INDEX `index_audit_logs_on_patient_id` USING btree ON `audit_logs` (`patient_id`) 
+  [1m[36m (4.0ms)[0m  [1mCREATE  INDEX `fk_rails_2fc931c99d` USING btree ON `audit_logs` (`patient_result_id`) [0m
+  [1m[35m (3.4ms)[0m  CREATE  INDEX `fk_rails_2f852d7fa9` USING btree ON `audit_logs` (`requested_test_id`) 
+  [1m[36m (2.3ms)[0m  [1mCREATE  INDEX `index_audit_logs_on_user_id` USING btree ON `audit_logs` (`user_id`) [0m
+  [1m[35m (3.2ms)[0m  CREATE  INDEX `index_audit_logs_on_uuid` USING btree ON `audit_logs` (`uuid`) 
+  [1m[36m (4.5ms)[0m  [1mDROP TABLE `audit_updates` CASCADE[0m
+  [1m[35m (15.1ms)[0m  CREATE TABLE `audit_updates` (`id` int(11) auto_increment PRIMARY KEY, `field_name` varchar(255), `old_value` varchar(255), `new_value` varchar(255), `uuid` varchar(255), `audit_log_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (3.9ms)[0m  [1mCREATE  INDEX `index_audit_updates_on_audit_log_id` USING btree ON `audit_updates` (`audit_log_id`) [0m
+  [1m[35m (2.0ms)[0m  CREATE  INDEX `index_audit_updates_on_uuid` USING btree ON `audit_updates` (`uuid`) 
+  [1m[36m (7.2ms)[0m  [1mDROP TABLE `comments` CASCADE[0m
+  [1m[35m (17.4ms)[0m  CREATE TABLE `comments` (`id` int(11) auto_increment PRIMARY KEY, `commented_on` date, `comment` text, `description` varchar(255), `uuid` varchar(255), `patient_id` int(11), `user_id` int(11), `image_file_name` varchar(255), `image_content_type` varchar(255), `image_file_size` int(11), `image_updated_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (2.7ms)[0m  [1mCREATE  INDEX `index_comments_on_patient_id` USING btree ON `comments` (`patient_id`) [0m
+  [1m[35m (3.0ms)[0m  CREATE  INDEX `index_comments_on_user_id` USING btree ON `comments` (`user_id`) 
+  [1m[36m (6.5ms)[0m  [1mCREATE  INDEX `index_comments_on_uuid` USING btree ON `comments` (`uuid`) [0m
+  [1m[35m (1.9ms)[0m  DROP TABLE `computed_policies` CASCADE
+  [1m[36m (11.8ms)[0m  [1mCREATE TABLE `computed_policies` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `action` varchar(255), `resource_type` varchar(255), `resource_id` varchar(255), `condition_institution_id` int(11), `condition_site_id` varchar(255), `delegable` tinyint(1) DEFAULT 0, `condition_device_id` int(11), `include_subsites` tinyint(1) DEFAULT 0) ENGINE=InnoDB[0m
+  [1m[35m (2.8ms)[0m  DROP TABLE `computed_policy_exceptions` CASCADE
+  [1m[36m (14.9ms)[0m  [1mCREATE TABLE `computed_policy_exceptions` (`id` int(11) auto_increment PRIMARY KEY, `computed_policy_id` int(11), `action` varchar(255), `resource_type` varchar(255), `resource_id` varchar(255), `condition_institution_id` int(11), `condition_site_id` varchar(255), `condition_device_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (4.2ms)[0m  DROP TABLE `conditions` CASCADE
+  [1m[36m (11.1ms)[0m  [1mCREATE TABLE `conditions` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (6.2ms)[0m  DROP TABLE `conditions_manifests` CASCADE
+  [1m[36m (8.5ms)[0m  [1mCREATE TABLE `conditions_manifests` (`manifest_id` int(11), `condition_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (4.4ms)[0m  DROP TABLE `device_commands` CASCADE
+  [1m[36m (10.6ms)[0m  [1mCREATE TABLE `device_commands` (`id` int(11) auto_increment PRIMARY KEY, `device_id` int(11), `name` varchar(255), `command` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (7.1ms)[0m  DROP TABLE `device_logs` CASCADE
+  [1m[36m (10.0ms)[0m  [1mCREATE TABLE `device_logs` (`id` int(11) auto_increment PRIMARY KEY, `device_id` int(11), `message` blob(65535), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (8.5ms)[0m  DROP TABLE `device_messages` CASCADE
+  [1m[36m (17.6ms)[0m  [1mCREATE TABLE `device_messages` (`id` int(11) auto_increment PRIMARY KEY, `raw_data` blob(65535), `device_id` int(11), `index_failed` tinyint(1), `index_failure_reason` text, `created_at` datetime, `updated_at` datetime, `index_failure_data` text, `site_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (3.4ms)[0m  CREATE  INDEX `index_device_messages_on_device_id` USING btree ON `device_messages` (`device_id`) 
+  [1m[36m (2.5ms)[0m  [1mCREATE  INDEX `index_device_messages_on_site_id` USING btree ON `device_messages` (`site_id`) [0m
+  [1m[35m (7.7ms)[0m  DROP TABLE `device_messages_patient_results` CASCADE
+  [1m[36m (17.4ms)[0m  [1mCREATE TABLE `device_messages_patient_results` (`id` int(11) auto_increment PRIMARY KEY, `device_message_id` int(11), `test_result_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (3.4ms)[0m  CREATE  INDEX `index_device_messages_patient_results_on_device_message_id` USING btree ON `device_messages_patient_results` (`device_message_id`) 
+  [1m[36m (3.2ms)[0m  [1mCREATE  INDEX `index_device_messages_patient_results_on_test_result_id` USING btree ON `device_messages_patient_results` (`test_result_id`) [0m
+  [1m[35m (5.3ms)[0m  DROP TABLE `device_models` CASCADE
+  [1m[36m (13.1ms)[0m  [1mCREATE TABLE `device_models` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `created_at` datetime, `updated_at` datetime, `institution_id` int(11), `published_at` datetime, `supports_activation` tinyint(1), `support_url` varchar(255), `picture_file_name` varchar(255), `picture_content_type` varchar(255), `picture_file_size` int(11), `picture_updated_at` datetime, `setup_instructions_file_name` varchar(255), `setup_instructions_content_type` varchar(255), `setup_instructions_file_size` int(11), `setup_instructions_updated_at` datetime, `supports_ftp` tinyint(1), `filename_pattern` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (5.9ms)[0m  CREATE  INDEX `index_device_models_on_published_at` USING btree ON `device_models` (`published_at`) 
+  [1m[36m (6.4ms)[0m  [1mDROP TABLE `devices` CASCADE[0m
+  [1m[35m (11.3ms)[0m  CREATE TABLE `devices` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `created_at` datetime, `updated_at` datetime, `uuid` varchar(255), `institution_id` int(11), `device_model_id` int(11), `secret_key_hash` varchar(255), `time_zone` varchar(255), `custom_mappings` text, `site_id` int(11), `serial_number` varchar(255), `site_prefix` varchar(255), `activation_token` varchar(255), `deleted_at` datetime) ENGINE=InnoDB
+  [1m[36m (4.3ms)[0m  [1mCREATE  INDEX `index_devices_on_deleted_at` USING btree ON `devices` (`deleted_at`) [0m
+  [1m[35m (2.8ms)[0m  DROP TABLE `encounters` CASCADE
+  [1m[36m (30.4ms)[0m  [1mCREATE TABLE `addresses` (`id` int(11) auto_increment PRIMARY KEY, `uuid` varchar(255), `addressable_id` int(11), `addressable_type` varchar(255), `address` varchar(255), `zip_code` varchar(255), `city` varchar(255), `state` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (9.9ms)[0m  CREATE  INDEX `index_addresses_on_addressable_id_and_addressable_type` USING btree ON `addresses` (`addressable_id`, `addressable_type`) 
+  [1m[36m (10.1ms)[0m  [1mCREATE TABLE `alert_condition_results` (`id` int(11) auto_increment PRIMARY KEY, `result` varchar(255), `alert_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (9.4ms)[0m  CREATE TABLE `alert_histories` (`id` int(11) auto_increment PRIMARY KEY, `read` tinyint(1) DEFAULT 0, `user_id` int(11), `alert_id` int(11), `test_result_id` int(11), `created_at` datetime, `updated_at` datetime, `for_aggregation_calculation` tinyint(1) DEFAULT 0, `test_result_updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (2.5ms)[0m  [1mCREATE  INDEX `index_alert_histories_on_alert_id` USING btree ON `alert_histories` (`alert_id`) [0m
+  [1m[35m (2.4ms)[0m  CREATE  INDEX `index_alert_histories_on_user_id` USING btree ON `alert_histories` (`user_id`) 
+  [1m[36m (30.7ms)[0m  [1mCREATE TABLE `alert_recipients` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `alert_id` int(11), `created_at` datetime, `updated_at` datetime, `email` varchar(255), `role_id` int(11), `recipient_type` int(11) DEFAULT 0, `telephone` varchar(255), `first_name` varchar(255), `last_name` varchar(255), `deleted_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (6.5ms)[0m  CREATE  INDEX `index_alert_recipients_on_alert_id` USING btree ON `alert_recipients` (`alert_id`) 
+  [1m[36m (3.2ms)[0m  [1mCREATE  INDEX `index_alert_recipients_on_deleted_at` USING btree ON `alert_recipients` (`deleted_at`) [0m
+  [1m[35m (4.0ms)[0m  CREATE  INDEX `index_alert_recipients_on_user_id` USING btree ON `alert_recipients` (`user_id`) 
+  [1m[36m (11.4ms)[0m  [1mCREATE TABLE `alerts` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `name` varchar(255), `description` varchar(255), `enabled` tinyint(1) DEFAULT 1, `last_alert` datetime, `created_at` datetime, `updated_at` datetime, `error_code` varchar(255), `category_type` int(11), `aggregation_type` int(11) DEFAULT 0, `query` text, `message` text, `channel_type` int(11) DEFAULT 0, `aggregation_frequency` int(11) DEFAULT 0, `sms_limit` int(11) DEFAULT 0, `anomalie_type` int(11) DEFAULT 0, `notify_patients` tinyint(1) DEFAULT 0, `sms_message` text, `deleted_at` datetime, `test_result_min_threshold` int(11), `test_result_max_threshold` int(11), `aggregation_threshold` int(11) DEFAULT 0, `sample_id` varchar(255), `utilization_efficiency_type` int(11) DEFAULT 0, `utilization_efficiency_number` int(11) DEFAULT 0, `utilization_efficiency_last_checked` datetime, `email_limit` int(11) DEFAULT 0, `use_aggregation_percentage` tinyint(1) DEFAULT 0, `institution_id` int(11), `time_last_aggregation_checked` datetime, `site_prefix` varchar(255), `site_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (3.1ms)[0m  CREATE  INDEX `index_alerts_on_deleted_at` USING btree ON `alerts` (`deleted_at`) 
+  [1m[36m (3.6ms)[0m  [1mCREATE  INDEX `index_alerts_on_institution_id` USING btree ON `alerts` (`institution_id`) [0m
+  [1m[35m (4.9ms)[0m  CREATE  INDEX `index_alerts_on_site_id` USING btree ON `alerts` (`site_id`) 
+  [1m[36m (6.6ms)[0m  [1mCREATE  INDEX `index_alerts_on_user_id` USING btree ON `alerts` (`user_id`) [0m
+  [1m[35m (10.3ms)[0m  CREATE TABLE `alerts_conditions` (`alert_id` int(11) NOT NULL, `condition_id` int(11) NOT NULL) ENGINE=InnoDB
+  [1m[36m (3.5ms)[0m  [1mCREATE  INDEX `index_alerts_conditions_on_alert_id_and_condition_id` USING btree ON `alerts_conditions` (`alert_id`, `condition_id`) [0m
+  [1m[35m (4.8ms)[0m  CREATE  INDEX `index_alerts_conditions_on_condition_id_and_alert_id` USING btree ON `alerts_conditions` (`condition_id`, `alert_id`) 
+  [1m[36m (8.6ms)[0m  [1mCREATE TABLE `alerts_devices` (`alert_id` int(11) NOT NULL, `device_id` int(11) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (2.1ms)[0m  CREATE  INDEX `index_alerts_devices_on_alert_id_and_device_id` USING btree ON `alerts_devices` (`alert_id`, `device_id`) 
+  [1m[36m (7.0ms)[0m  [1mCREATE  INDEX `index_alerts_devices_on_device_id_and_alert_id` USING btree ON `alerts_devices` (`device_id`, `alert_id`) [0m
+  [1m[35m (11.6ms)[0m  CREATE TABLE `alerts_sites` (`alert_id` int(11) NOT NULL, `site_id` int(11) NOT NULL) ENGINE=InnoDB
+  [1m[36m (9.3ms)[0m  [1mCREATE TABLE `audit_logs` (`id` int(11) auto_increment PRIMARY KEY, `comment` text, `title` varchar(255), `uuid` varchar(255), `patient_id` int(11), `user_id` int(11), `created_at` datetime, `updated_at` datetime, `type` varchar(255), `encounter_id` int(11), `requested_test_id` int(11), `patient_result_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (2.0ms)[0m  CREATE  INDEX `fk_rails_242face86a` USING btree ON `audit_logs` (`encounter_id`) 
+  [1m[36m (3.6ms)[0m  [1mCREATE  INDEX `index_audit_logs_on_patient_id` USING btree ON `audit_logs` (`patient_id`) [0m
+  [1m[35m (3.7ms)[0m  CREATE  INDEX `fk_rails_2fc931c99d` USING btree ON `audit_logs` (`patient_result_id`) 
+  [1m[36m (2.0ms)[0m  [1mCREATE  INDEX `fk_rails_2f852d7fa9` USING btree ON `audit_logs` (`requested_test_id`) [0m
+  [1m[35m (2.1ms)[0m  CREATE  INDEX `index_audit_logs_on_user_id` USING btree ON `audit_logs` (`user_id`) 
+  [1m[36m (5.7ms)[0m  [1mCREATE  INDEX `index_audit_logs_on_uuid` USING btree ON `audit_logs` (`uuid`) [0m
+  [1m[35m (14.3ms)[0m  CREATE TABLE `audit_updates` (`id` int(11) auto_increment PRIMARY KEY, `field_name` varchar(255), `old_value` varchar(255), `new_value` varchar(255), `uuid` varchar(255), `audit_log_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (7.4ms)[0m  [1mCREATE  INDEX `index_audit_updates_on_audit_log_id` USING btree ON `audit_updates` (`audit_log_id`) [0m
+  [1m[35m (4.7ms)[0m  CREATE  INDEX `index_audit_updates_on_uuid` USING btree ON `audit_updates` (`uuid`) 
+  [1m[36m (11.6ms)[0m  [1mCREATE TABLE `comments` (`id` int(11) auto_increment PRIMARY KEY, `commented_on` date, `comment` text, `description` varchar(255), `uuid` varchar(255), `patient_id` int(11), `user_id` int(11), `image_file_name` varchar(255), `image_content_type` varchar(255), `image_file_size` int(11), `image_updated_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (2.1ms)[0m  CREATE  INDEX `index_comments_on_patient_id` USING btree ON `comments` (`patient_id`) 
+  [1m[36m (3.0ms)[0m  [1mCREATE  INDEX `index_comments_on_user_id` USING btree ON `comments` (`user_id`) [0m
+  [1m[35m (5.1ms)[0m  CREATE  INDEX `index_comments_on_uuid` USING btree ON `comments` (`uuid`) 
+  [1m[36m (14.4ms)[0m  [1mCREATE TABLE `computed_policies` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `action` varchar(255), `resource_type` varchar(255), `resource_id` varchar(255), `condition_institution_id` int(11), `condition_site_id` varchar(255), `delegable` tinyint(1) DEFAULT 0, `condition_device_id` int(11), `include_subsites` tinyint(1) DEFAULT 0) ENGINE=InnoDB[0m
+  [1m[35m (9.8ms)[0m  CREATE TABLE `computed_policy_exceptions` (`id` int(11) auto_increment PRIMARY KEY, `computed_policy_id` int(11), `action` varchar(255), `resource_type` varchar(255), `resource_id` varchar(255), `condition_institution_id` int(11), `condition_site_id` varchar(255), `condition_device_id` int(11)) ENGINE=InnoDB
+  [1m[36m (11.5ms)[0m  [1mCREATE TABLE `conditions` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (8.9ms)[0m  CREATE TABLE `conditions_manifests` (`manifest_id` int(11), `condition_id` int(11)) ENGINE=InnoDB
+  [1m[36m (10.5ms)[0m  [1mCREATE TABLE `device_commands` (`id` int(11) auto_increment PRIMARY KEY, `device_id` int(11), `name` varchar(255), `command` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (7.0ms)[0m  CREATE TABLE `device_logs` (`id` int(11) auto_increment PRIMARY KEY, `device_id` int(11), `message` blob(65535), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (15.8ms)[0m  [1mCREATE TABLE `device_messages` (`id` int(11) auto_increment PRIMARY KEY, `raw_data` blob(65535), `device_id` int(11), `index_failed` tinyint(1), `index_failure_reason` text, `created_at` datetime, `updated_at` datetime, `index_failure_data` text, `site_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (4.5ms)[0m  CREATE  INDEX `index_device_messages_on_device_id` USING btree ON `device_messages` (`device_id`) 
+  [1m[36m (2.7ms)[0m  [1mCREATE  INDEX `index_device_messages_on_site_id` USING btree ON `device_messages` (`site_id`) [0m
+  [1m[35m (12.2ms)[0m  CREATE TABLE `device_messages_patient_results` (`id` int(11) auto_increment PRIMARY KEY, `device_message_id` int(11), `test_result_id` int(11)) ENGINE=InnoDB
+  [1m[36m (5.9ms)[0m  [1mCREATE  INDEX `index_device_messages_patient_results_on_device_message_id` USING btree ON `device_messages_patient_results` (`device_message_id`) [0m
+  [1m[35m (2.6ms)[0m  CREATE  INDEX `index_device_messages_patient_results_on_test_result_id` USING btree ON `device_messages_patient_results` (`test_result_id`) 
+  [1m[36m (11.3ms)[0m  [1mCREATE TABLE `device_models` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `created_at` datetime, `updated_at` datetime, `institution_id` int(11), `published_at` datetime, `supports_activation` tinyint(1), `support_url` varchar(255), `picture_file_name` varchar(255), `picture_content_type` varchar(255), `picture_file_size` int(11), `picture_updated_at` datetime, `setup_instructions_file_name` varchar(255), `setup_instructions_content_type` varchar(255), `setup_instructions_file_size` int(11), `setup_instructions_updated_at` datetime, `supports_ftp` tinyint(1), `filename_pattern` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (4.9ms)[0m  CREATE  INDEX `index_device_models_on_published_at` USING btree ON `device_models` (`published_at`) 
+  [1m[36m (7.5ms)[0m  [1mCREATE TABLE `devices` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `created_at` datetime, `updated_at` datetime, `uuid` varchar(255), `institution_id` int(11), `device_model_id` int(11), `secret_key_hash` varchar(255), `time_zone` varchar(255), `custom_mappings` text, `site_id` int(11), `serial_number` varchar(255), `site_prefix` varchar(255), `activation_token` varchar(255), `deleted_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (2.3ms)[0m  CREATE  INDEX `index_devices_on_deleted_at` USING btree ON `devices` (`deleted_at`) 
+  [1m[36m (101.6ms)[0m  [1mCREATE TABLE `encounters` (`id` int(11) auto_increment PRIMARY KEY, `institution_id` int(11), `patient_id` int(11), `uuid` varchar(255), `entity_id` varchar(255), `sensitive_data` blob(65535), `custom_fields` text, `core_fields` text, `created_at` datetime, `updated_at` datetime, `is_phantom` tinyint(1) DEFAULT 1, `deleted_at` datetime, `site_id` int(11), `user_updated_at` datetime, `site_prefix` varchar(255), `start_time` datetime, `user_id` int(11), `exam_reason` varchar(255), `tests_requested` varchar(255), `coll_sample_type` varchar(255), `coll_sample_other` varchar(255), `diag_comment` varchar(255), `testdue_date` date, `treatment_weeks` int(11), `performing_site_id` int(11), `status` int(11) DEFAULT 0, `testing_for` varchar(255) DEFAULT '', `culture_format` varchar(255), `presumptive_rr` tinyint(1)) ENGINE=InnoDB[0m
+  [1m[35m (2.4ms)[0m  CREATE  INDEX `index_encounters_on_deleted_at` USING btree ON `encounters` (`deleted_at`) 
+  [1m[36m (2.1ms)[0m  [1mCREATE  INDEX `index_encounters_on_performing_site_id` USING btree ON `encounters` (`performing_site_id`) [0m
+  [1m[35m (2.2ms)[0m  CREATE  INDEX `index_encounters_on_site_id` USING btree ON `encounters` (`site_id`) 
+  [1m[36m (1.9ms)[0m  [1mCREATE  INDEX `index_encounters_on_user_id` USING btree ON `encounters` (`user_id`) [0m
+  [1m[35m (8.8ms)[0m  CREATE TABLE `episodes` (`id` int(11) auto_increment PRIMARY KEY, `diagnosis` varchar(255), `patient_id` int(11), `hiv_status` varchar(255), `drug_resistance` varchar(255), `outcome` varchar(255), `anatomical_site_diagnosis` varchar(255), `initial_history` varchar(255), `previous_history` varchar(255), `uuid` varchar(255), `closed` tinyint(1) DEFAULT 0, `created_at` datetime, `updated_at` datetime, `closed_at` datetime) ENGINE=InnoDB
+  [1m[36m (2.6ms)[0m  [1mCREATE  INDEX `index_episodes_on_patient_id` USING btree ON `episodes` (`patient_id`) [0m
+  [1m[35m (12.4ms)[0m  CREATE TABLE `file_messages` (`id` int(11) auto_increment PRIMARY KEY, `filename` varchar(255), `status` varchar(255), `message` text, `device_id` int(11), `device_message_id` int(11), `ftp_hostname` varchar(255), `ftp_username` varchar(255), `ftp_password` varchar(255), `ftp_directory` varchar(255), `ftp_port` int(11), `ftp_passive` tinyint(1)) ENGINE=InnoDB
+  [1m[36m (7.4ms)[0m  [1mCREATE  INDEX `index_file_messages_on_device_id` USING btree ON `file_messages` (`device_id`) [0m
+  [1m[35m (2.4ms)[0m  CREATE  INDEX `index_file_messages_on_ftp_and_status` USING btree ON `file_messages` (`ftp_hostname`, `ftp_port`, `ftp_directory`, `status`) 
+  [1m[36m (10.0ms)[0m  [1mCREATE TABLE `filters` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `name` varchar(255), `query` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (3.3ms)[0m  CREATE  INDEX `index_filters_on_user_id` USING btree ON `filters` (`user_id`) 
+  [1m[36m (9.6ms)[0m  [1mCREATE TABLE `identities` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `provider` varchar(255), `token` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (9.1ms)[0m  CREATE TABLE `institutions` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `user_id` int(11), `created_at` datetime, `updated_at` datetime, `uuid` varchar(255), `kind` varchar(255) DEFAULT 'institution', `ftp_hostname` varchar(255), `ftp_username` varchar(255), `ftp_password` varchar(255), `ftp_directory` varchar(255), `ftp_port` int(11), `ftp_passive` tinyint(1)) ENGINE=InnoDB
+  [1m[36m (3.1ms)[0m  [1mCREATE  INDEX `index_institutions_on_user_id` USING btree ON `institutions` (`user_id`) [0m
+  [1m[35m (8.9ms)[0m  CREATE TABLE `manifests` (`id` int(11) auto_increment PRIMARY KEY, `version` varchar(255), `definition` text, `created_at` datetime, `updated_at` datetime, `api_version` varchar(255), `device_model_id` int(11)) ENGINE=InnoDB
+  [1m[36m (8.7ms)[0m  [1mCREATE TABLE `oauth_access_grants` (`id` int(11) auto_increment PRIMARY KEY, `resource_owner_id` int(11) NOT NULL, `application_id` int(11) NOT NULL, `token` varchar(255) NOT NULL, `expires_in` int(11) NOT NULL, `redirect_uri` text NOT NULL, `created_at` datetime NOT NULL, `revoked_at` datetime, `scopes` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (2.9ms)[0m  CREATE UNIQUE INDEX `index_oauth_access_grants_on_token` USING btree ON `oauth_access_grants` (`token`) 
+  [1m[36m (7.2ms)[0m  [1mCREATE TABLE `oauth_access_tokens` (`id` int(11) auto_increment PRIMARY KEY, `resource_owner_id` int(11), `application_id` int(11), `token` varchar(255) NOT NULL, `refresh_token` varchar(255), `expires_in` int(11), `revoked_at` datetime, `created_at` datetime NOT NULL, `scopes` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (2.6ms)[0m  CREATE UNIQUE INDEX `index_oauth_access_tokens_on_refresh_token` USING btree ON `oauth_access_tokens` (`refresh_token`) 
+  [1m[36m (5.1ms)[0m  [1mCREATE  INDEX `index_oauth_access_tokens_on_resource_owner_id` USING btree ON `oauth_access_tokens` (`resource_owner_id`) [0m
+  [1m[35m (3.0ms)[0m  CREATE UNIQUE INDEX `index_oauth_access_tokens_on_token` USING btree ON `oauth_access_tokens` (`token`) 
+  [1m[36m (12.0ms)[0m  [1mCREATE TABLE `oauth_applications` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255) NOT NULL, `uid` varchar(255) NOT NULL, `secret` varchar(255) NOT NULL, `redirect_uri` text NOT NULL, `scopes` varchar(255) DEFAULT '' NOT NULL, `created_at` datetime, `updated_at` datetime, `owner_id` int(11), `owner_type` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (3.4ms)[0m  CREATE  INDEX `index_oauth_applications_on_owner_id_and_owner_type` USING btree ON `oauth_applications` (`owner_id`, `owner_type`) 
+  [1m[36m (4.8ms)[0m  [1mCREATE UNIQUE INDEX `index_oauth_applications_on_uid` USING btree ON `oauth_applications` (`uid`) [0m
+  [1m[35m (12.2ms)[0m  CREATE TABLE `old_passwords` (`id` int(11) auto_increment PRIMARY KEY, `encrypted_password` varchar(255) NOT NULL, `password_archivable_type` varchar(255) NOT NULL, `password_archivable_id` int(11) NOT NULL, `created_at` datetime) ENGINE=InnoDB
+  [1m[36m (4.8ms)[0m  [1mCREATE  INDEX `index_password_archivable` USING btree ON `old_passwords` (`password_archivable_type`, `password_archivable_id`) [0m
+  [1m[35m (8.8ms)[0m  CREATE TABLE `page_headers` (`id` int(11) auto_increment PRIMARY KEY, `institution_id` int(11), `site_id` int(11), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL, `site_prefix` varchar(255)) ENGINE=InnoDB
+  [1m[36m (1.8ms)[0m  [1mCREATE  INDEX `index_page_headers_on_institution_id` USING btree ON `page_headers` (`institution_id`) [0m
+  [1m[35m (3.3ms)[0m  CREATE  INDEX `index_page_headers_on_site_id` USING btree ON `page_headers` (`site_id`) 
+  [1m[36m (20.8ms)[0m  [1mCREATE TABLE `patient_results` (`id` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime, `uuid` varchar(255), `custom_fields` text, `test_id` varchar(255), `sensitive_data` blob(65535), `device_id` int(11), `patient_id` int(11), `core_fields` text, `encounter_id` int(11), `site_id` int(11), `institution_id` int(11), `sample_identifier_id` int(11), `site_prefix` varchar(255), `deleted_at` datetime, `type` varchar(255), `requested_test_id` int(11), `sample_collected_on` date, `result_on` date, `specimen_type` varchar(255), `serial_number` varchar(255), `appearance` varchar(255), `results_h` varchar(255), `results_r` varchar(255), `results_e` varchar(255), `results_s` varchar(255), `results_amk` varchar(255), `results_km` varchar(255), `results_cm` varchar(255), `results_fq` varchar(255), `examined_by` varchar(255), `tuberculosis` varchar(255), `rifampicin` varchar(255), `media_used` varchar(255), `results_other1` varchar(255), `results_other2` varchar(255), `results_other3` varchar(255), `results_other4` varchar(255), `culture_format` varchar(255), `trace` varchar(255), `test_result` varchar(255), `method_used` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (3.8ms)[0m  CREATE  INDEX `index_patient_results_on_deleted_at` USING btree ON `patient_results` (`deleted_at`) 
+  [1m[36m (3.0ms)[0m  [1mCREATE  INDEX `index_patient_results_on_device_id` USING btree ON `patient_results` (`device_id`) [0m
+  [1m[35m (2.2ms)[0m  CREATE  INDEX `index_patient_results_on_institution_id` USING btree ON `patient_results` (`institution_id`) 
+  [1m[36m (2.3ms)[0m  [1mCREATE  INDEX `index_patient_results_on_method_used` USING btree ON `patient_results` (`method_used`) [0m
+  [1m[35m (2.9ms)[0m  CREATE  INDEX `index_patient_results_on_patient_id` USING btree ON `patient_results` (`patient_id`) 
+  [1m[36m (5.4ms)[0m  [1mCREATE  INDEX `index_patient_results_on_requested_test_id` USING btree ON `patient_results` (`requested_test_id`) [0m
+  [1m[35m (4.7ms)[0m  CREATE  INDEX `index_patient_results_on_sample_identifier_id` USING btree ON `patient_results` (`sample_identifier_id`) 
+  [1m[36m (4.0ms)[0m  [1mCREATE  INDEX `index_patient_results_on_site_id` USING btree ON `patient_results` (`site_id`) [0m
+  [1m[35m (2.2ms)[0m  CREATE  INDEX `index_patient_results_on_test_result` USING btree ON `patient_results` (`test_result`) 
+  [1m[36m (2.1ms)[0m  [1mCREATE  INDEX `index_patient_results_on_uuid` USING btree ON `patient_results` (`uuid`) [0m
+  [1m[35m (14.5ms)[0m  CREATE TABLE `patients` (`id` int(11) auto_increment PRIMARY KEY, `sensitive_data` blob(65535), `custom_fields` text, `core_fields` text, `entity_id_hash` varchar(255), `uuid` varchar(255), `institution_id` int(11), `created_at` datetime, `updated_at` datetime, `is_phantom` tinyint(1) DEFAULT 1, `deleted_at` datetime, `location_geoid` varchar(60), `lat` float(24), `lng` float(24), `address` varchar(255), `name` varchar(255), `entity_id` varchar(255), `site_id` int(11), `site_prefix` varchar(255), `state` varchar(255), `city` varchar(255), `zip_code` varchar(255), `nickname` varchar(255), `birth_date_on` date) ENGINE=InnoDB
+  [1m[36m (2.2ms)[0m  [1mCREATE  INDEX `index_patients_on_birth_date_on` USING btree ON `patients` (`birth_date_on`) [0m
+  [1m[35m (2.0ms)[0m  CREATE  INDEX `index_patients_on_deleted_at` USING btree ON `patients` (`deleted_at`) 
+  [1m[36m (3.4ms)[0m  [1mCREATE  INDEX `index_patients_on_institution_id` USING btree ON `patients` (`institution_id`) [0m
+  [1m[35m (2.6ms)[0m  CREATE  INDEX `index_patients_on_site_id` USING btree ON `patients` (`site_id`) 
+  [1m[36m (14.8ms)[0m  [1mCREATE TABLE `policies` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `granter_id` int(11), `definition` text, `created_at` datetime, `updated_at` datetime, `name` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (11.3ms)[0m  CREATE TABLE `recipient_notification_histories` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `alert_recipient_id` int(11), `alert_history_id` int(11), `alert_id` int(11), `channel_type` int(11), `message_sent` varchar(255), `created_at` datetime, `updated_at` datetime, `sms_response_id` int(11), `sms_response_guid` varchar(255), `sms_response_token` varchar(255)) ENGINE=InnoDB
+  [1m[36m (8.3ms)[0m  [1mCREATE  INDEX `index_recipient_notification_histories_on_user_id` USING btree ON `recipient_notification_histories` (`user_id`) [0m
+  [1m[35m (10.9ms)[0m  CREATE TABLE `requested_tests` (`id` int(11) auto_increment PRIMARY KEY, `encounter_id` int(11), `name` varchar(255), `status` int(11) DEFAULT 0, `deleted_at` datetime, `datetime` datetime, `created_at` datetime, `updated_at` datetime, `comment` text, `completed_at` datetime) ENGINE=InnoDB
+  [1m[36m (4.9ms)[0m  [1mCREATE  INDEX `index_requested_tests_on_completed_at` USING btree ON `requested_tests` (`completed_at`) [0m
+  [1m[35m (3.5ms)[0m  CREATE  INDEX `index_requested_tests_on_datetime` USING btree ON `requested_tests` (`datetime`) 
+  [1m[36m (1.9ms)[0m  [1mCREATE  INDEX `index_requested_tests_on_deleted_at` USING btree ON `requested_tests` (`deleted_at`) [0m
+  [1m[35m (2.0ms)[0m  CREATE  INDEX `index_requested_tests_on_encounter_id` USING btree ON `requested_tests` (`encounter_id`) 
+  [1m[36m (17.2ms)[0m  [1mCREATE TABLE `roles` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255) NOT NULL, `institution_id` int(11) NOT NULL, `site_id` int(11), `policy_id` int(11) NOT NULL, `created_at` datetime, `updated_at` datetime, `key` varchar(255), `site_prefix` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (11.5ms)[0m  CREATE TABLE `roles_users` (`role_id` int(11), `user_id` int(11)) ENGINE=InnoDB
+  [1m[36m (9.5ms)[0m  [1mCREATE TABLE `sample_identifiers` (`id` int(11) auto_increment PRIMARY KEY, `sample_id` int(11), `entity_id` varchar(255), `uuid` varchar(255), `site_id` int(11), `deleted_at` datetime, `created_at` datetime, `updated_at` datetime, `lab_sample_id` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (1.9ms)[0m  CREATE  INDEX `index_sample_identifiers_on_deleted_at` USING btree ON `sample_identifiers` (`deleted_at`) 
+  [1m[36m (2.2ms)[0m  [1mCREATE  INDEX `index_sample_identifiers_on_entity_id` USING btree ON `sample_identifiers` (`entity_id`) [0m
+  [1m[35m (6.4ms)[0m  CREATE  INDEX `index_sample_identifiers_on_sample_id` USING btree ON `sample_identifiers` (`sample_id`) 
+  [1m[36m (10.0ms)[0m  [1mCREATE UNIQUE INDEX `index_sample_identifiers_on_uuid` USING btree ON `sample_identifiers` (`uuid`) [0m
+  [1m[35m (9.3ms)[0m  CREATE TABLE `samples` (`id` int(11) auto_increment PRIMARY KEY, `sensitive_data` blob(65535), `institution_id` int(11), `custom_fields` text, `core_fields` text, `created_at` datetime, `updated_at` datetime, `patient_id` int(11), `encounter_id` int(11), `is_phantom` tinyint(1) DEFAULT 1, `deleted_at` datetime) ENGINE=InnoDB
+  [1m[36m (2.4ms)[0m  [1mCREATE  INDEX `index_samples_on_deleted_at` USING btree ON `samples` (`deleted_at`) [0m
+  [1m[35m (4.5ms)[0m  CREATE  INDEX `index_samples_on_institution_id_and_entity_id` USING btree ON `samples` (`institution_id`) 
+  [1m[36m (3.0ms)[0m  [1mCREATE  INDEX `index_samples_on_patient_id` USING btree ON `samples` (`patient_id`) [0m
+  [1m[35m (17.2ms)[0m  CREATE TABLE `settings_pages` (`id` int(11) auto_increment PRIMARY KEY, `institution_id` int(11), `site_id` int(11), `site_prefix` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (3.8ms)[0m  [1mCREATE  INDEX `index_settings_pages_on_institution_id` USING btree ON `settings_pages` (`institution_id`) [0m
+  [1m[35m (2.0ms)[0m  CREATE  INDEX `index_settings_pages_on_site_id` USING btree ON `settings_pages` (`site_id`) 
+  [1m[36m (10.8ms)[0m  [1mCREATE TABLE `sites` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `institution_id` int(11), `address` varchar(255), `city` varchar(255), `state` varchar(255), `zip_code` varchar(255), `country` varchar(255), `region` varchar(255), `lat` float(24), `lng` float(24), `created_at` datetime, `updated_at` datetime, `location_geoid` varchar(60), `uuid` varchar(255), `parent_id` int(11), `prefix` varchar(255), `sample_id_reset_policy` varchar(255) DEFAULT 'yearly', `deleted_at` datetime, `main_phone_number` varchar(255), `email_address` varchar(255), `last_sample_identifier_entity_id` varchar(255), `last_sample_identifier_date` date, `allows_manual_entry` tinyint(1), `comment` text) ENGINE=InnoDB[0m
+  [1m[35m (3.5ms)[0m  CREATE  INDEX `index_sites_on_deleted_at` USING btree ON `sites` (`deleted_at`) 
+  [1m[36m (20.4ms)[0m  [1mCREATE TABLE `ssh_keys` (`id` int(11) auto_increment PRIMARY KEY, `public_key` text, `device_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (4.6ms)[0m  CREATE  INDEX `index_ssh_keys_on_device_id` USING btree ON `ssh_keys` (`device_id`) 
+  [1m[36m (10.5ms)[0m  [1mCREATE TABLE `subscribers` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `name` varchar(255), `url` varchar(255), `fields` text, `last_run_at` datetime, `created_at` datetime, `updated_at` datetime, `url_user` varchar(255), `url_password` varchar(255), `filter_id` int(11), `verb` varchar(255) DEFAULT 'GET') ENGINE=InnoDB[0m
+  [1m[35m (3.3ms)[0m  CREATE  INDEX `index_subscribers_on_filter_id` USING btree ON `subscribers` (`filter_id`) 
+  [1m[36m (9.2ms)[0m  [1mCREATE TABLE `test_result_parsed_data` (`id` int(11) auto_increment PRIMARY KEY, `test_result_id` int(11), `data` blob(65535), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (11.5ms)[0m  CREATE TABLE `users` (`id` int(11) auto_increment PRIMARY KEY, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `sign_in_count` int(11) DEFAULT 0 NOT NULL, `current_sign_in_at` datetime, `last_sign_in_at` datetime, `current_sign_in_ip` varchar(255), `last_sign_in_ip` varchar(255), `confirmation_token` varchar(255), `confirmed_at` datetime, `confirmation_sent_at` datetime, `unconfirmed_email` varchar(255), `failed_attempts` int(11) DEFAULT 0 NOT NULL, `unlock_token` varchar(255), `locked_at` datetime, `created_at` datetime, `updated_at` datetime, `password_changed_at` datetime, `locale` varchar(255) DEFAULT 'en', `timestamps_in_device_time_zone` tinyint(1) DEFAULT 0, `time_zone` varchar(255) DEFAULT 'UTC', `first_name` varchar(255), `last_name` varchar(255), `invitation_token` varchar(255), `invitation_created_at` datetime, `invitation_sent_at` datetime, `invitation_accepted_at` datetime, `invitation_limit` int(11), `invited_by_id` int(11), `invited_by_type` varchar(255), `invitations_count` int(11) DEFAULT 0, `last_navigation_context` varchar(255), `is_active` tinyint(1) DEFAULT 1, `telephone` varchar(255), `sidebar_open` tinyint(1) DEFAULT 1) ENGINE=InnoDB
+  [1m[36m (4.4ms)[0m  [1mCREATE UNIQUE INDEX `index_users_on_confirmation_token` USING btree ON `users` (`confirmation_token`) [0m
+  [1m[35m (3.5ms)[0m  CREATE UNIQUE INDEX `index_users_on_email` USING btree ON `users` (`email`) 
+  [1m[36m (2.1ms)[0m  [1mCREATE UNIQUE INDEX `index_users_on_invitation_token` USING btree ON `users` (`invitation_token`) [0m
+  [1m[35m (2.1ms)[0m  CREATE  INDEX `index_users_on_invitations_count` USING btree ON `users` (`invitations_count`) 
+  [1m[36m (2.2ms)[0m  [1mCREATE  INDEX `index_users_on_invited_by_id` USING btree ON `users` (`invited_by_id`) [0m
+  [1m[35m (2.5ms)[0m  CREATE  INDEX `index_users_on_last_name` USING btree ON `users` (`last_name`) 
+  [1m[36m (3.3ms)[0m  [1mCREATE  INDEX `index_users_on_password_changed_at` USING btree ON `users` (`password_changed_at`) [0m
+  [1m[35m (2.1ms)[0m  CREATE UNIQUE INDEX `index_users_on_reset_password_token` USING btree ON `users` (`reset_password_token`) 
+  [1m[36m (4.7ms)[0m  [1mCREATE UNIQUE INDEX `index_users_on_unlock_token` USING btree ON `users` (`unlock_token`) [0m
+  [1m[35m (33.6ms)[0m  ALTER TABLE `encounters` ADD CONSTRAINT `fk_rails_da9664e0fe`
+FOREIGN KEY (`site_id`)
+  REFERENCES `sites` (`id`)
+
+  [1m[36m (26.7ms)[0m  [1mALTER TABLE `encounters` ADD CONSTRAINT `fk_rails_2f98fb270c`
+FOREIGN KEY (`user_id`)
+  REFERENCES `users` (`id`)
+[0m
+  [1m[35m (20.0ms)[0m  ALTER TABLE `episodes` ADD CONSTRAINT `fk_rails_2879068606`
+FOREIGN KEY (`patient_id`)
+  REFERENCES `patients` (`id`)
+
+  [1m[36m (33.2ms)[0m  [1mALTER TABLE `patients` ADD CONSTRAINT `fk_rails_dbea9f883f`
+FOREIGN KEY (`site_id`)
+  REFERENCES `sites` (`id`)
+[0m
+  [1m[35m (24.7ms)[0m  ALTER TABLE `requested_tests` ADD CONSTRAINT `fk_rails_450ea71014`
+FOREIGN KEY (`encounter_id`)
+  REFERENCES `encounters` (`id`)
+
+  [1m[36m (23.0ms)[0m  [1mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (4.1ms)[0m  CREATE UNIQUE INDEX `unique_schema_migrations`  ON `schema_migrations` (`version`) 
+  [1m[36m (0.2ms)[0m  [1mSELECT version FROM `schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160816140022')
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140203233601')[0m
+  [1m[35m (0.4ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140203234249')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140203234745')[0m
+  [1m[35m (0.4ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140204134837')
+  [1m[36m (0.6ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140312115721')[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140312144328')
+  [1m[36m (0.5ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140325195841')[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140326151525')
+  [1m[36m (0.5ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140326191422')[0m
+  [1m[35m (0.6ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140404152310')
+  [1m[36m (0.5ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140404152558')[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140404172012')
+  [1m[36m (0.5ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140407154134')[0m
+  [1m[35m (0.6ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140407184142')
+  [1m[36m (0.7ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140415190208')[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140422171811')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140423133302')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140425152014')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140428143812')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140505145148')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140515170318')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140515171158')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140521153536')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140521153720')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140521194129')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140522180707')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140526174156')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140526181013')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140526190412')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140530205604')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140603191744')[0m
+  [1m[35m (1.7ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140722154526')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140805151606')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140821200906')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140822151308')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140822152516')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140822165416')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140918175424')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140925185610')[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20141218155918')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150119150526')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150119150757')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150119154001')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150119172327')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150120144346')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150202182319')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150202182842')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150202182945')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150202184854')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150204181542')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150206142251')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150223145645')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150223151051')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150223151900')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150224154748')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150225160228')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150227193433')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150227193601')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150302142243')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150304194308')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150304200858')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150304202928')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150304203611')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150304203629')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150305145336')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150305153907')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150305175247')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150415173132')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150415173303')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150422124002')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150508170417')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150513175833')
+  [1m[36m (3.1ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150522173544')[0m
+  [1m[35m (1.6ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150522180205')
+  [1m[36m (0.5ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150526153400')[0m
+  [1m[35m (0.4ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150527160209')
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150601165237')[0m
+  [1m[35m (3.4ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150601165245')
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150601165607')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150601165748')
+  [1m[36m (5.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150604132737')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150604132909')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150608182645')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150608182743')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150608182846')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150624170646')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150724145211')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150728150405')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150805180134')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150805185341')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150812153349')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150812203030')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150818200013')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150821200128')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150825150412')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150901163906')
+  [1m[36m (0.7ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150902154438')[0m
+  [1m[35m (0.7ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150915164518')
+  [1m[36m (0.5ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150917174426')[0m
+  [1m[35m (0.6ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150921222526')
+  [1m[36m (0.6ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150922185638')[0m
+  [1m[35m (0.6ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150922204816')
+  [1m[36m (0.6ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150925172725')[0m
+  [1m[35m (0.6ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150925175941')
+  [1m[36m (0.6ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150925180545')[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150928142745')
+  [1m[36m (0.7ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150928183528')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150928201723')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150929100922')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150929202058')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150930130533')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151005141913')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151005172622')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151006141255')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151006141537')[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151006145712')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151008162340')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151008205841')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151013215720')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151015221802')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151016143640')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151019174509')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151019202219')[0m
+  [1m[35m (9.7ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151020173442')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151026185300')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151026193558')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151027172759')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151027175111')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151029165435')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151029184400')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151030120316')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151030211740')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151102104047')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151103193538')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151104202638')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151105211638')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151110161047')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151116133521')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151116134931')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151118155324')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151119133838')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151120181949')
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151123180754')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151123201511')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151124172252')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151125151833')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151130130846')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151201150151')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151202174956')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151204105403')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151207120355')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151208152927')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151209120802')[0m
+  [1m[35m (0.4ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151209165717')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151209174256')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151210114431')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151210132301')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151210144138')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151210181714')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151210184357')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151214171318')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151215172107')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151215172425')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151216095841')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151216102356')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151216135042')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151216150910')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151218123655')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151218172251')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151221103428')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151221105129')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160104104519')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160105165742')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160106154918')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160108181427')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160108194936')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160112190503')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160113171706')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160114154732')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160115131955')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160115135130')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160120213220')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160120214128')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160120214202')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160125112341')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160125134622')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160128123511')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160203094023')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160203095033')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160203103630')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160203150350')[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160203230132')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160204091551')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160205154644')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160210163103')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160210191011')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160210193741')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160215195614')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160218104352')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160223111818')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160301180433')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160307144244')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160308134157')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160309161106')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160310151033')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160317204732')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160318120245')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160322190646')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160330100508')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160405192357')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160412110000')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160419123349')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160602211123')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160613092735')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160614093412')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160615102904')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160617090150')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160617153402')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160621131357')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160621131501')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160621152015')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160622081634')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160622103305')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160623120302')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160627132226')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160627152542')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160627152957')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160627164314')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160630153022')[0m
+  [1m[35m (0.4ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160705092836')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160711130401')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160712141015')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160715133242')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160717142201')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160718092209')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160718123536')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160719090046')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160719161550')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160722112759')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160722114857')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160724151854')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160726102906')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160726103921')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160727135031')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160729125611')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160803112450')
+  [1m[36m (20.6ms)[0m  [1mCREATE TABLE `addresses` (`id` int(11) auto_increment PRIMARY KEY, `uuid` varchar(255), `addressable_id` int(11), `addressable_type` varchar(255), `address` varchar(255), `zip_code` varchar(255), `city` varchar(255), `state` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (2.1ms)[0m  CREATE  INDEX `index_addresses_on_addressable_id_and_addressable_type` USING btree ON `addresses` (`addressable_id`, `addressable_type`) 
+  [1m[36m (17.4ms)[0m  [1mCREATE TABLE `alert_condition_results` (`id` int(11) auto_increment PRIMARY KEY, `result` varchar(255), `alert_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (7.3ms)[0m  CREATE TABLE `alert_histories` (`id` int(11) auto_increment PRIMARY KEY, `read` tinyint(1) DEFAULT 0, `user_id` int(11), `alert_id` int(11), `test_result_id` int(11), `created_at` datetime, `updated_at` datetime, `for_aggregation_calculation` tinyint(1) DEFAULT 0, `test_result_updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (1.9ms)[0m  [1mCREATE  INDEX `index_alert_histories_on_alert_id` USING btree ON `alert_histories` (`alert_id`) [0m
+  [1m[35m (2.0ms)[0m  CREATE  INDEX `index_alert_histories_on_user_id` USING btree ON `alert_histories` (`user_id`) 
+  [1m[36m (9.2ms)[0m  [1mCREATE TABLE `alert_recipients` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `alert_id` int(11), `created_at` datetime, `updated_at` datetime, `email` varchar(255), `role_id` int(11), `recipient_type` int(11) DEFAULT 0, `telephone` varchar(255), `first_name` varchar(255), `last_name` varchar(255), `deleted_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (3.0ms)[0m  CREATE  INDEX `index_alert_recipients_on_alert_id` USING btree ON `alert_recipients` (`alert_id`) 
+  [1m[36m (30.0ms)[0m  [1mCREATE  INDEX `index_alert_recipients_on_deleted_at` USING btree ON `alert_recipients` (`deleted_at`) [0m
+  [1m[35m (1.9ms)[0m  CREATE  INDEX `index_alert_recipients_on_user_id` USING btree ON `alert_recipients` (`user_id`) 
+  [1m[36m (9.6ms)[0m  [1mCREATE TABLE `alerts` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `name` varchar(255), `description` varchar(255), `enabled` tinyint(1) DEFAULT 1, `last_alert` datetime, `created_at` datetime, `updated_at` datetime, `error_code` varchar(255), `category_type` int(11), `aggregation_type` int(11) DEFAULT 0, `query` text, `message` text, `channel_type` int(11) DEFAULT 0, `aggregation_frequency` int(11) DEFAULT 0, `sms_limit` int(11) DEFAULT 0, `anomalie_type` int(11) DEFAULT 0, `notify_patients` tinyint(1) DEFAULT 0, `sms_message` text, `deleted_at` datetime, `test_result_min_threshold` int(11), `test_result_max_threshold` int(11), `aggregation_threshold` int(11) DEFAULT 0, `sample_id` varchar(255), `utilization_efficiency_type` int(11) DEFAULT 0, `utilization_efficiency_number` int(11) DEFAULT 0, `utilization_efficiency_last_checked` datetime, `email_limit` int(11) DEFAULT 0, `use_aggregation_percentage` tinyint(1) DEFAULT 0, `institution_id` int(11), `time_last_aggregation_checked` datetime, `site_prefix` varchar(255), `site_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (2.1ms)[0m  CREATE  INDEX `index_alerts_on_deleted_at` USING btree ON `alerts` (`deleted_at`) 
+  [1m[36m (2.1ms)[0m  [1mCREATE  INDEX `index_alerts_on_institution_id` USING btree ON `alerts` (`institution_id`) [0m
+  [1m[35m (3.1ms)[0m  CREATE  INDEX `index_alerts_on_site_id` USING btree ON `alerts` (`site_id`) 
+  [1m[36m (2.1ms)[0m  [1mCREATE  INDEX `index_alerts_on_user_id` USING btree ON `alerts` (`user_id`) [0m
+  [1m[35m (13.8ms)[0m  CREATE TABLE `alerts_conditions` (`alert_id` int(11) NOT NULL, `condition_id` int(11) NOT NULL) ENGINE=InnoDB
+  [1m[36m (7.5ms)[0m  [1mCREATE  INDEX `index_alerts_conditions_on_alert_id_and_condition_id` USING btree ON `alerts_conditions` (`alert_id`, `condition_id`) [0m
+  [1m[35m (2.1ms)[0m  CREATE  INDEX `index_alerts_conditions_on_condition_id_and_alert_id` USING btree ON `alerts_conditions` (`condition_id`, `alert_id`) 
+  [1m[36m (11.4ms)[0m  [1mCREATE TABLE `alerts_devices` (`alert_id` int(11) NOT NULL, `device_id` int(11) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (2.3ms)[0m  CREATE  INDEX `index_alerts_devices_on_alert_id_and_device_id` USING btree ON `alerts_devices` (`alert_id`, `device_id`) 
+  [1m[36m (2.0ms)[0m  [1mCREATE  INDEX `index_alerts_devices_on_device_id_and_alert_id` USING btree ON `alerts_devices` (`device_id`, `alert_id`) [0m
+  [1m[35m (7.7ms)[0m  CREATE TABLE `alerts_sites` (`alert_id` int(11) NOT NULL, `site_id` int(11) NOT NULL) ENGINE=InnoDB
+  [1m[36m (10.4ms)[0m  [1mCREATE TABLE `audit_logs` (`id` int(11) auto_increment PRIMARY KEY, `comment` text, `title` varchar(255), `uuid` varchar(255), `patient_id` int(11), `user_id` int(11), `created_at` datetime, `updated_at` datetime, `type` varchar(255), `encounter_id` int(11), `requested_test_id` int(11), `patient_result_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (6.1ms)[0m  CREATE  INDEX `fk_rails_242face86a` USING btree ON `audit_logs` (`encounter_id`) 
+  [1m[36m (4.6ms)[0m  [1mCREATE  INDEX `index_audit_logs_on_patient_id` USING btree ON `audit_logs` (`patient_id`) [0m
+  [1m[35m (3.4ms)[0m  CREATE  INDEX `fk_rails_2fc931c99d` USING btree ON `audit_logs` (`patient_result_id`) 
+  [1m[36m (4.3ms)[0m  [1mCREATE  INDEX `fk_rails_2f852d7fa9` USING btree ON `audit_logs` (`requested_test_id`) [0m
+  [1m[35m (2.1ms)[0m  CREATE  INDEX `index_audit_logs_on_user_id` USING btree ON `audit_logs` (`user_id`) 
+  [1m[36m (2.3ms)[0m  [1mCREATE  INDEX `index_audit_logs_on_uuid` USING btree ON `audit_logs` (`uuid`) [0m
+  [1m[35m (8.0ms)[0m  CREATE TABLE `audit_updates` (`id` int(11) auto_increment PRIMARY KEY, `field_name` varchar(255), `old_value` varchar(255), `new_value` varchar(255), `uuid` varchar(255), `audit_log_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (6.3ms)[0m  [1mCREATE  INDEX `index_audit_updates_on_audit_log_id` USING btree ON `audit_updates` (`audit_log_id`) [0m
+  [1m[35m (9.7ms)[0m  CREATE  INDEX `index_audit_updates_on_uuid` USING btree ON `audit_updates` (`uuid`) 
+  [1m[36m (22.0ms)[0m  [1mCREATE TABLE `comments` (`id` int(11) auto_increment PRIMARY KEY, `commented_on` date, `comment` text, `description` varchar(255), `uuid` varchar(255), `patient_id` int(11), `user_id` int(11), `image_file_name` varchar(255), `image_content_type` varchar(255), `image_file_size` int(11), `image_updated_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (2.0ms)[0m  CREATE  INDEX `index_comments_on_patient_id` USING btree ON `comments` (`patient_id`) 
+  [1m[36m (2.1ms)[0m  [1mCREATE  INDEX `index_comments_on_user_id` USING btree ON `comments` (`user_id`) [0m
+  [1m[35m (5.6ms)[0m  CREATE  INDEX `index_comments_on_uuid` USING btree ON `comments` (`uuid`) 
+  [1m[36m (13.8ms)[0m  [1mCREATE TABLE `computed_policies` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `action` varchar(255), `resource_type` varchar(255), `resource_id` varchar(255), `condition_institution_id` int(11), `condition_site_id` varchar(255), `delegable` tinyint(1) DEFAULT 0, `condition_device_id` int(11), `include_subsites` tinyint(1) DEFAULT 0) ENGINE=InnoDB[0m
+  [1m[35m (7.0ms)[0m  CREATE TABLE `computed_policy_exceptions` (`id` int(11) auto_increment PRIMARY KEY, `computed_policy_id` int(11), `action` varchar(255), `resource_type` varchar(255), `resource_id` varchar(255), `condition_institution_id` int(11), `condition_site_id` varchar(255), `condition_device_id` int(11)) ENGINE=InnoDB
+  [1m[36m (20.9ms)[0m  [1mCREATE TABLE `conditions` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (7.3ms)[0m  CREATE TABLE `conditions_manifests` (`manifest_id` int(11), `condition_id` int(11)) ENGINE=InnoDB
+  [1m[36m (9.1ms)[0m  [1mCREATE TABLE `device_commands` (`id` int(11) auto_increment PRIMARY KEY, `device_id` int(11), `name` varchar(255), `command` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (6.8ms)[0m  CREATE TABLE `device_logs` (`id` int(11) auto_increment PRIMARY KEY, `device_id` int(11), `message` blob(65535), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (8.2ms)[0m  [1mCREATE TABLE `device_messages` (`id` int(11) auto_increment PRIMARY KEY, `raw_data` blob(65535), `device_id` int(11), `index_failed` tinyint(1), `index_failure_reason` text, `created_at` datetime, `updated_at` datetime, `index_failure_data` text, `site_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (4.8ms)[0m  CREATE  INDEX `index_device_messages_on_device_id` USING btree ON `device_messages` (`device_id`) 
+  [1m[36m (3.3ms)[0m  [1mCREATE  INDEX `index_device_messages_on_site_id` USING btree ON `device_messages` (`site_id`) [0m
+  [1m[35m (9.9ms)[0m  CREATE TABLE `device_messages_patient_results` (`id` int(11) auto_increment PRIMARY KEY, `device_message_id` int(11), `test_result_id` int(11)) ENGINE=InnoDB
+  [1m[36m (1.9ms)[0m  [1mCREATE  INDEX `index_device_messages_patient_results_on_device_message_id` USING btree ON `device_messages_patient_results` (`device_message_id`) [0m
+  [1m[35m (2.0ms)[0m  CREATE  INDEX `index_device_messages_patient_results_on_test_result_id` USING btree ON `device_messages_patient_results` (`test_result_id`) 
+  [1m[36m (8.7ms)[0m  [1mCREATE TABLE `device_models` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `created_at` datetime, `updated_at` datetime, `institution_id` int(11), `published_at` datetime, `supports_activation` tinyint(1), `support_url` varchar(255), `picture_file_name` varchar(255), `picture_content_type` varchar(255), `picture_file_size` int(11), `picture_updated_at` datetime, `setup_instructions_file_name` varchar(255), `setup_instructions_content_type` varchar(255), `setup_instructions_file_size` int(11), `setup_instructions_updated_at` datetime, `supports_ftp` tinyint(1), `filename_pattern` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (4.5ms)[0m  CREATE  INDEX `index_device_models_on_published_at` USING btree ON `device_models` (`published_at`) 
+  [1m[36m (10.1ms)[0m  [1mCREATE TABLE `devices` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `created_at` datetime, `updated_at` datetime, `uuid` varchar(255), `institution_id` int(11), `device_model_id` int(11), `secret_key_hash` varchar(255), `time_zone` varchar(255), `custom_mappings` text, `site_id` int(11), `serial_number` varchar(255), `site_prefix` varchar(255), `activation_token` varchar(255), `deleted_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (2.1ms)[0m  CREATE  INDEX `index_devices_on_deleted_at` USING btree ON `devices` (`deleted_at`) 
+  [1m[36m (9.0ms)[0m  [1mCREATE TABLE `encounters` (`id` int(11) auto_increment PRIMARY KEY, `institution_id` int(11), `patient_id` int(11), `uuid` varchar(255), `entity_id` varchar(255), `sensitive_data` blob(65535), `custom_fields` text, `core_fields` text, `created_at` datetime, `updated_at` datetime, `is_phantom` tinyint(1) DEFAULT 1, `deleted_at` datetime, `site_id` int(11), `user_updated_at` datetime, `site_prefix` varchar(255), `start_time` datetime, `user_id` int(11), `exam_reason` varchar(255), `tests_requested` varchar(255), `coll_sample_type` varchar(255), `coll_sample_other` varchar(255), `diag_comment` varchar(255), `testdue_date` date, `treatment_weeks` int(11), `performing_site_id` int(11), `status` int(11) DEFAULT 0, `testing_for` varchar(255) DEFAULT '', `culture_format` varchar(255), `presumptive_rr` tinyint(1)) ENGINE=InnoDB[0m
+  [1m[35m (8.0ms)[0m  CREATE  INDEX `index_encounters_on_deleted_at` USING btree ON `encounters` (`deleted_at`) 
+  [1m[36m (3.0ms)[0m  [1mCREATE  INDEX `index_encounters_on_performing_site_id` USING btree ON `encounters` (`performing_site_id`) [0m
+  [1m[35m (3.8ms)[0m  CREATE  INDEX `index_encounters_on_site_id` USING btree ON `encounters` (`site_id`) 
+  [1m[36m (3.9ms)[0m  [1mCREATE  INDEX `index_encounters_on_user_id` USING btree ON `encounters` (`user_id`) [0m
+  [1m[35m (11.3ms)[0m  CREATE TABLE `episodes` (`id` int(11) auto_increment PRIMARY KEY, `diagnosis` varchar(255), `patient_id` int(11), `hiv_status` varchar(255), `drug_resistance` varchar(255), `outcome` varchar(255), `anatomical_site_diagnosis` varchar(255), `initial_history` varchar(255), `previous_history` varchar(255), `uuid` varchar(255), `closed` tinyint(1) DEFAULT 0, `created_at` datetime, `updated_at` datetime, `closed_at` datetime) ENGINE=InnoDB
+  [1m[36m (3.4ms)[0m  [1mCREATE  INDEX `index_episodes_on_patient_id` USING btree ON `episodes` (`patient_id`) [0m
+  [1m[35m (7.4ms)[0m  CREATE TABLE `file_messages` (`id` int(11) auto_increment PRIMARY KEY, `filename` varchar(255), `status` varchar(255), `message` text, `device_id` int(11), `device_message_id` int(11), `ftp_hostname` varchar(255), `ftp_username` varchar(255), `ftp_password` varchar(255), `ftp_directory` varchar(255), `ftp_port` int(11), `ftp_passive` tinyint(1)) ENGINE=InnoDB
+  [1m[36m (2.9ms)[0m  [1mCREATE  INDEX `index_file_messages_on_device_id` USING btree ON `file_messages` (`device_id`) [0m
+  [1m[35m (7.5ms)[0m  CREATE  INDEX `index_file_messages_on_ftp_and_status` USING btree ON `file_messages` (`ftp_hostname`, `ftp_port`, `ftp_directory`, `status`) 
+  [1m[36m (11.9ms)[0m  [1mCREATE TABLE `filters` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `name` varchar(255), `query` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (2.0ms)[0m  CREATE  INDEX `index_filters_on_user_id` USING btree ON `filters` (`user_id`) 
+  [1m[36m (19.7ms)[0m  [1mCREATE TABLE `identities` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `provider` varchar(255), `token` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (9.9ms)[0m  CREATE TABLE `institutions` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `user_id` int(11), `created_at` datetime, `updated_at` datetime, `uuid` varchar(255), `kind` varchar(255) DEFAULT 'institution', `ftp_hostname` varchar(255), `ftp_username` varchar(255), `ftp_password` varchar(255), `ftp_directory` varchar(255), `ftp_port` int(11), `ftp_passive` tinyint(1)) ENGINE=InnoDB
+  [1m[36m (4.0ms)[0m  [1mCREATE  INDEX `index_institutions_on_user_id` USING btree ON `institutions` (`user_id`) [0m
+  [1m[35m (11.1ms)[0m  CREATE TABLE `manifests` (`id` int(11) auto_increment PRIMARY KEY, `version` varchar(255), `definition` text, `created_at` datetime, `updated_at` datetime, `api_version` varchar(255), `device_model_id` int(11)) ENGINE=InnoDB
+  [1m[36m (9.9ms)[0m  [1mCREATE TABLE `oauth_access_grants` (`id` int(11) auto_increment PRIMARY KEY, `resource_owner_id` int(11) NOT NULL, `application_id` int(11) NOT NULL, `token` varchar(255) NOT NULL, `expires_in` int(11) NOT NULL, `redirect_uri` text NOT NULL, `created_at` datetime NOT NULL, `revoked_at` datetime, `scopes` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (2.6ms)[0m  CREATE UNIQUE INDEX `index_oauth_access_grants_on_token` USING btree ON `oauth_access_grants` (`token`) 
+  [1m[36m (10.3ms)[0m  [1mCREATE TABLE `oauth_access_tokens` (`id` int(11) auto_increment PRIMARY KEY, `resource_owner_id` int(11), `application_id` int(11), `token` varchar(255) NOT NULL, `refresh_token` varchar(255), `expires_in` int(11), `revoked_at` datetime, `created_at` datetime NOT NULL, `scopes` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (2.4ms)[0m  CREATE UNIQUE INDEX `index_oauth_access_tokens_on_refresh_token` USING btree ON `oauth_access_tokens` (`refresh_token`) 
+  [1m[36m (4.1ms)[0m  [1mCREATE  INDEX `index_oauth_access_tokens_on_resource_owner_id` USING btree ON `oauth_access_tokens` (`resource_owner_id`) [0m
+  [1m[35m (2.5ms)[0m  CREATE UNIQUE INDEX `index_oauth_access_tokens_on_token` USING btree ON `oauth_access_tokens` (`token`) 
+  [1m[36m (19.2ms)[0m  [1mCREATE TABLE `oauth_applications` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255) NOT NULL, `uid` varchar(255) NOT NULL, `secret` varchar(255) NOT NULL, `redirect_uri` text NOT NULL, `scopes` varchar(255) DEFAULT '' NOT NULL, `created_at` datetime, `updated_at` datetime, `owner_id` int(11), `owner_type` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (2.1ms)[0m  CREATE  INDEX `index_oauth_applications_on_owner_id_and_owner_type` USING btree ON `oauth_applications` (`owner_id`, `owner_type`) 
+  [1m[36m (2.0ms)[0m  [1mCREATE UNIQUE INDEX `index_oauth_applications_on_uid` USING btree ON `oauth_applications` (`uid`) [0m
+  [1m[35m (9.1ms)[0m  CREATE TABLE `old_passwords` (`id` int(11) auto_increment PRIMARY KEY, `encrypted_password` varchar(255) NOT NULL, `password_archivable_type` varchar(255) NOT NULL, `password_archivable_id` int(11) NOT NULL, `created_at` datetime) ENGINE=InnoDB
+  [1m[36m (4.6ms)[0m  [1mCREATE  INDEX `index_password_archivable` USING btree ON `old_passwords` (`password_archivable_type`, `password_archivable_id`) [0m
+  [1m[35m (9.1ms)[0m  CREATE TABLE `page_headers` (`id` int(11) auto_increment PRIMARY KEY, `institution_id` int(11), `site_id` int(11), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL, `site_prefix` varchar(255)) ENGINE=InnoDB
+  [1m[36m (13.8ms)[0m  [1mCREATE  INDEX `index_page_headers_on_institution_id` USING btree ON `page_headers` (`institution_id`) [0m
+  [1m[35m (2.1ms)[0m  CREATE  INDEX `index_page_headers_on_site_id` USING btree ON `page_headers` (`site_id`) 
+  [1m[36m (9.8ms)[0m  [1mCREATE TABLE `patient_results` (`id` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime, `uuid` varchar(255), `custom_fields` text, `test_id` varchar(255), `sensitive_data` blob(65535), `device_id` int(11), `patient_id` int(11), `core_fields` text, `encounter_id` int(11), `site_id` int(11), `institution_id` int(11), `sample_identifier_id` int(11), `site_prefix` varchar(255), `deleted_at` datetime, `type` varchar(255), `requested_test_id` int(11), `sample_collected_on` date, `result_on` date, `specimen_type` varchar(255), `serial_number` varchar(255), `appearance` varchar(255), `results_h` varchar(255), `results_r` varchar(255), `results_e` varchar(255), `results_s` varchar(255), `results_amk` varchar(255), `results_km` varchar(255), `results_cm` varchar(255), `results_fq` varchar(255), `examined_by` varchar(255), `tuberculosis` varchar(255), `rifampicin` varchar(255), `media_used` varchar(255), `results_other1` varchar(255), `results_other2` varchar(255), `results_other3` varchar(255), `results_other4` varchar(255), `culture_format` varchar(255), `trace` varchar(255), `test_result` varchar(255), `method_used` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (4.2ms)[0m  CREATE  INDEX `index_patient_results_on_deleted_at` USING btree ON `patient_results` (`deleted_at`) 
+  [1m[36m (3.1ms)[0m  [1mCREATE  INDEX `index_patient_results_on_device_id` USING btree ON `patient_results` (`device_id`) [0m
+  [1m[35m (3.2ms)[0m  CREATE  INDEX `index_patient_results_on_institution_id` USING btree ON `patient_results` (`institution_id`) 
+  [1m[36m (3.4ms)[0m  [1mCREATE  INDEX `index_patient_results_on_method_used` USING btree ON `patient_results` (`method_used`) [0m
+  [1m[35m (5.8ms)[0m  CREATE  INDEX `index_patient_results_on_patient_id` USING btree ON `patient_results` (`patient_id`) 
+  [1m[36m (6.2ms)[0m  [1mCREATE  INDEX `index_patient_results_on_requested_test_id` USING btree ON `patient_results` (`requested_test_id`) [0m
+  [1m[35m (2.3ms)[0m  CREATE  INDEX `index_patient_results_on_sample_identifier_id` USING btree ON `patient_results` (`sample_identifier_id`) 
+  [1m[36m (3.1ms)[0m  [1mCREATE  INDEX `index_patient_results_on_site_id` USING btree ON `patient_results` (`site_id`) [0m
+  [1m[35m (2.9ms)[0m  CREATE  INDEX `index_patient_results_on_test_result` USING btree ON `patient_results` (`test_result`) 
+  [1m[36m (4.8ms)[0m  [1mCREATE  INDEX `index_patient_results_on_uuid` USING btree ON `patient_results` (`uuid`) [0m
+  [1m[35m (30.3ms)[0m  CREATE TABLE `patients` (`id` int(11) auto_increment PRIMARY KEY, `sensitive_data` blob(65535), `custom_fields` text, `core_fields` text, `entity_id_hash` varchar(255), `uuid` varchar(255), `institution_id` int(11), `created_at` datetime, `updated_at` datetime, `is_phantom` tinyint(1) DEFAULT 1, `deleted_at` datetime, `location_geoid` varchar(60), `lat` float(24), `lng` float(24), `address` varchar(255), `name` varchar(255), `entity_id` varchar(255), `site_id` int(11), `site_prefix` varchar(255), `state` varchar(255), `city` varchar(255), `zip_code` varchar(255), `nickname` varchar(255), `birth_date_on` date) ENGINE=InnoDB
+  [1m[36m (2.0ms)[0m  [1mCREATE  INDEX `index_patients_on_birth_date_on` USING btree ON `patients` (`birth_date_on`) [0m
+  [1m[35m (2.1ms)[0m  CREATE  INDEX `index_patients_on_deleted_at` USING btree ON `patients` (`deleted_at`) 
+  [1m[36m (2.1ms)[0m  [1mCREATE  INDEX `index_patients_on_institution_id` USING btree ON `patients` (`institution_id`) [0m
+  [1m[35m (3.7ms)[0m  CREATE  INDEX `index_patients_on_site_id` USING btree ON `patients` (`site_id`) 
+  [1m[36m (15.1ms)[0m  [1mCREATE TABLE `policies` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `granter_id` int(11), `definition` text, `created_at` datetime, `updated_at` datetime, `name` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (11.3ms)[0m  CREATE TABLE `recipient_notification_histories` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `alert_recipient_id` int(11), `alert_history_id` int(11), `alert_id` int(11), `channel_type` int(11), `message_sent` varchar(255), `created_at` datetime, `updated_at` datetime, `sms_response_id` int(11), `sms_response_guid` varchar(255), `sms_response_token` varchar(255)) ENGINE=InnoDB
+  [1m[36m (7.4ms)[0m  [1mCREATE  INDEX `index_recipient_notification_histories_on_user_id` USING btree ON `recipient_notification_histories` (`user_id`) [0m
+  [1m[35m (10.2ms)[0m  CREATE TABLE `requested_tests` (`id` int(11) auto_increment PRIMARY KEY, `encounter_id` int(11), `name` varchar(255), `status` int(11) DEFAULT 0, `deleted_at` datetime, `datetime` datetime, `created_at` datetime, `updated_at` datetime, `comment` text, `completed_at` datetime) ENGINE=InnoDB
+  [1m[36m (2.8ms)[0m  [1mCREATE  INDEX `index_requested_tests_on_completed_at` USING btree ON `requested_tests` (`completed_at`) [0m
+  [1m[35m (1.9ms)[0m  CREATE  INDEX `index_requested_tests_on_datetime` USING btree ON `requested_tests` (`datetime`) 
+  [1m[36m (2.9ms)[0m  [1mCREATE  INDEX `index_requested_tests_on_deleted_at` USING btree ON `requested_tests` (`deleted_at`) [0m
+  [1m[35m (2.3ms)[0m  CREATE  INDEX `index_requested_tests_on_encounter_id` USING btree ON `requested_tests` (`encounter_id`) 
+  [1m[36m (12.6ms)[0m  [1mCREATE TABLE `roles` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255) NOT NULL, `institution_id` int(11) NOT NULL, `site_id` int(11), `policy_id` int(11) NOT NULL, `created_at` datetime, `updated_at` datetime, `key` varchar(255), `site_prefix` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (13.1ms)[0m  CREATE TABLE `roles_users` (`role_id` int(11), `user_id` int(11)) ENGINE=InnoDB
+  [1m[36m (10.7ms)[0m  [1mCREATE TABLE `sample_identifiers` (`id` int(11) auto_increment PRIMARY KEY, `sample_id` int(11), `entity_id` varchar(255), `uuid` varchar(255), `site_id` int(11), `deleted_at` datetime, `created_at` datetime, `updated_at` datetime, `lab_sample_id` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (1.8ms)[0m  CREATE  INDEX `index_sample_identifiers_on_deleted_at` USING btree ON `sample_identifiers` (`deleted_at`) 
+  [1m[36m (2.2ms)[0m  [1mCREATE  INDEX `index_sample_identifiers_on_entity_id` USING btree ON `sample_identifiers` (`entity_id`) [0m
+  [1m[35m (2.8ms)[0m  CREATE  INDEX `index_sample_identifiers_on_sample_id` USING btree ON `sample_identifiers` (`sample_id`) 
+  [1m[36m (1.9ms)[0m  [1mCREATE UNIQUE INDEX `index_sample_identifiers_on_uuid` USING btree ON `sample_identifiers` (`uuid`) [0m
+  [1m[35m (14.3ms)[0m  CREATE TABLE `samples` (`id` int(11) auto_increment PRIMARY KEY, `sensitive_data` blob(65535), `institution_id` int(11), `custom_fields` text, `core_fields` text, `created_at` datetime, `updated_at` datetime, `patient_id` int(11), `encounter_id` int(11), `is_phantom` tinyint(1) DEFAULT 1, `deleted_at` datetime) ENGINE=InnoDB
+  [1m[36m (2.1ms)[0m  [1mCREATE  INDEX `index_samples_on_deleted_at` USING btree ON `samples` (`deleted_at`) [0m
+  [1m[35m (2.3ms)[0m  CREATE  INDEX `index_samples_on_institution_id_and_entity_id` USING btree ON `samples` (`institution_id`) 
+  [1m[36m (5.5ms)[0m  [1mCREATE  INDEX `index_samples_on_patient_id` USING btree ON `samples` (`patient_id`) [0m
+  [1m[35m (22.1ms)[0m  CREATE TABLE `settings_pages` (`id` int(11) auto_increment PRIMARY KEY, `institution_id` int(11), `site_id` int(11), `site_prefix` varchar(255), `created_at` datetime NOT NULL, `updated_at` datetime NOT NULL) ENGINE=InnoDB
+  [1m[36m (11.3ms)[0m  [1mCREATE  INDEX `index_settings_pages_on_institution_id` USING btree ON `settings_pages` (`institution_id`) [0m
+  [1m[35m (2.8ms)[0m  CREATE  INDEX `index_settings_pages_on_site_id` USING btree ON `settings_pages` (`site_id`) 
+  [1m[36m (11.5ms)[0m  [1mCREATE TABLE `sites` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `institution_id` int(11), `address` varchar(255), `city` varchar(255), `state` varchar(255), `zip_code` varchar(255), `country` varchar(255), `region` varchar(255), `lat` float(24), `lng` float(24), `created_at` datetime, `updated_at` datetime, `location_geoid` varchar(60), `uuid` varchar(255), `parent_id` int(11), `prefix` varchar(255), `sample_id_reset_policy` varchar(255) DEFAULT 'yearly', `deleted_at` datetime, `main_phone_number` varchar(255), `email_address` varchar(255), `last_sample_identifier_entity_id` varchar(255), `last_sample_identifier_date` date, `allows_manual_entry` tinyint(1), `comment` text) ENGINE=InnoDB[0m
+  [1m[35m (3.7ms)[0m  CREATE  INDEX `index_sites_on_deleted_at` USING btree ON `sites` (`deleted_at`) 
+  [1m[36m (13.9ms)[0m  [1mCREATE TABLE `ssh_keys` (`id` int(11) auto_increment PRIMARY KEY, `public_key` text, `device_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (4.5ms)[0m  CREATE  INDEX `index_ssh_keys_on_device_id` USING btree ON `ssh_keys` (`device_id`) 
+  [1m[36m (15.5ms)[0m  [1mCREATE TABLE `subscribers` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `name` varchar(255), `url` varchar(255), `fields` text, `last_run_at` datetime, `created_at` datetime, `updated_at` datetime, `url_user` varchar(255), `url_password` varchar(255), `filter_id` int(11), `verb` varchar(255) DEFAULT 'GET') ENGINE=InnoDB[0m
+  [1m[35m (1.9ms)[0m  CREATE  INDEX `index_subscribers_on_filter_id` USING btree ON `subscribers` (`filter_id`) 
+  [1m[36m (19.5ms)[0m  [1mCREATE TABLE `test_result_parsed_data` (`id` int(11) auto_increment PRIMARY KEY, `test_result_id` int(11), `data` blob(65535), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (10.0ms)[0m  CREATE TABLE `users` (`id` int(11) auto_increment PRIMARY KEY, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `sign_in_count` int(11) DEFAULT 0 NOT NULL, `current_sign_in_at` datetime, `last_sign_in_at` datetime, `current_sign_in_ip` varchar(255), `last_sign_in_ip` varchar(255), `confirmation_token` varchar(255), `confirmed_at` datetime, `confirmation_sent_at` datetime, `unconfirmed_email` varchar(255), `failed_attempts` int(11) DEFAULT 0 NOT NULL, `unlock_token` varchar(255), `locked_at` datetime, `created_at` datetime, `updated_at` datetime, `password_changed_at` datetime, `locale` varchar(255) DEFAULT 'en', `timestamps_in_device_time_zone` tinyint(1) DEFAULT 0, `time_zone` varchar(255) DEFAULT 'UTC', `first_name` varchar(255), `last_name` varchar(255), `invitation_token` varchar(255), `invitation_created_at` datetime, `invitation_sent_at` datetime, `invitation_accepted_at` datetime, `invitation_limit` int(11), `invited_by_id` int(11), `invited_by_type` varchar(255), `invitations_count` int(11) DEFAULT 0, `last_navigation_context` varchar(255), `is_active` tinyint(1) DEFAULT 1, `telephone` varchar(255), `sidebar_open` tinyint(1) DEFAULT 1) ENGINE=InnoDB
+  [1m[36m (2.5ms)[0m  [1mCREATE UNIQUE INDEX `index_users_on_confirmation_token` USING btree ON `users` (`confirmation_token`) [0m
+  [1m[35m (2.3ms)[0m  CREATE UNIQUE INDEX `index_users_on_email` USING btree ON `users` (`email`) 
+  [1m[36m (2.3ms)[0m  [1mCREATE UNIQUE INDEX `index_users_on_invitation_token` USING btree ON `users` (`invitation_token`) [0m
+  [1m[35m (2.5ms)[0m  CREATE  INDEX `index_users_on_invitations_count` USING btree ON `users` (`invitations_count`) 
+  [1m[36m (1.9ms)[0m  [1mCREATE  INDEX `index_users_on_invited_by_id` USING btree ON `users` (`invited_by_id`) [0m
+  [1m[35m (3.8ms)[0m  CREATE  INDEX `index_users_on_last_name` USING btree ON `users` (`last_name`) 
+  [1m[36m (9.7ms)[0m  [1mCREATE  INDEX `index_users_on_password_changed_at` USING btree ON `users` (`password_changed_at`) [0m
+  [1m[35m (4.6ms)[0m  CREATE UNIQUE INDEX `index_users_on_reset_password_token` USING btree ON `users` (`reset_password_token`) 
+  [1m[36m (3.3ms)[0m  [1mCREATE UNIQUE INDEX `index_users_on_unlock_token` USING btree ON `users` (`unlock_token`) [0m
+  [1m[35m (34.6ms)[0m  ALTER TABLE `encounters` ADD CONSTRAINT `fk_rails_da9664e0fe`
+FOREIGN KEY (`site_id`)
+  REFERENCES `sites` (`id`)
+
+  [1m[36m (21.0ms)[0m  [1mALTER TABLE `encounters` ADD CONSTRAINT `fk_rails_2f98fb270c`
+FOREIGN KEY (`user_id`)
+  REFERENCES `users` (`id`)
+[0m
+  [1m[35m (37.3ms)[0m  ALTER TABLE `episodes` ADD CONSTRAINT `fk_rails_2879068606`
+FOREIGN KEY (`patient_id`)
+  REFERENCES `patients` (`id`)
+
+  [1m[36m (31.7ms)[0m  [1mALTER TABLE `patients` ADD CONSTRAINT `fk_rails_dbea9f883f`
+FOREIGN KEY (`site_id`)
+  REFERENCES `sites` (`id`)
+[0m
+  [1m[35m (32.6ms)[0m  ALTER TABLE `requested_tests` ADD CONSTRAINT `fk_rails_450ea71014`
+FOREIGN KEY (`encounter_id`)
+  REFERENCES `encounters` (`id`)
+
+  [1m[36m (20.5ms)[0m  [1mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (5.5ms)[0m  CREATE UNIQUE INDEX `unique_schema_migrations`  ON `schema_migrations` (`version`) 
+  [1m[36m (0.2ms)[0m  [1mSELECT version FROM `schema_migrations`[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160816140022')
+  [1m[36m (3.6ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140203233601')[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140203234249')
+  [1m[36m (0.6ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140203234745')[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140204134837')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140312115721')[0m
+  [1m[35m (2.4ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140312144328')
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140325195841')[0m
+  [1m[35m (1.1ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140326151525')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140326191422')[0m
+  [1m[35m (3.7ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140404152310')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140404152558')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140404172012')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140407154134')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140407184142')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140415190208')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140422171811')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140423133302')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140425152014')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140428143812')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140505145148')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140515170318')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140515171158')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140521153536')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140521153720')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140521194129')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140522180707')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140526174156')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140526181013')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140526190412')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140530205604')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140603191744')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140722154526')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140805151606')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140821200906')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140822151308')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140822152516')
+  [1m[36m (1.5ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140822165416')[0m
+  [1m[35m (1.0ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140918175424')
+  [1m[36m (0.8ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140925185610')[0m
+  [1m[35m (0.7ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20141218155918')
+  [1m[36m (0.6ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150119150526')[0m
+  [1m[35m (0.7ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150119150757')
+  [1m[36m (0.7ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150119154001')[0m
+  [1m[35m (0.6ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150119172327')
+  [1m[36m (0.6ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150120144346')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150202182319')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150202182842')[0m
+  [1m[35m (1.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150202182945')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150202184854')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150204181542')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150206142251')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150223145645')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150223151051')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150223151900')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150224154748')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150225160228')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150227193433')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150227193601')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150302142243')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150304194308')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150304200858')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150304202928')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150304203611')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150304203629')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150305145336')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150305153907')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150305175247')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150415173132')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150415173303')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150422124002')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150508170417')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150513175833')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150522173544')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150522180205')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150526153400')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150527160209')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150601165237')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150601165245')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150601165607')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150601165748')
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150604132737')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150604132909')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150608182645')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150608182743')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150608182846')[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150624170646')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150724145211')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150728150405')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150805180134')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150805185341')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150812153349')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150812203030')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150818200013')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150821200128')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150825150412')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150901163906')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150902154438')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150915164518')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150917174426')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150921222526')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150922185638')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150922204816')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150925172725')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150925175941')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150925180545')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150928142745')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150928183528')[0m
+  [1m[35m (0.8ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150928201723')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150929100922')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150929202058')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150930130533')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151005141913')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151005172622')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151006141255')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151006141537')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151006145712')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151008162340')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151008205841')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151013215720')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151015221802')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151016143640')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151019174509')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151019202219')[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151020173442')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151026185300')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151026193558')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151027172759')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151027175111')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151029165435')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151029184400')
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151030120316')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151030211740')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151102104047')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151103193538')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151104202638')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151105211638')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151110161047')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151116133521')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151116134931')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151118155324')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151119133838')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151120181949')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151123180754')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151123201511')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151124172252')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151125151833')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151130130846')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151201150151')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151202174956')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151204105403')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151207120355')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151208152927')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151209120802')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151209165717')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151209174256')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151210114431')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151210132301')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151210144138')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151210181714')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151210184357')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151214171318')[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151215172107')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151215172425')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151216095841')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151216102356')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151216135042')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151216150910')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151218123655')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151218172251')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20151221103428')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20151221105129')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160104104519')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160105165742')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160106154918')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160108181427')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160108194936')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160112190503')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160113171706')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160114154732')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160115131955')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160115135130')[0m
+  [1m[35m (0.6ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160120213220')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160120214128')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160120214202')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160125112341')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160125134622')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160128123511')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160203094023')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160203095033')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160203103630')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160203150350')[0m
+  [1m[35m (0.8ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160203230132')
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160204091551')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160205154644')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160210163103')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160210191011')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160210193741')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160215195614')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160218104352')[0m
+  [1m[35m (0.5ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160223111818')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160301180433')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160307144244')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160308134157')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160309161106')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160310151033')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160317204732')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160318120245')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160322190646')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160330100508')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160405192357')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160412110000')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160419123349')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160602211123')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160613092735')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160614093412')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160615102904')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160617090150')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160617153402')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160621131357')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160621131501')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160621152015')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160622081634')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160622103305')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160623120302')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160627132226')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160627152542')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160627152957')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160627164314')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160630153022')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160705092836')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160711130401')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160712141015')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160715133242')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160717142201')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160718092209')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160718123536')
+  [1m[36m (0.7ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160719090046')[0m
+  [1m[35m (0.6ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160719161550')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160722112759')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160722114857')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160724151854')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160726102906')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160726103921')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160727135031')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20160729125611')[0m
+  [1m[35m (0.2ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20160803112450')
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
