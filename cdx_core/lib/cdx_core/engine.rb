@@ -5,5 +5,7 @@ module CdxCore
       g.assets false
       g.helper false
     end
+
+    config.i18n.load_path += Dir[File.join(CdxCore::Engine.root, 'config', 'locales', '**', '*.{rb,yml}')]
   end
 end

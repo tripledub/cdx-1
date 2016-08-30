@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :validatable, :confirmable, :timeoutable,
          :lockable, :password_expirable, :password_archivable
 
-  devise :omniauthable, :registerable unless Settings.single_tenant
+  devise :omniauthable, :registerable unless ENV['SINGLE_TENANT']
 
   has_many :identities, dependent: :destroy
   has_many :institutions
