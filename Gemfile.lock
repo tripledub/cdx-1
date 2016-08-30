@@ -53,6 +53,12 @@ PATH
     cdx_core (0.0.1)
       rails (~> 4.2.7.1)
 
+PATH
+  remote: cdx_vietnam
+  specs:
+    cdx_vietnam (0.0.1)
+      rails (~> 4.2.7.1)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -659,6 +665,7 @@ DEPENDENCIES
   cdx-api-elasticsearch!
   cdx-sync-server!
   cdx_core!
+  cdx_vietnam!
   chunky_png
   config
   csv_builder

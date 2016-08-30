@@ -96,6 +96,7 @@ gem 'nuntium_api', '~> 0.21'
 
 # Core cdx functionality
 gem 'cdx_core', path: 'cdx_core'
+gem 'cdx_vietnam', path: 'cdx_vietnam'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-urijs'
