@@ -277,6 +277,10 @@ en:
       match: " doesn't match previous resource's type "
       the_control: " - the control may not work OK"
       add_policy_btn: "Add policy"
+      and_subsites: " and subsites"
+      at_site_and_subsites: " at site and subsites"
+      no_actions_granted: "No actions granted"
+      new_policy: "New policy"
 
     policy_item_detail: 
       resources_label: "Resources"

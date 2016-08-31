@@ -211,6 +211,7 @@ vi:
       alert_testing_for: "Vui lòng chọn một loại thử nghiệm"
       alert_exam_reason: "Vui lòng chọn một Examination Reason."
       alert_tests_requested: "Vui lòng chọn một hoặc nhiều loại thử nghiệm"
+      alert_add_samples: "Vui lòng thêm một hoặc nhiều mẫu thử."
       test_order_details_heading: "Chi tiết thử nghiệm"
       testing_for_label: "Thử nghiệm cho"
       TB_option: "Lao"
@@ -273,6 +274,9 @@ vi:
 
     policy_item:
       description_msg: "Loại, tài nguyên, và hoạt động chưa được xác định rõ"
+      match: " không phù hợp với loại tài nguyên trước "
+      the_control: " - bộ điều khiển có thể không làm việc OK"
+      add_policy_btn: "Thêm chính sách"
       and_subsites: " và những trang con"
       at_site_and_subsites: " tại trang và những trang con"
       no_actions_granted: "Không có hoạt động nào được phép"
