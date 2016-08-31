@@ -10,8 +10,8 @@ module ApplicationHelper
   end
 
   def has_access_to_test_orders_index?
-     has_access?(PageHeader, Policy::Actions::DISPLAY_TEST_ORDER_HEADER)
-   end
+    has_access?(PageHeader, Policy::Actions::DISPLAY_TEST_ORDER_HEADER)
+  end
 
   def has_access_to_test_results_index?
     has_access?(PageHeader, Policy::Actions::DISPLAY_TEST_RESULT_HEADER) || has_access?(TestResult, Policy::Actions::QUERY_TEST)
@@ -55,12 +55,6 @@ module ApplicationHelper
 
   def can_delegate_permissions?
     current_user.computed_policies.any? &:delegable?
-  end
-
-  def form_title(obj, text = nil)
-    action = obj.persisted? ? 'Edit' : 'New'
-    name = text.present? ? text : obj.class.name.humanize
-    "#{action} #{name}"
   end
 
   def format_date(value, time_zone = nil)

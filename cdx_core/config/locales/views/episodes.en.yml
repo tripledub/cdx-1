@@ -1,5 +1,9 @@
 en:
   episodes:
+    new:
+      header: 'New episode'
+    edit:
+      header: 'Edit episode'
     form:
       header: 'Episode for %{patient_name}'
       history: 'History of Previous Treatment'
