@@ -13,7 +13,7 @@ var EncounterStore = Reflux.createStore({
         window.location.href = successUrl;
       }.bind(this),
       error: function(xhr, status, err) {
-	      _message_array= extractResponseErrors(xhr.responseText);
+        _message_array= extractResponseErrors(xhr.responseText);
         errorCallback(_message_array);
       }.bind(this)
     });
@@ -27,7 +27,7 @@ var EncounterStore = Reflux.createStore({
         window.location.href = successUrl;
       }.bind(this),
       error: function(xhr, status, err) {
-	      _message_array= extractResponseErrors(xhr.responseText);
+        _message_array= extractResponseErrors(xhr.responseText);
         errorCallback(_message_array);
       }.bind(this)
     });

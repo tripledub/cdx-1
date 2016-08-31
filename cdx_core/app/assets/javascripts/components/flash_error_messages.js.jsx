@@ -5,7 +5,7 @@ var FlashErrorMessages = React.createClass({
   },
   render: function() {
     return (
-	    <div id="#flash_messages" >
+      <div id="#flash_messages" >
       <div className="flash_messages_component">
         {this.props.messages.map(function(message, index) {
           _reason = message[0];

@@ -65,7 +65,7 @@ var RequestedTestRow = React.createClass({
       };
       name = 'dst';
     }
-	
+
     if (name.indexOf('lineprobe') !== -1) {
       if (name.indexOf('liquid') !== -1) {
         newOrEditPath += '&media=liquid';
@@ -75,7 +75,7 @@ var RequestedTestRow = React.createClass({
       };
       name = 'dst';
     }
-	
+
     if (name.indexOf('culture') !== -1) {
       if (name.indexOf('liquid') !== -1) {
         newOrEditPath += '&media=liquid';
@@ -85,7 +85,7 @@ var RequestedTestRow = React.createClass({
       };
       name = 'culture';
     }
-	
+
     switch(name) {
       case 'xpertmtb':
         urlPath = "/requested_tests/"+id+"/xpert_result"+newOrEditPath;

@@ -19,10 +19,10 @@ $(function() {
       end_demo_datetime = $("#data_end_datetime").val();
 
       //if a user enters a repeat value  > 0 they want the demo endpoint
-	  if ( $("#repeat_demo").val() > 0 ) {
-	    url= "/api/devices/" + device + "/demodata?repeat_demo="+repeat_demo_times+"&start_datetime="+start_demo_datetime+"&end_datetime="+end_demo_datetime;
+    if ( $("#repeat_demo").val() > 0 ) {
+      url= "/api/devices/" + device + "/demodata?repeat_demo="+repeat_demo_times+"&start_datetime="+start_demo_datetime+"&end_datetime="+end_demo_datetime;
       } else {
-	    url= "/api/devices/" + device + "/messages";
+      url= "/api/devices/" + device + "/messages";
       }
 
       $.ajax({

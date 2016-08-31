@@ -187,7 +187,7 @@ describe TestResultsController, elasticsearch: true do
         end
       end
 
-      xit "should download dynamic fields" do
+      it "should download dynamic fields" do
         fields = { "Location admin levels admin level 0" => root_location.id, "Location admin levels admin level 1" => location.id }
         fields.each do |name, value|
           expect(csv[0]).to contain_field(name, value)
