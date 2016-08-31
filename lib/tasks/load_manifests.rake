@@ -4,9 +4,9 @@ namespace :manifests do
   task :load => :environment do |task, args|
     default_password = ENV['PASSWORD']
     default_email = ENV['EMAIL']
-    default_institution = 'Institute One' if ENV['SINGLE_TENANT']
+    default_institution = 'Institute One' if Settings.single_tenant
     raise 'Please specify `PASSWORD` environment variable to be used as the default password for all admins' if default_password.blank?
-    raise "Please specify `EMAIL` environment variable to be used as the default email for all admins" if ENV['SINGLE_TENANT'] && default_email.blank?
+    raise "Please specify `EMAIL` environment variable to be used as the default email for all admins" if Settings.single_tenant && default_email.blank?
 
     data = {
       'genexpert' => {

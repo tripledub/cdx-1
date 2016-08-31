@@ -131,10 +131,16 @@ GEM
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.1)
     concurrent-ruby (1.0.2)
+    config (1.2.1)
+      activesupport (>= 3.0)
+      deep_merge (~> 1.0, >= 1.0.1)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
+    decent_exposure (3.0.0)
+      activesupport (>= 4.0)
+    deep_merge (1.1.1)
     devise (3.5.10)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -392,7 +398,9 @@ DEPENDENCIES
   cdx-sync-server!
   cdx_core!
   chunky_png
+  config
   database_cleaner
+  decent_exposure
   devise (~> 3.5.5)
   devise_invitable
   devise_security_extension!

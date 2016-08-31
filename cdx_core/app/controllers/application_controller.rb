@@ -13,7 +13,6 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
 
   def set_locale
-
     I18n.locale = current_user.try(:locale) || I18n.default_locale
     I18n.locale = :vi if params[:language]=="vi"
     @localization_helper = LocalizationHelper.new(current_user.try(:time_zone), I18n.locale,
@@ -41,8 +40,8 @@ class ApplicationController < ActionController::Base
   def load_js_global_settings
     gon.location_service_url = Settings.location_service_url
     gon.location_service_set = Settings.location_service_set
-    gon.location_geocoder = Settings.location_geocoder
-    gon.location_default = Settings.location_default
+    gon.location_geocoder    = Settings.location_geocoder
+    gon.location_default     = Settings.location_default
   end
 
   def authorize_resource(resource, action)

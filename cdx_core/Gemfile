@@ -34,6 +34,8 @@ gem 'oj'
 gem 'encryptor'
 gem 'base58'
 gem 'nuntium_api', '~> 0.21'
+gem 'config'
+gem 'decent_exposure'
 
 group :development do
   gem 'letter_opener'

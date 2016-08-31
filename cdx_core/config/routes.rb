@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  if ENV['SINGLE_TENANT']
+  if Settings.single_tenant
     devise_for(
       :users,
       controllers: {

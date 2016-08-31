@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :validatable, :confirmable, :timeoutable,
          :lockable, :password_expirable, :password_archivable
 
-  devise :omniauthable, :registerable unless ENV['SINGLE_TENANT']
+  devise :omniauthable, :registerable unless Settings.single_tenant
 
   has_many :identities, dependent: :destroy
   has_many :institutions
@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
   def implicit_policies
     self.institutions.pluck(:id, :kind).map do |institution_id, kind|
       Policy.owner(self, institution_id, kind)
-    end + [(Policy.implicit(self) unless ENV['SINGLE_TENANT'])].compact
+    end + [(Policy.implicit(self) unless Settings.single_tenant)].compact
   end
 
   def invited_pending?
