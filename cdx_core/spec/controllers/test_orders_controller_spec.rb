@@ -12,7 +12,7 @@ describe TestOrdersController, elasticsearch: true do
       encounter = Encounter.make institution: institution, site: site, patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"), testdue_date: 1.day.from_now.strftime("%Y-%m-%d"), status: rand(0..2)
       EncounterIndexer.new(encounter).index(true)
     }
-    encounter = Encounter.make institution: institution, site: site, performing_site_id: site2.id, patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"), testdue_date: 1.day.from_now.strftime("%Y-%m-%d"), status: rand(0..2)
+    encounter = Encounter.make institution: institution, site: site, performing_site_id: site2.id, patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"), testdue_date: 1.day.from_now.strftime("%Y-%m-%d"), status: 0
     EncounterIndexer.new(encounter).index(true)
   }
   let(:default_params) { { context: site.uuid } }
