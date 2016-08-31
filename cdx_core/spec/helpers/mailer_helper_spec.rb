@@ -7,7 +7,6 @@ RSpec.describe MailerHelper, type: :helper do
     end
 
     it "should append settings host if no host" do
-      expect(Settings.host).to eq("localhost:3000")
       expect(helper.absolute_url("/foo/bar")).to eq("http://localhost:3000/foo/bar")
     end
   end
