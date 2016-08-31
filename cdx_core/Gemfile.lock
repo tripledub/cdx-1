@@ -22,6 +22,14 @@ GIT
       rest-client (~> 1.6)
 
 GIT
+  remote: https://github.com/manastech/rails-view_components.git
+  revision: 59861a6e716944441b4cd5e584bb3f36d0a7c37e
+  branch: master
+  specs:
+    view_components (0.1.0)
+      rails
+
+GIT
   remote: https://github.com/phatworx/devise_security_extension
   revision: b2ee978af7d49f0fb0e7271c6ac074dfb4d39353
   specs:
@@ -482,6 +490,7 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   timecop
+  view_components!
   web-console (~> 2.0)
   webmock
 

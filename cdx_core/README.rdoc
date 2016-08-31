@@ -9,5 +9,8 @@ This project rocks and uses MIT-LICENSE.
 
 === Technical debt
 
+*Remove unnecessary gems*
+
 * Remove decent exposure.  Not used in most of the app. Only in the API.
 * Remove elasticsearch. Almost done.  Need to import device results into test results in a better way and then update the dashboard reports.
+* Remove view_components. Remove all components created with define_component (ApplicationHelper).
