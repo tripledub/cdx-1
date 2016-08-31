@@ -36,7 +36,7 @@ class EpisodesController < ApplicationController
   protected
 
   def check_access
-    redirect_to(patient_path(@patient), error: I18n.t('episodes.permission.not_allowed')) unless has_access?(@patient, UPDATE_PATIENT)
+    redirect_to(patient_path(@patient), error: I18n.t('episodes.permission.not_allowed')) unless has_access?(@patient, Policy::Actions::UPDATE_PATIENT)
   end
 
   def episode_params

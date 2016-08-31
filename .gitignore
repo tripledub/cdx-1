@@ -16,6 +16,7 @@
 cdx_core/spec/dummy/log/*
 cdx_vietnam/spec/dummy/log/*
 /tmp
+cdx_core/spec/dummy/tmp
 
 backend/_build
 backend/deps
