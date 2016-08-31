@@ -43,12 +43,12 @@ class DeviceMessageProcessor
       # Load original test if we are updating one
       test_id = parsed_message.get_in('test', 'core', 'id')
       original_test = test_id && TestResult.within_time(1.year, @parent.device_message.created_at).find_by(test_id: test_id, device_id: device.id, site_id: device.site_id)
-      test_result = original_test || TestResult.new(institution: institution, device: device) 
-      
+      test_result = original_test || TestResult.new(institution: institution, device: device)
+
       test_result.device_messages << device_message
       test_result.test_result_parsed_data << TestResultParsedDatum.new(data: @parsed_message)
       test_blender = @blender.load(test_result)
-      
+
       # Merge new attributes and sample id
       sample_id = parsed_message.get_in('sample', 'core', 'id').try(:to_s)
       test_blender.merge_attributes attributes_for('test').merge(sample_id: sample_id)
@@ -63,8 +63,8 @@ class DeviceMessageProcessor
         new_entity = find_entity_by_id(klazz, new_entity_id)
         original_blender = test_blender.send(klazz.entity_scope)
         new_entity ||= klazz.new(institution: institution) if entity_id_does_not_match || original_blender.nil?
-                
-        if new_entity && klazz.to_s == "Encounter" 
+
+        if new_entity && klazz.to_s == "Encounter"
           is_there_an_encounter = false
         else
           parent_blenders[klazz] = if new_entity
@@ -73,43 +73,43 @@ class DeviceMessageProcessor
             original_blender
           end
           @blender.set_parent(test_blender, parent_blenders[klazz])
-        end          
+        end
       end
 
       # Merge entity attributes from this device message
       [Sample, Encounter, Patient].each do |klazz|
         if !(klazz.to_s == "Encounter" && is_there_an_encounter == false)
-          parent_blenders[klazz].merge_attributes attributes_for(klazz.entity_scope) 
-        end 
+          parent_blenders[klazz].merge_attributes attributes_for(klazz.entity_scope)
+        end
       end
       parent_blenders[Encounter].site = device.site if is_there_an_encounter == true
       # Commit changes
-      @blender.save_and_index!     
+      @blender.save_and_index!
       check_invalid_start_time_alert(test_result)
     end
 
    private
-    
+
     def check_invalid_start_time_alert(test_result)
       start_time = @parsed_message["test"]["core"]["start_time"]
-      end_time = @parsed_message["test"]["core"]["end_time"]     
-      start_time = Time.now if start_time==nil   
-      end_time = Time.now if end_time==nil     
+      end_time = @parsed_message["test"]["core"]["end_time"]
+      start_time = Time.now if start_time==nil
+      end_time = Time.now if end_time==nil
       if (start_time > Time.now + 1.day) || (end_time < start_time)
         #CHECK does not return diaabled alerts
         any_alerts_with_invalid_test_date_count= Alert.invalid_test_date.where({enabled: true, institution_id: test_result.institution_id}).count
         if any_alerts_with_invalid_test_date_count > 0
           any_alerts_with_invalid_test_date= Alert.invalid_test_date.where({enabled: true, institution_id: test_result.institution_id})
-          any_alerts_with_invalid_test_date.each do |alert|  
-            if ((alert.sample_id.length==0) || (alert.sample_id == SampleIdentifier.where(id: test_result.sample_identifier_id).pluck(:entity_id)[0])) 
-              sites=alert.sites.map{|site| site.id} 
+          any_alerts_with_invalid_test_date.each do |alert|
+            if ((alert.sample_id.length==0) || (alert.sample_id == SampleIdentifier.where(id: test_result.sample_identifier_id).pluck(:entity_id)[0]))
+              sites=alert.sites.map{|site| site.id}
               if (sites.length==0) || ((sites.length > 0) and (sites.include? test_result.site_id))
-                devices=alert.devices.map{|device| device.id} 
+                devices=alert.devices.map{|device| device.id}
                 if (devices.length==0) || ((devices.length > 0) and (devices.include? test_result.device_id))
                   AlertJob.perform_later alert.id, test_result.uuid
                 end
               end
-            end                        
+            end
           end
         end
       end
