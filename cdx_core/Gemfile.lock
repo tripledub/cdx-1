@@ -104,6 +104,9 @@ GEM
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
       rack (>= 0.9.0)
+    bettertabs (1.4.2)
+      jquery-rails
+      rails (>= 3.1.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
@@ -142,6 +145,12 @@ GEM
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.1)
+    coffee-rails (4.0.1)
+      coffee-script (>= 2.2.0)
+      railties (>= 4.0.0, < 5.0)
+    coffee-script (2.4.1)
+      coffee-script-source
+      execjs
     coffee-script-source (1.10.0)
     concurrent-ruby (1.0.2)
     config (1.2.1)
@@ -150,6 +159,8 @@ GEM
     connection_pool (2.2.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
+    csv_builder (2.1.1)
+      actionpack (>= 3.0.0)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
     decent_exposure (2.3.2)
@@ -439,6 +450,7 @@ DEPENDENCIES
   barby
   base58
   better_errors
+  bettertabs
   binding_of_caller
   capistrano (~> 3.1.0)
   capistrano-bundler (~> 1.1)
@@ -452,7 +464,9 @@ DEPENDENCIES
   cdx-sync-server!
   cdx_core!
   chunky_png
+  coffee-rails (= 4.0.1)
   config
+  csv_builder
   database_cleaner
   decent_exposure (= 2.3.2)
   devise (~> 3.5.5)

@@ -15,3 +15,4 @@ This project rocks and uses MIT-LICENSE.
 * Remove elasticsearch. Almost done.  Need to import device results into test results in a better way and then update the dashboard reports.
 * Remove view_components. Remove all components created with define_component (ApplicationHelper).
 * Do we need all monkey patching in config/initializers ? :-(
+* Many gems in cdx_core/Gemfile are also bundled in cdx/Gemfile. Avoid duplication.

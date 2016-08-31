@@ -41,4 +41,9 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  config.authorized_keys_path = 'tmp/.ssh/authorized_keys'
+  config.sync_dir_path = 'tmp/sync'
+  config.ssh_server_host = 'localhost'
+  config.ssh_server_port = 2222
+  config.ssh_user = 'cdx-sync'
 end

@@ -44,6 +44,9 @@ gem 'decent_exposure', '2.3.2'
 gem 'gon'
 gem 'rubyzip', '>= 1.0.0'
 gem 'jbuilder', '~> 1.2'
+gem 'bettertabs'
+gem 'csv_builder'
+gem 'coffee-rails', '4.0.1'
 
 group :development do
   gem 'letter_opener'
