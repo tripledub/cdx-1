@@ -15,3 +15,5 @@ en:
     update:
       audit: 'DST and LPA test result has been updated'
       notice: 'DST and LPA test result was successfully updated.'
+    form:
+      lbl_method_used: 'Method Used'

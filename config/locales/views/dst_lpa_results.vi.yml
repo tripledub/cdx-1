@@ -15,3 +15,5 @@ vi:
     update:
       audit: 'Kết quả thử nghiệm DST and LPA đã được cập nhật'
       notice: 'Kết quả thử nghiệm DST and LPA đã được cập nhật thành công.'
+    form:
+      lbl_method_used: 'Phương thức sử dụng'

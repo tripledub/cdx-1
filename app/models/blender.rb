@@ -28,8 +28,8 @@ class Blender
   end
 
   def load(entity)
-    raise "Entity cannot be null" if entity.nil?
-    raise InstitutionMismatchError, "Entity institution does not match" if entity.institution != @institution
+    raise I18n.t('models.blender.not_null') if entity.nil?
+    raise InstitutionMismatchError, I18n.t('models.blender.not_mathch') if entity.institution != @institution
     blender_type = blender_type_for(entity)
     target = blenders_of(entity.class)
 
@@ -80,7 +80,7 @@ class Blender
   end
 
   def blenders_of(klazz)
-    blenders[klazz] or raise UnknownEntityError, "Unknown entity type #{klazz.name}"
+    blenders[klazz] or raise UnknownEntityError, "#{I18n.t('models.blender.unknown_entity_type')} #{klazz.name}"
   end
 
   def add_children(entity, blender)
@@ -167,7 +167,7 @@ class Blender
       when Encounter then EncounterIndexer.new(entity).index
       when Entity then EntityIndexUpdater.new(entity).update
       when nil then next
-      else raise UnknownEntityError, "Unknown entity type #{entity.class.name}"
+      else raise UnknownEntityError, "#{I18n.t('models.blender.unknown_entity_type')} #{entity.class.name}"
       end
     end
   end
@@ -250,11 +250,11 @@ class Blender
 
     def add_entity(entity, opts={})
       return self if entity.nil? || contains?(entity)
-      raise InstitutionMismatchError, "Cannot set #{self.class.entity_type.entity_scope} from a different institution" if entity.institution && entity.institution != @institution
+      raise InstitutionMismatchError, "#{I18n.t('models.blender.cannot_set')} #{self.class.entity_type.entity_scope} #{I18n.t('models.blender.from_a_different_institution')}" if entity.institution && entity.institution != @institution
 
       # Do not support merging two non-phantom entities by default
       if (entity.not_phantom? || opts[:entity_id]) && (not_phantom = @entities.select(&:not_phantom?).any?) && !opts[:force]
-        raise MergeNonPhantomError.new("Cannot merge two identified #{self.class.entity_type.entity_scope}s", self.class.entity_type)
+        raise MergeNonPhantomError.new("#{I18n.t('models.blender.Cannot_merge_two_identified')} #{self.class.entity_type.entity_scope}s", self.class.entity_type)
       end
 
       # Add entity to collection and merge its attributes and id
@@ -267,8 +267,8 @@ class Blender
 
     def add_child(child)
       return self if child.nil?
-      raise InstitutionMismatchError, "Cannot add child from a different institution" if child.institution && child.institution != @institution
-      raise EntityTypeMismatchError, "Entity blender add child must receive an entity blender" unless child.kind_of?(EntityBlender)
+      raise InstitutionMismatchError, I18n.t('models.blender.cannot_add_child') if child.institution && child.institution != @institution
+      raise EntityTypeMismatchError, I18n.t('models.blender.entity_blender_add_child') unless child.kind_of?(EntityBlender)
       @children << child unless @children.any?{|child_blender| child_blender == child}
     end
 
@@ -285,8 +285,8 @@ class Blender
     end
 
     def merge_blender(blender, opts={})
-      raise InstitutionMismatchError, "Cannot merge entity blender from a different institution" if blender.institution && self.institution && blender.institution != self.institution
-      raise EntityTypeMismatchError, "Cannot merge entity blender from a different type" if blender.entity_type != self.entity_type
+      raise InstitutionMismatchError, I18n.t('models.blender.cannot_merge_different_institution') if blender.institution && self.institution && blender.institution != self.institution
+      raise EntityTypeMismatchError, I18n.t('models.blender.cannot_merge_different_type') if blender.entity_type != self.entity_type
       return self if blender == self
       blender.entities.each { |entity| self.add_entity(entity, opts) }
       blender.children.clone.each { |child| child.set_parent(self) }
@@ -328,7 +328,7 @@ class Blender
     end
 
     def single_entity
-      raise "Multiple entities found on call to single entity" if @entities.size > 1
+      raise I18n.t('models.blender.Multiple_entities') if @entities.size > 1
       @entities.first
     end
 
@@ -434,7 +434,7 @@ class Blender
       if @entity_id.nil?
         @entity_id = new_id
       elsif @entity_id != new_id && !new_id.nil?
-        raise "Cannot change entity id of #{self.class.entity_type.entity_scope} from #{@entity_id} to #{new_id}"
+        raise "#{I18n.t('models.blender.cannot_change')} #{self.class.entity_type.entity_scope} #{I18n.t('models.blender.from')} #{@entity_id} #{I18n.t('models.blender.to')} #{new_id}"
       end
     end
 
@@ -593,7 +593,7 @@ class Blender
     end
 
     def add_child(child)
-      raise "Test result has no children entities"
+      raise I18n.t('models.blender.test_result')
     end
 
     def merge_attributes(entity_or_attributes)

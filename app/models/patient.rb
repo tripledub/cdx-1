@@ -89,7 +89,7 @@ class Patient < ActiveRecord::Base
 
   def entity_id_not_changed
     if entity_id_changed? && self.persisted? && entity_id_was.present?
-      errors.add(:entity_id, "can't be changed after assigned")
+      errors.add(:entity_id, I18n.t('patient.model_form.cant_change'))
     end
   end
 end

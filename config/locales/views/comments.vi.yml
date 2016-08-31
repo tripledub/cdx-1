@@ -11,3 +11,7 @@ vi:
     new:
       new_comment: 'Nhận xét mới'
       comment_detail: 'Chi tiết Nhận xét'
+    form:
+      description: 'Mô tả'
+      comment: 'Nhận xét'
+      image: 'Hình ảnh'

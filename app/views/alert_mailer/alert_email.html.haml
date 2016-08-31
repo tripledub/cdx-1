@@ -1,8 +1,8 @@
 %h1
-  = "Alert notification for #{@alert.name}"
+  = "#{I18n.t('alert_mailer.alert_email.h1')} #{@alert.name}"
 
 %p.custom-message
-  = "Raised at #{@alert.created_at.strftime('%m/%d/%Y %H:%M')}"
+  = "#{I18n.t('alert_mailer.alert_email.msg')} #{@alert.created_at.strftime('%m/%d/%Y %H:%M')}"
   %br/
   = @alert_body_text
 

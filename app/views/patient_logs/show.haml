@@ -34,8 +34,9 @@
                 %label
                 - if @patient_log.comment != ""
                   = AuditLog.human_attribute_name(:comment)
-                - if @patient_log.title == "New Test Order Created"
-                  %a{:href => "/encounters/#{@patient_log.comment}"} Click here to view the test order.
+                - if @patient_log.title == I18n.t('encounters_controller.test_order_created')
+                  %a{:href => "/encounters/#{@patient_log.comment}"}
+                    = I18n.t('patient_logs.show.view_test')
                 - else
                   = @patient_log.comment
 				

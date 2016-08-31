@@ -5,6 +5,9 @@ vi:
       prohibited: 'khiến cho Thuê bao đăng ký nhận tin này không được lưu'
       user_label: 'Người dùng (Không bắt buộc)'
       password_label: 'Mật khẩu (Không bắt buộc)'
+      filter_label: 'Bộ lọc'
+      name_label: 'Tên'
+      fields_label: 'Lĩnh vực'
       error_count:
         one: '1 lỗi'
         other: '%{count} lỗi'

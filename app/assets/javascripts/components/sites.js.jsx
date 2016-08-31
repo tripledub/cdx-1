@@ -227,7 +227,7 @@ var SiteTreeViewNode = React.createClass({
       );
     }
 
-    if(site.selected) document.getElementById('nav-context').innerHTML = 'at '+site.name;
+    if(site.selected) document.getElementById('nav-context').innerHTML = I18n.t("components.sites.at")+site.name;
 
     return (
       <li key={site.uuid} className={(this.state.expanded ? "expanded" : "") + " " + (site.selected ? "selected" : "")}>

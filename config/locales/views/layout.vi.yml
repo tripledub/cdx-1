@@ -1,7 +1,7 @@
 vi:
   layout:
     header:
-      meta_title: 'Hệ thống chẩn đoán'
+      meta_title: 'Kết nối hệ thống chẩn đoán'
     header_nav:
       menu_at: 'ở'
       home: 'Trang chủ'
@@ -15,6 +15,6 @@ vi:
       log_out: 'Đăng xuất'
       log_in: 'Đăng nhập'
     mailer:
-      copy_right: '©2015 Conected Diagnostics'
+      copy_right: '©2015 Kết nối chẩn đoán'
       policy: 'Chính sách bảo mật'
       term: 'Điều khoản và điều kiện'

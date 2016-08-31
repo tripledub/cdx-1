@@ -26,6 +26,24 @@ vi:
       remove_user: 'Gõ bỏ người dùng'
       remove: 'Gỡ bỏ'
       can_access: 'Có thể truy cập Cdx?'
+    create:
+      role_not_found: 'Vai trò không được tìm thấy'
+    update:
+      user_updated: 'Thông tin người dùng đã được cập nhật thành công.'
+      user_not_updated: 'Thông tin người dùng không thể được cập nhật.'
+    persistence:
+      create:
+        user_already_present: 'Người dùng với email: %{email} là đã có trong hệ thống - Vui lòng chỉnh sửa người dùng'
+      update:
+        user_updated: 'Người dùng đã được cập nhật'
+        user_not_updated: 'Có một vấn đề khi cập nhật người dùng này'
+      remove:
+        user_removed: 'Người dùng đã được xóa'
+        user_not_found: 'Người dùng không được tìm thấy'
+      resend_invite:
+        resending: 'Gửi lại lời mời'
+        resending_ok: 'Đã gửi lại lời mời'
+        resending_failed: 'Không thể gửi lại lời mời'
     no_data_allowed:
       users_header: 'Người dùng'
       no_access: 'Bạn không có quyền truy cập tới người dùng của các tổ chức được lựa chọn.'

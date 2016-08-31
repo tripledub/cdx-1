@@ -13,6 +13,8 @@ vi:
       patient_summary: 'Hồ sơ bệnh nhân'
       patient_history: 'Lịch sử bệnh nhân'
       episode_summary: 'Tóm tắt tập'
+      address: 'Địa chỉ'
+      alt_address: 'Địa chỉ thay thế'
     filters:
       add_patient: 'Thêm bệnh nhân'
       show_all: 'Hiển thị tất cả'
@@ -31,12 +33,18 @@ vi:
       no_entity: "Mã thực thể không được để trống"
       no_name: "Tên không được để trống"
     form:
-      institution: 'Tổ chức'
+      institution_label: 'Tổ chức'
       select_day: 'Chọn ngày'
       select_month: 'Chọn tháng'
       select_year: 'Chọn năm'
       estimate_age: 'Ước tính tuổi'
       history: 'Lịch sử'
+      nickname_label: 'Biệt danh'
+      entity_id_label: 'Mã thực thể'
+      gender_label: 'Giới tính'
+      birth_date_on_label: 'Ngày sinh'
+      email_label: 'Email'
+      phone_label: 'Điện thoại'
     index:
       no_patients: 'Không có bệnh nhân nào đăng ký'
       keep_organized: 'Giữ cho yêu cầu thử nghiệm của bạn được tổ chức theo lịch sử y tế của bệnh nhân'

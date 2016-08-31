@@ -11,3 +11,7 @@ en:
     new:
       new_comment: 'New comment'
       comment_detail: 'Comment Details'
+    form:
+      description: 'Description'
+      comment: 'Comment'
+      image: 'Image'

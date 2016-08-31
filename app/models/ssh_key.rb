@@ -10,7 +10,7 @@ class SshKey < ActiveRecord::Base
   def validate_public_key
     to_client.validate! unless public_key.blank?
   rescue
-    errors.add(:public_key, "Key #{public_key.truncate(10)} is invalid")
+    errors.add(:public_key, "#{I18n.t('models.ssh_key.key')} #{public_key.truncate(10)} #{I18n.t('models.ssh_key.is_invalid')}")
   end
 
   def to_client

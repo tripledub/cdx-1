@@ -190,6 +190,6 @@ class ApplicationController < ActionController::Base
       else
         "#{resource.class} (id=#{resource.id})"
       end
-    logger.warn "Authorization failed. #{action} requested by #{current_user.email} in #{resource_name}"
+    logger.warn "#{I18n.t('application_controller.authorization_failed')} #{action} #{I18n.t('application_controller.requested_by')} #{current_user.email} #{I18n.t('application_controller.in')} #{resource_name}"
   end
 end

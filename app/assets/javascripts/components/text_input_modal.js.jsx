@@ -1,8 +1,8 @@
 var TextInputModal = React.createClass({
   getInitialState: function() {
-    var buttonText = "Save";
+    var buttonText = I18n.t('components.text_input_modal.save_btn');
     if (this.props.edit == false) {
-      buttonText = "Close";
+      buttonText = I18n.t('components.text_input_modal.save_btn');
     }
 
     return {

@@ -29,6 +29,7 @@ vi:
       lbl_support_url: 'Hỗ trợ liên kết URL'
       lbl_support_ftp: 'Hỗ trợ phương thức truyền tập tin FTP'
       lbl_filename: 'Tên tập tin mẫu'
+      lbl_definition: 'Định nghĩa'
 
     publish:
       is_published: 'Kiểu thiết bị này đã được công bố; tất cả tổ chức trong CDX có thể đăng ký sử dụng nó.'

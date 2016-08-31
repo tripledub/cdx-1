@@ -6,6 +6,9 @@ vi:
       no_patient: 'Mỗi cuộc gặp phải thuộc về một bệnh nhân. Xin vui lòng đến trang Bệnh nhân và nhấn vào Thêm yêu cầu thử nghiệm'
     show:
       test_order: 'Yêu cầu thử nghiệm'
+    perform_encounter_action:
+      merge: 'Không thể thêm một thử nghiệm hoặc mẫu thử thuộc về một %{entity_type} khác'
+      error: 'Lỗi %{action_name} %{class_name}'
     edit:
       test_order: 'Yêu cầu thử nghiệm'
     new_index:

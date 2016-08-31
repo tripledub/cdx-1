@@ -15,8 +15,9 @@ vi:
     form:
       error: 'lỗi'
       prohibited: 'khiến cho Chính sách này không được lưu:'
-      name: 'Tên'
-      definition: 'Định nghĩa'
+      name_label: 'Tên'
+      definition_label: 'Định nghĩa'
+      user_id_label: 'Mã người dùng'
       error_count:
         one: '1 lỗi'
         other: '%{count} lỗi'

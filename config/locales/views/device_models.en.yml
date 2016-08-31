@@ -29,6 +29,7 @@ en:
       lbl_support_url: 'Support URL'
       lbl_support_ftp: 'Supports FTP'
       lbl_filename: 'Filename pattern'
+      lbl_definition: 'Definition'
 
     publish:
       is_published: 'This device model is published; all institutions in CDX may register devices using it.'

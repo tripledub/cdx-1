@@ -33,12 +33,18 @@ en:
       no_entity: "Entity Id can't be blank"
       no_name: "Name can't be blank"
     form:
-      institution: 'Institution'
+      institution_label: 'Institution'
       select_day: 'Select day'
       select_month: 'Select month'
       select_year: 'Select year'
       estimate_age: 'Estimate Age'
       history: 'History'
+      nickname_label: 'Nickname'
+      entity_id_label: 'Entity id'
+      gender_label: 'Gender'
+      birth_date_on_label: 'Birth date on'
+      email_label: 'Email'
+      phone_label: 'Phone'
     index:
       no_patients: 'No patients registered'
       keep_organized: 'Keep your test orders organized under patients medical history'

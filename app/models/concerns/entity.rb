@@ -127,9 +127,9 @@ module Entity
       key = key.to_s
       next if are_sensitive && key == 'custom'
       if (entity_field = field_definitions.find{|f| f.name == key}).nil?
-        errors << "#{key} is not supported for entity #{self.class.name.humanize}"
+        errors << "#{key} #{I18n.t('models.concerns.entity.is_not_supported')} #{self.class.name.humanize}"
       elsif (!!entity_field.pii? != are_sensitive)
-        errors << "#{key} is marked as#{entity_field.pii? ? ' ' : ' not '}sensitive"
+        errors << "#{key} #{I18n.t('models.concerns.entity.is_marked_as')}#{entity_field.pii? ? ' ' : ' not '}#{I18n.t('models.concerns.entity.sensitive')}"
       elsif (field_error = entity_field.validate(value))
         errors << field_error
       elsif entity_field.nested?
@@ -161,22 +161,22 @@ protected
 
   def validate_sample
     if self.sample
-      errors.add(:sample, "must belong to the same institution as this #{self.model_name.singular.humanize}") if self.institution_id != sample.institution_id
-      errors.add(:sample, "must belong to the same encounter as this #{self.model_name.singular.humanize}") if self.encounter_id != sample.encounter_id
-      errors.add(:sample, "must belong to the same patient as this #{self.model_name.singular.humanize}") if self.patient_id != sample.patient_id
+      errors.add(:sample, "#{I18n.t('models.concerns.entity.belong_to_institution')} #{self.model_name.singular.humanize}") if self.institution_id != sample.institution_id
+      errors.add(:sample, "#{I18n.t('models.concerns.entity.belong_to_encounter')} #{self.model_name.singular.humanize}") if self.encounter_id != sample.encounter_id
+      errors.add(:sample, "#{I18n.t('models.concerns.entity.belong_to_patient')} #{self.model_name.singular.humanize}") if self.patient_id != sample.patient_id
     end
   end
 
   def validate_encounter
     if self.encounter
-      errors.add(:encounter, "must belong to the same institution as this #{self.model_name.singular.humanize}") if self.institution_id != encounter.institution_id
-      errors.add(:encounter, "must belong to the same patient as this #{self.model_name.singular.humanize}") if self.patient_id != encounter.patient_id
+      errors.add(:encounter, "#{I18n.t('models.concerns.entity.belong_to_institution')} #{self.model_name.singular.humanize}") if self.institution_id != encounter.institution_id
+      errors.add(:encounter, "#{I18n.t('models.concerns.entity.belong_to_patient')} #{self.model_name.singular.humanize}") if self.patient_id != encounter.patient_id
     end
   end
 
   def validate_patient
     if self.patient
-      errors.add(:patient, "must belong to the same institution as this #{self.model_name.singular.humanize}") if self.institution_id != patient.institution_id
+      errors.add(:patient, "#{I18n.t('models.concerns.entity.belong_to_institution')} #{self.model_name.singular.humanize}") if self.institution_id != patient.institution_id
     end
   end
 

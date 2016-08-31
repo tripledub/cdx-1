@@ -45,6 +45,10 @@ en:
       no_other_test: 'No other test was made with this sample'
       was_also_made: 'was also made with this sample'
       were_also_made: 'were also made with this sample'
+      start_time: "Start time"
+      end_time: "End time"
+      status: "Status"
+      type: "Type"
     index:
       header: 'No tests have been reported'
       test:

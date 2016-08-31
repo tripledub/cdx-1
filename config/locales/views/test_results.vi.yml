@@ -45,6 +45,10 @@ vi:
       no_other_test: 'Không có thử nghiệm khác được thực hiện với mẫu này'
       was_also_made: 'cũng đã được thực hiện với mẫu này'
       were_also_made: 'cũng đã được thực hiện với mẫu này'
+      start_time: "Thời gian bắt đầu"
+      end_time: "Thời gian kết thúc"
+      status: "Trạng thái"
+      type: "Loại"
     index:
       header: 'Không có thử nghiệm nào được báo cáo'
       test:

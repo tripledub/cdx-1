@@ -5,6 +5,9 @@ en:
       prohibited: 'prohibited this subscriber from being saved:'
       user_label: 'User (optional)'
       password_label: 'Password (optional)'
+      filter_label: 'Filter'
+      name_label: 'Name'
+      fields_label: 'Fields'
       error_count:
         one: '1 error'
         other: '%{count} errors'

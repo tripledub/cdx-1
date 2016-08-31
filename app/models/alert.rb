@@ -111,21 +111,21 @@ class Alert < ActiveRecord::Base
       end
 
       if error
-        errors.add(:error_code, "errorcode must be an integer")
+        errors.add(:error_code, I18n.t('models.alert.errorcode_msg'))
       end
     elsif category_type == "utilization_efficiency"
       if (utilization_efficiency_number==0)
-        errors.add(:utilization_efficiency_number, "Timespan cannot be zero")
+        errors.add(:utilization_efficiency_number, I18n.t('models.alert.timespan_msg'))
       end
       if ( (sample_id == nil) || (sample_id.length==0)  )
-        errors.add(:sample_id, "Sample ID cannot be empty")
+        errors.add(:sample_id, I18n.t('models.alert.sample_id_msg'))
       end
     end
   end
   
   def aggregation_percentage_validation
     if (use_aggregation_percentage?) && (aggregation_threshold > 100)
-      errors.add(:aggregation_threshold, "Value cannot be greater than 100%")
+      errors.add(:aggregation_threshold, I18n.t('models.alert.value_msg'))
     end
   end
 

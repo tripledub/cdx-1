@@ -14,3 +14,10 @@ vi:
     update:
       audit: 'Kết quả thử nghiệm nuôi cấy đã được cập nhật'
       notice: 'Kết quả thử nghiệm nuôi cấy đã được cập nhật thành công.'
+    form:
+      sample_collected_on: 'Mẫu được thu thập ngày'
+      media_used: 'Phương tiện sử dụng'
+      serial_number: 'Số seri'
+      test_result: 'Kết quả kiểm tra'
+      examined_by: 'Kiểm tra bởi'
+      result_on: 'Kết quả ngày'

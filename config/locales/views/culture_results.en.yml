@@ -14,3 +14,10 @@ en:
     update:
       audit: 'Culture result has been updated'
       notice: 'Culture result was successfully updated.'
+    form:
+      sample_collected_on: 'Sample collected on'
+      media_used: 'Media used'
+      serial_number: 'Serial number'
+      test_result: 'Test result'
+      examined_by: 'Examined by'
+      result_on: 'Result on'

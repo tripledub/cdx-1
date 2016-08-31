@@ -19,7 +19,7 @@ class Api::ActivationsController < ApiController
         { status: :failure, message: I18n.t('api.activations_controller.missing_key') }
       end
 
-    logger.info "Response for activation request #{params[:token]}: #{response}"
+    logger.info "#{I18n.t('api.activations_controller.response')} #{params[:token]}: #{response}"
     render json: response
   end
 end

@@ -10,6 +10,12 @@ vi:
         zero: 'Không có vai trò nào được tạo'
         one: '1 Vai trò'
         other: '%{count} Vai trò'
+    create:
+      success: 'Vai trò đã được tạo thành công.'
+    update:
+      success: 'Vai trò đã được cập nhật thành công.'
+    destroy:
+      success: 'Vai trò đã được xóa thành công.'
     form:
       sites: 'Trang'
       institution: 'Tổ chức'

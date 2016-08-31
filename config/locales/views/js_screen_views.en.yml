@@ -233,6 +233,8 @@ en:
       diagnosis_lable: "Diagnosis"
       follow_up_lable: "Follow-Up"
       weeks_in_treatment_label: "Weeks in treatment"
+      comment: "Comment"
+      presumptive: "Presumptive RR-TB/MDR-TB"
 
     location_select:
       no_region: "A region could not be found for this address, please choose one;"
@@ -316,9 +318,13 @@ en:
       add_element_btn1: "Add elements to the exception list"
       add_element_btn2: "Add elements to the list"
 
+    site_select:
+      site: 'Site'
+
     sites:
       search_sites_placeholder: "Search sites"
       selection_label: "Selection includes all subsites"
+      at: "at "
 
     text_input_modal:
       add_comment_title: "Add Comment"

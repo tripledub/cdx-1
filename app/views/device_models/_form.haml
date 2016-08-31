@@ -26,7 +26,7 @@
         = f.fields_for :manifest do |manifest_form|
           .row
             .col.pe-4
-              = manifest_form.label :definition
+              = manifest_form.label :definition, I18n.t('device_models.form.lbl_definition')
             .col
               %input#deleted_manifest_id{:name => "deleted_manifest", :type => "hidden", :value => ""}
               - if !@device_model.new_record? && @device_model.manifest.definition

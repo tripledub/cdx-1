@@ -43,14 +43,14 @@ class PatientsController < ApplicationController
     @patient      = @institution.patients.new(patient_params)
     @patient.site = @navigation_context.site
 
-    if validate_name_and_entity_id && @patient.save_and_audit(current_user, "New patient #{@patient.name} added")
+    if validate_name_and_entity_id && @patient.save_and_audit(current_user, "#{I18n.t('patients_controller.new_patient')} #{@patient.name} #{I18n.t('patients_controller.added')}")
       next_url = if params[:next_url].blank?
         patient_path(@patient)
       else
         "#{params[:next_url]}#{params[:next_url].include?('?') ? '&' : '?'}patient_id=#{@patient.id}"
       end
 
-      redirect_to next_url, notice: 'Patient was successfully created.'
+      redirect_to next_url, notice: I18n.t('patients_controller.patient_created')
     else
       render action: 'new'
     end
@@ -69,8 +69,8 @@ class PatientsController < ApplicationController
     return unless authorize_resource(@patient, UPDATE_PATIENT)
     parse_date_of_birth
 
-    if name_is_present? && @patient.update_and_audit(patient_params, current_user, "#{@patient.name} patient details have been updated")
-      redirect_to patient_path(@patient), notice: 'Patient was successfully updated.'
+    if name_is_present? && @patient.update_and_audit(patient_params, current_user, "#{@patient.name} #{I18n.t('patients_controller.patient_detail_updated')}")
+      redirect_to patient_path(@patient), notice: I18n.t('patients_controller.patient_updated')
     else
       render action: 'edit'
     end
@@ -82,7 +82,7 @@ class PatientsController < ApplicationController
 
     @patient.destroy
 
-    redirect_to patients_path, notice: 'Patient was successfully deleted.'
+    redirect_to patients_path, notice: I18n.t('patients_controller.patient_deleted')
   end
 
   private

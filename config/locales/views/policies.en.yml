@@ -15,8 +15,9 @@ en:
     form:
       error: 'error'
       prohibited: 'prohibited this policy from being saved:'
-      name: 'Name'
-      definition: 'Definition'
+      name_label: 'Name'
+      definition_label: 'Definition'
+      user_id_label: 'user_id'
       error_count:
         one: '1 error'
         other: '%{count} errors'

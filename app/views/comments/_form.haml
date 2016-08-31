@@ -2,19 +2,19 @@
   = validation_errors @comment
   .row
     .col.pe-2
-      = f.label :description
+      = f.label :description, I18n.t('comments.form.description')
     .col
       = f.text_field :description
 
   .row
     .col.pe-2
-      = f.label :comment
+      = f.label :comment, I18n.t('comments.form.comment')
     .col
       = f.text_area :comment, rows: 5, cols: 65
 
   .row
     .col.pe-2
-      = f.label :image
+      = f.label :image, I18n.t('comments.form.image')
     .col
       = f.file_field :image
 
