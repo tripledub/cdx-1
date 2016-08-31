@@ -13,6 +13,8 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
+cdx_core/spec/dummy/log/*
+cdx_vietnam/spec/dummy/log/*
 /tmp
 
 backend/_build
