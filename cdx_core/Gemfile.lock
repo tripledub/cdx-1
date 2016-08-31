@@ -367,6 +367,7 @@ GEM
     rspec-support (3.5.0)
     ruby_parser (3.8.2)
       sexp_processor (~> 4.1)
+    rubyzip (1.2.0)
     safe_yaml (1.0.4)
     sexp_processor (4.7.0)
     shoulda (3.5.0)
@@ -475,6 +476,7 @@ DEPENDENCIES
   responders (~> 2.0)
   rspec-collection_matchers
   rspec-rails
+  rubyzip (>= 1.0.0)
   shoulda
   site_prism
   spring
