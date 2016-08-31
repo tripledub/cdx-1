@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/instedd/cdx-sync-server.git
+  revision: 2e453e4e0c71b42fdf82d0893cd4950b3638ea5e
+  branch: master
+  specs:
+    cdx-sync-server (0.0.0)
+      filewatcher (= 0.3.6)
+
+GIT
   remote: https://github.com/instedd/geojson_import
   revision: 322cf11df38a4e4a625bc41bfbf9f16b0c0ffde8
   branch: master
@@ -78,6 +86,7 @@ GEM
     addressable (2.4.0)
     arel (6.0.3)
     barby (0.6.4)
+    base58 (0.1.0)
     bcrypt (3.1.11)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
@@ -153,6 +162,8 @@ GEM
       i18n (~> 0.5)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
+    filewatcher (0.3.6)
+      trollop (~> 2.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     guid (0.1.1)
@@ -206,6 +217,9 @@ GEM
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
     ntlm-http (0.1.1)
+    nuntium_api (0.21)
+      json
+      rest-client
     oauth2 (1.2.0)
       faraday (>= 0.8, < 0.10)
       jwt (~> 1.0)
@@ -334,6 +348,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     timecop (0.8.1)
+    trollop (2.1.2)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     unf (0.1.4)
@@ -362,6 +377,7 @@ PLATFORMS
 
 DEPENDENCIES
   barby
+  base58
   better_errors
   binding_of_caller
   capistrano (~> 3.1.0)
@@ -373,6 +389,7 @@ DEPENDENCIES
   capybara-screenshot
   cdx!
   cdx-api-elasticsearch!
+  cdx-sync-server!
   cdx_core!
   chunky_png
   database_cleaner
@@ -388,6 +405,7 @@ DEPENDENCIES
   location_service!
   machinist (~> 1.0)
   mysql2
+  nuntium_api (~> 0.21)
   oj
   omniauth
   omniauth-google-oauth2
