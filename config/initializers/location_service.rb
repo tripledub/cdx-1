@@ -5,4 +5,4 @@ LocationService.setup do |config|
 end
 
 Location
-require File.join("#{Rails.root}", 'app/models/location')
+require File.join("#{Rails.root}", 'cdx_core/app/models/location')

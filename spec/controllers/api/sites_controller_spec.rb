@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'policy_spec_helper'
+require "#{Rails.root}/cdx_core/spec/policy_spec_helper"
 
 describe Api::SitesController do
   let(:user) {User.make}

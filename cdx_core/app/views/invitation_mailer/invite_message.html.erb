@@ -1,0 +1,22 @@
+<h1>
+<%= "#{User.find(@user.invited_by_id).full_name} has invited you to join the team as #{@role.name}" %>
+</h1>
+
+<p class="custom-message">
+  <%= @message %><br />
+  Please follow the instructions to complete the signup.
+</p>
+
+<p>
+  <%= link_to "Create account", accept_invitation_url(@user, :invitation_token => @token), class: "btn-primary" %>
+</p>
+
+<% content_for :footer do %>
+  <p class="footer">
+    If the link above is not working then paste this URL into your browser:
+    <%= link_to accept_invitation_url(@user, :invitation_token => @token), accept_invitation_url(@user, :invitation_token => @token) %>
+  </p>
+  <p class="footer">
+    <%= t("devise.mailer.invitation_instructions.ignore").html_safe %>
+  </p>
+<% end %>
