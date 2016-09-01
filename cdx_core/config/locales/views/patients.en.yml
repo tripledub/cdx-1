@@ -1,0 +1,58 @@
+en:
+  patients:
+    show:
+      episode_empty_header: 'No medical history'
+      episode_empty_text1: 'Create a %{href} in order to start the medical history.'
+      episode_empty_text2: 'You can not create test orders until a %{href} has been added.'
+      new_episode: 'new episode'
+      add_episode: 'Add episode'
+      edit_episode: 'Edit episode'
+      add_test_order: 'Add test order'
+      add_comment: 'Add comment'
+      edit_patient: 'Edit patient'
+      patient_summary: 'Patient Summary'
+      patient_history: 'Patient History'
+      episode_summary: 'Episode Summary'
+      address: 'Address'
+      alt_address: 'Alternative Address'
+    filters:
+      add_patient: 'Add patient'
+      show_all: 'Show all'
+      name: 'Name'
+      patient_id: 'Patient Id'
+      last_test_order: 'Last test order'
+      patients: 'Patients'
+      clear_button:  'Clear'
+      address: 'Address'
+    new:
+      new_patient: 'New patient'
+      new_patient_details: 'New patient details'
+    edit:
+      patient_details: 'Edit patient details'
+    create:
+      no_entity: "Entity Id can't be blank"
+      no_name: "Name can't be blank"
+    form:
+      select_day: 'Select day'
+      select_month: 'Select month'
+      select_year: 'Select year'
+      institution_tooltip: 'Institution handling this Patient'
+      nickname_tooltip: 'The Patients Nickname - if they have one'
+      entity_id_tooltip: 'The Patients ID'
+      gender_tooltip: 'The Patients Gender'
+      birthdate_tooltip: 'When the Patient was Born'
+      estimate_age_tooltip: 'Enter an age in here and the DOB year will be automatically populated based on it'
+      email_tooltip: 'The Patients Email Address'
+      phone_tooltip: 'A Phone number the Patient can be contacted on'
+    index:
+      no_patients: 'No patients registered'
+      keep_organized: 'Keep your test orders organized under patients medical history'
+      name: 'Name'
+      patient_id: 'Patient Id'
+      birth_date_on: 'Date of birth'
+      city: 'City'
+      last_test_order: 'Last test order'
+      patient:
+        zero: 'No patients'
+        one:  'One patient'
+        other: '%{count} patients'

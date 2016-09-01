@@ -506,7 +506,6 @@ ActiveRecord::Schema.define(version: 20160816140022) do
     t.string   "results_other2",       limit: 255
     t.string   "results_other3",       limit: 255
     t.string   "results_other4",       limit: 255
-    t.string   "culture_format",       limit: 255
     t.string   "trace",                limit: 255
     t.string   "test_result",          limit: 255
     t.string   "method_used",          limit: 255

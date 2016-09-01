@@ -1,0 +1,15 @@
+= CdxCore
+
+Core functionality for Cdx.
+
+To customise the application for other countries add an engine called cdx_country_name and add all your customisations there.
+
+=== Technical debt
+
+* Update Travis CI.
+* Ensure all content in main app should belong to there or can be moved to an engine. (API, Jobs)
+* Remove decent exposure.  Not used in most of the app. Only in the API.
+* Remove elasticsearch. Almost done.  Need to import device results into test results in a better way and then update the dashboard reports.
+* Remove view_components. Remove all components created with define_component (ApplicationHelper).
+* Do we need all monkey patching in config/initializers ? :-(
+* Many gems in cdx_core/Gemfile are also bundled in cdx/Gemfile. Avoid duplication.
