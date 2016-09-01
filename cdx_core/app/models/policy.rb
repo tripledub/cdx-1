@@ -261,6 +261,6 @@ class Policy < ActiveRecord::Base
 
   def self.predefined_policy_template(name)
     @templates       ||= {}
-    @templates[name] ||= File.read("#{Rails.root}/app/policies/#{name}.json.erb")
+    @templates[name] ||= File.read("#{Rails.root}/cdx_core/app/policies/#{name}.json.erb")
   end
 end
