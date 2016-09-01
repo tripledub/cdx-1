@@ -50,7 +50,7 @@ PATH
 PATH
   remote: .
   specs:
-    cdx_core (0.0.1)
+    cdx_core (1.1.0)
       rails (~> 4.2.7.1)
 
 GEM
