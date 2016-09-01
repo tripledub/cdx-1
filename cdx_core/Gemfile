@@ -52,6 +52,9 @@ gem 'kaminari'
 gem 'therubyracer'
 gem 'dotiw'
 gem 'rchardet'
+gem 'sidekiq', '3.5.0'
+gem 'sinatra'
+gem 'sidekiq-cron', '~> 0.3.1'
 
 group :development do
   gem 'letter_opener'
@@ -86,6 +89,6 @@ group :test do
   gem 'timecop'
   gem 'poltergeist'
   gem 'capybara-screenshot'
-  gem 'webmock', require: false
+  gem 'webmock', '1.21.0', require: false
   gem 'site_prism'
 end
