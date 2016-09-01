@@ -51,6 +51,7 @@ gem 'coffee-rails', '4.0.1'
 gem 'kaminari'
 gem 'therubyracer'
 gem 'dotiw'
+gem 'rchardet'
 
 group :development do
   gem 'letter_opener'

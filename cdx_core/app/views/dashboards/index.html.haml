@@ -38,7 +38,7 @@
         %header
           = image_tag('img/user.png')
           %h3
-            - I18n.t('dashboard.index.average_tests_by_technician')
+            = I18n.t('dashboard.index.average_tests_by_technician')
         .box-content
           #chartAverageTestsTechnician{:style => "height: 200px; width: 100%;"}
             = react_component 'CanvasJsChart', chartDiv: 'chartAverageTestsTechnician', chartData: Extras::Charts::VerticalColumns.new(@dashboard_report.average_tests_per_technician).render
