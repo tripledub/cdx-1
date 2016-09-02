@@ -2,7 +2,7 @@
 
 %section.row
   .small-12.columns
-    %header 
+    %header
       %h3
         Setup Details
   .col.box-content
@@ -26,7 +26,8 @@
     .col.pe-2
       = I18n.t('devices.setup.device_id')
     .col
-      .uuid= @device.uuid
+      .uuid
+        = @device.uuid
       %p
         = barcode @device.uuid
 
