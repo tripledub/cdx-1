@@ -7,6 +7,7 @@ To customise the application for other countries add an engine called cdx_countr
 === Technical debt
 
 * Update Travis CI.
+* Update ruby to 2.2.3
 * Ensure all content in main app should belong to there or can be moved to an engine. (API, Jobs)
 * Remove decent exposure.  Not used in most of the app. Only in the API.
 * Remove elasticsearch. Almost done.  Need to import device results into test results in a better way and then update the dashboard reports.
