@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-xdescribe Api::MessagesController, elasticsearch: true, validate_manifest: false do
+xdescribe CdxApiCore::MessagesController, elasticsearch: true, validate_manifest: false do
   let(:user) {User.make}
   let(:institution) {Institution.make user_id: user.id}
   let(:device) {Device.make institution_id: institution.id}
@@ -35,7 +35,7 @@ xdescribe Api::MessagesController, elasticsearch: true, validate_manifest: false
       expect {
         post :create, data, device_id: device.uuid, authentication_token: device.plain_secret_key
       }.to change{DeviceMessage.count}.by(1)
-      
+
       expect(all_elasticsearch_tests).to be_empty
       expect(DeviceMessage.last.index_failed).to be_truthy
     end

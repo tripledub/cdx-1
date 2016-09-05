@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-xdescribe Api::TestsController, elasticsearch: true, validate_manifest: false do
+xdescribe CdxApiCore::TestsController, elasticsearch: true, validate_manifest: false do
   let(:user) {User.make}
   let(:institution) {Institution.make user_id: user.id}
 

@@ -1,5 +1,5 @@
 module CdxApiCore
-  class ApiController < ApplicationController
+  class ApiController < ::ApplicationController
     include ApplicationHelper
     include Policy::Actions
 

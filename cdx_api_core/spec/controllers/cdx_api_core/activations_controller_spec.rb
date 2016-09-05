@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CdxApiCore::Api::ActivationsController do
+describe CdxApiCore::ActivationsController do
   let!(:device) { Device.make }
 
   shared_context :set_device_token do

@@ -1,7 +1,7 @@
 require 'spec_helper'
 require "#{Rails.root}/cdx_core/spec/policy_spec_helper"
 
-describe Api::EncountersController, elasticsearch: true, validate_manifest: false do
+describe CdxApiCore::EncountersController, elasticsearch: true, validate_manifest: false do
 
   let(:user) { User.make }
   let!(:institution) { Institution.make user_id: user.id }

@@ -1,7 +1,7 @@
 require 'spec_helper'
 require "#{Rails.root}/cdx_core/spec/policy_spec_helper"
 
-describe Api::TestsController, elasticsearch: true, validate_manifest: false do
+describe CdxApiCore::TestsController, elasticsearch: true, validate_manifest: false do
 
   let(:user) { User.make }
   let!(:institution) { Institution.make user_id: user.id }
@@ -209,7 +209,7 @@ describe Api::TestsController, elasticsearch: true, validate_manifest: false do
           expect(r.status).to eq(200)
           expect(r.content_type).to eq("text/csv")
           expect(r.headers["Content-Disposition"]).to eq("attachment; filename=\"Tests-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv\"")
-          expect(r).to render_template("api/tests/index")
+          expect(r).to render_template("cdx_api_core/tests/index")
         end
 
         render_views
@@ -223,7 +223,7 @@ describe Api::TestsController, elasticsearch: true, validate_manifest: false do
 
           refresh_index
 
-          response = get :index, "", format: 'csv', group_by: 'test.assays.result,test.error_code'
+          get :index, "", format: 'csv', group_by: 'test.assays.result,test.error_code'
 
           check_csv response
           expect(response.body).to eq("test.assays.result,test.error_code,count\nnegative,1234,2\npositive,1234,1\n")

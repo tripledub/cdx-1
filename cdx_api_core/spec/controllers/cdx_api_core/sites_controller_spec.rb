@@ -1,12 +1,15 @@
 require 'spec_helper'
 require "#{Rails.root}/cdx_core/spec/policy_spec_helper"
 
-describe CdxApiCore::Api::SitesController do
-  let(:user) {User.make}
-  let(:institution) {Institution.make user_id: user.id}
-  let(:device) {Device.make institution_id: institution.id}
-  let(:data) {Oj.dump results: [result: :positive]}
-  before(:each) {sign_in user}
+describe CdxApiCore::SitesController do
+  let(:user)           { User.make }
+  let(:institution)    { Institution.make user_id: user.id }
+  let(:device)         { Device.make institution_id: institution.id }
+  let(:data)           { Oj.dump results: [result: :positive] }
+
+  before :each do
+    sign_in user
+  end
 
   context "Sites" do
     it "should list the sites" do
@@ -18,6 +21,7 @@ describe CdxApiCore::Api::SitesController do
 
       new_sorted_sites = sites.sort_by { |f| f['name'] }
       get :index, format: 'json'
+
       expect(Oj.load(response.body)).to eq({'total_count' => 3, 'sites' => new_sorted_sites})
     end
 
@@ -86,7 +90,7 @@ describe CdxApiCore::Api::SitesController do
         expect(r.status).to eq(200)
         expect(r.content_type).to eq("text/csv")
         expect(r.headers["Content-Disposition"]).to eq("attachment; filename=\"Sites-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv\"")
-        expect(r).to render_template("api/sites/index")
+        expect(r).to render_template("cdx_api_core/sites/index")
       end
 
       let(:institution) { Institution.make user: user }

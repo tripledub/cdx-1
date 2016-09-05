@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Api::InstitutionsController do
+describe CdxApiCore::InstitutionsController do
   let!(:user) { User.make }
   let!(:institution) { Institution.make user: user, name: 'Acme Institution' }
 
@@ -21,7 +21,7 @@ describe Api::InstitutionsController do
         other_institution = Institution.make user: user, name: 'Other Institution'
         Institution.make user: User.make
         result = get :index, format: 'json'
-        
+
         all_institutions = [
           {'uuid' => institution.uuid, 'name' => institution.name},
           {'uuid' => other_institution.uuid, 'name' => other_institution.name}
@@ -38,7 +38,7 @@ describe Api::InstitutionsController do
           expect(r.status).to eq(200)
           expect(r.content_type).to eq("text/csv")
           expect(r.headers["Content-Disposition"]).to eq("attachment; filename=\"Institutions-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv\"")
-          expect(r).to render_template("api/institutions/index")
+          expect(r).to render_template("cdx_api_core/institutions/index")
         end
 
         render_views

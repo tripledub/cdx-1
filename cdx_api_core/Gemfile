@@ -48,6 +48,7 @@ gem 'rchardet'
 gem 'sidekiq', '3.5.0'
 gem 'sinatra'
 gem 'sidekiq-cron', '~> 0.3.1'
+gem 'doorkeeper'
 
 group :development do
   gem 'spring'

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Api::FiltersController do
+describe CdxApiCore::FiltersController do
   let(:user) { User.make }
   let!(:institution) { user.create Institution.make_unsaved }
   let!(:filter) { user.filters.make query: { site: 1 } }
