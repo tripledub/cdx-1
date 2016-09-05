@@ -43,7 +43,7 @@ class TestResults::Finder
   end
 
   # def filter_by_status
-  #   @filter_query = filter_query.where("patient_results.core_fields like '%status: ?%'", params["status"]) if params["status"].present?
+  #   @filter_query = filter_query.where("patient_results.core_fields like ?", "%status: #{params['status']}%") if params["status"].present?
   # end
 
   def filter_by_date
