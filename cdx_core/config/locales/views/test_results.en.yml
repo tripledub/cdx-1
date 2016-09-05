@@ -40,6 +40,7 @@ en:
       additional_data: 'Additional data'
       sample: 'Sample'
       other_tests: 'Other tests'
+      test_details: 'Test details'
       no_other_test: 'No other test was made with this sample'
       was_also_made: 'was also made with this sample'
       were_also_made: 'were also made with this sample'

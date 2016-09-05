@@ -20,7 +20,7 @@
   .container
     %header
       %h3
-        Test Details
+        = I18n.t('test_results.show.test_details')
     .panel
       .col
         = card image: "card-unkown.png" do |c|
@@ -32,7 +32,7 @@
               = @localization_helper.format_datetime(@test_result.core_fields[TestResult::START_TIME_FIELD]) # TODO should use device timezone (?)
             - if @show_institution
               %div
-                = I18n.t('test_results.show.institution_name', @test_result.institution.name)
+                = I18n.t('test_results.show.institution_name', institution_name: @test_result.institution.name)
           - c.bottom do
             - if @test_result.patient
               = I18n.t('test_results.show.patient')
