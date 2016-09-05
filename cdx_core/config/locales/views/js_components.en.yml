@@ -53,7 +53,7 @@ en:
 
     episodes:
       lbl_treatment_outcome: "Treatment Outcome"
-      h1_comfirm_msg: "Would you like to close this episode?"
+      h1_confirm_msg: "Would you like to close this episode?"
       confirm_yes: "Yes"
       confirm_no: "No"
 
