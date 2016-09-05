@@ -64,6 +64,7 @@ PATH
   remote: cdx_vietnam
   specs:
     cdx_vietnam (1.0.0)
+      cdx_core (~> 1.1.0)
       rails (~> 4.2.7.1)
 
 GEM

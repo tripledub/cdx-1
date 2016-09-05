@@ -20,7 +20,7 @@ describe Presenters::XpertResults do
     end
 
     it 'should return elements formated' do
-      expect(described_class.index_table(PatientResult.all).first).to eq({
+      expect(described_class.index_table(XpertResult.all).first).to eq({
         id:                XpertResult.first.uuid,
         sampleCollectedOn: Extras::Dates::Format.datetime_with_time_zone(XpertResult.first.sample_collected_on),
         examinedBy:        XpertResult.first.examined_by,
