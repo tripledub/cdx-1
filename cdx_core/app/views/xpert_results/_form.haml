@@ -47,6 +47,7 @@
     $('input[type=radio][name="xpert_result[tuberculosis]"]').change(
       function () {
         if (this.value === 'detected') {
+          console.log('now tb is selected');
           $('.tb-trace').show();
         } else {
           $('.tb-trace').hide();
