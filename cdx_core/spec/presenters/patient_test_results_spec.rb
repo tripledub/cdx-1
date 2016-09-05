@@ -37,7 +37,7 @@ describe Presenters::PatientTestResults do
       test_result = PatientResult.first
       expect(described_class.patient_view(PatientResult.all).first).to eq({
         id:              test_result.uuid,
-        name:            test_result.core_fields[TestResult::NAME_FIELD],
+        name:            test_result.device.name,
         date:            Extras::Dates::Format.datetime_with_time_zone(test_result.core_fields[TestResult::START_TIME_FIELD]),
         status:          test_result.core_fields[TestResult::STATUS_FIELD],
         viewLink:        Rails.application.routes.url_helpers.test_result_path(id: test_result.uuid)
@@ -48,7 +48,7 @@ describe Presenters::PatientTestResults do
       xpert_result = PatientResult.all[10]
       expect(described_class.patient_view(PatientResult.all)[10]).to eq({
         id:              xpert_result.uuid,
-        name:            xpert_result.specimen_type,
+        name:            'Xpert result',
         date:            Extras::Dates::Format.datetime_with_time_zone(xpert_result.sample_collected_on),
         status:          xpert_result.trace,
         viewLink:        Rails.application.routes.url_helpers.requested_test_xpert_result_path(requested_test_id: xpert_result.requested_test.id)
@@ -59,7 +59,7 @@ describe Presenters::PatientTestResults do
       microscopy_result = PatientResult.all[5]
       expect(described_class.patient_view(PatientResult.all)[5]).to eq({
         id:              microscopy_result.uuid,
-        name:            microscopy_result.specimen_type,
+        name:            'Microscopy result',
         date:            Extras::Dates::Format.datetime_with_time_zone(microscopy_result.sample_collected_on),
         status:          Extras::Select.find(MicroscopyResult.test_result_options, microscopy_result.test_result),
         viewLink:        Rails.application.routes.url_helpers.requested_test_microscopy_result_path(requested_test_id: microscopy_result.requested_test.id)
@@ -70,7 +70,7 @@ describe Presenters::PatientTestResults do
       culture_result = PatientResult.all[7]
       expect(described_class.patient_view(PatientResult.all)[7]).to eq({
         id:              culture_result.uuid,
-        name:            Extras::Select.find(CultureResult.media_options, culture_result.media_used),
+        name:            'Culture result',
         date:            Extras::Dates::Format.datetime_with_time_zone(culture_result.sample_collected_on),
         status:          Extras::Select.find(CultureResult.test_result_options, culture_result.test_result),
         viewLink:        Rails.application.routes.url_helpers.requested_test_culture_result_path(requested_test_id: culture_result.requested_test.id)
@@ -81,7 +81,7 @@ describe Presenters::PatientTestResults do
       dst_lpa_result = PatientResult.all[9]
       expect(described_class.patient_view(PatientResult.all)[9]).to eq({
         id:              dst_lpa_result.uuid,
-        name:            Extras::Select.find(DstLpaResult.method_options, dst_lpa_result.media_used),
+        name:            'Dst/Lpa result',
         date:            Extras::Dates::Format.datetime_with_time_zone(dst_lpa_result.sample_collected_on),
         status:          dst_lpa_result.serial_number,
         viewLink:        Rails.application.routes.url_helpers.requested_test_dst_lpa_result_path(requested_test_id: dst_lpa_result.requested_test.id)
