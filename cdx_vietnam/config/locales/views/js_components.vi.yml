@@ -53,7 +53,7 @@ vi:
 
     episodes:
       lbl_treatment_outcome: "Kết quả điều trị"
-      h1_comfirm_msg: "Bạn có muốn đóng giai đoạn này không?"
+      h1_confirm_msg: "Bạn có muốn đóng giai đoạn này không?"
       confirm_yes: "Có"
       confirm_no: "Không"
 
