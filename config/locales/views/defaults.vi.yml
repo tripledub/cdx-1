@@ -5,3 +5,5 @@ vi:
     save: 'Lưu'
     say_yes: 'Có'
     say_no: 'Không'
+    vi: 'Tiếng Việt'
+    en: 'Tiếng Anh'

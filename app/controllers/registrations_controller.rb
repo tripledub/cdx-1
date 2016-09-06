@@ -29,7 +29,7 @@ class RegistrationsController < Devise::RegistrationsController
   private
 
   def load_locales
-    @locales ||= [["English","en"],["Tiếng Việt", "vi"]]
+    @locales ||= [[I18n.t("views.en"),"en"],[I18n.t("views.vi"), "vi"]]
   end
 
   def sign_up_params
