@@ -7,28 +7,28 @@ var SitePicker = React.createClass({
   },
 
   getInitialState: function() {
-    return { sites: [], sites_tree: [], selected_site: null, query: '', subsites_selected: this.props.subsitesIncluded };
+    return { sites: [], sitesTree: [], selected_site: null, query: '', subsites_selected: this.props.subsitesIncluded };
   },
 
   componentDidMount: function() {
-    $.get(this.props.institutions_url, function(institutions_result) {
-      $.get(this.props.sites_url, function(sites_result) {
+    $.get(this.props.institutions_url, function(institutionsResult) {
+      $.get(this.props.sites_url, function(sitesResult) {
         if (!this.isMounted()) return;
 
-        var sites_and_institutions = sites_result.sites;
-        _.each(sites_and_institutions, function(site) {
+        var sitesAndInstitutions = sitesResult.sites;
+        _.each(sitesAndInstitutions, function(site) {
           site.parent_uuid = site.parent_uuid || site.institution_uuid;
         });
-        _.each(institutions_result.institutions, function(institution) {
-          sites_and_institutions.push(institution);
+        _.each(institutionsResult.institutions, function(institution) {
+          sitesAndInstitutions.push(institution);
         });
 
-        roots_and_selected = this._buildTree(sites_and_institutions, '', this.props.selected_uuid);
+        rootsAndSelected = this._buildTree(sitesAndInstitutions, '', this.props.selected_uuid);
 
         this.setState(React.addons.update(this.state, {
-          sites: { $set: sites_and_institutions },
-          sites_tree: { $set: roots_and_selected[0] },
-          selected_site: { $set: roots_and_selected[1] }
+          sites: { $set: sitesAndInstitutions },
+          sitesTree: { $set: rootsAndSelected[0] },
+          selected_site: { $set: rootsAndSelected[1] }
         }));
       }.bind(this));
     }.bind(this));
@@ -57,20 +57,20 @@ var SitePicker = React.createClass({
   },
 
   _buildTree: function(sites, query, selected_uuid) {
-    var sites_by_uuid = {};
+    var sitesByUuid = {};
     var roots = [];
     var selected = null;
-    var matched_sites = [];
+    var matchedSites = [];
     var exp = JSON.parse(localStorage.getItem('sidebar_state') || '{}');
     query = _.deburr(query).toLowerCase();
 
-    // prepares a matched_sites with all sites that match query
+    // prepares a matchedSites with all sites that match query
     // but it prepares a children property on each site for
     // building later the tree
     _.each(sites, function(site){
       if (query != '' && !this._siteMatch(site, query)) return;
-      matched_sites.push(site);
-      sites_by_uuid[site.uuid] = site;
+      matchedSites.push(site);
+      sitesByUuid[site.uuid] = site;
       site.children = [];
       site.selected = site.uuid == selected_uuid;
       site.expanded = exp[site.uuid]=='open' || false;
@@ -79,12 +79,12 @@ var SitePicker = React.createClass({
       }
     }.bind(this));
 
-    // builds a tree with all matched_sites and with the children
+    // builds a tree with all matchedSites and with the children
     // information. If parent is not present, it is considered a root.
     // Roots may vary depending on the query argument due to non-match of parents.
     // TODO what should happen in Match1 -> NonMatch1 -> Match2 ?
-    _.each(matched_sites, function(site) {
-      parent = sites_by_uuid[site.parent_uuid]
+    _.each(matchedSites, function(site) {
+      parent = sitesByUuid[site.parent_uuid]
       if (parent) {
         parent.children.push(site)
       } else {
@@ -92,11 +92,11 @@ var SitePicker = React.createClass({
       }
     });
 
-    // This handler remembers where the side bar was scrolled to, 
+    // This handler remembers where the side bar was scrolled to,
     // in conjunction with a scroll setter from application.js file.
-    $('#context_side_bar > div').scroll( function() 
+    $('#context_side_bar > div').scroll( function()
       {
-        if( $('#context_side_bar > div').html().length ) 
+        if( $('#context_side_bar > div').html().length )
         {
           var scroll_l = $('#context_side_bar > div').scrollLeft();
           var scroll_t = $('#context_side_bar > div').scrollTop();
@@ -136,11 +136,11 @@ var SitePicker = React.createClass({
   },
 
   handleSearch: function(query) {
-    roots_and_selected = this._buildTree(this.state.sites, query, this.state.selected_site.uuid);
+    rootsAndSelected = this._buildTree(this.state.sites, query, this.state.selected_site.uuid);
     // should not change selected site while filtering
 
     this.setState(React.addons.update(this.state, {
-      sites_tree: { $set: roots_and_selected[0] },
+      sitesTree: { $set: rootsAndSelected[0] },
     }));
   },
 
@@ -165,7 +165,7 @@ var SitePicker = React.createClass({
         <div>
           <input type="checkbox" id="include-subsites" onChange={this.onSubsiteCheckboxChange} checked={this.state.subsites_selected} />
           <label htmlFor="include-subsites" id="include-subsites">{I18n.t("components.sites.selection_label")}</label>
-          <SitesTreeView sites={this.state.sites_tree} onSiteClick={this.selectSite} />
+          <SitesTreeView sites={this.state.sitesTree} onSiteClick={this.selectSite} />
         </div>
       </div>
     )
