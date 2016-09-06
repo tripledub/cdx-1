@@ -12,8 +12,8 @@ describe XpertResultsController do
   let(:xpert_result)   { XpertResult.make requested_test: requested_test }
   let(:valid_params)   { {
     sample_collected_on: 4.days.ago,
-    tuberculosis:        'not_detected',
-    rifampicin:          'detected',
+    tuberculosis:        'detected',
+    rifampicin:          'not_detected',
     examined_by:         'Michael Kiske',
     result_on:           1.day.ago
   } }
@@ -41,9 +41,9 @@ describe XpertResultsController do
         it 'should save the comment' do
           patient_result = requested_test.xpert_result
 
-          expect(patient_result.tuberculosis).to eq('not_detected')
+          expect(patient_result.tuberculosis).to eq('detected')
           expect(patient_result.uuid).not_to be_empty
-          expect(patient_result.rifampicin).to eq('detected')
+          expect(patient_result.rifampicin).to eq('not_detected')
           expect(patient_result.sample_collected_on.strftime("%m/%d/%YYYY")).to eq(4.days.ago.strftime("%m/%d/%YYYY"))
           expect(patient_result.result_on.strftime("%m/%d/%YYYY")).to eq(1.day.ago.strftime("%m/%d/%YYYY"))
         end
