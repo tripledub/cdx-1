@@ -1,10 +1,10 @@
-task_group :rspec_cdx_core do
-  in_directory 'cdx_core' do
+task_group :rspec do
+  each_directory 'cdx_*' do
     shell 'bundle' unless ENV['USER'] == 'travis'
     shell 'bundle exec rspec --exclude-pattern "**/features/*_spec.rb"'
   end
 end
 
 build :default do
-  task_group :rspec_cdx_core
+  task_group :rspec
 end
