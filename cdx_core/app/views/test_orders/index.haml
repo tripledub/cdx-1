@@ -43,7 +43,7 @@
       = empty_data icon: 'icon-outline-test xx-large' do |c|
         - c.body do
           %h1
-            = I18n.t('test_orders.index.header')
+            = I18n.t('test_orders.index.no_test_orders')
     - else
       %section.row
         = react_component "TestOrdersIndexTable", testOrders: Presenters::TestOrders.index_view(@tests), orderBy: @order_by,

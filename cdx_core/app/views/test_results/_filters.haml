@@ -4,7 +4,7 @@
     .heading
       .title
         =I18n.t('test_results.filters.title')
-  
+
     .topfilteropt
       %input#query_button.btn-primary.filtershow(type='button' value='Show Filters')
 
@@ -46,7 +46,7 @@
             %label.block
               =I18n.t('test_results.filters.date_to')
             %input#to_date{type: "date", name: "to_date", value: params["to_date"]}
-          
+
           .filter
             %label.block
               =I18n.t('test_results.filters.type')

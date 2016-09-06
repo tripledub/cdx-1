@@ -8,16 +8,45 @@ describe TestResultsController, elasticsearch: true do
   let(:location)          { Location.make parent: root_location }
   let(:site)              { Site.make institution: institution, location: location }
   let(:subsite)           { Site.make institution: institution, location: location, parent: site }
+  let(:patient)           { Patient.make institution: institution }
   let(:device)            { Device.make institution_id: institution.id, site: site }
   let(:site2)             { Site.make institution: institution, location: location }
   let(:device2)           { Device.make institution_id: institution.id, site: site2 }
+  let(:encounter)         { Encounter.make institution: institution , user: user, patient: patient }
   let(:other_user)        { User.make }
   let(:other_institution) { Institution.make user_id: other_user.id }
   let(:other_site)        { Site.make institution: other_institution }
   let(:other_device)      { Device.make institution_id: other_institution.id, site: other_site }
   let(:default_params)    { {context: institution.uuid} }
+  let!(:test_results)      {
+    4.times do
+      TestResult.make patient: patient, institution: institution, device: device
+    end
 
-  before(:each)           { sign_in user }
+    2.times do
+      requested_test = RequestedTest.make encounter: encounter
+      MicroscopyResult.make requested_test: requested_test
+    end
+
+    5.times do
+      requested_test = RequestedTest.make encounter: encounter
+      CultureResult.make requested_test: requested_test
+    end
+
+    3.times do
+      requested_test = RequestedTest.make encounter: encounter
+      DstLpaResult.make requested_test: requested_test
+    end
+
+    2.times do
+      requested_test = RequestedTest.make encounter: encounter
+      XpertResult.make requested_test: requested_test, serial_number: '9999239999'
+    end
+  }
+
+  before :each do
+    sign_in user
+  end
 
   it "should display an empty page when there are no test results" do
     response = get :index
@@ -33,6 +62,28 @@ describe TestResultsController, elasticsearch: true do
 
     expect(response).to be_success
     expect(assigns(:total)).to eq(1)
+  end
+
+  context 'tabs' do
+    it 'should return xpert test results only' do
+      get :index, test_results_tabs_selected_tab: 'xpert'
+
+      expect(assigns(:total)).to eq(2)
+    end
+
+    it 'should return culture test results only' do
+      get :index, test_results_tabs_selected_tab: 'culture'
+
+      expect(assigns(:total)).to eq(5)
+    end
+  end
+
+  context 'filters' do
+    it 'should return tests filtered by serial number' do
+      get :index, test_results_tabs_selected_tab: 'xpert', 'sample.id': '23'
+
+      expect(assigns(:total)).to eq(2)
+    end
   end
 
   context "scoping" do

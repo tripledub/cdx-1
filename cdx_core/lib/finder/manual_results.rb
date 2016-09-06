@@ -30,7 +30,7 @@ class Finder::ManualResults
   end
 
   def filter_by_sample
-    @filter_query = filter_query.where("patient_results.serial_number like'%?%'", params["sample.id"]) if params["sample.id"].present?
+    @filter_query = filter_query.where("patient_results.serial_number like ?", "%#{params['sample.id']}%") if params["sample.id"].present?
   end
 
   def filter_by_media
