@@ -3,6 +3,8 @@ class XpertResult < PatientResult
   validates_inclusion_of :tuberculosis, in: ['detected', 'not_detected', 'invalid']
   validates_inclusion_of :rifampicin,   in: ['detected', 'not_detected', 'indeterminate']
 
+  validate :rifampicin_detected
+
   delegate :patient, to: 'requested_test.encounter'
 
   class << self
@@ -17,5 +19,11 @@ class XpertResult < PatientResult
     def trace_options
       [['very_low', I18n.t('select.xpert.trace.very_low')], ['low', I18n.t('select.xpert.trace.low')], ['medium', I18n.t('select.xpert.trace.medium')], ['high', I18n.t('select.xpert.trace.high')]]
     end
+  end
+
+  protected
+
+  def rifampicin_detected
+    errors.add(:rifampicin, I18n.t('xpert_results.form.rifampicin_detected')) if rifampicin == 'detected' && tuberculosis != 'detected'
   end
 end
