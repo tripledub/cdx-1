@@ -8,10 +8,10 @@ Gem::Specification.new do |s|
   s.name        = "cdx_vietnam"
   s.version     = CdxVietnam::VERSION
   s.authors     = ["Jorge Alvarez"]
-  s.email       = ["ja@conferize.com"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of CdxVietnam."
-  s.description = "TODO: Description of CdxVietnam."
+  s.email       = ["jorge@alvareznavarro.es"]
+  s.homepage    = "http://www.thecdx.org"
+  s.summary     = "Custom settings for Vietnam"
+  s.description = "Customisation and localising of the vietnamese version of CDX."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
