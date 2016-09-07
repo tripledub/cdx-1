@@ -1,4 +1,6 @@
 class PatientsController < ApplicationController
+  before_filter :find_patient, only:['show','edit','update','destroy']
+
   def search
     @patients = check_access(Patient.where(is_phantom: false).where(institution: @navigation_context.institution), READ_PATIENT).order(:name)
     @patients = @patients.where("name LIKE concat('%', ?, '%') OR entity_id LIKE concat('%', ?, '%')", params[:q], params[:q])
@@ -22,10 +24,13 @@ class PatientsController < ApplicationController
   end
 
   def show
-    @patient = Patient.find(params[:id])
     return unless authorize_resource(@patient, READ_PATIENT)
 
     @patient_json = Jbuilder.new { |json| @patient.as_json_card(json) }.attributes!
+  end
+
+  def find_patient
+    @patient  = Patient.find(params[:id])
   end
 
   def new
@@ -57,7 +62,6 @@ class PatientsController < ApplicationController
   end
 
   def edit
-    @patient  = Patient.find(params[:id])
     return unless authorize_resource(@patient, UPDATE_PATIENT)
     add_two_addresses
 
@@ -65,7 +69,6 @@ class PatientsController < ApplicationController
   end
 
   def update
-    @patient  = Patient.find(params[:id])
     return unless authorize_resource(@patient, UPDATE_PATIENT)
     parse_date_of_birth
 
@@ -77,7 +80,6 @@ class PatientsController < ApplicationController
   end
 
   def destroy
-    @patient = Patient.find(params[:id])
     return unless authorize_resource(@patient, DELETE_PATIENT)
 
     @patient.destroy
