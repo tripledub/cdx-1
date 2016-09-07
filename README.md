@@ -109,15 +109,21 @@ In the client side, you will need to run another filewatcher: [cdx-sync-client](
 
 Using i18n gem. The Ruby I18n (shorthand for internationalization) gem which is shipped with Ruby on Rails (starting from Rails 2.2) provides an easy-to-use and extensible framework for translating your application to a single custom language other than English or for providing multi-language support in your application.
 
+### Usage
+DO NOT hardcode any text
+For any text
+1. Create/Update one of the corresponding files (based on localization file structure below), depending on where the text appear
+2. Then update the markup. For example:
+- Instead of using fixed text. Ex: ```Filter was successfully created```
+- We need to use i18n function to support multi-lingual. Ex: ```I18n.t('filters_controller.filter_created')```
+3. When update any en.yml file, please update all other languages (vi.yml, fr.yml, ...) file correspondingly
+
 ### Localization file structure
 
-1. For each language, there are separated files. Ex: *.en.yml and *.vi.yml
+1. For each language, there are separated files. Ex: *.en.yml and *.vi.yml. EN files are in cdx_core directory and VI files are in cdx_vietnam directory
 2. Controller and helper: there is one file for all
 3. Model and view: there is one file for each model or view
 4. The locale file is organized based on file/module hierachy
 
-### Usage
 
-- Instead of using fixed text. Ex: "Filter was successfully created"
-- We need to use i18n function to support multi-lingual. Ex: I18n.t('filters_controller.filter_created')
 
