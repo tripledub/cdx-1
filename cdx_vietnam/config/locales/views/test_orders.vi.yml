@@ -2,16 +2,16 @@ vi:
   test_orders:
     index:
       header: ''
-      tests: 'Thử nghiệm'
+      tests: 'xét nghiệm'
       not_applicable: 'Không thể áp dụng'
-      header: 'Không có yêu cầu thử nghiệm nào được tạo'
+      header: 'Không có yêu cầu xét nghiệm nào được tạo'
       test_order:
-        zero: 'Yêu cầu thử nghiệm'
-        one: 'Yêu cầu thử nghiệm'
-        other: '%{count} Yêu cầu thử nghiệm'
+        zero: 'Yêu cầu xét nghiệm'
+        one: 'Yêu cầu xét nghiệm'
+        other: '%{count} Yêu cầu xét nghiệm'
     filters:
       show_all: 'Hiển thị tất cả'
       show_filters: 'Hiển thị bộ lọc'
-      testing_for: 'Thử nghiệm cho'
+      testing_for: 'xét nghiệm cho'
       date: 'Ngày'
-      test_order_id: 'Mã của yêu cầu thử nghiệm'
+      test_order_id: 'Mã của yêu cầu xét nghiệm'

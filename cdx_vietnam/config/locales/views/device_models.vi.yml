@@ -9,7 +9,7 @@ vi:
       device_models: 'Kiểu thiết bị'
       no_device_models: 'Không có kiểu thiết bị nào'
       there_are_no_device_models: 'Không có kiểu thiết bị nào'
-      create_device_models: 'Tạo các kiểu thiết bị và công bố các bản kê khai để cho phép báo cáo thử nghiệm trên hệ thống CDx.'
+      create_device_models: 'Tạo các kiểu thiết bị và công bố các bản kê khai để cho phép báo cáo xét nghiệm trên hệ thống CDx.'
       lnk_new_device: 'Kiểu thiết bị mới'
 
     form:
@@ -21,7 +21,7 @@ vi:
       upload_file: 'hoặc nhấp để tải lên'
       btn_save: 'Lưu'
       btn_delete: 'Xóa'
-      delete_msg: 'Bạn có chắc bạn muốn xóa kiểu thiết bị này không? Tất cả thiết bị sử dụng kiểu thiết bị này cũng sẽ bị xóa, cùng với bất kỳ thử nghiệm đã được tải lên.'
+      delete_msg: 'Bạn có chắc bạn muốn xóa kiểu thiết bị này không? Tất cả thiết bị sử dụng kiểu thiết bị này cũng sẽ bị xóa, cùng với bất kỳ xét nghiệm đã được tải lên.'
       lbl_institution: 'Tổ chức'
       lbl_name: 'Tên'
       lbl_setup: 'Hướng dẫn thiết lập'

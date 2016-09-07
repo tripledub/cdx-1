@@ -31,17 +31,17 @@ vi:
     logs_requested: 'Đã yêu cầu ghi chép của khách hàng'
 
   encounters_controller:
-    test_order_cancelled: 'Yêu Cầu Thử Nghiệm Đã Hủy'
-    test_order: 'Yêu Cầu Thử Nghiệm'
+    test_order_cancelled: 'Yêu Cầu xét nghiệm Đã Hủy'
+    test_order: 'Yêu Cầu xét nghiệm'
     cancelled: 'Đã Hủy'
     encounter_deleted: 'Encounter đã được xóa thành công.'
     sample_id_used: 'Mã mẫu vật này đã được sử dụng cho bệnh nhân khác'
-    test_order_created: 'Đã Tạo Yêu Cầu Thử Nghiệm Mới'
+    test_order_created: 'Đã Tạo Yêu Cầu xét nghiệm Mới'
     new: 'Mới'
-    test_created: 'Thử Nghiệm Đã Được Tạo'
-    test: 'Thử nghiệm'
-    created_for: 'được tạo cho yêu cầu thử nghiệm'
-    cannot_add_test: 'Không thể thêm một thử nghiệm hoặc mẫu vật không giống nhau'
+    test_created: 'xét nghiệm Đã Được Tạo'
+    test: 'xét nghiệm'
+    created_for: 'được tạo cho yêu cầu xét nghiệm'
+    cannot_add_test: 'Không thể thêm một xét nghiệm hoặc mẫu vật không giống nhau'
     error: 'Lỗi'
 
   filters_controller:
@@ -58,7 +58,7 @@ vi:
     institution_updated: 'Tổ chức đã được chỉnh sửa thành công.'
 
   patient_results_controller:
-    cannot_add: "Bạn không thể thêm kết quả thử nghiệm vào yêu cầu thử nghiệm này"
+    cannot_add: "Bạn không thể thêm kết quả xét nghiệm vào yêu cầu xét nghiệm này"
 
   patients_controller:
     new_patient: 'Bệnh nhân mới'

@@ -48,7 +48,7 @@ vi:
     side:
       creation_date: 'Ngày tạo'
       devices: 'Thiết bị'
-      tests: 'Thử nghiệm'
+      tests: 'xét nghiệm'
       users: 'Người dùng'
     devices:
       name: 'Tên'

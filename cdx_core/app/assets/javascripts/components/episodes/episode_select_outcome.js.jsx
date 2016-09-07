@@ -45,7 +45,7 @@ var EpisodeSelectOutcome = React.createClass({
           </select>
         </div>
         <Modal ref="confirmCloseEpisode">
-          <h1>{I18n.t("components.episodes.h1_comfirm_msg")}</h1>
+          <h1>{I18n.t("components.episodes.h1_confirm_msg")}</h1>
           <p><a href="#" onClick={this.closeEpisode}>{I18n.t("components.episodes.confirm_yes")}</a> | <a href="#" onClick={this.closeEpisodeModal}>{I18n.t("components.episodes.confirm_no")}</a></p>
         </Modal>
       </div>

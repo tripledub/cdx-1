@@ -6,14 +6,10 @@
 
   .row.header
     .col.pe-2
-<<<<<<< HEAD:app/views/patients/_form.html.haml
-      = f.label :institution, I18n.t('patients.form.institution_label')
-=======
       %div.tooltip
         = f.label :institution
         %div.tooltiptext_r
           = I18n.t('patients.form.institution_tooltip')
->>>>>>> dev:cdx_core/app/views/patients/_form.html.haml
     .col
       .value= f.object.institution
 
@@ -21,22 +17,15 @@
 
   .row.nickname
     .col.pe-2
-<<<<<<< HEAD:app/views/patients/_form.html.haml
-      = f.label :nickname, I18n.t('patients.form.nickname_label')
-=======
       %div.tooltip
         = f.label :nickname
         %div.tooltiptext_r
           = I18n.t('patients.form.nickname_tooltip')
->>>>>>> dev:cdx_core/app/views/patients/_form.html.haml
     .col
       = f.text_field :nickname, :class => 'input-large'
 
   .row
     .col.pe-2
-<<<<<<< HEAD:app/views/patients/_form.html.haml
-      = f.label :entity_id, I18n.t('patients.form.entity_id_label')
-=======
       %div.tooltip
         = f.label :social_security_code
         %div.tooltiptext_r
@@ -50,46 +39,33 @@
         = f.label :entity_id
         %div.tooltiptext_r
           = I18n.t('patients.form.entity_id_tooltip')
->>>>>>> dev:cdx_core/app/views/patients/_form.html.haml
     .col
       = f.text_field :entity_id, :class => 'input-large', readonly: !@patient.new_record?
 
   .row
     .col.pe-2
-<<<<<<< HEAD:app/views/patients/_form.html.haml
-      = f.label :gender, I18n.t('patients.form.gender_label')
-=======
       %div.tooltip
         = f.label :gender
         %div.tooltiptext_r
           = I18n.t('patients.form.gender_tooltip')
->>>>>>> dev:cdx_core/app/views/patients/_form.html.haml
     .col
       = f.collection_select :gender, Patient.gender_options, :first, :last
 
   .row
     .col.pe-2
-<<<<<<< HEAD:app/views/patients/_form.html.haml
-      = f.label :birth_date_on, I18n.t('patients.form.birth_date_on_label')
-=======
       %div.tooltip
         = f.label :birth_date_on
         %div.tooltiptext_r
           = I18n.t('patients.form.birthdate_tooltip')
->>>>>>> dev:cdx_core/app/views/patients/_form.html.haml
     .col
       = f.date_select :birth_date_on, order: [:day, :month, :year], prompt: { day: I18n.t('patients.form.select_day'), month: I18n.t('patients.form.select_month'), year: I18n.t('patients.form.select_year') }, start_year: Date.today.year, end_year: Date.today.year - 100
   .row
     .col.pe-2
-<<<<<<< HEAD:app/views/patients/_form.html.haml
-      = f.label I18n.t('patients.form.estimate_age')
-=======
       %div.tooltip
         = f.label 'Estimated Age'
         %div.tooltiptext_r
           = I18n.t('patients.form.estimate_age_tooltip')
 
->>>>>>> dev:cdx_core/app/views/patients/_form.html.haml
     .col
       = f.text_field 'age', :class=>'input-large'
       %script
@@ -107,27 +83,19 @@
 
   .row
     .col.pe-2
-<<<<<<< HEAD:app/views/patients/_form.html.haml
-      = f.label :email, I18n.t('patients.form.email_label')
-=======
       %div.tooltip
         = f.label :email
         %div.tooltiptext_r
           = I18n.t('patients.form.email_tooltip')
->>>>>>> dev:cdx_core/app/views/patients/_form.html.haml
     .col
       = f.text_field :email, :class => 'input-large'
 
   .row
     .col.pe-2
-<<<<<<< HEAD:app/views/patients/_form.html.haml
-      = f.label :phone, I18n.t('patients.form.phone_label')
-=======
       %div.tooltip
         = f.label :phone
         %div.tooltiptext_r
           = I18n.t('patients.form.phone_tooltip')
->>>>>>> dev:cdx_core/app/views/patients/_form.html.haml
     .col
       = f.text_field :phone, :class => 'input-large'
 

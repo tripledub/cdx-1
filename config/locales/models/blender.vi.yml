@@ -15,4 +15,4 @@ vi:
       cannot_change: "Không thể thay đổi mã thực thể của"
       from: "từ"
       to: "thành"
-      test_result: "kết quả thử nghiệm không có thực thể con"
+      test_result: "kết quả xét nghiệm không có thực thể con"

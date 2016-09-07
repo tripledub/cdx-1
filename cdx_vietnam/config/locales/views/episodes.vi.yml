@@ -19,5 +19,7 @@ vi:
       episode_type_not_available: 'Loại tập này hiện không có có sẵn'
     edit:
       back: 'Quay lại'
+      header: 'Chỉnh sửa tập'
     new:
       back: 'Quay lại'
+      header: 'Thêm tập'

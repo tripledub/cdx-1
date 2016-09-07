@@ -6,7 +6,7 @@ vi:
         site_option:  'Trang web'
         device_option: 'Thiết bị'
         deviceModel_option: 'Kiểu thiết bị'
-        testResult_option: 'Kết quả thử nghiệm'
+        testResult_option: 'Kết quả xét nghiệm'
         encounter_option: 'Cuộc gặp'
         role_option: 'Vai trò'
         user_option: 'Người dùng'

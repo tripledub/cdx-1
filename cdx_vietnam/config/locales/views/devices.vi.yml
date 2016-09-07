@@ -4,7 +4,7 @@
       performance: 'Hiệu suất'
       setup: 'Cài đặt'
     performance:
-      explore_tests: 'Khám phá các thử nghiệm'
+      explore_tests: 'Khám phá các xét nghiệm'
       or: 'hoặc'
       logs: 'Nhật ký'
     new:

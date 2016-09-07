@@ -6,6 +6,7 @@ en:
     create:
       audit_comment: 'New comment added'
       created_ok: 'Comment was successfully created.'
+      comment_ok: 'Comment was successfully added.'
     permissions:
       deny: "You can't add comments to this patient"
     new:

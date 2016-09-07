@@ -1,9 +1,5 @@
 en:
   episodes:
-    new:
-      header: 'New episode'
-    edit:
-      header: 'Edit episode'
     form:
       header: 'Episode for %{patient_name}'
       history: 'History of Previous Treatment'
@@ -23,5 +19,7 @@ en:
       episode_type_not_available: 'This Episode Type is not currently available'
     edit:
       back: 'Back'
+      header: 'New episode'
     new:
       back: 'Back'
+      header: 'Edit episode'

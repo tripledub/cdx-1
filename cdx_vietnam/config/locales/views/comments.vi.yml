@@ -6,6 +6,7 @@ vi:
     create:
       audit_comment: 'Nhận xét mới đã được thêm'
       created_ok: 'Nhận xét đã được tạo thành công'
+      comment_ok: 'Nhận xét đã được thêm vào'
     permissions:
       deny: "Bạn không thể thêm Nhận xét cho bệnh nhân này"
     new:
