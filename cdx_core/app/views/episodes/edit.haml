@@ -1,0 +1,18 @@
+.row.center.collapse.edit
+  .col.pe-10
+    %h2
+      = link_to patients_path, class: 'side-link', title: I18n.t('episodes.edit.back') do
+        = image_tag "arrow-left-white.png"
+      = I18n.t('episodes.edit.header')
+
+.testflow
+  .container
+    .row.labelHeader.episodeDetail
+      .row.col-6
+        %h3
+          = I18n.t('episodes.form.episode_details')
+          &nbsp;(
+          %span#episodeType
+          )
+      .row.col-6.right
+    = render 'form'

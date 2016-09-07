@@ -1,0 +1,74 @@
+- content_for(:subheader) do
+
+  .filterbar.filterbartest
+    .heading
+      .title
+        =I18n.t('test_results.filters.title')
+
+    .topfilteropt
+      %input#query_button.btn-primary.filtershow(type='button' value="#{I18n.t('test_results.filters.show_filters')}")
+
+  %form.filteroptions#filters-form{action: test_results_path, "data-auto-submit" => true}
+    %input{type: "hidden", name: "page_size", value: @page_size}
+    .row.center.custom_filters
+      .col.pe-10
+
+      .advanced
+
+        .row
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.condition')
+            = cdx_select name: "test.assays.condition", value: params["test.assays.condition"] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items(@conditions.map { |name| [name.upcase, name] })
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.result')
+            = cdx_select name: "test.assays.result", value: params["test.assays.result"] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items @results, :value, :label
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.date')
+            = cdx_select name: "since", value: params["since"] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items @date_options, :value, :label
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.date_from')
+            %input#from_date{type: "date", name: "from_date", value: params["from_date"]}
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.date_to')
+            %input#to_date{type: "date", name: "to_date", value: params["to_date"]}
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.type')
+            = cdx_select name: "test.type", value: params["test.type"] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items @test_types
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.status')
+            = cdx_select name: "test.status", value: params["test.status"] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items @test_statuses
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.sample_id')
+            %input{type: "text", name: "sample.id", value: params["sample.id"]}
+
+          .filter
+            %label.block
+              =I18n.t('test_results.filters.device')
+            = cdx_select name: "device.uuid", value: params["device.uuid"] do |select|
+              - select.item "", I18n.t('test_results.filters.show_all')
+              - select.items @devices, :uuid, :name

@@ -12,6 +12,7 @@ gem 'csv_builder'
 gem 'decent_exposure'
 gem 'nokogiri', '~> 1.6'
 gem 'react-rails', '~> 1.3.2'
+gem 'react-rails-img'
 gem 'foreman'
 gem 'paperclip', '~> 4.3.6'
 gem 'aws-sdk', '~> 1.6'
@@ -93,6 +94,12 @@ gem 'leaflet-rails'
 gem 'rake-progressbar'
 gem 'nuntium_api', '~> 0.21'
 
+# Core cdx functionality
+gem 'cdx_core', path: 'cdx_core'
+gem 'cdx_api_core', path: 'cdx_api_core'
+gem 'cdx_vietnam', path: 'cdx_vietnam'
+gem 'cdx_api_vietnam', path: 'cdx_api_vietnam'
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-urijs'
 end
@@ -105,6 +112,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'fudge'
 end
 
 group :test do

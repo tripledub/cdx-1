@@ -39,24 +39,24 @@ vi:
       term: 'Điều khoản và điều kiện'
 
     settings:
-      header_settings: 'Cài đặt'
+      header: 'Cài đặt'
       alert: 'Cảnh báo'
-      alert_body: 'Thông báo cho nhóm của bạn về những chuyện quan trọng.'
+      alert_notice: 'Thông báo cho nhóm của bạn về những chuyện quan trọng.'
       role:
         zero: 'Không có vai trò'
         one: "1 Vai trò"
         other: "%{count} Vai trò"
-      role_body: 'Quản lý quyền hạn của người dùng với chính sách tái sử dụng'
+      role_notice: 'Quản lý quyền hạn của người dùng với chính sách tái sử dụng'
       sites: 'Trang'
-      sites_body: 'Quản lý trang'
+      sites_notice: 'Quản lý trang'
       messages: 'Thông điệp'
-      messages_body: 'Quản lý nhật ký'
+      messages_notice: 'Quản lý nhật ký'
       models: 'Kiểu thiết bị'
-      models_body: 'Quản lý kiểu thiết bị'
+      models_notice: 'Quản lý kiểu thiết bị'
       users: 'Người dùng'
-      users_body: 'Quản lý người dùng'
+      users_notice: 'Quản lý người dùng'
       ftp: 'Giao thức truyền tập tin'
-      ftp_body: 'Cài đặt thiết bị giao thức truyền tập tin'
+      ftp_notice: 'Cài đặt thiết bị giao thức truyền tập tin'
 
     verify:
       check_email: 'Kiểm tra email của bạn để xác thực tài khoản'

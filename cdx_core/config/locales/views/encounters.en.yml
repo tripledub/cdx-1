@@ -1,0 +1,26 @@
+en:
+  encounters:
+    new:
+      existing_test: 'Existing test for %{patient_name}'
+      new_test: 'New test order for %{patient_name}'
+      no_patient: 'Every new encounter must belong to a patient. Please go to a patient page and click on Add test order'
+    show:
+      test_order: 'Test order'
+    perform_encounter_action:
+      merge: 'Cannot add a test or sample that belongs to a different %{entity_type}'
+      error: 'Error %{action_name} %{class_name}'
+    edit:
+      test_order: 'Test Order'
+    new_index:
+      new_tests: 'New Tests'
+      select_option: 'Please select one of the options below.'
+      new_test_order: 'New test order'
+      order_diagnostic_test: 'Order diagnostic tests against patients and samples. Specify sample type, test type, reason for examination and due date. Add sample IDs or use the sample ID generator.'
+      reported_test: 'Already reported tests'
+      organise_test_result: 'Organise and assign test results to patients. Review results and provide diagnosis.'
+    destroy:
+      success: 'Test order was successfully deleted.'
+      log_action: 'Test order %{uuid} Cancelled'
+      cancelled: 'Test order Cancelled'
+      not_allowed: 'You can not delete this test order.'
+
