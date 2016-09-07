@@ -1,8 +1,8 @@
-build_dir: cdx_core
+general:
+  build_dir: cdx_core
 machine:
   ruby:
     version: 2.2.4
-machine:
   services:
     - redis
     - elasticsearch
