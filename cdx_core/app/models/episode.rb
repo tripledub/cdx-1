@@ -89,7 +89,9 @@ class Episode < ActiveRecord::Base
       OpenStruct.new(id: :died, name: I18n.t('select.episode.treatment_outcome.died')),
       OpenStruct.new(id: :lost_to_follow_up, name: I18n.t('select.episode.treatment_outcome.lost_to_follow_up')),
       OpenStruct.new(id: :not_evaluated, name: I18n.t('select.episode.treatment_outcome.not_evaluated')),
-      OpenStruct.new(id: :success, name: I18n.t('select.episode.treatment_outcome.success'))
+      OpenStruct.new(id: :success, name: I18n.t('select.episode.treatment_outcome.success')),
+      OpenStruct.new(id: :in_error, name: I18n.t('select.episode.treatment_outcome.in_error')),
+      OpenStruct.new(id: :other, name: I18n.t('select.episode.treatment_outcome.other'))
     ]
   end
 

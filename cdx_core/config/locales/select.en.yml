@@ -89,6 +89,8 @@ en:
         lost_to_follow_up: 'Lost to follow-up'
         not_evaluated: 'Not evaluated'
         success: 'Treatment success'
+        in_error: 'Episode raised in error'
+        other: 'Other'
       drug_resistance:
         mono: 'Monoresistance'
         poly: 'Polydrug resistance'
