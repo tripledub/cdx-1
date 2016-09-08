@@ -9,6 +9,12 @@ en:
       success: 'Device model was successfully deleted.'
     publish:
       success: 'Device model %{device_name} was successfully %{device_action}.'
+      published: 'This device model is published; all institutions in CDX may register devices using it.'
+      can_unpublish: 'You may withdraw it as long as there are no devices outside this institution using this device model.'
+      withdraw: 'Withdraw'
+      not_published: 'This device model is not yet published.'
+      publishing: 'Publishing it will make it available to all institutions in CDX.'
+      publish: 'Publish'
     index:
       device_model:
         zero: 'No device model'

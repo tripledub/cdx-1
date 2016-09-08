@@ -2,22 +2,23 @@
   - can_unpublish = can_unpublish_device_model?(@device_model)
   .row
     .col
-      This device model is published; all institutions in CDX may register devices using it.
+      = I18n.t('device_models.publish.published')
       - if can_unpublish
-        You may withdraw it as long as there are no devices outside this institution using this device model.
+        = I18n.t('device_models.publish.can_unpublish')
   - if can_unpublish
     .row
       .col
         %button{type: 'submit', class: 'btn-secondary', name: 'unpublish', value: "1", id: 'device-model-publish'}
-          Withdraw
+          = I18n.t('device_models.publish.withdraw')
 -else
   - can_publish = can_publish_device_model?(@device_model)
   .row
     .col
-      This device model is not yet published.
+      = I18n.t('device_models.publish.not_published')
       - if can_publish
-        Publishing it will make it available to all institutions in CDX.
+
   - if can_publish
     .row
       .col
-        %button{type: 'submit', class: 'btn-primary', name: 'publish', value: "1", id: 'device-model-publish'}  Publish
+        %button{type: 'submit', class: 'btn-primary', name: 'publish', value: "1", id: 'device-model-publish'}
+          = I18n.t('device_models.publish.publish')
