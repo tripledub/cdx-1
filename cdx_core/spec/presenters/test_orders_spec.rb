@@ -40,6 +40,7 @@ describe Presenters::TestOrders do
         sampleId:           Encounter.first.samples.map(&:entity_ids).join(', '),
         testingFor:         Encounter.first.testing_for,
         requestedBy:        user.full_name,
+        batchId:            Encounter.first.batch_id,
         requestDate:        Extras::Dates::Format.datetime_with_time_zone(Encounter.first.start_time),
         dueDate:            Extras::Dates::Format.datetime_with_time_zone(Encounter.first.testdue_date),
         status:             'In progress: Microscopy (pending) - Culture (in progress) - Dst/Lpa (completed) - Xpert (rejected)',

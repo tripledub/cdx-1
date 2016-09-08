@@ -11,6 +11,7 @@ class Presenters::TestOrders
           sampleId:           encounter.samples.map(&:entity_ids).join(', '),
           testingFor:         encounter.testing_for,
           requestedBy:        encounter.user.full_name,
+          batchId:            encounter.batch_id,
           requestDate:        Extras::Dates::Format.datetime_with_time_zone(encounter.start_time),
           dueDate:            Extras::Dates::Format.datetime_with_time_zone(encounter.testdue_date),
           status:             generate_status(encounter),
