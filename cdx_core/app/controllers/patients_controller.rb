@@ -29,10 +29,6 @@ class PatientsController < ApplicationController
     @patient_json = Jbuilder.new { |json| @patient.as_json_card(json) }.attributes!
   end
 
-  def find_patient
-    @patient  = Patient.find(params[:id])
-  end
-
   def new
     @patient = @navigation_context.institution.patients.new
 
@@ -87,7 +83,11 @@ class PatientsController < ApplicationController
     redirect_to patients_path, notice: I18n.t('patients.destroy.success')
   end
 
-  private
+  protected
+
+  def find_patient
+    @patient  = Patient.find(params[:id])
+  end
 
   def patient_params
     params.require(:patient).permit(
