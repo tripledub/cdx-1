@@ -32,6 +32,7 @@ var EncounterShow = React.createClass({
     }
 
     var  urlParam = this.props.encounter.id
+
     EncounterActions.deleteEncounter(urlParam, successUrl, this.submitError);
   },
 
@@ -66,9 +67,9 @@ var EncounterShow = React.createClass({
   },
 
   render: function() {
-    if (this.props.can_update && this.props.showCancel) {
+    if (this.props.canUpdate && this.props.showCancel) {
       actionButton = <EncounterDelete showEdit={true} onChangeParentLevel={this.EncounterDeleteHandler} encounter={this.props.encounter} />;
-    } else if (this.props.can_update && this.props.showEdit) {
+    } else if (this.props.canUpdate && this.props.showEdit) {
       actionButton = <EncounterUpdate onChangeParentLevel={this.EncounterUpdateHandler} />;
     } else {
       actionButton = <ShowNoButton />;
