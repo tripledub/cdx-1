@@ -1,6 +1,8 @@
 class EncounterStatus
   class << self
     def change_status(encounter)
+      # Update requested tests probably outdated due to transaction issues.
+      encounter.requested_tests.reload
       if all_tests_finished?(encounter)
         encounter.update(status: :completed)
       elsif all_tests_pending?(encounter)

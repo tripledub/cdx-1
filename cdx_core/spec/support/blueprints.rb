@@ -277,8 +277,8 @@ end
 XpertResult.blueprint do
   requested_test { RequestedTest.make }
   sample_collected_on { 23.days.ago}
-  tuberculosis { 'invalid' }
-  rifampicin { 'detected' }
+  tuberculosis { 'detected' }
+  rifampicin { 'not_detected' }
   examined_by { Faker::Name.name }
   result_on { 7.days.from_now }
 end
