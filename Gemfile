@@ -112,6 +112,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'fudge'
 end
 
 group :test do
@@ -122,7 +123,6 @@ group :test do
   gem 'machinist', '~> 1.0'
   gem 'capybara'
   gem 'guard-rspec'
-  gem 'rspec'
   gem 'rspec-collection_matchers'
   gem 'vcr'
   gem 'webmock', require: false

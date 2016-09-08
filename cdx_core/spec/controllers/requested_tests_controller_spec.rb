@@ -15,10 +15,11 @@ describe RequestedTestsController  do
   end
   let(:encounter)        { Encounter.make institution: institution, site: site ,patient: patient }
   let(:requested_test1)  { RequestedTest.make encounter: encounter }
+  let(:requested_test2)  { RequestedTest.make encounter: encounter }
   let(:default_params)   { { context: institution.uuid } }
   let(:jsondata)         {
     {
-      "requested_tests" => {
+      "0" => {
         'id'      => requested_test1.id,
         'status'  => 'rejected',
         'comment' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
@@ -35,7 +36,7 @@ describe RequestedTestsController  do
       it "should update requestedTests status" do
         jsondata =
             {
-              "requested_tests" => {
+              "0" => {
                 "id" => requested_test1.id,
                 "status" => "inprogress",
                 "comment" => "comment xyz"
@@ -54,7 +55,7 @@ describe RequestedTestsController  do
       it "should update encounter status to completed ehen test status is complete" do
         jsondata =
             {
-              "requested_tests" => {
+              "0" => {
                 "id" => requested_test1.id,
                 "status" => "completed"
               }
@@ -71,7 +72,7 @@ describe RequestedTestsController  do
       it "should update encounter status to inprogress when test status is inprogress" do
         jsondata =
             {
-              "requested_tests" => {
+              "0" => {
                 "id" => requested_test1.id,
                 "status" => "inprogress"
               }
@@ -86,13 +87,12 @@ describe RequestedTestsController  do
       end
 
       it "should update audit log" do
-        jsondata =
-            {
-              "requested_tests" => {
-                "id" => requested_test1.id,
-                "status" => "inprogress"
-              }
-            }
+        jsondata = {
+          "0" => {
+            "id" => requested_test1.id,
+            "status" => "inprogress"
+          }
+        }
 
         post :update,  id: encounter.id, requested_tests: jsondata
 
@@ -103,16 +103,27 @@ describe RequestedTestsController  do
       context 'when status is set to rejected' do
         context 'when there is a comment' do
           before :each do
+            jsondata = {
+              "0" => {
+                "id" => requested_test1.id,
+                "status" => "rejected",
+                "comment" => "comment xyz"
+              },
+              "1" => {
+                "id" => requested_test2.id,
+                "status" => "rejected",
+                "comment" => "comment 123"
+              }
+            }
+
             post :update,  id: encounter.id, requested_tests: jsondata
+            requested_test1.reload
+            encounter.reload
           end
 
           it "should update encounter status to completed when test status is rejected" do
-
-            test = RequestedTest.find(requested_test1.id)
-
-            updated_encounter = Encounter.find(encounter.id)
-            expect(RequestedTest.statuses[test.status]).to eq RequestedTest.statuses["rejected"]
-            expect(Encounter.statuses[updated_encounter.status]).to eq Encounter.statuses["completed"]
+            expect(requested_test1.status).to eq 'rejected'
+            expect(encounter.status).to eq 'completed'
           end
 
           it 'should return ok' do
@@ -122,7 +133,7 @@ describe RequestedTestsController  do
 
         context 'when there is no comment' do
           before :each do
-            jsondata['requested_tests'].delete('comment')
+            jsondata['0'].delete('comment')
             post :update,  id: encounter.id, requested_tests: jsondata, format: :json
           end
 

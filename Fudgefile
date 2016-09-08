@@ -1,0 +1,14 @@
+task_group :rspec do
+  each_directory 'cdx_*' do
+    shell 'bundle'
+  end
+
+  in_directory 'cdx_core' do
+    shell 'bundle exec rake db:migrate'
+    shell 'bundle exec rspec --exclude-pattern "**/features/*_spec.rb"'
+  end
+end
+
+build :default do
+  task_group :rspec
+end

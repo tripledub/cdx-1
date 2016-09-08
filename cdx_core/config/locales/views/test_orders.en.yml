@@ -10,6 +10,7 @@ en:
         other: '%{count} Test orders'
     filters:
       show_all: 'Show all'
+      show_all_outstanding: 'Show all outstanding'
       show_filters: 'Show filters'
       testing_for: 'Testing for'
       date: 'Date'

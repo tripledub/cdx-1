@@ -8,9 +8,16 @@ class PatientResult < ActiveRecord::Base
 
   before_save :convert_string_to_dates
 
-  def self.find_associated_tests_to_results(encounter)
-    PatientResult.joins(:requested_test).where('requested_tests.encounter_id' => encounter.id).pluck(:id, :requested_test_id).map do |result|
-     { id: result[0], requested_test_id: result[1] }
+  class << self
+    def find_associated_tests_to_results(encounter)
+      PatientResult.joins(:requested_test).where('requested_tests.encounter_id' => encounter.id).pluck(:id, :requested_test_id).map do |result|
+       { id: result[0], requested_test_id: result[1] }
+      end
+    end
+
+    def find_all_for_patient(patient_id)
+      PatientResult.joins('LEFT OUTER JOIN `requested_tests` ON `requested_tests`.`id` = `patient_results`.`requested_test_id` LEFT OUTER JOIN `encounters` ON `encounters`.`id` = `requested_tests`.`encounter_id`')
+        .where('patient_results.patient_id = ? OR encounters.patient_id = ?', patient_id, patient_id)
     end
   end
 
