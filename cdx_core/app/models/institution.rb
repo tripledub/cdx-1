@@ -2,7 +2,7 @@ class Institution < ActiveRecord::Base
   include AutoUUID
   include Resource
 
-  KINDS = %w(institution manufacturer health_organization)
+  KINDS = %w(institution health_organization)
 
   belongs_to :user
 

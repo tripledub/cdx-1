@@ -3,7 +3,6 @@ var DeviceResultRow = React.createClass({
     return (
     <tr data-href={this.props.device.viewLink}>
       <td>{this.props.device.name}</td>
-      <td>{this.props.device.institutionName}</td>
       <td>{this.props.device.modelName}</td>
       <td>{this.props.device.siteName}</td>
     </tr>);
@@ -39,7 +38,6 @@ var DevicesIndexTable = React.createClass({
         <thead>
           <tr>
             {sortableHeader(I18n.t("components.devices.col_name"), "devices.name")}
-            {sortableHeader(I18n.t("components.devices.col_manufacturer"), "institutions.name")}
             {sortableHeader(I18n.t("components.devices.col_model"), "device_models.name")}
             {sortableHeader(I18n.t("components.devices.col_site"), "sites.name")}
           </tr>

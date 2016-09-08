@@ -1,5 +1,14 @@
 en:
   device_models:
+    create:
+      success: 'Device model was successfully created.'
+    update:
+      success: 'Device model %{device_name} was successfully updated.'
+      cannot_delete_manifest: 'You must have a manifest uploaded'
+    destroy:
+      success: 'Device model was successfully deleted.'
+    publish:
+      success: 'Device model %{device_name} was successfully %{device_action}.'
     index:
       device_model:
         zero: 'No device model'

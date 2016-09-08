@@ -8,10 +8,6 @@ describe SampleIdentifier do
       expect(SampleIdentifier.make(site: site).sample.institution).to eq(site.institution)
     end
 
-    it "should be able to create without site for manufacturers" do
-      expect(SampleIdentifier.make(sample: Sample.make(institution: Institution.make(:manufacturer))).site).to be_nil
-    end
-
     it "should create from samples" do
       sample = Sample.make
       sample_ident = sample.sample_identifiers.make
@@ -25,14 +21,6 @@ describe SampleIdentifier do
 
   context "validations" do
     it { is_expected.to validate_presence_of :sample }
-
-    context "validations for manufacturer" do
-      let(:sample) { Sample.make institution: Institution.make(:manufacturer) }
-
-      it "does not validate presence of site" do
-        expect(SampleIdentifier.new(sample: sample, site: nil, entity_id: "100000")).to be_valid
-      end
-    end
 
     context "validations for institution" do
       let(:institution) { Institution.make(:institution) }

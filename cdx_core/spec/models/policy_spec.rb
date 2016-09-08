@@ -573,14 +573,14 @@ describe Policy do
 
   context "Device Model" do
     context "Update" do
-      it "should not allow to update by manufacturer admin if has no institution" do
+      it "should not allow to update by admin if has no institution" do
         device_model = DeviceModel.make
-        user.institutions.make(kind: :manufacturer)
+        user.institutions.make
         assert_cannot user, device_model, UPDATE_DEVICE_MODEL
       end
     end
   end
-  
+
   context "Page Header" do
     let!(:site)  { Site.make institution: institution }
     it "should not allow page header with no roles" do
@@ -598,7 +598,7 @@ describe Policy do
       assert_cannot site, settings_page, DISPLAY_SETTINGS_PAGE_ROLE
     end
   end
-  
+
   context "Device" do
     context "Create" do
       it "disallows creating institution device" do

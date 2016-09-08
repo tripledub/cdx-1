@@ -14,7 +14,7 @@
   - can_publish = can_publish_device_model?(@device_model)
   .row
     .col
-      This device model is not yet published; only devices from its manufacturer can be created using this model.
+      This device model is not yet published.
       - if can_publish
         Publishing it will make it available to all institutions in CDX.
   - if can_publish
