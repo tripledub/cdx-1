@@ -1,0 +1,8 @@
+en:
+  institutions:
+    create:
+      success: 'Institution was successfully created.'
+    update:
+      success: 'Institution was successfully updated.'
+    destroy:
+      success: 'Institution was successfully deleted.'
