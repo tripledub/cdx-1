@@ -372,6 +372,7 @@ class EncountersController < ApplicationController
     Jbuilder.new do |json|
       json.(@encounter, :id)
       json.(@encounter, :uuid)
+      json.(@encounter, :batch_id)
       json.(@encounter, :user)
       json.(@encounter, :exam_reason)
       json.(@encounter, :tests_requested)

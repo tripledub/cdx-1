@@ -19,6 +19,7 @@ describe Presenters::PatientTestOrders do
     it 'should return elements formated' do
       expect(described_class.patient_view(patient.encounters).first).to eq({
         id:          patient.encounters.first.uuid,
+        batchId:     patient.encounters.first.batch_id,
         siteName:    patient.encounters.first.site.name,
         performingSiteName:  patient.encounters.first.site.name,
         requester:   patient.encounters.first.user.full_name,

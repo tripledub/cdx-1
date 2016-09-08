@@ -124,7 +124,7 @@ var EncounterShow = React.createClass({
           <div className="panel">
             <div className="row collapse">
               <div className="col-6">
-                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.order_id_label")}    fieldValue={ this.props.encounter.uuid } />
+                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.batch_id_label")}    fieldValue={ this.props.encounter.batch_id } />
                 <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.reason_exam_label")}    fieldValue={ examreason } />
                 <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.testing_for_label")} fieldValue={ this.props.encounter.testing_for } />
                 {

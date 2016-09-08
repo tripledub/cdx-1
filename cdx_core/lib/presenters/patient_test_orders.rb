@@ -4,6 +4,7 @@ class Presenters::PatientTestOrders
       test_orders.map do |test_order|
         {
           id:          test_order.uuid,
+          batchId:     test_order.batch_id,
           siteName:    site_name(test_order.site),
           performingSiteName:    site_name(test_order.performing_site),
           requester:   requester_name(test_order.user),
