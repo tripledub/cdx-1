@@ -89,7 +89,6 @@ class SitesController < ApplicationController
     respond_to do |format|
       update_or_save = false
 
-      debugger
       if site_params(@can_move).has_key?(:parent_id) && site_params(@can_move)[:parent_id].to_i != @site.parent_id
         new_site = institution.sites.new(site_params(true))
         begin
