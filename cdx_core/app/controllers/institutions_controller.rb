@@ -49,7 +49,7 @@ class InstitutionsController < ApplicationController
         # This is needed for the next redirect, which will use it
         params[:context] = new_context
 
-        format.html { redirect_to root_path, notice: 'Institution was successfully created.' }
+        format.html { redirect_to root_path, notice: I18n.t('institutions.create.success') }
         format.json { render action: 'show', status: :created, location: @institution }
       else
         format.html { render action: 'new' }
@@ -64,7 +64,7 @@ class InstitutionsController < ApplicationController
 
     respond_to do |format|
       if @institution.update(institution_params)
-        format.html { redirect_to root_path, notice: 'Institution was successfully updated.' }
+        format.html { redirect_to root_path, notice: I18n.t('institutions.update.success') }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -80,7 +80,7 @@ class InstitutionsController < ApplicationController
     @institution.destroy
 
     respond_to do |format|
-      format.html { redirect_to institutions_url }
+      format.html { redirect_to institutions_url, notice: I18n.t('institutions.destroy.success') }
       format.json { head :no_content }
     end
   end

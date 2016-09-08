@@ -1,5 +1,11 @@
 en:
   sites:
+    create:
+      success: 'Site was successfully created.'
+    update:
+      success: 'Site was successfully updated.'
+    destroy:
+      success: 'Site was successfully delete.'
     index:
       no_dependencies: 'This %{entity_name} has no dependencies.'
       create_sites: "Create sites here to keep your institution's hierachy organized."

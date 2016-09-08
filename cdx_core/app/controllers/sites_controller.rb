@@ -54,7 +54,7 @@ class SitesController < ApplicationController
 
     respond_to do |format|
       if @site.save
-        format.html { redirect_to sites_path, notice: 'Site was successfully created.' }
+        format.html { redirect_to sites_path, notice: I18n.t('sites.create.success') }
         format.json { render action: 'show', status: :created, location: @site }
       else
         format.html { render action: 'new' }
@@ -118,7 +118,7 @@ class SitesController < ApplicationController
       end
 
       if update_or_save
-        format.html { redirect_to sites_path(redirect_options), notice: 'Site was successfully updated.' }
+        format.html { redirect_to sites_path(redirect_options), notice: I18n.t('sites.update.success') }
         format.json { head :no_content }
       else
         @sites = check_access(institution.sites, READ_SITE) if @can_move
@@ -137,7 +137,7 @@ class SitesController < ApplicationController
     @site.destroy
 
     respond_to do |format|
-      format.html { redirect_to sites_path, notice: 'Site was successfully deleted.' }
+      format.html { redirect_to sites_path, notice: I18n.t('sites.destroy.success') }
       format.json { head :no_content }
     end
   end

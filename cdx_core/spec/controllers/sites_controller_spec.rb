@@ -28,7 +28,7 @@ describe SitesController do
     it "should return a valid CSV when requested" do
       get :index, format: :csv
       csv = CSV.parse(response.body)
-      expect(csv[0]).to eq(["Name", "Address","City", "State", "Zipcode"])   
+      expect(csv[0]).to eq(["Name", "Address","City", "State", "Zipcode"])
       expect(csv[1]).to eq([site.name, site.address, site.city, site.state, site.zip_code])
     end
 
@@ -134,7 +134,7 @@ describe SitesController do
       expect(site.reload.name).to eq("newname")
       expect(site.address).to eq("1 street")
       expect(site.city).to eq("london")
-       expect(site.state).to eq("aa")
+      expect(site.state).to eq("aa")
       expect(site.zip_code).to eq("sw11")
       expect(response).to be_redirect
     end
@@ -189,9 +189,9 @@ describe SitesController do
 
     context "change parent site by user with institution:createSite policy" do
       let!(:new_parent) { institution.sites.make }
-      let(:new_site) { Site.last }
-      let!(:device) { Device.make site: site }
-      let!(:test) { TestResult.make device: device }
+      let(:new_site)    { Site.last }
+      let!(:device)     { Device.make site: site }
+      let!(:test)       { TestResult.make device: device }
 
       before(:each) {
         patch :update, id: site.id, context: site.uuid, site: (
