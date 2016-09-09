@@ -170,6 +170,9 @@ class ApplicationController < ActionController::Base
   end if Rails.env.test?
 
   protected
+  def load_locales
+    @locales ||= [[I18n.t("views.en"),"en"],[I18n.t("views.vi"), "vi"]]
+  end
 
   def json_request?
     request.format.json?
@@ -195,4 +198,5 @@ class ApplicationController < ActionController::Base
       end
     logger.warn "#{I18n.t('application_controller.authorization_failed')} #{action} #{I18n.t('application_controller.requested_by')} #{current_user.email} #{I18n.t('application_controller.in')} #{resource_name}"
   end
+  
 end
