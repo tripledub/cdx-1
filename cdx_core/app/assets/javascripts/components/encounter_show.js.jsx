@@ -232,8 +232,7 @@ var EncounterDelete = React.createClass({
       return (
         <ConfirmationModalEncounter message= {I18n.t("components.encounter_show.cancel_confirm_msg")} title= {I18n.t("components.encounter_show.cancel_confirm_title")} cancelTarget= {this.cancelDeleteClickHandler} target={this.confirmClickHandler} hideOuterEvent={this.cancelDeleteClickHandler} deletion= {true} hideCancel= {false} confirmMessage= {I18n.t("components.encounter_show.delete_btn")} />
       );
-    }
-    else if (this.props.showEdit && (this.props.encounter.status != 'inprogress')) {
+    } else if (this.props.showEdit && (this.props.encounter.status == 'pending')) {
       return (
         <div>
           <a className = "btn-secondary pull-right" onClick={this.clickHandler} id="delete_encounter" href="#">{I18n.t("components.encounter_show.cancel_test_order_btn")}</a>
@@ -265,15 +264,15 @@ var ConfirmationModalEncounter = React.createClass({
   onCancel: function() {
     this.refs.confirmationModal.hide();
     if (this.props.target instanceof Function ) {
-     this.props.cancelTarget();
+      this.props.cancelTarget();
     }
   },
 
   onConfirm: function() {
     if (this.props.target instanceof Function ) {
-     this.props.target();
+      this.props.target();
     } else {
-    window[this.props.target]();
+      window[this.props.target]();
     }
     this.refs.confirmationModal.hide();
   },
