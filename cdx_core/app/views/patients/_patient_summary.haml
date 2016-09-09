@@ -55,6 +55,11 @@
             = Patient.human_attribute_name(:social_security_code)
           = patient.social_security_code
 
+        %li
+          %label
+            = Patient.human_attribute_name(:medical_insurance_num)
+          = patient.medical_insurance_num
+
         - if has_access?(@patient, Policy::Actions::UPDATE_PATIENT)
           %ul.button-container
             %li
