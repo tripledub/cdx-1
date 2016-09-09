@@ -63,6 +63,7 @@
       reactivate: 'Kích hoạt'
       confirm: 'Bạn có chắc không?'
     custom_mappings:
+      custom_fields: 'Ghi chú thêm'
       how_to_use: "Chỉ rõ cách bạn sử dụng một số lĩnh vực của thiết bị"
       device_field: 'Tôi sử dụng các lĩnh vực thiết bị'
       to_enter: 'để nhấn vào'

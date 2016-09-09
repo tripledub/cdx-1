@@ -41,7 +41,7 @@
   .institution-name
     .row
       .col.px-1
-        = f.label :name, :class => 'block'
+        = f.label :name, I18n.t('institutions.form.name'), :class => 'block'
       .col
         = f.text_field :name, readonly: @readonly, :class => 'input-block'
     - if not f.object.new_record?

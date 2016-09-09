@@ -2,7 +2,7 @@
   - custom_fields = @device.current_manifest.fields.select(&:custom?)
   .row
     .col.pe-2
-      = label_tag :custom_fields
+      = label_tag :custom_fields, I18n.t('devices.custom_mappings.custom_fields')
     .col
       .value
         = I18n.t('devices.custom_mappings.how_to_use')

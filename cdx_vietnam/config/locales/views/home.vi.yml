@@ -41,12 +41,12 @@ vi:
     settings:
       header: 'Cài đặt'
       alert: 'Cảnh báo'
-      alert_notice: 'Thông báo cho nhóm của bạn về những chuyện quan trọng.'
+      alerts_notice: 'Thông báo cho nhóm của bạn về những chuyện quan trọng.'
       role:
         zero: 'Không có vai trò'
         one: "1 Vai trò"
         other: "%{count} Vai trò"
-      role_notice: 'Quản lý quyền hạn của người dùng với chính sách tái sử dụng'
+      roles_notice: 'Quản lý quyền hạn của người dùng với chính sách tái sử dụng'
       sites: 'Trang'
       sites_notice: 'Quản lý trang'
       messages: 'Thông điệp'

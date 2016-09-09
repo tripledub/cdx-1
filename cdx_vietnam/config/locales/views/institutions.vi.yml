@@ -1,6 +1,7 @@
 vi:
   institutions:
     form:
+      name: Tên tổ chức
       health_org: 'Tổ chức y tế'
       work_for_health_org: 'Tôi làm việc cho một tổ chức y tế mà muốn có quyền truy cập vào kết quả chẩn đoán đã được chia sẻ để giám sát bệnh.'
       institution: 'Tổ chức'

@@ -1,6 +1,7 @@
 en:
   institutions:
     form:
+      name: Name
       health_org: 'Health organization'
       work_for_health_org: 'I work for a Health Organization that wants to have access to shared diagnostic results to do disease surveillance.'
       institution: 'Institution'
