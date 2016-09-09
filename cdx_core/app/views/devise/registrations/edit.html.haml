@@ -61,7 +61,6 @@
       = cdx_select form: f, name: :timestamps_in_device_time_zone, class: 'input-xx-large' do |select|
         - select.item false, I18n.t('devise.registrations.edit.select_my_timezone')
         - select.item true, I18n.t('devise.registrations.edit.select_device_timezone')
-      = f.label :timestamps_in_device_time_zone, I18n.t('devise.edit.test_timestamps')
 
   .row.button-actions
     .col

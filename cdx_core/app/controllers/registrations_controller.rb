@@ -1,7 +1,8 @@
 class RegistrationsController < Devise::RegistrationsController
-  before_action :load_locales
+  include Concerns::Context
+
   before_action :authenticate_user!
-  skip_before_filter :ensure_context, except: :edit
+  before_action :ensure_context
 
   protected
 
