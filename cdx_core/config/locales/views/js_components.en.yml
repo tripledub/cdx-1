@@ -89,6 +89,7 @@ en:
         col_request_by: "Request By"
         col_request_to: "Request To"
         col_order_id: "Order Id"
+        col_batch_id: "Batch Id"
         col_order_by: "Order by User"
         col_request_date: "Request Date"
         col_due_date: "Due Date"

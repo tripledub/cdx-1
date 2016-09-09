@@ -302,4 +302,15 @@ describe Encounter do
     end
   end
 
+  describe ':batch_id' do
+    it 'is a 0 padded string, prepended by CDP' do
+      encounter.id = 1
+      expect(encounter.batch_id).to eq('CDP-0000001')
+    end
+
+    it 'is always the same length' do
+      encounter.id = 999
+      expect(encounter.batch_id).to eq('CDP-0000999')
+    end
+  end
 end

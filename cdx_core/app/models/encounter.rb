@@ -177,6 +177,10 @@ class Encounter < ActiveRecord::Base
     end
   end
 
+  def batch_id
+    "CDP-#{self.id.to_s.rjust(7, '0')}"
+  end
+
   protected
 
   def ensure_entity_id
