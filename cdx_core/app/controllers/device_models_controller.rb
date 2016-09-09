@@ -37,7 +37,7 @@ class DeviceModelsController < ApplicationController
 
     respond_to do |format|
       if @device_model.save
-        format.html { redirect_to device_models_path, notice: 'Device Model was successfully created.' }
+        format.html { redirect_to device_models_path, notice: I18n.t('device_models.create.success') }
         format.json { render action: 'show', status: :created, device_model: @device_model }
       else
         @device_model.published_at = @device_model.published_at_was
@@ -58,22 +58,22 @@ class DeviceModelsController < ApplicationController
     set_published_status(@device_model)
 
     if params[:device_model][:manifest_attributes] &&
-       (params['deleted_manifest'] == params["device_model"]["manifest_attributes"]["id"]) &&
-       (params[:device_model][:manifest_attributes][:definition]==nil)
-       cannot_delete_manifest = true
+      (params['deleted_manifest'] == params["device_model"]["manifest_attributes"]["id"]) &&
+      (params[:device_model][:manifest_attributes][:definition] == nil)
+      cannot_delete_manifest = true
     end
-    
+
     load_manifest_upload
 
     respond_to do |format|
       if cannot_delete_manifest
-         flash.now[:error] = "you must have a manifest uploaded"
-         format.html { render action: 'edit'}
+        flash.now[:error] = I18n.t('device_models.update.cannot_delete_manifest')
+        format.html { render action: 'edit'}
       elsif @device_model.update(device_model_update_params)
-        format.html { redirect_to device_models_path, notice: "Device Model #{@device_model.name} was successfully updated." }
+        format.html { redirect_to device_models_path, notice: I18n.t('device_models.update.success', device_name: @device_model.name) }
         format.json { render action: 'show', status: :created, device_model: @device_model }
       else
-        @device_model.published_at = @device_model.published_at_was
+        @device_model.published_at       = @device_model.published_at_was
         @device_model.setup_instructions = DeviceModel.find(params[:id]).setup_instructions
         format.html { render action: 'edit' }
         format.json { render json: @device_model.errors, status: :unprocessable_entity }
@@ -87,7 +87,7 @@ class DeviceModelsController < ApplicationController
     @device_model.save!
 
     respond_to do |format|
-      format.html { redirect_to device_models_path, notice: "Device Model #{@device_model.name} was successfully #{params[:publish] ? 'published' : 'withdrawn'}." }
+      format.html { redirect_to device_models_path, notice: I18n.t('device_models.update.success', device_name: @device_model.name, device_action: params[:publish] ? 'published' : 'withdrawn') }
       format.json { render action: 'show', status: :created, device_model: @device_model }
     end
   end
@@ -98,7 +98,7 @@ class DeviceModelsController < ApplicationController
     @device_model.destroy!
 
     respond_to do |format|
-      format.html { redirect_to device_models_path }
+      format.html { redirect_to device_models_path, notice: I18n.t('device_models.destroy.success') }
       format.json { head :no_content }
     end
   end

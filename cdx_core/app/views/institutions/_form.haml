@@ -22,16 +22,6 @@
             %label{for: "institution_kind_institution"}
               .btn-add
                 = image_tag "arrow-down.png"
-      .col
-        = f.radio_button :kind, "manufacturer", checked: @institution.kind == "manufacturer", class: 'institution'
-        .institution-option
-          = image_tag "ic-manufacturer.png"
-          %h4 Manufacturer
-          %p I work for a device manufacturer and want to test the integration of our devices and provide support to our customers.
-          .institution-radio
-            %label{for: "institution_kind_manufacturer"}
-              .btn-add
-                = image_tag "arrow-down.png"
   .institution-name
     .row
       .col.px-1

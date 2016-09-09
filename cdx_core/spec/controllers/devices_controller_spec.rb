@@ -5,7 +5,7 @@ describe DevicesController do
   let!(:institution) {Institution.make}
   let!(:user) {institution.user}
   let!(:site) {institution.sites.make}
-  let!(:device_model) {DeviceModel.make(institution: Institution.make(:manufacturer))}
+  let!(:device_model) {DeviceModel.make(institution: Institution.make)}
   let!(:manifest) {Manifest.make(device_model: device_model)}
   let!(:device) {Device.make institution: institution, site: site, device_model: device_model}
   let!(:other_institution) {Institution.make user: user}
@@ -52,21 +52,6 @@ describe DevicesController do
       expect(assigns(:devices)).to contain_exactly(other_device)
     end
 
-    it "should display index filtered by manufacturer" do
-      manufacturer = Institution.make
-      device2.device_model.tap do |device_model|
-        device_model.institution = manufacturer
-        device_model.save!
-      end
-      Device.make institution: institution2
-
-      grant user2, user, [Institution.resource_name, Device.resource_name], "*"
-
-      get :index, context: institution2.uuid, manufacturer: manufacturer.id
-      expect(response).to be_success
-      expect(assigns(:devices)).to contain_exactly(device2)
-    end
-
     it "should download CSV" do
       get :index, format: :csv
       expect(response).to be_success
@@ -76,14 +61,12 @@ describe DevicesController do
           "UUID", "Name", "Serial Number", "Time Zone",
           "Institution UUID", "Institution Name",
           "Model Name",
-          "Manufacturer UUID", "Manufacturer Name",
           "Site UUID", "Site Name"
         ])
         expect(row.fields).to eq([
           device.uuid, device.name, device.serial_number, device.time_zone,
           device.institution.uuid, device.institution.name,
           device.device_model.name,
-          device.device_model.institution.uuid, device.device_model.institution.name,
           device.site.uuid, device.site.name
         ])
       end
@@ -123,21 +106,6 @@ describe DevicesController do
       get :index
       expect(response).to be_success
       expect(assigns(:devices)).to contain_exactly(device2)
-    end
-
-    it "should display manufacturers used by the devices in the current context despite manufacturer filter" do
-      device_model2 = DeviceModel.make institution: Institution.make
-      device2 = Device.make institution: institution, site: site, device_model: device_model2
-
-      site3 = institution.sites.make
-      device_model3 = DeviceModel.make institution: Institution.make
-      device3 = Device.make institution: institution, site: site3, device_model: device_model3
-
-      get :index, context: institution.uuid, manufacturer: device_model2.institution.id
-      expect(assigns(:manufacturers)).to match_array([device_model.institution, device_model2.institution, device_model3.institution])
-
-      get :index, context: site3.uuid
-      expect(assigns(:manufacturers)).to match_array([device_model3.institution])
     end
   end
 

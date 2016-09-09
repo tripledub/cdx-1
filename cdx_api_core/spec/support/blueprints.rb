@@ -100,10 +100,6 @@ Institution.blueprint do
   name
 end
 
-Institution.blueprint(:manufacturer) do
-  kind { "manufacturer" }
-end
-
 Device.blueprint do
   site { Site.make(institution: (object.institution || Institution.make)) }
   institution { object.site.try(:institution) || Institution.make }
@@ -173,18 +169,11 @@ RequestedTest.blueprint do
   comment {"this is a  comment for the requested test ......"}
 end
 
-
-def first_or_make_site_unless_manufacturer(institution)
-  unless institution.kind_manufacturer?
-    institution.sites.first || institution.sites.make
-  end
-end
-
 SampleIdentifier.blueprint do
   sample { Sample.make_unsaved({}.tap do |h|
     h[:institution] = object.site.institution if object.site
   end)}
-  site { first_or_make_site_unless_manufacturer(object.sample.institution) }
+  site { object.sample.institution }
 end
 
 Sample.blueprint do
