@@ -133,7 +133,7 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource_or_scope)
 
     # update user locale after signed in
-    resource_or_scope.update_attribute('locale', params[:user][:locale])
+    resource_or_scope.update_attribute('locale', params[:user][:locale]) if params[:user]
 
     if has_access?(TestResult, Policy::Actions::MEDICAL_DASHBOARD)
       dashboard_path
