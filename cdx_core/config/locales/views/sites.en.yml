@@ -4,6 +4,7 @@ en:
       success: 'Site was successfully created.'
     update:
       success: 'Site was successfully updated.'
+      not_allowed: 'You are not allowed to update %{site_name}.'
     destroy:
       success: 'Site was successfully delete.'
     index:
@@ -22,7 +23,7 @@ en:
       delete_site: 'Delete Site'
       delete: 'Delete'
       in_order_to_delete: 'In order to delete this site you must first reassign the'
-      device_count: 
+      device_count:
         one: '1 device'
         other: '%{count} devices'
       assigned: 'assigned to it.'
@@ -64,4 +65,3 @@ en:
       new_site: 'New Site'
     show:
       none: 'None'
-     

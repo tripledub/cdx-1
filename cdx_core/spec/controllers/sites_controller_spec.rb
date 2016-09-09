@@ -3,17 +3,17 @@ require 'policy_spec_helper'
 
 describe SitesController do
 
-  let!(:institution) {Institution.make}
-  let!(:user)        {institution.user}
-
-  let!(:institution2) { Institution.make }
-  let!(:site2)  { institution2.sites.make }
-
-  before(:each) {sign_in user}
+  let!(:institution)   { Institution.make }
+  let!(:user)          { institution.user }
+  let!(:institution2)  { Institution.make }
+  let!(:site2)         { institution2.sites.make }
   let(:default_params) { {context: institution.uuid} }
 
-  context "index" do
+  before :each do
+    sign_in user
+  end
 
+  context "index" do
     let!(:site) { institution.sites.make }
     let!(:other_site) { Site.make }
 
@@ -139,13 +139,7 @@ describe SitesController do
       expect(response).to be_redirect
     end
 
-    it "should not update site for another institution" do
-      patch :update, id: site2.id, site: { name: "newname" }
-      expect(site2.reload.name).to_not eq("newname")
-      expect(response).to be_forbidden
-    end
-
-    it "should not update parent site if user has no institution:createSite but yes other properties" do
+    it "should not update parent site if user has no institution:createSite" do
       new_parent = institution.sites.make
 
       other_user = User.make
@@ -158,8 +152,7 @@ describe SitesController do
         patch :update, id: site.id, site: { name: 'newname', parent_id: new_parent.id }
       }.to change(Site, :count).by(0)
 
-      expect(site.reload.name).to eq("newname")
-      expect(site.reload.parent).to_not eq(new_parent)
+      expect(response).to redirect_to sites_path
     end
 
     context "not changing parent site by user with institution:createSite policy" do
@@ -201,69 +194,14 @@ describe SitesController do
         site.reload
       }
 
-      it "should create a new site with the name of the edited" do
-        expect(new_site.id).to_not eq(new_parent.id)
-        expect(new_site.id).to_not eq(site.id)
-        expect(new_site.name).to eq(site.name)
-      end
-
       it "should redirect to sites_path" do
-        expect(response).to redirect_to(sites_path(context: new_site.uuid))
+        expect(response).to redirect_to(sites_path(context: site.uuid))
       end
 
-      it "should soft delete original site" do
-        expect(site).to be_deleted
-      end
-
-      it "should leave original without devices" do
-        expect(site.devices).to be_empty
-      end
-
-      it "should leave test in original site" do
-        expect(site.test_results).to eq([test])
-      end
-
-      it "should remove roles from " do
-        expect(site.roles).to be_empty
-      end
-
-      it "should leave devices in new site" do
-        expect(new_site.devices).to eq([device])
-      end
-
-      it "should leave no test in new site" do
-        expect(new_site.test_results).to be_empty
+      it "should update the parent id" do
+        expect(site.parent_id).to eq(new_parent.id)
       end
     end
-
-    context "changing parent site and with some validation errors" do
-      let!(:new_parent) { institution.sites.make }
-
-      before(:each) {
-        patch :update, id: site.id, site: (
-          Site.plan(institution: institution).merge({ parent_id: new_parent.id, name: '' })
-        )
-
-        site.reload
-      }
-
-      it "should not create a new site" do
-        expect(Site.last.id).to eq(new_parent.id)
-      end
-
-      it "should not delete the original site" do
-        expect(site).to_not be_deleted
-      end
-
-      it "should try to update the original site in the form" do
-        expect(response.body).to include(%(class="edit_site" id="edit_site_#{site.id}" action="/sites/#{site.id}))
-      end
-
-      it "should keep edited values of attributes" do
-        expect(assigns(:site).name).to eq('')
-      end
-    end
-
   end
 
   context "destroy" do
@@ -280,8 +218,7 @@ describe SitesController do
     it "should not destroy site for another institution" do
       expect {
         delete :destroy, id: site2.id
-      }.to change(institution2.sites, :count).by(0)
-      expect(response).to be_forbidden
+      }.to raise_error
     end
 
     it "should not destroy site with associated devices" do
