@@ -7,7 +7,7 @@ class HeadlessCSVMessageParser
 
   def lookup(path, data, root = data)
     unless ManifestFieldValidation.is_an_integer?(path)
-      raise "Header lookup is unsupported for headless CSV Messages"
+      raise I18n.t('models.headless_csv_message_parser.header_lookup')
     else
       data[path.to_i]
     end

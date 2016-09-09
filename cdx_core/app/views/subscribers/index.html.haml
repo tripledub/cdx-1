@@ -1,18 +1,20 @@
 .row
   .col
     - unless filters.empty?
-      = link_to "+", new_subscriber_path, class: 'btn-add side-link ontop fix', title: 'Add Subscriber'
+      = link_to "+", new_subscriber_path, class: 'btn-add side-link ontop fix', title: I18n.t('subscribers.index.add_subscriber_title')
     - if subscribers.empty?
-      = empty_data title: 'Subscribers' do |c|
+      = empty_data title: I18n.t('subscribers.index.subscribers_title') do |c|
         - c.body do
-          %h1 There are no subscribers
+          %h1 
+            = I18n.t('subscribers.index.no_subscriber')
     - else
-      = cdx_table title: 'Subscribers' do |t|
+      = cdx_table title: I18n.t('subscribers.index.subscribers_title') do |t|
         - t.columns do
           %col{:width => "100%"}
         - t.thead do
           %tr
-            %th Name
+            %th 
+              = I18n.t('subscribers.index.name')
         - t.tbody do
           - if filters.empty?
             %tr

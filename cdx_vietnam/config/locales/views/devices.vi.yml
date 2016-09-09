@@ -1,16 +1,22 @@
-vi:
+﻿vi:
   devices:
     show:
       performance: 'Hiệu suất'
       setup: 'Cài đặt'
     performance:
-      explore_tests: 'Khám phá các thử nghiệm'
+      explore_tests: 'Khám phá các xét nghiệm'
       or: 'hoặc'
       logs: 'Nhật ký'
     new:
       new_device: 'Thiết bị mới'
     form:
-      none: 'Không'
+      title_institution: 'Tổ chức'
+      lbl_device_model: 'Kiểu thiết bị'
+      lbl_site: 'Trang'
+      lbl_name: 'Tên'
+      lbl_serial_number: 'Số seri'
+      lbl_time_zone: 'Múi giờ'
+      none: 'Không có'
       save: 'Lưu'
       delete: 'Xóa'
       confirm_delete: 'Bạn muốn xóa vĩnh viễn thiết bị này. Hành động này không thể được hoàn tác. Bạn có chắc muốn tiếp tục?'
@@ -33,6 +39,7 @@ vi:
       activation_token: 'Kích hoạt thẻ'
       device_id: 'Mã thiết bị'
       secret_key: 'Khóa bí mật'
+      setup_details: 'Chi tiết cài đặt'
     token:
       token_header: 'Kích hoạt thẻ đã được tạo'
       token: 'Thẻ:'
@@ -41,7 +48,7 @@ vi:
       last_time: 'Đây là lần cuối cùng bạn sẽ có thể xem thẻ. Hãy giữ nó an toàn'
     filters:
       header: 'Thiết bị'
-      add_device: 'Tất cả thiết bị'
+      add_device: 'Thêm thiết bị'
       show_filters: 'Hiển thị bộ lọc'
       manufacturer: 'Nhà sản xuất'
       model: 'Kiểu'
@@ -51,10 +58,12 @@ vi:
       edit: 'Edit'
       serial_number: 'Số seri %{serial_number}'
       located_at: 'Thiết bị nằm ở '
+      device_details: 'Chi tiết thiết bị            '
     activation_token:
       reactivate: 'Kích hoạt'
       confirm: 'Bạn có chắc không?'
     custom_mappings:
+      custom_fields: 'Ghi chú thêm'
       how_to_use: "Chỉ rõ cách bạn sử dụng một số lĩnh vực của thiết bị"
       device_field: 'Tôi sử dụng các lĩnh vực thiết bị'
       to_enter: 'để nhấn vào'

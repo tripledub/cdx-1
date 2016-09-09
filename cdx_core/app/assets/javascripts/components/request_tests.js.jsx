@@ -139,7 +139,16 @@ var RequestedTestRow = React.createClass({
     }
 
     var statusData = statusArray, MakeItem = function(X) {
-      return <option key={X} value={X}>{X}</option>;
+      if (X == "pending"){
+        txt = I18n.t('components.request_tests.stt_pending');
+      }else if(X == "completed"){
+        txt = I18n.t('components.request_tests.stt_completed');
+      }else if(X == "rejected"){
+        txt = I18n.t('components.request_tests.stt_rejected');
+      }else if(X == "inprogress"){
+        txt = I18n.t('components.request_tests.stt_inprogress');
+      }
+      return <option key={X} value={X}>{txt}</option>;
     };
 
     return (
@@ -177,7 +186,7 @@ var RequestedTestRow = React.createClass({
 var RequestedTestsList = React.createClass({
   getDefaultProps: function() {
     return {
-      title: "Requested Tests",
+      title: I18n.t('components.request_tests.title'),
       titleClassName: ""
     }
   },
@@ -192,7 +201,7 @@ var RequestedTestsList = React.createClass({
         <thead>
           <tr>
             <th className="tableheader" colSpan="10">
-              <span className={this.props.titleClassName}>{this.props.title}</span>
+              <span className={this.props.titleClassName}>{I18n.t('components.request_tests.title')}</span>
             </th>
           </tr>
           <tr>

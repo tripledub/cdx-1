@@ -1,0 +1,4 @@
+vi:
+  models: 
+    device:
+      device_model_msg: 'Các kiểu thiết bị chưa được công bố chỉ có thể được sử dụng để cài đặt từ các tổ chức tương tự'

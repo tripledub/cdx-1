@@ -22,18 +22,18 @@ class FiltersController < ApplicationController
   end
 
   def create
-    flash[:notice] = "Filter was successfully created" if filter.save
+    flash[:notice] = I18n.t('filters_controller.filter_created') if filter.save
     respond_with filter, location: filters_path
   end
 
   def update
-    flash[:notice] = "Filter was successfully updated" if filter.save
+    flash[:notice] = I18n.t('filters_controller.filter_updated') if filter.save
     respond_with filter, location: filters_path
   end
 
   def destroy
     if filter.destroy
-      flash[:notice] = "Filter was successfully deleted"
+      flash[:notice] = I18n.t('filters_controller.filter_deleted')
       respond_with filter
     else
       render :edit

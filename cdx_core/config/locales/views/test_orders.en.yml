@@ -1,6 +1,7 @@
 en:
   test_orders:
     index:
+      tests: 'Tests'
       header: 'Test orders'
       not_applicable: 'Not Applicable'
       no_test_orders: 'No test orders have been created'

@@ -40,9 +40,18 @@ en:
     destroy:
       success: 'Patient was successfully deleted.'
     form:
+      institution_label: 'Institution'
       select_day: 'Select day'
       select_month: 'Select month'
       select_year: 'Select year'
+      estimate_age: 'Estimate Age'
+      history: 'History'
+      nickname_label: 'Nickname'
+      entity_id_label: 'Entity id'
+      gender_label: 'Gender'
+      birth_date_on_label: 'Birth date on'
+      email_label: 'Email'
+      phone_label: 'Phone'
       institution_tooltip: 'Institution handling this Patient'
       nickname_tooltip: 'The Patients Nickname - if they have one'
       entity_id_tooltip: 'The Patients ID'

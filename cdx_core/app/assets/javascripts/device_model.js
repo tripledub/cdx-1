@@ -6,11 +6,11 @@ $(function() {
   //Request confirmation on publish
   $('#device-model-publish').on('click', function(evt) {
     var msg = evt.target.name == 'publish'
-      ? "Publishing this device model will make it available to all institutions."
-      : "Withdrawing this device model will hide it from all institutions.";
-    msg += " Are you sure you want to proceed?";
+      ? I18n.t('stores.device_model.publishing')
+      : I18n.t('stores.device_model.withdrawing');
+    msg += I18n.t('stores.device_model.sure');
     if (form.hasClass('dirty')) {
-      msg += "\n\nAny pending changes will be saved before proceeding.";
+      msg += "\n\n" + I18n.t('stores.device_model.pending_changes');
     }
 
     if (!window.confirm(msg)) {

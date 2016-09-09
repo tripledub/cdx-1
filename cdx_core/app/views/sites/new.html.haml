@@ -4,7 +4,7 @@
       %h2
         = link_to sites_path, class: 'side-link', title: I18n.t('views.back') do
           = image_tag "arrow-left-white.png"
-        New Site
+        = I18n.t('sites.new.new_site')
   .testflow
     .container
       = render 'form'

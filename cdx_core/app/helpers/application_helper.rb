@@ -57,6 +57,12 @@ module ApplicationHelper
     current_user.computed_policies.any? &:delegable?
   end
 
+  def form_title(obj, text = nil)
+    action = obj.persisted? ? I18n.t('application_helper.edit') : I18n.t('application_helper.new')
+    name = text.present? ? text : obj.class.name.humanize
+    "#{action} #{name}"
+  end
+
   def format_date(value, time_zone = nil)
     return nil unless value
 
@@ -206,5 +212,64 @@ module ApplicationHelper
         obj.send(attr)
       end
     end
+  end
+
+  def test_results_table(attributes)
+    options = { filter: {} }
+    options[:filter]['site.uuid'] = attributes[:filter][:site].uuid if attributes[:filter][:site]
+    options[:filter]['device.uuid'] = attributes[:filter][:device].uuid if attributes[:filter][:device]
+
+    react_component('TestResultsTable', filter: options[:filter])
+  end
+
+  def show_institution?(action, resource)
+    ComputedPolicy.condition_resources_for(action, resource, current_user)[:institution].count > 1
+  end
+
+  def validation_errors(model)
+    if model.errors.present?
+      render partial: "shared/validation_errors", locals: { model: model }
+    end
+  end
+
+  def entity_html_options(entity)
+    res = {}
+    res[:class] = "deleted" if entity.deleted?
+    res
+  end
+
+  def navigation_context_is_site?
+    @navigation_context.try(:site)
+  end
+
+  def navigation_context_entity_name
+    navigation_context_is_site? ? "site" : "institution"
+  end
+
+  def truncated_navigation_context_entity_name
+    truncate(navigation_context_name, length: 25)
+  end
+
+  def navigation_context_name
+    @navigation_context.try(:site).try(:name) || @navigation_context.institution.name
+  end
+
+  def institution_name
+    institutions = check_access(Institution, READ_INSTITUTION) || []
+    if institutions.one?
+      institutions.first.name
+    elsif has_access?(Institution, CREATE_INSTITUTION)
+      I18n.t('application_helper.edit_institution')
+    else
+      I18n.t('application_helper.show_institution')
+    end
+  end
+
+  def filters_params
+    filters_params = params
+    ['controller', 'action', 'page_size', 'page'].each do |param|
+      filters_params.delete(param)
+    end
+    filters_params
   end
 end

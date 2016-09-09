@@ -1,55 +1,63 @@
-%h1#playground CDP - Playground
+%h1#playground
+  = I18n.t('api.playground.index.playground')
 .row
   .col.pe-4
-    %h4 Submit message
+    %h4
+      = I18n.t('api.playground.index.submit_message')
     %form#report_form(method="post")
-      %label.block(for="device") Device
+      %label.block(for="device")
+        = I18n.t('api.playground.index.lbl_device')
 
       = cdx_select name: "device" do |select|
         - select.items @devices, :uuid, :name
 
-      %label.block(for="data") Data
+      %label.block(for="data")
+        = I18n.t('api.playground.index.lbl_data')
       %textarea.input-block#data{:rows => "18"}
       .results.playground-error
 
       .row
         .col
-          = "Test results to generate:"
+          = I18n.t('api.playground.index.col_test_result')
         .col
           %input{:max => "500", :min => "0", :value => "0", :id => "repeat_demo", :type => "number"}
       .row
         .col
-          = "Start date time:"
+          = I18n.t('api.playground.index.col_start_date')
         .col
           = datetime_local_field("data", "start_datetime")
       .row
         .col
-          = "End date time:"
+          = I18n.t('api.playground.index.col_end_date')
         .col
           = datetime_local_field("data", "end_datetime")
       .row
         .col
-          %input#create_button.btn-primary(name="commit" type="submit" value="Create message")
+          %input#create_button.btn-primary(name="commit" type="submit" value="#{I18n.t('api.playground.index.btn_create_msg')}")
 
   .col
     .row
       .col
-        %h4 Query results
+        %h4
+          = I18n.t('api.playground.index.query_result')
 
     %form#query_form(method="post")
       .row
         .col
-          %label.block(for="query_string") Query string
+          %label.block(for="query_string")
+            = I18n.t('api.playground.index.lbl_query_string')
           %textarea.input-block#query_string{:rows => "8"} encounter.patient_age=20yo..20yo
         .col
-          %label.block(for="post_body") Request Body
+          %label.block(for="post_body")
+            = I18n.t('api.playground.index.lbl_query_body')
           %textarea.input-block#post_body{:rows => "8"}
       .row
         .col
-          %input#query_button.btn-primary(type="submit" value="Query")
+          %input#query_button.btn-primary(type="submit" value="#{I18n.t('api.playground.index.btn_query')}")
     .row
       .col
         #response_div
           %hr
-          %h4 Response:
+          %h4
+            = I18n.t('api.playground.index.response')
           %pre#response

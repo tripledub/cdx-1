@@ -11,10 +11,16 @@
   .col
     %p#notice= notice
     %p
-      %strong Version:
+      %strong
+        = I18n.t('device_models.show.version')
       = @device_model.manifest.try(:version)
     %p
-      %strong Definition:
+      %strong
+        = I18n.t('device_models.show.manufacturer')
+      = @device_model.institution.try(:name)
+    %p
+      %strong
+        = I18n.t('device_models.show.definition')
       %pre= JSON.pretty_generate(Oj.load(@device_model.manifest.definition)) rescue @device_model.manifest.try(:definition)
 
 = form_tag(publish_device_model_path(@device_model), method: :put) do |f|

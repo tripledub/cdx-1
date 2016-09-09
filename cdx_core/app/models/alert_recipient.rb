@@ -19,9 +19,9 @@ class AlertRecipient < ActiveRecord::Base
   def name_validation
     if recipient_type == "external_user"
       if (first_name==nil) || (first_name.length <= 2)
-        errors.add(:first_name, "first name too short")
+        errors.add(:first_name, I18n.t('models.alert_recipient.firstname_msg'))
       elsif (last_name==nil) || (last_name.length <= 2)
-        errors.add(:last_name, "last name too short")
+        errors.add(:last_name, I18n.t('models.alert_recipient.lastname_msg'))
       end
     end
   end
@@ -30,7 +30,7 @@ class AlertRecipient < ActiveRecord::Base
   def email_telephone_validation_presence
     if recipient_type == "external_user"
       if (email==nil || email.length==0) && (telephone==nil || telephone.length==0)
-        errors.add(:email, "email and telephone cannot both be empty")
+        errors.add(:email, I18n.t('models.alert_recipient.email_phone_msg'))
       end
     end
   end

@@ -8,6 +8,10 @@
   .row
     .col
       = f.password_field :password, autocomplete: "off", placeholder: I18n.t("sessions.new.password_place_holder"), class: "input-block"
+  .row
+    .col
+      = cdx_select form: f, name: :locale, class: 'input-block' do |select|
+        - select.items(@locales, :second, :first)
   %br
   .row
     .col

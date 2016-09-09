@@ -17,3 +17,9 @@ vi:
       select_type_of_episode: 'Chọn loại tập'
       episode_details: 'Thông tin tập'
       episode_type_not_available: 'Loại tập này hiện không có có sẵn'
+    edit:
+      back: 'Quay lại'
+      header: 'Chỉnh sửa tập'
+    new:
+      back: 'Quay lại'
+      header: 'Thêm tập'

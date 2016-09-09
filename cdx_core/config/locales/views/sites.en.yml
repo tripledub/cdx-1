@@ -14,6 +14,20 @@ en:
         one: '1 Site'
         other: '%{count} Sites'
     form:
+      site_details_header: 'Site Details'
+      yearly: 'Yearly'
+      monthly: 'Monthly'
+      weekly: 'Weekly'
+      none: 'None'
+      delete_site: 'Delete Site'
+      delete: 'Delete'
+      in_order_to_delete: 'In order to delete this site you must first reassign the'
+      device_count: 
+        one: '1 device'
+        other: '%{count} devices'
+      assigned: 'assigned to it.'
+      action_required: 'Action required'
+      understood: 'Understood'
       label:
         institution: 'Institution'
         name: 'Name'
@@ -32,3 +46,22 @@ en:
         main_phone_number: 'Site Main Phone Number'
         email_address: 'Site Email Contact Address'
         comment: 'Comment tooltip'
+    filters:
+      sites_title: 'Sites'
+      add_site_btn:  'Add Site'
+      add_site:  'Add Site'
+      name: 'Name'
+    side:
+      creation_date: 'Creation date'
+      devices: 'Devices'
+      tests: 'Tests'
+      users: 'Users'
+    devices:
+      name: 'Name'
+      model: 'Model'
+      site: 'Site'
+    new:
+      new_site: 'New Site'
+    show:
+      none: 'None'
+     

@@ -20,6 +20,7 @@ en:
       sent_at: 'Invitation sent %{sent_at}'
       never_logged_in: 'Never logged in'
     form:
+      user_details_header: 'User Details'
       resend_invite: 'Resend invite'
       send: 'Send'
       remove_user: 'Remove user'
@@ -43,3 +44,6 @@ en:
         resending: 'Resending invite'
         resending_ok: 'Resent Invite Ok'
         resending_failed: 'Failed to resend invite'
+    no_data_allowed:
+      users_header: 'Users'
+      no_access: 'You have no access to users of the selected institution.'

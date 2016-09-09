@@ -26,7 +26,7 @@
             .row
               .col-12
                 %label
-                  = DstLpaResult.human_attribute_name(:method_used)
+                  = DstLpaResult.human_attribute_name(I18n.t('dst_lpa_results.form.lbl_method_used'))
                 = Extras::Select.find(DstLpaResult.method_options, @dst_lpa_result.media_used)
             .row
               .col-12

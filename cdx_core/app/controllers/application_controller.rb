@@ -132,6 +132,10 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource_or_scope)
+
+    # update user locale after signed in
+    resource_or_scope.update_attribute('locale', params[:user][:locale])
+    
     if has_access?(TestResult, Policy::Actions::MEDICAL_DASHBOARD)
       dashboard_path
     elsif has_access_to_sites_index?
@@ -166,6 +170,9 @@ class ApplicationController < ActionController::Base
   end if Rails.env.test?
 
   protected
+  def load_locales
+    @locales ||= [[I18n.t("views.en"),"en"],[I18n.t("views.vi"), "vi"]]
+  end
 
   def json_request?
     request.format.json?
@@ -189,6 +196,7 @@ class ApplicationController < ActionController::Base
       else
         "#{resource.class} (id=#{resource.id})"
       end
-    logger.warn "Authorization failed. #{action} requested by #{current_user.email} in #{resource_name}"
+    logger.warn "#{I18n.t('application_controller.authorization_failed')} #{action} #{I18n.t('application_controller.requested_by')} #{current_user.email} #{I18n.t('application_controller.in')} #{resource_name}"
   end
+  
 end

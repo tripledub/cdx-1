@@ -36,12 +36,12 @@ class SubscribersController < ApplicationController
 
   def create
     subscriber.last_run_at = Time.now
-    flash[:notice] = "Subscriber was successfully created" if subscriber.save
+    flash[:notice] = I18n.t('subscribers_controller.subscriber_created') if subscriber.save
     respond_with subscriber, location: subscribers_path
   end
 
   def update
-    flash[:notice] = "Subscriber was successfully updated" if subscriber.save
+    flash[:notice] = I18n.t('subscribers_controller.subscriber_updated') if subscriber.save
     respond_with subscriber, location: subscribers_path
   end
 

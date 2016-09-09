@@ -129,7 +129,7 @@ class UsersController < ApplicationController
   def resend_invite
     #user = User.find_by(id: params[:id])
     @role = @user.roles.first
-    message = I18n.t('users.resend_invite.resending')
+    message = I18n.t('users_controller.resending_invite')
     if @user.present?
       @user.invite! do |u|
         u.skip_invitation = true
@@ -159,7 +159,7 @@ class UsersController < ApplicationController
 
   def build_csv
     CSV.generate do |csv|
-      csv << ["Full name", "Roles", "Last activity"]
+      csv << [I18n.t('users_controller.col_name'), I18n.t('users_controller.col_roles'), I18n.t('users_controller.col_last_activity')]
       Presenters::Users.index_table(@users, @navigation_context).map do |u|
         csv << [u[:name], u[:roles], u[:lastActivity]]
       end

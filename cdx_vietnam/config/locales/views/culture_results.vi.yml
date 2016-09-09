@@ -1,14 +1,23 @@
 vi:
   culture_results:
     new:
-      header: 'Thêm kết quả thử nghiệm môi trường nuôi cấy cho: %{patient_name}'
+      header: 'Thêm kết quả xét nghiệm nuôi cấy cho: %{patient_name}'
+      back: 'Quay lại'
+      culture_test_result: 'Kết quả xét nghiệm nuôi cấy'
     create:
-      audit: 'Kết quả thử nghiệm môi trường nuôi cấy đã được thêm'
-      notice: 'Kết quả thử nghiệm môi trường nuôi cấy đã được tạo thành công.'
+      audit: 'Kết quả xét nghiệm nuôi cấy đã được thêm'
+      notice: 'Kết quả xét nghiệm nuôi cấy đã được tạo thành công.'
     edit:
-      header: 'Chỉnh sửa kết quả thử nghiệm môi trường nuôi cấy cho: %{patient_name}'
+      header: 'Chỉnh sửa kết quả xét nghiệm nuôi cấy cho: %{patient_name}'
     show:
-      header: 'Kết quả thử nghiệm môi trường nuôi cấy cho: %{patient_name}'
+      header: 'Kết quả xét nghiệm nuôi cấy cho: %{patient_name}'
     update:
-      audit: 'Kết quả thử nghiệm môi trường nuôi cấy đã được cập nhật'
-      notice: 'Kết quả thử nghiệm môi trường nuôi cấy đã được cập nhật thành công.'
+      audit: 'Kết quả xét nghiệm nuôi cấy đã được cập nhật'
+      notice: 'Kết quả xét nghiệm nuôi cấy đã được cập nhật thành công.'
+    form:
+      sample_collected_on: 'Mẫu được thu thập ngày'
+      media_used: 'Phương tiện sử dụng'
+      serial_number: 'Số seri'
+      test_result: 'Kết quả kiểm tra'
+      examined_by: 'Kiểm tra bởi'
+      result_on: 'Kết quả ngày'

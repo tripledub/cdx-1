@@ -3,7 +3,7 @@ vi:
     sites_index_table:
       col_name: "Tên"
       col_city: "Thành phố"
-      col_comment: "Bình luận"
+      col_comment: "Nhận xét"
 
     device_messages_table:
       col_status: "Tình trạng"
@@ -35,9 +35,11 @@ vi:
       categories_tooltip: "Có nhiều loại thông báo lỗi"
       anomalies_label: "Các dị thường"
       device_errors_label: "Các lỗi thiết bị"
-      test_results_label: "Kết quả thử nghiệm"
+      test_results_label: "Kết quả xét nghiệm"
       utilization_efficiency_label: "Hiệu quả sử dụng"
       cancel_btn: "Hủy bỏ"
+      update_alert_btn: "Chỉnh Sửa Cảnh Báo"
+      save_btn: "Lưu"
 
     alert_child_components:
       delete_message: "Bạn muốn xóa vĩnh viễn thông báo này. Bạn có chắc muốn tiếp tục?"
@@ -159,7 +161,7 @@ vi:
 
     encounter_form:
       diagnosis_label: "Chuẩn đoán"
-      diagnosis_text: "Mỗi lần có 1 thử nghiệm mới, danh sách các tình trạng sẽ được cập nhật cho bạn chuẩn đoán"
+      diagnosis_text: "Mỗi lần có 1 xét nghiệm mới, danh sách các tình trạng sẽ được cập nhật cho bạn chuẩn đoán"
       quantitative_placeholder: "Định lượng"
       observations_placeholder: "Quan sát"
       site_label: "Trang"
@@ -169,7 +171,7 @@ vi:
       add_sample_heading: "Thêm mẫu"
       search_placeholder: "Tìm kiếm bằng mã mẫu"
       unify_sample_heading: "Mẫu thống nhất"
-      add_test_btn: "Thêm thử nghiệm"
+      add_test_btn: "Thêm xét nghiệm"
       save_btn: "Lưu"
 
     encounter_new:
@@ -182,35 +184,36 @@ vi:
       site_detail_heading: "Chi tiết trang"
       requesting_site_label: "Trang yêu cầu:"
       performing_site_label: "Trang thực hiện:"
-      test_detail_heading: "Chi tiết thử nghiệm"
+      test_detail_heading: "Chi tiết xét nghiệm"
       order_id_label: "Mã của yêu cầu:"
-      testing_for_label: "Thử nghiệm cho:"
+      testing_for_label: "xét nghiệm cho:"
       culture_format_label: "Định dạng môi trường nuôi cấy:"
       comment_label: "Bình luận:"
       weeks_in_treatment_label: "Số tuần điều trị:"
       samples_id_label: "Mã mẫu:"
       sample_type_label: "Loại mẫu:"
-      test_due_date_label: "Ngày hết hạn thử nghiệm:" 
+      test_due_date_label: "Ngày hết hạn xét nghiệm:" 
       status_label: "Tình trạng:"
-      update_btn: "Cập nhật thử nghiệm"
-      cancel_confirm_msg: "bạn muốn hủy bỏ vĩnh viễn thử nghiệm này. Bạn có chắc muốn tiếp tục?"
+      update_btn: "Cập nhật xét nghiệm"
+      cancel_confirm_msg: "bạn muốn hủy bỏ vĩnh viễn xét nghiệm này. Bạn có chắc muốn tiếp tục?"
       cancel_confirm_title: "Xác nhận hủy bỏ"
       delete_btn: "Xóa"
-      cancel_test_order_btn: "Hủy bỏ thử nghiệm"
+      cancel_test_order_btn: "Hủy bỏ xét nghiệm"
       cancel_confirmation_btn: "Xác nhận hủy bỏ"
       confirmation_btn: "Xác nhận"
       cancel_btn: "Hủy bỏ"
       confirm_btn: "Xác nhận"
-      reason_exam_label: "Lý do thử nghiệm:"
+      reason_exam_label: "Lý do xét nghiệm:"
       presumptive: "Giả định TB RR:"
 
     fresh_tests_encounter_form:
       alert_new_sample: "Mẫu này đã được thêm"
-      alert_testing_for: "Vui lòng chọn một loại thử nghiệm"
+      alert_testing_for: "Vui lòng chọn một loại xét nghiệm"
       alert_exam_reason: "Vui lòng chọn một Examination Reason."
-      alert_tests_requested: "Vui lòng chọn một hoặc nhiều loại thử nghiệm"
-      test_order_details_heading: "Chi tiết thử nghiệm"
-      testing_for_label: "Thử nghiệm cho"
+      alert_tests_requested: "Vui lòng chọn một hoặc nhiều loại xét nghiệm"
+      alert_add_samples: "Vui lòng thêm một hoặc nhiều mẫu thử."
+      test_order_details_heading: "Chi tiết xét nghiệm"
+      testing_for_label: "xét nghiệm cho"
       TB_option: "Lao"
       HIV_option: "HIV"
       Ebola_option: "Ebola"
@@ -224,21 +227,23 @@ vi:
       sputum_option: "Đờm"
       blood_option: "Máu"
       other_option: "Khác - Vui lòng mô tả cụ thể"
-      test_due_date_label: "Ngày hết hạn thử nghiệm"
+      test_due_date_label: "Ngày hết hạn xét nghiệm"
       save_btn: "Lưu"
       cancel_btn: "Hủy bỏ"
       diagnosis_lable: "Chuẩn đoán"
       follow_up_lable: "Theo dõi"
       weeks_in_treatment_label: "Số tuần điều trị"
+      comment: "Bình luận"
+      presumptive: "Giả định RR-TB/MDR-TB"
 
     location_select:
       no_region: "Khu vực không thể được tìm thấy cho địa chỉ này, vui lòng chọn một;"
       choose_one: "Chọn một"
 
     outstanding_tests_table:
-      outstanding_tests_title: "Các thử nghiệm nỗi bật"
+      outstanding_tests_title: "Các xét nghiệm nỗi bật"
       no_data_display: "Không có dữ liệu để hiển thị"
-      test_order_col: "Số thứ tự thử nghiệm"
+      test_order_col: "Số thứ tự xét nghiệm"
       date_ordered_col: "Ngày yêu cầu"
       ordered_by_col: "Yêu cầu bởi"
       outstanding_days_col: "Những ngày nỗi bật"
@@ -247,12 +252,13 @@ vi:
       no_patient_information: "Không có thông tin bệnh nhân"
       name_col: "Tên"
       gender_col: "Giới tính"
-      date_of_birth_col: "Ngày sinh nhật"
+      date_of_birth_col: "Ngày sinh"
       address_col: "Địa chỉ"
       phone_col: "Số điện thoại"
       email_col: "Email"
       edit: "Sửa"
-      create_test_order: "Tạo mới yêu cầu thử nghiệm"
+      create_test_order: "Tạo mới yêu cầu xét nghiệm"
+      alt_address_col: "Địa chỉ"
 
     patient_select:
       search_patient_placeholder: "Tìm bằng tên hoặc Mã bệnh nhân"
@@ -268,6 +274,13 @@ vi:
 
     policy_item:
       description_msg: "Loại, tài nguyên, và hoạt động chưa được xác định rõ"
+      match: " không phù hợp với loại tài nguyên trước "
+      the_control: " - bộ điều khiển có thể không làm việc OK"
+      add_policy_btn: "Thêm chính sách"
+      and_subsites: " và những trang con"
+      at_site_and_subsites: " tại trang và những trang con"
+      no_actions_granted: "Không có hoạt động nào được phép"
+      new_policy: "Chính sách mới"
 
     policy_item_detail: 
       resources_label: "Tài nguyên"
@@ -283,19 +296,24 @@ vi:
       delegate_permissions_on_this_policy: " có quyền ủy quyền chính sách này"
 
     request_tests:
+      stt_pending: 'Chờ xử lý'
+      stt_inprogress: 'Đang tiến hành'
+      stt_completed: 'Hoàn tất'
+      stt_rejected: 'Từ chối'
+      title: 'Yêu Cầu xét nghiệm'
       add_result: "Thêm kết quả"
       view_result: "Xem kết quả"
       type_col: "Loại"
       sample_id_col: "Mã mẫu"
-      order_by_user_col: "Order by user"
+      order_by_user_col: "Người yêu cầu"
       requested_date: "Ngày yêu cầu"
       request_by_col: "Yêu cầu bởi"
       due_date_col: "Ngày hết hạn"
       status_col: "Tình trạng"
       comment_col: "Bình luận"
       result_col: "Kết quả"
-      confirm_msg: "Bạn phải nhập kết quả thử nghiệm môi trường nuôi cấy trước khi có thể thêm kết quả DST"
-      confirm_title: "Yêu cầu kết quả thử nghiệm môi trường nuôi cấy"
+      confirm_msg: "Bạn phải nhập kết quả xét nghiệm môi trường nuôi cấy trước khi có thể thêm kết quả DST"
+      confirm_title: "Yêu cầu kết quả xét nghiệm môi trường nuôi cấy"
       close_btn: "Đóng"
       add_result_btn:  "Thêm kết quả"
       turnaround_col: "Chu kỳ"
@@ -303,14 +321,18 @@ vi:
     resource_list:
       add_element_btn1: "Thêm phần tử vào danh sách ngoại lệ"
       add_element_btn2: "Thêm phần tử vào danh sách"
+      
+    site_select:
+      site: 'Trang'
 
     sites:
       search_sites_placeholder: "Tìm kiếm trang"
       selection_label: "Lựa chọn bao gồm tất cả trang con"
+      at: "ở "
 
     text_input_modal:
       add_comment_title: "Thêm bình luận"
-      test_comment_heading: "Bình luận thử nghiệm"
+      test_comment_heading: "Bình luận xét nghiệm"
       add_comment_placeholder: "Thêm bình luận"
       save_btn: "Lưu"
       close_btn: "Đóng"
@@ -326,12 +348,12 @@ vi:
       cancel_btn: "Hủy bỏ"
       type_email_placeholder: "Nhập email và nhấn Enter"
 
-  stores: 
+  stores:
     device_model:
       publishing: "Công bố kiểu thiết bị này sẽ làm cho nó sẵn sàng sử dụng cho tất cả các tổ chức."
       withdrawing: "Thu hồi kiểu thiết bị này sẽ làm ẩn nó với tất cả các tổ chức."
       sure: " Bạn có chắc bạn muốn tiếp tục?"
-      pending_changes: "\n\nBất kỳ thay đổi đang chờ nào sẽ được lưu lại trước khi tiến hành."
+      pending_changes: "Bất kỳ thay đổi đang chờ nào sẽ được lưu lại trước khi tiến hành."
 
     playground:
       create_another_message: "Tạo mới một thông báo khác"

@@ -1,0 +1,7 @@
+vi:
+  models: 
+    alert:
+      errorcode_msg: 'Mã lỗi phải là một số nguyên'
+      timespan_msg: 'Khoảng thời gian không thể là số không'
+      sample_id_msg: 'Mã mẫu thử không thể để trống'
+      value_msg: 'Giá trị không thể lớn hơn 100%'

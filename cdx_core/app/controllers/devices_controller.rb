@@ -54,7 +54,7 @@ class DevicesController < ApplicationController
 
     respond_to do |format|
       if @device.save
-        format.html { redirect_to setup_device_path(@device), notice: 'Device was successfully created.' }
+        format.html { redirect_to setup_device_path(@device), notice: I18n.t('devices_controller.device_created') }
         format.json { render action: 'show', status: :created, location: @device }
       else
         format.html do
@@ -111,7 +111,7 @@ class DevicesController < ApplicationController
 
     respond_to do |format|
       if @device.update(device_params)
-        format.html { redirect_to devices_path, notice: 'Device was successfully updated.' }
+        format.html { redirect_to devices_path, notice: I18n.t('devices_controller.device_updated') }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -126,7 +126,7 @@ class DevicesController < ApplicationController
     @device.destroy
 
     respond_to do |format|
-      format.html { redirect_to devices_path, notice: 'Device was successfully deleted.' }
+      format.html { redirect_to devices_path, notice: I18n.t('devices_controller.device_deleted') }
       format.json { head :no_content }
     end
   end
@@ -166,7 +166,7 @@ class DevicesController < ApplicationController
     recipient = params[:recipient]
 
     DeviceMailer.setup_instructions(current_user, recipient, @device).deliver_now
-    flash[:notice] = "Setup instructions sent to #{recipient}"
+    flash[:notice] = "#{I18n.t('devices_controller.setup_sent_to')} #{recipient}"
 
     render json: {status: :ok}
   end
@@ -176,7 +176,7 @@ class DevicesController < ApplicationController
 
     @device.request_client_logs
 
-    redirect_to devices_path, notice: "Client logs requested"
+    redirect_to devices_path, notice: I18n.t('devices_controller.logs_requested')
   end
 
   def custom_mappings

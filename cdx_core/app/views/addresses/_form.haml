@@ -1,19 +1,19 @@
 .row
   .col.pe-2
     %div.tooltip
-      = address_form.label :address
+      = address_form.label :address, I18n.t('addresses.form.address')
       %div.tooltiptext_r
-        = I18n.t('addresses.form.address_tooltip')
+        = I18n.t('addresses.form.street_tooltip')
     %div.tooltip
-      = address_form.label :city
+      = address_form.label :city, I18n.t('addresses.form.city')
       %div.tooltiptext_r
         = I18n.t('addresses.form.city_tooltip')
     %div.tooltip
-      = address_form.label :state
+      = address_form.label :state, I18n.t('addresses.form.state')
       %div.tooltiptext_r
         = I18n.t('addresses.form.state_tooltip')
     %div.tooltip
-      = address_form.label :zip_code
+      = address_form.label :zip_code, I18n.t('addresses.form.zip_code')
       %div.tooltiptext_r
         = I18n.t('addresses.form.zip_code_tooltip')
   .col
@@ -23,5 +23,4 @@
     = address_form.text_field :zip_code, :class => 'input-large'
   .col
   .col
-  .col
-  .col
+  .c

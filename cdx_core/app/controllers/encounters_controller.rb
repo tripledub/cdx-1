@@ -135,7 +135,7 @@ class EncountersController < ApplicationController
         @extended_respone = { sample: sample }
       else
         render json: {
-          message: "This sample ID has already been used for another patient",
+          message: I18n.t('encounters_controller.sample_id_used'),
           status: 'error'
         }, status: 200 and return
       end
@@ -145,9 +145,9 @@ class EncountersController < ApplicationController
   private
 
   def store_create_encounter_audit_log
-    Audit::EncounterAuditor.new(@encounter, current_user.id).log_changes("New Test Order Created", "#{@encounter.id}", @encounter)
+    Audit::EncounterAuditor.new(@encounter, current_user.id).log_changes(I18n.t('encounters_controller.test_order_created'), "#{@encounter.id}", @encounter)
     @encounter.requested_tests.each do |test|
-      Audit::EncounterTestAuditor.new(@encounter, current_user.id).log_changes("New #{test.name} Test Created", "Test #{test.name} created for test order #{@encounter.uuid}", @encounter, test)
+      Audit::EncounterTestAuditor.new(@encounter, current_user.id).log_changes("#{I18n.t('encounters_controller.new')} #{test.name} #{I18n.t('encounters_controller.test_created')}", "#{I18n.t('encounters_controller.test')} #{test.name} #{I18n.t('encounters_controller.created_for')} #{@encounter.uuid}", @encounter, test)
     end
   end
 

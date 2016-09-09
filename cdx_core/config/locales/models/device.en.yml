@@ -1,0 +1,4 @@
+en:
+  models: 
+    device:
+      device_model_msg: 'Unpublished device models can only be used to setup devices from the same institution'

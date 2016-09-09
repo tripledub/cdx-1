@@ -9,3 +9,7 @@ en:
         one: '1 Incident'
         other: '%{count} Incidents'
       no_result: 'No result'
+
+    filters:
+      btn_show_filters: 'Show Filters'
+      show_all: 'Show all'

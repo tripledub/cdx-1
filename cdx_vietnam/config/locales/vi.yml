@@ -172,6 +172,10 @@ vi:
     select:
       prompt: Vui lòng chọn
     submit:
+      episode:
+        create: Tạo Tập
+        submit: Lưu Tập
+        update: Chỉnh Tập
       create: Tạo %{model}
       submit: Lưu %{model}
       update: Chỉnh sửa %{model}

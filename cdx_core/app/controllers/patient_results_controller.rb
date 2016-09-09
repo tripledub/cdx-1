@@ -9,7 +9,7 @@ class PatientResultsController < ApplicationController
   end
 
   def check_permissions
-    redirect_to(encounter_path(@requested_test.encounter), error: "You can't add test results to this test order") unless has_access?(TestResult, Policy::Actions::QUERY_TEST)
+    redirect_to(encounter_path(@requested_test.encounter), error: I18n.t('patient_results_controller.cannot_add')) unless has_access?(TestResult, Policy::Actions::QUERY_TEST)
   end
 
   def check_back_button_mode

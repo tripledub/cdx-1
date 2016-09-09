@@ -350,7 +350,7 @@ class ManifestFieldMapping
   def concat(values, data)
     return values.map do |source|
       value = traverse(source, data)
-      raise "Can't concat array values - use collect instead" if value.is_a? Array
+      raise I18n.t('models.manifest_field_mapping.cant_concat') if value.is_a? Array
       value
     end.join
   end

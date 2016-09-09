@@ -1,0 +1,4 @@
+vi:
+  localization_helper:
+    cache_for_time: 'devices_by_uuid cache cho định dạng thời gian không được khởi tạo'
+    unable_to_find: 'Không tìm thấy thiết bị trong devices_by_uuid cache trong định dạng thời gian'

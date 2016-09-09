@@ -28,7 +28,7 @@ vi:
         error: 'Rất tiếc! Kiểm tra biểu mẫu của bạn về các lỗi xảy ra'
       help:
         redirect_uri: 'Sử dụng một dòng cho một URI'
-        native_redirect_uri: 'Sử dụng %{native_redirect_uri} cho những thử nghiệm nội bộ'
+        native_redirect_uri: 'Sử dụng %{native_redirect_uri} cho những xét nghiệm nội bộ'
         scopes: 'Tách biệt phạm vi với khoảng trống. Để trống để sử dụng các phạm vi mặc định.'
       edit:
         title: 'Chỉnh sửa ứng dụng'

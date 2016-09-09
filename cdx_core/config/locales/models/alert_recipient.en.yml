@@ -1,0 +1,6 @@
+en:
+  models: 
+    alert_recipient:
+      firstname_msg: 'first name too short'
+      lastname_msg: 'last name too short'
+      email_phone_msg: 'email and telephone cannot both be empty'

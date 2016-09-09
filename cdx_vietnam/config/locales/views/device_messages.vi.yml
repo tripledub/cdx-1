@@ -2,7 +2,7 @@ vi:
   device_messages:
     index:
       no_logs: 'Không có nhật ký để báo cáo tại thời điểm này'
-      connect_device: 'Kết nối với một thiết bị và tải lên các thử nghiệm để xem tiến độ ở đây'
+      connect_device: 'Kết nối với một thiết bị và tải lên các xét nghiệm để xem tiến độ ở đây'
       message:
         zero: 'Không có thông báo'
         one: '1 thông báo'

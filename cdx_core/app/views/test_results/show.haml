@@ -76,7 +76,7 @@
         - next unless value
         .row
           .col.pe-2
-            %label= field.name.humanize
+            %label= I18n.t("test_results.show.#{field.name}")
           .col.wrap-text
             .value= field.humanize(@test_result.core_field_value(field))
 

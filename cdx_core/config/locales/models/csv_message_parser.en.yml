@@ -1,0 +1,4 @@
+en:
+  models: 
+    csv_message_parser:
+      path_nesting: 'path nesting is unsupported for CSV Messages'

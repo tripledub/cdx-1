@@ -1,0 +1,116 @@
+vi:
+  api_tokens_controller:
+    api_token_deleted: 'Mã API đã xóa'
+
+  application_controller:
+    authorization_failed: 'Ủy quyền thất bại.'
+    requested_by: 'được yêu cầu bởi'
+    in: 'vào lúc'
+
+  device_logs_controller:
+    logs: 'ghi chép -'
+
+  device_messages_controller:
+    file_name: 'thong-bao_'
+
+  device_models_controller:
+    model_created: 'Kiểu thiết bị đã được tạo thành công.'
+    must_have_manifest: 'bạn phải có một tài liệu đã tải lên'
+    device_model: 'Kiểu thiết bị'
+    was_updated: 'đã được chỉnh sửa thành công.'
+    was_successfully: 'thành công'
+    published: 'đã công bố'
+    withdrawn: 'đã thu hồi'
+
+  devices_controller:
+    file_name: 'thiet-bi-'
+    device_created: 'Thiết bị đã được tạo thành công.'
+    device_updated: 'Thiết bị đã được chỉnh sửa thành công.'
+    device_deleted: 'Thiết bị đã được xóa thành công.'
+    setup_sent_to: 'Hướng dẫn cài đặt đã được gửi đến'
+    logs_requested: 'Đã yêu cầu ghi chép của khách hàng'
+
+  encounters_controller:
+    test_order_cancelled: 'Yêu Cầu xét nghiệm Đã Hủy'
+    test_order: 'Yêu Cầu xét nghiệm'
+    cancelled: 'Đã Hủy'
+    encounter_deleted: 'Encounter đã được xóa thành công.'
+    sample_id_used: 'Mã mẫu vật này đã được sử dụng cho bệnh nhân khác'
+    test_order_created: 'Đã Tạo Yêu Cầu xét nghiệm Mới'
+    new: 'Mới'
+    test_created: 'xét nghiệm Đã Được Tạo'
+    test: 'xét nghiệm'
+    created_for: 'được tạo cho yêu cầu xét nghiệm'
+    cannot_add_test: 'Không thể thêm một xét nghiệm hoặc mẫu vật không giống nhau'
+    error: 'Lỗi'
+
+  filters_controller:
+    filter_created: 'Bộ lọc đã được tạo thành công'
+    filter_updated: 'Bộ lọc đã được chỉnh sửa thành công'
+    filter_deleted: 'Bộ lọc đã được xóa thành công'
+
+  ftp_settings_controller:
+    setting_updated: 'Thiết lập giao thức truyền tập tin đã được chỉnh sửa thành công.'
+    dont_have_permission: "Bạn không có quyền thay đổi thiết lập giao thức truyền tập tin."
+
+  institutions_controller:
+    institution_created: 'Tổ chức đã được tạo thành công.'
+    institution_updated: 'Tổ chức đã được chỉnh sửa thành công.'
+
+  patient_results_controller:
+    cannot_add: "Bạn không thể thêm kết quả xét nghiệm vào yêu cầu xét nghiệm này"
+
+  patients_controller:
+    new_patient: 'Bệnh nhân mới'
+    added: 'đã thêm'
+    patient_created: 'Bệnh nhân đã được tạo thành công.'
+    patient_detail_updated: 'chi tiết bệnh nhân đã được cập nhật'
+    patient_updated: 'Bệnh nhân đã được chỉnh sửa thành công.'
+    patient_deleted: 'Bệnh nhân đã được xóa thành công.'
+
+  policies_controller:
+    policy_created: 'Chính sách đã được tạo thành công.'
+    policy_updated: 'Chính sách đã được chỉnh sửa thành công.'
+    invitation_sent_to: 'Email mời đã được gửi đến'
+
+  roles_controller:
+    role_created: 'Vai trò đã được tạo thành công.'
+    role_updated: 'Vai trò đã được chỉnh sửa thành công.'
+    role_deleted: 'Vai trò đã được xóa thành công.'
+
+  sites_controller:
+    file_name: 'Trang-'
+    site_created: 'Trang đã được tạo thành công.'
+    site_updated: 'Trang đã được chỉnh sửa thành công.'
+    site_deleted: 'Trang đã được xóa thành công.'
+    col_name: 'Tên'
+    col_address: 'Địa chỉ'
+    col_city: 'Thành phố'
+    col_state: 'Bang'
+    col_zipcode: 'Zipcode'
+
+  subscribers_controller:
+    subscriber_created: 'Người đăng ký đã được tạo thành công'
+    subscriber_updated: 'Người đăng ký đã được cập nhật thành công'
+
+  test_orders_controller:
+    file_name: 'yeu-cau-thu-nghiem-'
+
+  test_results_controller:
+    file_name: 'ket-qua-thu-nghiem-'
+    not_applicable: 'Không áp dụng'
+
+  users_controller:
+    file_name: 'Nguoi-dung-'
+    user_updated: 'Người dùng đã được cập nhật'
+    problem_updating_user: 'Có một vấn đề khi chỉnh sửa người dùng này'
+    user_with_email: 'Người dùng với email'
+    already_existed: 'đã có trong hệ thống - vui lòng chỉnh sửa người dùng đó'
+    user_removed: 'Người dùng đã được loại bỏ'
+    user_not_found: 'Không tìm thấy người dùng'
+    resending_invite: 'Đang gửi lại lời mời'
+    resent_invite_ok: 'Đã gửi lại lời mời'
+    resent_invite_failed: 'Gửi lại lời mời thất bại'
+    col_name: 'Họ tên'
+    col_roles: 'Vai trò'
+    col_last_activity: 'Hoạt động cuối cùng'

@@ -4,16 +4,19 @@
       .row
         .col
           %h1
-            = link_to "+", new_policy_path, class: 'btn-add side-link fix', title: 'Add Policy'
-            Policies
+            = link_to "+", new_policy_path, class: 'btn-add side-link fix', title: I18n.t('policies.index.add_policy')
+            = I18n.t('policies.index.policies_header')
 
 .row
   .col
     - if @policies.empty?
-      = empty_data title: "No policies", icon: 'icon-outline-user xx-large' do |c|
+      = empty_data title: I18n.t('policies.index.no_policies'), icon: 'icon-outline-user xx-large' do |c|
         - c.body do
-          %h1 There are no users with access to #{truncated_navigation_context_entity_name}
-          %p Invite other users to join this site's team
+          %h1 
+            = I18n.t('policies.index.no_user_access') 
+            = truncated_navigation_context_entity_name
+          %p 
+            = I18n.t('policies.index.invite_other_user')
     - else
       = cdx_table title: pluralize(@policies.count, "policy") do |t|
         - t.columns do
@@ -23,10 +26,14 @@
           %col{:width => "30%"}
         - t.thead do
           %tr
-            %th Name
-            %th Policy Name
-            %th User
-            %th Last Activity
+            %th 
+              = I18n.t('policies.index.name_col')
+            %th 
+              = I18n.t('policies.index.policy_name')
+            %th 
+              = I18n.t('policies.index.user_col')
+            %th 
+              = I18n.t('policies.index.last_activity_col')
         - t.tbody do
           - @policies.each do |policy|
             %tr

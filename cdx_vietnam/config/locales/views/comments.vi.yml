@@ -2,11 +2,17 @@ vi:
   comments:
     show:
       header:
-        comment: 'Bình luận cho bệnh nhân %{patient_name}'
+        comment: 'Nhận xét cho bệnh nhân %{patient_name}'
     create:
-      audit_comment: 'Bình luận mới đã được thêm'
-      created_ok: 'Bình luận đã được tạo thành công'
+      audit_comment: 'Nhận xét mới đã được thêm'
+      created_ok: 'Nhận xét đã được tạo thành công'
+      comment_ok: 'Nhận xét đã được thêm vào'
     permissions:
-      deny: "Bạn không thể thêm bình luận cho bệnh nhân này"
+      deny: "Bạn không thể thêm Nhận xét cho bệnh nhân này"
     new:
-      new_comment: 'Bình luận mới'
+      new_comment: 'Nhận xét mới'
+      comment_detail: 'Chi tiết Nhận xét'
+    form:
+      description: 'Mô tả'
+      comment: 'Nhận xét'
+      image: 'Hình ảnh'

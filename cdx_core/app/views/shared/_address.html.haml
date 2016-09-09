@@ -1,35 +1,35 @@
 .row
   .col.pe-2
     %div.tooltip
-      = f.label :address
+      = f.label I18n.t('shared.address.address_label') 
       %div.tooltiptext_r 
-        A Street address
+        = I18n.t('shared.address.street') 
   .col
     = f.text_field :address, :class => 'input-large'
 
 .row
   .col.pe-2
     %div.tooltip
-      = f.label :city
+      = f.label I18n.t('shared.address.city_label') 
       %div.tooltiptext_r 
-        A City name
+        = I18n.t('shared.address.city')
   .col
     = f.text_field :city, :class => 'input-large'
 
 .row
   .col.pe-2
     %div.tooltip
-      = f.label :state
+      = f.label I18n.t('shared.address.state_label') 
       %div.tooltiptext_r 
-        A State / County name
+        = I18n.t('shared.address.state')
   .col
     = f.text_field :state, :class => 'input-large'
 
 .row
   .col.pe-2
     %div.tooltip
-      = f.label :post_code
+      = f.label I18n.t('shared.address.post_code_label') 
       %div.tooltiptext_r 
-        A Postal / Zip Code
+        = I18n.t('shared.address.postal')
   .col
     = f.text_field :zip_code, :class => 'input-large'

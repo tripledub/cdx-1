@@ -72,7 +72,7 @@ class TestResultsController < TestsController
   def load_device_test_results
     @results = Cdx::Fields.test.core_fields.find { |field| field.name == 'result' }.options.map do |result|
       if result == "n/a"
-        {value: 'n/a', label: 'Not Applicable'}
+        {value: 'n/a', label: I18n.t('test_results_controller.not_applicable')}
       else
         {value: result, label: result.capitalize}
       end

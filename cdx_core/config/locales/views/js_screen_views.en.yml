@@ -38,6 +38,8 @@ en:
       test_results_label: "Test Results"
       utilization_efficiency_label: "Utilization Efficiency"
       cancel_btn: "Cancel"
+      update_alert_btn: "Update Alert"
+      save_btn: "Save"
 
     alert_child_components:
       delete_message: "You are about to permanently delete this alert. Are you sure you want to proceed?"
@@ -79,6 +81,7 @@ en:
       patient_label: "All Patients"
       sample_id_label: "Sample Id"
       sample_id_tooltip: "ID of the Sample that produced this Alert"
+      sample_id_placeholder: "Sample Id"
       sms_limit_label: "Daily SMS Limit"
       sms_limit_tooltip: "Maximum number of SMS messages per day this alert can send"
       sms_limit_placeholder: "sms limit"
@@ -231,6 +234,8 @@ en:
       diagnosis_lable: "Diagnosis"
       follow_up_lable: "Follow-Up"
       weeks_in_treatment_label: "Weeks in treatment"
+      comment: "Comment"
+      presumptive: "Presumptive RR-TB/MDR-TB"
 
     location_select:
       no_region: "A region could not be found for this address, please choose one;"
@@ -250,11 +255,11 @@ en:
       gender_col: "Gender"
       date_of_birth_col: "Date of Birth"
       address_col: "Address"
-      alt_address_col: "Alternative Address"
       phone_col: "Phone"
       email_col: "Email"
       edit: "Edit"
       create_test_order: "Create Test Order"
+      alt_address_col: "Address"
 
     patient_select:
       search_patient_placeholder: "Search by name or patient id"
@@ -270,6 +275,13 @@ en:
 
     policy_item:
       description_msg: "Type, resource, and actions are not defined yet"
+      match: " doesn't match previous resource's type "
+      the_control: " - the control may not work OK"
+      add_policy_btn: "Add policy"
+      and_subsites: " and subsites"
+      at_site_and_subsites: " at site and subsites"
+      no_actions_granted: "No actions granted"
+      new_policy: "New policy"
 
     policy_item_detail: 
       resources_label: "Resources"
@@ -285,6 +297,11 @@ en:
       delegate_permissions_on_this_policy: " delegate permissions on this policy"
 
     request_tests:
+      stt_pending: 'Pending'
+      stt_inprogress: 'In progress'
+      stt_completed: 'Completed'
+      stt_rejected: 'Rejected'
+      title: 'Requested Tests'
       add_result: "Add Result"
       view_result: "View Result"
       type_col: "Type"
@@ -306,9 +323,13 @@ en:
       add_element_btn1: "Add elements to the exception list"
       add_element_btn2: "Add elements to the list"
 
+    site_select:
+      site: 'Site'
+
     sites:
       search_sites_placeholder: "Search sites"
       selection_label: "Selection includes all subsites"
+      at: "at "
 
     text_input_modal:
       add_comment_title: "Add Comment"
@@ -328,12 +349,12 @@ en:
       cancel_btn: "Cancel"
       type_email_placeholder: "Type email and press enter"
 
-  stores: 
+  stores:
     device_model:
       publishing: "Publishing this device model will make it available to all institutions."
       withdrawing: "Withdrawing this device model will hide it from all institutions."
       sure: " Are you sure you want to proceed?"
-      pending_changes: "\n\nAny pending changes will be saved before proceeding."
+      pending_changes: "Any pending changes will be saved before proceeding."
 
     playground:
       create_another_message: "Create another message"

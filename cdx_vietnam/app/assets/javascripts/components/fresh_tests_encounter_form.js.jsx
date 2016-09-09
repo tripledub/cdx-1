@@ -13,8 +13,8 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     if (clk === 0) { reason = 'diag'; }
 
     if (clk === 1) { reason = 'follow'; }
-	
-	$('.test_for_tb').attr('checked', false).parent().show();
+
+  $('.test_for_tb').attr('checked', false).parent().show();
 
     this.setState(React.addons.update(this.state, {
       encounter: {
@@ -85,8 +85,8 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
             </div>
             <div className="col-6">
               <label>
-			  <input type="hidden" className="input-large" id="testing_for" name="testing_for" datavalue={this.state.encounter.testing_for} />
-			  {I18n.t("components.fresh_tests_encounter_form.TB_option")}
+        <input type="hidden" className="input-large" id="testing_for" name="testing_for" datavalue={this.state.encounter.testing_for} />
+        {I18n.t("components.fresh_tests_encounter_form.TB_option")}
               </label>
             </div>
           </div>

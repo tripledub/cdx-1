@@ -1,0 +1,8 @@
+en:
+  locations:
+    index:
+      tbl_header: 'Locations'
+      col_name: 'Name'
+    show:
+      parent: 'Parent:'
+      admin: 'Admin level:'

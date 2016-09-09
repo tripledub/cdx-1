@@ -1,0 +1,21 @@
+en:
+  subscribers:
+    form:
+      error: 'error'
+      prohibited: 'prohibited this subscriber from being saved:'
+      user_label: 'User (optional)'
+      password_label: 'Password (optional)'
+      filter_label: 'Filter'
+      name_label: 'Name'
+      fields_label: 'Fields'
+      error_count:
+        one: '1 error'
+        other: '%{count} errors'
+    index:
+      first: 'You first need to create a filter to create a subscriber.'
+      go_to: 'Go to'
+      apply: 'apply a filter and create one.'
+      add_subscriber_title: 'Add Subscriber'
+      no_subscriber: 'There are no subscribers'
+      subscribers_title: 'Subscribers'
+      name: 'Name'

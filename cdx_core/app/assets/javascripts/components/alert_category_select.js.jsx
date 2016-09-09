@@ -17,7 +17,7 @@ var AlertCategorySelect = React.createClass({
       });
 
       this.setState({
-        submit_button_text: 'Update Alert'
+        submit_button_text: I18n.t('components.alert_category_select.update_alert_btn')
       });
     } else { //new alert
       this.setState({
@@ -30,7 +30,7 @@ var AlertCategorySelect = React.createClass({
 
     return {
       // had issues with a structure such as alert1 -updating the data object field in the 'select' options library so used individual fields
-      submit_button_text: 'Save',
+      submit_button_text: I18n.t('components.alert_category_select.save_btn'),
       disable_all_selects: false,
       edit: this.props.edit,
       all_devices: this.props.devices,

@@ -5,7 +5,7 @@ vi:
     ebola: Ebola
     hiv: HIV
   diagnosis:
-    presumptive_tb: Cơ sở lap phổi
+    presumptive_tb: Cơ sở lao phổi
     bacteriologically_confirmed: Có xác nhận về vi trùng
     clinically_diagnosed: Chẩn đoán lâm sàng
     pulmonary_tb: Bệnh lao phổi (PTB)

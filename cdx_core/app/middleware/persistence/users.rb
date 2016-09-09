@@ -17,7 +17,7 @@ class Persistence::Users
   def create(email, message, role)
     user = User.find_by(email: email)
     if user.present?
-      @status_message << I18n.t('users.persistence.create.user_alread_present', email: email)
+      @status_message << I18n.t('users.persistence.create.user_already_present', email: email)
     else
       user = User.new(email: email)
       invite_user(user, message, role) unless user.persisted?

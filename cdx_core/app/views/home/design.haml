@@ -1,31 +1,34 @@
-%h1 Grid
+%h1
+  = I18n.t('home.design.grid')
 
-%p 12 column divided row.
+%p
+  = I18n.t('home.design.divided_row')
 
 .row
   - 12.times do |i|
     .col.pe-1= i
 
 %p
-  use
+  = I18n.t('home.design.use')
   %code pe-1, pe-2, ... pe-12
-  classes to distribute the space with weight
+  = I18n.t('home.design.distribute_space')
 
 .row
   .col.pe-4
     %p
-      first column with
+      = I18n.t('home.design.first_col')
       %code .pe-4
   .col.pe-2
     %p
-      first column with
+      = I18n.t('home.design.first_col')
       %code .pe-2
   .col.pe-6
     %p
-      third column with rest of space
+      = I18n.t('home.design.third_col')
       %code .pe-8
 
-%p Nested columns
+%p
+  = I18n.t('home.design.nested_col')
 
 .row
   .col.pe-4
@@ -35,29 +38,34 @@
   .col.pe-2 2
   .col.pe-6 3
 
-%p Pixel fixed width and equaly distributed
+%p
+  = I18n.t('home.design.pixel_fix')
 
 .row
   .col.px-3
-    300px width
+    = I18n.t('home.design.300px_width')
   .col.pe-1
-    flex column equaly divided
+    = I18n.t('home.design.plex_col')
   .col.pe-1
-    flex column equaly divided
+    = I18n.t('home.design.plex_col')
   .col.px-4
-    400px width
+    = I18n.t('home.design.400px_width')
 
-%h1 Controls
+%h1
+  = I18n.t('home.design.control')
 
-%h2 Checkboxes
+%h2
+  = I18n.t('home.design.checkbox')
 
 %p
-  Checkboxes can be used with associated labels positioned either before of after the
-  %code input
-  \. Always include the
-  %code for/id
-  attributes in order to make the respond to click events.
-  If positioned before, as the later example, add an whitespace label.
+  = I18n.t('home.design.checkbox_can_be_used')
+  %code
+    = I18n.t('home.design.input')
+  = I18n.t('home.design.always_include')
+  %code
+    = I18n.t('home.design.for_id')
+  = I18n.t('home.design.make_response')
+  = I18n.t('home.design.if_positioned')
 
 .row
   .col
@@ -71,17 +79,21 @@
     %input(type="checkbox" id="chk2")
     %label(for="chk2") &nbsp;
 
-%h2 Radio buttons
+%h2
+  = I18n.t('home.design.radio_button')
 
 .row
   .col
     %input(type="radio" name="gender" id="opt_male" value="male")
-    %label(for="opt_male") Male
+    %label(for="opt_male")
+      = I18n.t('home.design.male')
 .row
   .col
     %input(type="radio" name="gender" id="opt_female" value="female")
-    %label(for="opt_female") Female
+    %label(for="opt_female")
+      = I18n.t('home.design.female')
 .row
   .col
     %input(type="radio" name="gender" id="opt_other" value="other")
-    %label(for="opt_other") Other
+    %label(for="opt_other")
+      = I18n.t('home.design.other')

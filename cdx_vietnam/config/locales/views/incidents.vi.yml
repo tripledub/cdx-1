@@ -9,3 +9,7 @@ vi:
         one: '1 sự cố'
         other: '%{count} sự cố'
       no_result: 'Không có kết quả'
+
+    filters:
+      btn_show_filters: 'Hiện bộ lọc'
+      show_all: 'Hiện tất cả'

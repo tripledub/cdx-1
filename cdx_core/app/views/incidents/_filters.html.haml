@@ -5,7 +5,7 @@
         =I18n.t('settings.alerts.incidents.incidents')
   
     .topfilteropt
-      %input#query_button.btn-primary.filtershow(type='button' value='Show Filters')
+      %input#query_button.btn-primary.filtershow(type='button' value="#{I18n.t('incidents.filters.btn_show_filters')}")
   
   %form.filteroptions#filters-form{action: incidents_path, "data-auto-submit" => true}
     %input{type: "hidden", name: "page_size", value: @page_size}
@@ -17,13 +17,13 @@
             %label.block 
               =I18n.t('settings.alerts.incidents.alert_group')
             = cdx_select name: "alert.id", value: params["alert.id"] do |select|
-              - select.item "", "Show all"
+              - select.item "", I18n.t('incidents.filters.show_all')
               - select.items @alerts, :id, :name
           .filter
             %label.block 
               =I18n.t('settings.alerts.incidents.date')
             = cdx_select name: "since", value: params["since"] do |select|
-              - select.item "", "Show all"
+              - select.item "", I18n.t('incidents.filters.show_all')
               - select.items @date_options, :value, :label
           .filter
             %label.block 

@@ -4,20 +4,20 @@
   .row.labelHeader
     .col-6
       %h3 
-        Device Model Details
+        = I18n.t('device_models.form.header_device_model')
     .col-6
   .panel.box-content
     .row
       .col
         .row
           .col.pe-4
-            = f.label :institution
+            = f.label :institution, I18n.t('device_models.form.lbl_institution')
           .col
             .value= f.object.institution
 
         .row
           .col.pe-4
-            = f.label :name
+            = f.label :name, I18n.t('device_models.form.lbl_name')
           .col
             = f.text_field :name
 
@@ -26,7 +26,7 @@
         = f.fields_for :manifest do |manifest_form|
           .row
             .col.pe-4
-              = manifest_form.label :definition
+              = manifest_form.label :definition, I18n.t('device_models.form.lbl_definition')
             .col
               %input#deleted_manifest_id{:name => "deleted_manifest", :type => "hidden", :value => ""}
               - if !@device_model.new_record? && @device_model.manifest.definition
@@ -36,18 +36,18 @@
                 %label{:for => 'device_model_manifest_attributes_definition'}
                   %span
                     .icon-upload.icon-blue
-                    Choose a file to upload
+                    = I18n.t('device_models.form.icon_upload')
                   %a.clear-input{:href => "#"}
                     = image_tag "ic-cross.png"
 
         .row
           .col.pe-4
-            = f.label :setup_instructions
+            = f.label :setup_instructions, I18n.t('device_models.form.lbl_setup')
           .col
             - if !@device_model.new_record? && @device_model.setup_instructions.present?
               .file-uploaded
                 %label.input.on
-                  = link_to "download", @device_model.setup_instructions.url
+                  = link_to I18n.t('device_models.form.lnk_download'), @device_model.setup_instructions.url
                   .clear-label
                     = f.check_box :delete_setup_instructions
                     %label.cross{:for => 'device_model_delete_setup_instructions'}
@@ -57,35 +57,36 @@
               %label{:for => 'device_model_setup_instructions'}
                 %span
                   .icon-upload.icon-blue
-                  Choose a file to upload
+                  = I18n.t('device_models.form.icon_upload')
                 %a.clear-input{:href => "#"}
                   = image_tag "ic-cross.png"
-            .text-small.muted Only PDF files below 5MB are allowed
+            .text-small.muted
+              = I18n.t('device_models.form.upload_msg')
 
 
         .row
           .col.pe-4
-            = f.label :supports_activation
+            = f.label :supports_activation, I18n.t('device_models.form.lbl_support')
           .col
             = f.check_box :supports_activation
             = f.label :supports_activation, "&nbsp;".html_safe
 
         .row
           .col.pe-4
-            = f.label :support_url
+            = f.label :support_url, I18n.t('device_models.form.lbl_support_url')
           .col
             = f.text_field :support_url
 
         .row
           .col.pe-4
-            = f.label :supports_ftp
+            = f.label :supports_ftp, I18n.t('device_models.form.lbl_support_ftp')
           .col
             = f.check_box :supports_ftp
             = f.label :supports_ftp, "&nbsp;".html_safe
 
         .row.device-model-filename-pattern
           .col.pe-4
-            = f.label :filename_pattern
+            = f.label :filename_pattern, I18n.t('device_models.form.lbl_filename')
           .col
             = f.text_field :filename_pattern
 
@@ -102,18 +103,19 @@
             .upload-picture-title
               %span.icon-outline-picture.xx-large
               %h2
-                Drop a picture here
-                %br or click to upload a file
+                = I18n.t('device_models.form.drop_picture')
+                %br
+                  = I18n.t('device_models.form.upload_file')
             %img{:src => ""}
             = f.file_field :picture, :class => "upload-picture", 'data-remove-checkbox' => '#device_model_delete_picture'
     %br
     .box.light
       = render 'publish'
   .row.button-actions
-    = f.submit class: 'btn-primary', value: "Save"
+    = f.submit class: 'btn-primary', value: I18n.t('device_models.form.btn_save')
     = link_to I18n.t('views.cancel'), device_models_path, class: 'btn-link'
     - if can_delete_device_model?(@device_model)
-      = link_to "Delete", @device_model, method: :delete, data: { confirm: 'Are you sure you want to delete this device model? All devices using this device model will be deleted as well, along with any tests they may have uploaded.' }, class: 'btn-danger pull-right'
+      = link_to I18n.t('device_models.form.btn_delete'), @device_model, method: :delete, data: { confirm: I18n.t('device_models.form.delete_msg') }, class: 'btn-danger pull-right'
 
 :javascript
   custom_input_file( jQuery, window, document );

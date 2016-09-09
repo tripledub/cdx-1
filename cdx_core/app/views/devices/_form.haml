@@ -3,7 +3,7 @@
 
   .row.header
     .col.pe-2
-      = f.label :institution
+      = f.label :institution, I18n.t('devices.form.title_institution')
     .col
       .value= @navigation_context.institution.name
     = f.submit I18n.t('devices.form.save'), class: 'btn-primary'
@@ -12,7 +12,7 @@
 
   .row
     .col.pe-2
-      = f.label :device_model_id
+      = f.label :device_model_id, I18n.t('devices.form.lbl_device_model')
     .col
       = cdx_select form: f, name: :device_model_id, class: 'input-x-large' do |select|
         - select.items(@device_models, :id, :full_name)
@@ -20,7 +20,7 @@
   - if @allow_to_pick_site
     .row
       .col.pe-2
-        = f.label :site
+        = f.label :site, I18n.t('devices.form.lbl_site')
       .col
         = cdx_select form: f, name: :site_id, class: 'input-x-large' do |select|
           - select.item "", I18n.t('devices.form.none')
@@ -30,22 +30,22 @@
   - else # once created is better to show site name, otherwise user might have read access to many site's device, and we should avoid not showing site name in that scenario
     .row
       .col.pe-2
-        = f.label :site
+        = f.label :site, I18n.t('devices.form.lbl_site')
       .col
         .value= f.object.site.name
   .row
     .col.pe-2
-      = f.label :name
+      = f.label :name, I18n.t('devices.form.lbl_name')
     .col
       = f.text_field :name, :class => 'input-large'
   .row
     .col.pe-2
-      = f.label :serial_number
+      = f.label :serial_number, I18n.t('devices.form.lbl_serial_number')
     .col
       = f.text_field :serial_number, :class => 'input-large'
   .row
     .col.pe-2
-      = f.label :time_zone
+      = f.label :time_zone, I18n.t('devices.form.lbl_time_zone')
     .col
       = cdx_select form: f, name: :time_zone, class: 'input-x-large' do |select|
         - select.items(ActiveSupport::TimeZone.all, :name, :to_s)

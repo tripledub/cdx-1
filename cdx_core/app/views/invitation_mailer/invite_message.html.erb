@@ -1,19 +1,19 @@
 <h1>
-<%= "#{User.find(@user.invited_by_id).full_name} has invited you to join the team as #{@role.name}" %>
+<%= "#{User.find(@user.invited_by_id).full_name} #{I18n.t('invitation_mailer.invite_message.invite_join')} #{@role.name}" %>
 </h1>
 
 <p class="custom-message">
   <%= @message %><br />
-  Please follow the instructions to complete the signup.
+  <%= I18n.t('invitation_mailer.invite_message.complete_sign_up') %>
 </p>
 
 <p>
-  <%= link_to "Create account", accept_invitation_url(@user, :invitation_token => @token), class: "btn-primary" %>
+  <%= link_to I18n.t('invitation_mailer.invite_message.create_acc'), accept_invitation_url(@user, :invitation_token => @token), class: "btn-primary" %>
 </p>
 
 <% content_for :footer do %>
   <p class="footer">
-    If the link above is not working then paste this URL into your browser:
+    <%= I18n.t('invitation_mailer.invite_message.complete_sign_up') %>
     <%= link_to accept_invitation_url(@user, :invitation_token => @token), accept_invitation_url(@user, :invitation_token => @token) %>
   </p>
   <p class="footer">

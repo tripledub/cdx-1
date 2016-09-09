@@ -6,6 +6,6 @@
           %h2
             = link_to filters_path, class: 'side-link', title: I18n.t('views.back') do
               = image_tag "arrow-left-white.png"
-            New Filter
+            = I18n.t('filters.new.new_filter')
 
 = render 'form'

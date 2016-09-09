@@ -1,5 +1,6 @@
-%h3 This is CDP's home.
+%h3
+  = I18n.t('home.index.cdp_home')
 
 - unless current_user
-  Please
-  = link_to "Sign in", new_session_path(:user)
+  = I18n.t('home.index.pls')
+  = link_to I18n.t('home.index.sign_in'), new_session_path(:user)

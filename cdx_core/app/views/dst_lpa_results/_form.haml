@@ -12,7 +12,7 @@
       = f.collection_select :media_used, DstLpaResult.media_options, :first, :last
   .row
     .col.pe-2
-      = f.label :method_used
+      = f.label :method_used, I18n.t('dst_lpa_results.form.lbl_method_used')
     .col
       = f.collection_select :method_used, DstLpaResult.method_options, :first, :last
   .row

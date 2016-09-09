@@ -11,7 +11,7 @@ class Episode < ActiveRecord::Base
   before_save :check_closing
 
   def turnaround_time
-    return 'Still open' unless closed?
+    return I18n.t('models.episode.still_open') unless closed?
     distance_of_time_in_words(created_at, closed_at)
   end
 

@@ -3,6 +3,7 @@ en:
     new:
       header: 'Drug Susceptibility Results'
       add_new: 'Add Dst & LPA Test Result for: %{patient_name}'
+      back: 'Back'
     create:
       audit: 'DST and LPA result added'
       notice: 'DST and LPA result was successfully created.'
@@ -14,3 +15,5 @@ en:
     update:
       audit: 'DST and LPA test result has been updated'
       notice: 'DST and LPA test result was successfully updated.'
+    form:
+      lbl_method_used: 'Method Used'

@@ -28,8 +28,8 @@ var AlertAggregation = React.createClass({
     return (
       < div className = "row" id = "aggregationTypeRow" >
       <div className = "col pe-2" >
-        <label className="tooltip">Aggregation Type
-          <div className="tooltiptext_r">Aggregation Type Tooltip.</div>
+        <label className="tooltip">{I18n.t("components.alert_aggregation.aggregation_type")}
+          <div className="tooltiptext_r">{I18n.t("components.alert_aggregation.aggregation_type_tooltip")}</div> 
         </label>
       </div>
       <div className = "col" >
@@ -88,8 +88,8 @@ var AlertAggregationFrequency = React.createClass({
     return (
       < div className = "row" id = "aggregationFrequenciesRow" >
       <div className = "col pe-2" >
-        <label className="tooltip">Aggregation Frequency
-          <div className="tooltiptext_r">Aggregation Frequency Tooltip.</div>
+        <label className="tooltip">{I18n.t("components.alert_aggregation.aggregation_frequency")}
+          <div className="tooltiptext_r">{I18n.t("components.alert_aggregation.aggregation_frequency_tooltip")}</div> 
         </label>
       </div>
       <div className = "col" >
@@ -124,22 +124,22 @@ var AlertAggregationThreshold = React.createClass({
     return (
       < div className = "row" id = "aggregationThresholdRow" >
       <div className = "col pe-2" >
-        <label className="tooltip">Aggregation Threshold
-          <div className="tooltiptext_r">Aggregation Threshold Tooltip.</div>
+        <label className="tooltip">{I18n.t("components.alert_aggregation.aggregation_threshold")}
+          <div className="tooltiptext_r">{I18n.t("components.alert_aggregation.aggregation_threshold_tooltip")}</div> 
         </label>
       </div>
 
       <div className = "col" >
-          <input type = "text" type="number" min="0" max="10000"
-            placeholder = "Agg Threshold"
+          <input type = "text" type="number" min="0" max="10000" 
+            placeholder = {I18n.t("components.alert_aggregation.agg_threshold_placeholder")}
             valueLink = {
               this.props.textLink
             }
             id="alertaggregationthresholdlimit" />
       </div>
-
+          
       <div className = "col">
-        <label>Use Percentage</label>
+        <label>{I18n.t("components.alert_aggregation.use_percentage")}</label>
       </div>
       <div className = "col">
         <input
@@ -149,10 +149,11 @@ var AlertAggregationThreshold = React.createClass({
           }
           id="alertaggregationpercentage"
           disabled={this.props.edit}
-          />
+          />    
          <label htmlFor="alertaggregationpercentage">&nbsp;</label>
-      </div>
+      </div>    
     </div>
   );
 }
 });
+

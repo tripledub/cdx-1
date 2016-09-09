@@ -1,0 +1,7 @@
+en:
+  models: 
+    alert:
+      errorcode_msg: 'errorcode must be an integer'
+      timespan_msg: 'Timespan cannot be zero'
+      sample_id_msg: 'Sample ID cannot be empty'
+      value_msg: 'Value cannot be greater than 100%'

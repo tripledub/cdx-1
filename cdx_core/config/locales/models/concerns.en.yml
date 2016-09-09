@@ -1,0 +1,26 @@
+en:
+  models: 
+    concerns:
+      resource:
+        institution_option: 'Institution'
+        site_option:  'Site'
+        device_option: 'Device'
+        deviceModel_option: 'DeviceModel'
+        testResult_option: 'TestResult'
+        encounter_option: 'Encounter'
+        role_option: 'Role'
+        user_option: 'User'
+        patient_option: 'Patient'
+        alert_option: 'Alert'
+        pageHeader_option: 'PageHeader'
+        settingsPage_option: 'SettingsPage'
+        resource_not_found: 'Resource not found:'
+      entity:
+        belong_to_institution: 'must belong to the same institution as this'
+        belong_to_encounter: 'must belong to the same encounter as this'
+        belong_to_patient: 'must belong to the same patient as this'
+        is_not_supported: 'is not supported for entity'
+        is_marked_as: 'is marked as'
+        sensitive: 'sensitive'
+      site_contained:
+        must_belong_to_institution: 'must belong to the institution'

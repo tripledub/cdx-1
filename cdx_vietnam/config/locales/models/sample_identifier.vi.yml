@@ -1,0 +1,5 @@
+vi:
+  models:
+    sample_identifier:
+      cant_be_blank: "không thể để trống"
+      is_already: " đã được sử dụng trong "

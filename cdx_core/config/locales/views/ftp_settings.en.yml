@@ -1,0 +1,11 @@
+en:
+  ftp_settings:
+    edit:
+      setting_msg: 'FTP settings for: '
+      host: 'Hostname'
+      port: 'Port'
+      lbl_passive: 'Passive'
+      folder: 'Folder'
+      lbl_login: 'Login'
+      username: 'Username'
+      password: 'Password'

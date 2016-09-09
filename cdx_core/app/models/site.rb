@@ -111,14 +111,14 @@ class Site < ActiveRecord::Base
       when "weekly"; date.beginning_of_week
       when "monthly"; date.beginning_of_month
       when "yearly"; date.beginning_of_year
-      else raise "#{sample_id_reset_policy} reset policy start date not implemented"
+      else raise "#{sample_id_reset_policy} #{I18n.t('models.site.reset_start_date')}"
     end
 
     end_date = case sample_id_reset_policy
       when "weekly"; date.end_of_week
       when "monthly"; date.end_of_month
       when "yearly"; date.end_of_year
-      else raise "#{sample_id_reset_policy} reset policy end date not implemented"
+      else raise "#{sample_id_reset_policy} #{I18n.t('models.site.reset_end_date')}"
     end
 
     return start_date..end_date
@@ -141,7 +141,7 @@ class Site < ActiveRecord::Base
 
   def same_institution_as_parent
     if parent && parent.institution != self.institution
-      self.errors.add(:institution, "must match parent site institution")
+      self.errors.add(:institution, I18n.t('models.site.must_match'))
     end
   end
 

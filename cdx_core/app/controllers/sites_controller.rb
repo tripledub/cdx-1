@@ -179,7 +179,7 @@ class SitesController < ApplicationController
 
   def build_csv
     CSV.generate do |csv|
-      csv << ["Name", "Address","City", "State", "Zipcode"]
+      csv << [I18n.t('sites_controller.col_name'), I18n.t('sites_controller.col_address'),I18n.t('sites_controller.col_city'), I18n.t('sites_controller.col_state'), I18n.t('sites_controller.col_zipcode')]
       @sites.each do |s|
         csv << [s.name, s.address, s.city, s.state, s.zip_code]
       end

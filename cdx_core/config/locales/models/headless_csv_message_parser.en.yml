@@ -1,0 +1,4 @@
+en:
+  models: 
+    headless_csv_message_parser:
+      header_lookup: '"Header lookup is unsupported for headless CSV Messages"'

@@ -10,7 +10,7 @@ class FtpSettingsController < ApplicationController
 
   def update
     if institution.update(institution_params)
-      redirect_to settings_path, notice: 'FTP settings were successfully updated.'
+      redirect_to settings_path, notice: I18n.t('ftp_settings_controller.setting_updated')
     else
       render action: 'edit'
     end
@@ -23,6 +23,6 @@ class FtpSettingsController < ApplicationController
   end
 
   def check_permissions
-    redirect_to(settings_path, error: "You don't have permission to change the FTP settings.") unless has_access?(institution, UPDATE_INSTITUTION)
+    redirect_to(settings_path, error: I18n.t('ftp_settings_controller.dont_have_permission')) unless has_access?(institution, UPDATE_INSTITUTION)
   end
 end

@@ -182,10 +182,10 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
           <Modal ref="addNewSamplesModal">
             <h1>
               <a href="#" className="modal-back" onClick={this.closeAddNewSamplesModal}></a>
-              Add sample
+              {I18n.t("components.fresh_tests_encounter_form.add_sample")}
             </h1>
 
-            <p><input type="text" className="input-block" placeholder="Sample ID" ref="manualSampleEntry"/></p>
+            <p><input type="text" className="input-block" placeholder={I18n.t("components.fresh_tests_encounter_form.sample_id_placeholder")} ref="manualSampleEntry"/></p>
             <p><button type="button" className="btn-primary pull-right" onClick={this.validateAndSetManualEntry}>OK</button></p>
           </Modal>
         </div>
@@ -328,7 +328,7 @@ var ReasonDiag = React.createClass({
     return (
       <div className="row">
         <div className="col-6">
-          <label>Comment</label>
+          <label>{I18n.t("components.fresh_tests_encounter_form.comment")}</label>
         </div>
         <div className="col-6">
           <textarea name="diag_comment" maxLength="200" id="diag_comment" rows="5" cols="60" onChange={this.updateComment}></textarea>
@@ -350,7 +350,7 @@ var PresumptiveRR = React.createClass({
         </div>
         <div className="col-6">
           <input type="checkbox" onChnage={this.updatePresumptiveRR} className="presumptive_rr" id="presumptive_rr" name="presumptive_rr"/>
-          <label htmlFor="presumptive_rr">Presumptive RR-TB/MDR-TB</label>
+          <label htmlFor="presumptive_rr">{I18n.t("components.fresh_tests_encounter_form.presumptive")}</label>
         </div>
       </div>
     )

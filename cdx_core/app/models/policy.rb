@@ -156,7 +156,7 @@ class Policy < ActiveRecord::Base
       Array(statement["action"]).each do |action|
         Array(statement["resource"]).each do |resource_matcher|
           unless self.class.can_delegate?(action, resource_matcher, granter)
-            return errors.add :owner, "can't delegate permission over #{resource_matcher}"
+            return errors.add :owner, "#{I18n.t('models.policy.cant_delegate')} #{resource_matcher}"
           end
         end
       end
@@ -168,12 +168,12 @@ class Policy < ActiveRecord::Base
   private
 
   def validate_self_granted
-    return errors.add :owner, "permission can't be self granted" if self_granted?
+    return errors.add :owner, I18n.t('models.policy.permission_cant_be_self_granted') if self_granted?
   end
 
   def validate_definition
     unless definition["statement"]
-      return errors.add :definition, "is missing a statement"
+      return errors.add :definition, I18n.t('models.policy.is_missing_a_statement')
     end
 
     definition["statement"].each do |statement|
@@ -184,18 +184,18 @@ class Policy < ActiveRecord::Base
           next if action == "*"
 
           unless ACTIONS.include?(action)
-            return errors.add :definition, "has an unknown action: `#{action}`"
+            return errors.add :definition, "#{I18n.t('models.policy.has_an_unknown_action')} `#{action}`"
           end
         end
       else
-        return errors.add :definition, "is missing action in statemenet"
+        return errors.add :definition, I18n.t('models.policy.is_missing_action')
       end
 
       resource_statements = statement["resource"]
       if resource_statements && !resource_statements.empty?
         validate_resource_statements(resource_statements)
       else
-        return errors.add :definition, "is missing resource in statement"
+        return errors.add :definition, I18n.t('models.policy.is_missing_resource')
       end
 
       except_statements = statement["except"]
@@ -207,7 +207,7 @@ class Policy < ActiveRecord::Base
         statement_value = statement[key]
         if !statement_value.nil?
           if statement_value != true && statement_value != false
-            return errors.add :definition, "has an invalid #{key} value: `#{statement_value}`"
+            return errors.add :definition, "#{I18n.t('models.policy.has_an_invalid')} #{key} #{I18n.t('models.policy.value')} `#{statement_value}`"
           end
         end
       end
@@ -217,11 +217,11 @@ class Policy < ActiveRecord::Base
   def validate_resource_statements(resource_statements)
     Array(resource_statements).each do |resource_statement|
       found_resource = Resource.resolve(resource_statement) rescue false
-      return errors.add :definition, "has an unknown resource: `#{resource_statement}`" unless found_resource
+      return errors.add :definition, "#{I18n.t('models.policy.has_an_unknown_resource')} `#{resource_statement}`" unless found_resource
 
       resource_class, resource_id, resource_query = found_resource
-      return errors.add :definition, "has an invalid condition in resource: `#{resource_statement}`"    unless resource_class.supports_query?(resource_query)
-      return errors.add :definition, "has unsupported identifier in resource: `#{resource_statement}`"  unless resource_class.supports_identifier?(resource_id)
+      return errors.add :definition, "#{I18n.t('models.policy.has_an_invalid_condition')} `#{resource_statement}`"    unless resource_class.supports_query?(resource_query)
+      return errors.add :definition, "#{I18n.t('models.policy.has_unsupported')} `#{resource_statement}`"  unless resource_class.supports_identifier?(resource_id)
     end
   end
 

@@ -1,6 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
 
-  before_filter :load_locales
+  before_action :load_locales
   skip_before_filter :ensure_context, except: :edit
 
   protected
@@ -27,10 +27,6 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   private
-
-  def load_locales
-    @locales ||= [%w(English en)]
-  end
 
   def sign_up_params
     params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)

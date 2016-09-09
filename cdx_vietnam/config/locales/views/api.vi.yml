@@ -1,0 +1,28 @@
+vi:
+  api:
+    playground:
+      index:
+        playground: 'CDP - Sân chơi'
+        submit_message: 'Gửi tin nhắn'
+        lbl_device: 'Thiết bị'
+        lbl_data: 'Dữ liệu'
+        col_test_result: 'Kết quả xét nghiệm để xuất ra:'
+        col_start_date: 'Ngày giờ bắt đầu:'
+        col_end_date: 'Ngày giờ kết thúc:'
+        btn_create_msg: 'Tạo tin nhắn'
+        query_result: 'Kết quả truy vấn'
+        lbl_query_string: 'Chuỗi truy vấn'
+        lbl_query_body: 'Nội dung truy vấn'
+        btn_query: 'Truy vấn'
+        response: 'Phản ứng:'
+
+      simulator:
+        simulator: 'CDP - Giả lập'
+        lbl_device: 'Thiết bị:'
+        lbl_patient: 'Tên bệnh nhân:'
+        lbl_gender: 'Giới tính:'
+        lbl_age: 'Tuổi:'
+        lbl_phone: 'Số điện thoại bệnh nhân:'
+        lbl_condition: 'Điều kiện:'
+        lbl_result: 'Kết quả:'
+        btn_simulate_test: 'Mô phỏng xét nghiệm'

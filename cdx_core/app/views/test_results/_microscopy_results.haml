@@ -5,7 +5,7 @@
         =I18n.t('test_results.filters.title')
 
     .topfilteropt
-      %input#query_button.btn-primary.filtershow(type='button' value='Show Filters')
+      %input#query_button.btn-primary.filtershow(type='button' value="#{I18n.t('test_results.filters.show_filters')}")
 
   %form.filteroptions#filters-form{ action: test_results_path, "data-auto-submit" => true }
     %input{ type: "hidden", name: "page_size", value: @page_size }

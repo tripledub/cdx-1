@@ -1,0 +1,24 @@
+vi:
+  activerecord:
+    attributes:
+      site:
+        parent: 'Trang web cha'
+        reset_start_date: 'thiết lập ngày bắt đầu chính sách không được thực hiện'
+        reset_end_date: 'thiết lập ngày kết thúc chính sách không được thực hiện'
+        must_match: 'phải phù hợp với tổ chức trang web cha'
+  models:
+    manifest:
+      unsupported_source_data_type: "loại nguồn dữ liệu không được hỗ trợ"
+      cant_be_blank: "không thể để trống"
+      must_be: "phải là"
+      must_be_a_json_array: "phải là một mảng json"
+      must_be_a_non_empty: "phải là một mảng JSON khác rỗng "
+      must_be_a_json_string: "phải là một mảng json "
+      must_be_in_snake_case: "phải trong trường hợp snake:"
+      must_include: "phải bao gồm"
+      field: "trường"
+      must_be_a_json_object: "phải là một đối tượng json"
+      field_cant_specify: ". Trường không thể xác định một loại."
+      a_scope_must_be_specified: ". Phạm vi phải được xác định."
+      scope: ". Phạm vi"
+      is_invalid: "là không hợp lệ."

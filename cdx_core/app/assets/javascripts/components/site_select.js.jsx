@@ -62,7 +62,7 @@ var SiteSelect = React.createClass({
       return (
       <div className="row">
         <div className="col-6">
-          <label>{this.props.fieldLabel} Site</label>
+          <label>{this.props.fieldLabel} {I18n.t("components.site_select.site")}</label>
         </div>
         <div className="col-6">
           <Select className="input-large" ref="select" clearable={false}

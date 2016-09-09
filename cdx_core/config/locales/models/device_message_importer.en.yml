@@ -1,0 +1,12 @@
+en:
+  device_message_importer:
+    running_import_for: 'Running import for'
+    with_pattern: 'with pattern'
+    saved_device_message: 'Saved device message'
+    for_device: 'for device'
+    parsing_failed: 'Parsing failed for device message'
+    error_processing_device: 'Error processing device message'
+    processed_device: 'Processed device message'
+    importing: 'Importing'
+    error_processing: 'Error processing'
+    with_encoding: 'with encoding'

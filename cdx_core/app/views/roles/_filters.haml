@@ -2,14 +2,15 @@
   .filterbar.filterbartest
     .heading
       .title
-        Roles
+        =I18n.t('roles.filters.roles_title')
     .topfilteropt
       - if @can_create
-        = link_to "Add Roles", new_role_path, class: 'btn-add side-link fix', title: 'Add Role'
+        = link_to I18n.t('roles.filters.add_roles'), new_role_path, class: 'btn-add side-link fix', title: I18n.t('roles.filters.add_role_title')
   %form#filters-form.filteroptions{action: roles_path, "data-auto-submit" => true}
     %input{type: "hidden", name: "page_size", value: @page_size}
     .row.custom_filters
       .advanced
         .filter
-          %label.block Name
+          %label.block 
+            = I18n.t('roles.filters.name')
           %input{type: "text", name: "name", value: params["name"]}

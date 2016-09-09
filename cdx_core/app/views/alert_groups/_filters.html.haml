@@ -4,9 +4,9 @@
     .heading
       .title
         %h3
-          Alert groups
+          = I18n.t('alert_groups.filters.title')
     .topfilteropt
       - if @can_create
-        = link_to "+", new_alert_group_path, class: 'btn-add side-link fix', title: 'Add Alert'
+        = link_to "+", new_alert_group_path, class: 'btn-add side-link fix', title: I18n.t('alert_groups.filters.btn_add_alert')
   %form#filters-form.filteroptions{action: alerts_path, "data-auto-submit" => true}
     %input{type: "hidden", name: "page_size", value: @page_size}

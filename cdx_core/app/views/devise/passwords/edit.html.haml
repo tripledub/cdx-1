@@ -1,18 +1,20 @@
 .row
   .col
-    %h1 Password reset
-    %p Choose a strong password and don't reuse it for other accounts.
+    %h1
+      = I18n.t('devise.passwords.edit.pass_reset')
+    %p
+      = I18n.t('devise.passwords.edit.choose_pass')
 = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
   = f.hidden_field :reset_password_token
   .row
     .col
-      = f.password_field :password, autofocus: true, autocomplete: "off", placeholder: 'Password', class: "input-block"
+      = f.password_field :password, autofocus: true, autocomplete: "off", placeholder: I18n.t('devise.passwords.edit.pass_place_holder'), class: "input-block"
       - if @minimum_password_length
         .small-quote
-          (#{@minimum_password_length} characters minimum)
+          (#{@minimum_password_length} #{I18n.t('devise.registrations.new.characters')})
   %br
   .row
     .col
-      = f.submit "Reset my password", class: "btn-secondary input-block"
+      = f.submit I18n.t('devise.passwords.edit.btn_reset_pass'), class: "btn-secondary input-block"
 
 = devise_error_messages!

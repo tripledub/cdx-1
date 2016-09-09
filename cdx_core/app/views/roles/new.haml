@@ -4,6 +4,6 @@
       %h2
         = link_to roles_path, class: 'side-link', title: I18n.t('views.back') do
           = image_tag "arrow-left-white.png"
-        New Role
+        =I18n.t('roles.new.new_role')
   .testflow
     = render 'form'

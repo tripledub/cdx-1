@@ -116,7 +116,7 @@ class Manifest < ActiveRecord::Base
     when "xml"
       XmlMessageParser.new
     else
-      raise "unsupported source data type"
+      raise I18n.t('models.manifest.unsupported_source_data_type')
     end
   end
 
@@ -131,7 +131,7 @@ class Manifest < ActiveRecord::Base
   def manifest_validation
     if self.definition && self.loaded_definition
       if self.metadata.blank?
-        self.errors.add(:metadata, "can't be blank")
+        self.errors.add(:metadata, I18n.t('models.manifest.cant_be_blank'))
       else
         fields = %w(version api_version conditions)
         check_fields_in_metadata(fields)
@@ -142,7 +142,7 @@ class Manifest < ActiveRecord::Base
       check_field_mapping
       check_custom_fields
     else
-      self.errors.add(:definition, "can't be blank")
+      self.errors.add(:definition, I18n.t('models.manifest.cant_be_blank'))
     end
 
   rescue Oj::ParseError => ex
@@ -157,30 +157,30 @@ class Manifest < ActiveRecord::Base
 
   def check_api_version
     unless self.metadata["api_version"] == CURRENT_VERSION
-      self.errors.add(:api_version, "must be #{CURRENT_VERSION}")
+      self.errors.add(:api_version, "#{I18n.t('models.manifest.must_be')} #{CURRENT_VERSION}")
     end
   end
 
   def check_conditions
     conditions = self.metadata["conditions"]
     unless conditions.is_a?(Array)
-      self.errors.add(:conditions, "must be a json array")
+      self.errors.add(:conditions, I18n.t('models.manifest.must_be_a_json_array'))
       return
     end
 
     if conditions.empty?
-      self.errors.add(:conditions, "must be a non-empty json array")
+      self.errors.add(:conditions, I18n.t('models.manifest.must_be_a_non_empty'))
       return
     end
 
     conditions.each do |condition|
       unless condition.is_a?(String)
-        self.errors.add(:conditions, "must be a json string array")
+        self.errors.add(:conditions, I18n.t('models.manifest.must_be_a_json_string'))
         return
       end
 
       unless Condition.valid_name?(condition)
-        self.errors.add(:conditions, "must be in snake case: #{condition}")
+        self.errors.add(:conditions, "#{I18n.t('models.manifest.must_be_in_snake_case')} #{condition}")
         return
       end
     end
@@ -190,14 +190,14 @@ class Manifest < ActiveRecord::Base
     m = self.metadata
     fields.each do |f|
       if m[f].blank?
-        self.errors.add(:metadata, "must include #{f} field")
+        self.errors.add(:metadata, "#{I18n.t('models.manifest.must_include')} #{f} #{I18n.t('models.manifest.field')}")
       end
     end
   end
 
   def check_field_mapping
     unless field_mapping.is_a? Hash
-      self.errors.add(:field_mapping, "must be a json object")
+      self.errors.add(:field_mapping, I18n.t('models.manifest.must_be_a_json_object'))
     end
   end
 
@@ -210,22 +210,22 @@ class Manifest < ActiveRecord::Base
         check_scope custom_field_name
       end
     else
-      self.errors.add(:custom_fields, "must be a json object")
+      self.errors.add(:custom_fields, I18n.t('models.manifest.must_be_a_json_object'))
     end
   end
 
   def check_no_type(custom_field_name, custom_field)
     if custom_field["type"]
-      self.errors.add(:invalid_type, ": target '#{custom_field_name}'. Field can't specify a type.")
+      self.errors.add(:invalid_type, ": target '#{custom_field_name}'#{I18n.t('models.manifest.field_cant_specify')}")
     end
   end
 
   def check_scope(custom_field_name)
     scope, name = custom_field_name.split(PATH_SPLIT_TOKEN)
     if name.nil?
-      self.errors.add(:custom_fields, ": target '#{custom_field_name}'. A scope must be specified.")
+      self.errors.add(:custom_fields, ": target '#{custom_field_name}'#{I18n.t('models.manifest.a_scope_must_be_specified')}")
     elsif !SCOPES.include?(scope)
-      self.errors.add(:custom_fields, ": target '#{custom_field_name}'. Scope '#{scope}' is invalid.")
+      self.errors.add(:custom_fields, ": target '#{custom_field_name}'#{I18n.t('models.manifest.scope')} '#{scope}' #{I18n.t('models.manifest.is_invalid')}")
     end
   end
 end

@@ -1,7 +1,7 @@
 %h2
-  Welcome
+  = I18n.t('devise.mailer.confirmation_instructions.welcome')
   = @email
 %p
-  Confirm your email and start using our platform
+  = I18n.t('devise.mailer.confirmation_instructions.confirm_email')
 .button-actions
-  = link_to 'Confirm email', confirmation_url(@resource, confirmation_token: @token), class: 'btn btn-primary'
+  = link_to I18n.t('devise.mailer.confirmation_instructions.btn_confirm'), confirmation_url(@resource, confirmation_token: @token), class: 'btn btn-primary'

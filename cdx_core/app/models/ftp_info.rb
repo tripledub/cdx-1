@@ -2,7 +2,7 @@ class FtpInfo < Struct.new(:hostname, :port, :directory, :username, :password, :
   def self.new(*args)
     if args.length == 1 && args[0].is_a?(Hash)
       unexpected = args[0].keys - self.members
-      fail "Unexpected keys: #{unexpected.join(', ')}" if unexpected.any?
+      fail "#{I18n.t('ftp_info.unexpected_key')} #{unexpected.join(', ')}" if unexpected.any?
       super(*self.members.map { |m| args[0][m] })
     else
       super

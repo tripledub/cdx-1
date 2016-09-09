@@ -29,7 +29,7 @@ class DeviceModel < ActiveRecord::Base
   before_validation { picture.clear if delete_picture == '1' }
 
   has_attached_file :setup_instructions
-  validates_attachment_content_type :setup_instructions, :content_type =>['application/pdf'], message: 'must be a pdf file'
+  validates_attachment_content_type :setup_instructions, :content_type =>['application/pdf'], message: I18n.t('device_model.must_be_pdf')
   attr_accessor :delete_setup_instructions
   attr_accessor :setup_instructions_content_type
   before_validation { setup_instructions.clear if delete_setup_instructions == '1' }
@@ -57,9 +57,9 @@ class DeviceModel < ActiveRecord::Base
   private
 
   def destroy_devices!
-    raise ActiveRecord::RecordNotDestroyed, "Cannot destroy a published device model" if published?
+    raise ActiveRecord::RecordNotDestroyed, I18n.t('device_model.cannot_destroy_publish_device') if published?
     devices = self.devices.to_a
-    raise ActiveRecord::RecordNotDestroyed, "Cannot destroy a device model with devices outside its institution" if devices.any?{|d| d.institution_id != institution_id}
+    raise ActiveRecord::RecordNotDestroyed, I18n.t('device_model.cannot_destroy_device') if devices.any?{|d| d.institution_id != institution_id}
     devices.each(&:destroy_cascade!)
     devices(true) # Reload devices relation so destroy:restrict does not prevent the record from being destroyed
   end
@@ -67,9 +67,9 @@ class DeviceModel < ActiveRecord::Base
   def valid_filename_pattern
     return if filename_pattern.blank?
     regex = Regexp.new(filename_pattern)
-    errors.add(:filename_pattern, "must capture device serial number as 'sn', for example: (?<sn>[A-Z0-9]+).*\\.csv") unless regex.names.include?('sn')
+    errors.add(:filename_pattern, "#{I18n.t('device_model.must_capture')} (?<sn>[A-Z0-9]+).*\\.csv") unless regex.names.include?('sn')
   rescue RegexpError => ex
-    errors.add(:filename_pattern, "must be a valid pattern (#{ex.message})")
+    errors.add(:filename_pattern, "#{I18n.t('device_model.must_be_valid_pattern')} (#{ex.message})")
   end
 
 end
