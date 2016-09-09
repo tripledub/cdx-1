@@ -16,6 +16,7 @@ Capybara.javascript_driver = :poltergeist
 Rails.backtrace_cleaner.remove_silencers!
 
 # Load support files
+Dir["#{CdxVietnam::Engine.root}/app/middleware/**/*.rb"].each { |f| require f }
 require "#{CdxVietnam::Engine.root}/../cdx_core/features/support/page_objects/cdx_page_helper.rb"
 require "#{CdxVietnam::Engine.root}/../cdx_core/features/support/page_objects/tests_run.rb"
 require "#{CdxVietnam::Engine.root}/../cdx_core/features/support/page_objects/file_input.rb"

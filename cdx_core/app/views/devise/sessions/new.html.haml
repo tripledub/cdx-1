@@ -11,7 +11,7 @@
   .row
     .col
       = cdx_select form: f, name: :locale, class: 'input-block' do |select|
-        - select.items(@locales, :second, :first)
+        - select.items(CdxLocalisation::Languages.active, :second, :first)
   %br
   .row
     .col

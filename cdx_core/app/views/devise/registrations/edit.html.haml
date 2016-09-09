@@ -41,7 +41,7 @@
       = f.label :locale, I18n.t('devise.registrations.edit.lbl_locale')
     .col
       = cdx_select form: f, name: :locale, class: 'input-xx-large' do |select|
-        - select.items(@locales, :second, :first)
+        - select.items(CdxLocalisation::Languages.active, :second, :first)
   .row
     .col.pe-2
       = f.label :time_zone, I18n.t('devise.registrations.edit.lbl_time_zone')
