@@ -117,7 +117,7 @@ en:
 
     alert_incidents:
       creation_date_row: "Creation Date"
-      incidents_row: "Incidents" 
+      incidents_row: "Incidents"
       last_incident_row: "Last Incident"
       ago_col: "Ago"
 
@@ -135,7 +135,7 @@ en:
       delete_btn: "Delete"
       confirm_btn: "Confirm"
 
-    device_code_table: 
+    device_code_table:
       no_data_msg: "There is no data to display"
       device_col: "Device"
       location_col: "Location"
@@ -193,7 +193,7 @@ en:
       weeks_in_treatment_label: "Weeks in treatment:"
       samples_id_label: "Samples Id:"
       sample_type_label: "Sample type:"
-      test_due_date_label: "Test due date:" 
+      test_due_date_label: "Test due date:"
       status_label: "Status:"
       update_btn: "Update Test Order"
       cancel_confirm_msg: "You are about to permanently cancel this test order. Are you sure you want to proceed?"
@@ -282,8 +282,9 @@ en:
       at_site_and_subsites: " at site and subsites"
       no_actions_granted: "No actions granted"
       new_policy: "New policy"
+      encounter: 'Test order'
 
-    policy_item_detail: 
+    policy_item_detail:
       resources_label: "Resources"
       all_text: "All"
       from_text: "from"
