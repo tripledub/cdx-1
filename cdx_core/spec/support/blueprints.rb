@@ -173,18 +173,11 @@ RequestedTest.blueprint do
   comment {"this is a  comment for the requested test ......"}
 end
 
-
-def first_or_make_site_unless_manufacturer(institution)
-  unless institution.kind_manufacturer?
-    institution.sites.first || institution.sites.make
-  end
-end
-
 SampleIdentifier.blueprint do
   sample { Sample.make_unsaved({}.tap do |h|
     h[:institution] = object.site.institution if object.site
-  end)}
-  site { first_or_make_site_unless_manufacturer(object.sample.institution) }
+  end) }
+  site { sample.institution.sites.first || sample.institution.sites.make }
 end
 
 Sample.blueprint do
@@ -277,8 +270,8 @@ end
 XpertResult.blueprint do
   requested_test { RequestedTest.make }
   sample_collected_on { 23.days.ago}
-  tuberculosis { 'invalid' }
-  rifampicin { 'detected' }
+  tuberculosis { 'detected' }
+  rifampicin { 'not_detected' }
   examined_by { Faker::Name.name }
   result_on { 7.days.from_now }
 end

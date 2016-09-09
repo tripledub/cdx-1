@@ -45,8 +45,8 @@ class EncountersController < ApplicationController
   end
 
   def destroy
-    if can_delete_encounter?
-      # note: Cannot delete record because dependent samples exist, so just set delated_at
+    if @encounter.status == 'pending'
+      # note: Cannot delete record because dependent samples exist, so just set deleted_at
       @encounter.update(deleted_at: Time.now)
       begin
          Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: @encounter.uuid
@@ -155,16 +155,15 @@ class EncountersController < ApplicationController
     @show_edit_encounter   = true
     @show_cancel_encounter = false
     @return_path_encounter = nil
-    @return_path_encounter = test_orders_path if params['test_order_page_mode'] !=nil
+    @return_path_encounter = test_orders_path if params['test_order_page_mode'] != nil
 
     if request.referer
       referer       = URI(request.referer).path
-      referer_check = referer =~ /\/patients\/\d/
-       if referer_check || (params['test_order_page_mode'] == 'cancel')
+      if (referer =~ /\/patients\/\d/) || (params['test_order_page_mode'] == 'cancel')
         @show_edit_encounter   = false
-        @show_cancel_encounter = true if @encounter && (Encounter.statuses[@encounter.status] != Encounter.statuses["inprogress"])
+        @show_cancel_encounter = true if @encounter && (Encounter.statuses[@encounter.status] == Encounter.statuses["pending"])
         if @encounter && @encounter.patient
-           @return_path_encounter = patient_path(@encounter.patient)
+          @return_path_encounter = patient_path(@encounter.patient)
         else
           @return_path_encounter = referer
         end
@@ -469,9 +468,5 @@ class EncountersController < ApplicationController
     return unless encounter_param['patient'] || encounter_param['patient_id']
 
     encounter_param['patient'].present? ? encounter_param['patient']['id'] : encounter_param['patient_id']
-  end
-
-  def can_delete_encounter?
-    @encounter.status == 'pending' && has_access?(@encounter, DELETE_ENCOUNTER)
   end
 end

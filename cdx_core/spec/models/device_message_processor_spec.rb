@@ -412,32 +412,6 @@ describe DeviceMessageProcessor, elasticsearch: true do
       expect(sample.core_fields).to eq(core_fields)
       expect(sample.custom_fields).to eq(custom_fields)
     end
-
-    it "should update sample from another site for manufacturer" do
-      institution.update_attributes! kind: 'manufacturer'
-
-      sample = Sample.make(
-        core_fields: core_fields,
-        custom_fields: custom_fields,
-        institution: institution
-      )
-
-      sample_identifier = SampleIdentifier.make(
-        sample: sample,
-        uuid: 'abc',
-        entity_id: SAMPLE_ID
-      )
-
-      device_message_processor.process
-
-      expect(Sample.count).to eq(1)
-
-      sample = sample.reload
-
-      expect(sample.core_fields).to eq(core_fields.merge(SAMPLE_CORE_FIELDS))
-      expect(sample.custom_fields).to eq(custom_fields.merge(SAMPLE_CUSTOM_FIELDS))
-    end
-
   end
 
   it "should update tests with the same test_id" do

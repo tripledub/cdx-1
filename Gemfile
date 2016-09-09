@@ -123,7 +123,6 @@ group :test do
   gem 'machinist', '~> 1.0'
   gem 'capybara'
   gem 'guard-rspec'
-  gem 'rspec'
   gem 'rspec-collection_matchers'
   gem 'vcr'
   gem 'webmock', require: false

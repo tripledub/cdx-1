@@ -53,4 +53,13 @@
         }
       }
     );
+
+    $('input[type=radio][name="xpert_result[rifampicin]"]').change(
+      function () {
+        if ((this.value === 'detected') && ($("input:radio[name='xpert_result[tuberculosis]']:checked").val() !== 'detected')) {
+          alert(I18n.t('xpert_results.form.rifampicin_detected'))
+          $("input:radio[name='xpert_result[rifampicin]']").attr('checked', false);
+        }
+      }
+    );
   })

@@ -18,7 +18,6 @@ describe Presenters::Devices do
       expect(described_class.index_table(site.devices).first).to eq({
         id:              site.devices.first.uuid,
         name:            site.devices.first.name,
-        institutionName: site.devices.first.device_model.institution.name,
         modelName:       site.devices.first.device_model.full_name,
         siteName:        site.name,
         viewLink:        Rails.application.routes.url_helpers.device_path(site.devices.first.id)

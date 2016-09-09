@@ -27,11 +27,6 @@ class SampleIdentifier < ActiveRecord::Base
     # i.e.: allow blank entity_id
     return if entity_id.blank?
 
-    # Manufacturers can submit samples for testing
-    # and they do not have sites
-    # TODO: should valid general uniqueness
-    return if sample.institution.kind_manufacturer?
-
     unless site
       errors.add(:site, I18n.t('models.sample_identifier.cant_be_blank'))
       return

@@ -23,7 +23,7 @@
             %label.block
               = I18n.t('test_orders.filters.status')
             = cdx_select name: "status", value: params["status"] do |select|
-              - select.item "", I18n.t('test_orders.filters.show_all')
+              - select.item "", I18n.t('test_orders.filters.show_all_outstanding')
               - select.items Encounter.status_options.map {|e| e.reverse }
           .filter
             %label.block

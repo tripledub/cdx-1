@@ -12,7 +12,7 @@
   context: @navigation_context,
   requestedTests: Presenters::RequestedTests.index_view(@encounter),
   requested_by: @encounter.user !=nil ? @encounter.user.email : '',
-  can_update: has_access?(@encounter, Policy::Actions::UPDATE_ENCOUNTER),
+  canUpdate: has_access?(@encounter, Policy::Actions::UPDATE_ENCOUNTER),
   showEdit: @show_edit_encounter,
   showCancel: @show_cancel_encounter,
   referer: @return_path_encounter,

@@ -32,6 +32,7 @@ var EncounterShow = React.createClass({
     }
 
     var  urlParam = this.props.encounter.id
+
     EncounterActions.deleteEncounter(urlParam, successUrl, this.submitError);
   },
 
@@ -42,7 +43,7 @@ var EncounterShow = React.createClass({
      successUrl = '/test_orders';
     }
 
-    if (this.props.requestedTests.length>0) {
+    if (this.props.requestedTests.length > 0) {
       var urlParam   = '/requested_tests';
       urlParam       = urlParam + '/' + this.props.encounter.id;
       requestedTests = this.props.requestedTests;
@@ -66,9 +67,9 @@ var EncounterShow = React.createClass({
   },
 
   render: function() {
-    if (this.props.can_update && this.props.showCancel) {
+    if (this.props.canUpdate && this.props.showCancel) {
       actionButton = <EncounterDelete showEdit={true} onChangeParentLevel={this.EncounterDeleteHandler} encounter={this.props.encounter} />;
-    } else if (this.props.can_update && this.props.showEdit) {
+    } else if (this.props.canUpdate && this.props.showEdit) {
       actionButton = <EncounterUpdate onChangeParentLevel={this.EncounterUpdateHandler} />;
     } else {
       actionButton = <ShowNoButton />;
@@ -129,19 +130,19 @@ var EncounterShow = React.createClass({
                 {
                   this.props.encounter.testing_for === 'TB' ?
                   this.props.encounter.culture_format != '' ?
-                  <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.culture_format_label")} fieldValue={ this.props.encounter.culture_format } /> 
+                  <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.culture_format_label")} fieldValue={ this.props.encounter.culture_format } />
                   : null
                   : null
                 }
                 <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.comment_label")} fieldValue={ this.props.encounter.diag_comment } />
                 {
                   this.props.encounter.exam_reason === 'follow' ?
-                  <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.weeks_in_treatment_label")} fieldValue={ this.props.encounter.treatment_weeks } /> 
+                  <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.weeks_in_treatment_label")} fieldValue={ this.props.encounter.treatment_weeks } />
                   : null
                 }
                 {
-                  this.props.encounter.presumptive_rr ? 
-                  <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.presumptive")} fieldValue={ this.props.encounter.presumptive_rr } /> 
+                  this.props.encounter.presumptive_rr ?
+                  <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.presumptive")} fieldValue={ this.props.encounter.presumptive_rr } />
                   : null
                 }
                 {
@@ -185,7 +186,8 @@ var EncounterShow = React.createClass({
 var EncounterUpdate = React.createClass({
   clickHandler: function() {
     this.props.onChangeParentLevel();
-   },
+  },
+
   render: function() {
     return(
       <div><a className="btn-secondary" onClick={this.clickHandler} id="update_encounter" href="#">{I18n.t("components.encounter_show.update_btn")}</a></div>

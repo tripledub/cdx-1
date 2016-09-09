@@ -17,7 +17,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     context 'an admin user' do
       let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, status: 0 }
 
-      it "should destroy an encounter no matter in which status is" do
+      it "should destroy an encounter if status is pending" do
         delete :destroy, id: encounter.id
 
         expect(Encounter.count).to eq 0
@@ -40,8 +40,20 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         delete :destroy, id: encounter.id
       end
 
-      context 'if encounter is not pending' do
+      context 'if encounter is in progress' do
         let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, status: 1 }
+
+        it 'should not be able to destroy it' do
+          expect(Encounter.count).to eq 1
+        end
+
+        it 'should inform the user' do
+          expect(flash.notice).to eq 'You can not delete this test order.'
+        end
+      end
+
+      context 'if encounter is completed' do
+        let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, status: 2 }
 
         it 'should not be able to destroy it' do
           expect(Encounter.count).to eq 1
@@ -86,8 +98,8 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       grant i1.user, user, {encounter: i1}, READ_ENCOUNTER
       encounter         = Encounter.make institution: i1, patient: patient
       sample_identifier = SampleIdentifier.make(site: site, entity_id: "entity random", lab_sample_id: 'Random lab sample', sample: Sample.make(institution: i1, encounter: encounter, patient: patient))
-
       get :show, id: encounter.id
+
       expect(response).to have_http_status(:success)
       expect(assigns[:can_update]).to be_falsy
       expect(assigns[:show_edit_encounter]).to be_truthy
@@ -109,7 +121,6 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       grant i1.user, user, {site: i1}, CREATE_SITE_ENCOUNTER
       grant i1.user, user, {encounter: i1}, READ_ENCOUNTER
       grant i1.user, user, {encounter: i1}, UPDATE_ENCOUNTER
-
       encounter = Encounter.make institution: i1, patient: patient
       get :show, id: encounter.id
 
@@ -119,21 +130,54 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     it "should load encounter by uuid" do
       encounter = Encounter.make institution: institution, patient: patient
       get :show, id: encounter.uuid
+
       expect(assigns(:encounter)).to eq(encounter)
     end
 
     it "should load encounter by id" do
       encounter = Encounter.make institution: institution, patient: patient
       get :show, id: encounter.id
+
       expect(assigns(:encounter)).to eq(encounter)
     end
 
     it "should load encounter first by uuid" do
-      encounter   = Encounter.make institution: institution, patient: patient
+      encounter  = Encounter.make institution: institution, patient: patient
       encounter2 = Encounter.make institution: institution, uuid: "#{encounter.id}lorem", patient: patient
-
       get :show, id: encounter2.uuid
+
       expect(assigns(:encounter)).to eq(encounter2)
+    end
+
+    context 'cancel encounter' do
+      before :each do
+        request.env["HTTP_REFERER"] = patient_path(patient)
+        get :show, id: encounter.uuid
+      end
+
+      context 'encounter status is pending' do
+        let(:encounter) { Encounter.make institution: institution, patient: patient, status: 0 }
+
+        it 'can be deleted by the user' do
+          expect(assigns(:show_cancel_encounter)).to eq(true)
+        end
+      end
+
+      context 'encounter status is completed' do
+        let(:encounter) { Encounter.make institution: institution, patient: patient, status: 2 }
+
+        it 'can not be deleted by the user' do
+          expect(assigns(:show_cancel_encounter)).to eq(false)
+        end
+      end
+
+      context 'encounter status is in progress' do
+        let(:encounter) { Encounter.make institution: institution, patient: patient, status: 1 }
+
+        it 'can not be deleted by the user' do
+          expect(assigns(:show_cancel_encounter)).to eq(false)
+        end
+      end
     end
   end
 

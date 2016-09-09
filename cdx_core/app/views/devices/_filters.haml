@@ -16,12 +16,6 @@
         .row
           .filter
             %label.block
-              = I18n.t('devices.filters.manufacturer')
-            = cdx_select name: "manufacturer", value: params["manufacturer"] do |select|
-              - select.item "", I18n.t('devices.filters.show_all')
-              - select.items @manufacturers, :id, :name
-          .filter
-            %label.block
               = I18n.t('devices.filters.model')
             = cdx_select name: "device_model", value: params["device_model"] do |select|
               - select.item "", I18n.t('devices.filters.show_all')
