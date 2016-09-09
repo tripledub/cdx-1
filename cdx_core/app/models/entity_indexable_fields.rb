@@ -48,16 +48,7 @@ module EntityIndexableFields
   end
 
   def location_fields(location)
-    return Hash.new if location.nil?
-    parent_locations = location.try(:self_and_ancestors) || []
-
-    return {
-      "id" => location.try(:geo_id),
-      "parents" => parent_locations.map(&:geo_id),
-      "admin_levels" => Hash[parent_locations.map { |l| ["admin_level_#{l.admin_level}", l.geo_id] }],
-      "lat" => location.try(:lat),
-      "lng" => location.try(:lng)
-    }
+    return Hash.new
   end
 
   def institution_fields(institution)

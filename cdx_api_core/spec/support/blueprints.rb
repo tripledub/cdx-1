@@ -305,7 +305,6 @@ end
 Site.blueprint do
   institution
   name
-  location_geoid { object.location.try(:id) || LocationService.repository.make.id }
   address { Faker::Address.street_address }
   city { Faker::Address.city }
   state { Faker::Address.state }
@@ -319,10 +318,4 @@ end
 Site.blueprint :child do
   parent { nil }
   institution { parent.institution }
-end
-
-Location; class Location
-  def self.make(params={})
-    LocationService.repository.make(params)
-  end
 end

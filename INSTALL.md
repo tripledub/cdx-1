@@ -47,8 +47,6 @@ Google client id and secret are required to enable login using Google, and you s
 ```yml
 host: cdx.example.com
 app_version: latest
-nndd_url: "/nndd/index.html"
-location_service_url: http://locations-stg.instedd.org
 google_client_id:
 google_client_secret:
 google_maps_api_key:

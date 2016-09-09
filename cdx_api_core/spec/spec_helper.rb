@@ -65,7 +65,6 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    LocationService.fake!
     Timecop.return
     ActionMailer::Base.deliveries.clear
   end

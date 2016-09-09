@@ -7,7 +7,6 @@ describe Blender do
     # then deleted via truncation on the end of the fixture
     before(:all) do
       DatabaseCleaner.clean_with :truncation
-      LocationService.fake!
 
       @institution = Institution.make
 

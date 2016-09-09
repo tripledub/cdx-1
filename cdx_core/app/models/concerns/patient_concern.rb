@@ -7,7 +7,6 @@ module PatientConcern
     include AutoIdHash
     include Resource
     include DateDistanceHelper
-    include WithLocation
     include SiteContained
     include Auditable
 

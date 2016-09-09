@@ -96,14 +96,14 @@ describe Manifest, validate_manifest: false do
 
       assert_manifest_application %(
         {
-          "sample.fields": { "script": "site.name + ',' + site.address + ',' + site.city + ',' + site.state + ',' + site.zip_code + ',' + site.region + ',' + parseInt(site.lat) + ',' + parseInt(site.lng) + ',' + site.location_geoid" }
+          "sample.fields": { "script": "site.name + ',' + site.address + ',' + site.city + ',' + site.state + ',' + site.zip_code + ',' + site.region" }
         }
       ), %(
         {
           "sample.fields": {}
         }
       ), %({}),
-      {"sample" => {"custom" => {"fields" => "#{site.name},#{site.address},#{site.city},#{site.state},#{site.zip_code},#{site.region},#{site.lat.to_i},#{site.lng.to_i},#{site.location_geoid}"}, "pii" => {}, "core" => {}}}, device
+      {"sample" => {"custom" => {"fields" => "#{site.name},#{site.address},#{site.city},#{site.state},#{site.zip_code},#{site.region}"}, "pii" => {}, "core" => {}}}, device
     end
 
     xit "has access to location from script" do

@@ -31,11 +31,7 @@ describe HourlyAlertJob, elasticsearch: true do
       @alert.destroy
     end
 
-    let(:parent_location) {Location.make}
-    let(:leaf_location1) {Location.make parent: parent_location}
-    let(:upper_leaf_location) {Location.make}
-
-    let(:site1) {Site.make institution: institution, location_geoid: leaf_location1.id}
+    let(:site1) {Site.make institution: institution }
 
     it "for error code category inject an error code" do
       before_test_history_count = AlertHistory.count
@@ -71,7 +67,7 @@ describe HourlyAlertJob, elasticsearch: true do
       expect(before_test_recipient_count).to eq(after_test_recipient_count)
     end
 
-  
+
     it "check non-repeat logic for when same smaple id but different event-id that multiple alert triggers are not generated" do
       before_test_history_count = AlertHistory.count
       before_test_recipient_count=RecipientNotificationHistory.count
@@ -90,7 +86,7 @@ describe HourlyAlertJob, elasticsearch: true do
       expect(before_test_history_count+3).to eq(after_test_history_count)
       expect(before_test_recipient_count+1).to eq(after_test_recipient_count)
     end
-    
+
 
   end
 end

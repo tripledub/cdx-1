@@ -12,7 +12,7 @@ module CdxApiCore
       @sites = check_access(@sites, READ_SITE).map do |site|
         @uuids << site.uuid
 
-        {"uuid" => site.uuid, "name" => site.name, "location" => site.location_geoid, "parent_uuid" => site.parent.try(:uuid), "institution_uuid" => site.institution.uuid }
+        {"uuid" => site.uuid, "name" => site.name, "parent_uuid" => site.parent.try(:uuid), "institution_uuid" => site.institution.uuid }
       end
 
       @sites.each do |site|
@@ -23,7 +23,7 @@ module CdxApiCore
 
       respond_to do |format|
         format.csv do
-          build_csv 'Sites', CSVBuilder.new(@sites, column_names: ["uuid", "name", "location", "parent_uuid", "institution_uuid"])
+          build_csv 'Sites', CSVBuilder.new(@sites, column_names: ["uuid", "name", "parent_uuid", "institution_uuid"])
           render :layout => false
         end
         format.json do

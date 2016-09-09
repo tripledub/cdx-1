@@ -4,13 +4,11 @@ require 'policy_spec_helper'
 describe TestResultsController, elasticsearch: true do
   let!(:user)             { User.make }
   let!(:institution)      { user.create Institution.make_unsaved }
-  let(:root_location)     { Location.make }
-  let(:location)          { Location.make parent: root_location }
-  let(:site)              { Site.make institution: institution, location: location }
-  let(:subsite)           { Site.make institution: institution, location: location, parent: site }
+  let(:site)              { Site.make institution: institution }
+  let(:subsite)           { Site.make institution: institution, parent: site }
   let(:patient)           { Patient.make institution: institution }
   let(:device)            { Device.make institution_id: institution.id, site: site }
-  let(:site2)             { Site.make institution: institution, location: location }
+  let(:site2)             { Site.make institution: institution }
   let(:device2)           { Device.make institution_id: institution.id, site: site2 }
   let(:encounter)         { Encounter.make institution: institution , user: user, patient: patient }
   let(:other_user)        { User.make }
@@ -233,13 +231,6 @@ describe TestResultsController, elasticsearch: true do
           "Institution name" => institution.name, "Site name" => site.name, "Sample type" => "blood",
           "Encounter uuid" => encounter.uuid, "Patient gender" => "male" }
 
-        fields.each do |name, value|
-          expect(csv[0]).to contain_field(name, value)
-        end
-      end
-
-      it "should download dynamic fields" do
-        fields = { "Location admin levels admin level 0" => root_location.id, "Location admin levels admin level 1" => location.id }
         fields.each do |name, value|
           expect(csv[0]).to contain_field(name, value)
         end

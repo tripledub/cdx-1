@@ -17,9 +17,6 @@
 # 9) If a filter or group has no name, it will be the same as the field name, as specified in (5).
 # 10) If a filter or group has no type, it will be the default type as specified in (3) and (4).
 # 11) If a filter or group is added with the sole option 'include_default: true', then the default filter or group will be added to the filters or groups array, as specified in (3), (4), and (5).
-# 12) If a field of type location is defined, the filters and groupings are going to be the following:
-#   a) a filter with the same name
-#   b) a grouping with the name of '#{default_name}_admin_level'
 
 #    - name: test.assays.quantitative_result
 #      filter_parameter_definition:
@@ -59,14 +56,6 @@ test:
     filter_parameter_definition:
       - type: match
     group_parameter_definition: none
-  - name: location.parents
-    filter_parameter_definition:
-      - name: location
-        type: match
-  - name: location.admin_levels
-    group_parameter_definition:
-      - name: admin_level
-        type: location
 encounter:
   - name: encounter.start_time
     filter_parameter_definition:
