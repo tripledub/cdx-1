@@ -4,6 +4,10 @@ class DashboardsController < ApplicationController
     @dashboard_report = Reports::Dashboard.new(current_user, @navigation_context, options)
   end
 
+  def nndd
+    return unless authorize_resource(TestResult, MEDICAL_DASHBOARD)
+  end
+
   protected
 
   def options
