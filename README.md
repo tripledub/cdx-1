@@ -15,17 +15,17 @@ To start developing:
 1. Clone the repo.
 
 2. Install dependencies:
-	* `bundle install`.
-	* PhantomJS 1.9.8 for [Poltergeist](https://github.com/teampoltergeist/poltergeist) (development and test only)
-		* Install it in mac with: `brew install phantomjs`
-	* ImageMagick for [Paperclip](https://github.com/thoughtbot/paperclip#image-processor)
-		* Install it in mac with: `brew install imagemagick`
-	* [Redis](http://redis.io/download) is [used](https://github.com/mperham/sidekiq/wiki/Using-Redis) by [sidekiq](http://sidekiq.org/). CDX uses sidekiq as [ActiveJob](http://guides.rubyonrails.org/active_job_basics.html#backends) backend
-		* Install it in mac with: `brew install redis`
-		* you can start it with `redis-server --daemonize yes`
-	* [Elasticsearch](https://www.elastic.co/) is used as the main index for test results.
-		* We support elasticsearch versions < 2.x
-		* Install it in mac with: `brew install elasticsearch17`
+  * `bundle install`.
+  * PhantomJS 1.9.8 for [Poltergeist](https://github.com/teampoltergeist/poltergeist) (development and test only)
+    * Install it in mac with: `brew install phantomjs`
+  * ImageMagick for [Paperclip](https://github.com/thoughtbot/paperclip#image-processor)
+    * Install it in mac with: `brew install imagemagick`
+  * [Redis](http://redis.io/download) is [used](https://github.com/mperham/sidekiq/wiki/Using-Redis) by [sidekiq](http://sidekiq.org/). CDX uses sidekiq as [ActiveJob](http://guides.rubyonrails.org/active_job_basics.html#backends) backend
+    * Install it in mac with: `brew install redis`
+    * you can start it with `redis-server --daemonize yes`
+  * [Elasticsearch](https://www.elastic.co/) is used as the main index for test results.
+    * We support elasticsearch versions < 2.x
+    * Install it in mac with: `brew install elasticsearch17`
 
 3. Setup development database: `bundle exec rake db:setup`
 
@@ -60,10 +60,6 @@ To create an initial set of tests:
 16. Copy the contents of `/spec/fixtures/csvs/genoscan_sample.csv` into the _Data_ field
 
 17. Run create message and navigate to _Tests_ to verify the tests were successfully imported
-
-### Locations setup
-
-Locations are obtained from the [InSTEDD Location Service](https://github.com/instedd/location_service). You can specify a different path in config/settings/development.yml.local
 
 ### NNDD
 
@@ -133,7 +129,3 @@ Using i18n gem. The Ruby I18n (shorthand for internationalization) gem which is 
 3. Model and view: there is one file for each model or view
 
 4. The locale file is organized based on file/module hierachy
-
-
-
-

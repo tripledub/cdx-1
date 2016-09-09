@@ -15,16 +15,20 @@ module Reports
     def get_device_location_details
       data = results['tests'].map do |result|
       {
-        device: ::Device.where(uuid: result["device.uuid"]).pluck(:name)[0],
+        device: current_device(result["device.uuid"]).name,
         error_code: result["test.error_code"],
         count: result["count"],
-        location: ::Site.where(location_geoid: result["location.id"]).pluck(:name),
+        location: current_device(result["device.uuid"]).site.name,
         last_error: latest_error_date(result)
       }
       end
     end
 
     private
+
+    def current_device(device_uuid)
+      ::Device.where(uuid: device_uuid)
+    end
 
     def latest_error_date(result)
       filter = {}

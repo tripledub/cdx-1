@@ -42,10 +42,6 @@ class Device < ActiveRecord::Base
     end
   end
 
-  def locations(opts = {})
-    sites.map { |l| l.location(opts) }.uniq
-  end
-
   def filter_by_owner(user, _check_conditions)
     institution.user_id == user.id ? self : nil
   end

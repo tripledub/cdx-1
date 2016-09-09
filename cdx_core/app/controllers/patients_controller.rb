@@ -89,7 +89,7 @@ class PatientsController < ApplicationController
 
   def patient_params
     params.require(:patient).permit(
-      :name, :entity_id, :gender, :nickname, :social_security_code, :birth_date_on, :lat, :lng, :location_geoid, :address, :email, :phone, :city, :state, :zip_code,
+      :name, :entity_id, :gender, :nickname, :social_security_code, :birth_date_on, :address, :email, :phone, :city, :state, :zip_code,
       addresses_attributes: [ :id, :address, :city, :state, :zip_code ]
     )
   end
@@ -124,9 +124,6 @@ class PatientsController < ApplicationController
 
     params[:entity_id]                  = session[:patients_filter_entity_id] if params[:entity_id].nil?
     session[:patients_filter_entity_id] = params[:entity_id]
-
-    params[:location]                  = session[:patients_filter_location] if params[:location].nil?
-    session[:patients_filter_location] = params[:location]
 
     params[:page]                  = session[:patients_filter_page] if params[:page].nil?
     session[:patients_filter_page] = params[:page]

@@ -165,21 +165,6 @@ describe "Cdx::Api::Elasticsearch::MappingTemplate" do
               }
             }
           },
-          "location" => {
-            "properties" => {
-              "id" => {
-                "type" => "string",
-                "index" => "not_analyzed"
-              },
-              "parents" => {
-                "type" => "string",
-                "index" => "not_analyzed"
-              },
-              "admin_levels" => {
-                "properties" => {}
-              }
-            }
-          },
           "encounter" => {
             "properties" => {
               "uuid" => {

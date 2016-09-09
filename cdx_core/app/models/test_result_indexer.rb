@@ -6,7 +6,7 @@ class TestResultIndexer < EntityIndexer
     @test_result = test_result
   end
 
-  def after_index(options) 
+  def after_index(options)
     percolate_result = client.percolate index: Cdx::Api.index_name, type: type, id: test_result.uuid
 
     percolate_result["matches"].each do |match|
@@ -17,7 +17,7 @@ class TestResultIndexer < EntityIndexer
         #the alert id is in this format: alert_{alertID}
         subscriber_id.slice! "alert_"
         alert = Alert.includes(:alert_recipients).find(subscriber_id)
-        
+
         if alert.enabled
           AlertJob.perform_later subscriber_id, test_result.uuid
         end
@@ -39,7 +39,6 @@ class TestResultIndexer < EntityIndexer
     return {
       'test'        => test_fields(test_result),
       'device'      => device_fields(test_result.device),
-      'location'    => location_fields(test_result.device.site.try(:location, ancestors: true)),
       'institution' => institution_fields(test_result.device.institution),
       'site'        => site_fields(test_result.device.site),
       'sample'      => sample_fields(test_result.sample),

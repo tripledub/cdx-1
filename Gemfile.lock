@@ -7,21 +7,6 @@ GIT
       filewatcher (= 0.3.6)
 
 GIT
-  remote: https://github.com/instedd/geojson_import
-  revision: 4aefec763e8eba37b316530eccba24e7a233dda4
-  branch: master
-  specs:
-    geojson_import (0.0.2)
-
-GIT
-  remote: https://github.com/instedd/ruby-location_service.git
-  revision: 830800eec4c4c7874dd6eb9ace576460fba7ba1e
-  branch: master
-  specs:
-    location_service (0.1.0)
-      rest-client (~> 1.6)
-
-GIT
   remote: https://github.com/manastech/rails-view_components.git
   revision: 59861a6e716944441b4cd5e584bb3f36d0a7c37e
   branch: master
@@ -701,7 +686,6 @@ DEPENDENCIES
   faker
   foreman
   fudge
-  geojson_import!
   gon
   guard-rspec
   guid
@@ -715,7 +699,6 @@ DEPENDENCIES
   leaflet-rails
   letter_opener
   letter_opener_web
-  location_service!
   lodash-rails
   machinist (~> 1.0)
   mysql2

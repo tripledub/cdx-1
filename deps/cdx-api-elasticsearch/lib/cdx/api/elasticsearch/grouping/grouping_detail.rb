@@ -26,7 +26,7 @@ class GroupingDetail
       when 'range'
         RangeGroupingDetail.new indexed_field.scoped_name, indexed_field, uri_param, values
       when 'location'
-        LocationGroupingDetail.new indexed_field.scoped_name, indexed_field, uri_param, values
+        #LocationGroupingDetail.new indexed_field.scoped_name, indexed_field, uri_param, values
       when 'duration'
         DurationGroupingDetail.new indexed_field.scoped_name, indexed_field, uri_param, values
       when 'date'
