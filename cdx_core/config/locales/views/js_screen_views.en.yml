@@ -278,6 +278,7 @@ en:
       at_site_and_subsites: " at site and subsites"
       no_actions_granted: "No actions granted"
       new_policy: "New policy"
+      encounter: 'Test order'
 
     policy_item_detail:
       resources_label: "Resources"
