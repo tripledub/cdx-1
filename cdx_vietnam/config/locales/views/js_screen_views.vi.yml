@@ -117,7 +117,7 @@ vi:
 
     alert_incidents:
       creation_date_row: "Ngày khởi tạo"
-      incidents_row: "Các sự cố" 
+      incidents_row: "Các sự cố"
       last_incident_row: "Sự cố cuối cùng"
       ago_col: "trước"
 
@@ -135,7 +135,7 @@ vi:
       delete_btn: "Xóa"
       confirm_btn: "Xác nhận"
 
-    device_code_table: 
+    device_code_table:
       no_data_msg: "Không có dữ liệu nào hiển thị"
       device_col: "Thiết bị"
       location_col: "Vị trí"
@@ -192,7 +192,7 @@ vi:
       weeks_in_treatment_label: "Số tuần điều trị:"
       samples_id_label: "Mã mẫu:"
       sample_type_label: "Loại mẫu:"
-      test_due_date_label: "Ngày hết hạn xét nghiệm:" 
+      test_due_date_label: "Ngày hết hạn xét nghiệm:"
       status_label: "Tình trạng:"
       update_btn: "Cập nhật xét nghiệm"
       cancel_confirm_msg: "bạn muốn hủy bỏ vĩnh viễn xét nghiệm này. Bạn có chắc muốn tiếp tục?"
@@ -236,10 +236,6 @@ vi:
       comment: "Bình luận"
       presumptive: "Giả định RR-TB/MDR-TB"
 
-    location_select:
-      no_region: "Khu vực không thể được tìm thấy cho địa chỉ này, vui lòng chọn một;"
-      choose_one: "Chọn một"
-
     outstanding_tests_table:
       outstanding_tests_title: "Các xét nghiệm nỗi bật"
       no_data_display: "Không có dữ liệu để hiển thị"
@@ -282,7 +278,7 @@ vi:
       no_actions_granted: "Không có hoạt động nào được phép"
       new_policy: "Chính sách mới"
 
-    policy_item_detail: 
+    policy_item_detail:
       resources_label: "Tài nguyên"
       all_text: "Tất cả"
       from_text: "từ"
@@ -321,7 +317,7 @@ vi:
     resource_list:
       add_element_btn1: "Thêm phần tử vào danh sách ngoại lệ"
       add_element_btn2: "Thêm phần tử vào danh sách"
-      
+
     site_select:
       site: 'Trang'
 

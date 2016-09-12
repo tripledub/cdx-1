@@ -40,7 +40,7 @@ var PolicyItem = React.createClass({
       return (
         <div>
           <div className="resource-type">
-            {statement.resourceType}{withSubsites}
+            {statement.resourceType == 'encounter' ? I18n.t("components.policy_item.encounter") : statement.resourceType}{withSubsites}
             <img src={Img.assetPath('ic-cross.png')} className="pull-right" onClick={this.remove} />
           </div>
           <div className="description">{description}</div>
@@ -48,5 +48,4 @@ var PolicyItem = React.createClass({
       );
     }
   },
-
 });

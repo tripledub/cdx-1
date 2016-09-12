@@ -7,21 +7,6 @@ GIT
       filewatcher (= 0.3.6)
 
 GIT
-  remote: https://github.com/instedd/geojson_import
-  revision: 322cf11df38a4e4a625bc41bfbf9f16b0c0ffde8
-  branch: master
-  specs:
-    geojson_import (0.0.4)
-
-GIT
-  remote: https://github.com/instedd/ruby-location_service.git
-  revision: 830800eec4c4c7874dd6eb9ace576460fba7ba1e
-  branch: master
-  specs:
-    location_service (0.1.0)
-      rest-client (~> 1.6)
-
-GIT
   remote: https://github.com/manastech/rails-view_components.git
   revision: 59861a6e716944441b4cd5e584bb3f36d0a7c37e
   branch: master
@@ -493,14 +478,12 @@ DEPENDENCIES
   dotiw
   encryptor
   faker
-  geojson_import!
   gon
   guid
   haml-rails
   jbuilder (~> 1.2)
   jquery-rails
   kaminari
-  location_service!
   machinist (~> 1.0)
   mysql2
   nuntium_api (~> 0.21)

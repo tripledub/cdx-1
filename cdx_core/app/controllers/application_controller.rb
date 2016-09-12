@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
   before_action :check_no_institution!
-  before_action :load_js_global_settings
   before_action :ensure_context
   before_action :set_locale
 
@@ -35,13 +34,6 @@ class ApplicationController < ActionController::Base
 
   def set_institution_tab(key)
     @institution_tab = key
-  end
-
-  def load_js_global_settings
-    gon.location_service_url = Settings.location_service_url
-    gon.location_service_set = Settings.location_service_set
-    gon.location_geocoder    = Settings.location_geocoder
-    gon.location_default     = Settings.location_default
   end
 
   def authorize_resource(resource, action)

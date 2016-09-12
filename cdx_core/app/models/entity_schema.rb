@@ -35,8 +35,6 @@ class EntitySchema
       }
     end
 
-    set_location_service schema
-
     schema
   end
 
@@ -144,14 +142,5 @@ class EntitySchema
 
   def string_schema(schema)
     schema["type"] = "string"
-  end
-
-  def set_location_service(schema)
-    # TODO: dehardcode location service in location scope
-    return unless schema['properties']['location'].present?
-    schema['properties']['location']['location-service'] = {
-      'url' => Settings.location_service_url,
-      'set' => Settings.location_service_set
-    }
   end
 end

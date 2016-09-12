@@ -104,7 +104,7 @@ describe Cdx::Api, elasticsearch: true do
       expect_one_result "negative", "encounter.patient_age" => "12yo..18yo"
       expect_no_results "encounter.patient_age" => "20yo.."
     end
-    
+
     it "should filter by test.user_mail" do
       index_with_test_result test: {assays: [result: :positive]}, encounter: {user_email: institution.user.email}
       expect_one_result "positive", "encounter.user_email" => institution.user.email
@@ -846,131 +846,6 @@ describe Cdx::Api, elasticsearch: true do
         {"test.reported_time"=>"2010-02", "count" => 1},
         {"test.reported_time"=>"2010-01", "count" => 1}
       ])
-    end
-  end
-
-  context "Location" do
-    it "filters by location" do
-      index test: {assays: [result: "negative"]}, location: {parents: [1, 2, 3]}
-      index test: {assays: [result: "positive"]}, location: {parents: [1, 2, 4]}
-      index test: {assays: [result: "positive with riff"]}, location: {parents: [1, 5]}
-
-      expect_one_result "negative", 'location' => 3
-      expect_one_result "positive", 'location' => 4
-
-      response = query_tests('location' => 2).sort_by do |test|
-        test["test"]["assays"].first["result"]
-      end
-
-      expect(response.size).to eq(2)
-      expect(response[0]["test"]["assays"].first["result"]).to eq("negative")
-      expect(response[1]["test"]["assays"].first["result"]).to eq("positive")
-
-      response = query_tests('location' => 1).sort_by do |test|
-        test["test"]["assays"].first["result"]
-      end
-
-      expect(response.size).to eq(3)
-      expect(response[0]["test"]["assays"].first["result"]).to eq("negative")
-      expect(response[1]["test"]["assays"].first["result"]).to eq("positive")
-      expect(response[2]["test"]["assays"].first["result"]).to eq("positive with riff")
-    end
-
-    it "groups by administrative level" do
-      index test: {assays: [result: "negative"]}, location: {admin_levels: {admin_level_0: "1", admin_level_1: "2"}}
-      index test: {assays: [result: "positive"]}, location: {admin_levels: {admin_level_0: "1", admin_level_1: "2"}}
-      index test: {assays: [result: "positive with riff"]}, location: {admin_levels: {admin_level_0: "1", admin_level_1: "5"}}
-
-      response = query_tests("group_by" => {'admin_level' => 1})
-      expect(response).to eq([
-        {"location"=>"2", "count" => 2},
-        {"location"=>"5", "count" => 1}
-      ])
-
-      response = query_tests("group_by" => {'admin_level' => 0})
-
-      expect(response).to eq([
-        {"location"=>"1", "count" => 3}
-      ])
-    end
-
-    context "with a second location field" do
-      before(:all) do
-        # add a new core field and regenerate the indexed fields with it.
-        @extra_scope = Cdx::Scope.new('patient_location', 'fields' => {
-          "id" => {},
-          "parents" => {"searchable" => true},
-          "admin_levels" => {"searchable" => true, "type" => 'dynamic'},
-          "lat" => {},
-          "lng" => {},
-        })
-
-        @extra_fields = @extra_scope.flatten.select(&:searchable?).map do |core_field|
-          Cdx::Api::Elasticsearch::IndexedField.for(core_field, [
-            {
-              "name" => 'patient_location.parents',
-              "filter_parameter_definition" => [{
-                "name" => 'patient_location.id',
-                type: 'match'
-              }]
-            },
-            {
-              "name" => 'patient_location.admin_levels',
-              "group_parameter_definition" => [{
-                "name" => 'patient_location.admin_level',
-                "type" => 'location'
-              }]
-            }
-          ],
-          Cdx::Api::Elasticsearch::CdxDocumentFormat::TestResult.new
-          )
-        end
-
-        Cdx::Fields.test.core_field_scopes.push @extra_scope
-        Cdx::Fields.test.core_fields.concat @extra_scope.flatten
-
-        Cdx::Fields.test.searchable_fields.concat @extra_fields
-
-        # Delete the index and recreate it to make ES grab the new template
-        Cdx::Api.client.indices.delete index: "cdx_test", ignore: 404
-        Cdx::Api.initialize_template "cdx_tests_template_test"
-      end
-
-      after(:all) do
-        Cdx::Fields.test.core_field_scopes.delete @extra_scope
-        @extra_scope.flatten.each do |field|
-          Cdx::Fields.test.core_fields.delete field
-        end
-
-        @extra_fields.each do |field|
-          Cdx::Fields.test.searchable_fields.delete field
-        end
-
-        # Delete the index and recreate it to make ES grab the new template
-        Cdx::Api.client.indices.delete index: "cdx_test", ignore: 404
-        Cdx::Api.initialize_template "cdx_tests_template_test"
-      end
-
-      it "should allow searching by the new field" do
-        index patient_location: {id: 1, parents: [1]}
-        index patient_location: {id: 2, parents: [1,2]}
-        index patient_location: {id: 3, parents: [3]}
-
-        response = query_tests 'patient_location.id' => 1
-        expect(response.count).to eq(2)
-
-        response = query_tests 'patient_location.id' => 3
-        expect(response.count).to eq(1)
-      end
-
-      it "should allow grouping by new field's admin level" do
-        index patient_location: {admin_levels: {admin_level_0: "1"}}
-        index patient_location: {admin_levels: {admin_level_0: "1", admin_level_1: "2"}}
-        index patient_location: {admin_levels: {admin_level_0: "3" }}
-
-        response = query_tests("group_by" => { 'patient_location.admin_level' => 0 })
-        expect(response).to eq [{"patient_location" => "1", "count" => 2}, {"patient_location" => "3", "count" => 1}]
-      end
     end
   end
 

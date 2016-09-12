@@ -66,7 +66,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :locations, only: [:index, :show]
   resources :sample_identifiers, only: [:update]
   resources :devices do
     member do

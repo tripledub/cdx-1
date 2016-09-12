@@ -16,7 +16,6 @@ describe RegistrationsController do
       get :edit, context: institution.uuid
 
       expect(response).to be_success
-      expect(assigns(:locales)).to be_a(Array)
     end
 
     it "should update password" do

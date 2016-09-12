@@ -7,10 +7,8 @@ class DeviceMessageProcessor
   end
 
   def process
-    Location.with_cache do
-      @device_message.parsed_messages.map do |parsed_message|
-        SingleMessageProcessor.new(self, parsed_message).process
-      end
+    @device_message.parsed_messages.map do |parsed_message|
+      SingleMessageProcessor.new(self, parsed_message).process
     end
   end
 

@@ -130,9 +130,6 @@ class ManifestFieldMapping
         if site = @device.site
           ctx["site"] = script_site(site)
         end
-        if location = site.try(&:location)
-          ctx["location"] = script_location(location)
-        end
       end
 
       result = ctx.eval(script)
@@ -175,18 +172,7 @@ class ManifestFieldMapping
       state: site.state,
       zip_code: site.zip_code,
       country: site.country,
-      region: site.region,
-      lat: site.lat,
-      lng: site.lng,
-      location_geoid: site.location_geoid,
-    }
-  end
-
-  def script_location(location)
-    {
-      name: location.name,
-      lat: location.lat,
-      lng: location.lng,
+      region: site.region
     }
   end
 

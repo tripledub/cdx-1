@@ -311,7 +311,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
     it 'should log the changes' do
       expect(EncounterAuditLog.count).to eq 1
-      expect(EncounterAuditLog.first.title).to eq "New Test Order Created"
+      expect(EncounterAuditLog.first.title).to eq "New Test order created"
     end
 
     it 'should set the encounter status to pending' do

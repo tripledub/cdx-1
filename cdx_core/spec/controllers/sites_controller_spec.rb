@@ -32,14 +32,6 @@ describe SitesController do
       expect(csv[1]).to eq([site.name, site.address, site.city, site.state, site.zip_code])
     end
 
-    it "should list sites without location" do
-      unlocated_site = institution.sites.make(location: nil)
-      get :index
-
-      expect(response).to be_success
-      expect(assigns(:sites)).to contain_exactly(site, unlocated_site)
-    end
-
     it "should filter by institution if requested" do
       grant institution2.user, user, Institution, [READ_INSTITUTION]
       grant nil, user, "site?institution=#{institution2.id}", [READ_SITE]
@@ -219,7 +211,7 @@ describe SitesController do
     it "should not destroy site for another institution" do
       expect {
         delete :destroy, id: site2.id
-      }.to raise_error
+      }.to raise_exception(ActiveRecord::RecordNotFound)
     end
 
     it "should not destroy site with associated devices" do

@@ -33,7 +33,7 @@ describe PatientLogsController do
       end
 
       it 'should display the right template' do
-        response.should render_template('show')
+        expect(response).to render_template('show')
       end
     end
   end

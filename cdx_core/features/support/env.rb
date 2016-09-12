@@ -65,9 +65,6 @@ require 'capybara-screenshot/cucumber'
 
 Capybara.default_driver = :poltergeist
 
-#needed for adding devices/sites to alert tests
-Before { LocationService.fake! }
-
 Before('@single_tenant') do
   Settings.single_tenant = true
 end
@@ -77,4 +74,3 @@ After('@single_tenant') do
 end
 
 Before { Sham.reset }
-

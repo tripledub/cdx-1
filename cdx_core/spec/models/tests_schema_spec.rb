@@ -5,7 +5,7 @@ describe TestsSchema do
   context "tests fields" do
 
     it "renders all tests scopes" do
-      expect(TestsSchema.new.build['properties'].keys).to contain_exactly("sample", "test", "device", "institution", "site", "patient", "location", "encounter")
+      expect(TestsSchema.new.build['properties'].keys).to contain_exactly("sample", "test", "device", "institution", "site", "patient", "encounter")
     end
 
   end
@@ -75,25 +75,6 @@ describe TestsSchema do
             "searchable" => false
           }
         }
-      })
-    end
-
-    it "should add location service properties to location scope" do
-      location_fields = {
-        "fields" => {
-          "lat" => {},
-          "lng" => {},
-        }
-      }
-
-      location_scope = Cdx::Scope.new('location', location_fields)
-      allow(Cdx).to receive(:core_field_scopes).and_return([location_scope])
-
-      schema = TestsSchema.new("es-AR").build
-
-      expect(schema["properties"]["location"]["location-service"]).to eq({
-        "url" => Settings.location_service_url,
-        "set" => Settings.location_service_set
       })
     end
 

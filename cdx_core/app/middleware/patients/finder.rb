@@ -15,7 +15,6 @@ class Patients::Finder
     filter_by_navigation_context
     filter_by_name
     filter_by_entity
-    filter_by_location
     filter_by_birth_date
     filter_by_address
   end
@@ -34,10 +33,6 @@ class Patients::Finder
 
   def filter_by_entity
     @filter_query = filter_query.where("entity_id LIKE concat('%', ?, '%')", @params[:entity_id]) unless @params[:entity_id].blank?
-  end
-
-  def filter_by_location
-    @filter_query = filter_query.where("location_geoid LIKE concat(?, '%')", @params[:location]) unless @params[:location].blank?
   end
 
   def filter_by_address

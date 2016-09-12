@@ -17,7 +17,7 @@ var AddressAutosuggest = React.createClass({
   getDefaultProps: function() {
     return {
       name: "address",
-      geocoder: gon.location_geocoder,
+      geocoder: '',
       geocoderOpts: {},
       className: 'input-x-large'
     }

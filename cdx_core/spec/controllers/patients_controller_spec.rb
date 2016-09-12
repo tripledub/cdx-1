@@ -79,16 +79,6 @@ RSpec.describe PatientsController, type: :controller do
       expect(assigns(:patients).count).to eq(2)
     end
 
-    it "should filter by entity_id" do
-      institution.patients.make location_geoid: 'ne:US3245'
-      institution.patients.make location_geoid: 'ne:US3432'
-      institution.patients.make location_geoid: 'ne:ARne:US'
-
-      get :index, location: 'ne:US'
-      expect(response).to be_success
-      expect(assigns(:patients).count).to eq(2)
-    end
-
     it "should filter based con navigation_context site" do
       site1 = institution.sites.make
       site11 = Site.make :child, parent: site1

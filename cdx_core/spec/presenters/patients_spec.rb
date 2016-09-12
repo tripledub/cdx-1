@@ -34,14 +34,14 @@ describe Presenters::Patients do
       address = Address.make
       patient = Patient.make institution: institution, addresses: [address]
 
-      described_class.show_full_address(patient.addresses.first).should eq("#{address.address}, #{address.city}, #{address.state}, #{address.zip_code}")
+      expect(described_class.show_full_address(patient.addresses.first)).to eq("#{address.address}, #{address.city}, #{address.state}, #{address.zip_code}")
     end
 
     it 'should not display the commas if any field is empty' do
       address = Address.make address: '', state: ''
       patient = Patient.make institution: institution, addresses: [address]
 
-      described_class.show_full_address(patient.addresses.first).should eq("#{address.city}, #{address.zip_code}")
+      expect(described_class.show_full_address(patient.addresses.first)).to eq("#{address.city}, #{address.zip_code}")
     end
   end
 end
