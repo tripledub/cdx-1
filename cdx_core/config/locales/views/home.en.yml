@@ -39,7 +39,7 @@ en:
       term: 'Terms and conditions'
 
     settings:
-      header_settings: 'Settings'
+      header: 'Settings'
       alert: 'Alerts'
       alerts_notice: 'Keep your team notified about important stuff.'
       role:

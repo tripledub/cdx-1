@@ -29,7 +29,7 @@ en:
       results_cm: 'Results Cm'
       results_fq: 'Results Fq'
     show:
-      test_belongs_to: 'This test belongs to an encounter.'
+      test_belongs_to: 'This test belongs to a test order.'
       click_here: 'Click here'
       to_view_it: 'to view it.'
       test_details: 'Test Details'

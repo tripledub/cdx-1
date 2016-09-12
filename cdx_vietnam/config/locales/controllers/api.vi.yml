@@ -8,7 +8,7 @@ vi:
       response: 'Phản hồi cho yêu cầu kích hoạt'
 
     encounters_controller:
-      file_name: 'Encounters-'
+      file_name: 'Test-orders-'
 
     tests_controller:
       file_name: 'Thu-nghiem-'

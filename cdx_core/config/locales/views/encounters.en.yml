@@ -3,7 +3,7 @@ en:
     new:
       existing_test: 'Existing test for %{patient_name}'
       new_test: 'New test order for %{patient_name}'
-      no_patient: 'Every new encounter must belong to a patient. Please go to a patient page and click on Add test order'
+      no_patient: 'Every new test order must belong to a patient. Please go to a patient page and click on Add test order'
     show:
       test_order: 'Test order'
     perform_encounter_action:
@@ -23,4 +23,3 @@ en:
       log_action: 'Test order %{uuid} Cancelled'
       cancelled: 'Test order Cancelled'
       not_allowed: 'You can not delete this test order.'
-
