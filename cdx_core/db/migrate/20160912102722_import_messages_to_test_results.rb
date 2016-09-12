@@ -12,9 +12,9 @@ class ImportMessagesToTestResults < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_column :patient_results, :device_result_name, :string
-    add_column :patient_results, :device_result_status, :string
-    add_column :patient_results, :device_result_type, :string
+    add_column :patient_results, :result_name, :string
+    add_column :patient_results, :result_status, :string
+    add_column :patient_results, :result_type, :string
 
     add_index :assay_results, [:assayable_type, :assayable_id]
     add_index :assay_results, :condition
