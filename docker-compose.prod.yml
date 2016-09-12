@@ -22,7 +22,7 @@ elasticsearch:
     - './data/elasticsearch:/usr/share/elasticsearch/data'
 
 web:
-  image: instedd/cdx:latest
+  image: finddx/cdx:latest
   restart: always
   links:
     - db
@@ -39,7 +39,7 @@ web:
     - sshd
 
 sidekiq:
-  image: instedd/cdx:latest
+  image: finddx/cdx:latest
   restart: always
   links:
     - db
@@ -48,7 +48,7 @@ sidekiq:
   env_file: docker.env
 
 csv_watch:
-  image: instedd/cdx:latest
+  image: finddx/cdx:latest
   restart: always
   links:
     - db
@@ -59,7 +59,7 @@ csv_watch:
     - sshd
 
 ftp_monitor:
-  image: instedd/cdx:latest
+  image: finddx/cdx:latest
   restart: always
   links:
     - db
