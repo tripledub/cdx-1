@@ -530,6 +530,9 @@ ActiveRecord::Schema.define(version: 20160912102722) do
     t.string   "trace",                limit: 255
     t.string   "test_result",          limit: 255
     t.string   "method_used",          limit: 255
+    t.string   "device_result_name",   limit: 255
+    t.string   "device_result_status", limit: 255
+    t.string   "device_result_type",   limit: 255
   end
 
   add_index "patient_results", ["deleted_at"], name: "index_patient_results_on_deleted_at", using: :btree
