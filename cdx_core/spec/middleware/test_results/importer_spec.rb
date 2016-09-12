@@ -26,15 +26,15 @@ describe TestResults::Importer do
     end
 
     it 'should add result_name to test_result' do
-      expect(test_result.device_result_name).to eq('Test name')
+      expect(test_result.result_name).to eq('Test name')
     end
 
     it 'should add result_status to test_result' do
-      expect(test_result.device_result_status).to eq('closed')
+      expect(test_result.result_status).to eq('closed')
     end
 
     it 'should add result_type to test_result' do
-      expect(test_result.device_result_type).to eq('Put sample on machine, press play.')
+      expect(test_result.result_type).to eq('Put sample on machine, press play.')
     end
 
     it 'should add assays to test_result' do

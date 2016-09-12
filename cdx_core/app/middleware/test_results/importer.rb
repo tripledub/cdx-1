@@ -28,9 +28,9 @@ module TestResults
     end
 
     def add_results_code
-      @test_result.device_result_name = @parsed_message['test']['core']['name'] if @parsed_message['test']['core']['name'].present?
-      @test_result.device_result_status = @parsed_message['test']['core']['status'] if @parsed_message['test']['core']['status'].present?
-      @test_result.device_result_type = @parsed_message['test']['core']['type'] if @parsed_message['test']['core']['type'].present?
+      @test_result.result_name = @parsed_message['test']['core']['name'] if @parsed_message['test']['core']['name'].present?
+      @test_result.result_status = @parsed_message['test']['core']['status'] if @parsed_message['test']['core']['status'].present?
+      @test_result.result_type = @parsed_message['test']['core']['type'] if @parsed_message['test']['core']['type'].present?
     end
 
     def test_core_available?
