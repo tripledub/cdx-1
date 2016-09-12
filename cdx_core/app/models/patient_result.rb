@@ -3,9 +3,9 @@ class PatientResult < ActiveRecord::Base
   include Auditable
 
   belongs_to :requested_test
+  has_many :assay_results, as: :assayable
 
   after_save :update_requested_test
-
   before_save :convert_string_to_dates
 
   class << self
