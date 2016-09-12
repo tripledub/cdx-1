@@ -43,7 +43,7 @@ class DeviceMessageProcessor
       original_test = test_id && TestResult.within_time(1.year, @parent.device_message.created_at).find_by(test_id: test_id, device_id: device.id, site_id: device.site_id)
       test_result = original_test || TestResult.new(institution: institution, device: device)
 
-      TestResults::Importer.new(test_result).import_message(@parsed_message)
+      TestResults::Importer.new(test_result, @parsed_message).import
       test_result.device_messages << device_message
       test_result.test_result_parsed_data << TestResultParsedDatum.new(data: @parsed_message)
       test_blender = @blender.load(test_result)
