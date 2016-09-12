@@ -226,4 +226,29 @@ $(document).ready(function(){
     $(".custom_filters").toggle();
   });
 
+  $(".icon-user").on('click', function(){
+    $(".user").toggleClass("show");
+  });
+  
+  $('body').click(function(e){
+    if (!e.target.matches('.icon-user')){
+      if($('.user').hasClass('show')){
+        $('.user').removeClass('show');
+      }
+    }
+  });
+  
+  $('.select_lang').on('change', function(){
+    var lang = $('.select_lang').val();
+    $.ajax({
+      url: '/users/change_language',
+      data: {language: lang},
+      success: function(){
+        location.reload();
+      }
+    });
+  });
+  
 });
+
+

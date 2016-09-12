@@ -50,6 +50,9 @@
         - if current_user && !@hide_nav_bar
           %li= link_to institution_name, institutions_path
           %li= link_to I18n.t('layout.header_nav.api_tokens'), api_tokens_path
+          %li
+            %form
+              =select_tag "language", options_for_select([[I18n.t("views.en"),"en"],[I18n.t("views.vi"), "vi"]], current_user.locale), class: 'select_lang'
         %li= link_to I18n.t('layout.header_nav.log_out'), destroy_session_path(:user), method: :delete
     - else
       = link_to I18n.t('layout.header_nav.log_in'), new_session_path(:user)
