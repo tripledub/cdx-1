@@ -22,6 +22,7 @@ gem 'premailer-rails'
 gem 'kaminari'
 gem 'base58'
 gem 'rubyzip', '>= 1.0.0'
+gem 'activesupport-decorators', '~> 2.1'
 
 gem 'config'
 gem 'rest-client'
