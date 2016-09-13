@@ -79,9 +79,9 @@
       = f.text_field 'age', :class=>'input-large'
       %script
         $('#patient_age').on('blur', function(){
-        var cyear = new Date().getFullYear();
-        var tyear = cyear - $(this).val();
-        $('#patient_birth_date_on_1i').val(tyear);
+        var currentyear = new Date().getFullYear();
+        var estimatedyear = currentyear - $(this).val();
+        $('#patient_birth_date_on_1i').val(estimatedyear);
         });
 
   - count = 0
