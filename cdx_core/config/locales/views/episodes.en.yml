@@ -3,9 +3,11 @@ en:
     form:
       header: 'Episode for %{patient_name}'
       history: 'History of Previous Treatment'
+      history_tb: 'Previous history of TB'
       select_type_of_episode: 'Select Type of Episode'
       episode_details: 'Episode Details'
       episode_type_not_available: 'This Episode Type is not currently available'
+      hiv_status: 'Current HIV Status'
     create:
       new_episode: 'New episode created'
       episode_created: 'Episode successfully created.'

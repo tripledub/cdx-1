@@ -26,15 +26,15 @@ var ShowPatientEpisode = React.createClass({
           <ul>
             <li>
               <label>
-                {I18n.t("components.patients.show.episodes.lbl_drug")}
-              </label>
-              {this.props.episode.drugResistance}
-            </li>
-            <li>
-              <label>
                 {I18n.t("components.patients.show.episodes.lbl_outcome")}
               </label>
               {this.props.episode.outcome}
+            </li>
+            <li>
+              <label>
+                {I18n.t("components.patients.show.episodes.lbl_drug")}
+              </label>
+              {this.props.episode.drugResistance}
             </li>
             <li>
               <label>

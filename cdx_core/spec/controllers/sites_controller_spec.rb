@@ -107,6 +107,7 @@ describe SitesController do
 
     it "should edit site" do
       get :edit, id: site.id
+
       expect(response).to be_success
     end
 

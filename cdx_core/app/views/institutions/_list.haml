@@ -1,0 +1,11 @@
+= cdx_table title: I18n.t('institutions.index.institution') do |t|
+  - t.columns do
+    %col{:width => "100%"}
+  - t.thead do
+    %tr
+      %th
+        = I18n.t('institutions.index.name')
+  - t.tbody do
+    - @institutions.each do |institution|
+      %tr
+        %td= link_to institution.name, edit_institution_path(institution)

@@ -29,6 +29,12 @@
   .row
     .col.pe-2
       = f.label :password, I18n.t('devise.registrations.edit.lbl_new_pass')
+      = f.label :current_password, I18n.t('devise.edit.current_password')
+    .col
+      = f.password_field :current_password, autocomplete: "off"
+  .row
+    .col.pe-2
+      = f.label :password, I18n.t('devise.edit.new_password')
     .col
       = f.password_field :password, autocomplete: "off"
   .row
@@ -41,7 +47,7 @@
       = f.label :locale, I18n.t('devise.registrations.edit.lbl_locale')
     .col
       = cdx_select form: f, name: :locale, class: 'input-xx-large' do |select|
-        - select.items(@locales, :second, :first)
+        - select.items(CdxLocalisation::Languages.active, :second, :first)
   .row
     .col.pe-2
       = f.label :time_zone, I18n.t('devise.registrations.edit.lbl_time_zone')
