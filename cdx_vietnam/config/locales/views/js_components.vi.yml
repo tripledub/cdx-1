@@ -22,7 +22,7 @@
 
     canvas-charts:
       err_chart_msg: "Có một lỗi xảy ra khi hiển thị biểu đồ."
-    
+
     device_models:
       col_name: "Tên thiết bị"
       col_ver: "Phiên bản"
@@ -196,18 +196,3 @@
       col_role: "Chức vụ"
       col_status: "Trạng thái"
       col_last_activity: "Hoạt động cuối cùng"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
