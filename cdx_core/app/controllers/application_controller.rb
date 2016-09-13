@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     I18n.locale = current_user.try(:locale) || I18n.default_locale
-    I18n.locale = :vi if params[:language]=="vi"
+    I18n.locale = params[:language].present? ? params[:language].to_sym : :en
     @localization_helper = LocalizationHelper.new(current_user.try(:time_zone), I18n.locale,
       current_user.try(:timestamps_in_device_time_zone))
   end
@@ -126,7 +126,7 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource_or_scope)
 
     # update user locale after signed in
-    resource_or_scope.update_attribute('locale', params[:user][:locale])
+    resource_or_scope.update_attribute('locale', params[:user][:locale]) if params[:user]
 
     if has_access?(TestResult, Policy::Actions::MEDICAL_DASHBOARD)
       dashboard_path
@@ -162,9 +162,6 @@ class ApplicationController < ActionController::Base
   end if Rails.env.test?
 
   protected
-  def load_locales
-    @locales ||= [[I18n.t("views.en"),"en"],[I18n.t("views.vi"), "vi"]]
-  end
 
   def json_request?
     request.format.json?
