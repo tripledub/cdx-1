@@ -129,7 +129,8 @@ RSpec.describe Episode, type: :model do
     end
 
     it 'includes cured, completed, failed, died, lost, not evaluated and success' do
-      expect(treatment_outcome_options.size).to eq(7)
+      expect(treatment_outcome_options.size).to eq(9)
+
       %w(cured completed failed died lost_to_follow_up not_evaluated success).each do |status|
         id = status.to_sym
         expected = treatment_outcome_options.select { |st| st.id == id }
