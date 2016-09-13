@@ -4,10 +4,16 @@
   %script
     $(document).ready( function(){
     $('.panel-tab').hide();
-
+    if(is_new_entry){ $('.questions').hide(); }
+    else { $('#outcome').show(); }
+    $('#episode_initial_history').on('change', function() {
+    $('.questions').show();
+    if(is_new_entry) { $('#outcome').hide(); }
+    var myval = $(this).val();
+    if(myval != 'previous') { $('#drugres').hide(); if(myval=='new') $('#episode_diagnosis').val('presumptive_tb'); }
+    });
     $('.panel-tab#episodetype_tb').show();  // default
     $('span#episodeType').text('TB');
-
     $('#epitabs li').on('click', function() {
     var type = $(this).attr('id').split('_')[1];  // get bit after the 'tab_' in the id
     $('#epitabs li').removeClass('active');
@@ -16,7 +22,6 @@
     $('.panel-tab#episodetype_'+type).show();
     $('span#episodeType').text(type);
     });
-
     });
 
   = render partial: 'disease_tabs', locals: { f: f }
@@ -36,31 +41,31 @@
   .panel.panel-tab#episodetype_tb
     .row
       .col-6
+        = f.label I18n.t('episodes.form.history_tb')
+      .col-6
+        = f.collection_select :initial_history, Episode.initial_history_options, :id, :name, include_blank: I18n.t('select.default')
+        = f.collection_select :previous_history, Episode.previous_history_options, :id, :name, include_blank: I18n.t('select.default')
+    .row.questions
+      .col-6
         = f.label :diagnosis
       .col-6
         = f.collection_select :diagnosis, Episode.general_diagnosis_options, :id, :name, include_blank: I18n.t('select.default')
-    .row
+    .row.questions
       .col-6.flexStart
         = f.label :anatomical_site_diagnosis
       .col-6
         = collection_radio_buttons(:episode, :anatomical_site_diagnosis, Episode.anatomical_diagnosis_options, :id, :name)
-    .row
+    .row.questions
       .col-6
-        = f.label I18n.t('patients.form.history')
-      .col-6
-        = f.collection_select :initial_history, Episode.initial_history_options, :id, :name, include_blank: I18n.t('select.default')
-        = f.collection_select :previous_history, Episode.previous_history_options, :id, :name, include_blank: I18n.t('select.default')
-    .row
-      .col-6
-        = f.label :hiv_status
+        = f.label I18n.t('episodes.form.hiv_status')
       .col-6
         = f.collection_select :hiv_status, Episode.hiv_status_options, :id, :name, include_blank: I18n.t('select.default')
-    .row
+    .row.questions#drugres
       .col-6
         = f.label :drug_resistance
       .col-6
         = f.collection_select :drug_resistance, Episode.drug_resistance_options, :id, :name, include_blank: I18n.t('select.default')
-    .zebra
+    .zebra.questions#outcome
       = react_component 'EpisodeSelectOutcome', outcomeOptions: outcome_options, selected: @episode.outcome
     .row.button-actions
       = f.submit
