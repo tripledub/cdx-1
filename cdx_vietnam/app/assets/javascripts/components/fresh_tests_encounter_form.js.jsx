@@ -14,12 +14,15 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
 
     if (clk === 1) { reason = 'follow'; }
 
-  $('.test_for_tb').attr('checked', false).parent().show();
+    $('.test_for_tb').attr('checked', false).parent().show();
 
     this.setState(React.addons.update(this.state, {
       encounter: {
         exam_reason: {
           $set: reason
+        },
+        testing_for: {
+          $set: 'TB'
         }
       }
     }));
@@ -85,8 +88,8 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
             </div>
             <div className="col-6">
               <label>
-        <input type="hidden" className="input-large" id="testing_for" name="testing_for" datavalue={this.state.encounter.testing_for} />
-        {I18n.t("components.fresh_tests_encounter_form.TB_option")}
+                <input type="hidden" className="input-large" id="testing_for" name="testing_for" datavalue="TB" />
+                {I18n.t("components.fresh_tests_encounter_form.TB_option")}
               </label>
             </div>
           </div>
@@ -150,15 +153,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
             </div>
             <div className="col-6">
               <textarea name="sample_other" id="sample_other" onChange={this.sample_other_change}></textarea>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-6">
-              <label>{I18n.t("components.fresh_tests_encounter_form.test_due_date_label")}</label>
-            </div>
-            <div className="col-6">
-              <input type="date" id="testdue_date" min={today} onChange={this.testDueDateChange} value={this.state.encounter.testdue_date}/>
             </div>
           </div>
 
@@ -243,18 +237,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
         }
       }
     }));
-  },
-
-  testDueDateChange: function() {
-    var testduedate = $('#testdue_date').val();
-    this.setState(React.addons.update(this.state, {
-      encounter: {
-        testdue_date: {
-          $set: testduedate
-        }
-      }
-    }));
-    this.state.encounter.testdue_date = testduedate;
   },
 
   testingForChange: function() {
