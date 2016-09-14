@@ -126,9 +126,9 @@ describe DeviceMessageProcessor, elasticsearch: true do
 
   it "should create a sample" do
     device_message_processor.process
+    sample = Sample.first
 
     expect(Sample.count).to eq(1)
-    sample = Sample.first
     expect(sample.sample_identifiers.first.entity_id).to eq(SAMPLE_ID)
     assert_sample_data(sample)
   end

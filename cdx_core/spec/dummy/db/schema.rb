@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160909145943) do
+ActiveRecord::Schema.define(version: 20160912102722) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -124,6 +124,26 @@ ActiveRecord::Schema.define(version: 20160909145943) do
     t.integer "alert_id", limit: 4, null: false
     t.integer "site_id",  limit: 4, null: false
   end
+
+  create_table "assay_results", force: :cascade do |t|
+    t.string   "assayable_type",      limit: 255
+    t.integer  "assayable_id",        limit: 4
+    t.string   "name",                limit: 255
+    t.string   "condition",           limit: 255
+    t.string   "result",              limit: 255
+    t.string   "quantitative_result", limit: 255
+    t.text     "assay_data",          limit: 65535
+    t.string   "uuid",                limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "assay_results", ["assayable_type", "assayable_id"], name: "index_assay_results_on_assayable_type_and_assayable_id", using: :btree
+  add_index "assay_results", ["condition"], name: "index_assay_results_on_condition", using: :btree
+  add_index "assay_results", ["created_at"], name: "index_assay_results_on_created_at", using: :btree
+  add_index "assay_results", ["quantitative_result"], name: "index_assay_results_on_quantitative_result", using: :btree
+  add_index "assay_results", ["result"], name: "index_assay_results_on_result", using: :btree
+  add_index "assay_results", ["uuid"], name: "index_assay_results_on_uuid", using: :btree
 
   create_table "audit_logs", force: :cascade do |t|
     t.text     "comment",           limit: 65535
@@ -509,6 +529,9 @@ ActiveRecord::Schema.define(version: 20160909145943) do
     t.string   "trace",                limit: 255
     t.string   "test_result",          limit: 255
     t.string   "method_used",          limit: 255
+    t.string   "result_name",          limit: 255
+    t.string   "result_status",        limit: 255
+    t.string   "result_type",          limit: 255
   end
 
   add_index "patient_results", ["deleted_at"], name: "index_patient_results_on_deleted_at", using: :btree
