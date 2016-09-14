@@ -31,6 +31,7 @@ gem 'chunky_png'
 gem 'gon'
 gem 'rchardet'
 gem 'therubyracer'
+gem 'country_select'
 
 gem 'cdx', path: '.'
 gem 'cdx-api-elasticsearch', path: '.'
