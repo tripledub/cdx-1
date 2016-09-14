@@ -15,9 +15,9 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
   describe "destroy" do
     context 'an admin user' do
-      let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, status: 0 }
+      let(:encounter) { Encounter.make institution: institution, site: site, patient: patient }
 
-      it "should destroy an encounter if status is pending" do
+      it "should destroy an encounter if status is new" do
         delete :destroy, id: encounter.id
 
         expect(Encounter.count).to eq 0
@@ -26,6 +26,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     context 'a clinician' do
+      let(:encounter) { Encounter.make institution: institution, site: site, patient: patient }
       let(:clinician) { User.make }
 
       before(:each) do
@@ -37,11 +38,13 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         grant clinician, user, Encounter,  [DELETE_ENCOUNTER]
 
         sign_in clinician
-        delete :destroy, id: encounter.id
       end
 
       context 'if encounter is in progress' do
-        let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, status: 1 }
+        before :each do
+          encounter.update_attribute(:status, 'inprogress')
+          delete :destroy, id: encounter.id
+        end
 
         it 'should not be able to destroy it' do
           expect(Encounter.count).to eq 1
@@ -53,7 +56,10 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       end
 
       context 'if encounter is completed' do
-        let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, status: 2 }
+        before :each do
+          encounter.update_attribute(:status, 'approved')
+          delete :destroy, id: encounter.id
+        end
 
         it 'should not be able to destroy it' do
           expect(Encounter.count).to eq 1
@@ -64,12 +70,9 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         end
       end
 
-      context 'if encounter status is pending' do
-        let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, status: 0 }
-
+      context 'if encounter status is new' do
         it 'should be able to destroy it' do
           expect(Encounter.count).to eq 0
-          expect(response).to be_redirect
         end
       end
     end
