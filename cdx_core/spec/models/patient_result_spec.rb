@@ -5,6 +5,8 @@ describe PatientResult do
 
   context "validations" do
     it { should belong_to(:requested_test) }
+
+    it { should belong_to(:test_batch) }
   end
 
   context 'after_save' do

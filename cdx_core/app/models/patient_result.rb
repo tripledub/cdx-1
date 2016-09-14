@@ -3,6 +3,7 @@ class PatientResult < ActiveRecord::Base
   include Auditable
 
   belongs_to :requested_test
+  belongs_to :test_batch
   has_many :assay_results, as: :assayable
 
   after_save :update_requested_test

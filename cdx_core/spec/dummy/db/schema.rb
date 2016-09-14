@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912102722) do
+ActiveRecord::Schema.define(version: 20160914125841) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -532,8 +532,12 @@ ActiveRecord::Schema.define(version: 20160912102722) do
     t.string   "result_name",          limit: 255
     t.string   "result_status",        limit: 255
     t.string   "result_type",          limit: 255
+    t.text     "comment",              limit: 65535
+    t.integer  "test_batch_id",        limit: 4
+    t.datetime "completed_at"
   end
 
+  add_index "patient_results", ["completed_at"], name: "index_patient_results_on_completed_at", using: :btree
   add_index "patient_results", ["deleted_at"], name: "index_patient_results_on_deleted_at", using: :btree
   add_index "patient_results", ["device_id"], name: "index_patient_results_on_device_id", using: :btree
   add_index "patient_results", ["institution_id"], name: "index_patient_results_on_institution_id", using: :btree
@@ -542,6 +546,7 @@ ActiveRecord::Schema.define(version: 20160912102722) do
   add_index "patient_results", ["requested_test_id"], name: "index_patient_results_on_requested_test_id", using: :btree
   add_index "patient_results", ["sample_identifier_id"], name: "index_patient_results_on_sample_identifier_id", using: :btree
   add_index "patient_results", ["site_id"], name: "index_patient_results_on_site_id", using: :btree
+  add_index "patient_results", ["test_batch_id"], name: "index_patient_results_on_test_batch_id", using: :btree
   add_index "patient_results", ["test_result"], name: "index_patient_results_on_test_result", using: :btree
   add_index "patient_results", ["uuid"], name: "index_patient_results_on_uuid", using: :btree
 
@@ -733,6 +738,18 @@ ActiveRecord::Schema.define(version: 20160912102722) do
   end
 
   add_index "subscribers", ["filter_id"], name: "index_subscribers_on_filter_id", using: :btree
+
+  create_table "test_batches", force: :cascade do |t|
+    t.integer  "encounter_id", limit: 4,     null: false
+    t.integer  "status",       limit: 4
+    t.string   "uuid",         limit: 255
+    t.text     "comment",      limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "test_batches", ["status"], name: "index_test_batches_on_status", using: :btree
+  add_index "test_batches", ["uuid"], name: "index_test_batches_on_uuid", using: :btree
 
   create_table "test_result_parsed_data", force: :cascade do |t|
     t.integer  "test_result_id", limit: 4
