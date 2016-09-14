@@ -1,6 +1,21 @@
 class Finder::TestResults
   attr_reader :params, :filter, :page, :page_size
 
+  class << self
+    # TODO this should be converted into instance methods
+    def find_by_institution(institution, current_user)
+      Policy.authorize(QUERY_TEST, TestResult, current_user).where(institution: institution)
+    end
+
+    def as_json_list(test_results, localization_helper)
+      Jbuilder.new do |json|
+        json.array! test_results do |test|
+          test.as_json(json, localization_helper)
+        end
+      end
+    end
+  end
+
   def initialize(params, current_user, navigation_context, localization_helper)
     @localization_helper = localization_helper
     @params              = params

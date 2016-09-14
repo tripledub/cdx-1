@@ -19,7 +19,7 @@ class EncountersController < ApplicationController
 
   def sites
     sites = check_access(@navigation_context.institution.sites, CREATE_SITE_ENCOUNTER)
-    render json: s(sites.sort_by(&:name)).attributes!
+    render json: Finder::Site.as_json_list(sites.sort_by(&:name)).attributes!
   end
 
   def show
@@ -50,21 +50,12 @@ class EncountersController < ApplicationController
   end
 
   def search_sample
-    @institution = Finder::Institution.find_by_uuid(params[:institution_uuid])
-    samples = scoped_samples\
-      .joins("LEFT JOIN encounters ON encounters.id = samples.encounter_id")\
-      .where("sample_identifiers.entity_id LIKE ?", "%#{params[:q]}%")\
-      .where("samples.encounter_id IS NULL OR encounters.is_phantom = TRUE OR sample_identifiers.uuid IN (?)", (params[:sample_uuids] || "").split(','))
-    render json: as_json_samples_search(samples).attributes!
+    @institution = Finder::Institution.find_by_uuid(params[:institution_uuid], current_user)
+    render json: Finder::Sample.find_as_json(@institution, current_user, params[:sample_uuids], params[:q]).attributes!
   end
 
   def search_test
-    @institution = Finder::Institution.find_by_uuid(params[:institution_uuid])
-    test_results = scoped_test_results\
-      .joins("LEFT JOIN encounters ON encounters.id = patient_results.encounter_id")\
-      .where("patient_results.encounter_id IS NULL OR encounters.is_phantom = TRUE")\
-      .where("patient_results.test_id LIKE ?", "%#{params[:q]}%")
-    render json: as_json_test_results_search(test_results).attributes!
+    render json: Encounters::Persistence.new(params, current_user, @localization_helper).search_test
   end
 
   def add_sample
@@ -116,43 +107,6 @@ class EncountersController < ApplicationController
 
     @encounter.new_samples = []
     Encounters::Persistence.new(params, current_user, @localization_helper).prepare_blender_and_json(@encounter)
-
-  end
-
-  def scoped_test_results
-    authorize_resource(TestResult, QUERY_TEST).where(institution: @institution)
-  end
-
-  def add_test_result_by_uuid(uuid)
-    test_result         = scoped_test_results.find_by!(uuid: uuid)
-    test_result_blender = @blender.load(test_result)
-    @blender.merge_parent(test_result_blender, @encounter_blender)
-    test_result_blender
-  end
-
-   def as_json_samples_search(samples)
-     Jbuilder.new do |json|
-       json.array! samples do |sample|
-         as_json_sample(json, sample)
-       end
-     end
-   end
-
-  def as_json_site_list(sites)
-    Jbuilder.new do |json|
-      json.total_count sites.size
-      json.sites sites do |site|
-        as_json_site(json, site)
-      end
-    end
-  end
-
-  def as_json_test_results_search(test_results)
-    Jbuilder.new do |json|
-      json.array! test_results do |test|
-        test.as_json(json, @localization_helper)
-      end
-    end
   end
 
   def find_institution_and_patient

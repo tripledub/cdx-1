@@ -96,6 +96,15 @@ module Encounters
       end
     end
 
+    def search_test
+      institution = Finder::Institution.find_by_uuid(params[:institution_uuid], current_user)
+      test_results = Finder::TestResults.find_by_institution(institution, current_user)
+        .joins("LEFT JOIN encounters ON encounters.id = patient_results.encounter_id")
+        .where("patient_results.encounter_id IS NULL OR encounters.is_phantom = TRUE")
+        .where("patient_results.test_id LIKE ?", "%#{test_id}%")
+      Finder::TestResults.as_json_list(test_results).attributes!
+    end
+
     def prepare_blender_and_json(encounter)
       @encounter = encounter
       @blender = Blender.new(encounter.institution)
@@ -237,7 +246,7 @@ module Encounters
     end
 
     def add_sample_by_uuid(uuid)
-      sample = Finder::Sample.find_by_encounter(@encounter, current_user).find_by!("sample_identifiers.uuid" => uuid)
+      sample = Finder::Sample.find_by_encounter_or_institution(@encounter, current_user, @encounter.institution).find_by!("sample_identifiers.uuid" => uuid)
       sample_blender = @blender.load(sample)
       @blender.merge_parent(sample_blender, @encounter_blender)
       sample_blender
@@ -250,7 +259,7 @@ module Encounters
     end
 
     def merge_samples_by_uuid(uuids)
-      samples = Finder::Sample.find_by_encounter(@encounter, current_user).where("sample_identifiers.uuid" => uuids).to_a
+      samples = Finder::Sample.find_by_encounter_or_institution(@encounter, current_user, @encounter.institution).where("sample_identifiers.uuid" => uuids).to_a
       raise ActiveRecord::RecordNotFound if samples.empty?
       target, *to_merge = samples.map{|s| @blender.load(s)}
       @blender.merge_blenders(target, to_merge)
@@ -320,6 +329,13 @@ module Encounters
         .where("sample_identifiers.entity_id = ?", "#{sample[:entity_id]}")
       matching_id = matching_id.joins("LEFT JOIN encounters ON encounters.id = samples.encounter_id").where(patient_id: @encounter.patient_id) if @encounter.patient_id
       matching_id.count == 0
+    end
+
+    def add_test_result_by_uuid(uuid)
+      test_result         = Finder::TestResults.find_by_institution(@institution, current_user).find_by!(uuid: uuid)
+      test_result_blender = @blender.load(test_result)
+      @blender.merge_parent(test_result_blender, @encounter_blender)
+      test_result_blender
     end
   end
 end
