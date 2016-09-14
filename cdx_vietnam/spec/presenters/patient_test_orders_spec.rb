@@ -19,12 +19,14 @@ describe Presenters::PatientTestOrders do
     it 'should return elements formated' do
       expect(described_class.patient_view(patient.encounters).first).to eq({
         id:          patient.encounters.first.uuid,
+        batchId:     patient.encounters.first.batch_id,
         siteName:    patient.encounters.first.site.name,
         performingSiteName:  patient.encounters.first.site.name,
         requester:   patient.encounters.first.user.full_name,
         requestDate: I18n.l(Time.parse(patient.encounters.first.start_time), format: :long),
+        dueDate:     nil,
         status:      'In progress',
-        statusRaw:  'inprogress',
+        statusRaw:   'inprogress',
         viewLink:    Rails.application.routes.url_helpers.encounter_path(patient.encounters.first)
       })
     end

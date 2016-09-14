@@ -40,7 +40,9 @@ describe Presenters::TestOrders do
         sampleId:           Encounter.first.samples.map(&:entity_ids).join(', '),
         testingFor:         Encounter.first.testing_for,
         requestedBy:        user.full_name,
+        batchId:            Encounter.first.batch_id,
         requestDate:        Extras::Dates::Format.datetime_with_time_zone(Encounter.first.start_time),
+        dueDate:            nil,
         status:             'In progress: Microscopy (pending) - Culture (in progress) - Dst/Lpa (completed) - Xpert (rejected)',
         viewLink:           Rails.application.routes.url_helpers.encounter_path(Encounter.first)
       })
