@@ -1,3 +1,11 @@
+%script
+  $(document).ready(function(){
+  $('#patient_name').on('blur', function(){
+  if($('#patient_nickname').val() == '')
+  { $('#patient_nickname').val( $('#patient_name').val() ); }
+  })
+  });
+
 = form_for(@patient) do |f|
   - unless params[:next_url].blank?
     = hidden_field_tag :next_url, params[:next_url]
