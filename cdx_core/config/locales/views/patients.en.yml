@@ -13,8 +13,8 @@ en:
       patient_summary: 'Patient Summary'
       patient_history: 'Patient History'
       episode_summary: 'Episode Summary'
-      address: 'Address'
-      alt_address: 'Alternative Address'
+      address: 'Permanent Address'
+      alt_address: 'Contact Address'
     filters:
       add_patient: 'Add patient'
       show_all: 'Show all'
@@ -47,6 +47,7 @@ en:
       estimate_age: 'Estimate Age'
       history: 'History'
       nickname_label: 'Nickname'
+      medical_insurance_num: 'Medical Insurance Number'
       entity_id_label: 'Entity id'
       gender_label: 'Gender'
       birth_date_on_label: 'Birth date on'
@@ -61,6 +62,7 @@ en:
       email_tooltip: 'The Patients Email Address'
       phone_tooltip: 'A Phone number the Patient can be contacted on'
       social_security_code_tooltip: 'Social security Id. of the patient.'
+      medical_insurance_num_tooltip: 'Medical Insurance Number of the patient.'
     index:
       no_patients: 'No patients registered'
       keep_organized: 'Keep your test orders organized under patients medical history'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912172957) do
+ActiveRecord::Schema.define(version: 20160909145943) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -124,26 +124,6 @@ ActiveRecord::Schema.define(version: 20160912172957) do
     t.integer "alert_id", limit: 4, null: false
     t.integer "site_id",  limit: 4, null: false
   end
-
-  create_table "assay_results", force: :cascade do |t|
-    t.string   "assayable_type",      limit: 255
-    t.integer  "assayable_id",        limit: 4
-    t.string   "name",                limit: 255
-    t.string   "condition",           limit: 255
-    t.string   "result",              limit: 255
-    t.string   "quantitative_result", limit: 255
-    t.text     "assay_data",          limit: 65535
-    t.string   "uuid",                limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "assay_results", ["assayable_type", "assayable_id"], name: "index_assay_results_on_assayable_type_and_assayable_id", using: :btree
-  add_index "assay_results", ["condition"], name: "index_assay_results_on_condition", using: :btree
-  add_index "assay_results", ["created_at"], name: "index_assay_results_on_created_at", using: :btree
-  add_index "assay_results", ["quantitative_result"], name: "index_assay_results_on_quantitative_result", using: :btree
-  add_index "assay_results", ["result"], name: "index_assay_results_on_result", using: :btree
-  add_index "assay_results", ["uuid"], name: "index_assay_results_on_uuid", using: :btree
 
   create_table "audit_logs", force: :cascade do |t|
     t.text     "comment",           limit: 65535
@@ -504,6 +484,7 @@ ActiveRecord::Schema.define(version: 20160912172957) do
     t.string   "site_prefix",          limit: 255
     t.datetime "deleted_at"
     t.string   "type",                 limit: 255
+    t.integer  "requested_test_id",    limit: 4
     t.date     "sample_collected_on"
     t.date     "result_on"
     t.string   "specimen_type",        limit: 255
@@ -528,10 +509,6 @@ ActiveRecord::Schema.define(version: 20160912172957) do
     t.string   "trace",                limit: 255
     t.string   "test_result",          limit: 255
     t.string   "method_used",          limit: 255
-    t.string   "result_name",          limit: 255
-    t.string   "result_status",        limit: 255
-    t.string   "result_type",          limit: 255
-    t.text     "comment",              limit: 65535
   end
 
   add_index "patient_results", ["deleted_at"], name: "index_patient_results_on_deleted_at", using: :btree
@@ -539,36 +516,38 @@ ActiveRecord::Schema.define(version: 20160912172957) do
   add_index "patient_results", ["institution_id"], name: "index_patient_results_on_institution_id", using: :btree
   add_index "patient_results", ["method_used"], name: "index_patient_results_on_method_used", using: :btree
   add_index "patient_results", ["patient_id"], name: "index_patient_results_on_patient_id", using: :btree
+  add_index "patient_results", ["requested_test_id"], name: "index_patient_results_on_requested_test_id", using: :btree
   add_index "patient_results", ["sample_identifier_id"], name: "index_patient_results_on_sample_identifier_id", using: :btree
   add_index "patient_results", ["site_id"], name: "index_patient_results_on_site_id", using: :btree
   add_index "patient_results", ["test_result"], name: "index_patient_results_on_test_result", using: :btree
   add_index "patient_results", ["uuid"], name: "index_patient_results_on_uuid", using: :btree
 
   create_table "patients", force: :cascade do |t|
-    t.binary   "sensitive_data",       limit: 65535
-    t.text     "custom_fields",        limit: 65535
-    t.text     "core_fields",          limit: 65535
-    t.string   "entity_id_hash",       limit: 255
-    t.string   "uuid",                 limit: 255
-    t.integer  "institution_id",       limit: 4
+    t.binary   "sensitive_data",        limit: 65535
+    t.text     "custom_fields",         limit: 65535
+    t.text     "core_fields",           limit: 65535
+    t.string   "entity_id_hash",        limit: 255
+    t.string   "uuid",                  limit: 255
+    t.integer  "institution_id",        limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_phantom",                         default: true
+    t.boolean  "is_phantom",                          default: true
     t.datetime "deleted_at"
-    t.string   "location_geoid",       limit: 60
-    t.float    "lat",                  limit: 24
-    t.float    "lng",                  limit: 24
-    t.string   "address",              limit: 255
-    t.string   "name",                 limit: 255
-    t.string   "entity_id",            limit: 255
-    t.integer  "site_id",              limit: 4
-    t.string   "site_prefix",          limit: 255
-    t.string   "state",                limit: 255
-    t.string   "city",                 limit: 255
-    t.string   "zip_code",             limit: 255
-    t.string   "nickname",             limit: 255
+    t.string   "location_geoid",        limit: 60
+    t.float    "lat",                   limit: 24
+    t.float    "lng",                   limit: 24
+    t.string   "address",               limit: 255
+    t.string   "name",                  limit: 255
+    t.string   "entity_id",             limit: 255
+    t.integer  "site_id",               limit: 4
+    t.string   "site_prefix",           limit: 255
+    t.string   "state",                 limit: 255
+    t.string   "city",                  limit: 255
+    t.string   "zip_code",              limit: 255
+    t.string   "nickname",              limit: 255
     t.date     "birth_date_on"
-    t.string   "social_security_code", limit: 255,   default: ""
+    t.string   "social_security_code",  limit: 255,   default: ""
+    t.string   "medical_insurance_num", limit: 255
   end
 
   add_index "patients", ["birth_date_on"], name: "index_patients_on_birth_date_on", using: :btree
