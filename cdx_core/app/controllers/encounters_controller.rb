@@ -231,6 +231,7 @@ class EncountersController < ApplicationController
       @encounter.institution       = @institution
       @encounter.site              = site_by_uuid(@institution, encounter_param['site']['uuid'])
       @encounter.performing_site   = site_by_uuid(@institution, encounter_param['performing_site']['uuid']) if encounter_param['performing_site'] !=nil
+      @encounter.status            = 'new'
       @encounter.exam_reason       = encounter_param['exam_reason']
       @encounter.tests_requested   = encounter_param['tests_requested']
       @encounter.coll_sample_type  = encounter_param['coll_sample_type']

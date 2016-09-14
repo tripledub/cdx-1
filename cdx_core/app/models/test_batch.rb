@@ -1,4 +1,7 @@
 class TestBatch < ActiveRecord::Base
+  include AutoUUID
+  include Auditable
+
   belongs_to :encounter
   has_many :patient_results
 

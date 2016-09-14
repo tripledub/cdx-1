@@ -334,7 +334,7 @@ ActiveRecord::Schema.define(version: 20160914125841) do
     t.date     "testdue_date"
     t.integer  "treatment_weeks",    limit: 4
     t.integer  "performing_site_id", limit: 4
-    t.integer  "status",             limit: 4,     default: 0
+    t.string   "status",             limit: 255,   default: "0"
     t.string   "testing_for",        limit: 255,   default: ""
     t.string   "culture_format",     limit: 255
     t.boolean  "presumptive_rr"
@@ -343,6 +343,7 @@ ActiveRecord::Schema.define(version: 20160914125841) do
   add_index "encounters", ["deleted_at"], name: "index_encounters_on_deleted_at", using: :btree
   add_index "encounters", ["performing_site_id"], name: "index_encounters_on_performing_site_id", using: :btree
   add_index "encounters", ["site_id"], name: "index_encounters_on_site_id", using: :btree
+  add_index "encounters", ["status"], name: "index_encounters_on_status", using: :btree
   add_index "encounters", ["user_id"], name: "index_encounters_on_user_id", using: :btree
 
   create_table "episodes", force: :cascade do |t|

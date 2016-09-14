@@ -314,8 +314,12 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       expect(EncounterAuditLog.first.title).to eq "New Test order created"
     end
 
-    it 'should set the encounter status to pending' do
-      expect(created_encounter.status).to eq('pending')
+    it 'should add a test batch' do
+      expect(created_encounter.test_batch).to be
+    end
+
+    it 'should set the encounter status to new' do
+      expect(created_encounter.status).to eq('new')
     end
   end
 

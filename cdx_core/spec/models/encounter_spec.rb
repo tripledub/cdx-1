@@ -1,7 +1,12 @@
 require 'spec_helper'
 
 describe Encounter do
+  let(:status_options)  { ['new', 'pending', 'inprogress', 'received', 'pending_approval', 'approved'] }
+
+  it { has_one :test_batch }
   it { is_expected.to validate_presence_of :institution }
+  it { should validate_inclusion_of(:status).in_array(status_options) }
+
   let(:patient)   { Patient.make }
   let(:encounter) { Encounter.make institution: patient.institution, patient: patient }
 

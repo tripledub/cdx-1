@@ -148,6 +148,7 @@ Encounter.blueprint do
   patient { Patient.make }
   institution { object.patient.try(:institution) || Institution.make }
   user { institution.user }
+  status 'new'
   site { object.institution.sites.first || object.institution.sites.make }
   performing_site { object.institution.sites.first || object.institution.sites.make }
   core_fields {
