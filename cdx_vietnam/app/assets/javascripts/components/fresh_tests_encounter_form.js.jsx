@@ -330,7 +330,7 @@ var PresumptiveRR = React.createClass({
         </div>
         <div className="col-6">
           <input type="checkbox" onChnage={this.updatePresumptiveRR} className="presumptive_rr" id="presumptive_rr" name="presumptive_rr"/>
-          <label htmlFor="presumptive_rr">Presumptive RR-TB/MDR-TB</label>
+          <label htmlFor="presumptive_rr">{I18n.t("components.fresh_tests_encounter_form.presumptive")}</label>
         </div>
       </div>
     )
