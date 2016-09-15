@@ -25,6 +25,10 @@ class EncountersController < ApplicationController
 
   def show
     return unless authorize_resource(@encounter, READ_ENCOUNTER)
+
+    current_encounter = Encounters::Persistence.new(params, current_user, @localization_helper)
+    current_encounter.prepare_blender_and_json(@encounter)
+    @encounter_as_json = current_encounter.as_json_edit.attributes!
     determine_referal
   end
 

@@ -101,6 +101,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       get :show, id: encounter.id
 
       expect(response).to have_http_status(:success)
+      expect(assigns[:encounter_as_json]).to include('user' => user)
       expect(assigns[:can_update]).to be_falsy
       expect(assigns[:show_edit_encounter]).to be_truthy
       expect(assigns[:show_cancel_encounter]).to be_falsy

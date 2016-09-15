@@ -109,7 +109,59 @@ module Encounters
       @encounter = encounter
       @blender = Blender.new(encounter.institution)
       @encounter_blender = @blender.load(encounter)
-      @encounter_as_json = as_json_edit.attributes!
+    end
+
+    def as_json_edit
+      Jbuilder.new do |json|
+        json.(@encounter, :id)
+        json.(@encounter, :uuid)
+        json.(@encounter, :batch_id)
+        json.(@encounter, :user)
+        json.(@encounter, :exam_reason)
+        json.(@encounter, :tests_requested)
+        json.(@encounter, :coll_sample_type)
+        json.(@encounter, :coll_sample_other)
+        json.(@encounter, :diag_comment)
+        json.(@encounter, :treatment_weeks)
+        json.(@encounter, :status)
+        json.(@encounter, :testdue_date)
+        json.(@encounter, :testing_for)
+        json.culture_format Extras::Select.find(Encounter.culture_format_options, @encounter.culture_format)
+        json.has_dirty_diagnostic @encounter.has_dirty_diagnostic?
+        json.assays (@encounter_blender.core_fields[Encounter::ASSAYS_FIELD] || [])
+        json.observations @encounter_blender.plain_sensitive_data[Encounter::OBSERVATIONS_FIELD]
+        json.institution do
+          Finder::Institution.as_json(json, @encounter.institution)
+        end
+
+        json.site do
+          Finder::Site.as_json(json, @encounter.site)
+        end
+
+        if @encounter.performing_site
+          json.performing_site do
+            Finder::Site.as_json(json, @encounter.performing_site)
+          end
+        end
+
+        json.patient do
+          if @encounter_blender.patient.blank?
+            json.nil!
+          else
+            @encounter_blender.patient.preview.as_json_card(json)
+          end
+        end
+
+        json.samples @encounter_blender.samples.uniq do |sample|
+          Finder::Sample.as_json(json, sample)
+        end
+
+        json.(@encounter, :new_samples)
+        localization_helper.devices_by_uuid = @encounter_blender.test_results.map{|tr| tr.single_entity.device}.uniq.index_by &:uuid
+        json.test_results @encounter_blender.test_results.uniq do |test_result|
+          test_result.single_entity.as_json(json, localization_helper)
+        end
+      end
     end
 
     protected
@@ -176,59 +228,6 @@ module Encounters
         'core_fields' => { Encounter::ASSAYS_FIELD => encounter_param['assays'] },
         'plain_sensitive_data' => { Encounter::OBSERVATIONS_FIELD => encounter_param['observations'] }
       )
-    end
-
-    def as_json_edit
-      Jbuilder.new do |json|
-        json.(@encounter, :id)
-        json.(@encounter, :uuid)
-        json.(@encounter, :batch_id)
-        json.(@encounter, :user)
-        json.(@encounter, :exam_reason)
-        json.(@encounter, :tests_requested)
-        json.(@encounter, :coll_sample_type)
-        json.(@encounter, :coll_sample_other)
-        json.(@encounter, :diag_comment)
-        json.(@encounter, :treatment_weeks)
-        json.(@encounter, :status)
-        json.(@encounter, :testdue_date)
-        json.(@encounter, :testing_for)
-        json.culture_format Extras::Select.find(Encounter.culture_format_options, @encounter.culture_format)
-        json.has_dirty_diagnostic @encounter.has_dirty_diagnostic?
-        json.assays (@encounter_blender.core_fields[Encounter::ASSAYS_FIELD] || [])
-        json.observations @encounter_blender.plain_sensitive_data[Encounter::OBSERVATIONS_FIELD]
-        json.institution do
-          Finder::Institution.as_json(json, @encounter.institution)
-        end
-
-        json.site do
-          Finder::Site.as_json(json, @encounter.site)
-        end
-
-        if @encounter.performing_site
-          json.performing_site do
-            Finder::Site.as_json(json, @encounter.performing_site)
-          end
-        end
-
-        json.patient do
-          if @encounter_blender.patient.blank?
-            json.nil!
-          else
-            @encounter_blender.patient.preview.as_json_card(json)
-          end
-        end
-
-        json.samples @encounter_blender.samples.uniq do |sample|
-          Finder::Sample.as_json(json, sample)
-        end
-
-        json.(@encounter, :new_samples)
-        localization_helper.devices_by_uuid = @encounter_blender.test_results.map{|tr| tr.single_entity.device}.uniq.index_by &:uuid
-        json.test_results @encounter_blender.test_results.uniq do |test_result|
-          test_result.single_entity.as_json(json, localization_helper)
-        end
-      end
     end
 
     def get_patient_id_from_params(encounter_param)
