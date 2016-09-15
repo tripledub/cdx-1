@@ -96,13 +96,13 @@ module Encounters
       end
     end
 
-    def search_test
+    def search_test(test_id)
       institution = Finder::Institution.find_by_uuid(params[:institution_uuid], current_user)
       test_results = Finder::TestResults.find_by_institution(institution, current_user)
         .joins("LEFT JOIN encounters ON encounters.id = patient_results.encounter_id")
         .where("patient_results.encounter_id IS NULL OR encounters.is_phantom = TRUE")
         .where("patient_results.test_id LIKE ?", "%#{test_id}%")
-      Finder::TestResults.as_json_list(test_results).attributes!
+      Finder::TestResults.as_json_list(test_results, @localization_helper).attributes!
     end
 
     def prepare_blender_and_json(encounter)
@@ -119,12 +119,12 @@ module Encounters
       begin
         yield
       rescue Blender::MergeNonPhantomError => e
-        return { status: :error, message: I18n.t('encounters.perform_encounter_action.merge', entity_type: e.entity_type.model_name.singular), encounter: as_json_edit.attributes! }, status: :unprocessable_entity
+        return { status: :error, message: I18n.t('encounters.perform_encounter_action.merge', entity_type: e.entity_type.model_name.singular), encounter: as_json_edit.attributes! }, :unprocessable_entity
       rescue => e
         Rails.logger.error(e.backtrace.unshift(e.message).join("\n"))
-        return { status: :error, message: I18n.t('encounters.perform_encounter_action.error', action_name: action, class_name: e.class), encounter: as_json_edit.attributes! }, status: :unprocessable_entity
+        return { status: :error, message: I18n.t('encounters.perform_encounter_action.error', action_name: action, class_name: e.class), encounter: as_json_edit.attributes! }, :unprocessable_entity
       else
-        return { status: :ok, encounter: as_json_edit.attributes! }.merge(@extended_respone)
+        return { status: :ok, encounter: as_json_edit.attributes! }.merge(@extended_respone), :ok
       end
     end
 

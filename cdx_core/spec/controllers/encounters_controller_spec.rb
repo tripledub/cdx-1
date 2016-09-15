@@ -153,31 +153,44 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     context 'cancel encounter' do
+      let(:encounter) { Encounter.make institution: institution, patient: patient }
+
       before :each do
         request.env["HTTP_REFERER"] = patient_path(patient)
-        get :show, id: encounter.uuid
       end
 
-      context 'encounter status is pending' do
-        let(:encounter) { Encounter.make institution: institution, patient: patient, status: 0 }
-
+      context 'encounter status is new' do
         it 'can be deleted by the user' do
+          encounter.update_attribute(:status, 'new')
+          get :show, id: encounter.uuid
+
           expect(assigns(:show_cancel_encounter)).to eq(true)
         end
       end
 
-      context 'encounter status is completed' do
-        let(:encounter) { Encounter.make institution: institution, patient: patient, status: 2 }
-
+      context 'encounter status is in progress' do
         it 'can not be deleted by the user' do
+          encounter.update_attribute(:status, 'inprogress')
+          get :show, id: encounter.uuid
+
           expect(assigns(:show_cancel_encounter)).to eq(false)
         end
       end
 
-      context 'encounter status is in progress' do
-        let(:encounter) { Encounter.make institution: institution, patient: patient, status: 1 }
-
+      context 'encounter status is approved' do
         it 'can not be deleted by the user' do
+          encounter.update_attribute(:status, 'approved')
+          get :show, id: encounter.uuid
+
+          expect(assigns(:show_cancel_encounter)).to eq(false)
+        end
+      end
+
+      context 'encounter status is pending approval' do
+        it 'can not be deleted by the user' do
+          encounter.update_attribute(:status, 'pending approval')
+          get :show, id: encounter.uuid
+
           expect(assigns(:show_cancel_encounter)).to eq(false)
         end
       end
@@ -186,23 +199,20 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
   describe "GET #edit" do
     it "returns http success if allowed" do
-      i1      = Institution.make
-      patient = Patient.make institution: i1
-      grant i1.user, user, {site: i1}, CREATE_SITE_ENCOUNTER
-      grant i1.user, user, {encounter: i1}, UPDATE_ENCOUNTER
-
-      encounter = Encounter.make institution: i1, patient: patient
+      patient   = Patient.make institution: institution
+      encounter = Encounter.make institution: institution, patient: patient
       get :edit, id: encounter.id
+
       expect(response).to have_http_status(:success)
     end
 
-    it "returns http forbidden if not allowed" do
+    it "redirects to encounters list if not allowed" do
       i1        = Institution.make
       patient   = Patient.make institution: i1
       encounter = Encounter.make institution: i1, patient: patient
       get :edit, id: encounter.id
 
-      expect(response).to have_http_status(:forbidden)
+      expect(response).to redirect_to(encounters_path)
     end
   end
 

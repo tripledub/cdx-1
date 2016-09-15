@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Encounter::Status do
+RSpec.describe Encounters::Status do
   let(:institution)            { Institution.make }
   let(:user)                   { institution.user }
   let(:site)                   { institution.sites.make }

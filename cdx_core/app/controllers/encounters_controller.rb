@@ -1,6 +1,6 @@
 class EncountersController < ApplicationController
   before_filter :load_encounter, only: [:show, :edit, :destroy]
-  before_filter :find_institution_and_patient,   only: [:new]
+  before_filter :find_institution_and_patient, only: [:new]
 
   def new_index
     return unless authorize_resource(Site, CREATE_SITE_ENCOUNTER).empty?
@@ -14,7 +14,8 @@ class EncountersController < ApplicationController
   end
 
   def create
-    render json: Encounters::Persistence.new(params, current_user, @localization_helper).create
+    content, status = Encounters::Persistence.new(params, current_user, @localization_helper).create
+    render json: content, status: status
   end
 
   def sites
@@ -28,12 +29,12 @@ class EncountersController < ApplicationController
   end
 
   def edit
+    return unless authorize_resource(@encounter, UPDATE_ENCOUNTER)
     if @encounter.has_dirty_diagnostic?
       @encounter.core_fields[Encounter::ASSAYS_FIELD] = @encounter.updated_diagnostic
       Encounters::Persistence.new(params, current_user, @localization_helper).prepare_blender_and_json(@encounter)
     end
     @possible_assay_results = TestResult.possible_results_for_assay
-    return unless authorize_resource(@encounter, UPDATE_ENCOUNTER)
   end
 
   def destroy
@@ -46,7 +47,8 @@ class EncountersController < ApplicationController
   end
 
   def update
-    render json: Encounters::Persistence.new(params, current_user, @localization_helper).update
+    content, status = Encounters::Persistence.new(params, current_user, @localization_helper).update
+    render json: content, status: status
   end
 
   def search_sample
@@ -55,27 +57,32 @@ class EncountersController < ApplicationController
   end
 
   def search_test
-    render json: Encounters::Persistence.new(params, current_user, @localization_helper).search_test
+    render json: Encounters::Persistence.new(params, current_user, @localization_helper).search_test(params[:q])
   end
 
   def add_sample
-    render json: Encounters::Persistence.new(params, current_user, @localization_helper).add_sample
+    content, status = Encounters::Persistence.new(params, current_user, @localization_helper).add_sample
+    render json: content, status: status
   end
 
   def add_test
-    render json: Encounters::Persistence.new(params, current_user, @localization_helper).add_test
+    content, status = Encounters::Persistence.new(params, current_user, @localization_helper).add_test
+    render json: content, status: status
   end
 
   def merge_samples
-    render json: Encounters::Persistence.new(params, current_user, @localization_helper).merge_samples
+    content, status = Encounters::Persistence.new(params, current_user, @localization_helper).merge_samples
+    render json: content, status: status
   end
 
   def new_sample
-    render json: Encounters::Persistence.new(params, current_user, @localization_helper).new_sample
+    content, status = Encounters::Persistence.new(params, current_user, @localization_helper).new_sample
+    render json: content, status: status
   end
 
   def add_sample_manually
-    render json: Encounters::Persistence.new(params, current_user, @localization_helper).add_sample_manually
+    content, status = Encounters::Persistence.new(params, current_user, @localization_helper).add_sample_manually
+    render json: content, status: status
   end
 
   private
@@ -90,7 +97,7 @@ class EncountersController < ApplicationController
       referer       = URI(request.referer).path
       if (referer =~ /\/patients\/\d/) || (params['test_order_page_mode'] == 'cancel')
         @show_edit_encounter   = false
-        @show_cancel_encounter = true if @encounter && (Encounter.statuses[@encounter.status] == Encounter.statuses["pending"])
+        @show_cancel_encounter = true if @encounter && (@encounter.status == 'new')
         if @encounter && @encounter.patient
           @return_path_encounter = patient_path(@encounter.patient)
         else
@@ -101,9 +108,8 @@ class EncountersController < ApplicationController
   end
 
   def load_encounter
-    @encounter = Encounter.where('uuid = :id', params).first ||
-                 Encounter.where('id = :id', params).first
-    return head(:not_found) unless @encounter.present? && (@encounter.id == params[:id].to_i || @encounter.uuid == params[:id])
+    @encounter = @navigation_context.institution.encounters.where('uuid = :id', params).first || @navigation_context.institution.encounters.where('id = :id', params).first
+    redirect_to(encounters_path, notice: I18n.t('encounters.show.no_encounter')) and return unless @encounter.present?
 
     @encounter.new_samples = []
     Encounters::Persistence.new(params, current_user, @localization_helper).prepare_blender_and_json(@encounter)
