@@ -1,10 +1,10 @@
 class DstLpaResult < PatientResult
-  validates_presence_of  :requested_test_id, :sample_collected_on, :examined_by, :result_on, :media_used, :serial_number, :results_h, :results_r, :results_e, :results_s, :results_amk, :results_km, :results_cm, :results_fq
-  validates_inclusion_of :results_h, :results_r, :results_e, :results_s, :results_amk, :results_km, :results_cm, :results_fq, in: ['resistant', 'susceptible', 'contaminated', 'not_done']
-  validates_inclusion_of :media_used, in: %w(solid liquid)
-  validates_inclusion_of :method_used, in: %w(direct indirect)
+  validates_presence_of  :sample_collected_on, :examined_by, :result_on, :media_used, :serial_number, :results_h, :results_r, :results_e, :results_s, :results_amk, :results_km, :results_cm, :results_fq, :on => :update
+  validates_inclusion_of :results_h, :results_r, :results_e, :results_s, :results_amk, :results_km, :results_cm, :results_fq, in: ['resistant', 'susceptible', 'contaminated', 'not_done'], :on => :update
+  validates_inclusion_of :media_used, in: %w(solid liquid), :on => :update
+  validates_inclusion_of :method_used, in: %w(direct indirect), :on => :update
 
-  delegate :patient, to: 'requested_test.encounter'
+  delegate :patient, to: 'test_batch.encounter'
 
   class << self
     def dst_lpa_options

@@ -1,11 +1,11 @@
 class XpertResult < PatientResult
-  validates_presence_of  :requested_test_id, :sample_collected_on, :examined_by, :tuberculosis, :rifampicin, :result_on
-  validates_inclusion_of :tuberculosis, in: ['detected', 'not_detected', 'invalid']
-  validates_inclusion_of :rifampicin,   in: ['detected', 'not_detected', 'indeterminate']
+  validates_presence_of  :sample_collected_on, :examined_by, :tuberculosis, :rifampicin, :result_on, :on => :update
+  validates_inclusion_of :tuberculosis, in: ['detected', 'not_detected', 'invalid'], :on => :update
+  validates_inclusion_of :rifampicin,   in: ['detected', 'not_detected', 'indeterminate'], :on => :update
 
   validate :rifampicin_detected
 
-  delegate :patient, to: 'requested_test.encounter'
+  delegate :patient, to: 'test_batch.encounter'
 
   class << self
     def tuberculosis_options

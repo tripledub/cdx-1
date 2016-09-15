@@ -151,6 +151,7 @@ Encounter.blueprint do
   status 'new'
   site { object.institution.sites.first || object.institution.sites.make }
   performing_site { object.institution.sites.first || object.institution.sites.make }
+  test_batch { TestBatch.new }
   core_fields {
     { "id" => "encounter-#{Sham.sn}" }.tap do |h|
       h["start_time"] = object.start_time if object.start_time

@@ -129,7 +129,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
             </div>
           </div>
 
-          <RequestedTests reqtestsChange={this.reqtestsChange} />
+          <RequestedTests reqTestsChange={this.reqTestsChange} />
 
           <div className="row">
             <div className="col-6">
@@ -204,7 +204,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     return '';
   },
 
-  reqtestsChange: function(requestedTests) {
+  reqTestsChange: function(requestedTests) {
     this.setState(React.addons.update(this.state, {
       encounter: {
         tests_requested: {

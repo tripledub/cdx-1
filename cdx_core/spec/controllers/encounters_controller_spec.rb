@@ -239,6 +239,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
           { entity_id: 'eid:1002', lab_sample_id: 'Some other laboratory Id' }
         ],
         test_results: [],
+        tests_requested: 'microscopy|xpertmtb|culture_cformat_solid|drugsusceptibility1line_cformat_liquid|',
         culture_format: 'liquid',
         assays: [{condition: 'mtb', result: 'positive', quantitative_result: "3"}],
         observations: 'Lorem ipsum',
@@ -308,13 +309,19 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       expect(json_response['encounter']['new_samples']).to eq([])
     end
 
-    it 'should log the changes' do
-      expect(EncounterAuditLog.count).to eq 1
-      expect(EncounterAuditLog.first.title).to eq "New Test order created"
+    context 'log changes' do
+      it 'should log the newly created test order' do
+        expect(EncounterAuditLog.count).to eq 1
+        expect(EncounterAuditLog.first.title).to eq "New Test order created"
+      end
     end
 
     it 'should add a test batch' do
       expect(created_encounter.test_batch).to be
+    end
+
+    it 'should add all requested results' do
+      expect(created_encounter.test_batch.patient_results.size).to eq(4)
     end
 
     it 'should set the encounter status to new' do

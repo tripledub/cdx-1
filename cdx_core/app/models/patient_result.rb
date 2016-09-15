@@ -4,9 +4,9 @@ class PatientResult < ActiveRecord::Base
 
   belongs_to :requested_test
   belongs_to :test_batch
-  has_many :assay_results, as: :assayable
+  has_many   :assay_results, as: :assayable
 
-  after_save :update_requested_test
+  after_save  :update_requested_test
   before_save :convert_string_to_dates
 
   class << self
@@ -19,6 +19,13 @@ class PatientResult < ActiveRecord::Base
     def find_all_for_patient(patient_id)
       PatientResult.joins('LEFT OUTER JOIN `requested_tests` ON `requested_tests`.`id` = `patient_results`.`requested_test_id` LEFT OUTER JOIN `encounters` ON `encounters`.`id` = `requested_tests`.`encounter_id`')
         .where('patient_results.patient_id = ? OR encounters.patient_id = ?', patient_id, patient_id)
+    end
+
+    def status_options
+      [
+        ['new', I18n.t('select.patient_result.status_options.new')],
+        ['completed', I18n.t('select.patient_result.status_options.completed')]
+      ]
     end
   end
 

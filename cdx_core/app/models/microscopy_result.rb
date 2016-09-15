@@ -1,9 +1,9 @@
 class MicroscopyResult < PatientResult
-  validates_presence_of  :requested_test_id, :sample_collected_on, :examined_by, :result_on, :specimen_type, :serial_number, :appearance, :test_result
-  validates_inclusion_of :test_result, in: ['negative', '1to9', '1plus', '2plus', '3plus']
-  validates_inclusion_of :appearance,  in: ['blood', 'mucopurulent', 'saliva']
+  validates_presence_of  :sample_collected_on, :examined_by, :result_on, :specimen_type, :serial_number, :appearance, :test_result, :on => :update
+  validates_inclusion_of :test_result, in: ['negative', '1to9', '1plus', '2plus', '3plus'], :on => :update
+  validates_inclusion_of :appearance,  in: ['blood', 'mucopurulent', 'saliva'], :on => :update
 
-  delegate :patient, to: 'requested_test.encounter'
+  delegate :patient, to: 'test_batch.encounter'
 
   class << self
     def visual_appearance_options

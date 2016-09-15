@@ -1,6 +1,6 @@
 module Encounters
   class Persistence
-    attr_reader :params, :current_user, :localization_helper
+    attr_reader :params, :current_user, :localization_helper, :encounter_param
 
     def initialize(params, current_user, localization_helper)
       @params = params
@@ -181,8 +181,8 @@ module Encounters
     end
 
     def prepare_encounter_from_json
-      encounter_param        = @encounter_param = JSON.parse(params[:encounter])
-      @encounter             = encounter_param['id'] ? Encounter.find(encounter_param['id']) : Encounter.new
+      @encounter_param = JSON.parse(params[:encounter])
+      @encounter = encounter_param['id'] ? Encounter.find(encounter_param['id']) : Encounter.new
       @encounter.new_samples = []
       @encounter.is_phantom  = false
 
@@ -266,14 +266,7 @@ module Encounters
     end
 
     def create_requested_tests
-      encounter_param = @encounter_param = JSON.parse(params[:encounter])
-      tests_requested = encounter_param['tests_requested']
-
-      if tests_requested.present?
-        tests_requested.split('|').each do |name|
-          @encounter.requested_tests.build(name: name, status: RequestedTest.statuses["pending"])
-        end
-      end
+      TestBatches::Persistence.build_requested_tests(@encounter.test_batch, encounter_param['tests_requested'])
     end
 
     def create_new_samples
@@ -310,12 +303,12 @@ module Encounters
     end
 
     def recalculate_diagnostic
-      previous_tests_uuids = @encounter_param['test_results'].map{|t| t['uuid']}
+      previous_tests_uuids = encounter_param['test_results'].map{|t| t['uuid']}
       assays_to_merge      = @blender.test_results\
         .reject{|tr| (tr.uuids & previous_tests_uuids).any?}\
         .map{|tr| tr.core_fields[TestResult::ASSAYS_FIELD]}
 
-      diagnostic_assays = assays_to_merge.inject(@encounter_param['assays']) do |merged, to_merge|
+      diagnostic_assays = assays_to_merge.inject(encounter_param['assays']) do |merged, to_merge|
         Encounter.merge_assays(merged, to_merge)
       end
 

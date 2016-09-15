@@ -18,6 +18,10 @@ en:
         in_progress: 'In progress'
         pending_approval: 'Pending approval'
         approved: 'Approved'
+    patient_result:
+      status_options:
+        new: 'New'
+        completed: 'Completed'
     microscopy:
       visual_appearance:
         blood: 'Blood-stained'
