@@ -11,8 +11,8 @@ class Presenters::Episodes
           outcome:        Extras::Select.find_from_struct(Episode.treatment_outcome_options, episode.outcome),
           anatomicalSiteDiagnosis: Extras::Select.find_from_struct(Episode.diagnosis_options, episode.anatomical_site_diagnosis),
           editLink:       Rails.application.routes.url_helpers.edit_patient_episode_path(episode.patient, episode),
-          created: episode.created_at.to_s(:long),
-          updated: episode.updated_at.to_s(:long)
+          created: Extras::Dates::Format.datetime_with_time_zone(episode.created_at),
+          updated: Extras::Dates::Format.datetime_with_time_zone(episode.updated_at)
         }
       end
     end
