@@ -88,10 +88,10 @@ module Encounters
           @encounter.new_samples << sample
           @extended_respone = { sample: sample }
         else
-          render json: {
+          return {
             message: I18n.t('encounters_controller.sample_id_used'),
             status: 'error'
-          }, status: 200 and return
+          }, :unprocessable_entity
         end
       end
     end
@@ -239,7 +239,8 @@ module Encounters
 
     def set_patient_by_id(id)
       return unless id
-      patient         = Finder::Patient.find_by_institution(@institution, current_user).find(id)
+      patient = Finder::Patient.find_by_institution(@institution, current_user).find(id)
+      @encounter.patient = patient
       patient_blender = @blender.load(patient)
       @blender.merge_parent(@encounter_blender, patient_blender)
       patient_blender
@@ -325,7 +326,7 @@ module Encounters
     end
 
     def validate_manual_sample_non_existant(sample)
-      matching_id = Sample.joins(:sample_identifiers)\
+      matching_id = @institution.samples.joins(:sample_identifiers)
         .where("sample_identifiers.entity_id = ?", "#{sample[:entity_id]}")
       matching_id = matching_id.joins("LEFT JOIN encounters ON encounters.id = samples.encounter_id").where(patient_id: @encounter.patient_id) if @encounter.patient_id
       matching_id.count == 0

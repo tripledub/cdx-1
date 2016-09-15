@@ -95,12 +95,9 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
   describe "GET #show" do
     it "returns http success if allowed" do
-      i1      = Institution.make
-      patient = Patient.make institution: i1
-      grant i1.user, user, {site: i1}, CREATE_SITE_ENCOUNTER
-      grant i1.user, user, {encounter: i1}, READ_ENCOUNTER
-      encounter         = Encounter.make institution: i1, patient: patient
-      sample_identifier = SampleIdentifier.make(site: site, entity_id: "entity random", lab_sample_id: 'Random lab sample', sample: Sample.make(institution: i1, encounter: encounter, patient: patient))
+      patient = Patient.make institution: institution
+      encounter = Encounter.make institution: institution, patient: patient
+      sample_identifier = SampleIdentifier.make(site: site, entity_id: "entity random", lab_sample_id: 'Random lab sample', sample: Sample.make(institution: institution, encounter: encounter, patient: patient))
       get :show, id: encounter.id
 
       expect(response).to have_http_status(:success)
@@ -115,19 +112,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       encounter = Encounter.make institution: i1, patient: patient
       get :show, id: encounter.id
 
-      expect(response).to have_http_status(:forbidden)
-    end
-
-    it "redirects to edit if can edit" do
-      i1      = Institution.make
-      patient = Patient.make institution: i1
-      grant i1.user, user, {site: i1}, CREATE_SITE_ENCOUNTER
-      grant i1.user, user, {encounter: i1}, READ_ENCOUNTER
-      grant i1.user, user, {encounter: i1}, UPDATE_ENCOUNTER
-      encounter = Encounter.make institution: i1, patient: patient
-      get :show, id: encounter.id
-
-      expect(response).to have_http_status(:success)
+      expect(response).to redirect_to(encounters_path)
     end
 
     it "should load encounter by uuid" do
@@ -1046,10 +1031,8 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
     it "return error if sample ID already exists for same patient" do
       patient = institution.patients.make
-      TestResult.make \
-        institution: institution,
-        device: Device.make(site: site),
-        sample_identifier: SampleIdentifier.make(site: site, entity_id: "12345678", sample: Sample.make(institution: institution))
+      TestResult.make institution: institution, device: Device.make(site: site),
+        sample_identifier: SampleIdentifier.make(site: site, entity_id: "12345678", sample: Sample.make(institution: institution, patient: patient))
 
       put :add_sample_manually, entity_id: '12345678', encounter: {
         institution: { uuid: institution.uuid },
@@ -1060,7 +1043,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         patient_id: patient.id
       }.to_json
 
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:unprocessable_entity)
       json_response = JSON.parse(response.body).with_indifferent_access
       expect(json_response['status']).to eq('error')
       expect(json_response['message']).to eq('This sample ID has already been used for another patient')
