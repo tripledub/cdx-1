@@ -1,9 +1,12 @@
 en:
   encounters:
     status:
+      new: 'New'
       pending: 'Pending'
       in_progress: 'In progress'
       completed: 'Completed'
+      pending_approval: 'Pending approval'
+      approved: 'Approved'
       site_id: 'Requested by'
       performing_site_id: 'Request to'
       user_id: 'Order by user'

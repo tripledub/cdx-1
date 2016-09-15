@@ -4,12 +4,12 @@ module Encounters
       def change_status(encounter)
         # Update requested tests probably outdated due to transaction issues.
         encounter.requested_tests.reload
-        if all_tests_finished?(encounter)
-          encounter.update(status: :pending_approval)
+        if any_tests_in_progress?(encounter)
+          encounter.update(status: :in_progress)
         elsif all_tests_pending?(encounter)
           encounter.update(status: :pending)
-        else
-          encounter.update(status: :inprogress)
+        elsif all_tests_finished?(encounter)
+          encounter.update(status: :pending_approval)
         end
       end
 
@@ -21,6 +21,10 @@ module Encounters
 
       def all_tests_pending?(encounter)
         encounter.requested_tests.all? { |rt| rt.status == 'pending' }
+      end
+
+      def any_tests_in_progress?(encounter)
+        encounter.requested_tests.any? { |rt| rt.status == 'inprogress' }
       end
     end
   end

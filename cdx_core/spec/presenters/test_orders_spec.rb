@@ -8,7 +8,7 @@ describe Presenters::TestOrders do
   let(:patient)             { Patient.make institution: institution, name: 'Nico McBrian' }
   let!(:encounters)         {
     7.times {
-      encounter = Encounter.make institution: institution, site: site, patient: patient, start_time: 3.days.ago.to_s, testdue_date: 1.day.from_now.to_s, status: 1, testing_for: 'TB', performing_site: performing_site
+      encounter = Encounter.make institution: institution, site: site, patient: patient, start_time: 3.days.ago.to_s, testdue_date: 1.day.from_now.to_s, testing_for: 'TB', performing_site: performing_site
       sample    = Sample.make(institution: institution, patient: patient, encounter: encounter)
       SampleIdentifier.make(site: site, entity_id: "sample-#{rand(1..30000)}",     sample: sample)
       SampleIdentifier.make(site: site, entity_id: "sample-#{rand(30001..60000)}", sample: sample)

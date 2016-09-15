@@ -22,7 +22,7 @@ class Encounter < ActiveRecord::Base
   validates_presence_of :site, if: Proc.new { |encounter| encounter.institution }
 
   validates_inclusion_of :culture_format, :allow_nil => true, in: ['solid', 'liquid'], if: Proc.new { |encounter| encounter.testing_for == 'TB' }
-  validates_inclusion_of :status,  in: ['new', 'pending', 'received', 'inprogress', 'pending_approval', 'approved']
+  validates_inclusion_of :status,  in: ['new', 'pending', 'received', 'in_progress', 'pending_approval', 'approved']
 
   validate :validate_patient
 
@@ -53,7 +53,7 @@ class Encounter < ActiveRecord::Base
       [
         ['new', I18n.t('select.encounter.status_options.new')],
         ['pending', I18n.t('select.encounter.status_options.pending')],
-        ['inprogress', I18n.t('select.encounter.status_options.inprogress')],
+        ['in_progress', I18n.t('select.encounter.status_options.in_progress')],
         ['received', I18n.t('select.encounter.status_options.received')],
         ['pending_approval', I18n.t('select.encounter.status_options.pending_approval')],
         ['approved', I18n.t('select.encounter.status_options.approved')]

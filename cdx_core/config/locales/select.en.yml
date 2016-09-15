@@ -12,9 +12,12 @@ en:
         hiv: 'H.I.V.'
         ebola: 'Ebola'
       status_options:
+        new: 'New'
         pending: 'Pending'
-        inprogress: 'In progress'
-        completed: 'Completed'
+        received: 'Received'
+        in_progress: 'In progress'
+        pending_approval: 'Pending approval'
+        approved: 'Approved'
     microscopy:
       visual_appearance:
         blood: 'Blood-stained'

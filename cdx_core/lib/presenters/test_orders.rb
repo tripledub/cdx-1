@@ -36,6 +36,8 @@ class Presenters::TestOrders
         I18n.t('encounters.status.in_progress')
       when 'completed'
         I18n.t('encounters.status.completed')
+      else
+        I18n.t('encounters.status.new')
       end
       encounter_status += ': '
 

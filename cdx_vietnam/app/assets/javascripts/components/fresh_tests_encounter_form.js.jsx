@@ -162,7 +162,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
             </div>
           </div>
 
-          { this.state.encounter.exam_reason === 'diag' ? <ReasonDiag diagCommentChange={this.diagCommentChange} /> : null }
+          <ReasonDiag diagCommentChange={this.diagCommentChange} />
 
           <div className="row labelfooter">
             <div className="col-12">

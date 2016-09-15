@@ -42,7 +42,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
       context 'if encounter is in progress' do
         before :each do
-          encounter.update_attribute(:status, 'inprogress')
+          encounter.update_attribute(:status, 'in_progress')
           delete :destroy, id: encounter.id
         end
 
@@ -155,7 +155,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
       context 'encounter status is in progress' do
         it 'can not be deleted by the user' do
-          encounter.update_attribute(:status, 'inprogress')
+          encounter.update_attribute(:status, 'in_progress')
           get :show, id: encounter.uuid
 
           expect(assigns(:show_cancel_encounter)).to eq(false)
