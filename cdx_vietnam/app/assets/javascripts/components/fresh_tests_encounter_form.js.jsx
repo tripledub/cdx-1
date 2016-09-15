@@ -14,12 +14,15 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
 
     if (clk === 1) { reason = 'follow'; }
 
-  $('.test_for_tb').attr('checked', false).parent().show();
+    $('.test_for_tb').attr('checked', false).parent().show();
 
     this.setState(React.addons.update(this.state, {
       encounter: {
         exam_reason: {
           $set: reason
+        },
+        testing_for: {
+          $set: 'TB'
         }
       }
     }));
@@ -85,8 +88,8 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
             </div>
             <div className="col-6">
               <label>
-        <input type="hidden" className="input-large" id="testing_for" name="testing_for" datavalue={this.state.encounter.testing_for} />
-        {I18n.t("components.fresh_tests_encounter_form.TB_option")}
+                <input type="hidden" className="input-large" id="testing_for" name="testing_for" datavalue="TB" />
+                {I18n.t("components.fresh_tests_encounter_form.TB_option")}
               </label>
             </div>
           </div>
@@ -245,18 +248,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     }));
   },
 
-  testDueDateChange: function() {
-    var testduedate = $('#testdue_date').val();
-    this.setState(React.addons.update(this.state, {
-      encounter: {
-        testdue_date: {
-          $set: testduedate
-        }
-      }
-    }));
-    this.state.encounter.testdue_date = testduedate;
-  },
-
   testingForChange: function() {
     var xx = $('#testing_for').val();
     this.setState(React.addons.update(this.state, {
@@ -348,7 +339,7 @@ var PresumptiveRR = React.createClass({
         </div>
         <div className="col-6">
           <input type="checkbox" onChnage={this.updatePresumptiveRR} className="presumptive_rr" id="presumptive_rr" name="presumptive_rr"/>
-          <label htmlFor="presumptive_rr">Presumptive RR-TB/MDR-TB</label>
+          <label htmlFor="presumptive_rr">{I18n.t("components.fresh_tests_encounter_form.presumptive")}</label>
         </div>
       </div>
     )

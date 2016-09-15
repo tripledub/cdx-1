@@ -2,7 +2,7 @@ module Finder
   class Site
     class << self
       def find_by_uuid(uuid, current_user, institution)
-        Policy.authorize(CREATE_SITE_ENCOUNTER, institution.sites, current_user).where(uuid: uuid).first
+        Policy.authorize(Policy::Actions::CREATE_SITE_ENCOUNTER, institution.sites, current_user).where(uuid: uuid).first
       end
 
       def as_json_list(sites)

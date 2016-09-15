@@ -39,7 +39,7 @@ module Finder
       end
 
       def authorized_samples(current_user)
-        Policy.authorize(QUERY_TEST, TestResult, current_user).joins(:sample_identifier).select('sample_identifiers.sample_id').to_sql
+        Policy.authorize(Policy::Actions::QUERY_TEST, TestResult, current_user).joins(:sample_identifier).select('sample_identifiers.sample_id').to_sql
       end
     end
   end

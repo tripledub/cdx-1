@@ -4,7 +4,7 @@ class Finder::TestResults
   class << self
     # TODO this should be converted into instance methods
     def find_by_institution(institution, current_user)
-      Policy.authorize(QUERY_TEST, TestResult, current_user).where(institution: institution)
+      Policy.authorize(Policy::Actions::QUERY_TEST, TestResult, current_user).where(institution: institution)
     end
 
     def as_json_list(test_results, localization_helper)
