@@ -1,5 +1,7 @@
 en:
   components:
+    created: 'Created'
+    updated: 'Last updated'
     alert_groups:
       col_name: "Name"
       tooltip_name: "This is the Name of the Alert."

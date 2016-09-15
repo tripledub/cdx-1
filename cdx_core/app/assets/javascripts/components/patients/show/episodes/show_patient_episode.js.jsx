@@ -6,6 +6,12 @@ var ShowPatientEpisode = React.createClass({
           <ul>
             <li>
               <label>
+                {I18n.t('components.created')}
+              </label>
+              {this.props.episode.created}
+            </li>
+            <li>
+              <label>
                 {I18n.t("components.patients.show.episodes.lbl_diagnosis")}
               </label>
               {this.props.episode.diagnosis}
@@ -24,6 +30,12 @@ var ShowPatientEpisode = React.createClass({
             </li>
           </ul>
           <ul>
+            <li>
+              <label>
+                {I18n.t('components.updated')}
+              </label>
+              {this.props.episode.updated}
+            </li>
             <li>
               <label>
                 {I18n.t("components.patients.show.episodes.lbl_outcome")}
