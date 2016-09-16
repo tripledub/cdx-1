@@ -4,7 +4,7 @@
 .row.center.collapse.edit
   .col.pe-10
     %h2
-      = link_to patients_path, class: 'side-link', title: I18n.t('episodes.new.back') do
+      = link_to patient_path(@patient), class: 'side-link', title: I18n.t('episodes.new.back') do
         = image_tag "arrow-left-white.png"
       = I18n.t('episodes.new.header')
 
