@@ -743,7 +743,7 @@ ActiveRecord::Schema.define(version: 20160914125841) do
   create_table "test_batches", force: :cascade do |t|
     t.integer  "encounter_id",   limit: 4,     null: false
     t.integer  "institution_id", limit: 4,     null: false
-    t.integer  "status",         limit: 4
+    t.string   "status",         limit: 255
     t.string   "uuid",           limit: 255
     t.text     "comment",        limit: 65535
     t.datetime "created_at"

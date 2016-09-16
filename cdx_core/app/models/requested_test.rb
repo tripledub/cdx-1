@@ -47,11 +47,6 @@ class RequestedTest < ActiveRecord::Base
     end
   end
 
-  def turnaround
-    return I18n.t('requested_test.incomplete') unless completed_at
-    distance_of_time_in_words(created_at, completed_at)
-  end
-
   def update_completed_status
     self.completed_at = Time.now if status == 'completed'
   end

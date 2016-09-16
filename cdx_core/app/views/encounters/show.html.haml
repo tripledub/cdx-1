@@ -10,6 +10,7 @@
 = react_component('EncounterShow',
   encounter: @encounter_as_json,
   context: @navigation_context,
+  testBatch: Presenters::TestBatch.for_encounter(@encounter),
   requestedTests: Presenters::RequestedTests.index_view(@encounter),
   requested_by: @encounter.user !=nil ? @encounter.user.email : '',
   canUpdate: has_access?(@encounter, Policy::Actions::UPDATE_ENCOUNTER),
@@ -17,5 +18,4 @@
   showCancel: @show_cancel_encounter,
   referer: @return_path_encounter,
   statusTypes: RequestedTest.statuses,
-  associatedTestsToResults: PatientResult.find_associated_tests_to_results(@encounter),
   showDstWarning: @encounter.requested_tests.show_dst_warning)

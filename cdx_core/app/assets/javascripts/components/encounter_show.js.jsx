@@ -166,12 +166,8 @@ var EncounterShow = React.createClass({
           </div>
         </div>
 
-        <div className="row">
-          <RequestedTestsIndexTable encounter={this.props.encounter} requestedTests={this.state.requestedTests} requestedBy={this.props.requested_by}
-            statusTypes={this.props.statusTypes} edit={this.props.showEdit} onTestChanged={this.onTestChanged} associatedTestsToResults={this.props.associatedTestsToResults}
-            showDstWarning={this.props.showDstWarning} />
-        </div>
-        <br />
+        <TestBatchList testBatch={ this.props.encounter.testBatch } />
+
         <div className="row buttonActions">
           <div className="col">
             {actionButton}

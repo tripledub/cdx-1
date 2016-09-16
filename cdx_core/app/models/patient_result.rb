@@ -1,21 +1,18 @@
 class PatientResult < ActiveRecord::Base
   include AutoUUID
   include Auditable
+  include ActionView::Helpers::DateHelper
 
   belongs_to :requested_test
   belongs_to :test_batch
   has_many   :assay_results, as: :assayable
 
-  after_save  :update_requested_test
-  before_save :convert_string_to_dates
+  after_save    :update_batch_status
+  before_save   :convert_string_to_dates
+  before_save   :complete_test
+  before_create :set_status_to_new
 
   class << self
-    def find_associated_tests_to_results(encounter)
-      PatientResult.joins(:requested_test).where('requested_tests.encounter_id' => encounter.id).pluck(:id, :requested_test_id).map do |result|
-       { id: result[0], requested_test_id: result[1] }
-      end
-    end
-
     def find_all_for_patient(patient_id)
       PatientResult.joins('LEFT OUTER JOIN `requested_tests` ON `requested_tests`.`id` = `patient_results`.`requested_test_id` LEFT OUTER JOIN `encounters` ON `encounters`.`id` = `requested_tests`.`encounter_id`')
         .where('patient_results.patient_id = ? OR encounters.patient_id = ?', patient_id, patient_id)
@@ -24,9 +21,15 @@ class PatientResult < ActiveRecord::Base
     def status_options
       [
         ['new', I18n.t('select.patient_result.status_options.new')],
+        ['rejected', I18n.t('select.patient_result.status_options.rejected')],
         ['completed', I18n.t('select.patient_result.status_options.completed')]
       ]
     end
+  end
+
+  def turnaround
+    return I18n.t('patient_result.incomplete') unless completed_at
+    distance_of_time_in_words(created_at, completed_at)
   end
 
   protected
@@ -36,9 +39,15 @@ class PatientResult < ActiveRecord::Base
     result_on           = Extras::Dates::Format.string_to_pattern(result_on) if result_on.present? && result_on.is_a?(String)
   end
 
-  def update_requested_test
-    return unless requested_test.present?
+  def complete_test
+    self.completed_at = Time.now if result_status == 'completed'
+  end
 
-    TestStatus.change_status(self)
+  def update_batch_status
+    TestBatches::Persistence.update_status(self.test_batch)
+  end
+
+  def set_status_to_new
+    self.result_status = 'new'
   end
 end

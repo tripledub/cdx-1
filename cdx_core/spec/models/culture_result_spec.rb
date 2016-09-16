@@ -16,16 +16,4 @@ describe CultureResult do
     it { should validate_inclusion_of(:media_used).in_array(media_options) }
     it { should validate_inclusion_of(:test_result).in_array(test_result_options) }
   end
-
-  context "find associated patient results" do
-      let(:encounter) { Encounter.make }
-      let(:requested_test) { RequestedTest.make encounter: encounter}
-
-      it "should find associated patient tests" do
-        result1 = CultureResult.new encounter_id: encounter.id, requested_test_id: requested_test.id
-        result1.save(validate: false)
-        expect(PatientResult.find_associated_tests_to_results(encounter).length).to eq(1)
-      end
-    end
-
 end
