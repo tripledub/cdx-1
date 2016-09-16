@@ -5,7 +5,7 @@ module TestBatches
         {
           id: test_batch.id,
           status: test_batch.status,
-          patient_results: PatientResults::Presenter.for_encounter(test_batch.patient_results)
+          patientResults: PatientResults::Presenter.for_encounter(test_batch.patient_results)
         }
       end
     end

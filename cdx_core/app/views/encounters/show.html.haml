@@ -10,7 +10,7 @@
 = react_component('EncounterShow',
   encounter: @encounter_as_json,
   context: @navigation_context,
-  testBatch: Presenters::TestBatch.for_encounter(@encounter),
+  testBatch: TestBatches::Presenter.for_encounter(@encounter),
   requestedTests: Presenters::RequestedTests.index_view(@encounter),
   requested_by: @encounter.user !=nil ? @encounter.user.email : '',
   canUpdate: has_access?(@encounter, Policy::Actions::UPDATE_ENCOUNTER),

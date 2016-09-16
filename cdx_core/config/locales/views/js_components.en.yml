@@ -15,6 +15,13 @@ en:
       tooltip_roles: "Something about roles."
       col_last_incident: "Last incident"
       tooltip_last_incident: "When the last incident was reported."
+    test_batch:
+      header: 'Requested tests'
+      status: 'Status'
+      new: 'New'
+      samples_collected: 'Samples collected'
+      in_progress: 'In progress'
+      closed: 'Closed'
 
     alert_messages:
       col_name: "Name"
