@@ -741,14 +741,17 @@ ActiveRecord::Schema.define(version: 20160914125841) do
   add_index "subscribers", ["filter_id"], name: "index_subscribers_on_filter_id", using: :btree
 
   create_table "test_batches", force: :cascade do |t|
-    t.integer  "encounter_id", limit: 4,     null: false
-    t.integer  "status",       limit: 4
-    t.string   "uuid",         limit: 255
-    t.text     "comment",      limit: 65535
+    t.integer  "encounter_id",   limit: 4,     null: false
+    t.integer  "institution_id", limit: 4,     null: false
+    t.integer  "status",         limit: 4
+    t.string   "uuid",           limit: 255
+    t.text     "comment",        limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "test_batches", ["encounter_id"], name: "index_test_batches_on_encounter_id", using: :btree
+  add_index "test_batches", ["institution_id"], name: "index_test_batches_on_institution_id", using: :btree
   add_index "test_batches", ["status"], name: "index_test_batches_on_status", using: :btree
   add_index "test_batches", ["uuid"], name: "index_test_batches_on_uuid", using: :btree
 

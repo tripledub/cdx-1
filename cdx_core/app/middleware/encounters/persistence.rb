@@ -202,7 +202,7 @@ module Encounters
         @encounter.testdue_date      = encounter_param['testdue_date']
         @encounter.testing_for       = encounter_param['testing_for']
         @encounter.presumptive_rr    = encounter_param['presumptive_rr']
-        @encounter.test_batch        = ::TestBatch.new
+        @encounter.test_batch        = ::TestBatch.new institution: @encounter.institution
       else
         @institution                 = @encounter.institution
       end

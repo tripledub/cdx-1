@@ -151,7 +151,7 @@ Encounter.blueprint do
   status 'new'
   site { object.institution.sites.first || object.institution.sites.make }
   performing_site { object.institution.sites.first || object.institution.sites.make }
-  test_batch { TestBatch.new }
+  test_batch { TestBatch.new institution: object.institution }
   core_fields {
     { "id" => "encounter-#{Sham.sn}" }.tap do |h|
       h["start_time"] = object.start_time if object.start_time
@@ -173,6 +173,12 @@ RequestedTest.blueprint do
   name { "CD4" }
   status { RequestedTest.statuses["pending"] }
   comment {"this is a  comment for the requested test ......"}
+end
+
+TestBatch.blueprint do
+  status 'new'
+  encounter { Encounter.make }
+  institution { object.encounter.try(:institution) || Institution.make }
 end
 
 SampleIdentifier.blueprint do

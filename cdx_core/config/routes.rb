@@ -104,16 +104,20 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :requested_tests , only: [:update] do
+  resources :test_batches do
+    resource :patient_results, only: [] do
+      collection do
+        put :update_samples
+      end
+    end
     resource :xpert_result, only: [:new, :create, :show, :edit, :update]
     resource :microscopy_result, only: [:new, :create, :show, :edit, :update]
     resource :dst_lpa_result, only: [:new, :create, :show, :edit, :update]
     resource :culture_result, only: [:new, :create, :show, :edit, :update]
-    resource :undefined_result, only: [:show]
   end
 
-  resources :test_results , only: [:index, :show]
-  resources :test_orders , only: [:index]
+  resources :test_results, only: [:index, :show]
+  resources :test_orders, only: [:index]
   resources :filters, format: 'html'
   resources :subscribers
   resources :policies
