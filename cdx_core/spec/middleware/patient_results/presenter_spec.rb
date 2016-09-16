@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe PatientResults::Presenter do
-  let(:encounter) { Encounter.new }
-  let(:test_batch) { encounter.test_batch }
+  let(:encounter) { Encounter.make }
+  let(:test_batch) { TestBatch.make encounter: encounter }
   let!(:requested_tests) {
     MicroscopyResult.make test_batch: test_batch
     CultureResult.make test_batch: test_batch
@@ -23,11 +23,11 @@ describe PatientResults::Presenter do
         id: patient_result.id,
         turnaround: patient_result.turnaround,
         comment: patient_result.comment,
-        name: patient_result.name,
-        status: patient_result.status,
-        completed_at: patient_result.completed_at,
-        created_at: patient_result.created_at,
-        updated_at: patient_result.updated_at
+        name: patient_result.result_name,
+        status: patient_result.result_status,
+        completed_at: Extras::Dates::Format.datetime_with_time_zone(patient_result.completed_at),
+        created_at: Extras::Dates::Format.datetime_with_time_zone(patient_result.created_at),
+        updated_at: Extras::Dates::Format.datetime_with_time_zone(patient_result.updated_at)
       )
     end
   end
