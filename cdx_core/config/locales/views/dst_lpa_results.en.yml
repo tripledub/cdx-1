@@ -1,8 +1,12 @@
 en:
   dst_lpa_results:
+    dst:
+      localised_name: 'Drug susceptibility test'
+    lpa:
+      localised_name: 'Line probe assay'
     new:
-      header: 'Drug Susceptibility Results'
-      add_new: 'Add Dst & LPA Test Result for: %{patient_name}'
+      header: 'Drug susceptibility results'
+      add_new: 'Add Dst & LPA test result for: %{patient_name}'
       back: 'Back'
     create:
       audit: 'DST and LPA result added'

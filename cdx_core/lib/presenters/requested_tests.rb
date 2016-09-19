@@ -4,7 +4,7 @@ class Presenters::RequestedTests
       encounter.requested_tests.map do |requested_test|
         {
           id: requested_test.id,
-          turnaround: requested_test.turnaround,
+          turnaround: 'out',
           comment: requested_test.comment,
           completed_at: requested_test.completed_at,
           created_at: requested_test.created_at,

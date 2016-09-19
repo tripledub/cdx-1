@@ -166,7 +166,7 @@ var EncounterShow = React.createClass({
           </div>
         </div>
 
-        <TestBatchList testBatch={ this.props.encounter.testBatch } />
+        <TestBatchList testBatch={ this.props.testBatch } />
 
         <div className="row buttonActions">
           <div className="col">

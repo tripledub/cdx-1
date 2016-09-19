@@ -1,5 +1,6 @@
 en:
   xpert_results:
+    localised_name: 'Xpert'
     new:
       header: 'Add Xpert MTB/RIF test result for: %{patient_name}'
       details_header: 'Details'

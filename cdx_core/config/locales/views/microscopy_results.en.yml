@@ -1,5 +1,6 @@
 en:
   microscopy_results:
+    localised_name: 'Microscopy'
     new:
       header: 'Add Microscopy test result for: %{patient_name}'
       back: 'Back'

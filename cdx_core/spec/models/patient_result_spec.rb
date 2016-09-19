@@ -3,7 +3,7 @@ require 'spec_helper'
 describe PatientResult do
   let(:encounter)   { Encounter.make }
   let(:test_batch)  { TestBatch.make encounter: encounter }
-  let(:test_result) { MicroscopyResult.make created_at: 3.days.ago, test_batch: test_batch }
+  let(:test_result) { MicroscopyResult.make created_at: 3.days.ago, test_batch: test_batch, result_name: 'requested_microscopy' }
 
   context "validations" do
     it { should belong_to(:requested_test) }
@@ -46,6 +46,62 @@ describe PatientResult do
         test_result.reload
 
         expect(test_result.turnaround).to eq('3 days')
+      end
+    end
+  end
+
+  describe 'test_name' do
+    context 'when result is microscopy' do
+      it 'should return microscopy as name' do
+        expect(test_result.test_name).to include('Microscopy')
+      end
+    end
+
+    context 'when result is culture' do
+      let(:test_result) { CultureResult.make created_at: 3.days.ago, test_batch: test_batch, result_name: 'culture_cformat_liquid' }
+
+      it 'should return microscopy as name' do
+        expect(test_result.test_name).to include('Culture')
+      end
+    end
+
+    context 'when result is xpert' do
+      let(:test_result) { XpertResult.make created_at: 3.days.ago, test_batch: test_batch, result_name: 'requested_xpertmtb' }
+
+      it 'should return microscopy as name' do
+        expect(test_result.test_name).to include('Xpert')
+      end
+    end
+
+    context 'when result is dst' do
+      let(:test_result) { DstLpaResult.make created_at: 3.days.ago, test_batch: test_batch, result_name: 'drugsusceptibility1line_cformat_liquid' }
+
+      it 'should return microscopy as name' do
+        expect(test_result.test_name).to include('Drug susceptibility')
+      end
+    end
+
+    context 'when result is lpa' do
+      let(:test_result) { DstLpaResult.make created_at: 3.days.ago, test_batch: test_batch, result_name: 'lineprobe1_cformat_solid' }
+
+      it 'should return microscopy as name' do
+        expect(test_result.test_name).to include('Line probe assay')
+      end
+    end
+
+    context 'when result is liquid' do
+      let(:test_result) { CultureResult.make created_at: 3.days.ago, test_batch: test_batch, result_name: 'culture_cformat_liquid' }
+
+      it 'should return microscopy as name' do
+        expect(test_result.test_name).to include('Liquid')
+      end
+    end
+
+    context 'when result is solid' do
+      let(:test_result) { DstLpaResult.make created_at: 3.days.ago, test_batch: test_batch, result_name: 'lineprobe1_cformat_solid' }
+
+      it 'should return microscopy as name' do
+        expect(test_result.test_name).to include('Solid')
       end
     end
   end

@@ -5,6 +5,10 @@ class CultureResult < PatientResult
 
   delegate :patient, to: 'test_batch.encounter'
 
+  def localised_name
+    I18n.t('culture_results.localised_name')
+  end
+
   class << self
     def media_options
       [

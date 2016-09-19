@@ -5,7 +5,7 @@ class TestBatchList extends React.Component{
         <table className="table testBatchTable" cellPadding="0" cellSpacing="0">
           <thead>
             <tr>
-              <th colspan="7">{ I18n.t('components.test_batch.header') } - { I18n.t('components.test_batch.status') }: { I18n.t('components.test_batch.' + this.props.testBatch) }</th>
+              <th colSpan="7">{ I18n.t('components.test_batch.header') } - { I18n.t('components.test_batch.status') }: { I18n.t('components.test_batch.' + this.props.testBatch.status) }</th>
             </tr>
           </thead>
           <tbody>

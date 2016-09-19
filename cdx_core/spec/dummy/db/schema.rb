@@ -334,7 +334,7 @@ ActiveRecord::Schema.define(version: 20160914125841) do
     t.date     "testdue_date"
     t.integer  "treatment_weeks",    limit: 4
     t.integer  "performing_site_id", limit: 4
-    t.string   "status",             limit: 255,   default: "0"
+    t.string   "status",             limit: 255,   default: ""
     t.string   "testing_for",        limit: 255,   default: ""
     t.string   "culture_format",     limit: 255
     t.boolean  "presumptive_rr"

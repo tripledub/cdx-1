@@ -7,6 +7,10 @@ class XpertResult < PatientResult
 
   delegate :patient, to: 'test_batch.encounter'
 
+  def localised_name
+    I18n.t('xpert_results.localised_name')
+  end
+
   class << self
     def tuberculosis_options
       [['detected', I18n.t('select.xpert.tuberculosis.detected')], ['not_detected', I18n.t('select.xpert.tuberculosis.not_detected')], ['invalid', I18n.t('select.xpert.tuberculosis.invalid')]]

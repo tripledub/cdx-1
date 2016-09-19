@@ -5,6 +5,10 @@ class MicroscopyResult < PatientResult
 
   delegate :patient, to: 'test_batch.encounter'
 
+  def localised_name
+    I18n.t('microscopy_results.localised_name')
+  end
+
   class << self
     def visual_appearance_options
       [

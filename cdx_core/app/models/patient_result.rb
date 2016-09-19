@@ -27,6 +27,10 @@ class PatientResult < ActiveRecord::Base
     end
   end
 
+  def test_name
+    [localised_name, format_name].compact.join(' ')
+  end
+
   def turnaround
     return I18n.t('patient_result.incomplete') unless completed_at
     distance_of_time_in_words(created_at, completed_at)
@@ -49,5 +53,13 @@ class PatientResult < ActiveRecord::Base
 
   def set_status_to_new
     self.result_status = 'new'
+  end
+
+  def format_name
+    if result_name.include? 'solid'
+      I18n.t('select.culture.media_options.solid')
+    elsif result_name.include? 'liquid'
+      I18n.t('select.culture.media_options.liquid')
+    end
   end
 end
