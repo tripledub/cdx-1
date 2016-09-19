@@ -84,6 +84,7 @@ en:
         col_name: "Name"
         col_gender: "Gender"
         col_birth_date: "Birth date"
+        name_tooltip: "Patient's name"
 
       show:
         msg_loading: "Loading test orders..."

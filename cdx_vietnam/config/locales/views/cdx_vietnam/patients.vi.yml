@@ -1,4 +1,6 @@
 vi:
   patients:
     form:
-      social_security_code_tooltip: 'CMND'
+      social_security_code: 'CMND'
+      wrong_social_security_number: "Dữ liệu nhập vào không hợp lệ (tối thiểu 9 ký tự, tối đa 15 ký tự). Bạn có muốn lưu lại không?"
+      social_security_code_tooltip: 'CMND (tối thiểu 9 ký tự, tối đa 15 ký tự)'
