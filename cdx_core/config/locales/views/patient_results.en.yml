@@ -1,0 +1,5 @@
+en:
+  patient_results:
+    update_samples:
+      samples_updated: 'Sample Ids updated successfully.'
+      updated_fail: 'Sample Ids can not be updated.'

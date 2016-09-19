@@ -2,7 +2,9 @@ class TestBatchActions extends React.Component{
   render() {
     return(
       <div className="row">
-        <AddSamplesAction batchId={ this.props.batchId } testBatch={ this.props.testBatch } submitSamplesUrl={ this.props.submitSamplesUrl }  authenticityToken={ this.props.authenticityToken }/>
+        { this.props.encounterStatus == 'new' ?
+          <SetBatchToPending  encounterStatus={ this.props.encounterStatus } batchId={ this.props.batchId } testBatch={ this.props.testBatch } submitSamplesUrl={ this.props.submitSamplesUrl }  authenticityToken={ this.props.authenticityToken } />
+          : null }
       </div>
     );
   }
@@ -13,4 +15,5 @@ TestBatchActions.propTypes = {
   batchId: React.PropTypes.string,
   submitSamplesUrl: React.PropTypes.string,
   authenticityToken: React.PropTypes.string,
+  encounterStatus: React.PropTypes.string,
 };

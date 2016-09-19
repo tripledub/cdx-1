@@ -23,5 +23,9 @@ describe PatientResults::Persistence do
     it 'should populate serial number with lab Id.' do
       expect(test_batch.patient_results.last.serial_number).to eq('Random Id')
     end
+
+    it 'should update test batch status to samples collected' do
+      expect(test_batch.status).to eq('samples_collected')
+    end
   end
 end

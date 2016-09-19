@@ -14,8 +14,8 @@ class AddSamplesAction extends React.Component{
 
   render() {
     return(
-      <div>
-        <button onClick={ this.submitSamples.bind(this) }>Submit samples</button>
+      <div className="col-3">
+        <button className="btn-secondary pull-right" onClick={ this.submitSamples.bind(this) }>Submit samples</button>
         <Modal ref="addSamplesModal">
           <h1>Sample Ids for Test batch: { this.props.batchId }</h1>
           <form method="post" action={ this.props.submitSamplesUrl }>

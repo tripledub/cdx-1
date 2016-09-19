@@ -5,6 +5,7 @@ class AddTestBatches < ActiveRecord::Migration
       t.references :institution, null: false
       t.string     :status
       t.string     :uuid
+      t.boolean    :payment_done, default: false
       t.text       :comment
 
       t.timestamps
@@ -13,7 +14,7 @@ class AddTestBatches < ActiveRecord::Migration
     add_column :patient_results, :comment, :text
     add_column :patient_results, :test_batch_id, :integer
     add_column :patient_results, :completed_at, :datetime
-    change_column :encounters, :status, :string, default: ''
+    #change_column :encounters, :status, :string, default: ''
 
     add_index :test_batches, :status
     add_index :test_batches, :uuid

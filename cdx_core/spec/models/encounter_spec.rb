@@ -7,8 +7,45 @@ describe Encounter do
   it { is_expected.to validate_presence_of :institution }
   it { should validate_inclusion_of(:status).in_array(status_options) }
 
-  let(:patient)   { Patient.make }
-  let(:encounter) { Encounter.make institution: patient.institution, patient: patient }
+  let(:patient)    { Patient.make }
+  let(:encounter)  { Encounter.make institution: patient.institution, patient: patient, test_batch: TestBatch.make }
+
+  describe 'validations' do
+    context 'payment_is_done' do
+      context 'payment is pending' do
+        before :each do
+          encounter.status = 'pending'
+        end
+
+        it 'should not allow change status if payment is not done' do
+          expect(encounter.valid?).to eq false
+        end
+      end
+
+      context 'payment is done but samples not collected' do
+        before :each do
+          encounter.test_batch.update_attribute(:payment_done, true)
+          encounter.status = 'pending'
+        end
+
+        it 'should not allow change status if payment is not done' do
+          expect(encounter.valid?).to eq false
+        end
+      end
+
+      context 'payment is done and samples have been collected' do
+        before :each do
+          encounter.test_batch.update_attribute(:payment_done, true)
+          encounter.test_batch.update_attribute(:status, 'samples_collected')
+          encounter.status = 'pending'
+        end
+
+        it 'should not allow change status if payment is not done' do
+          expect(encounter.valid?).to eq true
+        end
+      end
+    end
+  end
 
   it "#human_diagnose" do
     encounter.core_fields[Encounter::ASSAYS_FIELD] = [{"condition" => "flu_a", "name" => "flu_a", "result" => "positive", "quantitative_result" => nil}]

@@ -52,6 +52,10 @@ Rails.application.routes.draw do
   get 'settings' => 'home#settings'
 
   resources :encounters do
+    resource :test_batch, only: [] do
+      post :set_as_paid
+    end
+
     collection do
       get :new_index
 

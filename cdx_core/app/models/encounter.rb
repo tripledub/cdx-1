@@ -25,6 +25,7 @@ class Encounter < ActiveRecord::Base
   validates_inclusion_of :status,  in: ['new', 'pending', 'received', 'in_progress', 'pending_approval', 'approved']
 
   validate :validate_patient
+  validate :payment_is_done
 
   before_save :ensure_entity_id
   before_create :set_default_status
@@ -204,5 +205,11 @@ class Encounter < ActiveRecord::Base
 
   def set_default_status
     self.status = 'new'
+  end
+
+  def payment_is_done
+    if (status_was == 'new' && status == 'pending') && (test_batch.payment_done == false || test_batch.status != 'samples_collected')
+      errors.add(:status, I18n.t('encounters.validate_payment_fails'))
+    end
   end
 end

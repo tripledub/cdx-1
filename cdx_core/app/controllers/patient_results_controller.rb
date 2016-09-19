@@ -3,7 +3,13 @@ class PatientResultsController < ApplicationController
   before_filter :find_test_batch, :check_permissions, :check_back_button_mode
 
   def update_samples
-    redirect_to encounter_path(@test_batch.encounter), message: PatientResults::Persistence.collect_sample_ids(@test_batch, params[:samples])
+    if PatientResults::Persistence.collect_sample_ids(@test_batch, params[:samples])
+      message = I18n.t('patient_results.update_samples.samples_updated')
+    else
+      message = I18n.t('patient_results.update_samples.updated_fail')
+    end
+
+    redirect_to encounter_path(@test_batch.encounter), message: message
   end
 
   protected
