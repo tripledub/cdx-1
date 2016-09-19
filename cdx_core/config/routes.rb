@@ -107,7 +107,7 @@ Rails.application.routes.draw do
   resources :test_batches do
     resource :patient_results, only: [] do
       collection do
-        put :update_samples
+        post :update_samples
       end
     end
     resource :xpert_result, only: [:new, :create, :show, :edit, :update]

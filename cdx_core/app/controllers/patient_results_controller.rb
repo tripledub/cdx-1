@@ -3,8 +3,7 @@ class PatientResultsController < ApplicationController
   before_filter :find_test_batch, :check_permissions, :check_back_button_mode
 
   def update_samples
-    PatientResults::Persistence.collect_sample_ids(@test_batch, params[:samples])
-    render json: 'ok', status: :ok
+    redirect_to encounter_path(@test_batch.encounter), message: PatientResults::Persistence.collect_sample_ids(@test_batch, params[:samples])
   end
 
   protected

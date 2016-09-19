@@ -1,11 +1,12 @@
 require 'spec_helper'
 
 describe PatientResults::Persistence do
-  let(:test_batch) { TestBatch.make }
+  let(:encounter)         { Encounter.make }
+  let(:test_batch)        { encounter.test_batch }
   let(:microscopy_result) { MicroscopyResult.make test_batch: test_batch }
   let(:sample_ids) {
     [
-      { 'id' => microscopy_result.id, 'sample' => '8778' }
+      { microscopy_result.id.to_s => '8778' }
     ]
   }
 

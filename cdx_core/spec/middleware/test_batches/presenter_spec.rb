@@ -20,6 +20,7 @@ describe TestBatches::Presenter do
       test_batch = encounter.test_batch
       expect(subject).to eq(
         id: test_batch.id,
+        batchId: test_batch.encounter.batch_id,
         status: test_batch.status,
         patient_results: PatientResults::Presenter.for_encounter(test_batch.patient_results)
       )

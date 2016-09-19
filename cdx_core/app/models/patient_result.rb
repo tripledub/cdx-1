@@ -48,6 +48,8 @@ class PatientResult < ActiveRecord::Base
   end
 
   def update_batch_status
+    return unless self.test_batch
+
     TestBatches::Persistence.update_status(self.test_batch)
   end
 

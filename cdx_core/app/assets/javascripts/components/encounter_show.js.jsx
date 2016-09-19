@@ -166,7 +166,7 @@ var EncounterShow = React.createClass({
           </div>
         </div>
 
-        <TestBatchList testBatch={ this.props.testBatch } />
+        <TestBatchList testBatch={ this.props.testBatch } submitSamplesUrl={ this.props.submitSamplesUrl } authenticityToken={ this.props.authenticityToken } />
 
         <div className="row buttonActions">
           <div className="col">

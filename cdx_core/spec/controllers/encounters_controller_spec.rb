@@ -759,10 +759,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
     let(:samples) do
       3.times.map do |x|
-        test = TestResult.make \
-          institution: institution,
-          device: Device.make(site: site),
-          sample_identifier: SampleIdentifier.make(site: site, entity_id: "ID#{x+1}", sample: Sample.make(institution: institution))
+        test = TestResult.make institution: institution, device: Device.make(site: site), sample_identifier: SampleIdentifier.make(site: site, entity_id: "ID#{x+1}", sample: Sample.make(institution: institution))
         test.sample
       end
     end
@@ -771,11 +768,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     let!(:sample3) { samples[2] }
 
     let!(:sample2) do
-      test = TestResult.make \
-          institution: institution,
-          device: Device.make(site: site),
-          sample_identifier: SampleIdentifier.make(site: site, entity_id: "ID2B", sample: samples[1])
-
+      test = TestResult.make institution: institution, device: Device.make(site: site), sample_identifier: SampleIdentifier.make(site: site, entity_id: "ID2B", sample: samples[1])
       samples[1].reload
     end
 

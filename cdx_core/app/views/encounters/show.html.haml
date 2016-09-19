@@ -11,6 +11,8 @@
   encounter: @encounter_as_json,
   context: @navigation_context,
   testBatch: TestBatches::Presenter.for_encounter(@encounter.test_batch),
+  submitSamplesUrl: update_samples_test_batch_patient_results_path(@encounter.test_batch),
+  authenticityToken: form_authenticity_token,
   requested_by: @encounter.user !=nil ? @encounter.user.email : '',
   canUpdate: has_access?(@encounter, Policy::Actions::UPDATE_ENCOUNTER),
   showEdit: @show_edit_encounter,
