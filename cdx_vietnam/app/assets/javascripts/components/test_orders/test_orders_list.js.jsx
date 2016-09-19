@@ -18,7 +18,7 @@ var TestOrderRow = React.createClass({
       <td title={this.props.testOrder.testingFor} onClick={this.visitLink}>{this.props.testOrder.testingFor}</td>
       <td title={this.props.testOrder.requestedBy} onClick={this.visitLink}>{this.props.testOrder.requestedBy}</td>
       <td title={this.props.testOrder.requestDate} onClick={this.visitLink}>{this.props.testOrder.requestDate}</td>
-      <td title={this.props.testOrder.id} onClick={this.visitLink}>{this.props.testOrder.id}</td>
+      <td title={this.props.testOrder.id} onClick={this.visitLink}>{this.props.testOrder.batchId}</td>
     </tr>);
   }
 });
@@ -84,7 +84,7 @@ var TestOrdersIndexTable = React.createClass({
                 {sortableHeader(I18n.t("components.test_orders.col_testing_for"),   "patients.name")}
                 {sortableHeader(I18n.t("components.test_orders.col_order_by"), "users.first_name")}
                 {sortableHeader(I18n.t("components.test_orders.col_request_date"),  "encounters.start_time")}
-                {sortableHeader(I18n.t("components.test_orders.col_id"),      "encounters.uuid")}
+                {sortableHeader(I18n.t("components.encounter_show.batch_id_label"),      "encounters.id")}
               </tr>
             </thead>
             <tbody>
