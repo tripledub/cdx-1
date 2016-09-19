@@ -72,6 +72,10 @@ module PatientConcern
       @last_encounter = value
     end
 
+    def patient_id_display
+      self.id
+    end
+
     def as_json_card(json)
       json.(self, :id, :name, :age, :age_months, :gender, :address, :multi_address, :phone, :email, :entity_id, :city, :zip_code, :state)
       json.birth_date_on Extras::Dates::Format.datetime_with_time_zone(birth_date_on)
