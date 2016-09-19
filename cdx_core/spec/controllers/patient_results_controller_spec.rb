@@ -8,9 +8,9 @@ describe PatientResultsController do
   let(:test_batch)        { TestBatch.make encounter: encounter, institution: institution }
   let(:microscopy_result) { MicroscopyResult.make test_batch: test_batch }
   let(:default_params)    { { context: institution.uuid } }
-  let(:samples_ids)       { [
+  let(:samples_ids)       {
     { microscopy_result.id.to_s => 'sample-id' }
-  ] }
+  }
 
   before(:each) do
     sign_in user
