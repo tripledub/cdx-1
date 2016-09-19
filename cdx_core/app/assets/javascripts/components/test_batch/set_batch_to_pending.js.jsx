@@ -14,8 +14,9 @@ class SetBatchToPending extends React.Component{
 }
 
 SetBatchToPending.propTypes = {
-  testBatch: React.PropTypes.object,
-  batchId: React.PropTypes.string,
-  submitSamplesUrl: React.PropTypes.string,
-  authenticityToken: React.PropTypes.string,
+  testBatch: React.PropTypes.object.isRequired,
+  batchId: React.PropTypes.string.isRequired,
+  submitSamplesUrl: React.PropTypes.string.isRequired,
+  submitPaymentUrl: React.PropTypes.string.isRequired,
+  authenticityToken: React.PropTypes.string.isRequired,
 };

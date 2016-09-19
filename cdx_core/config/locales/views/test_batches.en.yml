@@ -1,0 +1,5 @@
+en:
+  test_batches:
+    set_as_paid:
+      payment_done: 'Test batch has been set as paid.'
+      not_allowed: 'Sorry, You are not allowed to set a test batch as paid.'

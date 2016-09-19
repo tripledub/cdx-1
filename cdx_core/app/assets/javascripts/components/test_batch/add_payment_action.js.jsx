@@ -12,6 +12,6 @@ class AddPaymentAction extends React.Component{
 }
 
 AddPaymentAction.propTypes = {
-  submitPaymentUrl: React.PropTypes.string,
-  authenticityToken: React.PropTypes.string,
+  submitPaymentUrl: React.PropTypes.string.isRequired,
+  authenticityToken: React.PropTypes.string.isRequired,
 };

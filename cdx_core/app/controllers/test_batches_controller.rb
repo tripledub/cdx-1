@@ -14,6 +14,6 @@ class TestBatchesController < ApplicationController
   end
 
   def check_permissions
-    redirect_to(encounter_path(@encounter), error: I18n.t('test_batch.cannot_add')) unless has_access?(@encounter, Policy::Actions::UPDATE_ENCOUNTER)
+    redirect_to(encounter_path(@encounter), error: I18n.t('test_batches.set_as_paid.not_allowed')) unless has_access?(@encounter, Policy::Actions::UPDATE_ENCOUNTER)
   end
 end
