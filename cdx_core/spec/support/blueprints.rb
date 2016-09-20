@@ -167,13 +167,6 @@ Episode.blueprint do
   outcome :cured
 end
 
-RequestedTest.blueprint do
-  encounter
-  name { "CD4" }
-  status { RequestedTest.statuses["pending"] }
-  comment {"this is a  comment for the requested test ......"}
-end
-
 TestBatch.blueprint do
   status 'new'
   encounter { object.try(:encounter) || Encounter.make }

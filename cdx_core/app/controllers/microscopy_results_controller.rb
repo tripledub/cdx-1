@@ -1,6 +1,6 @@
 class MicroscopyResultsController < PatientResultsController
 
-  before_filter :find_patient_result, only: [:edit, :update, :show]
+  before_filter :find_microscopy_result, only: [:edit, :update, :show]
 
   def show
   end
@@ -8,7 +8,7 @@ class MicroscopyResultsController < PatientResultsController
   def edit
     @microscopy_result.sample_collected_on = @microscopy_result.sample_collected_on || Date.today
     @microscopy_result.result_on           = @microscopy_result.result_on || Date.today
-    @microscopy_result.specimen_type       = @requested_test.encounter.coll_sample_type
+    @microscopy_result.specimen_type       = @test_batch.encounter.coll_sample_type
   end
 
   def update
@@ -21,7 +21,7 @@ class MicroscopyResultsController < PatientResultsController
 
   protected
 
-  def find_patient_result
+  def find_microscopy_result
     @microscopy_result = @test_batch.patient_results.find(params[:id])
   end
 

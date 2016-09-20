@@ -1,4 +1,4 @@
-= form_for([@requested_test, @xpert_result], url: requested_test_xpert_result_path(@requested_test, @xpert_result), html: { autocomplete: 'off' }) do |f|
+= form_for([@test_batch, @xpert_result], url: test_batch_xpert_result_path(@test_batch, @xpert_result), html: { autocomplete: 'off' }) do |f|
   = validation_errors @xpert_result
 
   .row
@@ -40,7 +40,7 @@
   .row.button-actions
     .col
       = f.submit I18n.t('views.save'), class: 'btn-primary'
-      = link_to I18n.t('views.cancel'), encounter_path(@requested_test.encounter), class: 'btn-link'
+      = link_to I18n.t('views.cancel'), encounter_path(@test_batch.encounter), class: 'btn-link'
 
 :javascript
   $(function(){
