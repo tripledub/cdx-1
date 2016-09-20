@@ -8,12 +8,12 @@ class TestBatchRow extends React.Component{
         <td>{this.props.patientResult.comment}</td>
         <td>{this.props.patientResult.completedAt}</td>
         <td>{this.props.patientResult.createdAt}</td>
-        <td>{this.props.patientResult.status}</td>
+        <td><TestResultStatus currentStatus={ this.props.patientResult.status } /></td>
       </tr>
     )
   }
 }
 
-TestBatchList.propTypes = {
-  patientResult: React.PropTypes.object,
+TestBatchRow.propTypes = {
+  patientResult: React.PropTypes.object.isRequired,
 };

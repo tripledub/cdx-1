@@ -4,11 +4,12 @@ describe PatientResult do
   let(:encounter)   { Encounter.make }
   let(:test_batch)  { TestBatch.make encounter: encounter }
   let(:test_result) { MicroscopyResult.make created_at: 3.days.ago, test_batch: test_batch, result_name: 'requested_microscopy' }
+  let(:result_status) { ['new', 'in_progress', 'rejected', 'completed'] }
 
   context "validations" do
     it { should belong_to(:requested_test) }
-
     it { should belong_to(:test_batch) }
+    it { should validate_inclusion_of(:result_status).in_array(result_status) }
   end
 
   context 'after_save' do
@@ -26,7 +27,7 @@ describe PatientResult do
       it 'should be set to pending when result has sample id assigned' do
         test_result.update_attribute(:serial_number, 'some sample id')
 
-        expect(test_result.result_status).to eq('pending')
+        expect(test_result.result_status).to eq('in_progress')
       end
 
       context 'if status is updated' do

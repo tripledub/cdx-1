@@ -8,7 +8,7 @@ class TestBatch < ActiveRecord::Base
 
   delegate :patient, to: :encounter
 
-  validates_inclusion_of :status,  in: ['new', 'samples_collected', 'in_progress', 'closed']
+  validates_inclusion_of :status,  in: ['new', 'samples_collected', 'in_progress', 'closed'], allow_nil: true
 
   before_create :set_status_to_new
   after_save :update_test_order_status

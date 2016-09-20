@@ -21,6 +21,7 @@ en:
     patient_result:
       status_options:
         new: 'New'
+        in_progress: 'In progress'
         rejected: 'Rejected'
         completed: 'Completed'
     microscopy:

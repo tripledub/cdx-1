@@ -7,6 +7,8 @@ class PatientResult < ActiveRecord::Base
   belongs_to :test_batch
   has_many   :assay_results, as: :assayable
 
+  validates_inclusion_of :result_status, in: ['new', 'in_progress', 'rejected', 'completed'], allow_nil: true
+
   after_save    :update_batch_status
   before_save   :convert_string_to_dates
   before_save   :complete_test
@@ -22,6 +24,7 @@ class PatientResult < ActiveRecord::Base
     def status_options
       [
         ['new', I18n.t('select.patient_result.status_options.new')],
+        ['in_progress', I18n.t('select.patient_result.status_options.in_progress')],
         ['rejected', I18n.t('select.patient_result.status_options.rejected')],
         ['completed', I18n.t('select.patient_result.status_options.completed')]
       ]
@@ -49,7 +52,7 @@ class PatientResult < ActiveRecord::Base
   end
 
   def update_status
-    self.result_status = 'pending' if result_status == 'new' && serial_number.present?
+    self.result_status = 'in_progress' if result_status == 'new' && serial_number.present?
   end
 
   def update_batch_status

@@ -1,7 +1,7 @@
 class XpertResult < PatientResult
   validates_presence_of  :sample_collected_on, :examined_by, :tuberculosis, :rifampicin, :result_on, :on => :update
-  validates_inclusion_of :tuberculosis, in: ['detected', 'not_detected', 'invalid'], :on => :update
-  validates_inclusion_of :rifampicin,   in: ['detected', 'not_detected', 'indeterminate'], :on => :update
+  validates_inclusion_of :tuberculosis, in: ['detected', 'not_detected', 'invalid'], allow_nil: true
+  validates_inclusion_of :rifampicin,   in: ['detected', 'not_detected', 'indeterminate'], allow_nil: true
 
   validate :rifampicin_detected
 

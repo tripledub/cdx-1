@@ -1,7 +1,7 @@
 class MicroscopyResult < PatientResult
   validates_presence_of  :sample_collected_on, :examined_by, :result_on, :specimen_type, :serial_number, :appearance, :test_result, :on => :update
-  validates_inclusion_of :test_result, in: ['negative', '1to9', '1plus', '2plus', '3plus'], :on => :update
-  validates_inclusion_of :appearance,  in: ['blood', 'mucopurulent', 'saliva'], :on => :update
+  validates_inclusion_of :test_result, in: ['negative', '1to9', '1plus', '2plus', '3plus'], allow_nil: true
+  validates_inclusion_of :appearance,  in: ['blood', 'mucopurulent', 'saliva'], allow_nil: true
 
   delegate :patient, to: 'test_batch.encounter'
 
