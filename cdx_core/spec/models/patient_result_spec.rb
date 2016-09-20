@@ -12,6 +12,20 @@ describe PatientResult do
     it { should validate_inclusion_of(:result_status).in_array(result_status) }
   end
 
+  context 'when status is rejected' do
+    it 'should not validate if comment is empty' do
+      test_result.result_status = 'rejected'
+      test_result.comment = ' '
+      expect(test_result).to_not be_valid
+    end
+
+    it 'should validate if comment has content' do
+      test_result.result_status = 'rejected'
+      test_result.comment = 'For whom the bell tolls'
+      expect(test_result).to be_valid
+    end
+  end
+
   context 'after_save' do
     it 'should update status' do
       expect(TestBatches::Persistence).to receive(:update_status).with(test_result.test_batch)

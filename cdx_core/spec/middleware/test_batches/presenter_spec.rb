@@ -10,7 +10,7 @@ describe TestBatches::Presenter do
   }
 
   describe 'for_encounter' do
-    subject { TestBatches::Presenter.for_encounter(encounter.test_batch) }
+    subject { described_class.for_encounter(encounter.test_batch) }
 
     it 'returns an Hash' do
       expect(subject).to be_a(Hash)
@@ -23,7 +23,7 @@ describe TestBatches::Presenter do
         batchId: test_batch.encounter.batch_id,
         paymentDone: test_batch.payment_done,
         status: test_batch.status,
-        patient_results: PatientResults::Presenter.for_encounter(test_batch.patient_results)
+        patientResults: PatientResults::Presenter.for_encounter(test_batch.patient_results)
       )
     end
   end
