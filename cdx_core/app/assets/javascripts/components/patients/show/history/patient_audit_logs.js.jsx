@@ -16,8 +16,8 @@ var PatientAuditLogs = React.createClass({
   getData: function(field, e) {
     if (e) { e.preventDefault(); }
     this.serverRequest = $.get(this.props.patientLogsUrl + this.getParams(field), function (results) {
-      if (results.length > 0) {
-        this.setState({ patientLogs: results });
+      if (results['rows'].length > 0) {
+        this.setState({ patientLogs: results['rows'] });
         this.updateOrderIcon(field);
         $("table").resizableColumns({store: window.store});
       } else {
