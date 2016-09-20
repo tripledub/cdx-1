@@ -46,7 +46,7 @@
             = I18n.t('test_orders.index.no_test_orders')
     - else
       %section.row
-        = react_component "TestOrdersIndexTable", testOrders: Presenters::TestOrders.index_view(@tests), orderBy: @order_by,
+        = react_component "TestOrdersIndexTable", testOrders: TestOrders::Presenter.index_view(@tests), orderBy: @order_by,
           imageUrl: image_url('img/test-tube.png'), headerTitle: I18n.t('test_orders.index.test_order', count: @total),
           csvUrl: test_orders_path, csvTitle: I18n.t('devices.index.download_csv')
         .pagination

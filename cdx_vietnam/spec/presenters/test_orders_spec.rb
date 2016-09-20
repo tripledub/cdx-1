@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Presenters::TestOrders do
+describe TestOrders::Presenter do
   let(:user)                { User.make }
   let!(:institution)        { user.institutions.make }
   let(:site)                { Site.make institution: institution }
@@ -28,12 +28,12 @@ describe Presenters::TestOrders do
 
   describe 'patient_view' do
     it 'should return an array of formated comments' do
-      expect(Presenters::TestOrders.index_view(Encounter.all).size).to eq(7)
+      expect(TestOrders::Presenter.index_view(Encounter.all).size).to eq(7)
     end
 
     it 'should return elements formated' do
       requested_tests
-      expect(Presenters::TestOrders.index_view(Encounter.all).first).to eq({
+      expect(TestOrders::Presenter.index_view(Encounter.all).first).to eq({
         id:                 Encounter.first.uuid,
         requestedSiteName:  site.name,
         performingSiteName: performing_site.name,

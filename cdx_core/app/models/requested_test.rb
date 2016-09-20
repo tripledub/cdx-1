@@ -21,20 +21,6 @@ class RequestedTest < ActiveRecord::Base
   before_save :update_completed_status
   after_save :update_encounter_status
 
-  class << self
-    def show_dst_warning
-      dst_new     = false
-      culture_new = false
-
-      all.each do |requested_test|
-        dst_new     = !requested_test.dst_lpa_result.present? if requested_test.name == 'dst'
-        culture_new = !requested_test.culture_result.present? if requested_test.name == 'culture'
-      end
-
-      dst_new && culture_new
-    end
-  end
-
   def result_type
     if name.include? 'culture'
       return I18n.t('requested_test.result.culture')

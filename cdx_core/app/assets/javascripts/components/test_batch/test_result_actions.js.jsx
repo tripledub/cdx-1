@@ -32,7 +32,7 @@ class TestResultActions extends React.Component{
   render() {
     return(
       <div>
-        <button onClick={ this.updateResult.bind(this, 'received', '') } className="btn-primary save">Received</button>
+        <button onClick={ this.updateResult.bind(this, 'sample_received', '') } className="btn-primary save">Sample received</button>
         <TextInputModal key={ this.props.resultId } mainHeader='Please, explain why this test is rejected' linkButton='Reject' comment={ this.state.commentValue } commentChanged={ this.commentChanged.bind(this) } edit={ true } ref='inviteModal' />
       </div>
 

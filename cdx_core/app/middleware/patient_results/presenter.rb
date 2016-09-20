@@ -11,7 +11,8 @@ module PatientResults
             comment:     patient_result.comment.to_s,
             status:      patient_result.result_status,
             completedAt: Extras::Dates::Format.datetime_with_time_zone(patient_result.completed_at),
-            createdAt:   Extras::Dates::Format.datetime_with_time_zone(patient_result.created_at)
+            createdAt:   Extras::Dates::Format.datetime_with_time_zone(patient_result.created_at),
+            editUrl:     Rails.application.routes.url_helpers.edit_test_batch_microscopy_result_path(patient_result.test_batch, patient_result)
           }
         end
       end

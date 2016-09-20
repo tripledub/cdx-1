@@ -114,10 +114,10 @@ Rails.application.routes.draw do
         post :update_samples
       end
     end
-    resource :xpert_result, only: [:new, :create, :show, :edit, :update]
-    resource :microscopy_result, only: [:new, :create, :show, :edit, :update]
-    resource :dst_lpa_result, only: [:new, :create, :show, :edit, :update]
-    resource :culture_result, only: [:new, :create, :show, :edit, :update]
+    resources :xpert_result, only: [:show, :edit, :update]
+    resources :microscopy_result, only: [:show, :edit, :update]
+    resources :dst_lpa_result, only: [:show, :edit, :update]
+    resources :culture_result, only: [:show, :edit, :update]
   end
 
   resources :test_results, only: [:index, :show]

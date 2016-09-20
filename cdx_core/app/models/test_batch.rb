@@ -13,6 +13,20 @@ class TestBatch < ActiveRecord::Base
   before_create :set_status_to_new
   after_save :update_test_order_status
 
+
+  def show_dst_warning
+    return false
+    dst_new     = false
+    culture_new = false
+
+    patient_results.each do |patient_result|
+      dst_new     = !patient_result.dst_lpa_result.present? if requested_test.name == 'dst'
+      culture_new = !patient_result.culture_result.present? if requested_test.name == 'culture'
+    end
+
+    dst_new && culture_new
+  end
+
   def status_options
     [
       ['new', I18n.t('select.test_batch.status_options.new')],
