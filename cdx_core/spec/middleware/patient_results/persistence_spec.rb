@@ -28,4 +28,26 @@ describe PatientResults::Persistence do
       expect(test_batch.status).to eq('samples_collected')
     end
   end
+
+  describe 'update_status' do
+    let(:patient_result) { { result_status: 'rejected', comment: 'New comment added' } }
+
+    it 'should update result status to rejected' do
+      described_class.update_status(microscopy_result, { result_status: 'rejected', comment: 'New comment added' })
+
+      expect(microscopy_result.result_status).to eq('rejected')
+    end
+
+    it 'should update result status to completed' do
+      described_class.update_status(microscopy_result, { result_status: 'completed', comment: 'New comment added' })
+
+      expect(microscopy_result.result_status).to eq('completed')
+    end
+
+    it 'should update the comment' do
+      described_class.update_status(microscopy_result, { result_status: 'completed', comment: 'New comment added' })
+
+      expect(microscopy_result.comment).to eq('New comment added')
+    end
+  end
 end

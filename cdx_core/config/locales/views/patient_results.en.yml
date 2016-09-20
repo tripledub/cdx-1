@@ -3,3 +3,6 @@ en:
     update_samples:
       samples_updated: 'Sample Ids updated successfully.'
       updated_fail: 'Sample Ids can not be updated.'
+    update:
+      success: 'Result was updated successfully.'
+      failure: 'Result can not be updated.'

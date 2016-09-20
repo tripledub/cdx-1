@@ -109,7 +109,7 @@ Rails.application.routes.draw do
   end
 
   resources :test_batches do
-    resource :patient_results, only: [] do
+    resource :patient_results, only: [:update] do
       collection do
         post :update_samples
       end

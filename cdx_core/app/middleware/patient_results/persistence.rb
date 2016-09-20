@@ -9,6 +9,14 @@ module PatientResults
 
         test_batch.update_attribute(:status, 'samples_collected')
       end
+
+      def update_status(patient_result, params)
+        if patient_result.update_attribute(:result_status, params[:result_status].to_s) && patient_result.update_attribute(:comment, params[:comment].to_s)
+          [patient_result.result_status, :ok]
+        else
+          [patient_result.errors.messages, :unprocessable_entity]
+        end
+      end
     end
   end
 end

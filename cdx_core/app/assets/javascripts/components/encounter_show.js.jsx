@@ -129,7 +129,7 @@ var EncounterShow = React.createClass({
           </div>
         </div>
 
-        <TestBatchList encounterStatus={ this.props.encounter.status } testBatch={ this.props.testBatch } submitSamplesUrl={ this.props.submitSamplesUrl } submitPaymentUrl={ this.props.submitPaymentUrl } authenticityToken={ this.props.authenticityToken } />
+        <TestBatchList encounterStatus={ this.props.encounter.status } testBatch={ this.props.testBatch } submitSamplesUrl={ this.props.submitSamplesUrl } submitPaymentUrl={ this.props.submitPaymentUrl } updateResultUrl={ this.props.updateResultUrl } authenticityToken={ this.props.authenticityToken } />
 
       </div>
       );

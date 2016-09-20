@@ -14,11 +14,13 @@ describe PatientResultsController do
 
   before(:each) do
     sign_in user
-
-    post :update_samples, test_batch_id: test_batch.id, samples: samples_ids
   end
 
   describe 'update_samples' do
+    before :each do
+      post :update_samples, test_batch_id: test_batch.id, samples: samples_ids
+    end
+
     it 'should update requested samples' do
       microscopy_result.reload
 
@@ -27,6 +29,23 @@ describe PatientResultsController do
 
     it 'should redirect to encounter view' do
       expect(response).to redirect_to(encounter_path(encounter))
+    end
+  end
+
+  describe 'update' do
+    let(:patient_result) { { result_status: 'completed', comment: 'New comment added' } }
+
+    before :each do
+      put :update, test_batch_id: test_batch.id, id: microscopy_result.id, patient_result: patient_result, format: :json
+      microscopy_result.reload
+    end
+
+    it 'should update the status of the result' do
+      expect(microscopy_result.result_status).to eq('completed')
+    end
+
+    it 'should update the comment' do
+      expect(microscopy_result.comment).to eq('New comment added')
     end
   end
 end

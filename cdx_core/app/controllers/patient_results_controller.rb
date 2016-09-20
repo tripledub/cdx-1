@@ -12,10 +12,19 @@ class PatientResultsController < ApplicationController
     redirect_to encounter_path(@test_batch.encounter), message: message
   end
 
+  def update
+    message, status = PatientResults::Persistence.update_status(@test_batch.patient_results.find(params[:id]), patient_results_params)
+    render json: { result: message }, status: status
+  end
+
   protected
 
   def find_test_batch
     @test_batch = @navigation_context.institution.test_batches.find(params[:test_batch_id])
+  end
+
+  def patient_results_params
+    params.require(:patient_result).permit(:result_status, :comment)
   end
 
   def check_permissions
