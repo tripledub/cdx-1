@@ -22,6 +22,9 @@ en:
       samples_collected: 'Samples collected'
       in_progress: 'In progress'
       closed: 'Closed'
+      payment: 'Payment'
+      false: 'Pending'
+      true: 'Done'
 
     alert_messages:
       col_name: "Name"
