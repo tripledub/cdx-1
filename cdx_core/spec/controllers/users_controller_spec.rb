@@ -141,7 +141,18 @@ describe UsersController, type: :controller do
       expect(users).to eq([another_user])
     end
 
-
   end
 
+  describe 'GET :change_language' do
+    let(:user) { User.make }
+    
+    it "should update user language" do
+      get :change_language, id: user.id, language: 'en'
+      
+      expect(response).to be_success
+      
+      user.reload
+      expect(user.locale).to eq("en")
+    end
+  end
 end

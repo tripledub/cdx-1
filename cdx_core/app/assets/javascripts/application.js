@@ -44,6 +44,7 @@
 //= require jquery-ui.min
 //= require jquery.comiseo.daterangepicker.min
 //= require jquery.bettertabs.min
+//= require menu
 
 Turbolinks.enableProgressBar()
 
@@ -225,5 +226,6 @@ $(document).ready(function(){
     // We want to set overflow visible after the expand animation has completed
     $(".custom_filters").toggle();
   });
-
 });
+
+

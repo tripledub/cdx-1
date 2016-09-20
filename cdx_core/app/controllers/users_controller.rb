@@ -142,6 +142,11 @@ class UsersController < ApplicationController
       redirect_to users_path, notice: I18n.t('users.resend_invite.resending_failed')
     end
   end
+  
+  def change_language
+    current_user.update_attribute('locale', params[:language])
+    render json: 'success'.to_json
+  end
 
   protected
 
