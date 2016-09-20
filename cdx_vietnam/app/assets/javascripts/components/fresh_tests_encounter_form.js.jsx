@@ -1,6 +1,5 @@
 var FreshTestsEncounterForm = React.createClass(_.merge({
   componentDidMount: function() {
-    $('#sample_other').hide();
     $('.test_for_ebola').attr('checked', false).parent().hide();
     $('.test_for_tb').attr('checked', false).parent().hide();
     $('.test_for_hiv').attr('checked', false).parent().hide();
@@ -28,26 +27,12 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     }));
   },
 
-  validateAndSetManualEntry: function (event) {
-    var sampleId    = React.findDOMNode(this.refs.manualSampleEntry).value;
-    if (this.state.encounter.new_samples.filter(function(el){ return el.entity_id == sampleId }).length > 0) {
-      // Error handling as done in the ajax responses
-      alert(I18n.t("components.fresh_tests_encounter_form.alert_new_sample"));
-    } else {
-      this._ajax_put('/encounters/add/manual_sample_entry', function() {
-        this.refs.addNewSamplesModal.hide();
-      }, {entity_id: sampleId});
-    }
-    event.preventDefault();
-  },
-
   validateThenSave: function(event)
   {
     event.preventDefault();
     if( this.state.encounter.testing_for == undefined ) {   alert(I18n.t("components.fresh_tests_encounter_form.alert_testing_for"));    return;  }
     if( this.state.encounter.exam_reason == undefined ) {   alert(I18n.t("components.fresh_tests_encounter_form.alert_exam_reason"));    return;  }
     if( this.state.encounter.tests_requested == '')     {   alert(I18n.t("components.fresh_tests_encounter_form.alert_tests_requested"));    return;  }
-    if( this.state.encounter.new_samples == [])         {   alert(I18n.t("components.fresh_tests_encounter_form.alert_add_samples"));  return;  }
     this.save();
   },
 
@@ -56,20 +41,10 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = now.getFullYear() + "-" + (month) + "-" + (day);
-    var show_auto_sample = '';
-    var show_manual_sample = '';
     var cancelUrl = "javascript:history.back();";
 
     if (this.props.referer != null) {
       cancelUrl = this.props.referer;
-    }
-
-    if (this.props.allows_manual_entry == true) {
-      show_auto_sample = "hidden";
-      show_manual_sample = "";
-    } else {
-      show_auto_sample = "";
-      show_manual_sample = "hidden";
     }
 
     return (
@@ -108,26 +83,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
 
           { this.state.encounter.exam_reason === 'follow' ? <ReasonFollow treatmentDateChange={this.treatmentDateChange} /> : null }
           { this.state.encounter.exam_reason === 'diag' ? <PresumptiveRR /> : null }
-
-          <div className="row">
-            <div className="col-6 flexStart">
-              <label>{I18n.t("components.fresh_tests_encounter_form.samples_lable")}</label>
-            </div>
-            <div className="col-6">
-              <SamplesList samples={this.state.encounter.samples}  />
-              <NewSamplesList samples={this.state.encounter.new_samples} onRemoveSample={this.removeNewSample}/>
-              <p className={show_auto_sample}>
-                <a className="btn-add-link" href='#' onClick={this.addNewSamples}>
-                  <span className="icon-circle-plus icon-blue"></span>
-                  {I18n.t("components.fresh_tests_encounter_form.add_sample")}
-                </a>
-              </p>
-              <p className={show_manual_sample}>
-                <input type="text" size="54" placeholder={I18n.t("components.fresh_tests_encounter_form.sample_id_placeholder")} ref="manualSampleEntry" />&nbsp;
-                <button type="button" className="btn-primary" onClick={this.validateAndSetManualEntry}>{I18n.t("components.fresh_tests_encounter_form.add_btn")}</button>
-              </p>
-            </div>
-          </div>
 
           <RequestedTests reqTestsChange={this.reqTestsChange} />
 
@@ -179,16 +134,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
               </ul>
             </div>
           </div>
-
-          <Modal ref="addNewSamplesModal">
-            <h1>
-              <a href="#" className="modal-back" onClick={this.closeAddNewSamplesModal}></a>
-              Add sample
-            </h1>
-
-            <p><input type="text" className="input-block" placeholder="Sample ID" ref="manualSampleEntry"/></p>
-            <p><button type="button" className="btn-primary pull-right" onClick={this.validateAndSetManualEntry}>OK</button></p>
-          </Modal>
         </div>
       </div>
     );
