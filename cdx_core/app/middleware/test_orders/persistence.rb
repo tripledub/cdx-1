@@ -9,7 +9,7 @@ module TestOrders
         elsif encounter.test_batch.status == 'in_progress'
           encounter.update_attribute(:status, 'in_progress')
         elsif encounter.test_batch.status == 'closed'
-          encounter.update_attribute(:status, 'pending_approval')
+          encounter.update_attribute(:status, 'completed')
         end
       end
     end
@@ -175,8 +175,6 @@ module TestOrders
         end
       end
     end
-
-
 
     protected
 

@@ -1,12 +1,11 @@
 class ShowRejectedWithComment extends React.Component {
   render() {
     return(
-      <div className="tooltip">
-        Rejected
-        <div className="tooltiptext_r">
-          { this.props.commentValue }
-        </div>
-      </div>
+      <p>
+        <strong>Rejected</strong>
+        <br />
+        <em>{ this.props.commentValue }</em>
+      </p>
     )
   }
 }

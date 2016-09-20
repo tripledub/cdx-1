@@ -7,7 +7,7 @@ class PatientResult < ActiveRecord::Base
   belongs_to :test_batch
   has_many   :assay_results, as: :assayable
 
-  validates_inclusion_of :result_status, in: ['new', 'sample_collected', 'sample_received', 'in_progress', 'rejected', 'completed'], allow_nil: true
+  validates_inclusion_of :result_status, in: ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed'], allow_nil: true
 
   after_save    :update_batch_status
   before_save   :convert_string_to_dates

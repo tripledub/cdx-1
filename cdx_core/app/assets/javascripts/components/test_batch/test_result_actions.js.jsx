@@ -32,7 +32,7 @@ class TestResultActions extends React.Component{
   render() {
     return(
       <div>
-        <button onClick={ this.updateResult.bind(this, 'sample_received', '') } className="btn-primary save">Sample received</button>
+        <button onClick={ this.updateResult.bind(this, this.props.actionInfo.actionStatus, '') } className="btn-primary save">{ this.props.actionInfo.actionLabel }</button>
         <TextInputModal key={ this.props.resultId } mainHeader='Please, explain why this test is rejected' linkButton='Reject' comment={ this.state.commentValue } commentChanged={ this.commentChanged.bind(this) } edit={ true } ref='inviteModal' />
       </div>
 
@@ -43,6 +43,7 @@ class TestResultActions extends React.Component{
 TestResultActions.propTypes = {
   updateResultUrl: React.PropTypes.string.isRequired,
   commentValue: React.PropTypes.string.isRequired,
+  actionInfo: React.PropTypes.object.isRequired,
   resultId: React.PropTypes.number.isRequired,
   updateResultStatus: React.PropTypes.func.isRequired,
 };

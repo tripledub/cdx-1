@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe PatientResults::Persistence do
-  let(:institution)       { Institution.make }
+  let(:user)              { User.make }
+  let!(:institution)      { user.institutions.make }
   let(:patient)           { Patient.make institution: institution }
   let(:encounter)         { Encounter.make institution: institution, patient: patient }
   let(:test_batch)        { TestBatch.make encounter: encounter, institution: institution }
@@ -60,6 +61,14 @@ describe PatientResults::Persistence do
 
         expect(microscopy_result.result_status).to eq('completed')
       end
+    end
+  end
+
+  describe 'update_result' do
+    it 'should set result status to pending approval' do
+      described_class.update_result(microscopy_result, { result_status: 'completed', comment: 'New comment added' }, user, 'Microscopy updated')
+
+      expect(microscopy_result.result_status).to eq('pending_approval')
     end
   end
 end

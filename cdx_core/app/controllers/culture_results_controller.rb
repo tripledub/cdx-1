@@ -8,11 +8,11 @@ class CultureResultsController < PatientResultsController
   def edit
     @culture_result.sample_collected_on = @culture_result.sample_collected_on || Date.today
     @culture_result.result_on           = @culture_result.result_on || Date.today
-    @culture_result.media_used          = @culture_result.media_used || @requested_test.encounter.culture_format
+    @culture_result.media_used          = @culture_result.media_used || @test_batch.encounter.culture_format
   end
 
   def update
-    if @culture_result.update_and_audit(culture_result_params, current_user, I18n.t('culture_results.update.audit'))
+    if PatientResults::Persistence.update_result(@culture_result, culture_result_params, current_user, I18n.t('culture_results.update.audit'))
       redirect_to encounter_path(@test_batch.encounter), notice: I18n.t('culture_results.update.notice')
     else
       render action: 'edit'

@@ -1,6 +1,9 @@
 module PatientResults
   class Presenter
     class << self
+      include Rails.application.routes.url_helpers
+      include ActionDispatch::Routing::PolymorphicRoutes
+
       def for_encounter(patient_results)
         patient_results.map do |patient_result|
           {
@@ -12,7 +15,7 @@ module PatientResults
             status:      patient_result.result_status,
             completedAt: Extras::Dates::Format.datetime_with_time_zone(patient_result.completed_at),
             createdAt:   Extras::Dates::Format.datetime_with_time_zone(patient_result.created_at),
-            editUrl:     Rails.application.routes.url_helpers.edit_test_batch_microscopy_result_path(patient_result.test_batch, patient_result)
+            editUrl:     edit_polymorphic_path([patient_result.test_batch, patient_result])
           }
         end
       end

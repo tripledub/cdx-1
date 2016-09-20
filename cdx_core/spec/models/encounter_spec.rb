@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Encounter do
-  let(:status_options)  { ['new', 'pending', 'in_progress', 'received', 'pending_approval', 'approved'] }
+  let(:status_options)  { ['new', 'pending', 'in_progress', 'received', 'pending_approval', 'completed'] }
 
   it { have_one :test_batch }
   it { is_expected.to validate_presence_of :institution }

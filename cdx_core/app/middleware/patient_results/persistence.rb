@@ -17,6 +17,14 @@ module PatientResults
           [patient_result.errors.messages, :unprocessable_entity]
         end
       end
+
+      def update_result(patient_result, params, current_user, audit_text)
+        if patient_result.update_and_audit(params, current_user, audit_text)
+          patient_result.update_attribute(:result_status, 'pending_approval')
+        else
+          false
+        end
+      end
     end
   end
 end
