@@ -44,7 +44,7 @@
 //= require jquery-ui.min
 //= require jquery.comiseo.daterangepicker.min
 //= require jquery.bettertabs.min
-//= menu
+//= require menu
 
 Turbolinks.enableProgressBar()
 
