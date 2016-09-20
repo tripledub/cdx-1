@@ -20,6 +20,6 @@ class TestBatch < ActiveRecord::Base
   end
 
   def update_test_order_status
-    TestOrders::Status.change_status(encounter)
+    TestOrders::Persistence.change_status(encounter)
   end
 end

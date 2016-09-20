@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe TestOrders::Status do
+RSpec.describe TestOrders::Persistence do
   let(:institution)            { Institution.make }
   let(:user)                   { institution.user }
   let(:site)                   { institution.sites.make }
@@ -16,6 +16,16 @@ RSpec.describe TestOrders::Status do
         encounter.test_batch.save
 
         expect(encounter.status).to eq('pending')
+      end
+    end
+
+    context 'pending_approval' do
+      it 'should be set to pending approval if test batch changes to ' do
+        encounter.test_batch.payment_done = true
+        encounter.test_batch.status       = 'closed'
+        encounter.test_batch.save
+
+        expect(encounter.status).to eq('pending_approval')
       end
     end
   end

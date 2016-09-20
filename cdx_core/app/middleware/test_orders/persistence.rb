@@ -2,6 +2,16 @@ module TestOrders
   class Persistence
     attr_reader :params, :current_user, :localization_helper, :encounter_param
 
+    class << self
+      def change_status(encounter)
+        if order_is_pending?(encounter.test_batch)
+          encounter.update_attribute(:status, 'pending')
+        elsif encounter.test_batch.status == 'closed'
+          encounter.update_attribute(:status, 'pending_approval')
+        end
+      end
+    end
+
     def initialize(params, current_user, localization_helper)
       @params = params
       @current_user = current_user
@@ -164,7 +174,13 @@ module TestOrders
       end
     end
 
+
+
     protected
+
+    def self.order_is_pending?(test_batch)
+      test_batch.payment_done == true && test_batch.status == 'samples_collected'
+    end
 
     def perform_encounter_action(action)
       @extended_respone = {}

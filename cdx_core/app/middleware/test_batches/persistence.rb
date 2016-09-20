@@ -30,7 +30,7 @@ module TestBatches
       end
 
       def any_new?(test_batch)
-        test_batch.patient_results.any? { |result| result.result_status == 'new' }
+        test_batch.patient_results.any? { |result| result.result_status == 'new' || result.result_status == 'in_progress' }
       end
 
       def any_finished?(test_batch)
