@@ -63,6 +63,7 @@ en:
       reactivate: 'Reactivate'
       confirm: 'Are you sure?'
     custom_mappings:
+      custom_fields: 'Custom fields'
       how_to_use: "Specify how you use some of the device's fields"
       device_field: 'I use the device field'
       to_enter: 'to enter the'

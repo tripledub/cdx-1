@@ -18,6 +18,7 @@ vi:
       unauthenticated: "Bạn cần đăng nhập hoặc đăng ký trước khi tiếp tục."
       unconfirmed: "Bạn cần xác nhận tài khoản trước khi tiếp tục."
       suspended: "Truy cập vào tài khoản của bạn đã bị tạm dừng, vui lòng tham khảo người giám sát của bạn"
+      last_attempt: "Bạn chỉ còn 1 lần thử trước khi tài khoản bị khóa."
     mailer:
       confirmation_instructions:
         subject: "Hướng dẫn xác nhận"

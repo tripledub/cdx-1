@@ -82,6 +82,7 @@
         col_name: "Tên"
         col_gender: "Giới tính"
         col_birth_date: "Ngày sinh"
+        name_tooltip: "Tên bệnh nhân"
 
       show:
         msg_loading: "Đang tải mệnh lệnh kiểm tra..."

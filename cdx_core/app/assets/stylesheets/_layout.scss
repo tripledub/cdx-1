@@ -116,16 +116,38 @@ header {
         color: $black;
       }
     }
-
+  }
+  
+  form {
+    padding: 10px;
+    color: $gray-xdark;
+    select {
+      option {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 14.3999996185303px;
+        font-weight: normal;
+      }
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14.3999996185303px;
+      font-weight: normal;
+    }
   }
 
-  &:focus {
-    pointer-events: none;
-    ul {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-    }
+  // &:focus {
+    // pointer-events: none;
+    // ul {
+      // opacity: 1;
+      // visibility: visible;
+      // pointer-events: auto;
+    // }
+  // }
+  
+}
+
+.show-nav-menu {
+  ul {
+    opacity: 1;
+    visibility: visible;
   }
 }
 

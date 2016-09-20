@@ -162,6 +162,7 @@ Rails.application.routes.draw do
       get :autocomplete
       post :update_setting
       get :no_data_allowed
+      get :change_language
     end
   end
 

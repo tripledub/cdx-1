@@ -81,6 +81,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'activesupport-decorators', '~> 2.1'
   gem 'machinist', '~> 1.0'
   gem 'capybara'
   gem 'database_cleaner'

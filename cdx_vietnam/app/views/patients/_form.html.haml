@@ -23,6 +23,16 @@
 
   = react_component 'PatientInputName', fieldValue: @patient.name, patientsSearchUrl: patient_search_index_path
 
+  - unless @patient.name.blank?
+    .row
+      .col.pe-2
+        %div.tooltip
+          = f.label :patient_id
+          %div.tooltiptext_r
+            = I18n.t('patients.form.patient_id_tooltip')
+      .col
+        = @patient.patient_id_display
+
   .row.nickname
     .col.pe-2
       %div.tooltip

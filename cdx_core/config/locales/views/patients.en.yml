@@ -53,6 +53,7 @@ en:
       birth_date_on_label: 'Birth date on'
       email_label: 'Email'
       phone_label: 'Phone'
+      patient_id_tooltip: 'The Patient ID'
       institution_tooltip: 'Institution handling this Patient'
       nickname_tooltip: 'The Patients Nickname - if they have one'
       entity_id_tooltip: 'The Patients ID'
