@@ -5,10 +5,9 @@ class TestBatchRow extends React.Component{
         <td>{this.props.patientResult.testType}</td>
         <td>{this.props.patientResult.sampleId}</td>
         <td>{this.props.patientResult.examinedBy}</td>
-        <td>{this.props.patientResult.comment}</td>
         <td>{this.props.patientResult.completedAt}</td>
         <td>{this.props.patientResult.createdAt}</td>
-        <td><TestResultStatus resultId={ this.props.patientResult.id } currentStatus={ this.props.patientResult.status } updateResultUrl={ this.props.updateResultUrl } /></td>
+        <td><TestResultStatus resultId={ this.props.patientResult.id } commentValue={ this.props.patientResult.comment } currentStatus={ this.props.patientResult.status } updateResultUrl={ this.props.updateResultUrl } /></td>
       </tr>
     )
   }
