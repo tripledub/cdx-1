@@ -1,16 +1,17 @@
-module Encounters
+module TestBatches
   class Status
     class << self
-      def change_status(encounter)
+      def change_status(test_batch)
         # Update requested tests probably outdated due to transaction issues.
-        encounter.requested_tests.reload
-        if any_tests_in_progress?(encounter)
-          encounter.update(status: :in_progress)
-        elsif all_tests_pending?(encounter)
-          encounter.update(status: :pending)
-        elsif all_tests_finished?(encounter)
-          encounter.update(status: :pending_approval)
-        end
+        test_batch.patient_results.reload
+
+        # if any_tests_in_progress?(encounter)
+        #   encounter.update(status: :in_progress)
+        # elsif all_tests_pending?(encounter)
+        #   encounter.update(status: :pending)
+        # elsif all_tests_finished?(encounter)
+        #   encounter.update(status: :pending_approval)
+        # end
       end
 
       protected

@@ -52,6 +52,6 @@ class RequestedTest < ActiveRecord::Base
   end
 
   def update_encounter_status
-    Encounters::Status.change_status(encounter)
+    TestOrders::Status.change_status(encounter)
   end
 end

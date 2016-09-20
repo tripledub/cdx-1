@@ -1,4 +1,4 @@
-module Encounters
+module TestOrders
   class Persistence
     attr_reader :params, :current_user, :localization_helper, :encounter_param
 

@@ -14,7 +14,7 @@ class EncountersController < ApplicationController
   end
 
   def create
-    content, status = Encounters::Persistence.new(params, current_user, @localization_helper).create
+    content, status = TestOrders::Persistence.new(params, current_user, @localization_helper).create
     render json: content, status: status
   end
 
@@ -26,7 +26,7 @@ class EncountersController < ApplicationController
   def show
     return unless authorize_resource(@encounter, READ_ENCOUNTER)
 
-    current_encounter = Encounters::Persistence.new(params, current_user, @localization_helper)
+    current_encounter = TestOrders::Persistence.new(params, current_user, @localization_helper)
     current_encounter.prepare_blender_and_json(@encounter)
     @encounter_as_json = current_encounter.as_json_edit.attributes!
     determine_referal
@@ -36,13 +36,13 @@ class EncountersController < ApplicationController
     return unless authorize_resource(@encounter, UPDATE_ENCOUNTER)
     if @encounter.has_dirty_diagnostic?
       @encounter.core_fields[Encounter::ASSAYS_FIELD] = @encounter.updated_diagnostic
-      Encounters::Persistence.new(params, current_user, @localization_helper).prepare_blender_and_json(@encounter)
+      TestOrders::Persistence.new(params, current_user, @localization_helper).prepare_blender_and_json(@encounter)
     end
     @possible_assay_results = TestResult.possible_results_for_assay
   end
 
   def destroy
-    message = Encounters::Persistence.new(params, current_user, @localization_helper).destroy(@encounter)
+    message = TestOrders::Persistence.new(params, current_user, @localization_helper).destroy(@encounter)
 
     respond_to do |format|
       format.html { redirect_to encounters_path, notice: message }
@@ -51,7 +51,7 @@ class EncountersController < ApplicationController
   end
 
   def update
-    content, status = Encounters::Persistence.new(params, current_user, @localization_helper).update
+    content, status = TestOrders::Persistence.new(params, current_user, @localization_helper).update
     render json: content, status: status
   end
 
@@ -61,31 +61,31 @@ class EncountersController < ApplicationController
   end
 
   def search_test
-    render json: Encounters::Persistence.new(params, current_user, @localization_helper).search_test(params[:q])
+    render json: TestOrders::Persistence.new(params, current_user, @localization_helper).search_test(params[:q])
   end
 
   def add_sample
-    content, status = Encounters::Persistence.new(params, current_user, @localization_helper).add_sample
+    content, status = TestOrders::Persistence.new(params, current_user, @localization_helper).add_sample
     render json: content, status: status
   end
 
   def add_test
-    content, status = Encounters::Persistence.new(params, current_user, @localization_helper).add_test
+    content, status = TestOrders::Persistence.new(params, current_user, @localization_helper).add_test
     render json: content, status: status
   end
 
   def merge_samples
-    content, status = Encounters::Persistence.new(params, current_user, @localization_helper).merge_samples
+    content, status = TestOrders::Persistence.new(params, current_user, @localization_helper).merge_samples
     render json: content, status: status
   end
 
   def new_sample
-    content, status = Encounters::Persistence.new(params, current_user, @localization_helper).new_sample
+    content, status = TestOrders::Persistence.new(params, current_user, @localization_helper).new_sample
     render json: content, status: status
   end
 
   def add_sample_manually
-    content, status = Encounters::Persistence.new(params, current_user, @localization_helper).add_sample_manually
+    content, status = TestOrders::Persistence.new(params, current_user, @localization_helper).add_sample_manually
     render json: content, status: status
   end
 
@@ -116,7 +116,7 @@ class EncountersController < ApplicationController
     redirect_to(encounters_path, notice: I18n.t('encounters.show.no_encounter')) and return unless @encounter.present?
 
     @encounter.new_samples = []
-    Encounters::Persistence.new(params, current_user, @localization_helper).prepare_blender_and_json(@encounter)
+    TestOrders::Persistence.new(params, current_user, @localization_helper).prepare_blender_and_json(@encounter)
   end
 
   def find_institution_and_patient
