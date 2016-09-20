@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe TestBatch do
-  let(:status_options)  { ['new', 'samples_collected', 'in_progress', 'closed'] }
+  let(:status_options)  { ['new', 'samples_collected', 'samples_received', 'in_progress', 'closed'] }
 
   context "validations" do
     it { should belong_to(:encounter) }

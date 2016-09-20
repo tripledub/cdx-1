@@ -4,7 +4,7 @@ describe PatientResult do
   let(:encounter)   { Encounter.make }
   let(:test_batch)  { TestBatch.make encounter: encounter }
   let(:test_result) { MicroscopyResult.make created_at: 3.days.ago, test_batch: test_batch, result_name: 'requested_microscopy' }
-  let(:result_status) { ['new', 'in_progress', 'rejected', 'completed'] }
+  let(:result_status) { ['new', 'sample_collected', 'sample_received', 'in_progress', 'rejected', 'completed'] }
 
   context "validations" do
     it { should belong_to(:requested_test) }

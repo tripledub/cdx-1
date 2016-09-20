@@ -6,6 +6,8 @@ module TestOrders
       def change_status(encounter)
         if order_is_pending?(encounter.test_batch)
           encounter.update_attribute(:status, 'pending')
+        elsif encounter.test_batch.status == 'in_progress'
+          encounter.update_attribute(:status, 'in_progress')
         elsif encounter.test_batch.status == 'closed'
           encounter.update_attribute(:status, 'pending_approval')
         end

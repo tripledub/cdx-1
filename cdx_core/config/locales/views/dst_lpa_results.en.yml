@@ -1,5 +1,6 @@
 en:
   dst_lpa_results:
+    dst_lpa: 'Dst/Lpa'
     dst:
       localised_name: 'Drug susceptibility test'
     lpa:

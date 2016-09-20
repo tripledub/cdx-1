@@ -1,6 +1,6 @@
-module Presenters
-  module Concerns
-    module TestOrders
+module Concerns
+  module TestOrders
+    module Presenter
       extend ActiveSupport::Concern
       included do
       end
@@ -35,18 +35,11 @@ module Presenters
         end
 
         def generate_status(encounter)
-          encounter_status = case encounter.status
-          when 'pending'
-            I18n.t('encounters.status.pending')
-          when 'inprogress'
-            I18n.t('encounters.status.in_progress')
-          when 'completed'
-            I18n.t('encounters.status.completed')
-          end
-          encounter_status += ': '
+          encounter_status = I18n.t("select.encounter.status_options.#{encounter.status}")
+          encounter_status += ': Batch (' + I18n.t("select.test_batch.status_options.#{encounter.test_batch.status}") + ') '
 
-          encounter_status += encounter.requested_tests.map do |requested_test|
-            "#{requested_test.result_type} (#{I18n.t('requested_test.status.'+requested_test.status)})"
+          encounter_status += encounter.test_batch.patient_results.map do |patient_result|
+            "#{patient_result.test_name} (#{I18n.t('select.patient_result.status_options.'+patient_result.result_status)})"
           end.join(' - ')
 
           encounter_status

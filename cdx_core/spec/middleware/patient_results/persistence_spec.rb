@@ -30,24 +30,36 @@ describe PatientResults::Persistence do
   end
 
   describe 'update_status' do
-    let(:patient_result) { { result_status: 'rejected', comment: 'New comment added' } }
+    context 'status is rejected' do
+      let(:patient_result) { { result_status: 'rejected', comment: 'New comment added' } }
 
-    it 'should update result status to rejected' do
-      described_class.update_status(microscopy_result, { result_status: 'rejected', comment: 'New comment added' })
+      before :each do
+        described_class.update_status(microscopy_result, { result_status: 'rejected', comment: 'New comment added' })
+      end
 
-      expect(microscopy_result.result_status).to eq('rejected')
+      it 'should update result status to rejected' do
+        expect(microscopy_result.result_status).to eq('rejected')
+      end
+
+      it 'should update the comment' do
+        expect(microscopy_result.comment).to eq('New comment added')
+      end
     end
 
-    it 'should update result status to completed' do
-      described_class.update_status(microscopy_result, { result_status: 'completed', comment: 'New comment added' })
+    context 'status is sample received' do
+      it 'should update result status to sample received' do
+        described_class.update_status(microscopy_result, { result_status: 'sample_received' })
 
-      expect(microscopy_result.result_status).to eq('completed')
+        expect(microscopy_result.result_status).to eq('sample_received')
+      end
     end
 
-    it 'should update the comment' do
-      described_class.update_status(microscopy_result, { result_status: 'completed', comment: 'New comment added' })
+    context 'status is completed' do
+      it 'should update result status to completed' do
+        described_class.update_status(microscopy_result, { result_status: 'completed', comment: 'New comment added' })
 
-      expect(microscopy_result.comment).to eq('New comment added')
+        expect(microscopy_result.result_status).to eq('completed')
+      end
     end
   end
 end

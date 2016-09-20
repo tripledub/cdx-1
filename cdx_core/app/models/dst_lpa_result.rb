@@ -7,6 +7,8 @@ class DstLpaResult < PatientResult
   delegate :patient, to: 'test_batch.encounter'
 
   def localised_name
+    return I18n.t('dst_lpa_results.dst_lpa') unless result_name
+
     if result_name.include? 'drugsusceptibility'
       I18n.t('dst_lpa_results.dst.localised_name')
     else

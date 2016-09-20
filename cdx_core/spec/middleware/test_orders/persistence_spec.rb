@@ -19,6 +19,15 @@ RSpec.describe TestOrders::Persistence do
       end
     end
 
+    context 'in_progress' do
+      it 'should be set to in progress if test batch has been set to in progress' do
+        encounter.test_batch.status       = 'in_progress'
+        encounter.test_batch.save
+
+        expect(encounter.status).to eq('in_progress')
+      end
+    end
+
     context 'pending_approval' do
       it 'should be set to pending approval if test batch changes to ' do
         encounter.test_batch.payment_done = true

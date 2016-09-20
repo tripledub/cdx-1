@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe TestBatches::Persistence do
-  let(:encounter)         { Encounter.make }
+  let(:encounter)         { Encounter.make test_batch: TestBatch.make }
   let(:test_batch)        { encounter.test_batch }
   let(:microscopy_result) { MicroscopyResult.make test_batch: test_batch }
   let(:dst_lpa_result)    { DstLpaResult.make test_batch: test_batch }
@@ -28,6 +28,13 @@ describe TestBatches::Persistence do
 
     it 'should set the status to new' do
       expect(test_batch.status).to eq('new')
+    end
+
+    it 'should set the status to in progress' do
+      culture_result.update_attribute(:result_status, 'sample_received')
+      test_batch.reload
+
+      expect(test_batch.status).to eq('samples_received')
     end
 
     it 'should set the status to in progress' do

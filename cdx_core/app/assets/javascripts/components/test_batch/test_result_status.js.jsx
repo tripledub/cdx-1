@@ -15,7 +15,7 @@ class TestResultStatus extends React.Component {
   render() {
     return(
       <div>
-        { this.state.currentStatus === 'in_progress' ? <TestResultActions updateResultStatus={ this.updateResultStatus.bind(this) } commentValue={ this.state.commentValue } resultId={ this.props.resultId } updateResultUrl={ this.props.updateResultUrl }/> : null }
+        { this.state.currentStatus === 'sample_collected' ? <TestResultActions updateResultStatus={ this.updateResultStatus.bind(this) } commentValue={ this.state.commentValue } resultId={ this.props.resultId } updateResultUrl={ this.props.updateResultUrl }/> : null }
         { this.state.currentStatus === 'new' ? 'New' : null }
         { this.state.currentStatus === 'rejected' ?
           <ShowRejectedWithComment commentValue={ this.state.commentValue } />

@@ -7,7 +7,7 @@ class PatientResult < ActiveRecord::Base
   belongs_to :test_batch
   has_many   :assay_results, as: :assayable
 
-  validates_inclusion_of :result_status, in: ['new', 'in_progress', 'rejected', 'completed'], allow_nil: true
+  validates_inclusion_of :result_status, in: ['new', 'sample_collected', 'sample_received', 'in_progress', 'rejected', 'completed'], allow_nil: true
 
   after_save    :update_batch_status
   before_save   :convert_string_to_dates
@@ -24,6 +24,8 @@ class PatientResult < ActiveRecord::Base
     def status_options
       [
         ['new', I18n.t('select.patient_result.status_options.new')],
+        ['sample_collected', I18n.t('select.patient_result.status_options.sample_collected')],
+        ['sample_received', I18n.t('select.patient_result.status_options.sample_received')],
         ['in_progress', I18n.t('select.patient_result.status_options.in_progress')],
         ['rejected', I18n.t('select.patient_result.status_options.rejected')],
         ['completed', I18n.t('select.patient_result.status_options.completed')]
@@ -66,6 +68,8 @@ class PatientResult < ActiveRecord::Base
   end
 
   def format_name
+    return unless result_name
+
     if result_name.include? 'solid'
       I18n.t('select.culture.media_options.solid')
     elsif result_name.include? 'liquid'
