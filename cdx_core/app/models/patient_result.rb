@@ -10,6 +10,7 @@ class PatientResult < ActiveRecord::Base
   after_save    :update_batch_status
   before_save   :convert_string_to_dates
   before_save   :complete_test
+  before_save   :update_status
   before_create :set_status_to_new
 
   class << self
@@ -45,6 +46,10 @@ class PatientResult < ActiveRecord::Base
 
   def complete_test
     self.completed_at = Time.now if result_status == 'completed'
+  end
+
+  def update_status
+    self.result_status = 'pending' if result_status == 'new' && serial_number.present?
   end
 
   def update_batch_status

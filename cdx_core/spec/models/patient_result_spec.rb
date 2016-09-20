@@ -18,17 +18,29 @@ describe PatientResult do
       test_result.save
     end
 
-    context 'if status is updated' do
-      it 'should set completed_at to current time if status is completed' do
-        test_result.update_attribute(:result_status, 'completed')
-
-        expect(test_result.completed_at).to be
+    describe 'change status' do
+      it 'should be set to new when result is created' do
+        expect(test_result.result_status).to eq('new')
       end
 
-      it 'should not update completed_at' do
-        test_result.update_attribute(:result_status, 'rejected')
+      it 'should be set to pending when result has sample id assigned' do
+        test_result.update_attribute(:serial_number, 'some sample id')
 
-        expect(test_result.completed_at).to_not be
+        expect(test_result.result_status).to eq('pending')
+      end
+
+      context 'if status is updated' do
+        it 'should set completed_at to current time if status is completed' do
+          test_result.update_attribute(:result_status, 'completed')
+
+          expect(test_result.completed_at).to be
+        end
+
+        it 'should not update completed_at' do
+          test_result.update_attribute(:result_status, 'rejected')
+
+          expect(test_result.completed_at).to_not be
+        end
       end
     end
   end

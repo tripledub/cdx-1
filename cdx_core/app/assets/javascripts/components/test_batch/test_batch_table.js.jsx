@@ -7,6 +7,8 @@ class TestBatchTable extends React.Component{
             <th>Type</th>
             <th>Sample Id</th>
             <th>Examined by</th>
+            <th></th>
+            <th></th>
             <th>Options</th>
           </tr>
         </thead>

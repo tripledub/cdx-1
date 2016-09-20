@@ -1,5 +1,5 @@
-module Finder
-  class Site
+module Sites
+  class Finder
     class << self
       def find_by_uuid(uuid, current_user, institution)
         Policy.authorize(Policy::Actions::CREATE_SITE_ENCOUNTER, institution.sites, current_user).where(uuid: uuid).first

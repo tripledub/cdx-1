@@ -20,7 +20,7 @@ class EncountersController < ApplicationController
 
   def sites
     sites = check_access(@navigation_context.institution.sites, CREATE_SITE_ENCOUNTER)
-    render json: Finder::Site.as_json_list(sites.sort_by(&:name)).attributes!
+    render json: Sites::Finder.as_json_list(sites.sort_by(&:name)).attributes!
   end
 
   def show
@@ -56,7 +56,7 @@ class EncountersController < ApplicationController
   end
 
   def search_sample
-    @institution = Finder::Institution.find_by_uuid(params[:institution_uuid], current_user)
+    @institution = Institutions::Finder.find_by_uuid(params[:institution_uuid], current_user)
     render json: Finder::Sample.find_as_json(@institution, current_user, params[:sample_uuids], params[:q]).attributes!
   end
 

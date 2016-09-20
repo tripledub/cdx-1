@@ -97,7 +97,7 @@ module TestOrders
     end
 
     def search_test(test_id)
-      institution = Finder::Institution.find_by_uuid(params[:institution_uuid], current_user)
+      institution = Institutions::Finder.find_by_uuid(params[:institution_uuid], current_user)
       test_results = Finder::TestResults.find_by_institution(institution, current_user)
         .joins("LEFT JOIN encounters ON encounters.id = patient_results.encounter_id")
         .where("patient_results.encounter_id IS NULL OR encounters.is_phantom = TRUE")
@@ -131,16 +131,16 @@ module TestOrders
         json.assays (@encounter_blender.core_fields[Encounter::ASSAYS_FIELD] || [])
         json.observations @encounter_blender.plain_sensitive_data[Encounter::OBSERVATIONS_FIELD]
         json.institution do
-          Finder::Institution.as_json(json, @encounter.institution)
+          Institutions::Finder.as_json(json, @encounter.institution)
         end
 
         json.site do
-          Finder::Site.as_json(json, @encounter.site)
+          Sites::Finder.as_json(json, @encounter.site)
         end
 
         if @encounter.performing_site
           json.performing_site do
-            Finder::Site.as_json(json, @encounter.performing_site)
+            Sites::Finder.as_json(json, @encounter.performing_site)
           end
         end
 
@@ -187,10 +187,10 @@ module TestOrders
       @encounter.is_phantom  = false
 
       if @encounter.new_record?
-        @institution                 = Finder::Institution.find_by_uuid(encounter_param['institution']['uuid'], current_user)
+        @institution                 = Institutions::Finder.find_by_uuid(encounter_param['institution']['uuid'], current_user)
         @encounter.institution       = @institution
-        @encounter.site              = Finder::Site.find_by_uuid(encounter_param['site']['uuid'], current_user, @institution)
-        @encounter.performing_site   = Finder::Site.find_by_uuid(encounter_param['performing_site']['uuid'], current_user, @institution) if encounter_param['performing_site'] !=nil
+        @encounter.site              = Sites::Finder.find_by_uuid(encounter_param['site']['uuid'], current_user, @institution)
+        @encounter.performing_site   = Sites::Finder.find_by_uuid(encounter_param['performing_site']['uuid'], current_user, @institution) if encounter_param['performing_site'] !=nil
         @encounter.status            = 'new'
         @encounter.exam_reason       = encounter_param['exam_reason']
         @encounter.tests_requested   = encounter_param['tests_requested']
