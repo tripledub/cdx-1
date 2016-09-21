@@ -12,6 +12,7 @@ gem 'csv_builder'
 gem 'decent_exposure'
 gem 'nokogiri', '~> 1.6'
 gem 'react-rails', '~> 1.3.2'
+gem 'react-rails-img'
 gem 'foreman'
 gem 'paperclip', '~> 4.3.6'
 gem 'aws-sdk', '~> 1.6'
@@ -21,6 +22,7 @@ gem 'premailer-rails'
 gem 'kaminari'
 gem 'base58'
 gem 'rubyzip', '>= 1.0.0'
+gem 'activesupport-decorators', '~> 2.1'
 
 gem 'config'
 gem 'rest-client'
@@ -33,8 +35,6 @@ gem 'therubyracer'
 gem 'cdx', path: '.'
 gem 'cdx-api-elasticsearch', path: '.'
 gem 'cdx-sync-server', git: 'https://github.com/instedd/cdx-sync-server.git', branch: 'master'
-gem 'geojson_import', git: 'https://github.com/instedd/geojson_import', branch: 'master'
-gem 'location_service', git: 'https://github.com/instedd/ruby-location_service.git', branch: 'master'
 gem 'view_components', git: 'https://github.com/manastech/rails-view_components.git', branch: 'master'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -58,7 +58,7 @@ gem 'puma', '~>3.5'
 gem 'sidekiq'
 gem 'sinatra'
 gem 'sidekiq-cron', '~> 0.3.1'
-
+gem 'i18n-js',">= 3.0.0.rc13"
 group :development do
   gem 'letter_opener'
   gem 'letter_opener_web'
@@ -93,6 +93,12 @@ gem 'leaflet-rails'
 gem 'rake-progressbar'
 gem 'nuntium_api', '~> 0.21'
 
+# Core cdx functionality
+gem 'cdx_core', path: 'cdx_core'
+gem 'cdx_api_core', path: 'cdx_api_core'
+gem 'cdx_vietnam', path: 'cdx_vietnam'
+gem 'cdx_api_vietnam', path: 'cdx_api_vietnam'
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-urijs'
 end
@@ -105,6 +111,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'fudge'
 end
 
 group :test do
@@ -115,7 +122,6 @@ group :test do
   gem 'machinist', '~> 1.0'
   gem 'capybara'
   gem 'guard-rspec'
-  gem 'rspec'
   gem 'rspec-collection_matchers'
   gem 'vcr'
   gem 'webmock', require: false

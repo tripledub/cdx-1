@@ -1,0 +1,59 @@
+:javascript
+  result_and_condition = #{result_and_condition().to_json};
+
+%h3#simulator
+  = I18n.t('api.playground.simulator.simulator')
+
+.row-fluid{:style => "overflow: hidden"}
+
+  .span12
+    %form#report_form(method="post")
+      .control-group
+        %label.control-label(for="device")
+          = I18n.t('api.playground.simulator.lbl_device')
+        .controls
+          %select#device(name="device")
+            = @devices.map do |device|
+              %option{ value: device.uuid}=device.name
+
+      .row-fluid
+        .span2
+          = image_tag "genexpert.png"
+        .span2
+          .control-group
+            %label.control-label(for="patient_name")
+              = I18n.t('api.playground.simulator.lbl_patient')
+            .controls
+              %input#patient_name.span12(name="patient_name"){:type => "text", :value => "John Doe"}
+          .control-group
+            %label.control-label(for="gender")
+              = I18n.t('api.playground.simulator.lbl_gender')
+            .controls
+              %select#gender.span12(name="gender")
+
+          .control-group
+            %label.control-label(for="age")
+              = I18n.t('api.playground.simulator.lbl_age')
+            .controls
+              %input#age.span12(name="age"){:type => "numeric", :value => "20"}
+
+          .control-group
+            %label.control-label(for="patient_telephone_number")
+              = I18n.t('api.playground.simulator.lbl_phone')
+            .controls
+              %input#patient_telephone_number.span12(name="patient_telephone_number"){:type => "text", :value => "12345678"}
+
+          .control-group
+            %label.control-label(for="condition")
+              = I18n.t('api.playground.simulator.lbl_condition')
+            .controls
+              %select#condition.span12(name="condition")
+
+          .control-group
+            %label.control-label(for="result")
+              = I18n.t('api.playground.simulator.lbl_result')
+            .controls
+              %select#result.span12(name="result")
+
+          .control-group
+            %input#create_button.btn(name="commit" type="submit" value="#{I18n.t('api.playground.simulator.btn_simulate_test')}")

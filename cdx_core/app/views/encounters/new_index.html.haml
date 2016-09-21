@@ -1,0 +1,27 @@
+- content_for(:subheader) do
+  .row.center.add-new.newtestoptions.collapse
+    .col.pe-10
+      %h2
+        = link_to test_orders_path, class: 'side-link', title: I18n.t('views.back') do
+          = image_tag "arrow-left-white.png"
+        = I18n.t('encounters.new_index.new_tests')
+
+
+.row
+  .optionsarea
+    %header 
+      %h3
+        = I18n.t('encounters.new_index.select_option')
+    %ul.nav-list
+      %li{'data-href' => new_encounter_path(mode: 'fresh_tests')}
+        %span
+          = I18n.t('encounters.new_index.new_test_order')
+        .text-small.muted
+          %i
+            = I18n.t('encounters.new_index.order_diagnostic_test')
+      %li{'data-href' => new_encounter_path(mode: 'existing_tests')}
+        %span
+          = I18n.t('encounters.new_index.reported_test')
+        .text-small.muted
+          %i
+            = I18n.t('encounters.new_index.organise_test_result')

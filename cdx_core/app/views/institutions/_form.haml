@@ -1,0 +1,68 @@
+= form_for(@institution) do |f|
+  = validation_errors @institution
+  - if @institution.new_record?
+    .row.centered.institution-container
+      .col
+        = f.radio_button :kind, "health_organization", checked: @institution.kind == "health_organization", class: 'institution'
+        .institution-option
+          = image_tag "ic-health-organization.png"
+          %h4
+            = I18n.t('institutions.form.health_org')
+          %p
+            = I18n.t('institutions.form.work_for_health_org')
+          .institution-radio
+            %label{for: "institution_kind_health_organization"}
+              .btn-add
+                = image_tag "arrow-down.png"
+      .col
+        = f.radio_button :kind, "institution", checked: @institution.kind == "institution", class: 'institution'
+        .institution-option
+          = image_tag "ic-institution.png"
+          %h4
+            = I18n.t('institutions.form.institution')
+          %p
+            = I18n.t('institutions.form.work_in_institution')
+          .institution-radio
+            %label{for: "institution_kind_institution"}
+              .btn-add
+                = image_tag "arrow-down.png"
+  .institution-name
+    .row
+      .col.px-1
+        = f.label :name, I18n.t('institutions.form.name'), :class => 'block'
+      .col
+        = f.text_field :name, readonly: @readonly, :class => 'input-block'
+    - if not f.object.new_record?
+      .row
+        .col.px-1
+          = label_tag "kind", I18n.t('institutions.form.type'), :class => 'block'
+        .col
+          .value= f.object.kind.humanize.titleize
+    .row
+      .col.pe-2= f.label :ftp_hostname, I18n.t('institutions.form.ftp')
+      .col.pe-2= f.text_field :ftp_hostname, placeholder: I18n.t('institutions.form.host')
+      .col.pe-2= f.number_field :ftp_port, min: 0, max: 65535, placeholder: I18n.t('institutions.form.port')
+      .col.pe-1
+        = f.label :ftp_passive, I18n.t('institutions.form.passive')
+      .col.pe-1
+        = f.check_box :ftp_passive
+        = f.label :ftp_passive, "&nbsp;".html_safe
+      .col.pe-2= f.text_field :ftp_directory, placeholder: I18n.t('institutions.form.folder')
+    .row{style: 'visibility:hidden; height: 1px'}
+      .col.pe-2= f.label :fake_username, I18n.t('institutions.form.login')
+      .col.pe-2= text_field :fake_username, placeholder: I18n.t('institutions.form.username'), autocomplete: 'on'
+      .col.pe-2= f.password_field :fake_password, value: '', placeholder: I18n.t('institutions.form.password'), autocomplete: 'off'
+    .row
+      .col.pe-2= f.label :ftp_username, I18n.t('institutions.form.login')
+      .col.pe-2= f.text_field :ftp_username, placeholder: I18n.t('institutions.form.username'), autocomplete: 'off'
+      .col.pe-2= f.password_field :ftp_password, value: @institution.ftp_password, placeholder: I18n.t('institutions.form.password'), autocomplete: 'off'
+
+    .row.button-actions
+      .col
+        - unless @readonly
+          = f.submit I18n.t('views.save'), class: 'btn-primary'
+
+        = link_to (@readonly ? I18n.t('views.back') : I18n.t('views.cancel')), (@institutions.one? ? dashboard_path : institutions_path), class: 'btn-link'
+
+        - if @can_delete
+          = confirm_deletion_button @institution

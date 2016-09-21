@@ -1,0 +1,269 @@
+/* =============================================================================
+  LAYOUT
+============================================================================= */
+
+iframe
+{
+  margin:0;
+  padding:0;
+  border:none;
+  overflow:hidden;
+  position:absolute;
+}
+
+body {
+  font-family: $sans;
+  font-size: 90%;
+}
+
+.wrapper {
+  @include flexbox();
+  @include flex-direction(column);
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  height: 100%;
+  min-width: 1330px;
+}
+
+header {
+  @include flex(none);
+  -webkit-box-flex: 0;
+  background: $gray-dark;
+  height: 60px;
+  padding: 0 1em;
+
+  .row {
+    height: 100%;
+    @include flex-flow(row nowrap);
+    @include justify-content(center);
+    @include align-items(center);
+
+    .logo {
+      img {
+        max-width: inherit !important;
+      }
+    }
+
+    nav {
+      @include align-self(stretch);
+      @include flex-grow(2);
+      margin-left: 38px;
+
+      ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+          display: inline;
+          padding: 0;
+          margin: 0;
+
+          &.active a {
+            color: $white;
+            height: 60px;
+          }
+        }
+      }
+
+      a {
+        color: $white-dark;
+        font-family: $sanstitle;
+        line-height: 60px;
+        font-size: 14px;
+        font-weight: 400;
+        text-transform: uppercase;
+        display: inline-block;
+        padding: 0 20px;
+      }
+    }
+  }
+
+}
+
+.user {
+  color: $white-dark;
+  position: relative;
+  outline: 0 !important;
+
+  span {
+    cursor: pointer;
+  }
+
+  ul {
+    border-radius: 3px;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.4);
+    background: $white;
+    margin-top: 20px;
+    width: 100%;
+    padding: 2px;
+    position: absolute;
+    right: 0;
+    min-width: 150px;
+    visibility: hidden;
+    z-index: 1;
+    transition: visibility 0.2s;
+
+    a {
+      border-radius: 3px;
+      color: $gray-xdark;
+      display: block;
+      padding: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      &:hover {
+        background: $white-light;
+        color: $black;
+      }
+    }
+  }
+  
+  form {
+    padding: 10px;
+    color: $gray-xdark;
+    select {
+      option {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 14.3999996185303px;
+        font-weight: normal;
+      }
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14.3999996185303px;
+      font-weight: normal;
+    }
+  }
+
+  // &:focus {
+    // pointer-events: none;
+    // ul {
+      // opacity: 1;
+      // visibility: visible;
+      // pointer-events: auto;
+    // }
+  // }
+  
+}
+
+.show-nav-menu {
+  ul {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.content {
+  @include flex(1 0 auto);
+  padding: 1.5em 1em;
+}
+
+footer {
+  @include flex(none);
+  border-top: 1px solid $white-light;
+  font-size: 90%;
+  padding: 0.5em 1em;
+}
+
+// Devise ---------------------------------------------------------//
+
+
+.devise {
+    background: $gray1;
+  .content {
+    @include flexbox();
+    @include align-items(center);
+    @include justify-content(center);
+  }
+}
+
+.devise-box {
+  background: $white;
+  border-radius: 3px;
+  padding: 25px;
+  min-width: 440px;
+
+  h1 {
+    color: $black;
+    margin: 0;
+    padding: 0 0 25px 0;
+
+    & + p {
+      color: $gray3;
+    }
+  }
+
+  a {
+    color: $blue;
+  }
+}
+
+.message {
+  text-align: center;
+
+  h1 {
+    color: $black;
+
+    small {
+      font-family: $sans;
+      font-size: 50%;
+      display: block;
+    }
+  }
+}
+
+.content.row {
+  padding: 0;
+}
+
+#context_side_bar {
+  padding: 0;
+  display: none;
+}
+
+
+
+// New Navigation Bar ---------------------------------------------------------//
+
+.show-navigation-context-picker #context_side_bar .search-sites {
+  padding-left:16px !important;
+}
+
+.wrapper #context_side_bar{
+background:#555354;
+}
+
+.sites-tree-view .selected::before {
+background:#e06023;
+}
+
+.show-navigation-context-picker #context_side_bar .search-sites {
+background:#555;
+color:#fff;
+
+}
+
+.sites-tree-view li.expanded > a > button {
+    background: transparent url("/assets/arr-select-down-inv-901cf5db9d4969e8e0b2192aed57309c.png") no-repeat scroll center 50%;
+}
+
+.sites-tree-view li button,
+.sites-tree-view li.selected > a > button {
+    background: transparent url("/assets/arr-select-right-inv-17a8a9c40b80687c153e5f8fd2cf8528.png") no-repeat scroll center center;
+}
+
+.sites-tree-view li.expanded > a > button {
+    background: transparent url("/assets/arr-select-down-inv-901cf5db9d4969e8e0b2192aed57309c.png") no-repeat scroll center 50%;
+}
+
+
+.sites-tree-view li ul{
+border:0px;
+}
+
+
+#context_side_bar {
+overflow-y:auto;
+}
+
+#contentcontainer {
+overflow:auto;
+}

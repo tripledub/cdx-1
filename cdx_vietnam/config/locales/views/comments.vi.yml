@@ -1,0 +1,18 @@
+vi:
+  comments:
+    show:
+      header:
+        comment: 'Nhận xét cho bệnh nhân %{patient_name}'
+    create:
+      audit_comment: 'Nhận xét mới đã được thêm'
+      created_ok: 'Nhận xét đã được tạo thành công'
+      comment_ok: 'Nhận xét đã được thêm vào'
+    permissions:
+      deny: "Bạn không thể thêm Nhận xét cho bệnh nhân này"
+    new:
+      new_comment: 'Nhận xét mới'
+      comment_detail: 'Chi tiết Nhận xét'
+    form:
+      description: 'Mô tả'
+      comment: 'Nhận xét'
+      image: 'Hình ảnh'

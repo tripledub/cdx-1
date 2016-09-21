@@ -1,0 +1,12 @@
+- content_for(:subheader) do
+  .row.center.add-new
+    .col.pe-10
+      .row
+        .col
+          %h2
+            - unless @institutions.size == 0
+              = link_to institutions_path, class: 'side-link', title: I18n.t('views.back') do
+                = image_tag "arrow-left-white.png"
+            = I18n.t('institutions.new.new_institution')
+
+= render 'form'

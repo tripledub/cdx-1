@@ -1,0 +1,36 @@
+= form_for(filter) do |f|
+  - if filter.errors.any?
+    #error_explanation
+      %p
+        = "#{I18n.t('filters.form.error', count: filter.errors.count)} #{I18n.t('filters.form.error_explan')}"
+      %ul
+        - filter.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.fields_for(:query) do |p|
+    - filter.query.each do |key, value|
+      = p.hidden_field key, value: value
+
+  .row
+    .col.pe-2
+      %label
+        = I18n.t('filters.form.lbl_site')
+    .col
+      #{site.try(:name)}
+  .row
+    .col.pe-2
+      %label
+        = I18n.t('filters.form.lbl_condition')
+    .col
+      #{condition}
+  .row
+    .col.pe-2
+      = f.label :name, :class => 'block'
+    .col
+      = f.text_field :name
+  .row.button-actions
+    .col
+      = f.submit class: "btn-primary"
+      = link_to I18n.t('views.cancel'), filters_path, class: 'btn-link'
+      - if @editing
+        = confirm_deletion_button filter, 'filter'

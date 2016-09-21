@@ -1,0 +1,6 @@
+%h3
+  = I18n.t('home.index.cdp_home')
+
+- unless current_user
+  = I18n.t('home.index.pls')
+  = link_to I18n.t('home.index.sign_in'), new_session_path(:user)

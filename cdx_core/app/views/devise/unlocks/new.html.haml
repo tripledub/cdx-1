@@ -1,0 +1,13 @@
+.row
+  .col
+    %h1
+      = I18n.t('devise.unlocks.new.resend_unlock')
+= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|
+  .row
+    .col
+      = f.email_field :email, autofocus: true, placeholder: 'Email', class: "input-block"
+  %br
+  .row
+    .col
+      = f.submit I18n.t('devise.unlocks.new.btn_resend'), class: "btn-secondary input-block"
+= devise_error_messages!

@@ -1,0 +1,13 @@
+- content_for(:subheader) do
+  .row.center.filters
+    .col.pe-10
+      .row
+        .col
+          %h1
+            = I18n.t('users.no_data_allowed.users_header')
+.row
+  .col
+    = empty_data icon: 'icon-outline-user xx-large' do |c|
+      - c.body do
+        %h1 
+          = I18n.t('users.no_data_allowed.no_access')

@@ -1,0 +1,5 @@
+vi:
+  patient_logs:
+    show:
+      header: 'Lịch sử'
+      view_test: 'Nhấp vào đây để hiển thị yêu cầu xét nghiệm.'

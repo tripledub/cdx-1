@@ -1,0 +1,28 @@
+- content_for(:subheader) do
+  .row.center.edit.collapse.deviceModels
+    .col.pe-10
+      %h2
+        = I18n.t('device_models.index.device_models')
+      - if has_access?(@navigation_context.institution, Policy::Actions::REGISTER_INSTITUTION_DEVICE_MODEL)
+        = link_to I18n.t('device_models.index.lnk_new_device'), new_device_model_path, class: 'btn-add side-link fix', title: I18n.t('device_models.index.add_device_model')
+
+  .testflow
+    .container
+      .row.paginationHeader
+        - if @device_models.empty?
+          = empty_data title: I18n.t('device_models.index.no_device_models'), icon: 'icon-outline-instructions xx-large' do |c|
+            - c.body do
+              %h1
+                = I18n.t('device_models.index.there_are_no_device_models')
+              %p
+                = I18n.t('device_models.index.create_device_models')
+        - else
+          .small-12.columns
+            %header
+              = image_tag('img/user.png')
+              %h3
+                = I18n.t('device_models.index.device_model', count: @total)
+            .box-content
+              = react_component "DeviceModelsIndexTable", deviceModels: Presenters::DeviceModels.index_table(@device_models, current_user), orderBy: @order_by
+              .pagination
+                = render 'shared/pagination'

@@ -1,0 +1,7 @@
+en:
+  alert_mailer:
+    alert_email:
+      h1: 'Alert notification for'
+      msg: 'Raised at'
+      email_text: 'Alert occurred'
+      time_occured: 'Time occurred'

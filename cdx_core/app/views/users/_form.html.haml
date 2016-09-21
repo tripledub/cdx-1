@@ -1,0 +1,67 @@
+= form_for(@user) do |f|
+  .row.labelHeader 
+    .col-6
+      %h3
+        = I18n.t('users.form.user_details_header')
+    .col-6
+  .panel.box-content
+    .row
+      .col.flexStart
+        .row
+          .col.pe-2
+            = f.label :name
+          .col
+            .value= f.object.full_name
+        .row
+          .col.pe-2
+            = f.label :email
+          .col
+            .value= f.object.email
+        .row
+          .col.pe-2
+            = f.label :telephone
+          .col
+            .value= f.object.telephone
+        .row
+          .col.pe-2
+            = f.label :roles
+          .col
+            .value
+              = react_component 'OptionList', chosenOnes: @user_roles, callback: "/users/#{@user.id}/assign_role", autocompleteCallback: "/roles/autocomplete"
+      .col
+        .box.small.gray
+          - if @can_update
+            .row
+              .col.pe-2
+                = f.label :is_active
+              .col
+                = f.check_box :is_active, class: 'power'
+                %label{:for => 'user_is_active'}
+                  = I18n.t('users.form.can_access')
+          .row
+            .col.pe-2
+              = f.label :last_sign_in_at
+            .col
+              .value= Presenters::Users.show_last_activity(f.object)
+
+          - if @can_update
+            .row
+              .col.pe-2
+                %label
+                  = I18n.t('users.form.resend_invite')
+              .col
+                .value
+                  = link_to I18n.t('users.form.send'), 'resend_invite', class: 'btn-link'
+            .row
+              .col.pe-2
+                %label
+                  = I18n.t('users.form.remove_user')
+              .col
+                .value
+                  = link_to I18n.t('users.form.remove'), 'remove', class: 'btn-link'
+
+  - if @can_update
+    .row.button-actions
+      .col
+        = f.submit I18n.t('views.save'), class: 'btn-primary'
+        = link_to I18n.t('views.cancel'), users_path,  class: 'btn-link'

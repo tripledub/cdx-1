@@ -1,0 +1,75 @@
+en:
+  devices:
+    show:
+      performance: 'Performance'
+      setup: 'Setup'
+    performance:
+      explore_tests: 'Explore tests'
+      or: 'or'
+      logs: 'Logs'
+    new:
+      new_device: 'New Device'
+    form:
+      title_institution: 'Institution'
+      lbl_device_model: 'Device model'
+      lbl_site: 'Site'
+      lbl_name: 'Name'
+      lbl_serial_number: 'Serial number'
+      lbl_time_zone: 'Time zone'
+      none: 'None'
+      save: 'Save'
+      delete: 'Delete'
+      confirm_delete: 'You are about to permanently delete this device. This action CANNOT be undone. Are you sure you want to proceed?'
+    index:
+      no_devices: 'There are no devices reporting at %{entity_name}'
+      configuration_steps: 'Follow the configuration steps to connect a device and start reporting'
+      device:
+        zero: 'No devices'
+        one: '1 device'
+        other: '%{count} devices'
+      download_csv: 'Download CSV'
+      name: 'Name'
+      manufacturer: 'Manufacturer'
+      model: 'Model'
+      site: 'Site'
+      devices: 'Devices'
+    setup:
+      setup_header: 'Setup'
+      setup_text: 'The Device Id and Secure Key allow your device to identify itself with CDx.'
+      activation_token: 'Activation token'
+      device_id: 'Device Id'
+      secret_key: 'Secret key'
+      setup_details: 'Setup Details'
+    token:
+      token_header: 'Activation token generated'
+      token: 'Token:'
+      warning: 'This token can be used only once. It will be valid as long as device secret key does not change.'
+      go_back: 'Ok, understood, go back'
+      last_time: 'This is the last time you will be able to view the token. Please keep it safe'
+    filters:
+      header: 'Devices'
+      add_device: 'Add Device'
+      show_filters: 'Show filters'
+      manufacturer: 'Manufacturer'
+      model: 'Model'
+      show_all: 'Show all'
+    device_card:
+      institution: 'Institution: %{institution_name}'
+      edit: 'Edit'
+      serial_number: 'Serial no. %{serial_number}'
+      located_at: 'Device located at '
+      device_details: 'Device Details            '
+    activation_token:
+      reactivate: 'Reactivate'
+      confirm: 'Are you sure?'
+    custom_mappings:
+      custom_fields: 'Custom fields'
+      how_to_use: "Specify how you use some of the device's fields"
+      device_field: 'I use the device field'
+      to_enter: 'to enter the'
+      none: 'none'
+      alert_error: "The manifest's custom fields definition seems to be out of date. Please contact the device manufacturer or the system administrator to update it."
+    secret_key:
+      warning: 'This is the last time you will be able to view this key. Please keep it safe.'
+      regenerate_key: 'Regenerate key'
+      confirm: 'Are you sure?'

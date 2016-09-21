@@ -1,7 +1,8 @@
 !!!
 %html
   %head
-    %title Connected Diagnostics Platform
+    %title
+      = I18n.t('layout.header.meta_title')
     = Gon::Base.render_data({})
     = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag "es5-shim" if Rails.env.test?
@@ -16,7 +17,7 @@
             = image_tag 'cdx-logo.png'
           - unless Settings.single_tenant
             .col
-              = link_to "Create an account", new_registration_path(:user), :class => 'btn-primary pull-right'
+              = link_to I18n.t("sessions.new.create_account"), new_registration_path(:user), :class => 'btn-primary pull-right'
 
 
       = flash_message

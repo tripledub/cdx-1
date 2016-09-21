@@ -1,0 +1,124 @@
+= form_for(@site) do |f|
+  = validation_errors @site
+
+  .row.labelHeader
+    .col-6
+      %h3
+        = I18n.t('sites.form.site_details_header') 
+    .col-6
+  .panel.box-content
+    .col.pe-6
+      .row
+        .col.pe-2
+          %div.tooltip
+            = f.label I18n.t('sites.form.label.institution')
+            %div.tooltiptext_r
+              = I18n.t('sites.form.tooltip.institution') 
+        .col
+          .value= f.object.institution
+
+      .row
+        .col.pe-2
+          %div.tooltip
+            = f.label I18n.t('sites.form.label.name')
+            %div.tooltiptext_r 
+              = I18n.t('sites.form.tooltip.name')
+        .col
+          = f.text_field :name, :class => 'input-large'
+      - if @site.new_record? || @can_move
+        .row
+          .col.pe-2
+            %div.tooltip
+              = f.label I18n.t('sites.form.label.parent')
+              %div.tooltiptext_r 
+                = I18n.t('sites.form.tooltip.parent')
+          .col
+            = cdx_select form: f, name: :parent_id, class: 'input-large' do |select|
+              - select.item "", I18n.t('sites.form.none')
+              - select.items @sites, :id, :name
+      - elsif @site.parent
+        .row
+          .col.pe-2
+            %div.tooltip
+              = f.label I18n.t('sites.form.label.parent')
+              %div.tooltiptext_r 
+                = I18n.t('sites.form.tooltip.parent')
+          .col
+            = @site.parent.name
+
+    .col.pe-2
+      - unless @site.new_record?
+        = render 'side'
+
+    = render partial: "shared/address", :locals => { :f => f , model_type: "site"}
+    .row
+      .col.pe-2
+        %div.tooltip
+          = f.label I18n.t('sites.form.label.sample_id_reset_policy')
+          %div.tooltiptext_r 
+            = I18n.t('sites.form.tooltip.sample_id_reset_policy')
+      .col
+        = cdx_select form: f, name: :sample_id_reset_policy, class: 'input-large sample-id-reset' do |select|
+          - select.item "yearly", I18n.t('sites.form.yearly')
+          - select.item "monthly", I18n.t('sites.form.monthly')
+          - select.item "weekly", I18n.t('sites.form.weekly')
+    .row
+      .col.pe-2
+        %div.tooltip
+          = f.label I18n.t('sites.form.label.allows_manual_entry')
+          %div.tooltiptext_r 
+            = I18n.t('sites.form.tooltip.allows_manual_entry')
+      .col
+        = f.check_box :allows_manual_entry
+        %label{for: 'site_allows_manual_entry'} &nbsp;
+    .row
+      .col.pe-2
+        %div.tooltip
+          = f.label I18n.t('sites.form.label.main_phone_number')
+          %div.tooltiptext_r 
+            = I18n.t('sites.form.tooltip.main_phone_number')
+      .col
+        = f.text_field :main_phone_number, :class => 'input-large'
+    .row
+      .col.pe-2
+        %div.tooltip
+          = f.label I18n.t('sites.form.label.email_address')
+          %div.tooltiptext_r 
+            = I18n.t('sites.form.tooltip.email_address')
+      .col
+        = f.email_field :email_address, :class => 'input-large'
+
+    .row
+      .col.pe-2
+        %div.tooltip
+          = f.label I18n.t('sites.form.label.comment')
+          %div.tooltiptext_r 
+            = I18n.t('sites.form.tooltip.comment')
+      .col
+        = f.text_area :comment, rows: 5, cols: 40
+
+
+    .row.button-actions
+      .col
+        = f.submit I18n.t('views.save'), class: 'btn-primary'
+        = link_to I18n.t('views.cancel'), sites_path, class: 'btn-link'
+        - if @can_delete
+          - if @can_be_deleted
+            = confirm_deletion_button @site, 'site'
+          - else
+            - # TODO: link to page with Devices tab always active - it's the current default, but may change
+            = link_to I18n.t('sites.form.delete'), '#', data: { confirm: "#{I18n.t('sites.form.in_order_to_delete')} <a href=\"#{edit_site_path(@site)}\"> #{I18n.t('sites.form.device_count', count: @site.devices.count)}</a> #{I18n.t('sites.form.assigned')}", confirm_title: I18n.t('sites.form.action_required'), confirm_hide_cancel: 'true', confirm_button_message: I18n.t('sites.form.understood') }, class: 'btn-secondary pull-right', title: 'Delete Site'
+
+:coffeescript
+  $ ->
+    cdx_select_on_change "site[parent_id]", (parent_id) ->
+      if parent_id? && (Number(parent_id) > 0)
+        $.get '/sites/' + parent_id, (result) ->
+          return unless result?
+          if result.allows_manual_entry
+            $("#site_allows_manual_entry").prop('checked', true)
+          else
+            $("#site_allows_manual_entry").prop('checked', false)
+          sample_id_reset_policy = result.sample_id_reset_policy.charAt(0).toUpperCase() + result.sample_id_reset_policy.slice(1)
+          $( "input[name='site[sample_id_reset_policy]']" ).val(result.sample_id_reset_policy)
+          $('.sample-id-reset .Select-placeholder').text(sample_id_reset_policy)

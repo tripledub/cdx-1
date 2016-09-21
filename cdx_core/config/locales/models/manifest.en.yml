@@ -1,0 +1,24 @@
+en:
+  activerecord:
+    attributes:
+      site:
+        parent: 'Parent site'
+        reset_start_date: 'reset policy start date not implemented'
+        reset_end_date: 'reset policy end date not implemented'
+        must_match: 'must match parent site institution'
+  models:
+    manifest:
+      unsupported_source_data_type: "unsupported source data type"
+      cant_be_blank: "can't be blank"
+      must_be: "must be"
+      must_be_a_json_array: "must be a json array"
+      must_be_a_non_empty: "must be a non-empty json array"
+      must_be_a_json_string: "must be a json string array"
+      must_be_in_snake_case: "must be in snake case:"
+      must_include: "must include"
+      field: "field"
+      must_be_a_json_object: "must be a json object"
+      field_cant_specify: ". Field can't specify a type."
+      a_scope_must_be_specified: ". A scope must be specified."
+      scope: ". Scope"
+      is_invalid: "is invalid."

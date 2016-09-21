@@ -1,0 +1,22 @@
+.row
+  .col
+    %h1
+      = I18n.t('devise.passwords.new.login_problems')
+    %p
+      = I18n.t('devise.passwords.new.enter_email')
+= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+  .row
+    .col
+      = f.email_field :email, autofocus: true, placeholder: 'Email', class: "input-block"
+  %br
+  .row
+    .col
+      = f.submit I18n.t('devise.passwords.new.btn_request_pass_reset'), class: "btn-secondary input-block"
+  .row
+    .col
+      = link_to I18n.t('devise.passwords.new.lnk_remembered_pass'), new_session_path(resource_name), class: "pull-right"
+      %br
+      = link_to I18n.t('devise.passwords.new.lnk_didnt_receive_instruction'), new_confirmation_path(resource_name), class: "pull-right"
+      %br
+      = link_to I18n.t('devise.passwords.new.lnk_didnt_receive_unlock'), new_unlock_path(resource_name), class: "pull-right"
+= devise_error_messages!

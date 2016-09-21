@@ -1,0 +1,7 @@
+<p><%= I18n.t('devise.mailer.unlock_instructions.hello_txt') %> <%= @resource.email %>!</p>
+
+<p><%= I18n.t('devise.mailer.unlock_instructions.msg_acc_locked') %></p>
+
+<p><%= I18n.t('devise.mailer.unlock_instructions.msg_unlock') %></p>
+
+<p><%= link_to I18n.t('devise.mailer.unlock_instructions.lnk_unlock'), unlock_url(@resource, unlock_token: @token) %></p>

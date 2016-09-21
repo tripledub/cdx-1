@@ -1,0 +1,14 @@
+vi:
+  alerts:
+    index:
+      alerts: 'Thông báo'
+      your_team: 'Thông báo cho nhóm của bạn về những nội dung quan trọng'
+      messages_sent: 'Thông báo đã được gửi'
+      incidents: 'Sự cố'
+
+    filters:
+      btn_add_alert: 'Thêm cảnh báo'
+      alert_group: 'Nhóm cảnh báo'
+
+    new:
+      new_alert: 'Cảnh báo mới'

@@ -1,0 +1,12 @@
+- content_for(:subheader) do
+  .testflow.testOrder
+    .container
+      .row.labelHeader
+        .col-6
+          %h3
+            - if params[:mode] == 'existing_tests'
+              = I18n.t('encounters.new.existing_test', patient_name: patient_display_name(@patient.name))
+            - else
+              = I18n.t('encounters.new.new_test', patient_name: patient_display_name(@patient.name))
+
+= react_component('EncounterNew', context: encounter_context(@navigation_context), patient_id: @patient.id, mode: params[:mode], possible_assay_results: @possible_assay_results, referer: @return_path_encounter)

@@ -1,0 +1,51 @@
+vi:
+  device_models:
+    index:
+      device_model:
+        zero: 'Không có kiểu thiết bị nào'
+        one: '1 kiểu thiết bị'
+        other: '%{count} kiểu thiết bị'
+      add_device_model: 'Thêm kiểu thiết bị'
+      device_models: 'Kiểu thiết bị'
+      no_device_models: 'Không có kiểu thiết bị nào'
+      there_are_no_device_models: 'Không có kiểu thiết bị nào'
+      create_device_models: 'Tạo các kiểu thiết bị và công bố các bản kê khai để cho phép báo cáo xét nghiệm trên hệ thống CDx.'
+      lnk_new_device: 'Kiểu thiết bị mới'
+
+    form:
+      header_device_model: 'Chi tiết kiểu thiết bị'
+      icon_upload: 'Chọn một tập tin để tải lên'
+      lnk_download: 'tải về'
+      upload_msg: 'Chỉ cho phép tập tin PDF dưới 5MB'
+      drop_picture: 'Bỏ một hình ảnh tại đây'
+      upload_file: 'hoặc nhấp để tải lên'
+      btn_save: 'Lưu'
+      btn_delete: 'Xóa'
+      delete_msg: 'Bạn có chắc bạn muốn xóa kiểu thiết bị này không? Tất cả thiết bị sử dụng kiểu thiết bị này cũng sẽ bị xóa, cùng với bất kỳ xét nghiệm đã được tải lên.'
+      lbl_institution: 'Tổ chức'
+      lbl_name: 'Tên'
+      lbl_setup: 'Hướng dẫn thiết lập'
+      lbl_support: 'Hỗ trợ kích hoạt'
+      lbl_support_url: 'Hỗ trợ liên kết URL'
+      lbl_support_ftp: 'Hỗ trợ phương thức truyền tập tin FTP'
+      lbl_filename: 'Tên tập tin mẫu'
+      lbl_definition: 'Định nghĩa'
+
+    publish:
+      is_published: 'Kiểu thiết bị này đã được công bố; tất cả tổ chức trong CDX có thể đăng ký sử dụng nó.'
+      can_publish: 'Bạn có thể lấy lại nó miễn là không có thiết bị bên ngoài tổ chức sử dụng kiểu thiết bị này.'
+      btn_withdraw: 'Lấy lại'
+      not_yet_published: 'Kiểu thiết bị này chưa được công bố; chỉ những thiết bị mà nhà sản xuất tạo ra mới được dúng kiểu này.'
+      can_publish_msg: 'Công bố nó sẽ làm cho nó sẵn sàng cho tất cả tổ chức trong CDX.'
+      btn_publish: 'Công bố'
+
+    edit:
+      edit_device: 'Đang chỉnh sửa kiểu thiết bị'
+
+    new:
+      new_device: 'Kiểu thiết bị mới'
+
+    show:
+      version: 'Phiên bản:'
+      manufacturer: 'Nhà sản xuất:'
+      definition: 'Định nghĩa:'

@@ -1,0 +1,37 @@
+en:
+  roles:
+    filters:
+      roles_title: 'Roles'
+      add_roles: "Add Roles"
+      add_role_title: "Add Role"
+      name: 'Name'
+    index:
+      role:
+        zero: 'No roles created yet'
+        one: '1 Role'
+        other: '%{count} Roles'
+    create:
+      success: 'Role was successfully created.'
+    update:
+      success: 'Role was successfully updated.'
+    destroy:
+      success: 'Role was successfully deleted.'
+    form:
+      sites: 'Site'
+      institution: 'Institution'
+      role_details: 'Role Details'
+      role_name: 'Role Name'
+      accessible_institution_tooltip: 'Which Institution this Role applies to.'
+      accessible_site_tooltip: 'Which Site within the Institution this Role Applies to.'
+      policies: 'Policies'
+      policies_tooltip: 'Policies grant users permisions over specific resources'
+      policies_small_muted: 'Policies grant users permisions over specific resource'
+      prohibited: 'prohibited this role from being saved:'
+      choose_one: "Choose one"
+      error: 'error'
+      name: 'Name'
+      error_count:
+        one: '1 error'
+        other: '%{count} errors'
+    new:
+      new_role: 'New Role'

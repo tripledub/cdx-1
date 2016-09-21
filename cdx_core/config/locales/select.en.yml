@@ -1,0 +1,100 @@
+en:
+  select:
+    default: Please Select
+    patient:
+      gender_options:
+        male: 'Male'
+        female: 'Female'
+        other: 'Other'
+    encounter:
+      testing_for_options:
+        tb: 'Tuberculosis'
+        hiv: 'H.I.V.'
+        ebola: 'Ebola'
+      status_options:
+        pending: 'Pending'
+        inprogress: 'In progress'
+        completed: 'Completed'
+    microscopy:
+      visual_appearance:
+        blood: 'Blood-stained'
+        mucopurulent: 'Mucopurulent'
+        saliva: 'Saliva'
+      test_result_options:
+        negative: 'Negative'
+        1to9: 'Results 1-9/100 HPF'
+        1plus: 'Results +'
+        2plus: 'Results ++'
+        3plus: 'Results +++'
+    culture:
+      media_options:
+        liquid: 'Liquid'
+        solid: 'Solid'
+      test_result_options:
+        ntm: 'Ntm'
+        contaminated: 'Contaminated'
+    dst_lpa:
+      dst_lpa_options:
+        not_selected: 'Please Select'
+        resistant: 'Resistant'
+        susceptible: 'Susceptible'
+        contaminated: 'Contaminated'
+        not_done: Not Done
+        not_selected_long: 'Please Select'
+        resistant_long: 'Resistant'
+        susceptible_long: 'Susceptible'
+        contaminated_long: 'Contaminated'
+        not_done_long: 'Not done'
+      method_options:
+        solid: 'Solid Media DST'
+        liquid: 'Liquid Media DST'
+        direct: 'Direct LPA'
+        indirect: 'Indirect LPA'
+    xpert:
+      tuberculosis:
+        detected: 'Detected'
+        not_detected: 'Not Detected'
+        invalid: 'Invalid / No result / Error'
+      rifampicin:
+        detected: 'Detected'
+        not_detected: 'Not Detected'
+        indeterminate:  'Indeterminate result'
+      trace:
+        very_low: 'Very low'
+        low: 'Low'
+        medium: 'Medium'
+        high: 'High'
+    user:
+      status_options:
+        show_all: 'Show all'
+        active: 'Active'
+        blocked: 'Blocked'
+    episode:
+      hiv_status:
+        positive_tb: 'Positive'
+        negative_tb: 'Negative'
+        unknown: 'Unknown'
+      history:
+        new: 'New Patients'
+        previous: 'Previously Treated'
+        unknown: 'Unknown Previously'
+        relapsed: 'Relapsed Treatment Aft.'
+        loss: 'Loss to follow-up'
+        other: 'Other previous treatments'
+      treatment_outcome:
+        cured: 'Cured'
+        completed: 'Treatment completed'
+        failed: 'Treatment failed'
+        died: 'Died'
+        lost_to_follow_up: 'Lost to follow-up'
+        not_evaluated: 'Not evaluated'
+        success: 'Treatment success'
+        in_error: 'Episode raised in error'
+        other: 'Other'
+      drug_resistance:
+        mono: 'Monoresistance'
+        poly: 'Polydrug resistance'
+        multi: 'Multidrug resistance'
+        extensive: 'Extensive drug resistance'
+        rif: 'Rifampicin resistance'
+        unknown: 'Unknown'

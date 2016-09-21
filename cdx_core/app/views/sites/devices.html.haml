@@ -1,0 +1,22 @@
+- if @site.devices.empty?
+  %span This site has no devices yet
+- else
+  = cdx_table title: 'Devices' do |t|
+    - t.columns do
+      %col{:width => "40%"}
+      %col{:width => "40%"}
+      %col{:width => "20%"}
+    - t.thead do
+      %tr
+        %th 
+          = I18n.t('sites.devices.name')
+        %th 
+          = I18n.t('sites.devices.model')
+        %th 
+          = I18n.t('sites.devices.site')
+    - t.tbody do
+      - @site.devices.each do |device|
+        %tr{data: (@devices_to_edit.include?(device.id) ? {href: edit_device_path(device) } : {})}
+          %td= device.name
+          %td= device.device_model.name
+          %td= device.site.try(:name)

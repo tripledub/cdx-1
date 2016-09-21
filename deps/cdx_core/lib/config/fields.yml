@@ -113,18 +113,6 @@ entities:
         pii: true
       phone:
         pii: true
-  location: &LOCATION
-    fields:
-      id:
-        searchable: true
-      parents:
-        searchable: true
-        multiple: true
-      admin_levels:
-        type: dynamic
-        searchable: true
-      lat:
-      lng:
   encounter: &ENCOUNTER
     allows_custom: true
     fields:
@@ -176,8 +164,6 @@ test:
     <<: *SITE
   patient:
     <<: *PATIENT
-  location:
-    <<: *LOCATION
   encounter:
     <<: *ENCOUNTER
 encounter:

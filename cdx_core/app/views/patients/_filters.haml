@@ -1,0 +1,52 @@
+- content_for(:subheader) do
+  %div.filterbar.filterbartest
+    .heading
+      .title
+        = I18n.t('patients.filters.patients')
+      .topfilteropt
+        - if has_access?(@navigation_context.institution, Policy::Actions::CREATE_INSTITUTION_PATIENT)
+          = link_to I18n.t('patients.filters.add_patient'), new_patient_path, class: 'btn-add side-link fix', title: I18n.t('patients.filters.add_patient')
+
+
+
+  %form.filteroptions#filters-form{ action: patients_path, "data-auto-submit" => true }
+    %input{type: "hidden", name: "page_size", value: @page_size}
+    .row.custom_filters.center
+      .advanced.patientsFilter
+        .row
+          .filter
+            %label.block
+              = I18n.t('patients.filters.name')
+            %input.input-block{ type: "text", name: "name", value: params["name"] }
+          .filter
+            %label.block
+              = I18n.t('patients.filters.patient_id')
+            %input.input-block{ type: "text", name: "entity_id", value: params["entity_id"] }
+          .filter
+            %label.block
+              = I18n.t('test_results.filters.date_from')
+            %input#from_date{type: "date", name: "since_dob", value: params['since_dob']}
+          .filter
+            %label.block
+              = I18n.t('test_results.filters.date_to')
+            %input#to_date{type: "date", name: "until_dob", value: params['until_dob']}
+          .filter
+            %label.block
+              = I18n.t('patients.filters.address')
+            %input.input-block{ type: "text", name: "address", value: params["address"] }
+          .filter
+            %input#clear_button.btn-primary(type='button' value="#{I18n.t('patients.filters.clear_button')}")
+
+  :javascript
+    $(document).ready( function()
+    {
+      $('#clear_button').on('click', function()
+      {
+        $('input[name=name]').val('');
+        $('input[name=entity_id]').val('');
+        $('input[name=since_dob]').val('');
+        $('input[name=until_dob]').val('');
+        $('input[name=address]').val('');
+        $('#filters-form').submit();
+      });
+    });

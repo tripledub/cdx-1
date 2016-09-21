@@ -1,0 +1,58 @@
+.row#header-fixed
+  .logo
+    = image_tag 'cdx-logo.png'
+
+  - if @navigation_context.try(:entity)
+    %a#nav-context(href='#'){title: @navigation_context.name}
+      = I18n.t('layout.header_nav.menu_at')
+      = @navigation_context.name
+
+  %nav#nav-bar
+    - if current_user && !@hide_nav_bar
+      %ul
+        -# ------------ HOME
+        - if has_access?(TestResult, Policy::Actions::MEDICAL_DASHBOARD)
+          %li{:class => is_menu_item_active?('dashboards', request.params) }
+            = link_to I18n.t('layout.header_nav.home'), dashboard_path
+
+        -# ------------ PATIENTS
+        - if has_access_to_patients_index?
+          %li{:class => is_menu_item_active?('patients', request.params) }
+            = link_to I18n.t('layout.header_nav.patients'), patients_path
+
+        -# ------------ TEST Orders
+        - if has_access_to_test_orders_index?
+          %li{:class => is_menu_item_active?('test_orders', request.params) }
+            = link_to I18n.t('layout.header_nav.test_orders'), test_orders_path
+
+        -# ------------ TEST RESULTS
+        - if has_access_to_test_results_index?
+          %li{:class => is_menu_item_active?('test_results', request.params) }
+            = link_to I18n.t('layout.header_nav.test_results'), test_results_path
+
+
+        -# ------------ DEVICES
+        - if has_access_to_devices_index?
+          %li{:class => is_menu_item_active?('devices', request.params) }
+            = link_to I18n.t('layout.header_nav.devices'), devices_path
+
+        -# ------------ SETTINGS
+        - if has_access_to_settings?
+          %li{:class => is_menu_item_active?('settings', request.params) }
+            = link_to I18n.t('layout.header_nav.settings'), settings_path
+
+  .user{:tabindex => "0"}
+    - if current_user
+      %span.icon-user.medium.icon-gray-light{title: current_user.email}
+      %ul
+        - unless @hide_my_account #|| Settings.single_tenant
+          %li= link_to I18n.t('layout.header_nav.my_account'), edit_user_registration_path
+        - if current_user && !@hide_nav_bar
+          %li= link_to institution_name, institutions_path
+          %li= link_to I18n.t('layout.header_nav.api_tokens'), api_tokens_path
+          %li
+            %form
+              =select_tag "language", options_for_select(CdxLocalisation::Languages.active, current_user.locale), class: 'select_lang'
+        %li= link_to I18n.t('layout.header_nav.log_out'), destroy_session_path(:user), method: :delete
+    - else
+      = link_to I18n.t('layout.header_nav.log_in'), new_session_path(:user)

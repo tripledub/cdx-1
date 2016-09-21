@@ -1,0 +1,27 @@
+%h1
+  = "#{I18n.t('setup_instructions.setup_for')} #{@device.name}"
+
+%p
+  = I18n.t('setup_instructions.contact_for')
+  - if @device.device_model.supports_activation?
+    %b
+      = I18n.t('setup_instructions.activation_code')
+  - else
+    %b
+      = I18n.t('setup_instructions.secret_key')
+
+- if !@device.device_model.supports_activation?
+  %h2
+    = I18n.t('setup_instructions.device_id')
+  %p= @device.uuid
+  = image_tag attachments['device_id.png'].url
+
+- if @device.device_model.support_url.present?
+  %p
+    = I18n.t('setup_instructions.support')
+    = link_to @device.device_model.support_url, @device.device_model.support_url
+
+- if @device.device_model.setup_instructions.present?
+  %p
+    = I18n.t('setup_instructions.download')
+    = link_to I18n.t('setup_instructions.pdf'), absolute_url(@device.device_model.setup_instructions.url)

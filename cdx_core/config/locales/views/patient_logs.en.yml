@@ -1,0 +1,5 @@
+en:
+  patient_logs:
+    show:
+      header: 'History logs'
+      view_test: 'Click here to view the test order.'

@@ -1,0 +1,18 @@
+en:
+  paging_helper:
+    row:
+      zero: 'No rows'
+      one: '1 row'
+      other: '%{count} rows'
+    per_page: 'per page'
+  confirmation_helper:
+    btn_delete: 'Delete'
+    confirm_msg: "You're about to permanently delete this"
+    confirm_question: 'This action CANNOT be undone. Are you sure you want to proceed?'
+    cannot_delete: 'Cannot delete'
+    has_associated: 'has associated'
+  application_helper:
+    new: 'New'
+    edit: 'Edit'
+    edit_institution: 'Edit institutions'
+    show_institution: 'Show institutions'

@@ -1,0 +1,28 @@
+en:
+  api:
+    playground:
+      index:
+        playground: 'CDP - Playground'
+        submit_message: 'Submit message'
+        lbl_device: 'Device'
+        lbl_data: 'Data'
+        col_test_result: 'Test results to generate:'
+        col_start_date: 'Start date time:'
+        col_end_date: 'End date time:'
+        btn_create_msg: 'Create message'
+        query_result: 'Query results'
+        lbl_query_string: 'Query string'
+        lbl_query_body: 'Request Body'
+        btn_query: 'Query'
+        response: 'Response:'
+
+      simulator:
+        simulator: 'CDP - Simulator'
+        lbl_device: 'Device:'
+        lbl_patient: 'Patient name:'
+        lbl_gender: 'Gender:'
+        lbl_age: 'Age:'
+        lbl_phone: 'Patient telephone number:'
+        lbl_condition: 'Condition:'
+        lbl_result: 'Result:'
+        btn_simulate_test: 'Simulate test'

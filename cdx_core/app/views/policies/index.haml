@@ -1,0 +1,43 @@
+- content_for(:subheader) do
+  .row.center.filters
+    .col.pe-10
+      .row
+        .col
+          %h1
+            = link_to "+", new_policy_path, class: 'btn-add side-link fix', title: I18n.t('policies.index.add_policy')
+            = I18n.t('policies.index.policies_header')
+
+.row
+  .col
+    - if @policies.empty?
+      = empty_data title: I18n.t('policies.index.no_policies'), icon: 'icon-outline-user xx-large' do |c|
+        - c.body do
+          %h1 
+            = I18n.t('policies.index.no_user_access') 
+            = truncated_navigation_context_entity_name
+          %p 
+            = I18n.t('policies.index.invite_other_user')
+    - else
+      = cdx_table title: pluralize(@policies.count, "policy") do |t|
+        - t.columns do
+          %col{:width => "25%"}
+          %col{:width => "20%"}
+          %col{:width => "25%"}
+          %col{:width => "30%"}
+        - t.thead do
+          %tr
+            %th 
+              = I18n.t('policies.index.name_col')
+            %th 
+              = I18n.t('policies.index.policy_name')
+            %th 
+              = I18n.t('policies.index.user_col')
+            %th 
+              = I18n.t('policies.index.last_activity_col')
+        - t.tbody do
+          - @policies.each do |policy|
+            %tr
+              %td= policy.user.full_name
+              %td= link_to policy.name, edit_policy_path(policy)
+              %td= link_to policy.user.email, edit_policy_path(policy)
+              %td= last_activity(policy.user)

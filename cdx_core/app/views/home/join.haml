@@ -1,0 +1,26 @@
+.col.px-6
+  .email-logo.centered
+    = image_tag "cdx-logo-med.png"
+  .box.big.centered
+    = image_tag "user-invite.png"
+    %h2
+      = I18n.t('home.join.invite_join')
+    .button-actions
+      %a.btn-primary{:href => "#"}
+        = I18n.t('home.join.btn_create_acc')
+
+  .bottom-links.centered
+    .row
+      .col
+        = I18n.t('home.join.link_not_work')
+        %a.block{:href => "#"} http://cdx.org/confirm-email/809832498754
+
+    .row
+      .col
+        = I18n.t('home.join.copy_right')
+        %br
+        %a{:href => "#"}
+          = I18n.t('home.join.policy')
+        |
+        %a{:href => "#"}
+          = I18n.t('home.join.term')

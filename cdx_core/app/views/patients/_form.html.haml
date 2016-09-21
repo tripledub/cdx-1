@@ -1,0 +1,140 @@
+= form_for(@patient) do |f|
+  - unless params[:next_url].blank?
+    = hidden_field_tag :next_url, params[:next_url]
+
+  = validation_errors @patient
+
+  .row.header
+    .col.pe-2
+      %div.tooltip
+        = f.label :institution
+        %div.tooltiptext_r
+          = I18n.t('patients.form.institution_tooltip')
+    .col
+      .value= f.object.institution
+
+  = react_component 'PatientInputName', fieldValue: @patient.name, patientsSearchUrl: patient_search_index_path
+
+  .row.nickname
+    .col.pe-2
+      %div.tooltip
+        = f.label :nickname
+        %div.tooltiptext_r
+          = I18n.t('patients.form.nickname_tooltip')
+    .col
+      = f.text_field :nickname, :class => 'input-large'
+
+  .row
+    .col.pe-2
+      %div.tooltip
+        = f.label :social_security_code
+        %div.tooltiptext_r
+          = I18n.t('patients.form.social_security_code_tooltip')
+    .col
+      = f.text_field :social_security_code, :class => 'input-large'
+
+  .row
+    .col.pe-2
+      %div.tooltip
+        = f.label :medical_insurance_num
+        %div.tooltiptext_r
+          = I18n.t('patients.form.medical_insurance_num_tooltip')
+    .col
+      = f.text_field :medical_insurance_num, :class => 'input-large'
+
+  .row
+    .col.pe-2
+      %div.tooltip
+        = f.label :entity_id
+        %div.tooltiptext_r
+          = I18n.t('patients.form.entity_id_tooltip')
+    .col
+      = f.text_field :entity_id, :class => 'input-large', readonly: !@patient.new_record?
+
+  .row
+    .col.pe-2
+      %div.tooltip
+        = f.label :gender
+        %div.tooltiptext_r
+          = I18n.t('patients.form.gender_tooltip')
+    .col
+      = f.collection_select :gender, Patient.gender_options, :first, :last
+
+  .row
+    .col.pe-2
+      %div.tooltip
+        = f.label :birth_date_on
+        %div.tooltiptext_r
+          = I18n.t('patients.form.birthdate_tooltip')
+    .col
+      = f.date_select :birth_date_on, order: [:day, :month, :year], prompt: { day: I18n.t('patients.form.select_day'), month: I18n.t('patients.form.select_month'), year: I18n.t('patients.form.select_year') }, start_year: Date.today.year, end_year: Date.today.year - 100
+  .row
+    .col.pe-2
+      %div.tooltip
+        = f.label I18n.t('patients.form.estimate_age')
+        %div.tooltiptext_r
+          = I18n.t('patients.form.estimate_age_tooltip')
+
+    .col
+      = f.text_field 'age', :class=>'input-large'
+      %script
+        $('#patient_age').on('blur', function(){
+        var cyear = new Date().getFullYear();
+        var tyear = cyear - $(this).val();
+        $('#patient_birth_date_on_1i').val(tyear);
+        });
+
+  - count = 0
+  = f.fields_for :addresses do |addresses_form|
+    - count = count + 1
+    - prefix = 'addresses.form.address' << count.to_s << '_prefix'
+    %div{:class => "add#{count}"}
+      = render partial: 'addresses/form', locals: { address_form: addresses_form, prefix: I18n.t(prefix) }
+
+  - if count > 1
+    %script
+      $(document).ready( function() {
+      $('#copy_addr').on('click', function(event){
+      event.preventDefault();
+      // copy address fields
+      $('#patient_addresses_attributes_1_id').val(       $('#patient_addresses_attributes_0_id').val() );
+      $('#patient_addresses_attributes_1_address').val(  $('#patient_addresses_attributes_0_address').val() );
+      $('#patient_addresses_attributes_1_city').val(     $('#patient_addresses_attributes_0_city').val() );
+      $('#patient_addresses_attributes_1_state').val(    $('#patient_addresses_attributes_0_state').val() );
+      $('#patient_addresses_attributes_1_country').val(  $('#patient_addresses_attributes_0_country').val() );
+      $('#patient_addresses_attributes_1_zip_code').val( $('#patient_addresses_attributes_0_zip_code').val() );
+      });
+      });
+
+    .row
+      .col.pe-2
+      .col
+        %button.input-large#copy_addr 
+          = I18n.t('patients.form.copy_addr_button')
+
+  .row
+    .col.pe-2
+      %div.tooltip
+        = f.label :email
+        %div.tooltiptext_r
+          = I18n.t('patients.form.email_tooltip')
+    .col
+      = f.text_field :email, :class => 'input-large'
+
+  .row
+    .col.pe-2
+      %div.tooltip
+        = f.label :phone
+        %div.tooltiptext_r
+          = I18n.t('patients.form.phone_tooltip')
+    .col
+      = f.text_field :phone, :class => 'input-large'
+
+  .row.button-actions
+    .col
+      = f.submit I18n.t('views.save'), class: 'btn-primary save'
+      - cancel_path = @patient.persisted? ? patient_path(@patient) : patients_path
+      = link_to I18n.t('views.cancel'), cancel_path, class: 'btn-link'
+
+      - if @can_delete
+        = confirm_deletion_button @patient, 'patient'

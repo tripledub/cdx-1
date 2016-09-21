@@ -1,0 +1,8 @@
+vi:
+  locations:
+    index:
+      tbl_header: 'Vị trí'
+      col_name: 'Tên'
+    show:
+      parent: 'Cấp cha:'
+      admin: 'Cấp quản lý:'

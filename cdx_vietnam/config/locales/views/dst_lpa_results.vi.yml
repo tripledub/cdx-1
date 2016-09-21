@@ -1,0 +1,19 @@
+vi:
+  dst_lpa_results:
+    new:
+      header: 'Kết quả tính nhạy cảm với thuốc'
+      add_new: 'Thêm kết quả xét nghiệm Dst & LPA cho: %{patient_name}'
+      back: 'Quay lại'
+    create:
+      audit: 'Kết quả xét nghiệm DST and LPA đã được thêm'
+      notice: 'Kết quả xét nghiệm DST and LPA đã được tạo thành công.'
+      dst_warning: 'Bạn phải nhập kết quả xét nghiệm môi trường môi trường nuôi cấy trước khi thêm kết quả DST'
+    show:
+      header: 'Kết quả xét nghiệm DST and LPA cho: %{patient_name}'
+    edit:
+      header: 'Chỉnh sửa kết quả xét nghiệm DST and LPA cho: %{patient_name}'
+    update:
+      audit: 'Kết quả xét nghiệm DST and LPA đã được cập nhật'
+      notice: 'Kết quả xét nghiệm DST and LPA đã được cập nhật thành công.'
+    form:
+      lbl_method_used: 'Phương thức sử dụng'

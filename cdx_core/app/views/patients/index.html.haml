@@ -1,0 +1,22 @@
+= render "filters"
+
+.row.paginationHeader
+  .col
+    - if @patients.empty?
+      = empty_data icon: 'icon-outline-patient xx-large' do |c|
+        - c.body do
+          %h1
+            = I18n.t('patients.index.no_patients')
+          %p
+            = I18n.t('patients.index.keep_organized')
+    - else
+      %section.row
+        .small-12.columns.box
+          %header
+            = image_tag('img/user.png')
+            %h3
+              = I18n.t('patients.index.patient', count: @total)
+          = react_component "PatientsIndexTable", patients: Presenters::Patients.index_table(@patients),
+              orderBy: params["order_by"] || "patients.name", searchTerm: params['address']
+          .pagination
+            = render 'shared/pagination'

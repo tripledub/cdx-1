@@ -1,0 +1,15 @@
+en:
+  requested_test:
+    validations:
+      rejected_no_comment: 'You need to add a comment explaining why the test is rejected.'
+    incomplete: 'Incomplete'
+    status:
+      pending: 'pending'
+      inprogress: 'in progress'
+      completed: 'completed'
+      rejected: 'rejected'
+    result:
+      culture:    'Culture'
+      microscopy: 'Microscopy'
+      dst_lpa:    'Dst/Lpa'
+      xpert:      'Xpert'

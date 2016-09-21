@@ -1,0 +1,9 @@
+vi:
+  views:
+    back: 'Quay lại'
+    cancel: 'Hủy bỏ'
+    save: 'Lưu'
+    say_yes: 'Có'
+    say_no: 'Không'
+    vi: 'Tiếng Việt'
+    en: 'Tiếng Anh'

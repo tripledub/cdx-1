@@ -1,0 +1,5 @@
+en:
+  models:
+    sample_identifier:
+      cant_be_blank: "can't be blank"
+      is_already: " is already used within "

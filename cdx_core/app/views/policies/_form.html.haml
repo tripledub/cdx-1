@@ -1,0 +1,32 @@
+= form_for @policy do |f|
+  - if @policy.errors.any?
+    #error_explanation
+      %p
+        = "#{I18n.t('policies.form.error_count', count: @policy.errors.count)} #{I18n.t('policies.form.prohibited')}"
+      %ul
+        - @policy.errors.full_messages.each do |msg|
+          %li= msg
+
+  .row
+    .col.pe-2
+      = f.label :name, I18n.t('policies.form.name_label')
+    .col
+      = f.text_field :name
+  .row
+    .col.pe-2
+      = f.label :user_id, I18n.t('policies.form.user_id_label')
+    .col
+      = f.text_field :user_id
+
+  .row
+    .col.pe-2
+      = f.label :definition, I18n.t('policies.form.definition_label')
+    .col.pe-3
+      .value
+        = f.text_area :definition, :rows => 5, :class => 'input-block'
+  .row.button-actions
+    .col
+      = f.submit I18n.t('views.save'), :class => 'btn-primary'
+      = link_to I18n.t('views.cancel'), policies_path, class: 'btn-link'
+      - if @editing
+        = confirm_deletion_button @policy, 'policy'

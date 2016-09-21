@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160729125611) do
+ActiveRecord::Schema.define(version: 20160909153203) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20160729125611) do
     t.string   "state",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "country",          limit: 255
   end
 
   add_index "addresses", ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type", using: :btree
@@ -160,7 +161,7 @@ ActiveRecord::Schema.define(version: 20160729125611) do
   add_index "audit_updates", ["uuid"], name: "index_audit_updates_on_uuid", using: :btree
 
   create_table "comments", force: :cascade do |t|
-    t.date     "commented_on"
+    t.date     "commented_on",                     default: '2016-06-16'
     t.text     "comment",            limit: 65535
     t.string   "description",        limit: 255
     t.string   "uuid",               limit: 255
@@ -506,7 +507,6 @@ ActiveRecord::Schema.define(version: 20160729125611) do
     t.string   "results_other2",       limit: 255
     t.string   "results_other3",       limit: 255
     t.string   "results_other4",       limit: 255
-    t.string   "culture_format",       limit: 255
     t.string   "trace",                limit: 255
     t.string   "test_result",          limit: 255
     t.string   "method_used",          limit: 255
@@ -524,29 +524,31 @@ ActiveRecord::Schema.define(version: 20160729125611) do
   add_index "patient_results", ["uuid"], name: "index_patient_results_on_uuid", using: :btree
 
   create_table "patients", force: :cascade do |t|
-    t.binary   "sensitive_data", limit: 65535
-    t.text     "custom_fields",  limit: 65535
-    t.text     "core_fields",    limit: 65535
-    t.string   "entity_id_hash", limit: 255
-    t.string   "uuid",           limit: 255
-    t.integer  "institution_id", limit: 4
+    t.binary   "sensitive_data",        limit: 65535
+    t.text     "custom_fields",         limit: 65535
+    t.text     "core_fields",           limit: 65535
+    t.string   "entity_id_hash",        limit: 255
+    t.string   "uuid",                  limit: 255
+    t.integer  "institution_id",        limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_phantom",                   default: true
+    t.boolean  "is_phantom",                          default: true
     t.datetime "deleted_at"
-    t.string   "location_geoid", limit: 60
-    t.float    "lat",            limit: 24
-    t.float    "lng",            limit: 24
-    t.string   "address",        limit: 255
-    t.string   "name",           limit: 255
-    t.string   "entity_id",      limit: 255
-    t.integer  "site_id",        limit: 4
-    t.string   "site_prefix",    limit: 255
-    t.string   "state",          limit: 255
-    t.string   "city",           limit: 255
-    t.string   "zip_code",       limit: 255
-    t.string   "nickname",       limit: 255
+    t.string   "location_geoid",        limit: 60
+    t.float    "lat",                   limit: 24
+    t.float    "lng",                   limit: 24
+    t.string   "address",               limit: 255
+    t.string   "name",                  limit: 255
+    t.string   "entity_id",             limit: 255
+    t.integer  "site_id",               limit: 4
+    t.string   "site_prefix",           limit: 255
+    t.string   "state",                 limit: 255
+    t.string   "city",                  limit: 255
+    t.string   "zip_code",              limit: 255
+    t.string   "nickname",              limit: 255
     t.date     "birth_date_on"
+    t.string   "social_security_code",  limit: 255,   default: ""
+    t.string   "medical_insurance_num", limit: 255
   end
 
   add_index "patients", ["birth_date_on"], name: "index_patients_on_birth_date_on", using: :btree
@@ -588,8 +590,10 @@ ActiveRecord::Schema.define(version: 20160729125611) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "comment",      limit: 65535
+    t.datetime "completed_at"
   end
 
+  add_index "requested_tests", ["completed_at"], name: "index_requested_tests_on_completed_at", using: :btree
   add_index "requested_tests", ["datetime"], name: "index_requested_tests_on_datetime", using: :btree
   add_index "requested_tests", ["deleted_at"], name: "index_requested_tests_on_deleted_at", using: :btree
   add_index "requested_tests", ["encounter_id"], name: "index_requested_tests_on_encounter_id", using: :btree

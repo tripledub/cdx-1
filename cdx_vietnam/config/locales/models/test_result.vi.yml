@@ -1,0 +1,4 @@
+vi:
+  models:
+    test_result:
+      match: "phải phù hợp với mẫu thử của bệnh nhân"

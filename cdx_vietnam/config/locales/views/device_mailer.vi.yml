@@ -1,0 +1,10 @@
+vi:
+  setup_instructions:
+    setup_for: 'Hướng dẫn cài đặt cho #{@device.name}'
+    contact_for: 'Vui lòng liên hệ với quản trị viên'
+    activation_code: 'mã kích hoạt'
+    secret_key: 'khóa bí mật'
+    device_id: 'Mã thiết bị'
+    support: 'Hỗ trợ trực tuyến'
+    download: 'Tải hướng dẫn về dưới dạng'
+    pdf: 'tập tin pdf'

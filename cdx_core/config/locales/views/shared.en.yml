@@ -1,0 +1,13 @@
+en:
+  shared:
+    address:
+      street: 'A Street address'
+      city: 'A City name'
+      state: 'A State / County name'
+      postal: 'A Postal / Zip Code'
+      address_label: 'Address'
+      city_label: 'City'
+      state_label: 'State'
+      post_code_label: 'Post code'
+    pagination:
+      of: 'of'

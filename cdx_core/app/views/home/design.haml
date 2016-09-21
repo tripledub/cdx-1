@@ -1,0 +1,99 @@
+%h1
+  = I18n.t('home.design.grid')
+
+%p
+  = I18n.t('home.design.divided_row')
+
+.row
+  - 12.times do |i|
+    .col.pe-1= i
+
+%p
+  = I18n.t('home.design.use')
+  %code pe-1, pe-2, ... pe-12
+  = I18n.t('home.design.distribute_space')
+
+.row
+  .col.pe-4
+    %p
+      = I18n.t('home.design.first_col')
+      %code .pe-4
+  .col.pe-2
+    %p
+      = I18n.t('home.design.first_col')
+      %code .pe-2
+  .col.pe-6
+    %p
+      = I18n.t('home.design.third_col')
+      %code .pe-8
+
+%p
+  = I18n.t('home.design.nested_col')
+
+.row
+  .col.pe-4
+    .row
+      - 4.times do |i|
+        .col.pe-3= "1.#{i}"
+  .col.pe-2 2
+  .col.pe-6 3
+
+%p
+  = I18n.t('home.design.pixel_fix')
+
+.row
+  .col.px-3
+    = I18n.t('home.design.300px_width')
+  .col.pe-1
+    = I18n.t('home.design.plex_col')
+  .col.pe-1
+    = I18n.t('home.design.plex_col')
+  .col.px-4
+    = I18n.t('home.design.400px_width')
+
+%h1
+  = I18n.t('home.design.control')
+
+%h2
+  = I18n.t('home.design.checkbox')
+
+%p
+  = I18n.t('home.design.checkbox_can_be_used')
+  %code
+    = I18n.t('home.design.input')
+  = I18n.t('home.design.always_include')
+  %code
+    = I18n.t('home.design.for_id')
+  = I18n.t('home.design.make_response')
+  = I18n.t('home.design.if_positioned')
+
+.row
+  .col
+    %input(type="checkbox" id="chk1")
+    %label(for="chk1") Lorem ipsum dolor sit amet
+
+.row
+  .col.px-3
+    %label(for="chk2") Lorem ipsum dolor sit amet
+  .col
+    %input(type="checkbox" id="chk2")
+    %label(for="chk2") &nbsp;
+
+%h2
+  = I18n.t('home.design.radio_button')
+
+.row
+  .col
+    %input(type="radio" name="gender" id="opt_male" value="male")
+    %label(for="opt_male")
+      = I18n.t('home.design.male')
+.row
+  .col
+    %input(type="radio" name="gender" id="opt_female" value="female")
+    %label(for="opt_female")
+      = I18n.t('home.design.female')
+.row
+  .col
+    %input(type="radio" name="gender" id="opt_other" value="other")
+    %label(for="opt_other")
+      = I18n.t('home.design.other')

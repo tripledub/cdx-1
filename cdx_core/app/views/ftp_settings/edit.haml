@@ -1,0 +1,34 @@
+- content_for(:subheader) do
+  .row.center.edit
+    .col.pe-10
+      .row
+        .col
+          %h2
+            = "#{I18n.t('ftp_settings.edit.setting_msg')} #{institution.name}"
+
+= form_for institution, url: ftp_setting_path(institution) do |f|
+  = validation_errors institution
+
+  .row
+    .col.pe-2= f.label :ftp_hostname, 'FTP'
+    .col.pe-2= f.text_field :ftp_hostname, placeholder: I18n.t('ftp_settings.edit.host')
+    .col.pe-2= f.number_field :ftp_port, min: 0, max: 65535, placeholder: I18n.t('ftp_settings.edit.port')
+    .col.pe-1
+      = f.label :ftp_passive, I18n.t('ftp_settings.edit.lbl_passive')
+    .col.pe-1
+      = f.check_box :ftp_passive
+      = f.label :ftp_passive, "&nbsp;".html_safe
+    .col.pe-2= f.text_field :ftp_directory, placeholder: I18n.t('ftp_settings.edit.folder')
+  .row{style: 'visibility:hidden; height: 1px'}
+    .col.pe-2= f.label :fake_username, I18n.t('ftp_settings.edit.lbl_login')
+    .col.pe-2= text_field :fake_username, placeholder: I18n.t('ftp_settings.edit.username'), autocomplete: 'on'
+    .col.pe-2= f.password_field :fake_password, value: '', placeholder: I18n.t('ftp_settings.edit.password'), autocomplete: 'off'
+  .row
+    .col.pe-2= f.label :ftp_username, I18n.t('ftp_settings.edit.lbl_login')
+    .col.pe-2= f.text_field :ftp_username, placeholder: I18n.t('ftp_settings.edit.username'), autocomplete: 'off'
+    .col.pe-2= f.password_field :ftp_password, value: institution.ftp_password, placeholder: I18n.t('ftp_settings.edit.password'), autocomplete: 'off'
+
+  .row.button-actions
+    .col
+      = f.submit I18n.t('views.save'), class: 'btn-primary'
+      = link_to I18n.t('views.cancel'), settings_path, class: 'btn-link'

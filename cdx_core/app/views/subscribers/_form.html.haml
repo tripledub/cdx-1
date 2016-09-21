@@ -1,0 +1,57 @@
+= form_for(subscriber) do |f|
+  - if subscriber.errors.any?
+    #error_explanation
+      %p
+        = "#{I18n.t('subscribers.form.error_count', count: subscriber.errors.count)} #{I18n.t('subscribers.form.prohibited')}"
+      %ul
+        - subscriber.errors.full_messages.each do |msg|
+          %li= msg
+
+  .row
+    .col.pe-2
+      = f.label :filter, I18n.t('subscribers.form.filter_label')
+    .col
+      = cdx_select form: f, name: :filter_id do |select|
+        - select.items filters, :id, :name
+  .row
+    .col.pe-2
+      = f.label :name, I18n.t('subscribers.form.name_label')
+    .col
+      = f.text_field :name
+  .row
+    .col.pe-2
+      = f.label :url, "URL"
+    .col
+      = f.text_field :url
+  .row
+    .col.pe-2
+      = f.label :verb, "HTTP Verb"
+    .col
+      .value.annotation GET will send fields in query string. POST will send a JSON object in the request body.
+      = cdx_select form: f, name: :verb do |select|
+        - select.items Subscriber::VALID_VERBS
+  .row
+    .col.pe-2
+      = f.label :url_user, I18n.t('subscribers.form.user_label')
+    .col
+      = f.text_field :url_user
+  .row
+    .col.pe-2
+      = f.label :url_password, I18n.t('subscribers.form.password_label')
+    .col
+      = f.password_field :url_password
+  .row
+    .col.pe-2
+      = f.label :fields, , I18n.t('subscribers.form.fields_label')
+    .col
+      .value.annotation Empty selection will send all fields
+      - Subscriber.available_field_names.sort.each do |field|
+        = check_box_tag "fields[#{field}]", true, subscriber.fields.try {|f| f.include?(field)}, id: "fields.#{field}"
+        %label{for: "fields.#{field}"}
+          = field
+  .row.button-actions
+    .col
+      = f.submit nil, class: "btn-primary"
+      = link_to I18n.t('views.cancel'), subscribers_path, class: 'btn-link'
+      - if @editing
+        = confirm_deletion_button subscriber, 'subscriber'

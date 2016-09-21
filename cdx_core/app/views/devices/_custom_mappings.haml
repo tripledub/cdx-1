@@ -1,0 +1,34 @@
+- begin
+  - custom_fields = @device.current_manifest.fields.select(&:custom?)
+  .row
+    .col.pe-2
+      = label_tag :custom_fields, I18n.t('devices.custom_mappings.custom_fields')
+    .col
+      .value
+        = I18n.t('devices.custom_mappings.how_to_use')
+  .row
+    .col.pe-2
+    .col
+      .row.custom-fields-title
+        .col.px-2
+          = I18n.t('devices.custom_mappings.device_field')
+        .col.px-2
+          = I18n.t('devices.custom_mappings.to_enter')
+      = fields_for(:device) do |d|
+        = d.fields_for(:custom_mappings) do |m|
+          - custom_fields.each do |field|
+            .row.custom-fields-line
+              .col.px-2
+                = m.label field.target_field
+                %span.icon-arrow-right.absolute-right
+              .col.px-2
+                = cdx_select form: m, name: field.target_field, value: (@device.custom_mappings || {})[field.target_field], class: 'input-medium' do |select|
+                  - select.item "", I18n.t('devices.custom_mappings.none')
+                  - select.items Device::CUSTOM_FIELD_TARGETS.map(&:to_s), :itself, :titleize
+- rescue ManifestParsingError => ex
+  .row
+    .col.pe-2
+      = label_tag :custom_fields
+    .col
+      .alert.alert-error
+        = I18n.t('devices.custom_mappings.alert_error')

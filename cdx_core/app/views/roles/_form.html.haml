@@ -1,0 +1,71 @@
+= form_for @role do |f|
+  - if @role.errors.any?
+    #error_explanation
+      %p
+        = "#{I18n.t('roles.form.error_count', count: @role.errors.count)} #{I18n.t('roles.form.prohibited')}"
+      %ul
+        - @role.errors.full_messages.each do |msg|
+          %li= msg
+  .row.labelHeader
+    .col-6
+      %h3
+        =I18n.t('roles.form.role_details')
+    .col-6
+  .panel
+    .row
+      .col-2
+        %div.tooltip
+          = f.label I18n.t('roles.form.name')
+          %div.tooltiptext_r 
+            =I18n.t('roles.form.role_name')
+      .col-10
+        = f.text_field :name
+
+    - if @accessible_institutions != 1
+      .row
+        .col-2
+          %div.tooltip
+            = f.label :institution_id, I18n.t('roles.form.institution')
+            %div.tooltiptext_r 
+              =I18n.t('roles.form.accessible_institution_tooltip')
+        .col-10
+          .value= @institution
+
+    - if @role.new_record?
+      .row
+        .col-2
+          %div.tooltip
+            = f.label :site_id, I18n.t('roles.form.sites')
+            %div.tooltiptext_r 
+              =I18n.t('roles.form.accessible_site_tooltip')
+        .col-10
+          = cdx_select form: f, name: :site_id, class: 'input-large' do |select|
+            - select.item "", I18n.t('roles.form.choose_one')
+            - select.items @sites, :id, :name
+    - elsif @role.site_id
+      .row
+        .col-2
+          = f.label :site_id
+        .col-10
+          .value= @role.site.try(:name)
+  .row.labelHeader
+    .col-6
+      %h3 
+        =I18n.t('roles.form.policies')
+    .col-6
+  .panel
+    .col
+      %div.tooltip
+        %div.tooltiptext_r 
+          =I18n.t('roles.form.policies_tooltip')
+      %p.text-small.muted
+        %i 
+          =I18n.t('roles.form.policies_small_muted')
+      = react_component 'PolicyDefinition', definition: @role.definition, actions: actions_per_resource_type, context: params['context'], resources: @policy_definition_resources, resourceTypes: resource_types
+  .row.button-actions
+    .col
+      = f.submit I18n.t('views.save'), :class => 'btn-primary'
+      = link_to I18n.t('views.cancel'), roles_path, class: 'btn-link'
+      - if @can_delete
+        - unless @role.new_record?
+          = confirm_deletion_button @role, 'role'

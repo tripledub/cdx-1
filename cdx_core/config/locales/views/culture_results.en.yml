@@ -1,0 +1,23 @@
+en:
+  culture_results:
+    new:
+      header: 'Add Culture test result for: %{patient_name}'
+      back: 'Back'
+      culture_test_result: 'Culture Test Results'
+    create:
+      audit: 'Culture result added'
+      notice: 'Culture result was successfully created.'
+    edit:
+      header: 'Editing Culture test result for: %{patient_name}'
+    show:
+      header: 'Culture test result for: %{patient_name}'
+    update:
+      audit: 'Culture result has been updated'
+      notice: 'Culture result was successfully updated.'
+    form:
+      sample_collected_on: 'Sample collected on'
+      media_used: 'Media used'
+      serial_number: 'Serial number'
+      test_result: 'Test result'
+      examined_by: 'Examined by'
+      result_on: 'Result on'

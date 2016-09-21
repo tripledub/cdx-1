@@ -13,7 +13,10 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
+*/spec/dummy/log/*
 /tmp
+*/tmp
+*/spec/dummy/tmp
 
 backend/_build
 backend/deps
@@ -35,6 +38,8 @@ bin/rspec
 bin/rake
 config/settings.local.yml
 config/settings/*.local.yml
+*/config/settings.local.yml
+*/config/settings/*.local.yml
 public/system
 examples.txt
 Procfile.local
@@ -43,4 +48,7 @@ cookbooks
 Cheffile.lock
 .vagrant
 .rbenv-vars
-.rbenv-vars
+.ruby-version
+.byebug_history
+public/javascripts/translations.js
+public/javascripts/i18n.js

@@ -1,0 +1,78 @@
+vi:
+  devise:
+    confirmations:
+      new:
+        resend_confirmation: 'Gửi lại hướng dẫn xác nhận'
+        btn_resend: 'Gửi lại hướng dẫn xác nhận'
+        lnk_login: 'Đã có tài khoản? Đăng nhập'
+
+    mailer:
+      confirmation_instructions:
+        welcome: 'Hoan nghênh'
+        confirm_email: 'Xác nhận email của bạn và bắt đầu sử dụng chương trình của chúng ta'
+        btn_confirm: 'Email xác nhận'
+
+      reset_password_instructions:
+        hello_txt: 'Xin chào'
+        msg_request_link: 'Một người nào đó đã yêu cầu một liên kết để thay đổi mật khẩu của bạn. Bạn có thể làm điều này thông qua liên hết dưới đây.'
+        lnk_change_password: 'Thay đổi mật khẩu của tôi'
+        ignore_email: 'Nếu bạn không yêu cầu điều này, vui lòng bỏ qua email này.'
+        msg_change_password: 'Mật khẩu của bạn sẽ không thay đổi cho đến khi bạn truy cập liên kết ở trên và tạo một cái mới.'
+
+      unlock_instructions:
+        hello_txt: 'Xin chào'
+        msg_acc_locked: 'Tài khoản của bạn đã bị khóa do đăng nhập không thành công nhiều lần.'
+        msg_unlock: 'Nhấp vào liên kết bên dưới để mở khóa tài khoản của bạn:'
+        lnk_unlock: 'Mở khóa tài khoản của tôi'
+
+    passwords:
+      edit:
+        pass_reset: 'Đặt lại mật khẩu'
+        choose_pass: 'Chọn một mật khẩu mạnh và đừng tái sử dụng nó cho các tài khoản khác.'
+        pass_place_holder: 'Mật khẩu'
+        btn_reset_pass: 'Đặt lại mật khẩu của tôi'
+
+      new:
+        login_problems: 'Có vấn đề về đăng nhập?'
+        enter_email: 'Nhập email của bạn và chúng tôi sẽ gửi cho bạn một liên kết để đặt lại mật khẩu'
+        btn_request_pass_reset: 'Yêu cầu đặt lại mật khẩu'
+        lnk_remembered_pass: 'Tôi đã nhớ ra mật khẩu'
+        lnk_didnt_receive_instruction: 'Không nhận được hướng dẫn xác nhận?'
+        lnk_didnt_receive_unlock: 'Không nhận được hướng dẫn mở khóa?'
+
+    registrations:
+      edit:
+        my_acc: 'Tài khoản của tôi'
+        lbl_first_name: 'Tên'
+        lbl_last_name: 'Họ'
+        lbl_new_pass: 'Mật khẩu mới'
+        lbl_retype_new_pass: 'Gõ lại mật khẩu mới'
+        lbl_locale: 'Nước'
+        lbl_time_zone: 'Múi giờ'
+        lbl_test_timestamps: 'Thời gian xét nghiệm'
+        select_my_timezone: 'So với múi giờ của tôi'
+        select_device_timezone: 'So với múi giờ của thiết bị'
+
+      new:
+        sign_up: 'Đăng ký'
+        first_name: 'Tên'
+        last_name: 'Họ'
+        password: 'Mật khẩu'
+        btn_sign_up: 'Đăng ký'
+        lnk_login: 'Đã có tài khoản? Đăng nhập'
+        lnk_login_problem: 'Có vấn đề về đăng nhập?'
+        characters: 'ký tự tối thiểu'
+
+    shared:
+      links:
+        login: 'Đăng nhập'
+        sign_up: 'Đăng ký'
+        forgot_pass: 'Quên mật khẩu?'
+        lnk_didnt_receive_instruction: 'Không nhận được hướng dẫn xác nhận?'
+        lnk_didnt_receive_unlock: 'Không nhận được hướng dẫn mở khóa?'
+        sign_in_with: 'Đăng nhập với'
+
+    unlocks:
+      new:
+        resend_unlock: 'Gửi lại hướng dẫn mở khóa'
+        btn_resend: 'Gửi lại hướng dẫn mở khóa'

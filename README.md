@@ -15,17 +15,17 @@ To start developing:
 1. Clone the repo.
 
 2. Install dependencies:
-	* `bundle install`.
-	* PhantomJS 1.9.8 for [Poltergeist](https://github.com/teampoltergeist/poltergeist) (development and test only)
-		* Install it in mac with: `brew install phantomjs`
-	* ImageMagick for [Paperclip](https://github.com/thoughtbot/paperclip#image-processor)
-		* Install it in mac with: `brew install imagemagick`
-	* [Redis](http://redis.io/download) is [used](https://github.com/mperham/sidekiq/wiki/Using-Redis) by [sidekiq](http://sidekiq.org/). CDX uses sidekiq as [ActiveJob](http://guides.rubyonrails.org/active_job_basics.html#backends) backend
-		* Install it in mac with: `brew install redis`
-		* you can start it with `redis-server --daemonize yes`
-	* [Elasticsearch](https://www.elastic.co/) is used as the main index for test results.
-		* We support elasticsearch versions < 2.x
-		* Install it in mac with: `brew install elasticsearch17`
+  * `bundle install`.
+  * PhantomJS 1.9.8 for [Poltergeist](https://github.com/teampoltergeist/poltergeist) (development and test only)
+    * Install it in mac with: `brew install phantomjs`
+  * ImageMagick for [Paperclip](https://github.com/thoughtbot/paperclip#image-processor)
+    * Install it in mac with: `brew install imagemagick`
+  * [Redis](http://redis.io/download) is [used](https://github.com/mperham/sidekiq/wiki/Using-Redis) by [sidekiq](http://sidekiq.org/). CDX uses sidekiq as [ActiveJob](http://guides.rubyonrails.org/active_job_basics.html#backends) backend
+    * Install it in mac with: `brew install redis`
+    * you can start it with `redis-server --daemonize yes`
+  * [Elasticsearch](https://www.elastic.co/) is used as the main index for test results.
+    * We support elasticsearch versions < 2.x
+    * Install it in mac with: `brew install elasticsearch17`
 
 3. Setup development database: `bundle exec rake db:setup`
 
@@ -60,10 +60,6 @@ To create an initial set of tests:
 16. Copy the contents of `/spec/fixtures/csvs/genoscan_sample.csv` into the _Data_ field
 
 17. Run create message and navigate to _Tests_ to verify the tests were successfully imported
-
-### Locations setup
-
-Locations are obtained from the [InSTEDD Location Service](https://github.com/instedd/location_service). You can specify a different path in config/settings/development.yml.local
 
 ### NNDD
 
@@ -104,3 +100,32 @@ Now, whenever a new csv file enters the sshd inbox, it will be imported into the
 ### Sync File Watcher - Client Side
 
 In the client side, you will need to run another filewatcher: [cdx-sync-client](https://github.com/instedd/cdx-sync-client). It is a Windos App. Install it using its NSI installer, restart your computer, and fill the form that will prompt after first restart.  You will be required to provide an activation token - you can generate it form the device manager in the CDP app.
+
+## Localization Guideline
+
+Using i18n gem. The Ruby I18n (shorthand for internationalization) gem which is shipped with Ruby on Rails (starting from Rails 2.2) provides an easy-to-use and extensible framework for translating your application to a single custom language other than English or for providing multi-language support in your application.
+
+### Usage
+1. DO NOT hardcode any text
+
+2. For any text
+
+2.1. Create/Update one of the corresponding files (based on localization file structure below), depending on where the text appear
+
+2.2. Then update the markup. For example:
+
+- Instead of using fixed text. Ex: ```Filter was successfully created```
+
+- We need to use i18n function to support multi-lingual. Ex: ```I18n.t('filters_controller.filter_created')```
+
+2.3. When update any en.yml file, please update all other languages (vi.yml, fr.yml, ...) file correspondingly
+
+### Localization file structure
+
+1. For each language, there are separated files. Ex: *.en.yml and *.vi.yml. EN files are in cdx_core directory and VI files are in cdx_vietnam directory
+
+2. Controller and helper: there is one file for all
+
+3. Model and view: there is one file for each model or view
+
+4. The locale file is organized based on file/module hierachy

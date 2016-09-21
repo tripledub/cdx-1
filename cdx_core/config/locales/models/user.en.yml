@@ -1,0 +1,13 @@
+en:
+  activerecord:
+    attributes:
+      user:
+        name: 'Name'
+        email: 'Email'
+        telephone: 'Phone'
+        roles: 'Role'
+        is_active: 'Status'
+        last_sign_in_at: 'Activity'
+  models:
+    user:
+      default: "Default OAuth2 Application"

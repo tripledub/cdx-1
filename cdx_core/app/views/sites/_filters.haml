@@ -1,0 +1,17 @@
+- content_for(:subheader) do
+  .filterbar.filterbartest
+    .heading
+      .title
+        = I18n.t('sites.filters.sites_title') 
+      .topfilteropt
+        - if @can_create
+          = link_to I18n.t('sites.filters.add_site_btn'), new_site_path, class: 'btn-add side-link fix', title: I18n.t('sites.filters.add_site')
+  %form#filters-form.filteroptions{action: sites_path, "data-auto-submit" => true}
+    %input{type: "hidden", name: "page_size", value: @page_size}
+    .row.custom_filters
+      .advanced
+        .row
+          .filter
+            %label.block 
+              = I18n.t('sites.filters.name')
+            %input{type: "text", name: "name", value: params["name"]}

@@ -1,0 +1,7 @@
+vi:
+  alert_mailer:
+    alert_email:
+      h1: 'Thông báo sự cố cho'
+      msg: 'Lúc'
+      email_text: 'Cảnh báo xảy ra'
+      time_occured: 'Thời gian xảy ra'

@@ -1,7 +1,0 @@
-en:
-  addresses:
-    form:
-      street_tooltip:   'A Street address'
-      city_tooltip:     'A City name'
-      state_tooltip:    'A State / County name'
-      zip_code_tooltip: 'A Postal / Zip Code'

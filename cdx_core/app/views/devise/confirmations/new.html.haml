@@ -1,0 +1,17 @@
+.row
+  .col
+    %h1
+      = I18n.t('devise.confirmations.new.resend_confirmation')
+= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
+  .row
+    .col
+      = f.email_field :email, autofocus: true, value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: "input-block"
+  %br
+  .row
+    .col
+      = f.submit I18n.t('devise.confirmations.new.btn_resend'), class: "btn-secondary input-block"
+  .row
+    .col
+      %br
+      = link_to I18n.t('devise.confirmations.new.lnk_login'), new_session_path(resource_name), class: "pull-right"
+= devise_error_messages!

@@ -1,0 +1,10 @@
+en:
+  activerecord:
+    attributes:
+      site:
+        parent: 'Parent site'
+  models:
+    site:
+      reset_start_date: 'reset policy start date not implemented'
+      reset_end_date: 'reset policy end date not implemented'
+      must_match: 'must match parent site institution'

@@ -93,7 +93,7 @@ class NNDDShapeImporter
       id = new_id.join "_"
 
       props["ID"] = id
-      props["NAME"] = Location.where(geo_id: id).first.name
+      props["NAME"] = ''
     end
 
     File.new(output_path, 'w').write(geojson.to_json)

@@ -1,0 +1,19 @@
+en:
+  test_orders:
+    index:
+      tests: 'Tests'
+      header: 'Test orders'
+      not_applicable: 'Not Applicable'
+      no_test_orders: 'No test orders have been created'
+      test_order:
+        zero: 'Test orders'
+        one: 'Test order'
+        other: '%{count} Test orders'
+    filters:
+      show_all: 'Show all'
+      show_all_outstanding: 'Show all outstanding'
+      show_filters: 'Show filters'
+      testing_for: 'Testing for'
+      date: 'Date'
+      test_order_id: 'Test order id'
+      status: 'Status'

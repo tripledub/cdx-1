@@ -1,0 +1,20 @@
+en:
+  alert_groups:
+    index:
+      no_alerts: 'No alert groups'
+      no_alert_groups: 'There are no alert groups at %{entity_name}'
+      create_alert_groups: 'Create alert groups in order to keep your team notified on current events'
+      alert_group:
+        zero: 'No alert groups'
+        one: '1 Alert group'
+        other: '%{count} Alert groups'
+      ago: ' ago'
+      never: 'never'
+
+    filters:
+      title: 'Alert groups'
+      btn_add_alert: 'Add Alert'
+
+    new:
+      new_alert: 'New Alert'
+      title: 'Alert Details'

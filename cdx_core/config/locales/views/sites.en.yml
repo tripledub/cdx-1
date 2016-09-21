@@ -1,0 +1,67 @@
+en:
+  sites:
+    create:
+      success: 'Site was successfully created.'
+    update:
+      success: 'Site was successfully updated.'
+      not_allowed: 'You are not allowed to update %{site_name}.'
+    destroy:
+      success: 'Site was successfully delete.'
+    index:
+      no_dependencies: 'This %{entity_name} has no dependencies.'
+      create_sites: "Create sites here to keep your institution's hierachy organized."
+      site:
+        zero: 'No sites'
+        one: '1 Site'
+        other: '%{count} Sites'
+    form:
+      site_details_header: 'Site Details'
+      yearly: 'Yearly'
+      monthly: 'Monthly'
+      weekly: 'Weekly'
+      none: 'None'
+      delete_site: 'Delete Site'
+      delete: 'Delete'
+      in_order_to_delete: 'In order to delete this site you must first reassign the'
+      device_count:
+        one: '1 device'
+        other: '%{count} devices'
+      assigned: 'assigned to it.'
+      action_required: 'Action required'
+      understood: 'Understood'
+      label:
+        institution: 'Institution'
+        name: 'Name'
+        parent: 'Parent Site'
+        sample_id_reset_policy: 'Sample ID reset policy'
+        allows_manual_entry: 'Allow Manual Entry'
+        main_phone_number: 'Main Phone Number'
+        email_address: 'Email Address'
+        comment:  'Comment'
+      tooltip:
+        institution: 'Institution this Site is part of'
+        name: 'Name of the Site'
+        parent: 'The Site this Site is a Child of'
+        sample_id_reset_policy: 'Sample ID reset policy tooltip'
+        allows_manual_entry: 'Does this Site allow Manual Entry of Data?'
+        main_phone_number: 'Site Main Phone Number'
+        email_address: 'Site Email Contact Address'
+        comment: 'Comment tooltip'
+    filters:
+      sites_title: 'Sites'
+      add_site_btn:  'Add Site'
+      add_site:  'Add Site'
+      name: 'Name'
+    side:
+      creation_date: 'Creation date'
+      devices: 'Devices'
+      tests: 'Tests'
+      users: 'Users'
+    devices:
+      name: 'Name'
+      model: 'Model'
+      site: 'Site'
+    new:
+      new_site: 'New Site'
+    show:
+      none: 'None'

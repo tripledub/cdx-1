@@ -1,0 +1,11 @@
+- content_for(:subheader) do
+  .row.center.add-new
+    .col.pe-10
+      .row
+        .col
+          %h2
+            = link_to policies_path, class: 'side-link', title: I18n.t('views.back') do
+              = image_tag "arrow-left-white.png"
+            = I18n.t('policies.new.new_policy')
+
+= render 'form'

@@ -1,0 +1,14 @@
+en:
+  filters:
+    form:
+      error_explan: ' prohibited this filter from being saved:'
+      lbl_site: 'Site'
+      lbl_condition: 'Condition'
+
+    index:
+      title_filters: 'Filters'
+      filter_msg: 'There are no saved filters'
+      col_name: 'Name'
+
+    new:
+      new_filter: 'New Filter'
