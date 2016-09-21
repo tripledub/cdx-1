@@ -54,6 +54,15 @@
   .row
     .col.pe-2
       %div.tooltip
+        = f.label :external_id
+        %div.tooltiptext_r
+          = I18n.t('patients.form.external_id_tooltip')
+    .col
+      = f.text_field :external_id, :class => 'input-large', readonly: !@patient.new_record?
+
+  .row
+    .col.pe-2
+      %div.tooltip
         = f.label :gender
         %div.tooltiptext_r
           = I18n.t('patients.form.gender_tooltip')

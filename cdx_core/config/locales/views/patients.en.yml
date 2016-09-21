@@ -49,6 +49,7 @@ en:
       nickname_label: 'Nickname'
       medical_insurance_num: 'Medical Insurance Number'
       entity_id_label: 'Entity id'
+      external_id_label: 'External Patient ID'
       gender_label: 'Gender'
       birth_date_on_label: 'Birth date on'
       email_label: 'Email'
