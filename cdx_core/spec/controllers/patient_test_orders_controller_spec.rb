@@ -18,7 +18,7 @@ describe PatientTestOrdersController do
     describe 'index' do
       before :each do
         11.times do
-          Encounter.make institution: institution, site: site, patient: patient
+          Encounter.make institution: institution, site: site, patient: patient, test_batch: TestBatch.make(institution: institution)
         end
       end
 

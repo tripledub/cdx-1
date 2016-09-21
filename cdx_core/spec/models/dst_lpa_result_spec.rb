@@ -4,9 +4,8 @@ describe DstLpaResult do
   let(:dst_lpa_options) { %w(resistant susceptible contaminated not_done) }
   let(:media_options) { %w(solid liquid) }
   let(:method_options) { %w(direct indirect) }
+
   describe 'validations' do
-    it { should belong_to(:requested_test) }
-    it { should validate_presence_of(:requested_test_id) }
     it { should validate_presence_of(:sample_collected_on) }
     it { should validate_presence_of(:examined_by) }
     it { should validate_presence_of(:result_on) }

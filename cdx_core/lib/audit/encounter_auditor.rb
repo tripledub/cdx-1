@@ -1,5 +1,5 @@
 module Audit
-  class  EncounterAuditor < Auditor
+  class EncounterAuditor < Auditor
 
     def log_action(title, comment='', encounter)
       create_log(title, comment, encounter)

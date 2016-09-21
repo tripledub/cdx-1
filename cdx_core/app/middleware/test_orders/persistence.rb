@@ -307,9 +307,6 @@ module TestOrders
 
     def store_create_encounter_audit_log
       Audit::EncounterAuditor.new(@encounter, current_user.id).log_changes(I18n.t('encounters_controller.test_order_created'), "#{@encounter.id}", @encounter)
-      @encounter.requested_tests.each do |test|
-        Audit::EncounterTestAuditor.new(@encounter, current_user.id).log_changes("#{I18n.t('encounters_controller.new')} #{test.name} #{I18n.t('encounters_controller.test_created')}", "#{I18n.t('encounters_controller.test')} #{test.name} #{I18n.t('encounters_controller.created_for')} #{@encounter.uuid}", @encounter, test)
-      end
     end
 
     def new_sample_for_site

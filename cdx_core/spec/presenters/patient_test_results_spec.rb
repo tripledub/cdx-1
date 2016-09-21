@@ -6,7 +6,7 @@ describe Presenters::PatientTestResults do
   let(:site)           { Site.make institution: institution }
   let(:patient)        { Patient.make institution: institution }
   let(:device)         { Device.make  institution: institution, site: site }
-  let(:encounter)      { Encounter.make institution: institution , user: user, patient: patient }
+  let(:encounter)      { Encounter.make institution: institution , user: user, patient: patient, test_batch: TestBatch.make(institution: institution) }
 
   describe 'patient_view' do
     before :each do
@@ -14,19 +14,15 @@ describe Presenters::PatientTestResults do
         TestResult.make patient: patient, institution: institution, device: device
       end
       2.times do
-        requested_test = RequestedTest.make encounter: encounter
-        MicroscopyResult.make requested_test: requested_test
+        MicroscopyResult.make test_batch: encounter.test_batch
       end
       2.times do
-        requested_test = RequestedTest.make encounter: encounter
-        CultureResult.make requested_test: requested_test
+        CultureResult.make test_batch: encounter.test_batch
       end
       2.times do
-        requested_test = RequestedTest.make encounter: encounter
-        DstLpaResult.make requested_test: requested_test
+        DstLpaResult.make test_batch: encounter.test_batch
       end
-      requested_test = RequestedTest.make encounter: encounter
-      XpertResult.make requested_test: requested_test
+      XpertResult.make test_batch: encounter.test_batch
     end
 
     it 'should return an array of formated comments' do

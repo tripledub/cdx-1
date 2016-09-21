@@ -4,15 +4,14 @@ describe Reports::DrtbPercentage do
   let(:user)               { User.make }
   let!(:institution)       { user.institutions.make }
   let(:patient)            { Patient.make institution: institution }
-  let(:encounter)          { Encounter.make institution: institution , user: user, patient: patient }
-  let(:requested_test)     { RequestedTest.make encounter: encounter }
+  let(:encounter)          { Encounter.make institution: institution , user: user, patient: patient, test_batch: TestBatch.make(institution: institution) }
   let(:navigation_context) { NavigationContext.new(user, institution.uuid) }
   let!(:results) {
-    XpertResult.make requested_test: requested_test, tuberculosis: 'detected',     rifampicin: 'detected', created_at: 2.years.ago
-    XpertResult.make requested_test: requested_test, tuberculosis: 'not_detected', rifampicin: 'detected'
-    XpertResult.make requested_test: requested_test, tuberculosis: 'detected',     rifampicin: 'not_detected'
-    XpertResult.make requested_test: requested_test, tuberculosis: 'detected',     rifampicin: 'indeterminate'
-    XpertResult.make requested_test: requested_test, tuberculosis: 'invalid',      rifampicin: 'indeterminate', created_at: 3.years.ago
+    XpertResult.make test_batch: encounter.test_batch, tuberculosis: 'detected',     rifampicin: 'detected', created_at: 2.years.ago
+    XpertResult.make test_batch: encounter.test_batch, tuberculosis: 'not_detected', rifampicin: 'detected'
+    XpertResult.make test_batch: encounter.test_batch, tuberculosis: 'detected',     rifampicin: 'not_detected'
+    XpertResult.make test_batch: encounter.test_batch, tuberculosis: 'detected',     rifampicin: 'indeterminate'
+    XpertResult.make test_batch: encounter.test_batch, tuberculosis: 'invalid',      rifampicin: 'indeterminate', created_at: 3.years.ago
   }
 
   xdescribe 'generate_chart' do

@@ -5,12 +5,9 @@ describe XpertResult do
   let(:user)           { institution.user }
   let(:site)           { institution.sites.make }
   let(:patient)        { Patient.make( institution: institution) }
-  let(:encounter)      { Encounter.make institution: institution, site: site ,patient: patient }
-  let(:requested_test) { RequestedTest.make encounter: encounter }
+  let(:encounter)      { Encounter.make institution: institution, site: site ,patient: patient, test_batch: TestBatch.make(institution: institution) }
 
   context "validations" do
-    it { should belong_to(:requested_test) }
-    it { should validate_presence_of(:requested_test_id) }
     it { should validate_presence_of(:sample_collected_on) }
     it { should validate_presence_of(:tuberculosis) }
     it { should validate_presence_of(:rifampicin) }
@@ -19,7 +16,7 @@ describe XpertResult do
 
     context 'rifampicin' do
       context 'if is detected and tuberculosis is not detected' do
-        subject { XpertResult.new requested_test_id: requested_test.id, result_on: 3.days.from_now, examined_by: 'The doctor', sample_collected_on: 1.day.ago, tuberculosis: 'not_detected', rifampicin: 'detected' }
+        subject { XpertResult.new test_batch: encounter.test_batch, result_on: 3.days.from_now, examined_by: 'The doctor', sample_collected_on: 1.day.ago, tuberculosis: 'not_detected', rifampicin: 'detected' }
 
         it 'should not be valid' do
           expect(subject.valid?).to be false
@@ -29,7 +26,7 @@ describe XpertResult do
       end
 
       context 'if is detected and tuberculosis is detected' do
-        subject { XpertResult.new requested_test_id: requested_test.id, result_on: 3.days.from_now, examined_by: 'The doctor', sample_collected_on: 1.day.ago, tuberculosis: 'detected', rifampicin: 'detected' }
+        subject { XpertResult.new test_batch: encounter.test_batch, result_on: 3.days.from_now, examined_by: 'The doctor', sample_collected_on: 1.day.ago, tuberculosis: 'detected', rifampicin: 'detected' }
 
         it 'should be valid' do
           expect(subject.valid?).to be

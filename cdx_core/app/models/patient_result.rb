@@ -3,7 +3,6 @@ class PatientResult < ActiveRecord::Base
   include Auditable
   include ActionView::Helpers::DateHelper
 
-  belongs_to :requested_test
   belongs_to :test_batch
   has_many   :assay_results, as: :assayable
 
@@ -17,11 +16,6 @@ class PatientResult < ActiveRecord::Base
   before_create :set_status_to_new
 
   class << self
-    def find_all_for_patient(patient_id)
-      PatientResult.joins('LEFT OUTER JOIN `requested_tests` ON `requested_tests`.`id` = `patient_results`.`requested_test_id` LEFT OUTER JOIN `encounters` ON `encounters`.`id` = `requested_tests`.`encounter_id`')
-        .where('patient_results.patient_id = ? OR encounters.patient_id = ?', patient_id, patient_id)
-    end
-
     def status_options
       [
         ['new', I18n.t('select.patient_result.status_options.new')],

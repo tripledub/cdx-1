@@ -7,7 +7,6 @@ describe PatientResult do
   let(:result_status) { ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed'] }
 
   context "validations" do
-    it { should belong_to(:requested_test) }
     it { should belong_to(:test_batch) }
     it { should validate_inclusion_of(:result_status).in_array(result_status) }
   end

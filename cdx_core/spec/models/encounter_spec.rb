@@ -331,19 +331,6 @@ describe Encounter do
     end
   end
 
-  context "add request test" do
-    let(:requested_test1) { RequestedTest.make encounter: encounter}
-    let(:requested_test2) { RequestedTest.make encounter: encounter}
-
-    it "should save requested tests" do
-      requested_test1.encounter = encounter
-      requested_test2.encounter = encounter
-      requested_test1.save!
-      requested_test2.save!
-      expect(encounter.requested_tests.count).to eq(2)
-    end
-  end
-
   describe ':batch_id' do
     it 'is a 0 padded string, prepended by CDP' do
       encounter.id = 1
