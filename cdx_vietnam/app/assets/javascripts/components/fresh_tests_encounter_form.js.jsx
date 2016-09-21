@@ -307,7 +307,7 @@ var ReasonDiag = React.createClass({
   render: function() {
     return (
       <div className="row">
-        <div className="col-6">
+        <div className="col-6 flexStart">
           <label>Comment</label>
         </div>
         <div className="col-6">
@@ -345,7 +345,7 @@ var ReasonFollow = React.createClass({
   render: function() {
     return (
       <div className="row">
-        <div className="col-6">
+        <div className="col-6 flexStart">
           <label>{I18n.t("components.fresh_tests_encounter_form.weeks_in_treatment_label")}</label>
         </div>
         <div className="col-6">

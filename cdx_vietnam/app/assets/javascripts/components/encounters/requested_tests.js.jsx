@@ -25,7 +25,7 @@ var RequestedTests = React.createClass({
   render: function() {
     return (
       <div className="row">
-        <div className="col-6">
+        <div className="col-6 flexStart">
           <label>{I18n.t("components.encounters.lbl_tests_requested")}</label>
         </div>
         <div className="col-6 req_tests_checks">
