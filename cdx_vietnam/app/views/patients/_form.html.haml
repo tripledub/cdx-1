@@ -101,6 +101,26 @@
     %div{:class => "add#{count}"}
       = render partial: 'addresses/form', locals: { address_form: addresses_form }
 
+  - if count > 1
+    %script
+      $(document).ready( function() {
+      $('#copy_addr').on('click', function(event){
+      event.preventDefault();
+      // copy address fields
+      $('#patient_addresses_attributes_1_id').val(       $('#patient_addresses_attributes_0_id').val() );
+      $('#patient_addresses_attributes_1_address').val(  $('#patient_addresses_attributes_0_address').val() );
+      $('#patient_addresses_attributes_1_city').val(     $('#patient_addresses_attributes_0_city').val() );
+      $('#patient_addresses_attributes_1_state').val(    $('#patient_addresses_attributes_0_state').val() );
+      $('#patient_addresses_attributes_1_country').val(  $('#patient_addresses_attributes_0_country').val() );
+      });
+      });
+
+    .row
+      .col.pe-2
+      .col
+        %button.input-large#copy_addr 
+          = I18n.t('patients.form.copy_addr_button')
+
   .row
     .col.pe-2
       %div.tooltip
