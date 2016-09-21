@@ -21,7 +21,7 @@ class PatientResult < ActiveRecord::Base
         ['new', I18n.t('select.patient_result.status_options.new')],
         ['sample_collected', I18n.t('select.patient_result.status_options.sample_collected')],
         ['sample_received', I18n.t('select.patient_result.status_options.sample_received')],
-        ['in_progress', I18n.t('select.patient_result.status_options.in_progress')],
+        ['pending_approval', I18n.t('select.patient_result.status_options.pending_approval')],
         ['rejected', I18n.t('select.patient_result.status_options.rejected')],
         ['completed', I18n.t('select.patient_result.status_options.completed')]
       ]
@@ -49,7 +49,7 @@ class PatientResult < ActiveRecord::Base
   end
 
   def update_status
-    self.result_status = 'in_progress' if result_status == 'new' && serial_number.present?
+    self.result_status = 'sample_collected' if result_status == 'new' && serial_number.present?
   end
 
   def update_batch_status

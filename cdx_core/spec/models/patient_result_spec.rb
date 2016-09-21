@@ -37,10 +37,10 @@ describe PatientResult do
         expect(test_result.result_status).to eq('new')
       end
 
-      it 'should be set to pending when result has sample id assigned' do
+      it 'should be set to sample collected when result has sample id assigned' do
         test_result.update_attribute(:serial_number, 'some sample id')
 
-        expect(test_result.result_status).to eq('in_progress')
+        expect(test_result.result_status).to eq('sample_collected')
       end
 
       context 'if status is updated' do

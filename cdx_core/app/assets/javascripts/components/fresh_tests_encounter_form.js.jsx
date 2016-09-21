@@ -84,8 +84,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
           { this.state.encounter.exam_reason === 'follow' ? <ReasonFollow treatmentDateChange={this.treatmentDateChange} /> : null }
           { this.state.encounter.exam_reason === 'diag' ? <PresumptiveRR /> : null }
 
-          <RequestedTests reqTestsChange={this.reqTestsChange} />
-
           <div className="row">
             <div className="col-6">
               <label>{I18n.t("components.fresh_tests_encounter_form.collection_sample_type_label")}</label>
@@ -147,16 +145,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     if (this.state.encounter.tests_requested.indexOf(what) != false)
       return 'selected ';
     return '';
-  },
-
-  reqTestsChange: function(requestedTests) {
-    this.setState(React.addons.update(this.state, {
-      encounter: {
-        tests_requested: {
-          $set: requestedTests
-        }
-      }
-    }));
   },
 
 

@@ -14,12 +14,10 @@ RSpec.describe Reports::AverageTechnicianTests, elasticsearch: true do
   let(:user_device)         { Device.make institution_id: institution.id, site: site }
   let(:user_device_two)     { Device.make institution_id: institution_two.id, site: site_two }
   let(:patient)             { Patient.make institution: institution }
-  let(:encounter)           { Encounter.make institution: institution , user: current_user, patient: patient, site: site }
-  let(:encounter2)          { Encounter.make institution: institution , user: user2, patient: patient, site: site2 }
-  let(:requested_test)      { RequestedTest.make encounter: encounter }
-  let(:requested_test2)     { RequestedTest.make encounter: encounter2 }
-  let!(:microscopy_result)  { MicroscopyResult.make requested_test: requested_test2 }
-  let!(:culture_result)     { CultureResult.make requested_test: requested_test }
+  let(:encounter)           { Encounter.make institution: institution , user: current_user, patient: patient, site: site, test_batch: TestBatch.make(institution: institution) }
+  let(:encounter2)          { Encounter.make institution: institution , user: user2, patient: patient, site: site2, test_batch: TestBatch.make(institution: institution) }
+  let!(:microscopy_result)  { MicroscopyResult.make test_batch: encounter2.test_batch }
+  let!(:culture_result)     { CultureResult.make test_batch: encounter.test_batch}
 
   let(:nav_context) { NavigationContext.new(current_user, institution.uuid) }
 

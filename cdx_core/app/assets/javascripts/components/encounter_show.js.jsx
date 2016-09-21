@@ -17,26 +17,6 @@ var EncounterShow = React.createClass({
     };
   },
 
-  submitError: function(errorArray) {
-    this.setState({
-      error_messages: errorArray
-    });
-    $('body').scrollTop(0);
-  },
-
-  onTestChanged: function(newTest) {
-    var len = this.state.requestedTests.length;
-    for (var i = 0; i<len; i++) {
-      if (this.state.requestedTests[i].id == newTest.id) {
-        tempRequestedTests    = this.state.requestedTests;
-        tempRequestedTests[i] = newTest;
-        this.setState({
-          requestedTests: tempRequestedTests
-        });
-      }
-    }
-  },
-
   render: function() {
     if (this.props.encounter.performing_site == null) {
       performing_site = "";

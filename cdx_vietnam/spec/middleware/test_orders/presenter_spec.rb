@@ -8,7 +8,7 @@ describe TestOrders::Presenter do
   let(:patient)             { Patient.make institution: institution, name: 'Nico McBrian' }
   let!(:encounters)         {
     7.times {
-      encounter = Encounter.make institution: institution, site: site, patient: patient, start_time: 3.days.ago.to_s, status: 1, testing_for: 'TB', performing_site: performing_site
+      encounter = Encounter.make institution: institution, site: site, patient: patient, start_time: 3.days.ago.to_s, testing_for: 'TB', performing_site: performing_site
       sample    = Sample.make(institution: institution, patient: patient, encounter: encounter)
       SampleIdentifier.make(site: site, entity_id: "sample-#{rand(1..30000)}",     sample: sample)
       SampleIdentifier.make(site: site, entity_id: "sample-#{rand(30001..60000)}", sample: sample)
@@ -16,13 +16,13 @@ describe TestOrders::Presenter do
   }
   let(:requested_tests)     {
     encounter = Encounter.first
-    RequestedTest.make(encounter: encounter, status: :pending,    name: 'microscopy')
-    encounter.reload
-    RequestedTest.make(encounter: encounter, status: :inprogress, name: 'culture')
-    encounter.reload
-    RequestedTest.make(encounter: encounter, status: :completed,  name: 'dst')
-    encounter.reload
-    RequestedTest.make(encounter: encounter, status: :rejected,   name: 'xpert')
+    microscopy_result = MicroscopyResult.make test_batch: encounter.test_batch
+    culture_result = CultureResult.make test_batch: encounter.test_batch
+    xpert_result = XpertResult.make test_batch: encounter.test_batch
+    dst_lpa_result = DstLpaResult.make test_batch: encounter.test_batch
+    microscopy_result.update_attribute(:result_status, 'sample_collected')
+    xpert_result.update_attribute(:result_status, 'sample_received')
+    dst_lpa_result.update_attribute(:result_status, 'rejected')
     encounter.reload
   }
 

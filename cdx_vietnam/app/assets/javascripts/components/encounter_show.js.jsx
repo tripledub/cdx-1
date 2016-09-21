@@ -35,36 +35,6 @@ var EncounterShow = React.createClass({
     EncounterActions.deleteEncounter(urlParam, successUrl, this.submitError);
   },
 
-  EncounterUpdateHandler: function() {
-    if (this.props.referer != null) {
-     successUrl = this.props.referer;
-    } else {
-     successUrl = '/test_orders';
-    }
-
-    if (this.props.requestedTests.length > 0) {
-      var urlParam   = '/requested_tests';
-      urlParam       = urlParam + '/' + this.props.encounter.id;
-      requestedTests = this.props.requestedTests;
-      EncounterRequestTestActions.update(urlParam, requestedTests, successUrl, this.submitError);
-    } else {
-      window.location.href = successUrl;
-    }
-  },
-
-  onTestChanged: function(newTest) {
-    var len = this.state.requestedTests.length;
-    for (var i = 0; i<len; i++) {
-      if (this.state.requestedTests[i].id == newTest.id) {
-        tempRequestedTests    = this.state.requestedTests;
-        tempRequestedTests[i] = newTest;
-        this.setState({
-          requestedTests: tempRequestedTests
-        });
-      }
-    }
-  },
-
   render: function() {
     if (this.props.can_update && this.props.showCancel) {
       actionButton = <EncounterDelete showEdit={true} onChangeParentLevel={this.EncounterDeleteHandler} encounter={this.props.encounter} />;

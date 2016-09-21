@@ -15,10 +15,4 @@
   submitPaymentUrl: set_as_paid_encounter_test_batch_path(@encounter),
   updateResultUrl: test_batch_patient_results_path(@encounter.test_batch),
   authenticityToken: form_authenticity_token,
-  requested_by: @encounter.user !=nil ? @encounter.user.email : '',
-  canUpdate: has_access?(@encounter, Policy::Actions::UPDATE_ENCOUNTER),
-  showEdit: @show_edit_encounter,
-  showCancel: @show_cancel_encounter,
-  referer: @return_path_encounter,
-  statusTypes: RequestedTest.statuses,
   showDstWarning: @encounter.test_batch.show_dst_warning)
