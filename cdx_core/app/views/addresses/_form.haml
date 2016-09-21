@@ -1,7 +1,7 @@
 .row
   .col.pe-2
     %div.tooltip
-      = address_form.label :address, I18n.t('addresses.form.address')
+      = address_form.label :address, prefix << I18n.t('addresses.form.address')
       %div.tooltiptext_r
         = I18n.t('addresses.form.street_tooltip')
     %div.tooltip
@@ -23,4 +23,3 @@
     = address_form.text_field :zip_code, :class => 'input-large'
   .col
   .col
-  .c

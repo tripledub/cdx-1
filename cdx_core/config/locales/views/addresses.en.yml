@@ -9,3 +9,6 @@ en:
       city: 'City'
       state: 'State'
       zip_code: 'Zip Code'
+      address_prefix: ''
+      address1_prefix: 'Permanent '
+      address2_prefix: 'Contact '

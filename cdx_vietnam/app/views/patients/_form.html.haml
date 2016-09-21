@@ -98,8 +98,9 @@
   - count = 0
   = f.fields_for :addresses do |addresses_form|
     - count = count + 1
+    - prefix = 'addresses.form.address' << count.to_s << '_prefix'
     %div{:class => "add#{count}"}
-      = render partial: 'addresses/form', locals: { address_form: addresses_form }
+      = render partial: 'addresses/form', locals: { address_form: addresses_form, prefix: I18n.t(prefix) }
 
   - if count > 1
     %script
