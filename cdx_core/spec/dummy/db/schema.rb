@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160914125841) do
+ActiveRecord::Schema.define(version: 20160922094628) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -231,6 +231,18 @@ ActiveRecord::Schema.define(version: 20160914125841) do
     t.integer "condition_id", limit: 4
   end
 
+  create_table "custom_translations", force: :cascade do |t|
+    t.integer  "localised_id",   limit: 4
+    t.string   "localised_type", limit: 255
+    t.string   "lang",           limit: 255
+    t.string   "text",           limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "custom_translations", ["lang"], name: "index_custom_translations_on_lang", using: :btree
+  add_index "custom_translations", ["localised_id", "localised_type"], name: "index_custom_translations_on_localised_id_and_localised_type", using: :btree
+
   create_table "device_commands", force: :cascade do |t|
     t.integer  "device_id",  limit: 4
     t.string   "name",       limit: 255
@@ -334,7 +346,7 @@ ActiveRecord::Schema.define(version: 20160914125841) do
     t.date     "testdue_date"
     t.integer  "treatment_weeks",    limit: 4
     t.integer  "performing_site_id", limit: 4
-    t.string   "status",             limit: 255,   default: ""
+    t.string   "status",             limit: 255,   default: "0"
     t.string   "testing_for",        limit: 255,   default: ""
     t.string   "culture_format",     limit: 255
     t.boolean  "presumptive_rr"
@@ -363,6 +375,17 @@ ActiveRecord::Schema.define(version: 20160914125841) do
   end
 
   add_index "episodes", ["patient_id"], name: "index_episodes_on_patient_id", using: :btree
+
+  create_table "feedback_messages", force: :cascade do |t|
+    t.integer  "institution_id", limit: 4,   null: false
+    t.string   "category",       limit: 255
+    t.string   "code",           limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "feedback_messages", ["category", "code"], name: "index_feedback_messages_on_category_and_code", using: :btree
+  add_index "feedback_messages", ["institution_id"], name: "index_feedback_messages_on_institution_id", using: :btree
 
   create_table "file_messages", force: :cascade do |t|
     t.string  "filename",          limit: 255
