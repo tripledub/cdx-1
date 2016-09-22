@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912102722) do
+ActiveRecord::Schema.define(version: 20160922110146) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20160912102722) do
     t.string   "state",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "country",          limit: 255
   end
 
   add_index "addresses", ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type", using: :btree
@@ -180,7 +181,7 @@ ActiveRecord::Schema.define(version: 20160912102722) do
   add_index "audit_updates", ["uuid"], name: "index_audit_updates_on_uuid", using: :btree
 
   create_table "comments", force: :cascade do |t|
-    t.date     "commented_on"
+    t.date     "commented_on",                     default: '2016-06-21'
     t.text     "comment",            limit: 65535
     t.string   "description",        limit: 255
     t.string   "uuid",               limit: 255
@@ -334,7 +335,7 @@ ActiveRecord::Schema.define(version: 20160912102722) do
     t.date     "testdue_date"
     t.integer  "treatment_weeks",    limit: 4
     t.integer  "performing_site_id", limit: 4
-    t.integer  "status",             limit: 4,     default: 0
+    t.string   "status",             limit: 255
     t.string   "testing_for",        limit: 255,   default: ""
     t.string   "culture_format",     limit: 255
     t.boolean  "presumptive_rr"
@@ -343,6 +344,7 @@ ActiveRecord::Schema.define(version: 20160912102722) do
   add_index "encounters", ["deleted_at"], name: "index_encounters_on_deleted_at", using: :btree
   add_index "encounters", ["performing_site_id"], name: "index_encounters_on_performing_site_id", using: :btree
   add_index "encounters", ["site_id"], name: "index_encounters_on_site_id", using: :btree
+  add_index "encounters", ["status"], name: "index_encounters_on_status", using: :btree
   add_index "encounters", ["user_id"], name: "index_encounters_on_user_id", using: :btree
 
   create_table "episodes", force: :cascade do |t|
@@ -532,8 +534,12 @@ ActiveRecord::Schema.define(version: 20160912102722) do
     t.string   "result_name",          limit: 255
     t.string   "result_status",        limit: 255
     t.string   "result_type",          limit: 255
+    t.text     "comment",              limit: 65535
+    t.integer  "test_batch_id",        limit: 4
+    t.datetime "completed_at"
   end
 
+  add_index "patient_results", ["completed_at"], name: "index_patient_results_on_completed_at", using: :btree
   add_index "patient_results", ["deleted_at"], name: "index_patient_results_on_deleted_at", using: :btree
   add_index "patient_results", ["device_id"], name: "index_patient_results_on_device_id", using: :btree
   add_index "patient_results", ["institution_id"], name: "index_patient_results_on_institution_id", using: :btree
@@ -542,6 +548,7 @@ ActiveRecord::Schema.define(version: 20160912102722) do
   add_index "patient_results", ["requested_test_id"], name: "index_patient_results_on_requested_test_id", using: :btree
   add_index "patient_results", ["sample_identifier_id"], name: "index_patient_results_on_sample_identifier_id", using: :btree
   add_index "patient_results", ["site_id"], name: "index_patient_results_on_site_id", using: :btree
+  add_index "patient_results", ["test_batch_id"], name: "index_patient_results_on_test_batch_id", using: :btree
   add_index "patient_results", ["test_result"], name: "index_patient_results_on_test_result", using: :btree
   add_index "patient_results", ["uuid"], name: "index_patient_results_on_uuid", using: :btree
 
@@ -571,6 +578,7 @@ ActiveRecord::Schema.define(version: 20160912102722) do
     t.date     "birth_date_on"
     t.string   "social_security_code",  limit: 255,   default: ""
     t.string   "medical_insurance_num", limit: 255
+    t.string   "external_id",           limit: 255
   end
 
   add_index "patients", ["birth_date_on"], name: "index_patients_on_birth_date_on", using: :btree
@@ -734,6 +742,22 @@ ActiveRecord::Schema.define(version: 20160912102722) do
 
   add_index "subscribers", ["filter_id"], name: "index_subscribers_on_filter_id", using: :btree
 
+  create_table "test_batches", force: :cascade do |t|
+    t.integer  "encounter_id",   limit: 4,                     null: false
+    t.integer  "institution_id", limit: 4,                     null: false
+    t.string   "status",         limit: 255
+    t.string   "uuid",           limit: 255
+    t.boolean  "payment_done",                 default: false
+    t.text     "comment",        limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "test_batches", ["encounter_id"], name: "index_test_batches_on_encounter_id", using: :btree
+  add_index "test_batches", ["institution_id"], name: "index_test_batches_on_institution_id", using: :btree
+  add_index "test_batches", ["status"], name: "index_test_batches_on_status", using: :btree
+  add_index "test_batches", ["uuid"], name: "index_test_batches_on_uuid", using: :btree
+
   create_table "test_result_parsed_data", force: :cascade do |t|
     t.integer  "test_result_id", limit: 4
     t.binary   "data",           limit: 65535
@@ -779,6 +803,7 @@ ActiveRecord::Schema.define(version: 20160912102722) do
     t.boolean  "is_active",                                  default: true
     t.string   "telephone",                      limit: 255
     t.boolean  "sidebar_open",                               default: true
+    t.integer  "timeout_in_seconds",             limit: 4,   default: 180
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
