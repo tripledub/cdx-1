@@ -3,6 +3,9 @@ var PatientAuditLogs = React.createClass({
     return {
       patientLogs: [],
       queryOrder: true,
+      pagination: {},
+      activeField: 'date',
+      pageNumber: 1,
       loadingMessasge: I18n.t("components.patients.show.history.msg_loading"),
       orderedColumns: {},
       availableColumns: [
@@ -17,6 +20,7 @@ var PatientAuditLogs = React.createClass({
     if (e) { e.preventDefault(); }
     this.serverRequest = $.get(this.props.patientLogsUrl + this.getParams(field), function (results) {
       if (results['rows'].length > 0) {
+        this.setState({ pagination: results['pages'] });
         this.setState({ patientLogs: results['rows'] });
         this.updateOrderIcon(field);
         $("table").resizableColumns({store: window.store});
@@ -26,9 +30,15 @@ var PatientAuditLogs = React.createClass({
     }.bind(this));
   },
 
+  pageData: function(pageNumber) {
+    this.setState({pageNumber: pageNumber});
+    this.getData(this.state.activeField);
+  },
+
   getParams: function(field) {
     this.state.queryOrder = !this.state.queryOrder;
-    return '&field='+ field + '&order=' + this.state.queryOrder;
+    this.setState({ activeField: field });
+    return '&field='+ this.state.activeField + '&order=' + this.state.queryOrder + '&page=' + this.state.pageNumber;
   },
 
   updateOrderIcon: function(orderedField) {
@@ -67,7 +77,6 @@ var PatientAuditLogs = React.createClass({
         rowHeaders.push(<OrderedColumnHeader key={availableColumn.fieldName} title={availableColumn.title} fieldName={availableColumn.fieldName} orderEvent={that.getData} orderIcon={that.state.orderedColumns[availableColumn.fieldName]} />);
       }
     );
-
     return (
       <div className="row">
         {
@@ -78,6 +87,11 @@ var PatientAuditLogs = React.createClass({
                {rowHeaders}
               </tr>
             </thead>
+            <tfoot>
+              <tr>
+                <td><Paginator pages={this.state.pagination} pageData={this.pageData}/></td>
+              </tr>
+            </tfoot>
             <tbody>
               {rows}
             </tbody>

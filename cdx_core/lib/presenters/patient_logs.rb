@@ -15,8 +15,8 @@ class Presenters::PatientLogs
       log_data['pages'] = {
         total_pages: patient_logs.total_pages,
         current_page: patient_logs.current_page,
-        first_page?: patient_logs.first_page?,
-        last_page?: patient_logs.last_page?,
+        first_page: patient_logs.first_page?,
+        last_page: patient_logs.last_page?,
         prev_page: patient_logs.prev_page,
         next_page: patient_logs.next_page
       }
