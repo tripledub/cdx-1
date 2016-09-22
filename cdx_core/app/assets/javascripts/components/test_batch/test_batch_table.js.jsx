@@ -12,7 +12,7 @@ class TestBatchTable extends React.Component{
         </thead>
         <tbody>
           { this.props.patientResults.map(function(patientResult) {
-             return <TestBatchRow key={ patientResult.id } patientResult={ patientResult } updateResultUrl={ this.props.updateResultUrl } />;
+             return <TestBatchRow key={ patientResult.id } rejectReasons={ this.props.rejectReasons } patientResult={ patientResult } updateResultUrl={ this.props.updateResultUrl } />;
           }.bind(this)) }
         </tbody>
       </table>
@@ -22,5 +22,6 @@ class TestBatchTable extends React.Component{
 
 TestBatchTable.propTypes = {
   patientResults: React.PropTypes.array,
+  rejectReasons: React.PropTypes.object.isRequired,
   updateResultUrl: React.PropTypes.string.isRequired,
 };

@@ -33,7 +33,7 @@ class TestResultActions extends React.Component{
     return(
       <div>
         <button onClick={ this.updateResult.bind(this, this.props.actionInfo.actionStatus, '') } className="btn-primary save">{ this.props.actionInfo.actionLabel }</button>
-        <TextInputModal key={ this.props.resultId } mainHeader='Please, explain why this test is rejected' linkButton='Reject' comment={ this.state.commentValue } commentChanged={ this.commentChanged.bind(this) } edit={ true } ref='inviteModal' />
+        <TextInputModal key={ this.props.resultId } showRejectionSelect={ true } rejectReasons={ this.props.rejectReasons } mainHeader='Please explain why this test is rejected' linkButton='Reject' comment={ this.state.commentValue } commentChanged={ this.commentChanged.bind(this) } edit={ true } ref='inviteModal' />
       </div>
 
     )
@@ -44,6 +44,7 @@ TestResultActions.propTypes = {
   updateResultUrl: React.PropTypes.string.isRequired,
   commentValue: React.PropTypes.string.isRequired,
   actionInfo: React.PropTypes.object.isRequired,
+  rejectReasons: React.PropTypes.array.isRequired,
   resultId: React.PropTypes.number.isRequired,
   updateResultStatus: React.PropTypes.func.isRequired,
 };

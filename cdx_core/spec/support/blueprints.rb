@@ -73,6 +73,16 @@ Comment.blueprint do
   comment       { Faker::Lorem.paragraph }
 end
 
+FeedbackMessage.blueprint do
+  category Faker::Lorem.word
+  code Faker::Lorem.word
+end
+
+CustomTranslation.blueprint do
+  lang { 'en' }
+  text { Faker::Lorem.sentence }
+end
+
 AuditLog.blueprint do
   patient       { Patient.make }
   user          { User.make }

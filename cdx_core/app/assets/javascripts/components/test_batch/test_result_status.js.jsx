@@ -26,11 +26,11 @@ class TestResultStatus extends React.Component {
       <div>
         { this.state.currentStatus === 'new' ? 'New' : null }
         { this.state.currentStatus === 'sample_collected' ?
-          <TestResultActions actionInfo={ sampleReceived } updateResultStatus={ this.updateResultStatus.bind(this) } commentValue={ this.state.commentValue } resultId={ this.props.resultId } updateResultUrl={ this.props.updateResultUrl }/> : null }
+          <TestResultActions actionInfo={ sampleReceived } rejectReasons={ this.props.rejectReasons['samples_collected'] } updateResultStatus={ this.updateResultStatus.bind(this) } commentValue={ this.state.commentValue } resultId={ this.props.resultId } updateResultUrl={ this.props.updateResultUrl }/> : null }
         { this.state.currentStatus === 'sample_received' ?
           <AddPatientResultAction editResultUrl={ this.props.editResultUrl }/> : null }
         { this.state.currentStatus === 'pending_approval' ?
-          <TestResultActions actionInfo={ sampleApproved } updateResultStatus={ this.updateResultStatus.bind(this) } commentValue={ this.state.commentValue } resultId={ this.props.resultId } updateResultUrl={ this.props.updateResultUrl }/> : null }
+          <TestResultActions actionInfo={ sampleApproved } rejectReasons={ this.props.rejectReasons['samples_collected'] } updateResultStatus={ this.updateResultStatus.bind(this) } commentValue={ this.state.commentValue } resultId={ this.props.resultId } updateResultUrl={ this.props.updateResultUrl }/> : null }
         { this.state.currentStatus === 'rejected' ?
           <ShowRejectedWithComment commentValue={ this.state.commentValue } />
           : null }
@@ -47,4 +47,5 @@ TestResultStatus.propTypes = {
   editResultUrl: React.PropTypes.string.isRequired,
   resultId: React.PropTypes.number.isRequired,
   commentValue: React.PropTypes.string.isRequired,
+  rejectReasons: React.PropTypes.object.isRequired,
 };
