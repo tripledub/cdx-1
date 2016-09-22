@@ -559,11 +559,13 @@ ActiveRecord::Schema.define(version: 20160922094628) do
     t.text     "comment",              limit: 65535
     t.integer  "test_batch_id",        limit: 4
     t.datetime "completed_at"
+    t.integer  "feedback_message_id",  limit: 4
   end
 
   add_index "patient_results", ["completed_at"], name: "index_patient_results_on_completed_at", using: :btree
   add_index "patient_results", ["deleted_at"], name: "index_patient_results_on_deleted_at", using: :btree
   add_index "patient_results", ["device_id"], name: "index_patient_results_on_device_id", using: :btree
+  add_index "patient_results", ["feedback_message_id"], name: "index_patient_results_on_feedback_message_id", using: :btree
   add_index "patient_results", ["institution_id"], name: "index_patient_results_on_institution_id", using: :btree
   add_index "patient_results", ["method_used"], name: "index_patient_results_on_method_used", using: :btree
   add_index "patient_results", ["patient_id"], name: "index_patient_results_on_patient_id", using: :btree

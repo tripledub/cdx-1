@@ -8,8 +8,11 @@ class AddFeedbackMessages < ActiveRecord::Migration
       t.timestamps null: false
     end
 
+    add_column :patient_results, :feedback_message_id, :integer
+
     add_index :feedback_messages, [:category, :code]
     add_index :feedback_messages, :institution_id
+    add_index :patient_results,   :feedback_message_id
 
     create_table :custom_translations do |t|
       t.integer :localisable_id
