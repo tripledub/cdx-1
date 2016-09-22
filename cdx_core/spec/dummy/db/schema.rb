@@ -232,16 +232,16 @@ ActiveRecord::Schema.define(version: 20160922094628) do
   end
 
   create_table "custom_translations", force: :cascade do |t|
-    t.integer  "localised_id",   limit: 4
-    t.string   "localised_type", limit: 255
-    t.string   "lang",           limit: 255
-    t.string   "text",           limit: 255
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "localisable_id",   limit: 4
+    t.string   "localisable_type", limit: 255
+    t.string   "lang",             limit: 255
+    t.string   "text",             limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "custom_translations", ["lang"], name: "index_custom_translations_on_lang", using: :btree
-  add_index "custom_translations", ["localised_id", "localised_type"], name: "index_custom_translations_on_localised_id_and_localised_type", using: :btree
+  add_index "custom_translations", ["localisable_id", "localisable_type"], name: "index_custom_translations_on_localisable_id_and_localisable_type", using: :btree
 
   create_table "device_commands", force: :cascade do |t|
     t.integer  "device_id",  limit: 4
@@ -346,7 +346,7 @@ ActiveRecord::Schema.define(version: 20160922094628) do
     t.date     "testdue_date"
     t.integer  "treatment_weeks",    limit: 4
     t.integer  "performing_site_id", limit: 4
-    t.string   "status",             limit: 255,   default: "0"
+    t.string   "status",             limit: 255,   default: ""
     t.string   "testing_for",        limit: 255,   default: ""
     t.string   "culture_format",     limit: 255
     t.boolean  "presumptive_rr"
