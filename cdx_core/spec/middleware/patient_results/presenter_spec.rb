@@ -4,13 +4,13 @@ describe PatientResults::Presenter do
   let(:encounter) { Encounter.make }
   let(:test_batch) { TestBatch.make encounter: encounter }
   let!(:requested_tests) {
-    MicroscopyResult.make test_batch: test_batch
+    MicroscopyResult.make test_batch: test_batch, feedback_message: FeedbackMessage.make(institution: encounter.institution)
     CultureResult.make test_batch: test_batch
     DstLpaResult.make test_batch: test_batch
   }
 
   describe 'for_encounter' do
-    subject { PatientResults::Presenter.for_encounter(test_batch.patient_results) }
+    subject { described_class.for_encounter(test_batch.patient_results) }
 
     it 'returns an array of formatted test requests' do
       expect(subject).to be_a(Array)
@@ -18,7 +18,7 @@ describe PatientResults::Presenter do
     end
 
     it 'returns all elements correctly formatted' do
-      patient_result = PatientResult.first
+      patient_result = MicroscopyResult.first
       expect(subject.first).to eq(
         id: patient_result.id,
         testType:    patient_result.test_name.to_s,
@@ -28,6 +28,7 @@ describe PatientResults::Presenter do
         status:      patient_result.result_status,
         completedAt: Extras::Dates::Format.datetime_with_time_zone(patient_result.completed_at),
         createdAt:   Extras::Dates::Format.datetime_with_time_zone(patient_result.created_at),
+        feedbackMessage: FeedbackMessages::Finder.find_text_from_patient_result(patient_result),
         editUrl:     Rails.application.routes.url_helpers.edit_test_batch_microscopy_result_path(patient_result.test_batch, patient_result)
       )
     end

@@ -7,6 +7,7 @@ describe PatientResultsController do
   let(:encounter)         { Encounter.make institution: institution, patient: patient }
   let(:test_batch)        { TestBatch.make encounter: encounter, institution: institution }
   let(:microscopy_result) { MicroscopyResult.make test_batch: test_batch }
+  let(:feedback_message)  { FeedbackMessage.make(institution: institution) }
   let(:default_params)    { { context: institution.uuid } }
   let(:samples_ids)       {
     { microscopy_result.id.to_s => 'sample-id' }
@@ -33,7 +34,7 @@ describe PatientResultsController do
   end
 
   describe 'update' do
-    let(:patient_result) { { result_status: 'completed', comment: 'New comment added' } }
+    let(:patient_result) { { result_status: 'completed', comment: 'New comment added', feedback_message_id: feedback_message.id } }
 
     before :each do
       put :update, test_batch_id: test_batch.id, id: microscopy_result.id, patient_result: patient_result, format: :json
@@ -46,6 +47,10 @@ describe PatientResultsController do
 
     it 'should update the comment' do
       expect(microscopy_result.comment).to eq('New comment added')
+    end
+
+    it 'should update the feedback message' do
+      expect(microscopy_result.feedback_message).to eq(feedback_message)
     end
   end
 end

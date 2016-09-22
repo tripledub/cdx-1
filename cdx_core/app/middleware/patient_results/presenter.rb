@@ -15,6 +15,7 @@ module PatientResults
             status:      patient_result.result_status,
             completedAt: Extras::Dates::Format.datetime_with_time_zone(patient_result.completed_at),
             createdAt:   Extras::Dates::Format.datetime_with_time_zone(patient_result.created_at),
+            feedbackMessage: FeedbackMessages::Finder.find_text_from_patient_result(patient_result),
             editUrl:     edit_polymorphic_path([patient_result.test_batch, patient_result])
           }
         end

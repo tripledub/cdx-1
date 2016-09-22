@@ -32,7 +32,7 @@ class TestResultStatus extends React.Component {
         { this.state.currentStatus === 'pending_approval' ?
           <TestResultActions actionInfo={ sampleApproved } rejectReasons={ this.props.rejectReasons['samples_collected'] } updateResultStatus={ this.updateResultStatus.bind(this) } commentValue={ this.state.commentValue } resultId={ this.props.resultId } updateResultUrl={ this.props.updateResultUrl }/> : null }
         { this.state.currentStatus === 'rejected' ?
-          <ShowRejectedWithComment commentValue={ this.state.commentValue } />
+          <ShowRejectedWithComment commentValue={ this.state.commentValue } feedbackMessage={ this.props.feedbackMessage }/>
           : null }
         { this.state.currentStatus === 'completed' ? 'Completed' : null }
       </div>
@@ -47,5 +47,6 @@ TestResultStatus.propTypes = {
   editResultUrl: React.PropTypes.string.isRequired,
   resultId: React.PropTypes.number.isRequired,
   commentValue: React.PropTypes.string.isRequired,
+  feedbackMessage: React.PropTypes.string.isRequired,
   rejectReasons: React.PropTypes.object.isRequired,
 };

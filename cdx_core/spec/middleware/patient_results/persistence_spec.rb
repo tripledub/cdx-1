@@ -33,10 +33,10 @@ describe PatientResults::Persistence do
 
   describe 'update_status' do
     context 'status is rejected' do
-      let(:patient_result) { { result_status: 'rejected', comment: 'New comment added', feedback_message: feedback_message.id } }
+      let(:patient_result) { { result_status: 'rejected', comment: 'New comment added', feedback_message_id: feedback_message.id } }
 
       before :each do
-        described_class.update_status(microscopy_result, { result_status: 'rejected', comment: 'New comment added' })
+        described_class.update_status(microscopy_result, patient_result)
       end
 
       it 'should update result status to rejected' do
@@ -47,7 +47,7 @@ describe PatientResults::Persistence do
         expect(microscopy_result.comment).to eq('New comment added')
       end
 
-      it 'should update the comment' do
+      it 'should update the feedback message' do
         expect(microscopy_result.feedback_message).to eq(feedback_message)
       end
     end

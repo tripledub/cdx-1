@@ -2,7 +2,7 @@ class ShowRejectedWithComment extends React.Component {
   render() {
     return(
       <p>
-        <strong>Rejected</strong>
+        <strong>Rejected - { this.props.feedbackMessage }</strong>
         <br />
         <em>{ this.props.commentValue }</em>
       </p>
@@ -12,4 +12,5 @@ class ShowRejectedWithComment extends React.Component {
 
 ShowRejectedWithComment.propTypes = {
   commentValue: React.PropTypes.string.isRequired,
+  feedbackMessage: React.PropTypes.string.isRequired,
 };

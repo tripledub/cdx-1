@@ -1,0 +1,4 @@
+en:
+  feedback_messages:
+    finder:
+      translation_not_found: 'Feedback message available in your language'
