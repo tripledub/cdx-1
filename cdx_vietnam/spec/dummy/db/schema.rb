@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921133234) do
+ActiveRecord::Schema.define(version: 20160912102722) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -572,7 +572,6 @@ ActiveRecord::Schema.define(version: 20160921133234) do
     t.date     "birth_date_on"
     t.string   "social_security_code",  limit: 255,   default: ""
     t.string   "medical_insurance_num", limit: 255
-    t.string   "external_id",           limit: 255
   end
 
   add_index "patients", ["birth_date_on"], name: "index_patients_on_birth_date_on", using: :btree
