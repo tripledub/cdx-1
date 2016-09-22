@@ -8,6 +8,12 @@ class Patients::Finder
     set_filter
   end
 
+  class << self
+    def find_by_institution(institution, current_user)
+      Policy.authorize(Policy::Actions::READ_PATIENT, institution.patients, current_user)
+    end
+  end
+
   protected
 
   def set_filter

@@ -35,7 +35,7 @@ module TestOrders
     def update
       perform_encounter_action "updating encounter" do
         prepare_encounter_from_json
-        return unless Policy.authorize(UPDATE_ENCOUNTER, @encounter, current_user)
+        return unless Policy.authorize(Policy::Actions::UPDATE_ENCOUNTER, @encounter, current_user)
         raise "encounter.id does not match" if params[:id].to_i != @encounter.id
         create_new_samples
         @blender.save_and_index!
@@ -254,7 +254,7 @@ module TestOrders
 
     def set_patient_by_id(id)
       return unless id
-      patient = Finder::Patient.find_by_institution(@institution, current_user).find(id)
+      patient = Patients::Finder.find_by_institution(@institution, current_user).find(id)
       @encounter.patient = patient
       patient_blender = @blender.load(patient)
       @blender.merge_parent(@encounter_blender, patient_blender)
