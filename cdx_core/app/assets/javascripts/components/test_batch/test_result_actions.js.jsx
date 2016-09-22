@@ -5,12 +5,12 @@ class TestResultActions extends React.Component{
     this.state = { currentStatus: props.currentStatus, commentValue: props.commentValue }
   }
 
-  updateResult(status, comment) {
+  updateResult(status, comment, reasonId) {
     const that = this;
     $.ajax({
       url: this.props.updateResultUrl,
       method: 'PUT',
-      data: { id: this.props.resultId, patient_result: { result_status: status, comment: comment } }
+      data: { id: this.props.resultId, patient_result: { result_status: status, comment: comment, feedback_message_id: reasonId } }
     }).done( function(data) {
       that.props.updateResultStatus(data['result'], comment);
     }).fail( function(data) {
@@ -23,9 +23,9 @@ class TestResultActions extends React.Component{
     this.refs.inviteModal.show();
   }
 
-  commentChanged(newComment) {
+  commentChanged(newComment, reasonId) {
     if (newComment) {
-      this.updateResult('rejected', newComment);
+      this.updateResult('rejected', newComment, reasonId);
     }
   }
 

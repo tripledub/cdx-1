@@ -8,6 +8,7 @@ describe PatientResults::Persistence do
   let(:test_batch)        { TestBatch.make encounter: encounter, institution: institution }
   let(:microscopy_result) { MicroscopyResult.make test_batch: test_batch }
   let(:culture_result)    { CultureResult.make test_batch: test_batch }
+  let(:feedback_message)  { FeedbackMessage.make institution: institution }
   let(:sample_ids) {
     { microscopy_result.id.to_s => '8778', culture_result.id.to_s => 'Random Id' }
   }
@@ -32,7 +33,7 @@ describe PatientResults::Persistence do
 
   describe 'update_status' do
     context 'status is rejected' do
-      let(:patient_result) { { result_status: 'rejected', comment: 'New comment added' } }
+      let(:patient_result) { { result_status: 'rejected', comment: 'New comment added', feedback_message: feedback_message.id } }
 
       before :each do
         described_class.update_status(microscopy_result, { result_status: 'rejected', comment: 'New comment added' })
@@ -44,6 +45,10 @@ describe PatientResults::Persistence do
 
       it 'should update the comment' do
         expect(microscopy_result.comment).to eq('New comment added')
+      end
+
+      it 'should update the comment' do
+        expect(microscopy_result.feedback_message).to eq(feedback_message)
       end
     end
 

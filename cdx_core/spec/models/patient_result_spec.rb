@@ -8,6 +8,7 @@ describe PatientResult do
 
   context "validations" do
     it { should belong_to(:test_batch) }
+    it { should belong_to(:feedback_message) }
     it { should validate_inclusion_of(:result_status).in_array(result_status) }
   end
 
@@ -71,7 +72,7 @@ describe PatientResult do
         test_result.update_attribute(:result_status, 'completed')
         test_result.reload
 
-        expect(test_result.turnaround).to eq('3 days')
+        expect(test_result.turnaround).to include('3 days')
       end
     end
   end

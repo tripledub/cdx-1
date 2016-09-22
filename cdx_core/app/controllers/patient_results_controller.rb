@@ -24,7 +24,7 @@ class PatientResultsController < ApplicationController
   end
 
   def patient_results_params
-    params.require(:patient_result).permit(:result_status, :comment)
+    params.require(:patient_result).permit(:result_status, :comment, :feedback_message_id)
   end
 
   def check_permissions

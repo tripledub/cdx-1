@@ -11,7 +11,7 @@ module PatientResults
       end
 
       def update_status(patient_result, params)
-        if patient_result.update_attribute(:result_status, params[:result_status].to_s) && patient_result.update_attribute(:comment, params[:comment].to_s)
+        if patient_result.update(params)
           [patient_result.result_status, :ok]
         else
           [patient_result.errors.messages, :unprocessable_entity]
