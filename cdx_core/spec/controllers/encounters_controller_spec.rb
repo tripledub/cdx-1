@@ -21,7 +21,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         EncounterIndexer.new(encounter).index(true)
         delete :destroy, id: encounter.id
 
-        expect(Encounter.count).to eq 0
+        expect(Encounter.all.count).to eq 1
         expect(response).to be_redirect
       end
     end
