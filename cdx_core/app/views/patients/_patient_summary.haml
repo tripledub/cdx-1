@@ -37,6 +37,12 @@
           %label
             = Patient.human_attribute_name(:entity_id)
           = patient.entity_id
+        %li
+          %label
+            = Patient.human_attribute_name(:external_id)
+          = patient.external_id
+
+
         - patient_address_label = "patients.show.address"
         - patient.addresses.each do |address|
           %li
