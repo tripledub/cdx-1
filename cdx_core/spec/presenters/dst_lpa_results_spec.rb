@@ -35,7 +35,7 @@ describe Presenters::DstLpaResults do
         resultKm:          Extras::Select.find(DstLpaResult.dst_lpa_options, DstLpaResult.first.results_km),
         resultCm:          Extras::Select.find(DstLpaResult.dst_lpa_options, DstLpaResult.first.results_cm),
         resultFq:          Extras::Select.find(DstLpaResult.dst_lpa_options, DstLpaResult.first.results_fq),
-        viewLink:          Rails.application.routes.url_helpers.requested_test_dst_lpa_result_path(requested_test_id: DstLpaResult.first.requested_test.id)
+        viewLink:          Rails.application.routes.url_helpers.test_batch_dst_lpa_result_path(DstLpaResult.first.test_batch, DstLpaResult.first)
       })
     end
   end
