@@ -6,7 +6,9 @@ class PatientLogsController < ApplicationController
   before_filter :find_patient_log, only: [:show]
 
   def index
-    render json: Presenters::PatientLogs.patient_view(@patient.audit_logs.joins(:user).order(set_order_from_params).limit(30).offset(params[:page] || 0))
+    page = params[:page] || 1
+    logs = @patient.audit_logs.joins(:user).order(set_order_from_params).page(page).per(10)
+    render json: Presenters::PatientLogs.patient_view(logs)
   end
 
   def show

@@ -20,8 +20,7 @@ describe PatientLogsController do
 
       it 'should return a json with comments' do
         get 'index', patient_id: patient.id
-
-        expect(JSON.parse(response.body).size).to eq(9)
+        expect(JSON.parse(response.body)['rows'].size).to eq(9)
       end
     end
 
