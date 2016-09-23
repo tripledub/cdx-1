@@ -5,8 +5,9 @@ class Episode < ActiveRecord::Base
 
   belongs_to :patient
 
-  validates_presence_of :diagnosis, :hiv_status, :drug_resistance, :initial_history
+  validates_presence_of :diagnosis, :hiv_status, :initial_history
   validates :previous_history, presence: true, if: Proc.new { |a| a.initial_history == 'previous' }
+  validates :drug_resistance, presence: true, if: Proc.new { |a| a.initial_history == 'previous' }
 
   before_save :check_closing
 

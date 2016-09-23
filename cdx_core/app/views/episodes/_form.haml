@@ -1,27 +1,51 @@
 = form_for([@patient, @episode], html: { class: 'zebra' } ) do |f|
   = f.hidden_field :closed, value: @episode.closed
 
-  %script
-    $(document).ready( function(){
-    $('.panel-tab').hide();
-    if(is_new_entry){ $('.questions').hide(); }
-    else { $('#outcome').show(); }
-    $('#episode_initial_history').on('change', function() {
-    $('.questions').show();
-    if(is_new_entry) { $('#outcome').hide(); }
-    var myval = $(this).val();
-    if(myval != 'previous') { $('#drugres').hide(); if(myval=='new') $('#episode_diagnosis').val('presumptive_tb'); }
-    });
-    $('.panel-tab#episodetype_tb').show();  // default
-    $('span#episodeType').text('TB');
-    $('#epitabs li').on('click', function() {
-    var type = $(this).attr('id').split('_')[1];  // get bit after the 'tab_' in the id
-    $('#epitabs li').removeClass('active');
-    $(this).addClass('active');
-    $('.panel-tab').hide();
-    $('.panel-tab#episodetype_'+type).show();
-    $('span#episodeType').text(type);
-    });
+  :javascript
+    $(document).ready( function()
+    {
+      $('.panel-tab').hide();
+      // is_new_entry is added in the new or edit files
+      if(is_new_entry)
+      { 
+        $('#episode_previous_history').hide();
+        $('.questions').hide(); 
+      }
+      else 
+      { 
+        $('#outcome').show(); 
+      }
+      // Episode History manager
+      $('#episode_initial_history').on('change', function() 
+      {
+        $('.questions').show();
+        if(is_new_entry) 
+        { 
+          $('#outcome').hide(); 
+        }
+        var myval = $(this).val();
+        if(myval != 'previous') 
+        { 
+          $('#episode_previous_history').hide();
+          $('#drugres').hide(); 
+          if(myval=='new') 
+            $('#episode_diagnosis').val('presumptive_tb'); 
+        }
+        else
+          $('#episode_previous_history').show();
+      });
+      // Tab Handler
+      $('.panel-tab#episodetype_tb').show();  // default
+      $('span#episodeType').text('TB');
+      $('#epitabs li').on('click', function() 
+      {
+        var type = $(this).attr('id').split('_')[1];  // get bit after the 'tab_' in the id
+        $('#epitabs li').removeClass('active');
+        $(this).addClass('active');
+        $('.panel-tab').hide();
+        $('.panel-tab#episodetype_'+type).show();
+        $('span#episodeType').text(type);
+      });
     });
 
   = render partial: 'disease_tabs', locals: { f: f }
