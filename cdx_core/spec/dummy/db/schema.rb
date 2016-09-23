@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20160912102722) do
     t.string   "state",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "country",          limit: 255
   end
 
   add_index "addresses", ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type", using: :btree
