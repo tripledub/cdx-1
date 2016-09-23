@@ -4,13 +4,13 @@ RSpec.describe Patient, type: :model do
 
   describe '#social_security_code' do
 
-    context 'is \'1234567890\'' do
+    context 'is a 10 character string' do
       let(:patient) { Patient.make }
 
       it { expect(patient).to be_valid }
     end
 
-    context 'is \'1234\'' do
+    context 'is a 4 character string' do
       let(:patient) { Patient.make }
 
       it do
