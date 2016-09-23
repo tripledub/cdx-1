@@ -165,7 +165,7 @@ module TestOrders
         end
 
         json.samples @encounter_blender.samples.uniq do |sample|
-          Finder::Sample.as_json(json, sample)
+          Samples::Finder.as_json(json, sample)
         end
 
         json.(@encounter, :new_samples)
@@ -262,7 +262,7 @@ module TestOrders
     end
 
     def add_sample_by_uuid(uuid)
-      sample = Finder::Sample.find_by_encounter_or_institution(@encounter, current_user, @encounter.institution).find_by!("sample_identifiers.uuid" => uuid)
+      sample = Samples::Finder.find_by_encounter_or_institution(@encounter, current_user, @encounter.institution).find_by!("sample_identifiers.uuid" => uuid)
       sample_blender = @blender.load(sample)
       @blender.merge_parent(sample_blender, @encounter_blender)
       sample_blender
@@ -275,7 +275,7 @@ module TestOrders
     end
 
     def merge_samples_by_uuid(uuids)
-      samples = Finder::Sample.find_by_encounter_or_institution(@encounter, current_user, @encounter.institution).where("sample_identifiers.uuid" => uuids).to_a
+      samples = Samples::Finder.find_by_encounter_or_institution(@encounter, current_user, @encounter.institution).where("sample_identifiers.uuid" => uuids).to_a
       raise ActiveRecord::RecordNotFound if samples.empty?
       target, *to_merge = samples.map{|s| @blender.load(s)}
       @blender.merge_blenders(target, to_merge)

@@ -1,5 +1,5 @@
-module Finder
-  class Sample
+module Samples
+  class Finder
     class << self
       def find_by_encounter_or_institution(encounter, current_user, institution)
         samples_in_encounter = "samples.encounter_id = #{encounter.id} OR " if encounter.try(:persisted?)
