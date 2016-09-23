@@ -3,7 +3,7 @@ class TestBatchList extends React.Component{
     return(
       <div className="row">
         <TestBatchHeader batchId={ this.props.testBatch.batchId } status={ this.props.testBatch.status } paymentDone= { this.props.testBatch.paymentDone }/>
-        <TestBatchTable patientResults={ this.props.testBatch.patientResults } rejectReasons={ this.props.rejectReasons } updateResultUrl={ this.props.updateResultUrl } />
+        <TestBatchTable patientResults={ this.props.testBatch.patientResults } paymentDone={ this.props.testBatch.paymentDone } rejectReasons={ this.props.rejectReasons } updateResultUrl={ this.props.updateResultUrl } />
         <TestBatchActions encounterStatus={ this.props.encounterStatus } batchId={ this.props.testBatch.batchId } testBatch= { this.props.testBatch } submitPaymentUrl={ this.props.submitPaymentUrl } submitSamplesUrl={ this.props.submitSamplesUrl }  authenticityToken={ this.props.authenticityToken } />
       </div>
     );

@@ -25,7 +25,7 @@ class TestResultStatus extends React.Component {
     return(
       <div>
         { this.state.currentStatus === 'new' ? 'New' : null }
-        { this.state.currentStatus === 'sample_collected' ?
+        { this.state.currentStatus === 'sample_collected' && this.props.paymentDone ?
           <TestResultActions actionInfo={ sampleReceived } rejectReasons={ this.props.rejectReasons['samples_collected'] } updateResultStatus={ this.updateResultStatus.bind(this) } commentValue={ this.state.commentValue } resultId={ this.props.resultId } updateResultUrl={ this.props.updateResultUrl }/> : null }
         { this.state.currentStatus === 'sample_received' ?
           <AddPatientResultAction editResultUrl={ this.props.editResultUrl }/> : null }
@@ -45,6 +45,7 @@ TestResultStatus.propTypes = {
   currentStatus: React.PropTypes.string.isRequired,
   updateResultUrl: React.PropTypes.string.isRequired,
   editResultUrl: React.PropTypes.string.isRequired,
+  paymentDone: React.PropTypes.bool.isRequired,
   resultId: React.PropTypes.number.isRequired,
   commentValue: React.PropTypes.string.isRequired,
   feedbackMessage: React.PropTypes.string.isRequired,
