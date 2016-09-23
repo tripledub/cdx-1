@@ -46,11 +46,10 @@ module TestOrders
     def destroy(encounter)
       @encounter = encounter
       if @encounter.status == 'new'
-        # note: Cannot delete record because dependent samples exist, so just set deleted_at
-        @encounter.update(deleted_at: Time.now)
         begin
-          Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: @encounter.uuid
+          Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: @encounter.uuid, ignore: 404
           Audit::EncounterAuditor.new(@encounter, current_user.id).log_action(I18n.t('encounters.destroy.cancelled'), I18n.t('encounters.destroy.log_action', uuid: @encounter.uuid), @encounter)
+          @encounter.destroy
           message = I18n.t('encounters.destroy.success')
         rescue => ex
           Rails.logger.error ex.message
