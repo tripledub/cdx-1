@@ -7,8 +7,6 @@ class PatientResult < ActiveRecord::Base
   belongs_to :feedback_message
   has_many   :assay_results, as: :assayable
 
-
-  validates_inclusion_of :result_status, in: ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed'], allow_nil: true
   validates_presence_of :comment, if: Proc.new { |rt| rt.result_status == 'rejected' }, message: I18n.t('patient_results.validations.rejected_no_comment')
 
   after_save    :update_batch_status
