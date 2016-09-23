@@ -6,13 +6,15 @@ describe XpertResult do
   let(:site)           { institution.sites.make }
   let(:patient)        { Patient.make( institution: institution) }
   let(:encounter)      { Encounter.make institution: institution, site: site ,patient: patient, test_batch: TestBatch.make(institution: institution) }
+  let(:result_status) { ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed', 'success', 'error'] }
 
   context "validations" do
-    it { should validate_presence_of(:sample_collected_on) }
-    it { should validate_presence_of(:tuberculosis) }
-    it { should validate_presence_of(:rifampicin) }
-    it { should validate_presence_of(:examined_by) }
-    it { should validate_presence_of(:result_on) }
+    it { should validate_presence_of(:sample_collected_on).on(:update) }
+    it { should validate_presence_of(:tuberculosis).on(:update) }
+    it { should validate_presence_of(:rifampicin).on(:update) }
+    it { should validate_presence_of(:examined_by).on(:update) }
+    it { should validate_presence_of(:result_on).on(:update) }
+    it { should validate_inclusion_of(:result_status).in_array(result_status) }
 
     context 'rifampicin' do
       context 'if is detected and tuberculosis is not detected' do

@@ -338,7 +338,7 @@ module TestOrders
     end
 
     def add_test_result_by_uuid(uuid)
-      test_result         = Finder::TestResults.find_by_institution(@institution, current_user).find_by!(uuid: uuid)
+      test_result         = ::Finder::TestResults.find_by_institution(@institution, current_user).find_by!(uuid: uuid)
       test_result_blender = @blender.load(test_result)
       @blender.merge_parent(test_result_blender, @encounter_blender)
       test_result_blender

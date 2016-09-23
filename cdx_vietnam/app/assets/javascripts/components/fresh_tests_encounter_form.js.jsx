@@ -111,15 +111,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
             </div>
           </div>
 
-          <div className="row">
-            <div className="col-6">
-              <label>{I18n.t("components.fresh_tests_encounter_form.test_due_date_label")}</label>
-            </div>
-            <div className="col-6">
-              <input type="date" id="testdue_date" min={today} onChange={this.testDueDateChange} value={this.state.encounter.testdue_date}/>
-            </div>
-          </div>
-
           <ReasonDiag diagCommentChange={this.diagCommentChange} />
 
           <div className="row labelfooter">
