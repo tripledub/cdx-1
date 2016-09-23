@@ -15,9 +15,10 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
   describe "destroy" do
     context 'an admin user' do
-      let(:encounter) { Encounter.make institution: institution, site: site, patient: patient }
+      let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, test_batch: TestBatch.make(institution: institution) }
 
       it "should destroy an encounter if status is new" do
+        EncounterIndexer.new(encounter).index(true)
         delete :destroy, id: encounter.id
 
         expect(Encounter.count).to eq 0
@@ -110,36 +111,36 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     it "returns http forbidden if not allowed" do
       i1        = Institution.make
       patient   = Patient.make institution: i1
-      encounter = Encounter.make institution: i1, patient: patient
+      encounter = Encounter.make institution: i1, patient: patient, test_batch: TestBatch.make(institution: i1)
       get :show, id: encounter.id
 
       expect(response).to redirect_to(encounters_path)
     end
 
     it "should load encounter by uuid" do
-      encounter = Encounter.make institution: institution, patient: patient
+      encounter = Encounter.make institution: institution, patient: patient, test_batch: TestBatch.make(institution: institution)
       get :show, id: encounter.uuid
 
       expect(assigns(:encounter)).to eq(encounter)
     end
 
     it "should load encounter by id" do
-      encounter = Encounter.make institution: institution, patient: patient
+      encounter = Encounter.make institution: institution, patient: patient, test_batch: TestBatch.make(institution: institution)
       get :show, id: encounter.id
 
       expect(assigns(:encounter)).to eq(encounter)
     end
 
     it "should load encounter first by uuid" do
-      encounter  = Encounter.make institution: institution, patient: patient
-      encounter2 = Encounter.make institution: institution, uuid: "#{encounter.id}lorem", patient: patient
+      encounter  = Encounter.make institution: institution, patient: patient, test_batch: TestBatch.make(institution: institution)
+      encounter2 = Encounter.make institution: institution, uuid: "#{encounter.id}lorem", patient: patient, test_batch: TestBatch.make(institution: institution)
       get :show, id: encounter2.uuid
 
       expect(assigns(:encounter)).to eq(encounter2)
     end
 
     context 'cancel encounter' do
-      let(:encounter) { Encounter.make institution: institution, patient: patient }
+      let(:encounter) { Encounter.make institution: institution, patient: patient, test_batch: TestBatch.make(institution: institution) }
 
       before :each do
         request.env["HTTP_REFERER"] = patient_path(patient)
@@ -186,7 +187,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
   describe "GET #edit" do
     it "returns http success if allowed" do
       patient   = Patient.make institution: institution
-      encounter = Encounter.make institution: institution, patient: patient
+      encounter = Encounter.make institution: institution, patient: patient, test_batch: TestBatch.make(institution: institution)
       get :edit, id: encounter.id
 
       expect(response).to have_http_status(:success)
@@ -195,7 +196,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     it "redirects to encounters list if not allowed" do
       i1        = Institution.make
       patient   = Patient.make institution: i1
-      encounter = Encounter.make institution: i1, patient: patient
+      encounter = Encounter.make institution: i1, patient: patient, test_batch: TestBatch.make(institution: i1)
       get :edit, id: encounter.id
 
       expect(response).to redirect_to(encounters_path)
@@ -330,7 +331,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
   end
 
   describe "PUT #update" do
-    let(:encounter) { Encounter.make institution: institution, site: site, patient: patient }
+    let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, test_batch: TestBatch.make(institution: institution) }
 
     let(:sample) {
       device = Device.make institution: institution
