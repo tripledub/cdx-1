@@ -12,7 +12,7 @@ describe Presenters::XpertResults do
 
   describe 'index_table' do
     before :each do
-      7.times { XpertResult.make test_batch: encounter2.test_batch }
+      7.times { XpertResult.make test_batch: encounter.test_batch }
     end
 
     it 'should return an array of formated comments' do
@@ -28,7 +28,7 @@ describe Presenters::XpertResults do
         tuberculosis:      Extras::Select.find(XpertResult.tuberculosis_options, XpertResult.first.specimen_type),
         rifampicin:        Extras::Select.find(XpertResult.rifampicin_options, XpertResult.first.serial_number),
         trace:             Extras::Select.find(XpertResult.trace_options, XpertResult.first.trace),
-        viewLink:          Rails.application.routes.url_helpers.requested_test_xpert_result_path(requested_test_id: XpertResult.first.requested_test.id)
+        viewLink:          Rails.application.routes.url_helpers.test_batch_xpert_result_path(XpertResult.first.test_batch, XpertResult.first)
       })
     end
   end

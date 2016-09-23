@@ -10,7 +10,7 @@ class Presenters::CultureResults
           mediaUsed:         Extras::Select.find(CultureResult.media_options, culture_result.media_used),
           serialNumber:      culture_result.serial_number,
           testResult:        Extras::Select.find(CultureResult.test_result_options, culture_result.test_result),
-          viewLink:          Rails.application.routes.url_helpers.requested_test_culture_result_path(requested_test_id: culture_result.requested_test.id)
+          viewLink:          Rails.application.routes.url_helpers.test_batch_culture_result_path(culture_result.test_batch, culture_result)
         }
       end
     end

@@ -29,7 +29,7 @@ describe Presenters::MicroscopyResults do
         serialNumber:      MicroscopyResult.first.serial_number,
         testResult:        Extras::Select.find(MicroscopyResult.test_result_options, MicroscopyResult.first.test_result),
         appearance:        Extras::Select.find(MicroscopyResult.visual_appearance_options, MicroscopyResult.first.appearance),
-        viewLink:          Rails.application.routes.url_helpers.requested_test_microscopy_result_path(requested_test_id: MicroscopyResult.first.requested_test.id)
+        viewLink:          Rails.application.routes.url_helpers.test_batch_microscopy_result_path(MicroscopyResult.first.test_batch, MicroscopyResult.first)
       })
     end
   end

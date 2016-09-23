@@ -10,7 +10,7 @@ class Presenters::XpertResults
           tuberculosis:      Extras::Select.find(XpertResult.tuberculosis_options, xpert_result.specimen_type),
           rifampicin:        Extras::Select.find(XpertResult.rifampicin_options, xpert_result.serial_number),
           trace:             Extras::Select.find(XpertResult.trace_options, xpert_result.trace),
-          viewLink:          Rails.application.routes.url_helpers.requested_test_xpert_result_path(requested_test_id: xpert_result.requested_test.id)
+          viewLink:          Rails.application.routes.url_helpers.test_batch_xpert_result_path(xpert_result.test_batch, xpert_result)
         }
       end
     end
