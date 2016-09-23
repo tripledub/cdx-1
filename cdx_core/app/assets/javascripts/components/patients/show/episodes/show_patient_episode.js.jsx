@@ -49,7 +49,7 @@ var ShowPatientEpisode = React.createClass({
               {this.props.episode.drugResistance}
             </li>
             <li>
-              <label>
+              <label id="diagnosis_label">
                 {I18n.t("components.patients.show.episodes.lbl_diagnosis_by_site")}
               </label>
               &nbsp;{this.props.episode.anatomicalSiteDiagnosis}
