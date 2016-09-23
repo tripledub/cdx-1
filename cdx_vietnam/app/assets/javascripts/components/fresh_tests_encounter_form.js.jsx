@@ -22,6 +22,9 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
         },
         testing_for: {
           $set: 'TB'
+        },
+        testdue_date: {
+          $set: '2020-12-01'
         }
       }
     }));
@@ -111,16 +114,9 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
             </div>
           </div>
 
-          <div className="row">
-            <div className="col-6">
-              <label>{I18n.t("components.fresh_tests_encounter_form.test_due_date_label")}</label>
-            </div>
-            <div className="col-6">
-              <input type="date" id="testdue_date" min={today} onChange={this.testDueDateChange} value={this.state.encounter.testdue_date}/>
-            </div>
-          </div>
+          <input type="hidden" name="testdue_date" value="2020-12-01" />
 
-          <ReasonDiag diagCommentChange={this.diagCommentChange} />
+          { this.state.encounter.exam_reason === 'diag' ? <ReasonDiag diagCommentChange={this.diagCommentChange} /> : null }
 
           <div className="row labelfooter">
             <div className="col-12">
