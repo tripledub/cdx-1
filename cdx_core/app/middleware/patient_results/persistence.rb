@@ -31,7 +31,7 @@ module PatientResults
       def update_patient_result(patient_result, params)
         patient_result.result_status = params[:result_status]
         patient_result.comment = params[:comment]
-        patient_result.feedback_message = patient_result.test_batch.institution.feedback_messages.find(params[:feedback_message_id]) if params[:feedback_message_id]
+        patient_result.feedback_message = patient_result.test_batch.institution.feedback_messages.find(params[:feedback_message_id]) if params[:feedback_message_id].to_i > 0
         patient_result.save(validate: false)
       end
     end

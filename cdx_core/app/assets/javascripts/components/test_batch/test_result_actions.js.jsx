@@ -5,7 +5,8 @@ class TestResultActions extends React.Component{
     this.state = { currentStatus: props.currentStatus, commentValue: props.commentValue }
   }
 
-  updateResult(status, comment, reasonId) {
+  updateResult(status, comment, reasonId, event) {
+    if (event) { event.preventDefault() }
     const that = this;
     $.ajax({
       url: this.props.updateResultUrl,
@@ -32,7 +33,7 @@ class TestResultActions extends React.Component{
   render() {
     return(
       <div>
-        <button onClick={ this.updateResult.bind(this, this.props.actionInfo.actionStatus, '') } className="btn-primary save">{ this.props.actionInfo.actionLabel }</button>
+        <button onClick={ this.updateResult.bind(this, this.props.actionInfo.actionStatus, '', 0) } className="btn-primary save">{ this.props.actionInfo.actionLabel }</button>
         <TextInputModal key={ this.props.resultId } showRejectionSelect={ true } rejectReasons={ this.props.rejectReasons } mainHeader='Please explain why this test is rejected' linkButton='Reject' comment={ this.state.commentValue } commentChanged={ this.commentChanged.bind(this) } edit={ true } ref='inviteModal' />
       </div>
 
