@@ -49,6 +49,7 @@ en:
       nickname_label: 'Nickname'
       medical_insurance_num: 'Medical Insurance Number'
       entity_id_label: 'Entity id'
+      external_id_label: 'External Patient ID'
       gender_label: 'Gender'
       birth_date_on_label: 'Birth date on'
       email_label: 'Email'
@@ -64,6 +65,7 @@ en:
       phone_tooltip: 'A Phone number the Patient can be contacted on'
       social_security_code_tooltip: 'Social security Id. of the patient.'
       medical_insurance_num_tooltip: 'Medical Insurance Number of the patient.'
+      copy_addr_button: 'Copy Address to other'
     index:
       no_patients: 'No patients registered'
       keep_organized: 'Keep your test orders organized under patients medical history'

@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20160922094628) do
     t.string   "state",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "country",          limit: 255
   end
 
   add_index "addresses", ["addressable_id", "addressable_type"], name: "index_addresses_on_addressable_id_and_addressable_type", using: :btree
@@ -602,6 +603,7 @@ ActiveRecord::Schema.define(version: 20160922094628) do
     t.date     "birth_date_on"
     t.string   "social_security_code",  limit: 255,   default: ""
     t.string   "medical_insurance_num", limit: 255
+    t.string   "external_id",    limit: 255
   end
 
   add_index "patients", ["birth_date_on"], name: "index_patients_on_birth_date_on", using: :btree

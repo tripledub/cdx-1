@@ -23,7 +23,7 @@ describe Presenters::Patients do
         name:           patient_display_name(Patient.first.name),
         entityId:       Patient.first.entity_id,
         dateOfBirth:    Extras::Dates::Format.datetime_with_time_zone(Patient.first.birth_date_on),
-        addresses:      ["#{Patient.first.addresses.first.address}, #{Patient.first.addresses.first.city}, #{Patient.first.addresses.first.state}, #{Patient.first.addresses.first.country}, #{Patient.first.addresses.first.zip_code}"],
+        addresses:      ["#{Patient.first.addresses.first.address}, #{Patient.first.addresses.first.city}, #{Patient.first.addresses.first.state}, #{Patient.first.addresses.first.country}"],
         viewLink:       Rails.application.routes.url_helpers.patient_path(Patient.first)
       })
     end
@@ -34,14 +34,14 @@ describe Presenters::Patients do
       address = Address.make
       patient = Patient.make institution: institution, addresses: [address]
 
-      expect(described_class.show_full_address(patient.addresses.first)).to eq("#{address.address}, #{address.city}, #{address.state}, #{address.country}, #{address.zip_code}")
+      expect(described_class.show_full_address(patient.addresses.first)).to eq("#{address.address}, #{address.city}, #{address.state}, #{address.country}")
     end
 
     it 'should not display the commas if any field is empty' do
       address = Address.make address: '', state: ''
       patient = Patient.make institution: institution, addresses: [address]
 
-      expect(described_class.show_full_address(patient.addresses.first)).to eq("#{address.city}, #{address.country}, #{address.zip_code}")
+      expect(described_class.show_full_address(patient.addresses.first)).to eq("#{address.city}")
     end
   end
 end

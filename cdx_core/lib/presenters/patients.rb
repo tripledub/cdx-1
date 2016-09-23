@@ -22,6 +22,7 @@ class Presenters::Patients
       address << patient_address.address
       address << patient_address.city
       address << patient_address.state
+      address << patient_address.country
       address << patient_address.zip_code
       address.reject(&:blank?).join(', ')
     end

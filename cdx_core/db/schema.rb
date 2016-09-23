@@ -547,6 +547,7 @@ ActiveRecord::Schema.define(version: 20160816140022) do
     t.string   "zip_code",       limit: 255
     t.string   "nickname",       limit: 255
     t.date     "birth_date_on"
+    t.string   "external_id",    limit: 255
   end
 
   add_index "patients", ["birth_date_on"], name: "index_patients_on_birth_date_on", using: :btree
