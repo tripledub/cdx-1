@@ -96,7 +96,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
   describe "GET #show" do
     it "returns http success if allowed" do
       patient = Patient.make institution: institution
-      encounter = Encounter.make institution: institution, patient: patient
+      encounter = Encounter.make institution: institution, patient: patient, test_batch: TestBatch.make(institution: institution)
       sample_identifier = SampleIdentifier.make(site: site, entity_id: "entity random", lab_sample_id: 'Random lab sample', sample: Sample.make(institution: institution, encounter: encounter, patient: patient))
       get :show, id: encounter.id
 
@@ -850,7 +850,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     it "saves merged samples after a merge sample operation" do
-      encounter = Encounter.make institution: institution, patient: patient
+      encounter = Encounter.make institution: institution, patient: patient, test_batch: TestBatch.make(institution: institution)
       sample1.encounter = encounter
       sample1.save
       sample2.encounter = encounter

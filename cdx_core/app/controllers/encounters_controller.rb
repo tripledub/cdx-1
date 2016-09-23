@@ -57,7 +57,7 @@ class EncountersController < ApplicationController
 
   def search_sample
     @institution = Institutions::Finder.find_by_uuid(params[:institution_uuid], current_user)
-    render json: Finder::Sample.find_as_json(@institution, current_user, params[:sample_uuids], params[:q]).attributes!
+    render json: Samples::Finder.find_as_json(@institution, current_user, params[:sample_uuids], params[:q]).attributes!
   end
 
   def search_test
