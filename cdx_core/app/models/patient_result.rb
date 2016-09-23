@@ -16,6 +16,11 @@ class PatientResult < ActiveRecord::Base
   before_create :set_status_to_new
 
   class << self
+    def find_all_results_for_patient(patient_id)
+      PatientResult.joins('LEFT OUTER JOIN `test_batches` ON `test_batches`.`id` = `patient_results`.`test_batch_id` LEFT OUTER JOIN `encounters` ON `encounters`.`id` = `test_batches`.`encounter_id`')
+        .where('patient_results.patient_id = ? OR encounters.patient_id = ?', patient_id, patient_id)
+    end
+
     def status_options
       [
         ['new', I18n.t('select.patient_result.status_options.new')],

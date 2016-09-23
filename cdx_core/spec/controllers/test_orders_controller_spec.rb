@@ -9,10 +9,10 @@ describe TestOrdersController, elasticsearch: true do
   let(:patient)        { Patient.make institution: institution }
   let!(:encounters)    {
     7.times {
-      encounter = Encounter.make institution: institution, site: site, patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"), testdue_date: 1.day.from_now.strftime("%Y-%m-%d"), status: rand(0..2)
+      encounter = Encounter.make institution: institution, site: site, patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"), testdue_date: 1.day.from_now.strftime("%Y-%m-%d"), test_batch: TestBatch.make(institution: institution)
       EncounterIndexer.new(encounter).index(true)
     }
-    encounter = Encounter.make institution: institution, site: site, performing_site_id: site2.id, patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"), testdue_date: 1.day.from_now.strftime("%Y-%m-%d"), status: 0
+    encounter = Encounter.make institution: institution, site: site, performing_site_id: site2.id, patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"), testdue_date: 1.day.from_now.strftime("%Y-%m-%d"), test_batch: TestBatch.make(institution: institution)
     EncounterIndexer.new(encounter).index(true)
   }
   let(:default_params) { { context: site.uuid } }
@@ -35,7 +35,7 @@ describe TestOrdersController, elasticsearch: true do
           end
 
           it 'should display the outstanding test orders' do
-            outstanding_test_orders = Encounter.where('encounters.status IN (0,1)').count
+            outstanding_test_orders = institution.encounters.where("encounters.status IN ('new', 'pending', 'received', 'in_progress', 'pending_approval')").count
             expect(assigns(:total)).to eq(outstanding_test_orders)
           end
         end

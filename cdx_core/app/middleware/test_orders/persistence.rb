@@ -49,9 +49,9 @@ module TestOrders
         # note: Cannot delete record because dependent samples exist, so just set deleted_at
         @encounter.update(deleted_at: Time.now)
         begin
-           Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: @encounter.uuid
-           Audit::EncounterAuditor.new(@encounter, current_user.id).log_action(I18n.t('encounters.destroy.cancelled'), I18n.t('encounters.destroy.log_action', uuid: @encounter.uuid), @encounter)
-           message = I18n.t('encounters.destroy.success')
+          Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: @encounter.uuid
+          Audit::EncounterAuditor.new(@encounter, current_user.id).log_action(I18n.t('encounters.destroy.cancelled'), I18n.t('encounters.destroy.log_action', uuid: @encounter.uuid), @encounter)
+          message = I18n.t('encounters.destroy.success')
         rescue => ex
           Rails.logger.error ex.message
         end
@@ -110,11 +110,11 @@ module TestOrders
 
     def search_test(test_id)
       institution = Institutions::Finder.find_by_uuid(params[:institution_uuid], current_user)
-      test_results = Finder::TestResults.find_by_institution(institution, current_user)
+      test_results = ::Finder::TestResults.find_by_institution(institution, current_user)
         .joins("LEFT JOIN encounters ON encounters.id = patient_results.encounter_id")
         .where("patient_results.encounter_id IS NULL OR encounters.is_phantom = TRUE")
         .where("patient_results.test_id LIKE ?", "%#{test_id}%")
-      Finder::TestResults.as_json_list(test_results, @localization_helper).attributes!
+      ::Finder::TestResults.as_json_list(test_results, @localization_helper).attributes!
     end
 
     def prepare_blender_and_json(encounter)
