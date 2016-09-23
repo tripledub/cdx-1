@@ -8,7 +8,6 @@ RSpec.describe Episode, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:diagnosis) }
     it { should validate_presence_of(:hiv_status) }
-    it { should validate_presence_of(:drug_resistance) }
 
     describe 'history of previous treatment' do
       it { should validate_presence_of(:initial_history) }
