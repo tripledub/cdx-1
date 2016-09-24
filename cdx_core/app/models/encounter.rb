@@ -196,6 +196,11 @@ class Encounter < ActiveRecord::Base
     "CDP-#{self.id.to_s.rjust(7, '0')}"
   end
 
+  def tests_requiring_approval
+    return if test_batch.blank?
+    "#{test_batch.patient_results.pending_approval.count} of #{test_batch.patient_results.count}"
+  end
+
   protected
 
   def ensure_entity_id

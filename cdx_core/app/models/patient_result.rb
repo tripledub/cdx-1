@@ -15,6 +15,8 @@ class PatientResult < ActiveRecord::Base
   before_save   :update_status
   before_create :set_status_to_new
 
+  scope :pending_approval, -> { where(:result_status => 'pending_approval') }
+
   class << self
     def find_all_results_for_patient(patient_id)
       PatientResult.joins('LEFT OUTER JOIN `test_batches` ON `test_batches`.`id` = `patient_results`.`test_batch_id` LEFT OUTER JOIN `encounters` ON `encounters`.`id` = `test_batches`.`encounter_id`')

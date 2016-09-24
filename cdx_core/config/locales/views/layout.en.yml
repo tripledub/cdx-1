@@ -8,6 +8,7 @@ en:
       patients: 'Patients'
       test_orders: 'Test orders'
       test_results: 'Test results'
+      approvals: 'Approvals'
       devices: 'Devices'
       settings: 'Settings'
       my_account: 'My account'

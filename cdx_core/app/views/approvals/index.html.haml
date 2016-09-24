@@ -1,0 +1,14 @@
+.row.paginationHeader
+  .col
+    - if @approvals.empty?
+      = empty_data icon: 'icon-outline-test xx-large' do |c|
+        - c.body do
+          %h1
+            = I18n.t('test_orders.index.no_test_orders')
+    - else
+      %section.row
+        = react_component "ApprovalTable", testOrders: Approvals::Presenter.index_view(@approvals), orderBy: @order_by,
+          imageUrl: image_url('img/test-tube.png'), headerTitle: I18n.t('approvals.index.approvals', count: @total),
+          csvUrl: approvals_path, csvTitle: I18n.t('devices.index.download_csv')
+        .pagination
+          = render 'shared/pagination'

@@ -209,12 +209,14 @@ en:
 
     test_orders:
       col_sample_id: "Sample Id"
+      col_batch_id: "Batch Id"
       col_status: "Status"
       col_request_by: "Request by"
       col_request_to: "Request to"
       col_testing_for: "Testing for"
       col_order_by: "Order by user"
       col_request_date: "Request date"
+      col_tests_requiring_approval: "Tests requiring approval"
       col_due_date: "Due date"
       col_id: "Order Id"
 
