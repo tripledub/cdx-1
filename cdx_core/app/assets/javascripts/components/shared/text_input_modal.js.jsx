@@ -23,7 +23,6 @@ var TextInputModal = React.createClass({
   },
 
   reasonChange: function(reasonId) {
-    console.log(reasonId);
     this.setState({ reasonId: reasonId });
   },
 
