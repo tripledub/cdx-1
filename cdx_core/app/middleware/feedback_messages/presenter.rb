@@ -1,30 +1,29 @@
 module FeedbackMessages
   class Presenter
     class << self
-      def reject_reasons(institution, language)
+      def reject_reasons(institution)
         {
-          samples_collected: get_messages(institution, 'samples_collected', language),
-          approval: get_messages(institution, 'approval', language)
+          samplesCollected: get_messages(institution, 'samples_collected'),
+          approval: get_messages(institution, 'approval'),
+          labTech: get_messages(institution, 'lab_tech')
         }
       end
 
       protected
 
-      def get_messages(institution, category, language)
+      def get_messages(institution, category)
         feedback_messages = institution.feedback_messages.where(category: category)
         return [] unless feedback_messages
 
         feedback_messages.map do |feedback_message|
-          get_translated_text(feedback_message, language)
+          get_translated_text(feedback_message)
         end
       end
 
-      def get_translated_text(feedback_message, language)
-        custom_translation = feedback_message.custom_translations.where(lang: language).first
-
+      def get_translated_text(feedback_message)
         {
-          id:   custom_translation.id,
-          text: "#{custom_translation.text} (#{feedback_message.code})"
+          id:   feedback_message.id,
+          text: "#{FeedbackMessages::Finder.find_current_translation(feedback_message)} (#{feedback_message.code})"
         }
       end
     end

@@ -14,7 +14,7 @@ describe FeedbackMessages::Presenter do
   }
 
   describe 'reject_reasons' do
-    subject { described_class.reject_reasons(institution, I18n.locale) }
+    subject { described_class.reject_reasons(institution) }
 
     it 'returns a Hash of reject reassons' do
       expect(subject).to be_a(Hash)

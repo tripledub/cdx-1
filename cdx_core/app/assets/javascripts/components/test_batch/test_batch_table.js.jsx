@@ -4,10 +4,10 @@ class TestBatchTable extends React.Component{
       <table className="table testBatchTable" cellPadding="0" cellSpacing="0">
         <thead>
           <tr>
-            <th>Type</th>
-            <th>Sample Id</th>
-            <th>Examined by</th>
-            <th>Options</th>
+            <th>{ I18n.t('components.test_batch_table.type') }</th>
+            <th>{ I18n.t('components.test_batch_table.sample_id') }</th>
+            <th>{ I18n.t('components.test_batch_table.examined_by') }</th>
+            <th>{ I18n.t('components.test_batch_table.options') }</th>
           </tr>
         </thead>
         <tbody>

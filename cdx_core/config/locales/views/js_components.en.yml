@@ -4,22 +4,53 @@ en:
     updated: 'Last updated'
     previous: 'Previous'
     next: 'Next'
+    cancel: 'Cancel'
+    test_result_actions:
+      update_failed: 'Can not update status.'
+    test_result_status:
+      sample_received:
+        action_label: 'Sample received'
+        reject_label: 'Reject sample'
+        reject_header: 'Please explain why this sample is rejected'
+      sample_approved:
+        action_label: 'Approve sample'
+        reject_label: 'Reject sample'
+        reject_header: 'Please explain why this sample is rejected'
+      test_received:
+        action_label: 'Approve test'
+        reject_label: 'Reject test'
+        reject_header: 'Please explain why this test is rejected'
+      test_completed: 'Test completed'
+      test_new:  'New test'
+      test_rejected: 'Test rejected'
+    payment_action:
+      mark_as_paid: 'Mark test order as paid'
+    add_samples_action:
+      submit_samples:  'Submit samples'
+      sample_ids: 'Sample Ids for test batch'
+      save_sample_ids: 'Save sample ids'
+    test_batch_table:
+      type: 'Type'
+      sample_id: 'Sample id'
+      examined_by: 'Examined by'
+      options: 'Options'
     alert_groups:
-      col_name: "Name"
-      tooltip_name: "This is the Name of the Alert."
-      col_description: "Description"
-      tooltip_description: "A meaningful description about what the alert entails."
-      col_enabled: "Enabled"
-      tooltip_enabled: "Is this alert enabled?"
-      col_sites: "Sites"
-      tooltip_sites: "Which site(s) this alert will trigger for."
+      col_name: 'Name'
+      tooltip_name: 'This is the name of the alert.'
+      col_description: 'Description'
+      tooltip_description: 'A meaningful description about what the alert entails.'
+      col_enabled: 'Enabled'
+      tooltip_enabled: 'Is this alert enabled?'
+      col_sites: 'Sites'
+      tooltip_sites: 'Which site(s) this alert will trigger for.'
       col_roles: "Roles"
       tooltip_roles: "Something about roles."
       col_last_incident: "Last incident"
       tooltip_last_incident: "When the last incident was reported."
     test_batch:
+      test_order_header: 'Test order status'
       header: 'Requested tests'
-      status: 'Status'
+      status: 'status'
       new: 'New'
       samples_collected: 'Samples collected'
       in_progress: 'In progress'
@@ -27,6 +58,13 @@ en:
       payment: 'Payment'
       false: 'Pending'
       true: 'Done'
+    test_order:
+      new: 'New'
+      pending: 'Pending'
+      recieved: 'Received'
+      in_progress: 'In progress'
+      pending_approval: 'Pending approval'
+      completed: 'Completed'
 
     alert_messages:
       col_name: "Name"

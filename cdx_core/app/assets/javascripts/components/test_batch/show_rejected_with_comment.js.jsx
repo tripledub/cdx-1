@@ -2,7 +2,7 @@ class ShowRejectedWithComment extends React.Component {
   render() {
     return(
       <p>
-        <strong>Rejected - { this.props.feedbackMessage }</strong>
+        <strong>{ I18n.t('components.test_result_status.test_rejected') } - { this.props.feedbackMessage }</strong>
         <br />
         <em>{ this.props.commentValue }</em>
       </p>
