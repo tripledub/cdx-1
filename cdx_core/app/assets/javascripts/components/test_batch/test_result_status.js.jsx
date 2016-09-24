@@ -24,10 +24,19 @@ class TestResultStatus extends React.Component {
       commentValue: this.state.commentValue,
     };
     const sampleApproved = {
-      actionStatus: 'pending_approval',
       actionLabel: I18n.t('components.test_result_status.sample_approved.action_label'),
       rejectLabel: I18n.t('components.test_result_status.sample_approved.reject_label'),
       rejectHeader: I18n.t('components.test_result_status.sample_approved.reject_header'),
+      resultId: this.props.resultId,
+      updateResultUrl: this.props.updateResultUrl,
+      commentValue: this.state.commentValue,
+      editResultUrl: this.props.editResultUrl,
+    };
+    const inProgress = {
+      actionStatus: 'pending_approval',
+      actionLabel: I18n.t('components.test_result_status.in_progress.action_label'),
+      rejectLabel: I18n.t('components.test_result_status.in_progress.reject_label'),
+      rejectHeader: I18n.t('components.test_result_status.in_progress.reject_header'),
       rejectReasons: this.props.rejectReasons['approval'],
       resultId: this.props.resultId,
       updateResultUrl: this.props.updateResultUrl,
@@ -50,9 +59,9 @@ class TestResultStatus extends React.Component {
         { this.state.currentStatus === 'sample_collected' && this.props.paymentDone ?
           <TestResultActions actionInfo={ sampleReceived } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
         { this.state.currentStatus === 'sample_received' ?
-          <AddPatientResultAction editResultUrl={ this.props.editResultUrl }/> : null }
+          <AddPatientResultAction actionInfo={ sampleApproved } /> : null }
         { this.state.currentStatus === 'in_progress' ?
-          <TestResultActions actionInfo={ sampleApproved } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
+          <TestResultActions actionInfo={ inProgress } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
         { this.state.currentStatus === 'pending_approval' ?
           <TestResultActions actionInfo={ testApproved } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
         { this.state.currentStatus === 'rejected' ?
