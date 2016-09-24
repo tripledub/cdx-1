@@ -8,7 +8,6 @@ var TestBatchStore = Reflux.createStore({
   },
 
   onUpdateStatus: function(newStatus) {
-    console.log('status updated ' + newStatus);
     this.trigger(newStatus);
   }
 });

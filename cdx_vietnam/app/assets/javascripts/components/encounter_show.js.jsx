@@ -136,11 +136,11 @@ var EncounterShow = React.createClass({
                   <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.samples_id_label")}   fieldValue={ <LabSamplesList context={this.props.context} samples={this.props.encounter.samples}  /> } /> : null
                 }
 
-                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.sample_type_label")}   fieldValue={ sample_type } />
+                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.sample_type_label")} fieldValue={ sample_type } />
 
-                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.status_label")}        fieldValue={ this.state.testOrderStatus } />
-                <DisplayFieldWithLabel fieldLabel="Test batch"        fieldValue={ this.state.testBatchStatus } />
-                <DisplayFieldWithLabel fieldLabel="Payment"        fieldValue={ this.props.testBatch.paymentDone } />
+                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.status_label")} fieldValue={ I18n.t('components.test_order.' + this.state.testOrderStatus) } />
+                <DisplayFieldWithLabel fieldLabel={ I18n.t('components.test_batch.header') + ': ' + this.props.testBatch.batchId } fieldValue={ I18n.t('components.test_batch.' + this.state.testBatchStatus) } />
+                <DisplayFieldWithLabel fieldLabel={ I18n.t('components.test_batch.payment') } fieldValue={ I18n.t('components.test_batch.' + this.props.testBatch.paymentDone) } />
               </div>
 
               <div className="col-6 patientCard">

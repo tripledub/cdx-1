@@ -49,7 +49,7 @@ en:
       tooltip_last_incident: "When the last incident was reported."
     test_batch:
       test_order_header: 'Test order status'
-      header: 'Requested tests'
+      header: 'Test batch'
       status: 'status'
       new: 'New'
       samples_collected: 'Samples collected'
