@@ -12,7 +12,14 @@ module PatientResults
 
       def update_status(patient_result, params)
         if update_patient_result(patient_result, params)
-          [patient_result.result_status, :ok]
+          [
+            {
+              resultStatus: patient_result.result_status,
+              testBatchStatus: patient_result.test_batch.status,
+              testOrderStatus: patient_result.test_batch.encounter.status
+             },
+             :ok
+          ]
         else
           [patient_result.errors.messages, :unprocessable_entity]
         end

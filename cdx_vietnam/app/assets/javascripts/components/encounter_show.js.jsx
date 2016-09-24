@@ -13,8 +13,25 @@ var EncounterShow = React.createClass({
       user_email: user_email,
       error_messages:[],
       requestedTests: this.props.requestedTests,
-      disable_all_selects: disable_all_selects
+      disable_all_selects: disable_all_selects,
+      testOrderStatus: this.props.encounter.status,
+      testBatchStatus: this.props.testBatch.status,
     };
+  },
+
+  onUpdateStatus: function(updatedStatus) {
+    this.setState({
+      testOrderStatus: updatedStatus['testOrderStatus'],
+      testBatchStatus: updatedStatus['testBatchStatus']
+    });
+  },
+
+  componentDidMount: function() {
+    this.unsubscribe = TestBatchStore.listen(this.onUpdateStatus);
+  },
+
+  componentWillUnmount: function() {
+    this.unsubscribe();
   },
 
   submitError: function(errorArray) {
@@ -71,7 +88,7 @@ var EncounterShow = React.createClass({
         </div>
         <div className="row labelHeader">
           <div className="col-6">
-            <h3>{I18n.t("components.encounter_show.site_detail_heading")}</h3>
+            <h3>{I18n.t("components.encounter_show.site_detail_heading")} jorge</h3>
           </div>
           <div className="col-6">
           </div>
@@ -121,7 +138,9 @@ var EncounterShow = React.createClass({
 
                 <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.sample_type_label")}   fieldValue={ sample_type } />
 
-                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.status_label")}        fieldValue={ this.props.encounter.status } />
+                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.status_label")}        fieldValue={ this.state.testOrderStatus } />
+                <DisplayFieldWithLabel fieldLabel="Test batch"        fieldValue={ this.state.testBatchStatus } />
+                <DisplayFieldWithLabel fieldLabel="Payment"        fieldValue={ this.props.testBatch.paymentDone } />
               </div>
 
               <div className="col-6 patientCard">
@@ -134,7 +153,7 @@ var EncounterShow = React.createClass({
           </div>
         </div>
 
-        <TestBatchList encounterStatus={ this.props.encounter.status } testBatch={ this.props.testBatch } submitSamplesUrl={ this.props.submitSamplesUrl } submitPaymentUrl={ this.props.submitPaymentUrl } updateResultUrl={ this.props.updateResultUrl } rejectReasons={ this.props.rejectReasons } authenticityToken={ this.props.authenticityToken } />
+        <TestBatchList testOrderStatus={ this.props.encounter.status } testBatch={ this.props.testBatch } submitSamplesUrl={ this.props.submitSamplesUrl } submitPaymentUrl={ this.props.submitPaymentUrl } updateResultUrl={ this.props.updateResultUrl } rejectReasons={ this.props.rejectReasons } authenticityToken={ this.props.authenticityToken } />
 
       </div>
       );

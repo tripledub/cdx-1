@@ -13,7 +13,7 @@
   testBatch: TestBatches::Presenter.for_encounter(@encounter.test_batch),
   submitSamplesUrl: update_samples_test_batch_patient_results_path(@encounter.test_batch),
   submitPaymentUrl: set_as_paid_encounter_test_batch_path(@encounter),
-  rejectReasons: FeedbackMessages::Presenter.reject_reasons(@encounter.institution, I18n.locale),
+  rejectReasons: FeedbackMessages::Presenter.reject_reasons(@encounter.institution),
   updateResultUrl: test_batch_patient_results_path(@encounter.test_batch),
   authenticityToken: form_authenticity_token,
   showDstWarning: @encounter.test_batch.show_dst_warning)

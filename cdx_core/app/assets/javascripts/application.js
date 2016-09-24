@@ -227,5 +227,3 @@ $(document).ready(function(){
     $(".custom_filters").toggle();
   });
 });
-
-
