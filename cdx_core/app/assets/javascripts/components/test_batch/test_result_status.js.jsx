@@ -50,6 +50,8 @@ class TestResultStatus extends React.Component {
         { this.state.currentStatus === 'sample_collected' && this.props.paymentDone ?
           <TestResultActions actionInfo={ sampleReceived } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
         { this.state.currentStatus === 'sample_received' ?
+          <AddPatientResultAction editResultUrl={ this.props.editResultUrl }/> : null }
+        { this.state.currentStatus === 'in_progress' ?
           <TestResultActions actionInfo={ sampleApproved } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
         { this.state.currentStatus === 'pending_approval' ?
           <TestResultActions actionInfo={ testApproved } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
