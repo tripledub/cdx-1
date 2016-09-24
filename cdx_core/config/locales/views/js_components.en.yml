@@ -13,6 +13,10 @@ en:
         reject_label: 'Reject sample'
         reject_header: 'Please explain why this sample is rejected'
       sample_approved:
+        action_label: 'Enter test result'
+        reject_label: 'Add comment'
+        reject_header: 'Comment'
+      in_progress:
         action_label: 'Approve sample'
         reject_label: 'Reject sample'
         reject_header: 'Please explain why this sample is rejected'
@@ -26,6 +30,7 @@ en:
     payment_action:
       mark_as_paid: 'Mark test order as paid'
     add_samples_action:
+      add_result: 'Add result'
       submit_samples:  'Submit samples'
       sample_ids: 'Sample Ids for test batch'
       save_sample_ids: 'Save sample ids'

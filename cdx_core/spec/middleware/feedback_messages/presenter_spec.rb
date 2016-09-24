@@ -18,17 +18,17 @@ describe FeedbackMessages::Presenter do
 
     it 'returns a Hash of reject reassons' do
       expect(subject).to be_a(Hash)
-      expect(subject.size).to eq(2)
+      expect(subject.size).to eq(3)
     end
 
     it 'returns an array of localised rejection reasons' do
-      expect(subject[:samples_collected].size).to eq(2)
+      expect(subject[:samplesCollected].size).to eq(2)
       expect(subject[:approval].size).to eq(1)
     end
 
     it 'returns all elements correctly formatted' do
-      custom_translation = CustomTranslation.find(subject[:samples_collected].first[:id])
-      expect(subject[:samples_collected].first).to eq(
+      custom_translation = CustomTranslation.find(subject[:samplesCollected].first[:id])
+      expect(subject[:samplesCollected].first).to eq(
         id:   custom_translation.id,
         text: "#{custom_translation.text} (#{custom_translation.localisable.code})"
       )
