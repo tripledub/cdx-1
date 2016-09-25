@@ -1,8 +1,11 @@
 require 'spec_helper'
 
 describe TestBatches::Presenter do
-  let(:encounter)  { Encounter.make }
-  let(:test_batch) { TestBatch.make encounter: encounter }
+  let(:user)             { User.make }
+  let(:institution)      { user.institutions.make }
+  let(:patient)          { Patient.make institution: institution }
+  let(:encounter)        { Encounter.make institution: institution, patient: patient }
+  let(:test_batch)       { TestBatch.make encounter: encounter }
   let!(:requested_tests) {
     MicroscopyResult.make test_batch: test_batch
     CultureResult.make test_batch: test_batch
@@ -10,7 +13,7 @@ describe TestBatches::Presenter do
   }
 
   describe 'for_encounter' do
-    subject { described_class.for_encounter(encounter.test_batch) }
+    subject { described_class.for_encounter(encounter.test_batch, user) }
 
     it 'returns an Hash' do
       expect(subject).to be_a(Hash)
@@ -23,6 +26,7 @@ describe TestBatches::Presenter do
         batchId: test_batch.encounter.batch_id,
         paymentDone: test_batch.payment_done,
         status: test_batch.status,
+        userCanApprove: Policy.can?(Policy::Actions::APPROVE_ENCOUNTER, Encounter, user),
         patientResults: PatientResults::Presenter.for_encounter(test_batch.patient_results)
       )
     end
