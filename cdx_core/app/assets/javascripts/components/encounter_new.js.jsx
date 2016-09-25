@@ -16,6 +16,7 @@ var EncounterNew = React.createClass({
       tests_requested: '',
       diag_comment: '',
       treatment_weeks: 0,
+      status: 'new',
       testdue_date: '',
       allows_manual_entry: null
     }};
@@ -40,6 +41,7 @@ var EncounterNew = React.createClass({
         tests_requested: { $set: '' },
         diag_comment: { $set: '' },
         treatment_weeks: { $set: 0 },
+        status: { $set: 'new' },
         testdue_date: { $set: '' }
       }
     }));

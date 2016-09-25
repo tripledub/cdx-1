@@ -123,6 +123,7 @@ module TestOrders
     end
 
     def as_json_edit
+      # TODO refactor. This should be a presenter
       Jbuilder.new do |json|
         json.(@encounter, :id)
         json.(@encounter, :uuid)
