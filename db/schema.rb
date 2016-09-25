@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160922110146) do
+ActiveRecord::Schema.define(version: 20160922094628) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -181,7 +181,7 @@ ActiveRecord::Schema.define(version: 20160922110146) do
   add_index "audit_updates", ["uuid"], name: "index_audit_updates_on_uuid", using: :btree
 
   create_table "comments", force: :cascade do |t|
-    t.date     "commented_on",                     default: '2016-06-21'
+    t.date     "commented_on"
     t.text     "comment",            limit: 65535
     t.string   "description",        limit: 255
     t.string   "uuid",               limit: 255
@@ -231,6 +231,18 @@ ActiveRecord::Schema.define(version: 20160922110146) do
     t.integer "manifest_id",  limit: 4
     t.integer "condition_id", limit: 4
   end
+
+  create_table "custom_translations", force: :cascade do |t|
+    t.integer  "localisable_id",   limit: 4
+    t.string   "localisable_type", limit: 255
+    t.string   "lang",             limit: 255
+    t.string   "text",             limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "custom_translations", ["lang"], name: "index_custom_translations_on_lang", using: :btree
+  add_index "custom_translations", ["localisable_id", "localisable_type"], name: "index_custom_translations_on_localisable_id_and_localisable_type", using: :btree
 
   create_table "device_commands", force: :cascade do |t|
     t.integer  "device_id",  limit: 4
@@ -364,6 +376,17 @@ ActiveRecord::Schema.define(version: 20160922110146) do
   end
 
   add_index "episodes", ["patient_id"], name: "index_episodes_on_patient_id", using: :btree
+
+  create_table "feedback_messages", force: :cascade do |t|
+    t.integer  "institution_id", limit: 4,   null: false
+    t.string   "category",       limit: 255
+    t.string   "code",           limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "feedback_messages", ["category", "code"], name: "index_feedback_messages_on_category_and_code", using: :btree
+  add_index "feedback_messages", ["institution_id"], name: "index_feedback_messages_on_institution_id", using: :btree
 
   create_table "file_messages", force: :cascade do |t|
     t.string  "filename",          limit: 255
@@ -537,11 +560,13 @@ ActiveRecord::Schema.define(version: 20160922110146) do
     t.text     "comment",              limit: 65535
     t.integer  "test_batch_id",        limit: 4
     t.datetime "completed_at"
+    t.integer  "feedback_message_id",  limit: 4
   end
 
   add_index "patient_results", ["completed_at"], name: "index_patient_results_on_completed_at", using: :btree
   add_index "patient_results", ["deleted_at"], name: "index_patient_results_on_deleted_at", using: :btree
   add_index "patient_results", ["device_id"], name: "index_patient_results_on_device_id", using: :btree
+  add_index "patient_results", ["feedback_message_id"], name: "index_patient_results_on_feedback_message_id", using: :btree
   add_index "patient_results", ["institution_id"], name: "index_patient_results_on_institution_id", using: :btree
   add_index "patient_results", ["method_used"], name: "index_patient_results_on_method_used", using: :btree
   add_index "patient_results", ["patient_id"], name: "index_patient_results_on_patient_id", using: :btree
@@ -803,7 +828,6 @@ ActiveRecord::Schema.define(version: 20160922110146) do
     t.boolean  "is_active",                                  default: true
     t.string   "telephone",                      limit: 255
     t.boolean  "sidebar_open",                               default: true
-    t.integer  "timeout_in_seconds",             limit: 4,   default: 180
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
