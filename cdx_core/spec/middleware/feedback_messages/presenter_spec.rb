@@ -27,9 +27,10 @@ describe FeedbackMessages::Presenter do
     end
 
     it 'returns all elements correctly formatted' do
-      custom_translation = CustomTranslation.find(subject[:samplesCollected].first[:id])
+      feedback_message = FeedbackMessage.find(subject[:samplesCollected].first[:id])
+      custom_translation = feedback_message.custom_translations.first
       expect(subject[:samplesCollected].first).to eq(
-        id:   custom_translation.id,
+        id:   feedback_message.id,
         text: "#{custom_translation.text} (#{custom_translation.localisable.code})"
       )
     end
