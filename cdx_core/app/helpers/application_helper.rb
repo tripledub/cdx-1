@@ -37,10 +37,6 @@ module ApplicationHelper
     has_access?(Institution, Policy::Actions::REGISTER_INSTITUTION_DEVICE_MODEL) || check_access(DeviceModel, Policy::Actions::READ_DEVICE_MODEL).exists?
   end
 
-  def has_access_to_test_results_index?
-    has_access?(TestResult, Policy::Actions::QUERY_TEST)
-  end
-
   def has_access_to_users_index?
     has_access?(Site, Policy::Actions::READ_SITE_USERS) || has_access?(Institution, Policy::Actions::READ_INSTITUTION_USERS)
   end
