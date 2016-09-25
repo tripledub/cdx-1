@@ -31,7 +31,6 @@ describe FeedbackMessages::Presenter do
       custom_translation = feedback_message.custom_translations.first
       expect(subject[:samplesCollected].first).to eq(
         id:   feedback_message.id,
-
         text: "#{custom_translation.text} (#{custom_translation.localisable.code})"
       )
     end
