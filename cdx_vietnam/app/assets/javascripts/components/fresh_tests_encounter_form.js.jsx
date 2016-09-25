@@ -256,7 +256,7 @@ var ReasonDiag = React.createClass({
     return (
       <div className="row">
         <div className="col-6 flexStart">
-          <label>Comment</label>
+          <label>{ I18n.t('components.encounters.btn_comment')}</label>
         </div>
         <div className="col-6">
           <textarea name="diag_comment" maxLength="200" id="diag_comment" rows="5" cols="60" onChange={this.updateComment}></textarea>

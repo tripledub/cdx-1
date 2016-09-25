@@ -92,6 +92,7 @@ en:
       col_site: "Site"
 
     encounters:
+      btn_comment: 'Comment'
       btn_save: "Save lab. Id"
       lbl_tests_requested: "Tests Requested"
       lbl_microscopy: "Microscopy"
