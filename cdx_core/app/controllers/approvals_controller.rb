@@ -20,6 +20,7 @@ class ApprovalsController < TestsController
   def execute_encounter_query
     @approvals = Encounter.joins(:institution, :site)
                           .includes(:patient, :user, :test_batch => [:patient_results])
+                          .where(:site => @sites)
                           .where(:patient_results => {:result_status => 'pending_approval'})
 
     @total = @approvals.count
