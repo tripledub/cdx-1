@@ -51,7 +51,7 @@ var ApprovalTable = React.createClass({
           <table className="table testOrdersTable" cellPadding="0" cellSpacing="0"  data-resizable-columns-id="approvals-table">
             <thead>
               <tr>
-                <CsvCheckboxColumnHeader columnId="test-orders-table" selectedTestOrders={this.selectedTestOrders} />
+                <CsvCheckboxColumnHeader columnId="approvals-table" selectedTestOrders={this.selectedTestOrders} />
                 <th data-resizable-column-id="sample-id">{I18n.t("components.test_orders.col_sample_id")}</th>
                 {sortableHeader(I18n.t("components.test_orders.col_status"),        "encounters.status")}
                 {sortableHeader(I18n.t("components.test_orders.col_request_by"),    "sites.name")}
@@ -59,7 +59,7 @@ var ApprovalTable = React.createClass({
                 {sortableHeader(I18n.t("components.test_orders.col_testing_for"),   "patients.name")}
                 {sortableHeader(I18n.t("components.test_orders.col_order_by"), "users.first_name")}
                 {sortableHeader(I18n.t("components.test_orders.col_request_date"),  "encounters.start_time")}
-                <th data-resizable-column-id="sample-id">{I18n.t("components.test_orders.col_tests_requiring_approval")}</th>
+                <th data-resizable-column-id="tests-requiring-approval">{I18n.t("components.test_orders.col_tests_requiring_approval")}</th>
                 {sortableHeader(I18n.t("components.test_orders.col_id"),      "encounters.uuid")}
 
               </tr>
