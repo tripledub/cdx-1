@@ -15,6 +15,7 @@ class TestResultStatus extends React.Component {
   render() {
     const sampleReceived = {
       actionStatus: 'sample_received',
+      actionStyles: 'btn-danger side-link',
       actionLabel: I18n.t('components.test_result_status.sample_received.action_label'),
       rejectLabel: I18n.t('components.test_result_status.sample_received.reject_label'),
       rejectHeader: I18n.t('components.test_result_status.sample_received.reject_header'),
@@ -25,6 +26,7 @@ class TestResultStatus extends React.Component {
     };
     const sampleApproved = {
       actionLabel: I18n.t('components.test_result_status.sample_approved.action_label'),
+      actionStyles: 'btn-danger side-link',
       rejectLabel: I18n.t('components.test_result_status.sample_approved.reject_label'),
       rejectHeader: I18n.t('components.test_result_status.sample_approved.reject_header'),
       resultId: this.props.resultId,
@@ -34,6 +36,7 @@ class TestResultStatus extends React.Component {
     };
     const inProgress = {
       actionStatus: 'pending_approval',
+      actionStyles: 'btn-danger side-link',
       actionLabel: I18n.t('components.test_result_status.in_progress.action_label'),
       rejectLabel: I18n.t('components.test_result_status.in_progress.reject_label'),
       rejectHeader: I18n.t('components.test_result_status.in_progress.reject_header'),
@@ -44,6 +47,7 @@ class TestResultStatus extends React.Component {
     };
     const testApproved = {
       actionStatus: 'completed',
+      actionStyles: 'btn-danger side-link',
       actionLabel: I18n.t('components.test_result_status.test_received.action_label'),
       rejectLabel: I18n.t('components.test_result_status.test_received.reject_label'),
       rejectHeader: I18n.t('components.test_result_status.test_received.reject_header'),

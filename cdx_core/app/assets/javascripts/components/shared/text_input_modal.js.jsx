@@ -5,6 +5,7 @@ var TextInputModal = React.createClass({
       buttonText: this.props.actionButton || I18n.t('components.text_input_modal.save_btn'),
       mainHeader: this.props.mainHeader || I18n.t("components.text_input_modal.add_comment_title"),
       reasonId:   this.props.rejectReasons ? this.props.rejectReasons[0]['id'] : 0,
+      actionStyles: this.props.actionStyles || 'btn-primary save side-link'
     };
   },
 
@@ -35,7 +36,7 @@ var TextInputModal = React.createClass({
   render: function() {
     return (
       <div>
-        <a className="btn-primary save side-link" href='#' title={ I18n.t("components.text_input_modal.add_comment_title") } onClick={ this.openInviteModal } >
+        <a className={ this.state.actionStyles } href='#' title={ I18n.t("components.text_input_modal.add_comment_title") } onClick={ this.openInviteModal } >
           { this.props.linkButton ? this.props.linkButton
             : <span className="icon-pencil icon-white"></span>
           }

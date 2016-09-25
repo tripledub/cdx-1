@@ -16,3 +16,8 @@
   rejectReasons: FeedbackMessages::Presenter.reject_reasons(@encounter.institution),
   updateResultUrl: test_batch_patient_results_path(@encounter.test_batch),
   authenticityToken: form_authenticity_token)
+
+- if @encounter.status == 'new'
+  .row
+    .col
+      = button_to I18n.t('encounters.show.delete_test_order'), encounter_path(@encounter), method: :delete, class: 'btn-danger', data: { confirm: I18n.t('views.are_you_sure')}

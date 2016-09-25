@@ -44,7 +44,7 @@ class EncountersController < ApplicationController
     message = @test_order.destroy(@encounter)
 
     respond_to do |format|
-      format.html { redirect_to encounters_path, notice: message }
+      format.html { redirect_to patient_path(@encounter.patient), notice: message }
       format.json { head :no_content }
     end
   end
