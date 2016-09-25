@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'policy_spec_helper'
 
 describe PatientResults::Persistence do
   let(:user)              { User.make }
@@ -36,7 +37,7 @@ describe PatientResults::Persistence do
       let(:patient_result) { { result_status: 'rejected', comment: 'New comment added', feedback_message_id: feedback_message.id } }
 
       before :each do
-        described_class.update_status(microscopy_result, patient_result)
+        described_class.update_status(microscopy_result, patient_result, user)
       end
 
       it 'should update result status to rejected' do
@@ -54,17 +55,31 @@ describe PatientResults::Persistence do
 
     context 'status is sample received' do
       it 'should update result status to sample received' do
-        described_class.update_status(microscopy_result, { result_status: 'sample_received' })
+        described_class.update_status(microscopy_result, { result_status: 'sample_received' }, user)
 
         expect(microscopy_result.result_status).to eq('sample_received')
       end
     end
 
     context 'status is completed' do
-      it 'should update result status to completed' do
-        described_class.update_status(microscopy_result, { result_status: 'completed', comment: 'New comment added' })
+      context 'user with permission' do
+        it 'should update result status to completed' do
+          described_class.update_status(microscopy_result, { result_status: 'completed' }, user)
 
-        expect(microscopy_result.result_status).to eq('completed')
+          expect(microscopy_result.result_status).to eq('completed')
+        end
+      end
+
+      context 'user with no permission' do
+        let(:user2) { User.make }
+
+        it 'should update result status to completed' do
+          grant user, user2, Institution, Policy::Actions::READ_INSTITUTION
+
+          described_class.update_status(microscopy_result, { result_status: 'completed' }, user2)
+
+          expect(microscopy_result.result_status).to_not eq('completed')
+        end
       end
     end
   end

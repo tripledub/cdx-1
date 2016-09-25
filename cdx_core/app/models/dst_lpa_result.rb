@@ -3,7 +3,7 @@ class DstLpaResult < PatientResult
   validates_inclusion_of :results_h, :results_r, :results_e, :results_s, :results_amk, :results_km, :results_cm, :results_fq, in: ['resistant', 'susceptible', 'contaminated', 'not_done'], allow_nil: true
   validates_inclusion_of :media_used, in: %w(solid liquid), allow_nil: true
   validates_inclusion_of :method_used, in: %w(direct indirect), allow_nil: true
-  validates_inclusion_of :result_status, in: ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed', 'success', 'error'], allow_nil: true
+  validates_inclusion_of :result_status, in: ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed'], allow_nil: true
 
   delegate :patient, to: 'test_batch.encounter'
 

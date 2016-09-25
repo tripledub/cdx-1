@@ -10,8 +10,8 @@ module PatientResults
         test_batch.update_attribute(:status, 'samples_collected')
       end
 
-      def update_status(patient_result, params)
-        if update_patient_result(patient_result, params)
+      def update_status(patient_result, params, current_user)
+        if update_patient_result(patient_result, params, current_user)
           [
             {
               resultStatus: patient_result.result_status,
@@ -35,11 +35,17 @@ module PatientResults
 
       protected
 
-      def update_patient_result(patient_result, params)
-        patient_result.result_status = params[:result_status] if params[:result_status].present?
+      def update_patient_result(patient_result, params, current_user)
+        patient_result.result_status = params[:result_status] if params[:result_status].present? && can_approve_results?(params, current_user)
         patient_result.comment = params[:comment]
         patient_result.feedback_message = patient_result.test_batch.institution.feedback_messages.find(params[:feedback_message_id]) if params[:feedback_message_id].to_i > 0
         patient_result.save(validate: false)
+      end
+
+      def can_approve_results?(params, current_user)
+        return true unless params[:result_status] == 'completed'
+
+        Policy.can?(Policy::Actions::APPROVE_ENCOUNTER, Encounter, current_user)
       end
     end
   end
