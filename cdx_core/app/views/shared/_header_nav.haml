@@ -30,6 +30,9 @@
           %li{:class => is_menu_item_active?('test_results', request.params) }
             = link_to I18n.t('layout.header_nav.test_results'), test_results_path
 
+        -# ------------ APPROVALS
+        %li{:class => is_menu_item_active?('approvals', request.params) }
+          = link_to(I18n.t('layout.header_nav.approvals'), approvals_path)
 
         -# ------------ DEVICES
         - if has_access_to_devices_index?

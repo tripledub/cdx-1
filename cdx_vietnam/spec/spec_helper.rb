@@ -22,6 +22,7 @@ require "#{CdxVietnam::Engine.root}/../cdx_core/features/support/page_objects/te
 require "#{CdxVietnam::Engine.root}/../cdx_core/features/support/page_objects/file_input.rb"
 Dir["#{CdxVietnam::Engine.root}/../cdx_core/features/support/page_objects/*.rb"].each {|f| require f}
 Dir["#{CdxVietnam::Engine.root}/../cdx_core/spec/support/**/*.rb"].each { |f| require f }
+Dir["#{CdxVietnam::Engine.root}/spec/support/**/*.rb"].each { |f| require f }
 
 WebMock.disable_net_connect!(:allow_localhost => true, allow: [/fonts\.googleapis\.com/, /manastech\.testrail\.com/])
 

@@ -122,6 +122,7 @@ Rails.application.routes.draw do
 
   resources :test_results, only: [:index, :show]
   resources :test_orders, only: [:index]
+  resources :approvals, only: [:index]
   resources :filters, format: 'html'
   resources :subscribers
   resources :policies

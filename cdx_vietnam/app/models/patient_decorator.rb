@@ -1,5 +1,5 @@
 class Patient < ActiveRecord::Base
-  include PatientConcern
+
   validates :social_security_code, length: { in: 9..15 }
 
   alias_method :core_patient_id_display, :patient_id_display
