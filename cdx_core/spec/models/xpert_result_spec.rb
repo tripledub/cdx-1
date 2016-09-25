@@ -6,7 +6,7 @@ describe XpertResult do
   let(:site)           { institution.sites.make }
   let(:patient)        { Patient.make( institution: institution) }
   let(:encounter)      { Encounter.make institution: institution, site: site ,patient: patient, test_batch: TestBatch.make(institution: institution) }
-  let(:result_status) { ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed', 'success', 'error'] }
+  let(:result_status) { ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed'] }
 
   context "validations" do
     it { should validate_presence_of(:sample_collected_on).on(:update) }

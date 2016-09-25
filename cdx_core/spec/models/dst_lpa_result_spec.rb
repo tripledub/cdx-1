@@ -4,7 +4,7 @@ describe DstLpaResult do
   let(:dst_lpa_options) { %w(resistant susceptible contaminated not_done) }
   let(:media_options) { %w(solid liquid) }
   let(:method_options) { %w(direct indirect) }
-  let(:result_status) { ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed', 'success', 'error'] }
+  let(:result_status) { ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed'] }
 
   describe 'validations' do
     it { should validate_presence_of(:sample_collected_on).on(:update) }

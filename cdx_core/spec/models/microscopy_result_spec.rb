@@ -3,7 +3,7 @@ require 'spec_helper'
 describe MicroscopyResult do
   let(:visual_appearance_options)  { ['blood', 'mucopurulent', 'saliva'] }
   let(:test_result_options)  { ['negative', '1to9', '1plus', '2plus', '3plus'] }
-  let(:result_status) { ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed', 'success', 'error'] }
+  let(:result_status) { ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed'] }
 
 
   context "validations" do
