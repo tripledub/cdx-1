@@ -18,15 +18,13 @@ class ApprovalsController < TestsController
   protected
 
   def execute_encounter_query
-    @approvals = Encounter.joins(:institution, :site)
-                          .includes(:patient, :user, :test_batch => [:patient_results])
-                          .where(:site => @sites)
-                          .where(:patient_results => {:result_status => 'pending_approval'})
+    params['patient_result_status'] = 'pending_approval'
+    @approvals = TestOrders::Finder.new(@navigation_context, params)
 
-    @total = @approvals.count
+    @total = @approvals.filter_query.count
     order_by, offset = perform_pagination('encounters.start_time')
 
-    @approvals = @approvals.order(order_by)
+    @approvals = @approvals.filter_query.order(order_by)
                            .offset(offset)
                            .limit(@page_size)
   end
