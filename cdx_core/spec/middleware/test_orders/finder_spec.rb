@@ -7,12 +7,12 @@ RSpec.describe TestOrders::Finder do
   let(:site2)              { Site.make institution: institution }
   let(:site3)              { Site.make institution: institution, parent_id: site2.id }
   let(:patient)            { Patient.make institution: institution }
-  let!(:test_order)        { Encounter.make institution: institution, site: site,  patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"),  testdue_date: 1.day.from_now.strftime("%Y-%m-%d"),  status: 0, testing_for: 'TB' }
-  let!(:test_order2)       { Encounter.make institution: institution, site: site,  patient: patient, start_time: 30.days.ago.strftime("%Y-%m-%d"), testdue_date: 2.days.from_now.strftime("%Y-%m-%d"), status: 1, testing_for: 'HIV' }
-  let!(:test_order3)       { Encounter.make institution: institution, site: site2, patient: patient, start_time: 7.days.ago.strftime("%Y-%m-%d"),  testdue_date: 3.days.from_now.strftime("%Y-%m-%d"), status: 2 }
-  let!(:test_order4)       { Encounter.make institution: institution, site: site,  patient: patient, start_time: 14.days.ago.strftime("%Y-%m-%d"), testdue_date: 4.days.from_now.strftime("%Y-%m-%d"), status: 0, testing_for: 'TB' }
-  let!(:test_order5)       { Encounter.make institution: institution, site: site2, patient: patient, start_time: 23.days.ago.strftime("%Y-%m-%d"), testdue_date: 5.days.from_now.strftime("%Y-%m-%d"), status: 1 }
-  let!(:test_order6)       { Encounter.make institution: institution, site: site3, patient: patient, start_time: 93.days.ago.strftime("%Y-%m-%d"), testdue_date: 6.days.from_now.strftime("%Y-%m-%d"), status: 1, testing_for: 'EBOLA' }
+  let!(:test_order)        { Encounter.make institution: institution, site: site,  patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"),  testdue_date: 1.day.from_now.strftime("%Y-%m-%d"),  testing_for: 'TB' }
+  let!(:test_order2)       { Encounter.make institution: institution, site: site,  patient: patient, start_time: 30.days.ago.strftime("%Y-%m-%d"), testdue_date: 2.days.from_now.strftime("%Y-%m-%d"), testing_for: 'HIV' }
+  let!(:test_order3)       { Encounter.make institution: institution, site: site2, patient: patient, start_time: 7.days.ago.strftime("%Y-%m-%d"),  testdue_date: 3.days.from_now.strftime("%Y-%m-%d") }
+  let!(:test_order4)       { Encounter.make institution: institution, site: site,  patient: patient, start_time: 14.days.ago.strftime("%Y-%m-%d"), testdue_date: 4.days.from_now.strftime("%Y-%m-%d"), testing_for: 'TB' }
+  let!(:test_order5)       { Encounter.make institution: institution, site: site2, patient: patient, start_time: 23.days.ago.strftime("%Y-%m-%d"), testdue_date: 5.days.from_now.strftime("%Y-%m-%d") }
+  let!(:test_order6)       { Encounter.make institution: institution, site: site3, patient: patient, start_time: 93.days.ago.strftime("%Y-%m-%d"), testdue_date: 6.days.from_now.strftime("%Y-%m-%d"), testing_for: 'EBOLA' }
   let(:navigation_context) { NavigationContext.new(user, institution.uuid) }
   let(:params) { { } }
 
@@ -25,7 +25,7 @@ RSpec.describe TestOrders::Finder do
       end
 
       it 'should return outstanding test orders from that institution' do
-        expect(subject.filter_query.count).to eq(5)
+        expect(subject.filter_query.count).to eq(6)
       end
     end
 
@@ -46,7 +46,7 @@ RSpec.describe TestOrders::Finder do
         subject { described_class.new(navigation_context, { 'selectedItems' => [test_order2.id, test_order3.id, test_order5.id] }) }
 
         it 'should return a single encounter when filter by id' do
-          expect(subject.filter_query.count).to eq(2)
+          expect(subject.filter_query.count).to eq(3)
         end
 
         it 'should return the requested encounter when filter by id' do
@@ -69,10 +69,10 @@ RSpec.describe TestOrders::Finder do
       end
 
       context 'Status' do
-        subject { described_class.new(navigation_context, { 'status' => 1 }) }
+        subject { described_class.new(navigation_context, { 'status' => 'new' }) }
 
         it 'should return a single encounter when filter by id' do
-          expect(subject.filter_query.count).to eq(3)
+          expect(subject.filter_query.count).to eq(6)
         end
 
         it 'should return the requested encounter when filter by id' do
@@ -86,7 +86,7 @@ RSpec.describe TestOrders::Finder do
         subject { described_class.new(navigation_context, { 'since' => 25.days.ago.strftime("%Y-%m-%d") }) }
 
         it 'should return the right number of encounters' do
-          expect(subject.filter_query.count).to eq(3)
+          expect(subject.filter_query.count).to eq(4)
         end
 
         it 'should return the encounter data' do
@@ -103,7 +103,7 @@ RSpec.describe TestOrders::Finder do
       subject { described_class.new(navigation_context, params) }
 
       it 'should return all test orders from that site and subsites' do
-        expect(subject.filter_query.count).to eq(2)
+        expect(subject.filter_query.count).to eq(3)
       end
     end
 
@@ -113,7 +113,7 @@ RSpec.describe TestOrders::Finder do
       subject { described_class.new(navigation_context, params) }
 
       it 'should return all test orders from that site' do
-        expect(subject.filter_query.count).to eq(1)
+        expect(subject.filter_query.count).to eq(2)
       end
     end
   end

@@ -3,6 +3,20 @@ require 'spec_helper'
 describe Institution do
   let(:user) {User.make}
 
+  context "validations" do
+    it { should have_many(:sites) }
+    it { should have_many(:devices) }
+    it { should have_many(:device_models) }
+    it { should have_many(:encounters) }
+    it { should have_many(:patients) }
+    it { should have_many(:samples) }
+    it { should have_many(:test_results) }
+    it { should have_many(:roles) }
+    it { should have_many(:alerts) }
+    it { should have_many(:test_batches) }
+    it { should have_many(:feedback_messages) }
+  end
+
   describe "roles" do
     it "creates predefined roles for institution" do
       institution = nil

@@ -5,14 +5,14 @@ describe Presenters::DstLpaResults do
   let!(:institution)        { user.institutions.make }
   let(:site)                { Site.make institution: institution }
   let(:patient)             { Patient.make institution: institution }
-  let(:encounter)           { Encounter.make institution: institution , user: user, patient: patient }
+  let(:encounter)           { Encounter.make institution: institution , user: user, patient: patient, test_batch: TestBatch.make(institution: institution) }
   let(:sample)              { Sample.make(institution: institution, patient: patient, encounter: encounter) }
   let!(:sample_identifier1) { SampleIdentifier.make(site: site, entity_id: 'sample-id', sample: sample) }
   let!(:sample_identifier2) { SampleIdentifier.make(site: site, entity_id: 'sample-2', sample: sample) }
 
   describe 'index_table' do
     before :each do
-      7.times { DstLpaResult.make requested_test: RequestedTest.make(encounter: encounter) }
+      7.times { DstLpaResult.make test_batch: encounter.test_batch }
     end
 
     it 'should return an array of formated comments' do
@@ -35,7 +35,7 @@ describe Presenters::DstLpaResults do
         resultKm:          Extras::Select.find(DstLpaResult.dst_lpa_options, DstLpaResult.first.results_km),
         resultCm:          Extras::Select.find(DstLpaResult.dst_lpa_options, DstLpaResult.first.results_cm),
         resultFq:          Extras::Select.find(DstLpaResult.dst_lpa_options, DstLpaResult.first.results_fq),
-        viewLink:          Rails.application.routes.url_helpers.requested_test_dst_lpa_result_path(requested_test_id: DstLpaResult.first.requested_test.id)
+        viewLink:          Rails.application.routes.url_helpers.test_batch_dst_lpa_result_path(DstLpaResult.first.test_batch, DstLpaResult.first)
       })
     end
   end

@@ -6,7 +6,7 @@ describe Presenters::PatientTestResults do
   let(:site)           { Site.make institution: institution }
   let(:patient)        { Patient.make institution: institution }
   let(:device)         { Device.make  institution: institution, site: site }
-  let(:encounter)      { Encounter.make institution: institution , user: user, patient: patient }
+  let(:encounter)      { Encounter.make institution: institution , user: user, patient: patient, test_batch: TestBatch.make(institution: institution) }
 
   describe 'patient_view' do
     before :each do
@@ -14,19 +14,15 @@ describe Presenters::PatientTestResults do
         TestResult.make patient: patient, institution: institution, device: device
       end
       2.times do
-        requested_test = RequestedTest.make encounter: encounter
-        MicroscopyResult.make requested_test: requested_test
+        MicroscopyResult.make test_batch: encounter.test_batch
       end
       2.times do
-        requested_test = RequestedTest.make encounter: encounter
-        CultureResult.make requested_test: requested_test
+        CultureResult.make test_batch: encounter.test_batch
       end
       2.times do
-        requested_test = RequestedTest.make encounter: encounter
-        DstLpaResult.make requested_test: requested_test
+        DstLpaResult.make test_batch: encounter.test_batch
       end
-      requested_test = RequestedTest.make encounter: encounter
-      XpertResult.make requested_test: requested_test
+      XpertResult.make test_batch: encounter.test_batch
     end
 
     it 'should return an array of formated comments' do
@@ -51,7 +47,7 @@ describe Presenters::PatientTestResults do
         name:            'Xpert result',
         date:            Extras::Dates::Format.datetime_with_time_zone(xpert_result.sample_collected_on),
         status:          xpert_result.trace,
-        viewLink:        Rails.application.routes.url_helpers.requested_test_xpert_result_path(requested_test_id: xpert_result.requested_test.id)
+        viewLink:        Rails.application.routes.url_helpers.test_batch_xpert_result_path(xpert_result.test_batch, xpert_result)
       })
     end
 
@@ -62,7 +58,7 @@ describe Presenters::PatientTestResults do
         name:            'Microscopy result',
         date:            Extras::Dates::Format.datetime_with_time_zone(microscopy_result.sample_collected_on),
         status:          Extras::Select.find(MicroscopyResult.test_result_options, microscopy_result.test_result),
-        viewLink:        Rails.application.routes.url_helpers.requested_test_microscopy_result_path(requested_test_id: microscopy_result.requested_test.id)
+        viewLink:        Rails.application.routes.url_helpers.test_batch_microscopy_result_path(microscopy_result.test_batch, microscopy_result)
       })
     end
 
@@ -73,7 +69,7 @@ describe Presenters::PatientTestResults do
         name:            'Culture result',
         date:            Extras::Dates::Format.datetime_with_time_zone(culture_result.sample_collected_on),
         status:          Extras::Select.find(CultureResult.test_result_options, culture_result.test_result),
-        viewLink:        Rails.application.routes.url_helpers.requested_test_culture_result_path(requested_test_id: culture_result.requested_test.id)
+        viewLink:        Rails.application.routes.url_helpers.test_batch_culture_result_path(culture_result.test_batch, culture_result)
       })
     end
 
@@ -84,7 +80,7 @@ describe Presenters::PatientTestResults do
         name:            'Dst/Lpa result',
         date:            Extras::Dates::Format.datetime_with_time_zone(dst_lpa_result.sample_collected_on),
         status:          dst_lpa_result.serial_number,
-        viewLink:        Rails.application.routes.url_helpers.requested_test_dst_lpa_result_path(requested_test_id: dst_lpa_result.requested_test.id)
+        viewLink:        Rails.application.routes.url_helpers.test_batch_dst_lpa_result_path(dst_lpa_result.test_batch, dst_lpa_result)
       })
     end
   end

@@ -108,26 +108,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
           { this.state.encounter.exam_reason === 'follow' ? <ReasonFollow treatmentDateChange={this.treatmentDateChange} /> : null }
           { this.state.encounter.exam_reason === 'diag' ? <PresumptiveRR /> : null }
 
-          <div className="row">
-            <div className="col-6 flexStart">
-              <label>{I18n.t("components.fresh_tests_encounter_form.samples_lable")}</label>
-            </div>
-            <div className="col-6">
-              <SamplesList samples={this.state.encounter.samples}  />
-              <NewSamplesList samples={this.state.encounter.new_samples} onRemoveSample={this.removeNewSample}/>
-              <p className={show_auto_sample}>
-                <a className="btn-add-link" href='#' onClick={this.addNewSamples}>
-                  <span className="icon-circle-plus icon-blue"></span>
-                  {I18n.t("components.fresh_tests_encounter_form.add_sample")}
-                </a>
-              </p>
-              <p className={show_manual_sample}>
-                <input type="text" size="54" placeholder={I18n.t("components.fresh_tests_encounter_form.sample_id_placeholder")} ref="manualSampleEntry" />&nbsp;
-                <button type="button" className="btn-primary" onClick={this.validateAndSetManualEntry}>{I18n.t("components.fresh_tests_encounter_form.add_btn")}</button>
-              </p>
-            </div>
-          </div>
-
           <RequestedTests reqtestsChange={this.reqtestsChange} />
 
           <div className="row">

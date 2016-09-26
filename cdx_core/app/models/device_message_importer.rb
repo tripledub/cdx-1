@@ -19,6 +19,7 @@ class DeviceMessageImporter
   def load_for_device(data, device_uuid)
     device = Device.includes(:manifest, :institution, :site).find_by!(uuid: device_uuid)
     device_message = DeviceMessage.new(device: device, plain_text_data: data)
+
     device_message.save!
     Rails.logger.debug("#{I18n.t('device_message_importer.saved_device_message')} #{device_message.id} #{I18n.t('device_message_importer.for_device')} #{device_uuid}")
 

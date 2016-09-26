@@ -1,15 +1,34 @@
 class PatientResultsController < ApplicationController
 
-  before_filter :find_requested_test, :check_permissions, :check_back_button_mode
+  before_filter :find_test_batch, :check_permissions, :check_back_button_mode
+
+  def update_samples
+    if PatientResults::Persistence.collect_sample_ids(@test_batch, params[:samples])
+      message = I18n.t('patient_results.update_samples.samples_updated')
+    else
+      message = I18n.t('patient_results.update_samples.updated_fail')
+    end
+
+    redirect_to encounter_path(@test_batch.encounter), message: message
+  end
+
+  def update
+    message, status = PatientResults::Persistence.update_status(@test_batch.patient_results.find(params[:id]), patient_results_params, current_user)
+    render json: { result: message }, status: status
+  end
 
   protected
 
-  def find_requested_test
-    @requested_test = RequestedTest.find(params[:requested_test_id])
+  def find_test_batch
+    @test_batch = @navigation_context.institution.test_batches.find(params[:test_batch_id])
+  end
+
+  def patient_results_params
+    params.require(:patient_result).permit(:result_status, :comment, :feedback_message_id)
   end
 
   def check_permissions
-    redirect_to(encounter_path(@requested_test.encounter), error: I18n.t('patient_results_controller.cannot_add')) unless has_access?(TestResult, Policy::Actions::QUERY_TEST)
+    redirect_to(encounter_path(@test_batch.encounter), error: I18n.t('patient_results_controller.cannot_add')) unless has_access?(TestResult, Policy::Actions::QUERY_TEST)
   end
 
   def check_back_button_mode

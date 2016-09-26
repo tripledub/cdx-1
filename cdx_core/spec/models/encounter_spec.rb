@@ -1,9 +1,51 @@
 require 'spec_helper'
 
 describe Encounter do
+  let(:status_options)  { ['new', 'pending', 'in_progress', 'received', 'pending_approval', 'completed'] }
+
+  it { have_one :test_batch }
   it { is_expected.to validate_presence_of :institution }
-  let(:patient)   { Patient.make }
-  let(:encounter) { Encounter.make institution: patient.institution, patient: patient }
+  it { should validate_inclusion_of(:status).in_array(status_options) }
+
+  let(:patient)    { Patient.make }
+  let(:encounter)  { Encounter.make institution: patient.institution, patient: patient, test_batch: TestBatch.make }
+
+  describe 'validations' do
+    context 'payment_is_done' do
+      context 'payment is pending' do
+        before :each do
+          encounter.status = 'pending'
+        end
+
+        it 'should not allow change status if payment is not done' do
+          expect(encounter.valid?).to eq false
+        end
+      end
+
+      context 'payment is done but samples not collected' do
+        before :each do
+          encounter.test_batch.update_attribute(:payment_done, true)
+          encounter.status = 'pending'
+        end
+
+        it 'should not allow change status if payment is not done' do
+          expect(encounter.valid?).to eq false
+        end
+      end
+
+      context 'payment is done and samples have been collected' do
+        before :each do
+          encounter.test_batch.update_attribute(:payment_done, true)
+          encounter.test_batch.update_attribute(:status, 'samples_collected')
+          encounter.status = 'pending'
+        end
+
+        it 'should not allow change status if payment is not done' do
+          expect(encounter.valid?).to eq true
+        end
+      end
+    end
+  end
 
   it "#human_diagnose" do
     encounter.core_fields[Encounter::ASSAYS_FIELD] = [{"condition" => "flu_a", "name" => "flu_a", "result" => "positive", "quantitative_result" => nil}]
@@ -144,8 +186,8 @@ describe Encounter do
 
   context "field validations" do
 
-    it "should default status to pending" do
-      expect(encounter.status).to eq('pending')
+    it "should default status to new" do
+      expect(encounter.status).to eq('new')
     end
 
     it "should allow observations pii field" do
@@ -286,19 +328,6 @@ describe Encounter do
       it "if there is no existing encounter for a sample id then do not create one automatically" do
         expect(TestResult.last.encounter_id).to eq(nil)
       end
-    end
-  end
-
-  context "add request test" do
-    let(:requested_test1) { RequestedTest.make encounter: encounter}
-    let(:requested_test2) { RequestedTest.make encounter: encounter}
-
-    it "should save requested tests" do
-      requested_test1.encounter = encounter
-      requested_test2.encounter = encounter
-      requested_test1.save!
-      requested_test2.save!
-      expect(encounter.requested_tests.count).to eq(2)
     end
   end
 

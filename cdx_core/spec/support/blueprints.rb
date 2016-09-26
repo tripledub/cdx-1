@@ -73,6 +73,16 @@ Comment.blueprint do
   comment       { Faker::Lorem.paragraph }
 end
 
+FeedbackMessage.blueprint do
+  category Faker::Lorem.word
+  code Faker::Lorem.word
+end
+
+CustomTranslation.blueprint do
+  lang { 'en' }
+  text { Faker::Lorem.sentence }
+end
+
 AuditLog.blueprint do
   patient       { Patient.make }
   user          { User.make }
@@ -148,6 +158,7 @@ Encounter.blueprint do
   patient { Patient.make }
   institution { object.patient.try(:institution) || Institution.make }
   user { institution.user }
+  status 'new'
   site { object.institution.sites.first || object.institution.sites.make }
   performing_site { object.institution.sites.first || object.institution.sites.make }
   core_fields {
@@ -166,11 +177,10 @@ Episode.blueprint do
   outcome :cured
 end
 
-RequestedTest.blueprint do
-  encounter
-  name { "CD4" }
-  status { RequestedTest.statuses["pending"] }
-  comment {"this is a  comment for the requested test ......"}
+TestBatch.blueprint do
+  status 'new'
+  encounter { object.try(:encounter) || Encounter.make }
+  institution { object.encounter.try(:institution) || Institution.make }
 end
 
 SampleIdentifier.blueprint do
@@ -229,7 +239,6 @@ TestResult.blueprint do
 end
 
 CultureResult.blueprint do
-  requested_test { RequestedTest.make }
   sample_collected_on { 23.days.ago}
   serial_number { 'some random serial numbers' }
   media_used { 'solid' }
@@ -239,7 +248,6 @@ CultureResult.blueprint do
 end
 
 DstLpaResult.blueprint do
-  requested_test { RequestedTest.make }
   sample_collected_on { 23.days.ago}
   serial_number { 'some random serial numbers' }
   media_used { 'solid' }
@@ -258,7 +266,6 @@ DstLpaResult.blueprint do
 end
 
 MicroscopyResult.blueprint do
-  requested_test { RequestedTest.make }
   sample_collected_on { 23.days.ago}
   serial_number { 'some random serial numbers' }
   appearance { 'blood' }
@@ -269,7 +276,6 @@ MicroscopyResult.blueprint do
 end
 
 XpertResult.blueprint do
-  requested_test { RequestedTest.make }
   sample_collected_on { 23.days.ago}
   tuberculosis { 'detected' }
   rifampicin { 'not_detected' }

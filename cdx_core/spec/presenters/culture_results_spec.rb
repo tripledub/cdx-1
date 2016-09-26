@@ -5,14 +5,14 @@ describe Presenters::CultureResults do
   let!(:institution)        { user.institutions.make }
   let(:site)                { Site.make institution: institution }
   let(:patient)             { Patient.make institution: institution }
-  let(:encounter)           { Encounter.make institution: institution , user: user, patient: patient }
+  let(:encounter)           { Encounter.make institution: institution , user: user, patient: patient, test_batch: TestBatch.make(institution: institution) }
   let(:sample)              { Sample.make(institution: institution, patient: patient, encounter: encounter) }
   let!(:sample_identifier1) { SampleIdentifier.make(site: site, entity_id: 'sample-id', sample: sample) }
   let!(:sample_identifier2) { SampleIdentifier.make(site: site, entity_id: 'sample-2', sample: sample) }
 
   describe 'index_table' do
     before :each do
-      7.times { CultureResult.make requested_test: RequestedTest.make(encounter: encounter) }
+      7.times { CultureResult.make test_batch: encounter.test_batch }
     end
 
     it 'should return an array of formated comments' do
@@ -28,7 +28,7 @@ describe Presenters::CultureResults do
         mediaUsed:         Extras::Select.find(CultureResult.media_options, CultureResult.first.media_used),
         serialNumber:      CultureResult.first.serial_number,
         testResult:        Extras::Select.find(CultureResult.test_result_options, CultureResult.first.test_result),
-        viewLink:          Rails.application.routes.url_helpers.requested_test_culture_result_path(requested_test_id: CultureResult.first.requested_test.id)
+        viewLink:          Rails.application.routes.url_helpers.test_batch_culture_result_path(CultureResult.first.test_batch, CultureResult.first)
       })
     end
   end

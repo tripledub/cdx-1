@@ -162,13 +162,6 @@ Episode.blueprint do
   outcome :cured
 end
 
-RequestedTest.blueprint do
-  encounter
-  name { "CD4" }
-  status { RequestedTest.statuses["pending"] }
-  comment {"this is a  comment for the requested test ......"}
-end
-
 SampleIdentifier.blueprint do
   sample { Sample.make_unsaved({}.tap do |h|
     h[:institution] = object.site.institution if object.site
@@ -224,7 +217,6 @@ TestResult.blueprint do
 end
 
 CultureResult.blueprint do
-  requested_test { RequestedTest.make }
   sample_collected_on { 23.days.ago}
   serial_number { 'some random serial numbers' }
   media_used { 'solid' }
@@ -234,7 +226,6 @@ CultureResult.blueprint do
 end
 
 DstLpaResult.blueprint do
-  requested_test { RequestedTest.make }
   sample_collected_on { 23.days.ago}
   serial_number { 'some random serial numbers' }
   media_used { 'solid' }
@@ -253,7 +244,6 @@ DstLpaResult.blueprint do
 end
 
 MicroscopyResult.blueprint do
-  requested_test { RequestedTest.make }
   sample_collected_on { 23.days.ago}
   serial_number { 'some random serial numbers' }
   appearance { 'blood' }
@@ -264,7 +254,6 @@ MicroscopyResult.blueprint do
 end
 
 XpertResult.blueprint do
-  requested_test { RequestedTest.make }
   sample_collected_on { 23.days.ago}
   tuberculosis { 'invalid' }
   rifampicin { 'detected' }

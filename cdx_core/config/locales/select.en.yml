@@ -12,8 +12,28 @@ en:
         hiv: 'H.I.V.'
         ebola: 'Ebola'
       status_options:
+        new: 'New'
         pending: 'Pending'
-        inprogress: 'In progress'
+        received: 'Received'
+        in_progress: 'In progress'
+        pending_approval: 'Pending approval'
+        approved: 'Approved'
+        completed: 'Completed'
+    test_batch:
+      status_options:
+        new: 'New'
+        samples_collected: 'Samples collected'
+        samples_received: 'Samples received'
+        in_progress: 'In progress'
+        closed: 'Closed'
+    patient_result:
+      status_options:
+        new: 'New'
+        sample_collected: 'Sample collected'
+        sample_received: 'Sample received'
+        in_progress: 'In progress'
+        pending_approval: 'Pending approval'
+        rejected: 'Rejected'
         completed: 'Completed'
     microscopy:
       visual_appearance:

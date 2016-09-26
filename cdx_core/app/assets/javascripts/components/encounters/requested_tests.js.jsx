@@ -53,62 +53,6 @@ var RequestedTests = React.createClass({
               </ul>
             </li>
             <li>
-              <input type="checkbox" onChange={this.reqtestsChange} className="test_for_tb drugsusceptibility1line" id="requested_drugsusceptibility1line"/>
-              <label htmlFor="requested_drugsusceptibility1line">{I18n.t("components.encounters.lbl_drug_first_line")}</label>
-              <ul className="cformatIndented" id="drugsusceptibility1line_cultformat_section">
-                <li>
-                  <input data-parent-target='requested_drugsusceptibility1line' type="checkbox" onChange={this.reqtestsChange} className="cultureformat" id="drugsusceptibility1line_cformat_liquid" name="drugsusceptibility1line_cformat_liquid"/>
-                  <label htmlFor="drugsusceptibility1line_cformat_liquid">{I18n.t("components.encounters.lbl_liquid_culture")}</label>
-                </li>
-                <li>
-                  <input data-parent-target='requested_drugsusceptibility1line' type="checkbox" onChange={this.reqtestsChange} className="cultureformat" id="drugsusceptibility1line_cformat_solid" name="drugsusceptibility1line_cformat_solid"/>
-                  <label htmlFor="drugsusceptibility1line_cformat_solid">{I18n.t("components.encounters.lbl_solid_culture")}</label>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <input type="checkbox" onChange={this.reqtestsChange} className="test_for_tb drugsusceptibility2line" id="requested_drugsusceptibility2line"/>
-              <label htmlFor="requested_drugsusceptibility2line">{I18n.t("components.encounters.lbl_drug_second_line")}</label>
-              <ul className="cformatIndented" id="drugsusceptibility2line_cultformat_section">
-                <li>
-                  <input data-parent-target='requested_drugsusceptibility2line' type="checkbox" onChange={this.reqtestsChange} className="cultureformat" id="drugsusceptibility2line_cformat_liquid" name="drugsusceptibility2line_cformat_liquid"/>
-                  <label htmlFor="drugsusceptibility2line_cformat_liquid">{I18n.t("components.encounters.lbl_liquid_culture")}</label>
-                </li>
-                <li>
-                  <input data-parent-target='requested_drugsusceptibility2line' type="checkbox" onChange={this.reqtestsChange} className="cultureformat" id="drugsusceptibility2line_cformat_solid" name="drugsusceptibility2line_cformat_solid"/>
-                  <label htmlFor="drugsusceptibility2line_cformat_solid">{I18n.t("components.encounters.lbl_solid_culture")}</label>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <input type="checkbox" onChange={this.reqtestsChange} className="test_for_tb lineprobe1" id="requested_lineprobe1"/>
-              <label htmlFor="requested_lineprobe1">{I18n.t("components.encounters.lbl_line_first_line")}</label>
-              <ul className="cformatIndented" id="lineprobe1_cultformat_section">
-                <li>
-                  <input data-parent-target='requested_lineprobe1' type="checkbox" onChange={this.reqtestsChange} className="cultureformat" id="lineprobe1_cformat_liquid" name="lineprobe1_cformat_liquid"/>
-                  <label htmlFor="lineprobe1_cformat_liquid">{I18n.t("components.encounters.lbl_liquid_culture")}</label>
-                </li>
-                <li>
-                  <input data-parent-target='requested_lineprobe1' type="checkbox" onChange={this.reqtestsChange} className="cultureformat" id="lineprobe1_cformat_solid" name="lineprobe1_cformat_solid"/>
-                  <label htmlFor="lineprobe1_cformat_solid">{I18n.t("components.encounters.lbl_solid_culture")}</label>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <input type="checkbox" onChange={this.reqtestsChange} className="test_for_tb lineprobe2" id="requested_lineprobe2"/>
-              <label htmlFor="requested_lineprobe2">{I18n.t("components.encounters.lbl_line_second_line")}</label>
-              <ul className="cformatIndented" id="lineprobe2_cultformat_section">
-                <li>
-                  <input data-parent-target='requested_lineprobe2' type="checkbox" onChange={this.reqtestsChange} className="cultureformat" id="lineprobe2_cformat_liquid" name="lineprobe2_cformat_liquid"/>
-                  <label htmlFor="lineprobe2_cformat_liquid">{I18n.t("components.encounters.lbl_liquid_culture")}</label>
-                </li>
-                <li>
-                  <input data-parent-target='requested_lineprobe2' type="checkbox" onChange={this.reqtestsChange} className="cultureformat" id="lineprobe2_cformat_solid" name="lineprobe2_cformat_solid"/>
-                  <label htmlFor="lineprobe2_cformat_solid">{I18n.t("components.encounters.lbl_solid_culture")}</label>
-                </li>
-              </ul>
-            </li>
-            <li>
               <input type="checkbox" onChange={this.reqtestsChange} name="cd4" className="test_for_hiv" id="requested_cd4"/>
               <label htmlFor="requested_cd4">{I18n.t("components.encounters.lbl_cd4_count")}</label>
             </li>

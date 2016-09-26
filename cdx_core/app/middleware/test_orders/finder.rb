@@ -17,6 +17,7 @@ class TestOrders::Finder
     filter_by_status
     filter_by_testing_for
     filter_by_start_time
+    filter_by_patient_result_status
   end
 
   def init_query
@@ -47,7 +48,7 @@ class TestOrders::Finder
     if @params['status'].present?
       @filter_query = filter_query.where("encounters.status = ?", @params['status'])
     else
-      @filter_query = filter_query.where("encounters.status IN (0,1)")
+      @filter_query = filter_query.where("encounters.status IN('new', 'pending', 'received', 'in_progress', 'pending_approval') ")
     end
   end
 
@@ -61,6 +62,13 @@ class TestOrders::Finder
     until_day = end_date + ' 23:59'
 
     @filter_query = filter_query.where('encounters.start_time' => since_day..until_day)
+  end
+
+  def filter_by_patient_result_status
+    return unless @params['patient_result_status']
+
+    @filter_query = filter_query.includes(:test_batch => [:patient_results])
+                                .where(:patient_results => {:result_status => @params['patient_result_status']})
   end
 
   def start_date

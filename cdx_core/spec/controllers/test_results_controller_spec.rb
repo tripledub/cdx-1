@@ -10,7 +10,7 @@ describe TestResultsController, elasticsearch: true do
   let(:device)            { Device.make institution_id: institution.id, site: site }
   let(:site2)             { Site.make institution: institution }
   let(:device2)           { Device.make institution_id: institution.id, site: site2 }
-  let(:encounter)         { Encounter.make institution: institution , user: user, patient: patient }
+  let(:encounter)         { Encounter.make institution: institution , user: user, patient: patient, test_batch: TestBatch.make(institution: institution) }
   let(:other_user)        { User.make }
   let(:other_institution) { Institution.make user_id: other_user.id }
   let(:other_site)        { Site.make institution: other_institution }
@@ -22,23 +22,19 @@ describe TestResultsController, elasticsearch: true do
     end
 
     2.times do
-      requested_test = RequestedTest.make encounter: encounter
-      MicroscopyResult.make requested_test: requested_test
+      MicroscopyResult.make test_batch: encounter.test_batch
     end
 
     5.times do
-      requested_test = RequestedTest.make encounter: encounter
-      CultureResult.make requested_test: requested_test
+      CultureResult.make test_batch: encounter.test_batch
     end
 
     3.times do
-      requested_test = RequestedTest.make encounter: encounter
-      DstLpaResult.make requested_test: requested_test
+      DstLpaResult.make test_batch: encounter.test_batch
     end
 
     2.times do
-      requested_test = RequestedTest.make encounter: encounter
-      XpertResult.make requested_test: requested_test, serial_number: '9999239999'
+      XpertResult.make test_batch: encounter.test_batch, serial_number: '9999239999'
     end
   }
 

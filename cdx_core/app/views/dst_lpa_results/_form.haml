@@ -1,4 +1,4 @@
-= form_for([@requested_test, @dst_lpa_result], url: requested_test_dst_lpa_result_path(@requested_test, @dst_lpa_result), html: { autocomplete: 'off' }) do |f|
+= form_for([@test_batch, @dst_lpa_result], url: test_batch_dst_lpa_result_path(@test_batch, @dst_lpa_result), html: { autocomplete: 'off' }) do |f|
   = validation_errors @dst_lpa_result
   .row
     .col.pe-2
@@ -95,4 +95,4 @@
   .row.button-actions
     .col
       = f.submit I18n.t('views.save'), class: 'btn-primary'
-      = link_to I18n.t('views.cancel'), encounter_path(@requested_test.encounter), class: 'btn-link'
+      = link_to I18n.t('views.cancel'), encounter_path(@test_batch.encounter), class: 'btn-link'

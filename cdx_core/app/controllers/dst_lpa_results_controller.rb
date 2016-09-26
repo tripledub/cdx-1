@@ -4,33 +4,18 @@ class DstLpaResultsController < PatientResultsController
 
   before_filter :validate_culture_is_added, only: [:new, :create]
 
-  def new
-    @dst_lpa_result                     = @requested_test.build_dst_lpa_result
-    @dst_lpa_result.sample_collected_on = Date.today
-    @dst_lpa_result.result_on           = Date.today
-    @dst_lpa_result.serial_number       = @requested_test.encounter.samples.map(&:entity_ids).join(', ')
-    @dst_lpa_result.media_used          = params['media']
-  end
-
-  def create
-    @dst_lpa_result = @requested_test.build_dst_lpa_result(dst_lpa_result_params)
-
-    if @requested_test.dst_lpa_result.save_and_audit(current_user, I18n.t('dst_lpa_results.create.audit'))
-      redirect_to encounter_path(@requested_test.encounter), notice: I18n.t('dst_lpa_results.create.notice')
-    else
-      render action: 'new'
-    end
-  end
-
   def show
   end
 
   def edit
+    @dst_lpa_result.sample_collected_on = @dst_lpa_result.sample_collected_on || Date.today
+    @dst_lpa_result.result_on           = @dst_lpa_result.result_on  || Date.today
+    @dst_lpa_result.media_used          = @dst_lpa_result.media_used || params['media']
   end
 
   def update
-    if @dst_lpa_result.update_and_audit(dst_lpa_result_params, current_user, I18n.t('dst_lpa_results.update.audit'))
-      redirect_to encounter_path(@requested_test.encounter), notice: I18n.t('dst_lpa_results.update.notice')
+    if PatientResults::Persistence.update_result(@dst_lpa_result, dst_lpa_result_params, current_user, I18n.t('culture_results.update.audit'))
+      redirect_to encounter_path(@test_batch.encounter), notice: I18n.t('dst_lpa_results.update.notice')
     else
       render action: 'edit'
     end
@@ -39,7 +24,7 @@ class DstLpaResultsController < PatientResultsController
   protected
 
   def find_dst_lpa_result
-    @dst_lpa_result = @requested_test.dst_lpa_result
+    @dst_lpa_result = @test_batch.patient_results.find(params[:id])
   end
 
   def dst_lpa_result_params
@@ -47,6 +32,6 @@ class DstLpaResultsController < PatientResultsController
   end
 
   def validate_culture_is_added
-    redirect_to(encounter_path(@requested_test.encounter), notice: I18n.t('dst_lpa_results.create.dst_warning')) if @requested_test.encounter.requested_tests.show_dst_warning
+    redirect_to(encounter_path(@test_batch.encounter), notice: I18n.t('dst_lpa_results.create.dst_warning')) if @test_batch.show_dst_warning
   end
 end

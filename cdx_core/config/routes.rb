@@ -52,6 +52,10 @@ Rails.application.routes.draw do
   get 'settings' => 'home#settings'
 
   resources :encounters do
+    resource :test_batch, only: [] do
+      post :set_as_paid
+    end
+
     collection do
       get :new_index
 
@@ -104,16 +108,21 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :requested_tests , only: [:update] do
-    resource :xpert_result, only: [:new, :create, :show, :edit, :update]
-    resource :microscopy_result, only: [:new, :create, :show, :edit, :update]
-    resource :dst_lpa_result, only: [:new, :create, :show, :edit, :update]
-    resource :culture_result, only: [:new, :create, :show, :edit, :update]
-    resource :undefined_result, only: [:show]
+  resources :test_batches do
+    resource :patient_results, only: [:update] do
+      collection do
+        post :update_samples
+      end
+    end
+    resources :xpert_results, only: [:show, :edit, :update]
+    resources :microscopy_results, only: [:show, :edit, :update]
+    resources :dst_lpa_results, only: [:show, :edit, :update]
+    resources :culture_results, only: [:show, :edit, :update]
   end
 
-  resources :test_results , only: [:index, :show]
-  resources :test_orders , only: [:index]
+  resources :test_results, only: [:index, :show]
+  resources :test_orders, only: [:index]
+  resources :approvals, only: [:index]
   resources :filters, format: 'html'
   resources :subscribers
   resources :policies

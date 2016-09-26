@@ -7,13 +7,11 @@ class Encounter < ActiveRecord::Base
   ASSAYS_FIELD = 'diagnosis'
   OBSERVATIONS_FIELD = 'observations'
 
+  has_one  :test_batch, dependent: :destroy
   has_many :samples, dependent: :restrict_with_error
   has_many :test_results, dependent: :restrict_with_error
-  has_many :requested_tests, autosave: true, dependent: :destroy
 
   belongs_to :performing_site, class_name: 'Site'
-
-  enum status: [:pending, :inprogress, :completed]
 
   belongs_to :patient
   belongs_to :user
@@ -23,10 +21,13 @@ class Encounter < ActiveRecord::Base
   validates_presence_of :site, if: Proc.new { |encounter| encounter.institution }
 
   validates_inclusion_of :culture_format, :allow_nil => true, in: ['solid', 'liquid'], if: Proc.new { |encounter| encounter.testing_for == 'TB' }
+  validates_inclusion_of :status,  in: ['new', 'pending', 'received', 'in_progress', 'pending_approval', 'completed']
 
   validate :validate_patient
+  validate :payment_is_done
 
   before_save :ensure_entity_id
+  before_create :set_default_status
 
   class << self
     def entity_scope
@@ -34,15 +35,29 @@ class Encounter < ActiveRecord::Base
     end
 
     def testing_for_options
-      [['TB', I18n.t('select.encounter.testing_for_options.tb')], ['HIV', I18n.t('select.encounter.testing_for_options.hiv')], ['Ebola', I18n.t('select.encounter.testing_for_options.ebola')]]
+      [
+        ['TB', I18n.t('select.encounter.testing_for_options.tb')],
+        ['HIV', I18n.t('select.encounter.testing_for_options.hiv')],
+        ['Ebola', I18n.t('select.encounter.testing_for_options.ebola')]
+      ]
     end
 
     def culture_format_options
-      [['solid', I18n.t('select.culture.media_options.solid')], ['liquid', I18n.t('select.culture.media_options.liquid')]]
+      [
+        ['solid', I18n.t('select.culture.media_options.solid')],
+        ['liquid', I18n.t('select.culture.media_options.liquid')]
+      ]
     end
 
     def status_options
-      [['0', I18n.t('select.encounter.status_options.pending')], ['1', I18n.t('select.encounter.status_options.inprogress')], ['2', I18n.t('select.encounter.status_options.completed')]]
+      [
+        ['new', I18n.t('select.encounter.status_options.new')],
+        ['pending', I18n.t('select.encounter.status_options.pending')],
+        ['in_progress', I18n.t('select.encounter.status_options.in_progress')],
+        ['received', I18n.t('select.encounter.status_options.received')],
+        ['pending_approval', I18n.t('select.encounter.status_options.pending_approval')],
+        ['approved', I18n.t('select.encounter.status_options.approved')]
+      ]
     end
 
     def merge_assays(assays1, assays2)
@@ -181,10 +196,24 @@ class Encounter < ActiveRecord::Base
     "CDP-#{self.id.to_s.rjust(7, '0')}"
   end
 
+  def tests_requiring_approval
+    return if test_batch.blank?
+    "#{test_batch.patient_results.pending_approval.count} of #{test_batch.patient_results.count}"
+  end
+
   protected
 
   def ensure_entity_id
     self.entity_id = entity_id
   end
 
+  def set_default_status
+    self.status = 'new'
+  end
+
+  def payment_is_done
+    if (status_was == 'new' && status == 'pending') && (test_batch.payment_done == false || test_batch.status != 'samples_collected')
+      errors.add(:status, I18n.t('encounters.validate_payment_fails'))
+    end
+  end
 end

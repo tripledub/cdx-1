@@ -1,0 +1,10 @@
+en:
+  patient_results:
+    validations:
+      rejected_no_comment: 'You need to add a comment explaining why the test is rejected.'
+    update_samples:
+      samples_updated: 'Sample Ids updated successfully.'
+      updated_fail: 'Sample Ids can not be updated.'
+    update:
+      success: 'Result was updated successfully.'
+      failure: 'Result can not be updated.'

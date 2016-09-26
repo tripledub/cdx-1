@@ -17,7 +17,7 @@ var DeviceMessageRow = React.createClass({
       <td>{this.props.deviceMessage.errorField}</td>
       <td>{this.props.deviceMessage.createdAt}</td>
       <td>
-        
+
         <a href={this.props.deviceMessage.rawLink} title={I18n.t("components.device_messages_table.download_raw_file")}>
           <div className="icon-download icon-gray"></div>
         </a>
@@ -46,7 +46,7 @@ var DeviceMessagesList = React.createClass({
     }.bind(this);
 
     return (
-      <table className="table" cellPadding="0" cellSpacing="0" data-resizable-columns-id="test-orders-table">
+      <table className="table" cellPadding="0" cellSpacing="0" data-resizable-columns-id="devices-table">
         <thead>
           <tr>
             {sortableHeader(I18n.t("components.device_messages_table.col_status"),  "device_messages.index_failed")}

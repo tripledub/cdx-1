@@ -242,7 +242,7 @@ describe FtpMonitor, elasticsearch: true do
 
       let(:subject) { FtpMonitor::FtpProcessor.new(ftp_info, [device]) }
 
-      it 'should unzip and process the contents' do
+      xit 'should unzip and process the contents' do
         expect(subject).to receive(:download_files).with(files).and_return(tempfiles)
 
         expect(subject.process!).to be_nil

@@ -17,64 +17,22 @@ var EncounterShow = React.createClass({
     };
   },
 
-  submitError: function(errorArray) {
+  onUpdateStatus: function(updatedStatus) {
     this.setState({
-      error_messages: errorArray
+      testOrderStatus: updatedStatus['testOrderStatus'],
+      testBatchStatus: updatedStatus['testBatchStatus']
     });
-    $('body').scrollTop(0);
   },
 
-  EncounterDeleteHandler: function() {
-    if (this.props.referer != null) {
-      successUrl = this.props.referer;
-    } else {
-      successUrl = '/test_orders';
-    }
-
-    var  urlParam = this.props.encounter.id
-
-    EncounterActions.deleteEncounter(urlParam, successUrl, this.submitError);
+  componentDidMount: function() {
+    this.unsubscribe = TestBatchStore.listen(this.onUpdateStatus);
   },
 
-  EncounterUpdateHandler: function() {
-    if (this.props.referer != null) {
-     successUrl = this.props.referer;
-    } else {
-     successUrl = '/test_orders';
-    }
-
-    if (this.props.requestedTests.length > 0) {
-      var urlParam   = '/requested_tests';
-      urlParam       = urlParam + '/' + this.props.encounter.id;
-      requestedTests = this.props.requestedTests;
-      EncounterRequestTestActions.update(urlParam, requestedTests, successUrl, this.submitError);
-    } else {
-      window.location.href = successUrl;
-    }
-  },
-
-  onTestChanged: function(newTest) {
-    var len = this.state.requestedTests.length;
-    for (var i = 0; i<len; i++) {
-      if (this.state.requestedTests[i].id == newTest.id) {
-        tempRequestedTests    = this.state.requestedTests;
-        tempRequestedTests[i] = newTest;
-        this.setState({
-          requestedTests: tempRequestedTests
-        });
-      }
-    }
+  componentWillUnmount: function() {
+    this.unsubscribe();
   },
 
   render: function() {
-    if (this.props.canUpdate && this.props.showCancel) {
-      actionButton = <EncounterDelete showEdit={true} onChangeParentLevel={this.EncounterDeleteHandler} encounter={this.props.encounter} />;
-    } else if (this.props.canUpdate && this.props.showEdit) {
-      actionButton = <EncounterUpdate onChangeParentLevel={this.EncounterUpdateHandler} />;
-    } else {
-      actionButton = <ShowNoButton />;
-    }
-
     if (this.props.encounter.performing_site == null) {
       performing_site = "";
     } else {
@@ -153,7 +111,9 @@ var EncounterShow = React.createClass({
                 <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.sample_type_label")}   fieldValue={ sample_type } />
 
                 <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.test_due_date_label")} fieldValue={ this.props.encounter.testdue_date } />
-                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.status_label")}        fieldValue={ this.props.encounter.status } />
+                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.status_label")} fieldValue={ I18n.t('components.test_order.' + this.state.testOrderStatus) } />
+                <DisplayFieldWithLabel fieldLabel={ I18n.t('components.test_batch.header') + ': ' + this.props.testBatch.batchId } fieldValue={ I18n.t('components.test_batch.' + this.state.testBatchStatus) } />
+                <DisplayFieldWithLabel fieldLabel={ I18n.t('components.test_batch.payment') } fieldValue={ I18n.t('components.test_batch.' + this.props.testBatch.paymentDone) } />
               </div>
 
               <div className="col-6 patientCard">
@@ -166,147 +126,9 @@ var EncounterShow = React.createClass({
           </div>
         </div>
 
-        <div className="row">
-          <RequestedTestsIndexTable encounter={this.props.encounter} requestedTests={this.state.requestedTests} requestedBy={this.props.requested_by}
-            statusTypes={this.props.statusTypes} edit={this.props.showEdit} onTestChanged={this.onTestChanged} associatedTestsToResults={this.props.associatedTestsToResults}
-            showDstWarning={this.props.showDstWarning} />
-        </div>
-        <br />
-        <div className="row buttonActions">
-          <div className="col">
-            {actionButton}
-          </div>
-        </div>
+        <TestBatchList testOrderStatus={ this.props.encounter.status } testBatch={ this.props.testBatch } submitSamplesUrl={ this.props.submitSamplesUrl } submitPaymentUrl={ this.props.submitPaymentUrl } updateResultUrl={ this.props.updateResultUrl } rejectReasons={ this.props.rejectReasons } authenticityToken={ this.props.authenticityToken } />
+
       </div>
       );
     },
   });
-
-
-var EncounterUpdate = React.createClass({
-  clickHandler: function() {
-    this.props.onChangeParentLevel();
-  },
-
-  render: function() {
-    return(
-      <div><a className="btn-secondary" onClick={this.clickHandler} id="update_encounter" href="#">{I18n.t("components.encounter_show.update_btn")}</a></div>
-    );
-  }
-});
-
-var ShowNoButton = React.createClass({
-  render: function() {
-    return(
-      <div></div>
-     );
-    }
-});
-
-var EncounterDelete = React.createClass({
-  getInitialState: function() {
-    return {
-      displayConfirm: false
-    };
-  },
-
-  clickHandler: function(e) {
-    e.preventDefault()
-    this.setState({
-      displayConfirm: true
-    });
-  },
-
-  cancelDeleteClickHandler: function() {
-    this.setState({
-      displayConfirm: false
-    });
-  },
-
-  confirmClickHandler: function() {
-    this.props.onChangeParentLevel();
-  },
-
-  render: function() {
-    if (this.state.displayConfirm == true) {
-      return (
-        <ConfirmationModalEncounter message= {I18n.t("components.encounter_show.cancel_confirm_msg")} title= {I18n.t("components.encounter_show.cancel_confirm_title")} cancelTarget= {this.cancelDeleteClickHandler} target={this.confirmClickHandler} hideOuterEvent={this.cancelDeleteClickHandler} deletion= {true} hideCancel= {false} confirmMessage= {I18n.t("components.encounter_show.delete_btn")} />
-      );
-    } else if (this.props.showEdit && (this.props.encounter.status == 'pending')) {
-      return (
-        <div>
-          <a className = "btn-secondary pull-right" onClick={this.clickHandler} id="delete_encounter" href="#">{I18n.t("components.encounter_show.cancel_test_order_btn")}</a>
-        </div>
-      );
-    } else {
-      return null;
-    }
-  }
-});
-
-var ConfirmationModalEncounter = React.createClass({
-  modalTitle: function() {
-    return this.props.title || (this.props.deletion ? I18n.t("components.encounter_show.cancel_confirmation_btn") : I18n.t("components.encounter_show.confirmation_btn"));
-  },
-
-  cancelMessage: function() {
-   return this.props.cancelMessage || I18n.t("components.encounter_show.cancel_btn");
-  },
-
-  confirmMessage: function() {
-    return this.props.confirmMessage || (this.props.deletion ? I18n.t("components.encounter_show.cancel_btn") : I18n.t("components.encounter_show.confirm_btn"));
-  },
-
-  componentDidMount: function() {
-    this.refs.confirmationModal.show();
-  },
-
-  onCancel: function() {
-    this.refs.confirmationModal.hide();
-    if (this.props.target instanceof Function ) {
-      this.props.cancelTarget();
-    }
-  },
-
-  onConfirm: function() {
-    if (this.props.target instanceof Function ) {
-      this.props.target();
-    } else {
-      window[this.props.target]();
-    }
-    this.refs.confirmationModal.hide();
-  },
-
-  hideOuterEvent: function() {
-    this.props.hideOuterEvent();
-  },
-
-  confirmButtonClass: function() {
-    return this.props.deletion ? "btn-primary btn-danger" : "btn-primary";
-  },
-
-  showCancelButton: function() {
-    return this.props.hideCancel != true;
-  },
-
-  render: function() {
-    var cancelButton = null;
-    if (this.showCancelButton()) {
-      cancelButton = <button type="button" className="btn-link" onClick={this.onCancel}>{this.cancelMessage()}</button>
-    }
-
-    return (
-      <Modal ref="confirmationModal" show="true" hideOuterEvent={this.hideOuterEvent}>
-        <h1>{this.modalTitle()}</h1>
-        <div className="modal-content">
-          {this.props.message}
-        </div>
-
-        <div className="modal-footer button-actions">
-          <button type="button" className={this.confirmButtonClass()} onClick={this.onConfirm}>{this.confirmMessage()}</button>
-          { cancelButton }
-        </div>
-      </Modal>
-    );
-  }
- });

@@ -1,5 +1,6 @@
 en:
   culture_results:
+    localised_name: 'Culture'
     new:
       header: 'Add Culture test result for: %{patient_name}'
       back: 'Back'

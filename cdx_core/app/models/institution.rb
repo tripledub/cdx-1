@@ -16,6 +16,8 @@ class Institution < ActiveRecord::Base
   has_many :test_results, dependent: :destroy
   has_many :roles, dependent: :destroy
   has_many :alerts
+  has_many :test_batches
+  has_many :feedback_messages, dependent: :destroy
 
   composed_of :ftp_info, mapping: FtpInfo.mapping('ftp_')
 
