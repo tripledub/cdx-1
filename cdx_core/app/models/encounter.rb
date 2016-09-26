@@ -3,6 +3,7 @@ class Encounter < ActiveRecord::Base
   include AutoUUID
   include Resource
   include SiteContained
+  include Auditable
 
   ASSAYS_FIELD = 'diagnosis'
   OBSERVATIONS_FIELD = 'observations'

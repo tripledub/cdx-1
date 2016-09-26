@@ -44,18 +44,16 @@ module TestOrders
     end
 
     def destroy(encounter)
-      @encounter = encounter
-      if @encounter.status == 'new'
+      if encounter.status == 'new'
         begin
-          Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: @encounter.uuid, ignore: 404
-          Audit::EncounterAuditor.new(@encounter, current_user.id).log_action(I18n.t('encounters.destroy.cancelled'), I18n.t('encounters.destroy.log_action', uuid: @encounter.uuid), @encounter)
-          @encounter.destroy
-          message = I18n.t('encounters.destroy.success')
+          Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: encounter.uuid, ignore: 404
+          encounter.destroy_and_audit(current_user, "#{encounter.uuid} t{encounters.destroy.log_action}")
+          I18n.t('encounters.destroy.success')
         rescue => ex
           Rails.logger.error ex.message
         end
       else
-        message = I18n.t('encounters.destroy.not_allowed')
+        I18n.t('encounters.destroy.not_allowed')
       end
     end
 
@@ -306,7 +304,7 @@ module TestOrders
     end
 
     def store_create_encounter_audit_log
-      Audit::EncounterAuditor.new(@encounter, current_user.id).log_changes(I18n.t('encounters_controller.test_order_created'), "#{@encounter.id}", @encounter)
+      Audit::Auditor.new(@encounter, current_user.id).log_changes("t{encounters.create.test_order_created}: #{@encounter.uuid}", @encounter.uuid)
     end
 
     def new_sample_for_site
@@ -317,9 +315,9 @@ module TestOrders
 
     def recalculate_diagnostic
       previous_tests_uuids = encounter_param['test_results'].map{|t| t['uuid']}
-      assays_to_merge      = @blender.test_results\
-        .reject{|tr| (tr.uuids & previous_tests_uuids).any?}\
-        .map{|tr| tr.core_fields[TestResult::ASSAYS_FIELD]}
+      assays_to_merge = @blender.test_results.reject { |tr|
+        (tr.uuids & previous_tests_uuids).any?
+      }.map{ |tr| tr.core_fields[TestResult::ASSAYS_FIELD] }
 
       diagnostic_assays = assays_to_merge.inject(encounter_param['assays']) do |merged, to_merge|
         Encounter.merge_assays(merged, to_merge)
