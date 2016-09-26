@@ -28,7 +28,7 @@
               .col-12
                 %label
                   = AuditLog.human_attribute_name(:title)
-                = @patient_log.title
+                = Audit::TextTranslator.localise(@patient_log.title)
             .row
               .col-12
                 %label

@@ -46,7 +46,7 @@ class PatientsController < ApplicationController
     @patient      = @institution.patients.new(patient_params)
     @patient.site = @navigation_context.site
 
-    if validate_name_and_entity_id && @patient.save_and_audit(current_user, "#{@patient.name} t{patients.create.audit_log}")
+    if validate_name_and_entity_id && @patient.save_and_audit(current_user, "t{patients.create.audit_log}: #{@patient.name}")
       next_url = if params[:next_url].blank?
                    patient_path(@patient)
                  else
