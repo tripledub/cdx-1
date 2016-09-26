@@ -26,7 +26,7 @@ class EpisodesController < ApplicationController
   end
 
   def update
-    if @episode && @episode.update_and_audit( episode_params, current_user, I18n.t('episodes.update.update_episode'))
+    if @episode && @episode.update_and_audit( episode_params, current_user, 't#episodes.update.update_episode#'))
       redirect_to patient_path(@patient), notice: I18n.t('episodes.update.episode_updated')
     else
       render action: 'edit'
