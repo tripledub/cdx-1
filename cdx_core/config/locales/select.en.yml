@@ -60,6 +60,7 @@ en:
         not_detected: 'Not Detected'
         indeterminate:  'Indeterminate result'
       trace:
+        trace: 'Trace'
         very_low: 'Very low'
         low: 'Low'
         medium: 'Medium'
