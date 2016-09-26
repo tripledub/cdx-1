@@ -1,3 +1,5 @@
+# AuditLog
+# Audit and log activities related to patients.
 class AuditLog < ActiveRecord::Base
   include AutoUUID
 
