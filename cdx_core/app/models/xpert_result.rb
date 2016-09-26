@@ -17,7 +17,7 @@ class XpertResult < PatientResult
     end
 
     def trace_options
-      [['very_low', I18n.t('select.xpert.trace.very_low')], ['low', I18n.t('select.xpert.trace.low')], ['medium', I18n.t('select.xpert.trace.medium')], ['high', I18n.t('select.xpert.trace.high')]]
+      [['trace', I18n.t('select.xpert.trace.trace')], ['very_low', I18n.t('select.xpert.trace.very_low')], ['low', I18n.t('select.xpert.trace.low')], ['medium', I18n.t('select.xpert.trace.medium')], ['high', I18n.t('select.xpert.trace.high')]]
     end
   end
 
