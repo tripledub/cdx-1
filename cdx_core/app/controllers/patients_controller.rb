@@ -80,7 +80,7 @@ class PatientsController < ApplicationController
   def destroy
     return unless authorize_resource(@patient, DELETE_PATIENT)
 
-    @patient.destroy
+    @patient.destroy_and_audit(current_user, "#{@patient.name} t{patients.destroy.audit_log}")
 
     redirect_to patients_path, notice: I18n.t('patients.destroy.success')
   end

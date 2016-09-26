@@ -39,6 +39,7 @@ en:
       audit_log: 'patient details have been updated'
     destroy:
       success: 'Patient was successfully deleted.'
+      audit_log: 'patient was successfully deleted.'
     form:
       institution_label: 'Institution'
       select_day: 'Select day'
