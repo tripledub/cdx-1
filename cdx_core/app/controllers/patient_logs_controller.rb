@@ -1,3 +1,4 @@
+# Patient logs controller
 class PatientLogsController < ApplicationController
   respond_to :json
 
@@ -8,7 +9,7 @@ class PatientLogsController < ApplicationController
   def index
     page = params[:page] || 1
     logs = @patient.audit_logs.joins(:user).order(set_order_from_params).page(page).per(10)
-    render json: Presenters::PatientLogs.patient_view(logs)
+    render json: PatientLogs::Presenter.patient_view(logs)
   end
 
   def show
