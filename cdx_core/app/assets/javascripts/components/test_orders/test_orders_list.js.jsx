@@ -19,7 +19,7 @@ var TestOrderRow = React.createClass({
       <td title={this.props.testOrder.requestedBy} onClick={this.visitLink}>{this.props.testOrder.requestedBy}</td>
       <td title={this.props.testOrder.requestDate} onClick={this.visitLink}>{this.props.testOrder.requestDate}</td>
       <td title={this.props.testOrder.dueDate} onClick={this.visitLink}>{this.props.testOrder.dueDate}</td>
-      <td title={this.props.testOrder.id} onClick={this.visitLink}>{this.props.testOrder.id}</td>
+      <td title={this.props.testOrder.id} onClick={this.visitLink}>{this.props.testOrder.batchId}</td>
     </tr>);
   }
 });
