@@ -1,4 +1,8 @@
-.row.paginationHeader
+.filterbar
+  .heading
+    .title= I18n.t('approvals.index.approvals')
+
+.row.paginationHeader.row--nofilter
   .col
     - if @approvals.empty?
       = empty_data icon: 'icon-outline-test xx-large' do |c|

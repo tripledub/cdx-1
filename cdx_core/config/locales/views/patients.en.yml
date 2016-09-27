@@ -48,7 +48,7 @@ en:
       estimate_age: 'Estimate Age'
       history: 'History'
       nickname_label: 'Nickname'
-      medical_insurance_num: 'Medical Insurance Number'
+      medical_insurance_num_label: 'Medical Insurance Number'
       entity_id_label: 'Entity id'
       external_id_label: 'External Patient ID'
       gender_label: 'Gender'

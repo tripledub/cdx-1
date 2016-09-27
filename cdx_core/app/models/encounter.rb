@@ -197,7 +197,7 @@ class Encounter < ActiveRecord::Base
   end
 
   def tests_requiring_approval
-    "#{patient_results.pending_approval.count} of #{patient_results.count}"
+    "#{patient_results.pending_approval.count} / #{patient_results.count}"
   end
 
   protected
