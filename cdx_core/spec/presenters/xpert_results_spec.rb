@@ -5,14 +5,14 @@ describe Presenters::XpertResults do
   let!(:institution)        { user.institutions.make }
   let(:site)                { Site.make institution: institution }
   let(:patient)             { Patient.make institution: institution }
-  let(:encounter)           { Encounter.make institution: institution , user: user, patient: patient, test_batch: TestBatch.make(institution: institution) }
+  let(:encounter)           { Encounter.make institution: institution , user: user, patient: patient }
   let(:sample)              { Sample.make(institution: institution, patient: patient, encounter: encounter) }
   let!(:sample_identifier1) { SampleIdentifier.make(site: site, entity_id: 'sample-id', sample: sample) }
   let!(:sample_identifier2) { SampleIdentifier.make(site: site, entity_id: 'sample-2', sample: sample) }
 
   describe 'index_table' do
     before :each do
-      7.times { XpertResult.make test_batch: encounter.test_batch }
+      7.times { XpertResult.make encounter: encounter }
     end
 
     it 'should return an array of formated comments' do
@@ -28,7 +28,7 @@ describe Presenters::XpertResults do
         tuberculosis:      Extras::Select.find(XpertResult.tuberculosis_options, XpertResult.first.specimen_type),
         rifampicin:        Extras::Select.find(XpertResult.rifampicin_options, XpertResult.first.serial_number),
         trace:             Extras::Select.find(XpertResult.trace_options, XpertResult.first.trace),
-        viewLink:          Rails.application.routes.url_helpers.test_batch_xpert_result_path(XpertResult.first.test_batch, XpertResult.first)
+        viewLink:          Rails.application.routes.url_helpers.encounter_xpert_result_path(XpertResult.first.encounter, XpertResult.first)
       })
     end
   end
