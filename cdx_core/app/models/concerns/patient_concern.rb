@@ -1,3 +1,4 @@
+# Common functionality for patients
 module PatientConcern
   extend ActiveSupport::Concern
 
@@ -16,7 +17,7 @@ module PatientConcern
     has_many :comments,     dependent: :destroy
     has_many :audit_logs,   dependent: :destroy
     has_many :episodes,     dependent: :destroy
-    has_many :addresses,    dependent: :destroy, :as => :addressable
+    has_many :addresses,    dependent: :destroy, as: :addressable
 
     validates_presence_of   :institution
     validates_uniqueness_of :entity_id, scope: :institution_id, allow_nil: true
@@ -93,7 +94,7 @@ module PatientConcern
 
   class_methods do
     def entity_scope
-      "patient"
+      'patient'
     end
 
     def gender_options

@@ -12,7 +12,7 @@ class CultureResultsController < PatientResultsController
   end
 
   def update
-    if PatientResults::Persistence.update_result(@culture_result, culture_result_params, current_user, I18n.t('culture_results.update.audit'))
+    if PatientResults::Persistence.update_result(@culture_result, culture_result_params, current_user, 't{culture_results.update.audit}')
       redirect_to encounter_path(@test_batch.encounter), notice: I18n.t('culture_results.update.notice')
     else
       render action: 'edit'

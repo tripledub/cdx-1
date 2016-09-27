@@ -1,3 +1,4 @@
+# Encounter controller
 class EncountersController < ApplicationController
   before_filter :load_encounter, only: [:show, :edit, :update, :destroy]
   before_filter :find_institution_and_patient, only: [:new]

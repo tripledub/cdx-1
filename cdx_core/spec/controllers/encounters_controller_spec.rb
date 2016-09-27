@@ -21,7 +21,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         EncounterIndexer.new(encounter).index(true)
         delete :destroy, id: encounter.id
 
-        expect(Encounter.all.count).to eq 1
+        expect(Encounter.where(id: encounter.id).first).to_not be
         expect(response).to be_redirect
       end
     end
@@ -301,19 +301,19 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       expect(sample_identifier2.lab_sample_id).to eq('Some other laboratory Id')
     end
 
-    it "should move new samples in samples" do
-      expect(json_response['encounter']['samples'].detect {|h| h['entity_ids'].include?('eid:1001') }).to_not be_nil
-      expect(json_response['encounter']['samples'].detect {|h| h['entity_ids'].include?('eid:1002') }).to_not be_nil
+    it 'should move new samples in samples' do
+      expect(json_response['encounter']['samples'].detect { |h| h['entity_ids'].include?('eid:1001') }).to_not be_nil
+      expect(json_response['encounter']['samples'].detect { |h| h['entity_ids'].include?('eid:1002') }).to_not be_nil
     end
 
-    it "should leave new samples empty" do
+    it 'should leave new samples empty' do
       expect(json_response['encounter']['new_samples']).to eq([])
     end
 
     context 'log changes' do
       it 'should log the newly created test order' do
-        expect(EncounterAuditLog.count).to eq 1
-        expect(EncounterAuditLog.first.title).to eq "New Test order created"
+        expect(AuditLog.count).to eq 1
+        expect(AuditLog.first.title).to include 't{encounters.create.test_order_created}'
       end
     end
 

@@ -7,10 +7,12 @@ describe CommentsController do
   let!(:institution)   { user.institutions.make }
   let(:patient)        { Patient.make institution: institution }
   let(:default_params) { { context: institution.uuid } }
-  let(:valid_params)   { {
-    description:  'New valid comment',
-    comment:      'For whom the bell tolls'
-  } }
+  let(:valid_params) do
+    {
+      description:  'New valid comment',
+      comment:      'For whom the bell tolls'
+    }
+  end
 
   context 'user with edit patient permission' do
     before(:each) do
@@ -54,7 +56,7 @@ describe CommentsController do
       it 'should render the new template' do
         get 'new', patient_id: patient.id
 
-        expect(response).to  render_template('new')
+        expect(response).to render_template('new')
       end
     end
 
@@ -78,7 +80,7 @@ describe CommentsController do
 
         context 'audited data do' do
           before :each do
-            @audit_log = AuditLog.where(patient: patient, title: 'New comment added').first
+            @audit_log = AuditLog.where(patient: patient).first
           end
 
           it 'should audit the comment' do
@@ -102,13 +104,13 @@ describe CommentsController do
       it 'should render the show template' do
         get 'show', patient_id: patient.id, id: comment.id
 
-        expect(response).to  render_template('show')
+        expect(response).to render_template('show')
       end
     end
   end
 
   context 'user with no edit patient permission' do
-    let(:invalid_user)           { Institution.make.user }
+    let(:invalid_user) { Institution.make.user }
 
     before(:each) do
       grant user, invalid_user, institution, READ_INSTITUTION

@@ -1,5 +1,5 @@
+# Xpert results controller
 class XpertResultsController < PatientResultsController
-
   before_filter :find_xpert_result, only: [:edit, :update, :show]
 
   def show
@@ -11,7 +11,7 @@ class XpertResultsController < PatientResultsController
   end
 
   def update
-    if PatientResults::Persistence.update_result(@xpert_result, xpert_result_params, current_user, I18n.t('xpert_results.update.audit'))
+    if PatientResults::Persistence.update_result(@xpert_result, xpert_result_params, current_user, 't{xpert_results.update.audit}')
       redirect_to encounter_path(@test_batch.encounter), notice: I18n.t('xpert_results.update.notice')
     else
       render action: 'edit'

@@ -33,12 +33,13 @@ en:
       no_entity: "Entity Id can't be blank"
       no_name: "Name can't be blank"
       success: 'Patient was successfully created.'
-      audit_log: 'New patient %{patient_name} added'
+      audit_log: 'New patient added'
     update:
       success: 'Patient was successfully updated.'
-      audit_log: '%{patient_name} patient details have been updated'
+      audit_log: 'patient details have been updated'
     destroy:
       success: 'Patient was successfully deleted.'
+      audit_log: 'patient was successfully deleted.'
     form:
       institution_label: 'Institution'
       select_day: 'Select day'

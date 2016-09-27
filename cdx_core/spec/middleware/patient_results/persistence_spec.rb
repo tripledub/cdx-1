@@ -10,9 +10,7 @@ describe PatientResults::Persistence do
   let(:microscopy_result) { MicroscopyResult.make test_batch: test_batch }
   let(:culture_result)    { CultureResult.make test_batch: test_batch }
   let(:feedback_message)  { FeedbackMessage.make institution: institution }
-  let(:sample_ids) {
-    { microscopy_result.id.to_s => '8778', culture_result.id.to_s => 'Random Id' }
-  }
+  let(:sample_ids)        { { microscopy_result.id.to_s => '8778', culture_result.id.to_s => 'Random Id' } }
 
   describe 'collect_sample_ids' do
     before :each do
@@ -86,7 +84,10 @@ describe PatientResults::Persistence do
 
   describe 'update_result' do
     it 'should set result status to pending approval' do
-      described_class.update_result(microscopy_result, { result_status: 'completed', comment: 'New comment added' }, user, 'Microscopy updated')
+      described_class.update_result(
+        microscopy_result,
+        { result_status: 'completed', comment: 'New comment added' }, user, 'Microscopy updated'
+      )
 
       expect(microscopy_result.result_status).to eq('pending_approval')
     end
