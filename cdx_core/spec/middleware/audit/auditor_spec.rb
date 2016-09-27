@@ -33,7 +33,7 @@ describe Audit::Auditor do
       end
 
       it 'should return the translated version of the string' do
-        expect(AuditLog.last.title).to eq("new episode #{patient.name} added")
+        expect(AuditLog.last.title).to include("#{patient.name} added")
       end
     end
   end
