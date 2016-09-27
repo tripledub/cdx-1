@@ -60,8 +60,6 @@ var ApprovalTable = React.createClass({
                 {sortableHeader(I18n.t("components.test_orders.col_order_by"), "users.first_name")}
                 {sortableHeader(I18n.t("components.test_orders.col_request_date"),  "encounters.start_time")}
                 <th data-resizable-column-id="tests-requiring-approval">{I18n.t("components.test_orders.col_tests_requiring_approval")}</th>
-                {sortableHeader(I18n.t("components.test_orders.col_id"),      "encounters.uuid")}
-
               </tr>
             </thead>
             <tbody>
