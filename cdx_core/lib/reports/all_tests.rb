@@ -20,11 +20,8 @@ module Reports
       manual_results    = get_manual_results_query(automatic_results.filter).group('date(patient_results.created_at)').count
       results           = merge_results(automatic_results, manual_results)
 
-      if results.number_of_months > 1
-        sorted_data = results.sort_by_month.data
-      else
-        sorted_data = results.sort_by_day.data
-      end
+      sorted_data = (results.number_of_months > 1) ? results.sort_by_month.data : results.sort_by_day.data
+
       {
         title:   '',
         titleY:  'Number of tests',

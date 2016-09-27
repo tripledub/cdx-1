@@ -1,3 +1,4 @@
+# Patient test results controller
 class PatientTestResultsController < ApplicationController
   respond_to :json
 

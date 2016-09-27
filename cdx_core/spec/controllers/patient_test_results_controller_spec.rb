@@ -7,8 +7,8 @@ describe PatientTestResultsController do
   let(:institution)    { user.institutions.make }
   let(:site)           { Site.make institution: institution }
   let(:patient)        { Patient.make institution: institution }
-  let(:encounter)      { Encounter.make institution: institution , user: user, patient: patient }
-  let(:device)         { Device.make  institution: institution, site: site }
+  let(:encounter)      { Encounter.make institution: institution, user: user, patient: patient }
+  let(:device)         { Device.make institution: institution, site: site }
   let(:default_params) { { context: institution.uuid } }
 
   context 'logged in user' do
@@ -19,7 +19,7 @@ describe PatientTestResultsController do
     describe 'index' do
       before :each do
         4.times do
-          TestResult.make patient: patient, institution: institution, device: device
+          TestResult.make patient: patient, institution: institution, device: device, encounter: encounter
         end
         2.times do
           MicroscopyResult.make encounter: encounter

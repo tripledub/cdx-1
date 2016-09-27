@@ -251,8 +251,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     }
 
     let(:json_response) { JSON.parse(response.body) }
-    let(:created_encounter) {
-      Encounter.find(json_response['encounter']['id']) }
+    let(:created_encounter) { Encounter.find(json_response['encounter']['id']) }
 
     it "succeed" do
       expect(response).to have_http_status(:success)
@@ -318,7 +317,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     it 'should add all requested results' do
-      expect(created_encounter.patient_results.size).to eq(4)
+      expect(created_encounter.patient_results.count).to eq(5)
     end
 
     it 'should set the encounter status to new' do
