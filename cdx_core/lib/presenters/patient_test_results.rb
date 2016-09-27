@@ -36,7 +36,7 @@ class Presenters::PatientTestResults
         name:            I18n.t('patient_test_results.index.xpert_result'),
         date:            Extras::Dates::Format.datetime_with_time_zone(xpert_result.sample_collected_on),
         status:          xpert_result.trace,
-        viewLink:        Rails.application.routes.url_helpers.test_batch_xpert_result_path(xpert_result.test_batch, xpert_result)
+        viewLink:        Rails.application.routes.url_helpers.encounter_xpert_result_path(xpert_result.encounter, xpert_result)
       }
     end
 
@@ -46,7 +46,7 @@ class Presenters::PatientTestResults
         name:            I18n.t('patient_test_results.index.microscopy_result'),
         date:            Extras::Dates::Format.datetime_with_time_zone(microscopy_result.sample_collected_on),
         status:          Extras::Select.find(MicroscopyResult.test_result_options, microscopy_result.test_result),
-        viewLink:        Rails.application.routes.url_helpers.test_batch_microscopy_result_path(microscopy_result.test_batch, microscopy_result)
+        viewLink:        Rails.application.routes.url_helpers.encounter_microscopy_result_path(microscopy_result.encounter, microscopy_result)
       }
     end
 
@@ -56,7 +56,7 @@ class Presenters::PatientTestResults
         name:            I18n.t('patient_test_results.index.culture_result'),
         date:            Extras::Dates::Format.datetime_with_time_zone(culture_result.sample_collected_on),
         status:          Extras::Select.find(CultureResult.test_result_options, culture_result.test_result),
-        viewLink:        Rails.application.routes.url_helpers.test_batch_culture_result_path(culture_result.test_batch, culture_result)
+        viewLink:        Rails.application.routes.url_helpers.encounter_culture_result_path(culture_result.encounter, culture_result)
       }
     end
 
@@ -66,7 +66,7 @@ class Presenters::PatientTestResults
         name:            I18n.t('patient_test_results.index.dst_lpa_result'),
         date:            Extras::Dates::Format.datetime_with_time_zone(dst_lpa_result.sample_collected_on),
         status:          dst_lpa_result.serial_number,
-        viewLink:        Rails.application.routes.url_helpers.test_batch_dst_lpa_result_path(dst_lpa_result.test_batch, dst_lpa_result)
+        viewLink:        Rails.application.routes.url_helpers.encounter_dst_lpa_result_path(dst_lpa_result.encounter, dst_lpa_result)
       }
     end
   end

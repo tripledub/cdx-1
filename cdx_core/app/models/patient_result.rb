@@ -61,6 +61,8 @@ class PatientResult < ActiveRecord::Base
   end
 
   def update_batch_status
+    return unless encounter.present?
+
     TestOrders::Status.update_status(encounter)
   end
 
