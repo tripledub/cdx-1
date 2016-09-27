@@ -4,7 +4,7 @@ class CultureResult < PatientResult
   validates_inclusion_of :media_used, in: ['solid', 'liquid'], allow_nil: true
   validates_inclusion_of :result_status, in: ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed'], allow_nil: true
 
-  delegate :patient, to: 'test_batch.encounter'
+  delegate :patient, to: 'encounter'
 
   def localised_name
     I18n.t('culture_results.localised_name')

@@ -8,9 +8,9 @@ class Encounter < ActiveRecord::Base
   ASSAYS_FIELD = 'diagnosis'
   OBSERVATIONS_FIELD = 'observations'
 
-  has_one  :test_batch, dependent: :destroy
   has_many :samples, dependent: :restrict_with_error
   has_many :test_results, dependent: :restrict_with_error
+  has_many :patient_results
 
   belongs_to :performing_site, class_name: 'Site'
 
@@ -22,10 +22,9 @@ class Encounter < ActiveRecord::Base
   validates_presence_of :site, if: Proc.new { |encounter| encounter.institution }
 
   validates_inclusion_of :culture_format, :allow_nil => true, in: ['solid', 'liquid'], if: Proc.new { |encounter| encounter.testing_for == 'TB' }
-  validates_inclusion_of :status,  in: ['new', 'pending', 'received', 'in_progress', 'pending_approval', 'completed']
+  validates_inclusion_of :status,  in: %w(new samples_collected pending received in_progress pending_approval closed)
 
   validate :validate_patient
-  validate :payment_is_done
 
   before_save :ensure_entity_id
   before_create :set_default_status
@@ -198,8 +197,7 @@ class Encounter < ActiveRecord::Base
   end
 
   def tests_requiring_approval
-    return if test_batch.blank?
-    "#{test_batch.patient_results.pending_approval.count} of #{test_batch.patient_results.count}"
+    "#{patient_results.pending_approval.count} of #{patient_results.count}"
   end
 
   protected
@@ -210,11 +208,5 @@ class Encounter < ActiveRecord::Base
 
   def set_default_status
     self.status = 'new'
-  end
-
-  def payment_is_done
-    if (status_was == 'new' && status == 'pending') && (test_batch.payment_done == false || test_batch.status != 'samples_collected')
-      errors.add(:status, I18n.t('encounters.validate_payment_fails'))
-    end
   end
 end

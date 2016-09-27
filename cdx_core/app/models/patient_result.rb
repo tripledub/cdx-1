@@ -1,9 +1,10 @@
+# Patient results model
 class PatientResult < ActiveRecord::Base
   include AutoUUID
   include Auditable
   include ActionView::Helpers::DateHelper
 
-  belongs_to :test_batch
+  belongs_to :encounter
   belongs_to :feedback_message
   has_many   :assay_results, as: :assayable
 
@@ -15,11 +16,11 @@ class PatientResult < ActiveRecord::Base
   before_save   :update_status
   before_create :set_status_to_new
 
-  scope :pending_approval, -> { where(:result_status => 'pending_approval') }
+  scope :pending_approval, -> { where(result_status: 'pending_approval') }
 
   class << self
     def find_all_results_for_patient(patient_id)
-      PatientResult.joins('LEFT OUTER JOIN `test_batches` ON `test_batches`.`id` = `patient_results`.`test_batch_id` LEFT OUTER JOIN `encounters` ON `encounters`.`id` = `test_batches`.`encounter_id`')
+      PatientResult.joins(:encounter)
         .where('patient_results.patient_id = ? OR encounters.patient_id = ?', patient_id, patient_id)
     end
 
@@ -60,9 +61,7 @@ class PatientResult < ActiveRecord::Base
   end
 
   def update_batch_status
-    return unless self.test_batch
-
-    TestBatches::Persistence.update_status(self.test_batch)
+    TestOrders::Status.update_status(encounter)
   end
 
   def set_status_to_new

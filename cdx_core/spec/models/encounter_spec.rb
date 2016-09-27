@@ -1,50 +1,14 @@
 require 'spec_helper'
 
 describe Encounter do
-  let(:status_options)  { ['new', 'pending', 'in_progress', 'received', 'pending_approval', 'completed'] }
-
-  it { have_one :test_batch }
-  it { is_expected.to validate_presence_of :institution }
-  it { should validate_inclusion_of(:status).in_array(status_options) }
-
+  let(:status_options) { %w(new samples_collected pending received in_progress pending_approval closed) }
   let(:patient)    { Patient.make }
-  let(:encounter)  { Encounter.make institution: patient.institution, patient: patient, test_batch: TestBatch.make }
+  let(:encounter)  { Encounter.make institution: patient.institution, patient: patient }
 
   describe 'validations' do
-    context 'payment_is_done' do
-      context 'payment is pending' do
-        before :each do
-          encounter.status = 'pending'
-        end
-
-        it 'should not allow change status if payment is not done' do
-          expect(encounter.valid?).to eq false
-        end
-      end
-
-      context 'payment is done but samples not collected' do
-        before :each do
-          encounter.test_batch.update_attribute(:payment_done, true)
-          encounter.status = 'pending'
-        end
-
-        it 'should not allow change status if payment is not done' do
-          expect(encounter.valid?).to eq false
-        end
-      end
-
-      context 'payment is done and samples have been collected' do
-        before :each do
-          encounter.test_batch.update_attribute(:payment_done, true)
-          encounter.test_batch.update_attribute(:status, 'samples_collected')
-          encounter.status = 'pending'
-        end
-
-        it 'should not allow change status if payment is not done' do
-          expect(encounter.valid?).to eq true
-        end
-      end
-    end
+    it { have_many :patient_results }
+    it { is_expected.to validate_presence_of :institution }
+    it { should validate_inclusion_of(:status).in_array(status_options) }
   end
 
   it "#human_diagnose" do

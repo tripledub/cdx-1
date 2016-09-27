@@ -161,11 +161,11 @@ Encounter.blueprint do
   status 'new'
   site { object.institution.sites.first || object.institution.sites.make }
   performing_site { object.institution.sites.first || object.institution.sites.make }
-  core_fields {
+  core_fields do
     { "id" => "encounter-#{Sham.sn}" }.tap do |h|
       h["start_time"] = object.start_time if object.start_time
     end
-  }
+  end
 end
 
 Episode.blueprint do
@@ -175,12 +175,6 @@ Episode.blueprint do
   initial_history :previous
   previous_history :relapsed
   outcome :cured
-end
-
-TestBatch.blueprint do
-  status 'new'
-  encounter { object.try(:encounter) || Encounter.make }
-  institution { object.encounter.try(:institution) || Institution.make }
 end
 
 SampleIdentifier.blueprint do

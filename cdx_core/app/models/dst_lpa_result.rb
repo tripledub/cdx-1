@@ -5,7 +5,7 @@ class DstLpaResult < PatientResult
   validates_inclusion_of :method_used, in: %w(direct indirect), allow_nil: true
   validates_inclusion_of :result_status, in: ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed'], allow_nil: true
 
-  delegate :patient, to: 'test_batch.encounter'
+  delegate :patient, to: 'encounter'
 
   def localised_name
     return I18n.t('dst_lpa_results.dst_lpa') unless result_name
