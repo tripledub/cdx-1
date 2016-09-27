@@ -16,10 +16,10 @@ describe TestOrders::Presenter do
   }
   let(:requested_tests)     {
     encounter = Encounter.first
-    microscopy_result = MicroscopyResult.make test_batch: encounter.test_batch
-    culture_result = CultureResult.make test_batch: encounter.test_batch
-    xpert_result = XpertResult.make test_batch: encounter.test_batch
-    dst_lpa_result = DstLpaResult.make test_batch: encounter.test_batch
+    microscopy_result = MicroscopyResult.make encounter: encounter
+    culture_result = CultureResult.make encounter: encounter
+    xpert_result = XpertResult.make encounter: encounter
+    dst_lpa_result = DstLpaResult.make encounter: encounter
     microscopy_result.update_attribute(:result_status, 'sample_collected')
     xpert_result.update_attribute(:result_status, 'sample_received')
     dst_lpa_result.update_attribute(:result_status, 'rejected')

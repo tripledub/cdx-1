@@ -10,10 +10,10 @@ RSpec.describe Reports::AverageSiteTests, elasticsearch: true do
   end
 
   let(:patient)             { Patient.make institution: institution }
-  let(:encounter)           { Encounter.make institution: institution , user: current_user, patient: patient, site: site, test_batch: TestBatch.make(institution: institution) }
-  let(:encounter2)          { Encounter.make institution: institution , user: current_user, patient: patient, site: site2, test_batch: TestBatch.make(institution: institution) }
-  let!(:microscopy_result)  { MicroscopyResult.make test_batch: encounter2.test_batch }
-  let!(:culture_result)     { CultureResult.make test_batch: encounter.test_batch }
+  let(:encounter)           { Encounter.make institution: institution, user: current_user, patient: patient, site: site }
+  let(:encounter2)          { Encounter.make institution: institution, user: current_user, patient: patient, site: site2 }
+  let!(:microscopy_result)  { MicroscopyResult.make encounter: encounter2 }
+  let!(:culture_result)     { CultureResult.make encounter: encounter }
   let(:nav_context)         { NavigationContext.new(current_user, institution.uuid) }
   let(:options)             { {} }
 
@@ -34,7 +34,7 @@ RSpec.describe Reports::AverageSiteTests, elasticsearch: true do
         },
         device_messages: [DeviceMessage.make(device: user_device)]
       )
-      MicroscopyResult.make encounter2.test_batch, created_at: start_time
+      MicroscopyResult.make encounter2, created_at: start_time
     end
 
     30.times do

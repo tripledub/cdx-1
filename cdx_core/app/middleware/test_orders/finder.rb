@@ -67,8 +67,8 @@ class TestOrders::Finder
   def filter_by_patient_result_status
     return unless @params['patient_result_status']
 
-    @filter_query = filter_query.includes(:test_batch => [:patient_results])
-                                .where(:patient_results => {:result_status => @params['patient_result_status']})
+    @filter_query = filter_query.includes(:patient_results)
+                                .where(:patient_results => { :result_status => @params['patient_result_status'] })
   end
 
   def start_date

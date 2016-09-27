@@ -20,10 +20,10 @@ module Reports
 
     def filter_by_institution_or_site
       if context.institution
-        @query_joins.merge!({ test_batch: { encounter: :institution }})
+        @query_joins.merge!({ encounter: :institution })
         @query_conditions.merge!({ 'institutions.uuid': context.institution.uuid })
       elsif context.site
-        @query_joins.merge!({ test_batch: { encounter: :site }})
+        @query_joins.merge!({ encounter: :site })
         @query_conditions.merge!({ 'sites.uuid': context.site.uuid })
       end
     end

@@ -8,7 +8,7 @@ class MicroscopyResultsController < PatientResultsController
   def edit
     @microscopy_result.sample_collected_on = @microscopy_result.sample_collected_on || Date.today
     @microscopy_result.result_on           = @microscopy_result.result_on || Date.today
-    @microscopy_result.specimen_type       = @test_batch.encounter.coll_sample_type
+    @microscopy_result.specimen_type       = @encounter.coll_sample_type
   end
 
   def update

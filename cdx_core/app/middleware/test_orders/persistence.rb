@@ -2,18 +2,6 @@ module TestOrders
   class Persistence
     attr_reader :params, :current_user, :localization_helper, :encounter_param
 
-    class << self
-      def change_status(encounter)
-        if order_is_pending?(encounter.test_batch)
-          encounter.update_attribute(:status, 'pending')
-        elsif encounter.test_batch.status == 'in_progress'
-          encounter.update_attribute(:status, 'in_progress')
-        elsif encounter.test_batch.status == 'closed'
-          encounter.update_attribute(:status, 'completed')
-        end
-      end
-    end
-
     def initialize(params, current_user, localization_helper)
       @params = params
       @current_user = current_user
@@ -177,10 +165,6 @@ module TestOrders
 
     protected
 
-    def self.order_is_pending?(test_batch)
-      test_batch.payment_done == true && test_batch.status == 'samples_collected'
-    end
-
     def perform_encounter_action(action)
       @extended_respone = {}
       begin
@@ -217,7 +201,6 @@ module TestOrders
         @encounter.testdue_date      = encounter_param['testdue_date']
         @encounter.testing_for       = encounter_param['testing_for']
         @encounter.presumptive_rr    = encounter_param['presumptive_rr']
-        @encounter.test_batch        = ::TestBatch.new institution: @encounter.institution, status: 'new'
       else
         @institution                 = @encounter.institution
       end
@@ -281,7 +264,7 @@ module TestOrders
     end
 
     def create_requested_tests
-      TestBatches::Persistence.build_requested_tests(@encounter.test_batch, encounter_param['tests_requested'])
+      PatientResults::Persistence.build_requested_tests(@encounter, encounter_param['tests_requested'])
     end
 
     def create_new_samples

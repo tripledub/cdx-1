@@ -15,7 +15,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
   describe "destroy" do
     context 'an admin user' do
-      let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, test_batch: TestBatch.make(institution: institution) }
+      let(:encounter) { Encounter.make institution: institution, site: site, patient: patient }
 
       it "should destroy an encounter if status is new" do
         EncounterIndexer.new(encounter).index(true)
@@ -97,7 +97,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
   describe "GET #show" do
     it "returns http success if allowed" do
       patient = Patient.make institution: institution
-      encounter = Encounter.make institution: institution, patient: patient, test_batch: TestBatch.make(institution: institution)
+      encounter = Encounter.make institution: institution, patient: patient
       sample_identifier = SampleIdentifier.make(site: site, entity_id: "entity random", lab_sample_id: 'Random lab sample', sample: Sample.make(institution: institution, encounter: encounter, patient: patient))
       get :show, id: encounter.id
 
@@ -111,36 +111,36 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     it "returns http forbidden if not allowed" do
       i1        = Institution.make
       patient   = Patient.make institution: i1
-      encounter = Encounter.make institution: i1, patient: patient, test_batch: TestBatch.make(institution: i1)
+      encounter = Encounter.make institution: i1, patient: patient
       get :show, id: encounter.id
 
       expect(response).to redirect_to(encounters_path)
     end
 
     it "should load encounter by uuid" do
-      encounter = Encounter.make institution: institution, patient: patient, test_batch: TestBatch.make(institution: institution)
+      encounter = Encounter.make institution: institution, patient: patient
       get :show, id: encounter.uuid
 
       expect(assigns(:encounter)).to eq(encounter)
     end
 
     it "should load encounter by id" do
-      encounter = Encounter.make institution: institution, patient: patient, test_batch: TestBatch.make(institution: institution)
+      encounter = Encounter.make institution: institution, patient: patient
       get :show, id: encounter.id
 
       expect(assigns(:encounter)).to eq(encounter)
     end
 
     it "should load encounter first by uuid" do
-      encounter  = Encounter.make institution: institution, patient: patient, test_batch: TestBatch.make(institution: institution)
-      encounter2 = Encounter.make institution: institution, uuid: "#{encounter.id}lorem", patient: patient, test_batch: TestBatch.make(institution: institution)
+      encounter  = Encounter.make institution: institution, patient: patient
+      encounter2 = Encounter.make institution: institution, uuid: "#{encounter.id}lorem", patient: patient
       get :show, id: encounter2.uuid
 
       expect(assigns(:encounter)).to eq(encounter2)
     end
 
     context 'cancel encounter' do
-      let(:encounter) { Encounter.make institution: institution, patient: patient, test_batch: TestBatch.make(institution: institution) }
+      let(:encounter) { Encounter.make institution: institution, patient: patient }
 
       before :each do
         request.env["HTTP_REFERER"] = patient_path(patient)
@@ -187,7 +187,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
   describe "GET #edit" do
     it "returns http success if allowed" do
       patient   = Patient.make institution: institution
-      encounter = Encounter.make institution: institution, patient: patient, test_batch: TestBatch.make(institution: institution)
+      encounter = Encounter.make institution: institution, patient: patient
       get :edit, id: encounter.id
 
       expect(response).to have_http_status(:success)
@@ -196,7 +196,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     it "redirects to encounters list if not allowed" do
       i1        = Institution.make
       patient   = Patient.make institution: i1
-      encounter = Encounter.make institution: i1, patient: patient, test_batch: TestBatch.make(institution: i1)
+      encounter = Encounter.make institution: i1, patient: patient
       get :edit, id: encounter.id
 
       expect(response).to redirect_to(encounters_path)
@@ -317,12 +317,8 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       end
     end
 
-    it 'should add a test batch' do
-      expect(created_encounter.test_batch).to be
-    end
-
     it 'should add all requested results' do
-      expect(created_encounter.test_batch.patient_results.size).to eq(4)
+      expect(created_encounter.patient_results.size).to eq(4)
     end
 
     it 'should set the encounter status to new' do
@@ -331,7 +327,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
   end
 
   describe "PUT #update" do
-    let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, test_batch: TestBatch.make(institution: institution) }
+    let(:encounter) { Encounter.make institution: institution, site: site, patient: patient }
 
     let(:sample) {
       device = Device.make institution: institution
@@ -851,7 +847,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     it "saves merged samples after a merge sample operation" do
-      encounter = Encounter.make institution: institution, patient: patient, test_batch: TestBatch.make(institution: institution)
+      encounter = Encounter.make institution: institution, patient: patient
       sample1.encounter = encounter
       sample1.save
       sample2.encounter = encounter

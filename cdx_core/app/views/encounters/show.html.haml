@@ -10,10 +10,10 @@
 = react_component('EncounterShow',
   encounter: @encounter_as_json,
   context: @navigation_context,
-  submitSamplesUrl: update_samples_test_batch_patient_results_path(@encounter.test_batch),
+  submitSamplesUrl: update_samples_encounter_patient_results_path(@encounter),
   submitPaymentUrl: set_as_paid_encounter_encounter_payments_path(@encounter),
   rejectReasons: FeedbackMessages::Presenter.reject_reasons(@encounter.institution),
-  updateResultUrl: test_batch_patient_results_path(@encounter.test_batch),
+  updateResultUrl: encounter_patient_results_path(@encounter),
   authenticityToken: form_authenticity_token)
 
 - if @encounter.status == 'new'

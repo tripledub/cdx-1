@@ -9,10 +9,10 @@ describe TestOrdersController, elasticsearch: true do
   let(:patient)        { Patient.make institution: institution }
   let!(:encounters)    {
     7.times {
-      encounter = Encounter.make institution: institution, site: site, patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"), testdue_date: 1.day.from_now.strftime("%Y-%m-%d"), test_batch: TestBatch.make(institution: institution)
+      encounter = Encounter.make institution: institution, site: site, patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"), testdue_date: 1.day.from_now.strftime("%Y-%m-%d")
       EncounterIndexer.new(encounter).index(true)
     }
-    encounter = Encounter.make institution: institution, site: site, performing_site_id: site2.id, patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"), testdue_date: 1.day.from_now.strftime("%Y-%m-%d"), test_batch: TestBatch.make(institution: institution)
+    encounter = Encounter.make institution: institution, site: site, performing_site_id: site2.id, patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"), testdue_date: 1.day.from_now.strftime("%Y-%m-%d")
     EncounterIndexer.new(encounter).index(true)
   }
   let(:default_params) { { context: site.uuid } }

@@ -186,8 +186,7 @@ module Reports
       since_day    = filter['since'] + ' 00:00'
       until_day    = (filter['until'] || Date.today.strftime("%Y-%m-%d")) + ' 23:59'
       manual_query = PatientResult.where('patient_results.type != "TestResult"')
-        .joins('LEFT OUTER JOIN test_batches ON test_batches.id = patient_results.test_batch_id')
-        .joins('LEFT OUTER JOIN encounters ON encounters.id = test_batches.encounter_id')
+        .joins('LEFT OUTER JOIN encounters ON encounters.id = patient_results.encounter_id')
         .joins('LEFT OUTER JOIN institutions ON institutions.id = encounters.institution_id')
         .joins('INNER JOIN sites ON sites.id = encounters.site_id')
         .where('sites.deleted_at IS NULL')
