@@ -136,6 +136,7 @@ module TestOrders
         json.(@encounter, :status)
         json.(@encounter, :testdue_date)
         json.(@encounter, :testing_for)
+        json.(@encounter, :payment_done)
         json.culture_format Extras::Select.find(Encounter.culture_format_options, @encounter.culture_format)
         json.has_dirty_diagnostic @encounter.has_dirty_diagnostic?
         json.assays (@encounter_blender.core_fields[Encounter::ASSAYS_FIELD] || [])

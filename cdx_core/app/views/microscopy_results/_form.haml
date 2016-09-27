@@ -1,4 +1,4 @@
-= form_for([@test_batch, @microscopy_result], url: test_batch_microscopy_result_path(@test_batch, @microscopy_result), html: { autocomplete: 'off' }) do |f|
+= form_for([@encounter, @microscopy_result], url: encounter_microscopy_result_path(@encounter, @microscopy_result), html: { autocomplete: 'off' }) do |f|
   = validation_errors @microscopy_result
   .box-content
     .row
@@ -55,4 +55,4 @@
     .row.button-actions
       .col
         = f.submit I18n.t('views.save'), class: 'btn-primary'
-        = link_to I18n.t('views.cancel'), encounter_path(@test_batch.encounter), class: 'btn-link'
+        = link_to I18n.t('views.cancel'), encounter_path(@encounter), class: 'btn-link'

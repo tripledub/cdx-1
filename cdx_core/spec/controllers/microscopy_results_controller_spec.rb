@@ -7,11 +7,11 @@ describe MicroscopyResultsController do
   let!(:institution)        { user.institutions.make }
   let(:site)                { Site.make institution: institution }
   let(:patient)             { Patient.make institution: institution }
-  let(:encounter)           { Encounter.make institution: institution , user: user, patient: patient, test_batch: TestBatch.make(institution: institution) }
+  let(:encounter)           { Encounter.make institution: institution, user: user, patient: patient }
   let(:sample)              { Sample.make(institution: institution, patient: patient, encounter: encounter) }
   let!(:sample_identifier1) { SampleIdentifier.make(site: site, entity_id: 'sample-id', sample: sample) }
   let!(:sample_identifier2) { SampleIdentifier.make(site: site, entity_id: 'sample-2', sample: sample) }
-  let(:microscopy_result)   { MicroscopyResult.make test_batch: encounter.test_batch }
+  let(:microscopy_result)   { MicroscopyResult.make encounter: encounter }
   let(:default_params) { { context: institution.uuid } }
   let(:valid_params)   { {
     sample_collected_on: 4.days.ago,
@@ -31,7 +31,7 @@ describe MicroscopyResultsController do
     describe 'show' do
       it 'should render the new template' do
         microscopy_result
-        get 'show', test_batch_id: encounter.test_batch.id, id: microscopy_result
+        get 'show', encounter_id: encounter.id, id: microscopy_result
 
         expect(request).to render_template('show')
       end
@@ -41,8 +41,8 @@ describe MicroscopyResultsController do
       context 'with valid data' do
         before :each do
           microscopy_result
-          valid_params.merge!({ appearance: 'blood' })
-          put :update, test_batch_id: encounter.test_batch.id, id: microscopy_result, microscopy_result: valid_params
+          valid_params[:appearance] = 'blood'
+          put :update, encounter_id: encounter.id, id: microscopy_result, microscopy_result: valid_params
         end
 
         it 'should update the content' do
@@ -57,8 +57,8 @@ describe MicroscopyResultsController do
       context 'with invalid data' do
         before :each do
           microscopy_result
-          valid_params.merge!({ appearance: '' })
-          put :update, test_batch_id: encounter.test_batch.id, id: microscopy_result, microscopy_result: valid_params
+          valid_params[:appearance] = ''
+          put :update, encounter_id: encounter.id, id: microscopy_result, microscopy_result: valid_params
         end
 
         it 'should redirect to the test order page' do

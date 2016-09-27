@@ -5,7 +5,7 @@ describe XpertResult do
   let(:user)           { institution.user }
   let(:site)           { institution.sites.make }
   let(:patient)        { Patient.make( institution: institution) }
-  let(:encounter)      { Encounter.make institution: institution, site: site ,patient: patient, test_batch: TestBatch.make(institution: institution) }
+  let(:encounter)      { Encounter.make institution: institution, site: site ,patient: patient }
   let(:result_status) { ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed'] }
 
   context "validations" do
@@ -18,7 +18,7 @@ describe XpertResult do
 
     context 'rifampicin' do
       context 'if is detected and tuberculosis is not detected' do
-        subject { XpertResult.new test_batch: encounter.test_batch, result_on: 3.days.from_now, examined_by: 'The doctor', sample_collected_on: 1.day.ago, tuberculosis: 'not_detected', rifampicin: 'detected' }
+        subject { XpertResult.new encounter: encounter, result_on: 3.days.from_now, examined_by: 'The doctor', sample_collected_on: 1.day.ago, tuberculosis: 'not_detected', rifampicin: 'detected' }
 
         it 'should not be valid' do
           expect(subject.valid?).to be false
@@ -28,7 +28,7 @@ describe XpertResult do
       end
 
       context 'if is detected and tuberculosis is detected' do
-        subject { XpertResult.new test_batch: encounter.test_batch, result_on: 3.days.from_now, examined_by: 'The doctor', sample_collected_on: 1.day.ago, tuberculosis: 'detected', rifampicin: 'detected' }
+        subject { XpertResult.new encounter: encounter, result_on: 3.days.from_now, examined_by: 'The doctor', sample_collected_on: 1.day.ago, tuberculosis: 'detected', rifampicin: 'detected' }
 
         it 'should be valid' do
           expect(subject.valid?).to be

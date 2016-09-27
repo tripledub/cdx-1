@@ -13,7 +13,6 @@ describe Institution do
     it { should have_many(:test_results) }
     it { should have_many(:roles) }
     it { should have_many(:alerts) }
-    it { should have_many(:test_batches) }
     it { should have_many(:feedback_messages) }
   end
 

@@ -16,7 +16,7 @@ class MicroscopyResultsController < PatientResultsController
       @microscopy_result,
       microscopy_result_params, current_user, 't{microscopy_results.update.audit}'
     )
-      redirect_to encounter_path(@test_batch.encounter), notice: I18n.t('microscopy_results.update.notice')
+      redirect_to encounter_path(@encounter), notice: I18n.t('microscopy_results.update.notice')
     else
       render action: 'edit'
     end
@@ -25,7 +25,7 @@ class MicroscopyResultsController < PatientResultsController
   protected
 
   def find_microscopy_result
-    @microscopy_result = @test_batch.patient_results.find(params[:id])
+    @microscopy_result = @encounter.patient_results.find(params[:id])
   end
 
   def microscopy_result_params
