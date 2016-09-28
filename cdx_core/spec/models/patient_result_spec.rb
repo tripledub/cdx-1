@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe PatientResult do
+  let(:user)        { User.make }
   let(:encounter)   { Encounter.make }
   let(:test_result) { MicroscopyResult.make created_at: 3.days.ago, encounter: encounter, result_name: 'requested_microscopy' }
 
@@ -26,7 +27,8 @@ describe PatientResult do
 
   context 'after_save' do
     it 'should update status' do
-      expect(TestOrders::Status).to receive(:update_status).with(test_result.encounter)
+      User.current = user
+      expect(TestOrders::Status).to receive(:update_status).with(test_result.encounter, user)
 
       test_result.save
     end

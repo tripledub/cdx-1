@@ -3,7 +3,7 @@ module PatientResults
   class StatusAuditor
     class << self
       def create_status_log(patient_result, user, values)
-        Audit::Auditor.new(patient_result, user).log_status_change('t{patient_results.update.status_tracking}', values)
+        Audit::Auditor.new(patient_result, user.id).log_status_change('t{patient_results.update.status_tracking}', values)
       end
     end
   end

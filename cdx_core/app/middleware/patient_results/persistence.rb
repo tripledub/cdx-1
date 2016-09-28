@@ -49,7 +49,7 @@ module PatientResults
         patient_result.result_status = params[:result_status] if params[:result_status].present? && can_approve_results?(params, current_user)
         patient_result.comment = params[:comment]
         patient_result.feedback_message = patient_result.encounter.institution.feedback_messages.find(params[:feedback_message_id]) if params[:feedback_message_id].to_i > 0
-        create_status_log(patient_result, current_user, [patient_result.result_status_was, patient_result.result_status]) if patient_result.result_status.changed?
+        create_status_log(patient_result, current_user, [patient_result.result_status_was, patient_result.result_status]) if patient_result.result_status_changed?
         patient_result.save(validate: false)
       end
 

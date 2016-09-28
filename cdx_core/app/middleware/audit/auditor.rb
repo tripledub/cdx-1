@@ -51,7 +51,13 @@ module Audit
     end
 
     def encounter_id
-      @auditable_model.is_a?(Encounter) ? @auditable_model.id : nil
+      if @auditable_model.is_a?(Encounter)
+        return @auditable_model.id
+      elsif @auditable_model.is_a?(PatientResult)
+        return @auditable_model.encounter.id
+      end
+
+      nil
     end
 
     def patient_result_id
