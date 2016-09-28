@@ -8,7 +8,7 @@ var PatientTestOrders = React.createClass({
       availableColumns: [
         { title: I18n.t("components.patients.show.col_request_by"),    fieldName: 'site' },
         { title: I18n.t("components.patients.show.col_request_to"),    fieldName: 'performingSite' },
-        { title: I18n.t("components.patients.show.col_batch_id"),      fieldName: 'batchId' },
+        { title: I18n.t("components.patients.show.col_order_id"),      fieldName: 'orderId' },
         { title: I18n.t("components.patients.show.col_order_by"), fieldName: 'requester' },
         { title: I18n.t("components.patients.show.col_request_date"),  fieldName: 'requestDate' },
         { title: I18n.t("components.patients.show.col_due_date"),      fieldName: 'dueDate' },

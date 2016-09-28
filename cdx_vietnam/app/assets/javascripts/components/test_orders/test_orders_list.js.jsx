@@ -84,7 +84,7 @@ var TestOrdersIndexTable = React.createClass({
                 {sortableHeader(I18n.t("components.test_orders.col_testing_for"),   "patients.name")}
                 {sortableHeader(I18n.t("components.test_orders.col_order_by"), "users.first_name")}
                 {sortableHeader(I18n.t("components.test_orders.col_request_date"),  "encounters.start_time")}
-                {sortableHeader(I18n.t("components.encounter_show.batch_id_label"),      "encounters.id")}
+                {sortableHeader(I18n.t("components.patients.show.col_order_id"),      "encounters.id")}
               </tr>
             </thead>
             <tbody>
