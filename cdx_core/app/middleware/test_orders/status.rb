@@ -18,7 +18,7 @@ module TestOrders
       protected
 
       def order_is_pending?(encounter)
-        encounter.payment_done == true && encounter.status == 'samples_collected'
+        encounter.payment_done == true && encounter.status == 'samples_received'
       end
 
       def any_pending_approval_or_finished?(encounter)

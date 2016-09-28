@@ -22,7 +22,6 @@ en:
     test_batch:
       status_options:
         new: 'New'
-        samples_collected: 'Samples collected'
         samples_received: 'Samples received'
         in_progress: 'In progress'
         closed: 'Closed'

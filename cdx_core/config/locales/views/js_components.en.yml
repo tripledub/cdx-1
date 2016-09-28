@@ -57,7 +57,6 @@ en:
       header: 'Test batch'
       status: 'status'
       new: 'New'
-      samples_collected: 'Samples collected'
       samples_received: 'Samples received'
       in_progress: 'In progress'
       payment: 'Payment'
@@ -66,7 +65,6 @@ en:
     test_order:
       new: 'New'
       pending: 'Pending'
-      samples_collected: 'Samples collected'
       samples_received: 'Samples received'
       recieved: 'Received'
       in_progress: 'In progress'
