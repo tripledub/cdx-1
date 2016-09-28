@@ -1,7 +1,7 @@
 class TestBatchTable extends React.Component{
   render() {
     return(
-      <table className="table testBatchTable" cellPadding="0" cellSpacing="0">
+      <table className="table testResultsTable" cellPadding="0" cellSpacing="0">
         <thead>
           <tr>
             <th>{ I18n.t('components.test_batch_table.type') }</th>
