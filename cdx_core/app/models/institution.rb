@@ -1,3 +1,4 @@
+# Institution model
 class Institution < ActiveRecord::Base
   include AutoUUID
   include Resource
@@ -33,9 +34,9 @@ class Institution < ActiveRecord::Base
             allow_blank: true
 
   after_create :create_predefined_roles
-  after_update :update_predefined_roles, if: :name_changed?
-
   after_create :update_owner_policies
+  after_create :create_default_feedback_messages
+  after_update :update_predefined_roles, if: :name_changed?
   after_destroy :update_owner_policies
 
   def self.filter_by_owner(user, check_conditions)
@@ -83,7 +84,10 @@ class Institution < ActiveRecord::Base
   end
 
   def update_owner_policies
-    self.user.try(:update_computed_policies)
+    user.try(:update_computed_policies)
   end
 
+  def create_default_feedback_messages
+    FeedbackMessages::Institutions.create_default_messages(self)
+  end
 end
