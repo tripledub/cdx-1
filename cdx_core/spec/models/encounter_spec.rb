@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Encounter do
-  let(:status_options) { %w(new samples_received pending received in_progress pending_approval closed) }
+  let(:status_options) { %w(new samples_received samples_collected pending received in_progress pending_approval closed) }
   let(:patient)    { Patient.make }
   let(:encounter)  { Encounter.make institution: patient.institution, patient: patient }
 

@@ -16,7 +16,7 @@ module PatientResults
           result.update_attribute(:serial_number, sample_id[1])
         end
 
-        encounter.update_attribute(:status, 'samples_received')
+        encounter.update_attribute(:status, 'samples_collected')
       end
 
       def update_status(patient_result, params, current_user)

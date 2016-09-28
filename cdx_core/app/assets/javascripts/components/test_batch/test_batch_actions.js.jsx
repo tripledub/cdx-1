@@ -2,7 +2,7 @@ class TestBatchActions extends React.Component{
   render() {
     return(
       <div className="row">
-        { this.props.encounter.status == 'new' ?
+        { this.props.encounter.status == 'new' || this.props.encounter.status == 'samples_collected' ?
           <SetBatchToPending  encounter={ this.props.encounter } patientResults={ this.props.patientResults } submitSamplesUrl={ this.props.submitSamplesUrl }  submitPaymentUrl={ this.props.submitPaymentUrl } authenticityToken={ this.props.authenticityToken } />
           : null }
       </div>
