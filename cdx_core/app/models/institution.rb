@@ -88,6 +88,6 @@ class Institution < ActiveRecord::Base
   end
 
   def create_default_feedback_messages
-    FeedbackMessages::Institutions.create_default_messages(self)
+    FeedbackMessages::Institution.create_default_messages(self)
   end
 end

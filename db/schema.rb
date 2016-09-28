@@ -158,14 +158,12 @@ ActiveRecord::Schema.define(version: 20160927143636) do
     t.integer  "encounter_id",      limit: 4
     t.integer  "requested_test_id", limit: 4
     t.integer  "patient_result_id", limit: 4
-    t.integer  "test_batch_id",     limit: 4
   end
 
   add_index "audit_logs", ["encounter_id"], name: "fk_rails_242face86a", using: :btree
   add_index "audit_logs", ["patient_id"], name: "index_audit_logs_on_patient_id", using: :btree
   add_index "audit_logs", ["patient_result_id"], name: "fk_rails_2fc931c99d", using: :btree
   add_index "audit_logs", ["requested_test_id"], name: "fk_rails_2f852d7fa9", using: :btree
-  add_index "audit_logs", ["test_batch_id"], name: "index_audit_logs_on_test_batch_id", using: :btree
   add_index "audit_logs", ["user_id"], name: "index_audit_logs_on_user_id", using: :btree
   add_index "audit_logs", ["uuid"], name: "index_audit_logs_on_uuid", using: :btree
 

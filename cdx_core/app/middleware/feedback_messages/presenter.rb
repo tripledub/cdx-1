@@ -1,4 +1,5 @@
 module FeedbackMessages
+  # Groups feedback reasons by category
   class Presenter
     class << self
       def reject_reasons(institution)

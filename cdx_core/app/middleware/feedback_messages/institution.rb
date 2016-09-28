@@ -1,6 +1,6 @@
 module FeedbackMessages
   # Add default feedback messages to new institutions
-  class Institutions
+  class Institution
     class << self
       def create_default_messages(institution)
         s001 = institution.feedback_messages.create!({ category: 'samples_collected', code: 'S001' })
