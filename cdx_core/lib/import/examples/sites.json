@@ -1,0 +1,30 @@
+[
+  {
+    "institute" : "NTP - National TB Programme",
+    "site" : {
+      "name" : "Site 1 National Lung Cancer Hospital"
+    }
+  },
+  {
+    "institute" : "NTP - National TB Programme",
+    "site" : {
+      "name" : "Site 2 Hanoi Lung Hospital",
+      "address" : "Hospital Place",
+      "city" : "Hanoi",
+      "state" : "Hanoi State",
+      "zip_code" : "123 123"
+    }
+  },
+  {
+    "institute" : "NTP - National TB Programme",
+    "site" : {
+      "Site 3 Hoang Mai District HC (with Xpert machine)"
+    }
+  },
+  {
+    "institute" : "NTP - National TB Programme",
+    "site" : {
+      "name" : "Site 4 Hai Ba Trung District HC (without Xpert machine)"
+    }
+  }
+]

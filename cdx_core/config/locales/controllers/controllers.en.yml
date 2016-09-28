@@ -1,4 +1,8 @@
 en:
+  'admin/imports_controller':
+    success: 'Import process successfully'
+    failure: 'Import failed'
+
   api_tokens_controller:
     api_token_deleted: 'API Token deleted'
 

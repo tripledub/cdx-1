@@ -1,0 +1,8 @@
+en:
+  'admin/imports':
+    index:
+      imports: 'Import seed data via CSV'
+      form:
+        file: CSV File
+        import_type: Import type
+        clear_current_data: Clear current data

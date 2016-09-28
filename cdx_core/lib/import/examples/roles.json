@@ -1,0 +1,268 @@
+[
+  {
+    "email" : "recep_site_1@mailinator.com",
+    "password" : "admin123",
+    "institution" : "NTP - National TB Programme",
+    "site" : "Site 1 National Lung Cancer Hospital",
+    "role_label" : "Outpatient Recep, Doc & Nurse",
+    "definition" : {
+      "statement" : [
+        {
+          "delegable" : false,
+          "action" : ["institution:read", "institution:createPatient"],
+          "resource" : "institution",
+          "except" : [],
+          "includeSubsites" : false
+        },
+        {
+          "delegable" : false,
+          "action" : ["site:read", "site:createEncounter"],
+          "resource" : "site",
+          "except" : [],
+          "includeSubsites" : false
+        },
+        {
+          "delegable" : false,
+          "action" : "*",
+          "resource" : "patient",
+          "except" : [],
+          "includeSubsites" : false
+        },
+        {
+          "delegable" : false,
+          "action" : "*",
+          "resource" : "encounter",
+          "except" : [],
+          "includeSubsites" : false
+        },
+        {
+          "delegable" : false,
+          "action" : ["alert:read"],
+          "resource" : "alert",
+          "except" : [],
+          "includeSubsites" : false
+        }
+      ]
+    }
+  },
+  {
+    "email" : "cdx_labtach@mailinator.com",
+    "password" : "admin123",
+    "institution" : "NTP - National TB Programme",
+    "site" : "Site 1 National Lung Cancer Hospital",
+    "role_label" : "Sample Recep & Lab Tech",
+    "definition" : {
+      "statement" : [
+        {
+          "delegable" : false,
+          "action" : ["institution:read"],
+          "resource" : "institution",
+          "except" : [],
+          "includeSubsites" : false
+        },
+        {
+          "delegable" : false,
+          "action" : ["site:read"],
+          "resource" : "site",
+          "except" : [],
+          "includeSubsites" : false
+        },
+        {
+          "delegable" : false,
+          "action" : ["testResult:query"],
+          "resource" : "testResult",
+          "except" : [],
+          "includeSubsites" : false
+        },
+        {
+          "delegable" : false,
+          "action" : ["encounter:read", "encounter:update", "encounter:pii"],
+          "resource" : "encounter",
+          "except" : [],
+          "includeSubsites" : false
+        },
+        {
+          "delegable" : false,
+          "action" : ["pageHeader:displayTestOrder"],
+          "resource" : "pageHeader",
+          "except" : [],
+          "includeSubsites" : false
+        },
+          {"delegable" : false,
+          "action" : ["alert:read"],
+          "resource" : "alert",
+          "except" : [],
+          "includeSubsites" : false
+        }
+      ]
+    }
+  },
+  {
+    "email" : "labsupervisor@mailinator.com",
+    "password" : "admin123",
+    "institution" : "NTP - National TB Programme",
+    "site" : "Site 1 National Lung Cancer Hospital",
+    "role_label" : "Lab Supervisor",
+    "definition" : {
+      "statement" : [
+        {
+          "delegable" : false,
+          "action" : ["institution:read"],
+          "resource" : "institution",
+          "except" : [],
+          "includeSubsites" : false
+        },
+        {
+          "delegable" : false,
+          "action" : ["site:read"],
+          "resource" : "site",
+          "except" : [],
+          "includeSubsites" : false
+        },
+        {
+          "delegable" : false,
+          "action" : ["testResult:query"],
+          "resource" : "testResult",
+          "except" : [],
+          "includeSubsites" : false
+        },
+        {
+          "delegable" : false,
+          "action" : ["pageHeader:displayTestResult"],
+          "resource" : "pageHeader",
+          "except" : [],
+          "includeSubsites" : false
+        },
+        {
+          "delegable" : false,
+          "action" : [],
+          "resource" : "alert",
+          "except" : [],
+          "includeSubsites" : false
+        },
+        {
+          "delegable" : false,
+          "action" : "*",
+          "resource" : "encounter",
+          "except" : [],
+          "includeSubsites" : false
+        }
+      ]
+    }
+  },
+  {
+    "email" : "chopperchappell@gmail.com",
+    "password" : "admin123",
+    "institution" : "NTP - National TB Programme",
+    "site" : "Site 1 National Lung Cancer Hospital",
+    "role_label" : "Lab Admin",
+    "definition" : {
+      "statement" : [
+        {
+          "resource" : "institution/{{INSTITUTION_ID}}",
+          "action" : "institution:read"
+        },
+        {
+          "resource" : "site/{{SITE_ID}}",
+          "action" : "site:read"
+        },
+        {
+          "resource" : "device?site={{SITE_ID}}",
+          "action" : "device:read"
+        },
+        {
+          "resource" : "testResult?site={{SITE_ID}}",
+          "action" : "testResult:query"
+        },
+        {
+          "resource" : "encounter?site={{SITE_ID}}",
+          "action" : "encounter:read"
+        }
+      ]
+    }
+  },
+  {
+    "email" : "admin_il@thecdx.org",
+    "password" : "admin123",
+    "institution" : "NTP - National TB Programme",
+    "role_label" : "Institute One Admin",
+    "definition" : {
+      "statement" : [
+        {
+          "resource" : "institution/{{INSTITUTION_ID}}",
+          "action" : [
+            "institution:read",
+            "institution:update",
+            "institution:registerDevice",
+            "institution:registerDeviceModel",
+            "institution:createPatient",
+            "institution:createSite",
+            "institution:createRole",
+            "institution:readUsers"
+          ],
+          "delegable" : true
+        },
+        {
+          "resource"  : "testResult?institution={{INSTITUTION_ID}}",
+          "action"    : "testResult:medicalDashboard",
+          "delegable" : true
+        },
+        {
+          "resource"  : "patient?institution={{INSTITUTION_ID}}",
+          "action"    : "*",
+          "delegable" : true
+        },
+        {
+          "resource"  : "site?institution={{INSTITUTION_ID}}",
+          "action"    : "*",
+          "delegable" : true
+        },
+        {
+          "resource"  : "device?institution={{INSTITUTION_ID}}",
+          "action"    : "*",
+          "delegable" : true
+        },
+        {
+          "resource"  : "testResult?institution={{INSTITUTION_ID}}",
+          "action"    : "*",
+          "delegable" : true
+        },
+        {
+          "resource"  : "encounter?institution={{INSTITUTION_ID}}",
+          "action"    : "*",
+          "delegable" : true
+        },
+        {
+          "resource"  : "deviceModel",
+          "action"    : "*",
+          "delegable" : true
+        },
+        {
+          "resource"  : "alert?institution={{INSTITUTION_ID}}",
+          "action"    : "*",
+          "delegable" : true
+        },
+        {
+          "resource"  : "pageHeader?institution={{INSTITUTION_ID}}",
+          "action"    : "*",
+          "delegable" : true
+        },
+        {
+          "resource"  : "settingsPage?institution={{INSTITUTION_ID}}",
+          "action"    : "*",
+          "delegable" : true
+        },
+        {
+          "resource"  : "device?institution={{INSTITUTION_ID}}",
+          "action"    : "*",
+          "delegable" : true
+        },
+        {
+          "resource"  : "role?institution={{INSTITUTION_ID}}",
+          "action"    : "*",
+          "delegable" : true
+        }
+      ]
+    }
+  }
+]

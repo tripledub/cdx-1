@@ -49,8 +49,8 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :settings do
-    match 'imports' => 'settings/imports#index', :via => [:get, :post]
+  namespace :admin do
+    match 'imports' => 'imports#index', :via => [:get, :post]
   end
 
   get 'settings' => 'home#settings'

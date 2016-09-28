@@ -1,5 +1,3 @@
-require 'csv'
-
 module Import
-  IMPORT_TYPES = %w(sites)
+  IMPORT_TYPES = %w(sites roles)
 end

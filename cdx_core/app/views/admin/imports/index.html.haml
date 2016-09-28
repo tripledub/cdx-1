@@ -1,0 +1,32 @@
+.filterbar
+  .heading
+    .title= I18n.t('admin/imports.index.imports')
+
+.row.paginationHeader.row--nofilter
+  .col
+    %section.row
+
+      = form_tag [:admin, :imports], :method => :post, :multipart => true do
+
+        .row
+          .col
+            %div.tooltip
+              = label :import, :file, I18n.t('admin/imports.index.form.file')
+          .col
+            = file_field :import, :file
+
+        .row
+          .col
+            %div.tooltip
+              = label :import, :import_type, I18n.t('admin/imports.index.form.import_type')
+          .col
+            = select :import, :import_type, Import::IMPORT_TYPES, :prompt => true
+
+        .row
+          .col
+            = check_box :import, :clear_current_data, {}
+            = label :import, :clear_current_data, I18n.t('admin/imports.index.form.clear_current_data')
+
+        .row.button-actions
+          .col
+            = submit_tag I18n.t('views.save'), class: 'btn-primary'
