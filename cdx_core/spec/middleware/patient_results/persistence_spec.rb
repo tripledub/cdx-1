@@ -39,7 +39,7 @@ describe PatientResults::Persistence do
     end
 
     it 'should update encounter status to samples collected' do
-      expect(encounter.status).to eq('samples_received')
+      expect(encounter.status).to eq('samples_collected')
     end
   end
 
