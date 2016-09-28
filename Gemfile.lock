@@ -40,9 +40,22 @@ PATH
       rails (~> 4.2.7.1)
 
 PATH
+  remote: cdx_api_vietnam
+  specs:
+    cdx_api_vietnam (0.0.1)
+      rails (~> 4.2.7.1)
+
+PATH
   remote: cdx_core
   specs:
     cdx_core (1.1.0)
+      rails (~> 4.2.7.1)
+
+PATH
+  remote: cdx_vietnam
+  specs:
+    cdx_vietnam (1.0.0)
+      cdx_core (~> 1.1.0)
       rails (~> 4.2.7.1)
 
 GEM
@@ -668,7 +681,9 @@ DEPENDENCIES
   cdx-api-elasticsearch!
   cdx-sync-server!
   cdx_api_core!
+  cdx_api_vietnam!
   cdx_core!
+  cdx_vietnam!
   chunky_png
   config
   country_select
