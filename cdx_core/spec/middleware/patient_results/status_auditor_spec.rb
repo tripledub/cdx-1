@@ -7,7 +7,7 @@ describe PatientResults::StatusAuditor do
 
   describe 'create_status_log' do
     before :each do
-      described_class.create_status_log(patient_result, user.id, %w(old_status new_status))
+      described_class.create_status_log(patient_result, user, %w(old_status new_status))
     end
 
     it 'should add a new log for the encounter' do
