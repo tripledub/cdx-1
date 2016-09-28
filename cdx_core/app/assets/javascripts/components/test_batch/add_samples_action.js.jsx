@@ -21,7 +21,7 @@ class AddSamplesAction extends React.Component{
           <form method="post" action={ this.props.submitSamplesUrl }>
             <input type='hidden' name='authenticity_token' value={this.props.authenticityToken} />
             <div className="col">
-              { this.props.encounter.patientResults.map(function(patientResult, element) {
+              { this.props.patientResults.map(function(patientResult, element) {
                  return <SampleRow key={ patientResult.id } elementId={ 'input' + element } resultId={ patientResult.id } resultName={ patientResult.testType } resultSampleId={ patientResult.sampleId } />;
               }.bind(this)) }
             </div>
@@ -37,7 +37,8 @@ class AddSamplesAction extends React.Component{
 }
 
 AddSamplesAction.propTypes = {
-  batchId: React.PropTypes.string,
-  submitSamplesUrl: React.PropTypes.string,
-  authenticityToken: React.PropTypes.string,
+  batchId: React.PropTypes.string.isRequired,
+  patientResults: React.PropTypes.array.isRequired,
+  submitSamplesUrl: React.PropTypes.string.isRequired,
+  authenticityToken: React.PropTypes.string.isRequired,
 };

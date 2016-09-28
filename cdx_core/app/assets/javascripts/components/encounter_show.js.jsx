@@ -112,7 +112,7 @@ var EncounterShow = React.createClass({
 
                 <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.test_due_date_label")} fieldValue={ this.props.encounter.testdue_date } />
                 <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.status_label")} fieldValue={ I18n.t('components.test_order.' + this.state.testOrderStatus) } />
-                <DisplayFieldWithLabel fieldLabel={ I18n.t('components.test_batch.payment') } fieldValue={ I18n.t('components.test_batch.' + this.props.encounter.payment_done) } />
+                <DisplayFieldWithLabel fieldLabel={ I18n.t('components.test_batch.payment') } fieldValue={ I18n.t('components.test_batch.' + this.props.encounter.paymentDone) } />
               </div>
 
               <div className="col-6 patientCard">
@@ -125,7 +125,7 @@ var EncounterShow = React.createClass({
           </div>
         </div>
 
-        <TestBatchList testOrderStatus={ this.props.encounter.status } submitSamplesUrl={ this.props.submitSamplesUrl } submitPaymentUrl={ this.props.submitPaymentUrl } updateResultUrl={ this.props.updateResultUrl } rejectReasons={ this.props.rejectReasons } authenticityToken={ this.props.authenticityToken } />
+        <TestBatchList encounter={ this.props.encounter } patientResults={ this.props.patientResults } submitSamplesUrl={ this.props.submitSamplesUrl } submitPaymentUrl={ this.props.submitPaymentUrl } updateResultUrl={ this.props.updateResultUrl } rejectReasons={ this.props.rejectReasons } authenticityToken={ this.props.authenticityToken } />
 
       </div>
       );

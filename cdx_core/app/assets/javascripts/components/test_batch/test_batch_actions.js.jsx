@@ -3,7 +3,7 @@ class TestBatchActions extends React.Component{
     return(
       <div className="row">
         { this.props.testOrderStatus == 'new' ?
-          <SetBatchToPending  testOrderStatus={ this.props.encounter.status } batchId={ this.props.encounter.batchId } submitSamplesUrl={ this.props.submitSamplesUrl }  submitPaymentUrl={ this.props.submitPaymentUrl } authenticityToken={ this.props.authenticityToken } />
+          <SetBatchToPending  encounter={ this.props.encounter } patientResults={ this.props.patientResults } submitSamplesUrl={ this.props.submitSamplesUrl }  submitPaymentUrl={ this.props.submitPaymentUrl } authenticityToken={ this.props.authenticityToken } />
           : null }
       </div>
     );
@@ -11,6 +11,7 @@ class TestBatchActions extends React.Component{
 }
 
 TestBatchActions.propTypes = {
+  patientResults: React.PropTypes.array.isRequired,
   encounter: React.PropTypes.object,
   submitSamplesUrl: React.PropTypes.string,
   submitPaymentUrl: React.PropTypes.string.isRequired,

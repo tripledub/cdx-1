@@ -7,7 +7,7 @@ class SetBatchToPending extends React.Component{
           : null }
           &nbsp;  &nbsp; &nbsp;
         { this.props.encounter.status == 'new' ?
-          <AddSamplesAction batchId={ this.props.encounter.batchId } submitSamplesUrl={ this.props.submitSamplesUrl } authenticityToken={ this.props.authenticityToken } />
+          <AddSamplesAction batchId={ this.props.encounter.batch_id } patientResults={ this.props.patientResults } submitSamplesUrl={ this.props.submitSamplesUrl } authenticityToken={ this.props.authenticityToken } />
           : null }
       </div>
     )
@@ -16,6 +16,7 @@ class SetBatchToPending extends React.Component{
 
 SetBatchToPending.propTypes = {
   encounter: React.PropTypes.object,
+  patientResults: React.PropTypes.array.isRequired,
   submitSamplesUrl: React.PropTypes.string.isRequired,
   submitPaymentUrl: React.PropTypes.string.isRequired,
   authenticityToken: React.PropTypes.string.isRequired,

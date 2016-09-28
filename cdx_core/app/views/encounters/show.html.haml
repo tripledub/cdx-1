@@ -9,6 +9,7 @@
             = I18n.t('encounters.show.test_order')
 = react_component('EncounterShow',
   encounter: @encounter_as_json,
+  patientResults: PatientResults::Presenter.for_encounter(@encounter.patient_results),
   context: @navigation_context,
   submitSamplesUrl: update_samples_encounter_patient_results_path(@encounter),
   submitPaymentUrl: set_as_paid_encounter_encounter_payments_path(@encounter),

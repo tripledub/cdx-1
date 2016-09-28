@@ -137,7 +137,7 @@ var EncounterShow = React.createClass({
                 <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.sample_type_label")} fieldValue={ sample_type } />
 
                 <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.status_label")} fieldValue={ I18n.t('components.test_order.' + this.state.testOrderStatus) } />
-                <DisplayFieldWithLabel fieldLabel={ I18n.t('components.test_batch.payment') } fieldValue={ I18n.t('components.test_batch.' + this.props.encounter.payment_done) } />
+                <DisplayFieldWithLabel fieldLabel={ I18n.t('components.test_batch.payment') } fieldValue={ I18n.t('components.test_batch.' + this.props.encounter.paymentDone) } />
               </div>
 
               <div className="col-6 patientCard">
