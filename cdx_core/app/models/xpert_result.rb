@@ -6,7 +6,7 @@ class XpertResult < PatientResult
 
   validate :rifampicin_detected
 
-  delegate :patient, to: 'test_batch.encounter'
+  delegate :patient, to: 'encounter'
 
   def localised_name
     I18n.t('xpert_results.localised_name')

@@ -2,8 +2,8 @@ class TestBatchActions extends React.Component{
   render() {
     return(
       <div className="row">
-        { this.props.testOrderStatus == 'new' ?
-          <SetBatchToPending  testOrderStatus={ this.props.testOrderStatus } batchId={ this.props.batchId } testBatch={ this.props.testBatch } submitSamplesUrl={ this.props.submitSamplesUrl }  submitPaymentUrl={ this.props.submitPaymentUrl } authenticityToken={ this.props.authenticityToken } />
+        { this.props.encounter.status == 'new' || this.props.encounter.status == 'samples_collected' ?
+          <SetBatchToPending  encounter={ this.props.encounter } patientResults={ this.props.patientResults } submitSamplesUrl={ this.props.submitSamplesUrl }  submitPaymentUrl={ this.props.submitPaymentUrl } authenticityToken={ this.props.authenticityToken } />
           : null }
       </div>
     );
@@ -11,10 +11,9 @@ class TestBatchActions extends React.Component{
 }
 
 TestBatchActions.propTypes = {
-  testBatch: React.PropTypes.object,
-  batchId: React.PropTypes.string,
+  patientResults: React.PropTypes.array.isRequired,
+  encounter: React.PropTypes.object,
   submitSamplesUrl: React.PropTypes.string,
   submitPaymentUrl: React.PropTypes.string.isRequired,
   authenticityToken: React.PropTypes.string,
-  testOrderStatus: React.PropTypes.string,
 };

@@ -1,5 +1,7 @@
 en:
   encounters:
+    create:
+      test_order_created: 'New test order created'
     new:
       existing_test: 'Existing test for %{patient_name}'
       new_test: 'New test order for %{patient_name}'
@@ -22,6 +24,6 @@ en:
       organise_test_result: 'Organise and assign test results to patients. Review results and provide diagnosis.'
     destroy:
       success: 'Test order was successfully deleted.'
-      log_action: 'Test order %{uuid} Cancelled'
-      cancelled: 'Test order Cancelled'
+      log_action: 'deleted'
+      cancelled: 'Test order deleted'
       not_allowed: 'You can not delete this test order.'

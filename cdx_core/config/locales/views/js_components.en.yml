@@ -60,18 +60,18 @@ en:
       samples_collected: 'Samples collected'
       samples_received: 'Samples received'
       in_progress: 'In progress'
-      closed: 'Closed'
       payment: 'Payment'
       false: 'Pending'
       true: 'Done'
     test_order:
       new: 'New'
       pending: 'Pending'
+      samples_collected: 'Samples collected'
+      samples_received: 'Samples received'
       recieved: 'Received'
       in_progress: 'In progress'
       pending_approval: 'Pending approval'
-      completed: 'Completed'
-
+      closed: 'Closed'
     alert_messages:
       col_name: "Name"
       col_date: "Date"
@@ -149,7 +149,6 @@ en:
         col_request_by: "Request By"
         col_request_to: "Request To"
         col_order_id: "Order Id"
-        col_batch_id: "Batch Id"
         col_order_by: "Order by User"
         col_request_date: "Request Date"
         col_due_date: "Due Date"
@@ -210,7 +209,6 @@ en:
 
     test_orders:
       col_sample_id: "Sample Id"
-      col_batch_id: "Batch Id"
       col_status: "Status"
       col_request_by: "Request by"
       col_request_to: "Request to"

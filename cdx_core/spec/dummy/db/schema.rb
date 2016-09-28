@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160922094628) do
+ActiveRecord::Schema.define(version: 20160927143636) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -351,6 +351,7 @@ ActiveRecord::Schema.define(version: 20160922094628) do
     t.string   "testing_for",        limit: 255,   default: ""
     t.string   "culture_format",     limit: 255
     t.boolean  "presumptive_rr"
+    t.boolean  "payment_done",                     default: false
   end
 
   add_index "encounters", ["deleted_at"], name: "index_encounters_on_deleted_at", using: :btree
@@ -529,7 +530,6 @@ ActiveRecord::Schema.define(version: 20160922094628) do
     t.string   "site_prefix",          limit: 255
     t.datetime "deleted_at"
     t.string   "type",                 limit: 255
-    t.integer  "requested_test_id",    limit: 4
     t.date     "sample_collected_on"
     t.date     "result_on"
     t.string   "specimen_type",        limit: 255
@@ -558,7 +558,6 @@ ActiveRecord::Schema.define(version: 20160922094628) do
     t.string   "result_status",        limit: 255
     t.string   "result_type",          limit: 255
     t.text     "comment",              limit: 65535
-    t.integer  "test_batch_id",        limit: 4
     t.datetime "completed_at"
     t.integer  "feedback_message_id",  limit: 4
   end
@@ -570,10 +569,8 @@ ActiveRecord::Schema.define(version: 20160922094628) do
   add_index "patient_results", ["institution_id"], name: "index_patient_results_on_institution_id", using: :btree
   add_index "patient_results", ["method_used"], name: "index_patient_results_on_method_used", using: :btree
   add_index "patient_results", ["patient_id"], name: "index_patient_results_on_patient_id", using: :btree
-  add_index "patient_results", ["requested_test_id"], name: "index_patient_results_on_requested_test_id", using: :btree
   add_index "patient_results", ["sample_identifier_id"], name: "index_patient_results_on_sample_identifier_id", using: :btree
   add_index "patient_results", ["site_id"], name: "index_patient_results_on_site_id", using: :btree
-  add_index "patient_results", ["test_batch_id"], name: "index_patient_results_on_test_batch_id", using: :btree
   add_index "patient_results", ["test_result"], name: "index_patient_results_on_test_result", using: :btree
   add_index "patient_results", ["uuid"], name: "index_patient_results_on_uuid", using: :btree
 
@@ -766,22 +763,6 @@ ActiveRecord::Schema.define(version: 20160922094628) do
   end
 
   add_index "subscribers", ["filter_id"], name: "index_subscribers_on_filter_id", using: :btree
-
-  create_table "test_batches", force: :cascade do |t|
-    t.integer  "encounter_id",   limit: 4,                     null: false
-    t.integer  "institution_id", limit: 4,                     null: false
-    t.string   "status",         limit: 255
-    t.string   "uuid",           limit: 255
-    t.boolean  "payment_done",                 default: false
-    t.text     "comment",        limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "test_batches", ["encounter_id"], name: "index_test_batches_on_encounter_id", using: :btree
-  add_index "test_batches", ["institution_id"], name: "index_test_batches_on_institution_id", using: :btree
-  add_index "test_batches", ["status"], name: "index_test_batches_on_status", using: :btree
-  add_index "test_batches", ["uuid"], name: "index_test_batches_on_uuid", using: :btree
 
   create_table "test_result_parsed_data", force: :cascade do |t|
     t.integer  "test_result_id", limit: 4

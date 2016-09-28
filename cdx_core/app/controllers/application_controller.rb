@@ -1,3 +1,4 @@
+# Application controller. Where it all starts.
 class ApplicationController < ActionController::Base
   include ApplicationHelper
   include Concerns::Context
@@ -15,15 +16,18 @@ class ApplicationController < ActionController::Base
   def set_locale
     I18n.locale = current_user.try(:locale) || I18n.default_locale
     I18n.locale = params[:language] if params[:language].present?
-    @localization_helper = LocalizationHelper.new(current_user.try(:time_zone), I18n.locale,
-      current_user.try(:timestamps_in_device_time_zone))
+    @localization_helper = LocalizationHelper.new(
+      current_user.try(:time_zone),
+      I18n.locale,
+      current_user.try(:timestamps_in_device_time_zone)
+    )
   end
 
   decent_configuration do
     strategy DecentExposure::StrongParametersStrategy
   end
 
-  def render_json(object, params={})
+  def render_json(object, params = {})
     render params.merge(text: object.to_json_oj, content_type: 'text/json')
   end
 
@@ -75,7 +79,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def default_url_options(options={})
+  def default_url_options(options = {})
     if params[:context].present?
       return {:context => params[:context]}
     end

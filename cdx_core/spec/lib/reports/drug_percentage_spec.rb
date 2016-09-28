@@ -4,16 +4,16 @@ describe Reports::DrugPercentage do
   let(:user)               { User.make }
   let!(:institution)       { user.institutions.make }
   let(:patient)            { Patient.make institution: institution }
-  let(:encounter)          { Encounter.make institution: institution , user: user, patient: patient, test_batch: TestBatch.make(institution: institution) }
+  let(:encounter)          { Encounter.make institution: institution , user: user, patient: patient }
   let(:navigation_context) { NavigationContext.new(user, institution.uuid) }
   let!(:results)           {
-    XpertResult.make test_batch: encounter.test_batch, tuberculosis: 'detected', rifampicin: 'detected', created_at: 2.years.ago
-    XpertResult.make test_batch: encounter.test_batch, tuberculosis: 'not_detected', rifampicin: 'detected'
-    XpertResult.make test_batch: encounter.test_batch, tuberculosis: 'detected', rifampicin: 'not_detected'
-    XpertResult.make test_batch: encounter.test_batch, tuberculosis: 'detected', rifampicin: 'detected'
-    XpertResult.make test_batch: encounter.test_batch, tuberculosis: 'invalid', rifampicin: 'indeterminate', created_at: 3.years.ago
-    XpertResult.make test_batch: encounter.test_batch, tuberculosis: 'not_detected', rifampicin: 'detected', created_at: 14.months.ago
-    XpertResult.make test_batch: encounter.test_batch, tuberculosis: 'not_detected', rifampicin: 'indeterminate'
+    XpertResult.make encounter: encounter, tuberculosis: 'detected', rifampicin: 'detected', created_at: 2.years.ago
+    XpertResult.make encounter: encounter, tuberculosis: 'not_detected', rifampicin: 'detected'
+    XpertResult.make encounter: encounter, tuberculosis: 'detected', rifampicin: 'not_detected'
+    XpertResult.make encounter: encounter, tuberculosis: 'detected', rifampicin: 'detected'
+    XpertResult.make encounter: encounter, tuberculosis: 'invalid', rifampicin: 'indeterminate', created_at: 3.years.ago
+    XpertResult.make encounter: encounter, tuberculosis: 'not_detected', rifampicin: 'detected', created_at: 14.months.ago
+    XpertResult.make encounter: encounter, tuberculosis: 'not_detected', rifampicin: 'indeterminate'
   }
 
   xdescribe 'generate_chart' do

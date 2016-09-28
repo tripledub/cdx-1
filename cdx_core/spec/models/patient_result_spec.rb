@@ -2,11 +2,10 @@ require 'spec_helper'
 
 describe PatientResult do
   let(:encounter)   { Encounter.make }
-  let(:test_batch)  { TestBatch.make encounter: encounter }
-  let(:test_result) { MicroscopyResult.make created_at: 3.days.ago, test_batch: test_batch, result_name: 'requested_microscopy' }
+  let(:test_result) { MicroscopyResult.make created_at: 3.days.ago, encounter: encounter, result_name: 'requested_microscopy' }
 
   context "validations" do
-    it { should belong_to(:test_batch) }
+    it { should belong_to(:encounter) }
     it { should belong_to(:feedback_message) }
   end
 
@@ -26,7 +25,7 @@ describe PatientResult do
 
   context 'after_save' do
     it 'should update status' do
-      expect(TestBatches::Persistence).to receive(:update_status).with(test_result.test_batch)
+      expect(TestOrders::Status).to receive(:update_status).with(test_result.encounter)
 
       test_result.save
     end
@@ -83,7 +82,7 @@ describe PatientResult do
     end
 
     context 'when result is culture' do
-      let(:test_result) { CultureResult.make created_at: 3.days.ago, test_batch: test_batch, result_name: 'culture_cformat_liquid' }
+      let(:test_result) { CultureResult.make created_at: 3.days.ago, encounter: encounter, result_name: 'culture_cformat_liquid' }
 
       it 'should return microscopy as name' do
         expect(test_result.test_name).to include('Culture')
@@ -91,7 +90,7 @@ describe PatientResult do
     end
 
     context 'when result is xpert' do
-      let(:test_result) { XpertResult.make created_at: 3.days.ago, test_batch: test_batch, result_name: 'requested_xpertmtb' }
+      let(:test_result) { XpertResult.make created_at: 3.days.ago, encounter: encounter, result_name: 'requested_xpertmtb' }
 
       it 'should return microscopy as name' do
         expect(test_result.test_name).to include('Xpert')
@@ -99,7 +98,7 @@ describe PatientResult do
     end
 
     context 'when result is dst' do
-      let(:test_result) { DstLpaResult.make created_at: 3.days.ago, test_batch: test_batch, result_name: 'drugsusceptibility1line_cformat_liquid' }
+      let(:test_result) { DstLpaResult.make created_at: 3.days.ago, encounter: encounter, result_name: 'drugsusceptibility1line_cformat_liquid' }
 
       it 'should return microscopy as name' do
         expect(test_result.test_name).to include('Drug susceptibility')
@@ -107,7 +106,7 @@ describe PatientResult do
     end
 
     context 'when result is lpa' do
-      let(:test_result) { DstLpaResult.make created_at: 3.days.ago, test_batch: test_batch, result_name: 'lineprobe1_cformat_solid' }
+      let(:test_result) { DstLpaResult.make created_at: 3.days.ago, encounter: encounter, result_name: 'lineprobe1_cformat_solid' }
 
       it 'should return microscopy as name' do
         expect(test_result.test_name).to include('Line probe assay')
@@ -115,7 +114,7 @@ describe PatientResult do
     end
 
     context 'when result is liquid' do
-      let(:test_result) { CultureResult.make created_at: 3.days.ago, test_batch: test_batch, result_name: 'culture_cformat_liquid' }
+      let(:test_result) { CultureResult.make created_at: 3.days.ago, encounter: encounter, result_name: 'culture_cformat_liquid' }
 
       it 'should return microscopy as name' do
         expect(test_result.test_name).to include('Liquid')
@@ -123,7 +122,7 @@ describe PatientResult do
     end
 
     context 'when result is solid' do
-      let(:test_result) { DstLpaResult.make created_at: 3.days.ago, test_batch: test_batch, result_name: 'lineprobe1_cformat_solid' }
+      let(:test_result) { DstLpaResult.make created_at: 3.days.ago, encounter: encounter, result_name: 'lineprobe1_cformat_solid' }
 
       it 'should return microscopy as name' do
         expect(test_result.test_name).to include('Solid')

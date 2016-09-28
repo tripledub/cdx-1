@@ -6,9 +6,9 @@ describe XpertResultsController do
   let(:user)           { User.make }
   let!(:institution)   { user.institutions.make }
   let(:patient)        { Patient.make institution: institution }
-  let(:encounter)      { Encounter.make institution: institution , user: user, patient: patient, test_batch: TestBatch.make(institution: institution) }
+  let(:encounter)      { Encounter.make institution: institution , user: user, patient: patient }
   let(:default_params) { { context: institution.uuid } }
-  let!(:xpert_result)   { XpertResult.make test_batch: encounter.test_batch }
+  let!(:xpert_result)  { XpertResult.make encounter: encounter }
   let(:valid_params)   { {
     sample_collected_on: 4.days.ago,
     tuberculosis:        'detected',
@@ -24,7 +24,7 @@ describe XpertResultsController do
 
     describe 'show' do
       it 'should render the new template' do
-        get 'show', test_batch_id: encounter.test_batch.id, id: xpert_result
+        get 'show', encounter_id: encounter.id, id: xpert_result
 
         expect(request).to render_template('show')
       end
@@ -32,7 +32,7 @@ describe XpertResultsController do
 
     describe 'edit' do
       before :each do
-        get 'edit', test_batch_id: encounter.test_batch.id, id: xpert_result
+        get 'edit', encounter_id: encounter.id, id: xpert_result
       end
 
       it 'should render the edit template' do
@@ -44,7 +44,7 @@ describe XpertResultsController do
       context 'with valid data' do
         before :each do
           valid_params.merge!({ tuberculosis: 'not_detected' })
-          put :update, test_batch_id: encounter.test_batch.id, id: xpert_result, xpert_result: valid_params
+          put :update, encounter_id: encounter.id, id: xpert_result, xpert_result: valid_params
           xpert_result.reload
         end
 
@@ -53,14 +53,14 @@ describe XpertResultsController do
         end
 
         it 'should redirect to the test order page' do
-          expect(response).to redirect_to encounter_path(encounter.test_batch.encounter)
+          expect(response).to redirect_to encounter_path(encounter)
         end
       end
 
       context 'with invalid data' do
         before :each do
           valid_params.merge!({ tuberculosis: '' })
-          put :update, test_batch_id: encounter.test_batch.id, id: xpert_result, xpert_result: valid_params
+          put :update, encounter_id: encounter.id, id: xpert_result, xpert_result: valid_params
         end
 
         it 'should redirect to the test order page' do

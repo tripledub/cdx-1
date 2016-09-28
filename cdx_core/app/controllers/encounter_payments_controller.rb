@@ -1,9 +1,9 @@
-class TestBatchesController < ApplicationController
-
+# Set an encounter as paid
+class EncounterPaymentsController < ApplicationController
   before_filter :find_encounter, :check_permissions
 
   def set_as_paid
-    @encounter.test_batch.update_attribute(:payment_done, true)
+    @encounter.update_attribute(:payment_done, true)
     redirect_to encounter_path(@encounter), message: I18n.t('test_batches.set_as_paid.payment_done')
   end
 

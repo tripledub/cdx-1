@@ -1,7 +1,7 @@
 class TestBatchTable extends React.Component{
   render() {
     return(
-      <table className="table testBatchTable" cellPadding="0" cellSpacing="0">
+      <table className="table testResultsTable" cellPadding="0" cellSpacing="0">
         <thead>
           <tr>
             <th>{ I18n.t('components.test_batch_table.type') }</th>
@@ -12,7 +12,7 @@ class TestBatchTable extends React.Component{
         </thead>
         <tbody>
           { this.props.patientResults.map(function(patientResult) {
-             return <TestBatchRow key={ patientResult.id } userCanApprove={ this.props.userCanApprove } paymentDone={ this.props.paymentDone } rejectReasons={ this.props.rejectReasons } patientResult={ patientResult } updateResultUrl={ this.props.updateResultUrl } />;
+             return <TestBatchRow key={ patientResult.id } userCanApprove={ this.props.encounter.userCanApprove } paymentDone={ this.props.encounter.paymentDone } rejectReasons={ this.props.rejectReasons } patientResult={ patientResult } updateResultUrl={ this.props.updateResultUrl } />;
           }.bind(this)) }
         </tbody>
       </table>
@@ -21,9 +21,8 @@ class TestBatchTable extends React.Component{
 }
 
 TestBatchTable.propTypes = {
-  patientResults: React.PropTypes.array,
+  patientResults: React.PropTypes.array.isRequired,
+  encounter: React.PropTypes.object.isRequired,
   rejectReasons: React.PropTypes.object.isRequired,
-  paymentDone: React.PropTypes.bool.isRequired,
-  userCanApprove: React.PropTypes.bool.isRequired,
   updateResultUrl: React.PropTypes.string.isRequired,
 };

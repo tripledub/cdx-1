@@ -7,11 +7,11 @@ describe CultureResultsController do
   let!(:institution)        { user.institutions.make }
   let(:site)                { Site.make institution: institution }
   let(:patient)             { Patient.make institution: institution }
-  let(:encounter)           { Encounter.make institution: institution , user: user, patient: patient, test_batch: TestBatch.make(institution: institution) }
+  let(:encounter)           { Encounter.make institution: institution , user: user, patient: patient }
   let(:sample)              { Sample.make(institution: institution, patient: patient, encounter: encounter) }
   let!(:sample_identifier1) { SampleIdentifier.make(site: site, entity_id: 'sample-id', sample: sample) }
   let!(:sample_identifier2) { SampleIdentifier.make(site: site, entity_id: 'sample-2', sample: sample) }
-  let!(:culture_result)     { CultureResult.make test_batch: encounter.test_batch }
+  let!(:culture_result)     { CultureResult.make encounter: encounter }
   let(:default_params)      { { context: institution.uuid } }
   let(:valid_params) do
     {
@@ -32,7 +32,7 @@ describe CultureResultsController do
 
     describe 'show' do
       it 'should render the show template' do
-        get 'show', test_batch_id: encounter.test_batch.id, id: culture_result
+        get 'show', encounter_id: encounter.id, id: culture_result
 
         expect(request).to render_template('show')
       end
@@ -40,7 +40,7 @@ describe CultureResultsController do
 
     describe 'edit' do
       before :each do
-        get 'edit', test_batch_id: encounter.test_batch.id, id: culture_result
+        get 'edit', encounter_id: encounter.id, id: culture_result
       end
 
       it 'should render the edit template' do
@@ -52,7 +52,7 @@ describe CultureResultsController do
       context 'with valid data' do
         before :each do
           valid_params.merge!({ media_used: 'liquid' })
-          put :update, test_batch_id: encounter.test_batch.id, id: culture_result, culture_result: valid_params
+          put :update, encounter_id: encounter.id, id: culture_result, culture_result: valid_params
           culture_result.reload
         end
 
@@ -61,14 +61,14 @@ describe CultureResultsController do
         end
 
         it 'should redirect to the test order page' do
-          expect(response).to redirect_to encounter_path(encounter.test_batch.encounter)
+          expect(response).to redirect_to encounter_path(encounter)
         end
       end
 
       context 'with invalid data' do
         before :each do
           valid_params.merge!({ media_used: '' })
-          put :update, test_batch_id: encounter.test_batch.id, id: culture_result, culture_result: valid_params
+          put :update, encounter_id: encounter.id, id: culture_result, culture_result: valid_params
         end
 
         it 'should redirect to the test order page' do

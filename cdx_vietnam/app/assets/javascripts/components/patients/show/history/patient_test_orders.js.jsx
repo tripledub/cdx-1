@@ -3,7 +3,7 @@ var PatientTestOrders = React.createClass({
     return {
       patientTestOrders: [],
       queryOrder: true,
-      loadingMessage: I18n.t("components.patients.show.history.msg_loading_order"),
+      loadingMessage: I18n.t("components.patients.show.msg_loading"),
       orderedColumns: {},
       availableColumns: [
         { title: I18n.t("components.patients.show.history.col_test_order_request_by"),      fieldName: 'site' },
@@ -25,7 +25,7 @@ var PatientTestOrders = React.createClass({
         this.updateOrderIcon(field);
         $("table").resizableColumns({store: window.store});
       } else {
-        this.setState({ loadingMessage: I18n.t("components.patients.show.history.msg_no_order") });
+        this.setState({ loadingMessage: I18n.t("components.patients.show.msg_no_order") });
       };
     }.bind(this));
   },
@@ -57,7 +57,7 @@ var PatientTestOrders = React.createClass({
   },
 
   render: function(){
-    var rows       = [];
+    var rows = [];
     var rowHeaders = [];
     var that       = this;
     this.state.patientTestOrders.forEach(

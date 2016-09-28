@@ -52,9 +52,19 @@ Rails.application.routes.draw do
   get 'settings' => 'home#settings'
 
   resources :encounters do
-    resource :test_batch, only: [] do
+    resource :encounter_payments, only: [] do
       post :set_as_paid
     end
+
+    resource :patient_results, only: [:update] do
+      collection do
+        post :update_samples
+      end
+    end
+    resources :xpert_results, only: [:show, :edit, :update]
+    resources :microscopy_results, only: [:show, :edit, :update]
+    resources :dst_lpa_results, only: [:show, :edit, :update]
+    resources :culture_results, only: [:show, :edit, :update]
 
     collection do
       get :new_index
@@ -106,18 +116,6 @@ Rails.application.routes.draw do
       get 'raw'
       post 'reprocess'
     end
-  end
-
-  resources :test_batches do
-    resource :patient_results, only: [:update] do
-      collection do
-        post :update_samples
-      end
-    end
-    resources :xpert_results, only: [:show, :edit, :update]
-    resources :microscopy_results, only: [:show, :edit, :update]
-    resources :dst_lpa_results, only: [:show, :edit, :update]
-    resources :culture_results, only: [:show, :edit, :update]
   end
 
   resources :test_results, only: [:index, :show]

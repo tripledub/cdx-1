@@ -2,18 +2,6 @@ module TestOrders
   class Persistence
     attr_reader :params, :current_user, :localization_helper, :encounter_param
 
-    class << self
-      def change_status(encounter)
-        if order_is_pending?(encounter.test_batch)
-          encounter.update_attribute(:status, 'pending')
-        elsif encounter.test_batch.status == 'in_progress'
-          encounter.update_attribute(:status, 'in_progress')
-        elsif encounter.test_batch.status == 'closed'
-          encounter.update_attribute(:status, 'completed')
-        end
-      end
-    end
-
     def initialize(params, current_user, localization_helper)
       @params = params
       @current_user = current_user
@@ -44,18 +32,16 @@ module TestOrders
     end
 
     def destroy(encounter)
-      @encounter = encounter
-      if @encounter.status == 'new'
+      if encounter.status == 'new'
         begin
-          Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: @encounter.uuid, ignore: 404
-          Audit::EncounterAuditor.new(@encounter, current_user.id).log_action(I18n.t('encounters.destroy.cancelled'), I18n.t('encounters.destroy.log_action', uuid: @encounter.uuid), @encounter)
-          @encounter.destroy
-          message = I18n.t('encounters.destroy.success')
+          Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: encounter.uuid, ignore: 404
+          encounter.destroy_and_audit(current_user, "#{encounter.uuid} t{encounters.destroy.log_action}")
+          I18n.t('encounters.destroy.success')
         rescue => ex
           Rails.logger.error ex.message
         end
       else
-        message = I18n.t('encounters.destroy.not_allowed')
+        I18n.t('encounters.destroy.not_allowed')
       end
     end
 
@@ -138,6 +124,8 @@ module TestOrders
         json.(@encounter, :status)
         json.(@encounter, :testdue_date)
         json.(@encounter, :testing_for)
+        json.paymentDone @encounter.payment_done
+        json.userCanApprove Policy.can?(Policy::Actions::APPROVE_ENCOUNTER, Encounter, current_user)
         json.culture_format Extras::Select.find(Encounter.culture_format_options, @encounter.culture_format)
         json.has_dirty_diagnostic @encounter.has_dirty_diagnostic?
         json.assays (@encounter_blender.core_fields[Encounter::ASSAYS_FIELD] || [])
@@ -178,10 +166,6 @@ module TestOrders
 
     protected
 
-    def self.order_is_pending?(test_batch)
-      test_batch.payment_done == true && test_batch.status == 'samples_collected'
-    end
-
     def perform_encounter_action(action)
       @extended_respone = {}
       begin
@@ -218,7 +202,6 @@ module TestOrders
         @encounter.testdue_date      = encounter_param['testdue_date']
         @encounter.testing_for       = encounter_param['testing_for']
         @encounter.presumptive_rr    = encounter_param['presumptive_rr']
-        @encounter.test_batch        = ::TestBatch.new institution: @encounter.institution, status: 'new'
       else
         @institution                 = @encounter.institution
       end
@@ -282,7 +265,7 @@ module TestOrders
     end
 
     def create_requested_tests
-      TestBatches::Persistence.build_requested_tests(@encounter.test_batch, encounter_param['tests_requested'])
+      PatientResults::Persistence.build_requested_tests(@encounter, encounter_param['tests_requested'])
     end
 
     def create_new_samples
@@ -306,7 +289,7 @@ module TestOrders
     end
 
     def store_create_encounter_audit_log
-      Audit::EncounterAuditor.new(@encounter, current_user.id).log_changes(I18n.t('encounters_controller.test_order_created'), "#{@encounter.id}", @encounter)
+      Audit::Auditor.new(@encounter, current_user.id).log_changes("t{encounters.create.test_order_created}: #{@encounter.batch_id}", @encounter.batch_id)
     end
 
     def new_sample_for_site
@@ -317,9 +300,9 @@ module TestOrders
 
     def recalculate_diagnostic
       previous_tests_uuids = encounter_param['test_results'].map{|t| t['uuid']}
-      assays_to_merge      = @blender.test_results\
-        .reject{|tr| (tr.uuids & previous_tests_uuids).any?}\
-        .map{|tr| tr.core_fields[TestResult::ASSAYS_FIELD]}
+      assays_to_merge = @blender.test_results.reject { |tr|
+        (tr.uuids & previous_tests_uuids).any?
+      }.map{ |tr| tr.core_fields[TestResult::ASSAYS_FIELD] }
 
       diagnostic_assays = assays_to_merge.inject(encounter_param['assays']) do |merged, to_merge|
         Encounter.merge_assays(merged, to_merge)

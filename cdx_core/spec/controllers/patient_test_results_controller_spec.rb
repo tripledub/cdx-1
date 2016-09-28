@@ -7,8 +7,8 @@ describe PatientTestResultsController do
   let(:institution)    { user.institutions.make }
   let(:site)           { Site.make institution: institution }
   let(:patient)        { Patient.make institution: institution }
-  let(:encounter)      { Encounter.make institution: institution , user: user, patient: patient, test_batch: TestBatch.make(institution: institution) }
-  let(:device)         { Device.make  institution: institution, site: site }
+  let(:encounter)      { Encounter.make institution: institution, user: user, patient: patient }
+  let(:device)         { Device.make institution: institution, site: site }
   let(:default_params) { { context: institution.uuid } }
 
   context 'logged in user' do
@@ -19,18 +19,18 @@ describe PatientTestResultsController do
     describe 'index' do
       before :each do
         4.times do
-          TestResult.make patient: patient, institution: institution, device: device
+          TestResult.make patient: patient, institution: institution, device: device, encounter: encounter
         end
         2.times do
-          MicroscopyResult.make test_batch: encounter.test_batch
+          MicroscopyResult.make encounter: encounter
         end
         2.times do
-          CultureResult.make test_batch: encounter.test_batch
+          CultureResult.make encounter: encounter
         end
         2.times do
-          DstLpaResult.make test_batch: encounter.test_batch
+          DstLpaResult.make encounter: encounter
         end
-        XpertResult.make test_batch: encounter.test_batch
+        XpertResult.make encounter: encounter
       end
 
       it 'should return a json with test results' do

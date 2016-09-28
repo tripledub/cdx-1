@@ -11,7 +11,7 @@ class Presenters::MicroscopyResults
           serialNumber:      microscopy_result.serial_number,
           testResult:        Extras::Select.find(MicroscopyResult.test_result_options, microscopy_result.test_result),
           appearance:        Extras::Select.find(MicroscopyResult.visual_appearance_options, microscopy_result.appearance),
-          viewLink:          Rails.application.routes.url_helpers.test_batch_microscopy_result_path(microscopy_result.test_batch, microscopy_result)
+          viewLink:          Rails.application.routes.url_helpers.encounter_microscopy_result_path(microscopy_result.encounter, microscopy_result)
         }
       end
     end

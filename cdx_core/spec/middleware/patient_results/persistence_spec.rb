@@ -6,29 +6,40 @@ describe PatientResults::Persistence do
   let!(:institution)      { user.institutions.make }
   let(:patient)           { Patient.make institution: institution }
   let(:encounter)         { Encounter.make institution: institution, patient: patient }
-  let(:test_batch)        { TestBatch.make encounter: encounter, institution: institution }
-  let(:microscopy_result) { MicroscopyResult.make test_batch: test_batch }
-  let(:culture_result)    { CultureResult.make test_batch: test_batch }
+  let(:microscopy_result) { MicroscopyResult.make encounter: encounter }
+  let(:culture_result)    { CultureResult.make encounter: encounter }
   let(:feedback_message)  { FeedbackMessage.make institution: institution }
-  let(:sample_ids) {
-    { microscopy_result.id.to_s => '8778', culture_result.id.to_s => 'Random Id' }
-  }
+  let(:sample_ids)        { { microscopy_result.id.to_s => '8778', culture_result.id.to_s => 'Random Id' } }
+  let(:tests_requested)   { 'microscopy|xpertmtb|culture_cformat_solid|drugsusceptibility1line_cformat_liquid|' }
+
+  describe 'build_requested_tests' do
+    it 'should build tests from string' do
+      described_class.build_requested_tests(encounter, tests_requested)
+
+      expect(encounter.patient_results.count).to eq(4)
+    end
+
+    it 'should create a valid batch of tests' do
+      expect(encounter.valid?).to be true
+    end
+  end
 
   describe 'collect_sample_ids' do
     before :each do
-      described_class.collect_sample_ids(test_batch, sample_ids)
+      described_class.collect_sample_ids(encounter, sample_ids)
+      encounter.reload
     end
 
     it 'should populate serial number with lab Id.' do
-      expect(test_batch.patient_results.first.serial_number).to eq('8778')
+      expect(encounter.patient_results.first.serial_number).to eq('8778')
     end
 
     it 'should populate serial number with lab Id.' do
-      expect(test_batch.patient_results.last.serial_number).to eq('Random Id')
+      expect(encounter.patient_results.last.serial_number).to eq('Random Id')
     end
 
-    it 'should update test batch status to samples collected' do
-      expect(test_batch.status).to eq('samples_collected')
+    it 'should update encounter status to samples collected' do
+      expect(encounter.status).to eq('samples_collected')
     end
   end
 
@@ -86,7 +97,10 @@ describe PatientResults::Persistence do
 
   describe 'update_result' do
     it 'should set result status to pending approval' do
-      described_class.update_result(microscopy_result, { result_status: 'completed', comment: 'New comment added' }, user, 'Microscopy updated')
+      described_class.update_result(
+        microscopy_result,
+        { result_status: 'completed', comment: 'New comment added' }, user, 'Microscopy updated'
+      )
 
       expect(microscopy_result.result_status).to eq('pending_approval')
     end

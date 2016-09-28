@@ -36,10 +36,10 @@ module Concerns
 
         def generate_status(encounter)
           encounter_status = I18n.t("select.encounter.status_options.#{encounter.status}")
-          encounter_status += ': Batch (' + I18n.t("select.test_batch.status_options.#{encounter.test_batch.status}") + ') '
+          encounter_status += ': '
 
-          encounter_status += encounter.test_batch.patient_results.map do |patient_result|
-            "#{patient_result.test_name} (#{I18n.t('select.patient_result.status_options.'+patient_result.result_status)})"
+          encounter_status += encounter.patient_results.map do |patient_result|
+            "#{patient_result.test_name} (#{I18n.t('select.patient_result.status_options.' + patient_result.result_status)})"
           end.join(' - ')
 
           encounter_status

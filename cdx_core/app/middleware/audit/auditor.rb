@@ -1,15 +1,16 @@
 module Audit
+  # Saves all audit information to the database.
   class Auditor
     def initialize(auditable_model, user_id)
       @auditable_model = auditable_model
       @user_id         = user_id
     end
 
-    def log_action(title, comment='')
+    def log_action(title, comment = '')
       create_log(title, comment)
     end
 
-    def log_changes(title, comment='')
+    def log_changes(title, comment = '')
       audit_log = create_log(title, comment)
 
       update_log(audit_log)
@@ -49,5 +50,4 @@ module Audit
       end
     end
   end
-
 end

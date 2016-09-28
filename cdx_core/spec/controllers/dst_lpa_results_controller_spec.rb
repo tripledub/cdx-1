@@ -7,11 +7,11 @@ describe DstLpaResultsController do
   let!(:institution)        { user.institutions.make }
   let(:site)                { Site.make institution: institution }
   let(:patient)             { Patient.make institution: institution }
-  let(:encounter)           { Encounter.make institution: institution , user: user, patient: patient, test_batch: TestBatch.make(institution: institution) }
+  let(:encounter)           { Encounter.make institution: institution , user: user, patient: patient }
   let(:sample)              { Sample.make(institution: institution, patient: patient, encounter: encounter) }
   let!(:sample_identifier1) { SampleIdentifier.make(site: site, entity_id: 'sample-id', sample: sample) }
   let!(:sample_identifier2) { SampleIdentifier.make(site: site, entity_id: 'sample-2', sample: sample) }
-  let!(:dst_lpa_result)      { DstLpaResult.make test_batch: encounter.test_batch }
+  let!(:dst_lpa_result)      { DstLpaResult.make encounter: encounter }
   let(:default_params)      { { context: institution.uuid } }
   let(:valid_params)        { {
     sample_collected_on: 4.days.ago,
@@ -41,7 +41,7 @@ describe DstLpaResultsController do
 
     describe 'show' do
       it 'should render the new template' do
-        get 'show', test_batch_id: encounter.test_batch.id, id: dst_lpa_result
+        get 'show', encounter_id: encounter.id, id: dst_lpa_result
 
         expect(request).to render_template('show')
       end
@@ -51,7 +51,7 @@ describe DstLpaResultsController do
       context 'with valid data' do
         before :each do
           valid_params.merge!({ media_used: 'liquid' })
-          put :update, test_batch_id: encounter.test_batch.id, id: dst_lpa_result, dst_lpa_result: valid_params
+          put :update, encounter_id: encounter.id, id: dst_lpa_result, dst_lpa_result: valid_params
           dst_lpa_result.reload
         end
 
@@ -67,7 +67,7 @@ describe DstLpaResultsController do
       context 'with invalid data' do
         before :each do
           valid_params.merge!({ media_used: '' })
-          put :update, test_batch_id: encounter.test_batch.id, id: dst_lpa_result, dst_lpa_result: valid_params
+          put :update, encounter_id: encounter.id, id: dst_lpa_result, dst_lpa_result: valid_params
         end
 
         it 'should redirect to the test order page' do

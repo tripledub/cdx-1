@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 describe Extras::Select do
-  let(:select_options) {
+  let(:select_options) do
     [
       ['first',  'First option'],
       ['second', 'Second option'],
       ['third',  'Third option'],
       ['fourth', 'Fourth option']
     ]
-  }
+  end
 
   describe 'find' do
     it 'should return the first match in all options' do

@@ -1,3 +1,4 @@
+# Patientes test order
 class PatientTestOrdersController < ApplicationController
   respond_to :json
 
@@ -19,10 +20,10 @@ class PatientTestOrdersController < ApplicationController
   def set_order_from_params
     order = params[:order] == 'true' ? 'asc' : 'desc'
     case params[:field].to_s
-    when 'site'
+    when 'requestedSiteName'
       "sites.name #{order}"
-    when 'orderId'
-      "encounters.uuid #{order}"
+    when 'batchId'
+      "encounters.batch_id #{order}"
     when 'requester'
       "users.first_name #{order}, users.last_name"
     when 'dueDate'

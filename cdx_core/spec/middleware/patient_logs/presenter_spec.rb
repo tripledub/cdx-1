@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Presenters::PatientLogs do
+describe PatientLogs::Presenter do
   let(:user)           { User.make }
   let!(:institution)   { user.institutions.make }
   let(:patient)        { Patient.make institution: institution }

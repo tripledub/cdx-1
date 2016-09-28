@@ -3,7 +3,7 @@ var PatientTestOrders = React.createClass({
     return {
       patientTestOrders: [],
       queryOrder: true,
-      loadingMessage: I18n.t("components.patients.show.history.msg_loading_order"),
+      loadingMessage: I18n.t("components.patients.show.msg_loading"),
       orderedColumns: {},
       availableColumns: [
         { title: I18n.t("components.patients.show.history.col_test_order_request_by"),      fieldName: 'site' },
@@ -26,7 +26,7 @@ var PatientTestOrders = React.createClass({
         this.updateOrderIcon(field);
         $("table").resizableColumns({store: window.store});
       } else {
-        this.setState({ loadingMessage: I18n.t("components.patients.show.history.msg_no_order") });
+        this.setState({ loadingMessage: I18n.t("components.patients.show.msg_no_order") });
       };
     }.bind(this));
   },
@@ -58,13 +58,22 @@ var PatientTestOrders = React.createClass({
   },
 
   render: function(){
-    var rows       = [];
+    var rows = [];
     var rowHeaders = [];
     var that       = this;
     this.state.patientTestOrders.forEach(
       function(patientTestOrder) {
-        // Add new on-the-fly field to the output row
-        patientTestOrder.turnaroundTime = 42;
+        // Add any on-the-fly field values to the output row
+        patientTestOrder._highlight_overdue = '';
+        var today = new Date();
+        if(patientTestOrder.statusRaw != 'completed' && patientTestOrder.dueDate)
+        {
+          var dd = Date.parse(patientTestOrder.dueDate);
+          if(dd < today )
+          {
+            patientTestOrder._highlight_overdue = 'overdueHightlight';
+          }
+        }
         rows.push(<PatientTestOrder patientTestOrder={patientTestOrder} key={patientTestOrder.id} />);
       }
     );

@@ -5,8 +5,7 @@ describe PatientResultsController do
   let(:institution)       { user.institutions.make }
   let(:patient)           { Patient.make institution: institution }
   let(:encounter)         { Encounter.make institution: institution, patient: patient }
-  let(:test_batch)        { TestBatch.make encounter: encounter, institution: institution }
-  let(:microscopy_result) { MicroscopyResult.make test_batch: test_batch }
+  let(:microscopy_result) { MicroscopyResult.make encounter: encounter }
   let(:feedback_message)  { FeedbackMessage.make(institution: institution) }
   let(:default_params)    { { context: institution.uuid } }
   let(:samples_ids)       {
@@ -19,7 +18,7 @@ describe PatientResultsController do
 
   describe 'update_samples' do
     before :each do
-      post :update_samples, test_batch_id: test_batch.id, samples: samples_ids
+      post :update_samples, encounter_id: encounter.id, samples: samples_ids
     end
 
     it 'should update requested samples' do
@@ -37,7 +36,7 @@ describe PatientResultsController do
     let(:patient_result) { { result_status: 'completed', comment: 'New comment added', feedback_message_id: feedback_message.id } }
 
     before :each do
-      put :update, test_batch_id: test_batch.id, id: microscopy_result.id, patient_result: patient_result, format: :json
+      put :update, encounter_id: encounter.id, id: microscopy_result.id, patient_result: patient_result, format: :json
       microscopy_result.reload
     end
 

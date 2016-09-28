@@ -1,5 +1,4 @@
 class DstLpaResultsController < PatientResultsController
-
   before_filter :find_dst_lpa_result, only: [:edit, :update, :show]
 
   before_filter :validate_culture_is_added, only: [:new, :create]
@@ -14,8 +13,8 @@ class DstLpaResultsController < PatientResultsController
   end
 
   def update
-    if PatientResults::Persistence.update_result(@dst_lpa_result, dst_lpa_result_params, current_user, I18n.t('culture_results.update.audit'))
-      redirect_to encounter_path(@test_batch.encounter), notice: I18n.t('dst_lpa_results.update.notice')
+    if PatientResults::Persistence.update_result(@dst_lpa_result, dst_lpa_result_params, current_user, 't{culture_results.update.audit}')
+      redirect_to encounter_path(@encounter), notice: I18n.t('dst_lpa_results.update.notice')
     else
       render action: 'edit'
     end
@@ -24,14 +23,10 @@ class DstLpaResultsController < PatientResultsController
   protected
 
   def find_dst_lpa_result
-    @dst_lpa_result = @test_batch.patient_results.find(params[:id])
+    @dst_lpa_result = @encounter.patient_results.find(params[:id])
   end
 
   def dst_lpa_result_params
     params.require(:dst_lpa_result).permit(:sample_collected_on, :examined_by, :result_on, :media_used, :serial_number, :results_h, :results_r, :results_e, :results_s, :results_amk, :results_km, :results_cm, :results_fq, :results_other1, :results_other2, :results_other3, :results_other4, :method_used)
-  end
-
-  def validate_culture_is_added
-    redirect_to(encounter_path(@test_batch.encounter), notice: I18n.t('dst_lpa_results.create.dst_warning')) if @test_batch.show_dst_warning
   end
 end

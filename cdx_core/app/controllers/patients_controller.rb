@@ -1,8 +1,10 @@
+# Patients controller
 class PatientsController < ApplicationController
-  before_filter :find_patient, only:['show','edit','update','destroy']
+  before_filter :find_patient, only: %w(show edit update destroy)
 
   def search
-    @patients = check_access(Patient.where(is_phantom: false).where(institution: @navigation_context.institution), READ_PATIENT).order(:name)
+    @patients = check_access(Patient.where(is_phantom: false)
+      .where(institution: @navigation_context.institution), READ_PATIENT).order(:name)
     @patients = @patients.where("name LIKE concat('%', ?, '%') OR entity_id LIKE concat('%', ?, '%')", params[:q], params[:q])
     @patients = @patients.page(1).per(10)
 
@@ -38,18 +40,18 @@ class PatientsController < ApplicationController
   end
 
   def create
-    @institution  = @navigation_context.institution
+    @institution = @navigation_context.institution
     return unless authorize_resource(@institution, CREATE_INSTITUTION_PATIENT)
     parse_date_of_birth
     @patient      = @institution.patients.new(patient_params)
     @patient.site = @navigation_context.site
 
-    if validate_name_and_entity_id && @patient.save_and_audit(current_user, I18n.t('patients.create.audit_log', patient_name: @patient.name))
+    if validate_name_and_entity_id && @patient.save_and_audit(current_user, "t{patients.create.audit_log}: #{@patient.name}")
       next_url = if params[:next_url].blank?
-        patient_path(@patient)
-      else
-        "#{params[:next_url]}#{params[:next_url].include?('?') ? '&' : '?'}patient_id=#{@patient.id}"
-      end
+                   patient_path(@patient)
+                 else
+                   "#{params[:next_url]}#{params[:next_url].include?('?') ? '&' : '?'}patient_id=#{@patient.id}"
+                 end
 
       redirect_to next_url, notice: I18n.t('patients.create.success')
     else
@@ -68,7 +70,7 @@ class PatientsController < ApplicationController
     return unless authorize_resource(@patient, UPDATE_PATIENT)
     parse_date_of_birth
 
-    if name_is_present? && @patient.update_and_audit(patient_params, current_user, I18n.t('patients.update.audit_log', patient_name: @patient.name))
+    if name_is_present? && @patient.update_and_audit(patient_params, current_user, "#{@patient.name} t{patients.update.audit_log}")
       redirect_to patient_path(@patient), notice: I18n.t('patients.update.success')
     else
       render action: 'edit'
@@ -78,7 +80,7 @@ class PatientsController < ApplicationController
   def destroy
     return unless authorize_resource(@patient, DELETE_PATIENT)
 
-    @patient.destroy
+    @patient.destroy_and_audit(current_user, "#{@patient.name} t{patients.destroy.audit_log}")
 
     redirect_to patients_path, notice: I18n.t('patients.destroy.success')
   end
@@ -86,13 +88,14 @@ class PatientsController < ApplicationController
   protected
 
   def find_patient
-    @patient  = Patient.find(params[:id])
+    @patient = Patient.find(params[:id])
   end
 
   def patient_params
     params.require(:patient).permit(
-      :name, :entity_id, :gender, :nickname, :medical_insurance_num, :social_security_code, :external_id, :birth_date_on, :address, :email, :phone, :city, :state, :zip_code,
-      addresses_attributes: [ :id, :address, :city, :state, :zip_code ]
+      :name, :entity_id, :gender, :nickname, :medical_insurance_num, :social_security_code, :external_id,
+      :birth_date_on, :address, :email, :phone, :city, :state, :zip_code,
+      addresses_attributes: [:id, :address, :city, :state, :zip_code]
     )
   end
 
@@ -100,8 +103,8 @@ class PatientsController < ApplicationController
     (2 - @patient.addresses.size).times { @patient.addresses.build }
   end
 
+  # Only patients from form need this validation. Phantom patients don't have name or entity_id
   def validate_name_and_entity_id
-    #Only patients from form need this validation. Phantom patients don't have name or entity_id
     @patient.valid?
     @patient.errors.add(:entity_id, I18n.t('patients.create.no_entity')) if @patient.new_record? && !@patient.entity_id.present?
     @patient.errors.add(:name, I18n.t('patients.create.no_entity'))      unless @patient.name.present?

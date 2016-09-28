@@ -1,3 +1,4 @@
+# Comments controller
 class CommentsController < ApplicationController
   respond_to :html
   respond_to :json, only: [:index]
@@ -7,7 +8,8 @@ class CommentsController < ApplicationController
   before_filter :find_comment, only: [:show]
 
   def index
-    render json: Presenters::Comments.patient_view(@patient.comments.joins(:user).order(set_order_from_params).limit(30).offset(params[:page] || 0))
+    render json: Presenters::Comments.patient_view(@patient.comments.joins(:user)
+      .order(set_order_from_params).limit(30).offset(params[:page] || 0))
   end
 
   def new
@@ -19,7 +21,7 @@ class CommentsController < ApplicationController
     @comment              = @patient.comments.new(comment_params)
     @comment.user         = current_user
 
-    if @comment.save_and_audit(current_user, I18n.t('comments.create.audit_comment'), @comment.comment)
+    if @comment.save_and_audit(current_user, 't{comments.create.audit_comment}', @comment.comment)
       redirect_to patient_path(@patient), notice: I18n.t('comments.create.comment_ok')
     else
       render action: 'new'

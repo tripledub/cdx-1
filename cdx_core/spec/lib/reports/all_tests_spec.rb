@@ -10,9 +10,9 @@ RSpec.describe Reports::AllTests, elasticsearch: true do
   let(:user_device)         { Device.make institution_id: institution.id, site: site }
   let(:user_device_two)     { Device.make institution_id: institution_two.id, site: site_two }
   let(:patient)             { Patient.make institution: institution }
-  let(:encounter)           { Encounter.make institution: institution , user: current_user, patient: patient, test_batch: TestBatch.make(institution: institution) }
-  let!(:microscopy_result)  { MicroscopyResult.make test_batch: encounter.test_batch }
-  let!(:culture_result)     { CultureResult.make test_batch: encounter.test_batch }
+  let(:encounter)           { Encounter.make institution: institution , user: current_user, patient: patient }
+  let!(:microscopy_result)  { MicroscopyResult.make encounter: encounter }
+  let!(:culture_result)     { CultureResult.make encounter: encounter }
   let(:nav_context)         { NavigationContext.new(current_user, institution.uuid) }
   let(:options)             { {} }
 

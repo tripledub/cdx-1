@@ -18,7 +18,7 @@ en:
         in_progress: 'In progress'
         pending_approval: 'Pending approval'
         approved: 'Approved'
-        completed: 'Completed'
+        closed: 'Closed'
     test_batch:
       status_options:
         new: 'New'

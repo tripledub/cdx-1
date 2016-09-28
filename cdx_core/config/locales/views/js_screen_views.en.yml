@@ -186,7 +186,6 @@ en:
       performing_site_label: "Performing site:"
       test_detail_heading: "Test Details"
       order_id_label: "Order Id:"
-      batch_id_label: "Batch Id:"
       testing_for_label: "Testing for:"
       culture_format_label: "Culture format:"
       comment_label: "Comment:"
