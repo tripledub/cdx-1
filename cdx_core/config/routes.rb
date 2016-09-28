@@ -1,4 +1,7 @@
-Rails.application.routes.draw do
+CdxCore::Engine.routes.draw do
+
+  mount CdxApiCore::Engine => "/api"
+
   if Settings.single_tenant
     devise_for(
       :users,

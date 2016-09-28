@@ -18,6 +18,6 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 4.2.7.1"
-
   s.add_dependency "cdx_core", "~> 1.1.0"
+  s.add_dependency "grape", "~> 0.17.0"
 end

@@ -1,5 +1,6 @@
 CdxApiCore::Engine.routes.draw do
-  resources :activations, only: :create
+  mount CdxApiCore::Base => '/'
+  #resources :activations, only: :create
   resources :playground, only: :index, defaults: { format: 'html' } do
     collection do
       get :simulator
