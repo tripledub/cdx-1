@@ -12,18 +12,24 @@ module Audit
 
     def log_changes(title, comment = '')
       audit_log = create_log(title, comment)
-
       update_log(audit_log)
+    end
+
+    def log_status_change(title, values)
+      audit_log = create_log(title, '')
+      create_log_update(audit_log, 'status', values)
     end
 
     protected
 
     def create_log(title, comment)
       AuditLog.create do |log|
-        log.title      = title
+        log.title = title
         log.patient_id = patient_id
-        log.user_id    = @user_id
-        log.comment    = comment
+        log.user_id = @user_id
+        log.comment = comment
+        log.encounter_id = encounter_id
+        log.patient_result_id = patient_result_id
       end
     end
 
@@ -33,7 +39,7 @@ module Audit
     end
 
     def create_log_update(audit_log, field, values)
-      audit_log.audit_updates.create! do |log_update|
+      audit_log.audit_updates.create do |log_update|
         log_update.field_name = field
         log_update.old_value  = values[0]
         log_update.new_value  = values[1]
@@ -41,7 +47,15 @@ module Audit
     end
 
     def patient_id
-      @auditable_model.class.to_s == 'Patient' ? @auditable_model.id : @auditable_model.patient.id
+      @auditable_model.is_a?(Patient) ? @auditable_model.id : @auditable_model.patient.id
+    end
+
+    def encounter_id
+      @auditable_model.is_a?(Encounter) ? @auditable_model.id : nil
+    end
+
+    def patient_result_id
+      @auditable_model.is_a?(PatientResult) ? @auditable_model.id : nil
     end
 
     def audit_changes_to_addresses(audit_log, addresses)

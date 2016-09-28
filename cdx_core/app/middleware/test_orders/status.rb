@@ -2,20 +2,27 @@ module TestOrders
   # Logic to handle all different test order status
   class Status
     class << self
-      def update_status(encounter)
+      def update_status(encounter, current_user)
         encounter.reload
         if all_finished?(encounter)
-          encounter.update_attribute(:status, 'closed')
+          update_and_log(encounter, current_user, 'closed')
         elsif any_pending_approval_or_finished?(encounter)
-          encounter.update_attribute(:status, 'in_progress')
+          update_and_log(encounter, current_user, 'in_progress')
         elsif any_sample_received?(encounter)
-          encounter.update_attribute(:status, 'samples_received')
+          update_and_log(encounter, current_user, 'samples_received')
         elsif order_is_pending?(encounter)
-          encounter.update_attribute(:status, 'pending')
+          update_and_log(encounter, current_user, 'pending')
         end
       end
 
       protected
+
+      def update_and_log(encounter, current_user, new_status)
+        current_user = encounter.user unless current_user
+
+        TestOrders::StatusAuditor.create_status_log(encounter, current_user.id, [encounter.status, new_status])
+        encounter.update_attribute(:status, new_status)
+      end
 
       def order_is_pending?(encounter)
         encounter.payment_done == true && encounter.status == 'samples_received'

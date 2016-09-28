@@ -7,6 +7,7 @@ describe PatientResult do
   context "validations" do
     it { should belong_to(:encounter) }
     it { should belong_to(:feedback_message) }
+    it { have_many :audit_logs }
   end
 
   context 'when status is rejected' do

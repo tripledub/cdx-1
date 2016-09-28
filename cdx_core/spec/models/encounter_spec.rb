@@ -7,6 +7,7 @@ describe Encounter do
 
   describe 'validations' do
     it { have_many :patient_results }
+    it { have_many :audit_logs }
     it { is_expected.to validate_presence_of :institution }
     it { should validate_inclusion_of(:status).in_array(status_options) }
   end

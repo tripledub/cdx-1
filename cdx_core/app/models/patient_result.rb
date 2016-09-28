@@ -7,6 +7,7 @@ class PatientResult < ActiveRecord::Base
   belongs_to :encounter
   belongs_to :feedback_message
   has_many   :assay_results, as: :assayable
+  has_many   :audit_logs
 
   validates_presence_of :comment, if: Proc.new { |rt| rt.result_status == 'rejected' }, message: I18n.t('patient_results.validations.rejected_no_comment')
 
@@ -15,6 +16,8 @@ class PatientResult < ActiveRecord::Base
   before_save   :complete_test
   before_save   :update_status
   before_create :set_status_to_new
+
+  acts_as_paranoid
 
   scope :pending_approval, -> { where(result_status: 'pending_approval') }
 
@@ -62,7 +65,7 @@ class PatientResult < ActiveRecord::Base
   def update_batch_status
     return unless encounter.present?
 
-    TestOrders::Status.update_status(encounter)
+    TestOrders::Status.update_status(encounter, User.current)
   end
 
   def set_status_to_new

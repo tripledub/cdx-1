@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe TestOrders::Status do
+  let(:user)              { User.make }
   let(:encounter)         { Encounter.make }
   let(:microscopy_result) { MicroscopyResult.make encounter: encounter }
   let(:dst_lpa_result)    { DstLpaResult.make encounter: encounter }
@@ -9,6 +10,7 @@ describe TestOrders::Status do
 
   describe 'update_status' do
     before :each do
+      User.current = user
       dst_lpa_result
       microscopy_result
     end
