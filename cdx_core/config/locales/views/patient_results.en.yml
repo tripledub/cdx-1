@@ -6,5 +6,6 @@ en:
       samples_updated: 'Sample Ids updated successfully.'
       updated_fail: 'Sample Ids can not be updated.'
     update:
+      status_tracking: 'Test result status updated'
       success: 'Result was updated successfully.'
       failure: 'Result can not be updated.'
