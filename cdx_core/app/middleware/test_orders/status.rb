@@ -3,6 +3,7 @@ module TestOrders
   class Status
     class << self
       def update_status(encounter)
+        encounter.reload
         if all_finished?(encounter)
           encounter.update_attribute(:status, 'closed')
         elsif any_pending_approval_or_finished?(encounter)
