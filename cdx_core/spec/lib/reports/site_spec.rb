@@ -10,8 +10,8 @@ RSpec.describe Reports::Site, elasticsearch: true do
   let(:user_device_two)     { Device.make institution_id: institution.id, site: site2 }
   let(:nav_context)         { NavigationContext.new(current_user, institution.uuid) }
   let(:patient)             { Patient.make institution: institution }
-  let(:encounter)           { Encounter.make institution: institution , user: current_user, patient: patient, site: site }
-  let(:encounter2)          { Encounter.make institution: institution , user: current_user, patient: patient, site: site2 }
+  let(:encounter)           { Encounter.make institution: institution, user: current_user, patient: patient, site: site }
+  let(:encounter2)          { Encounter.make institution: institution, user: current_user, patient: patient, site: site2 }
   let!(:microscopy_result)  { MicroscopyResult.make encounter: encounter2 }
   let!(:culture_result)     { CultureResult.make encounter: encounter }
 
@@ -58,6 +58,10 @@ RSpec.describe Reports::Site, elasticsearch: true do
   end
 
   describe 'process results' do
+    before :each do
+      patient.reload
+    end
+
     subject { Reports::Site.new(current_user, nav_context).generate_chart }
 
     it 'can sort results by site' do

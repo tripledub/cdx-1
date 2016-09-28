@@ -1,4 +1,5 @@
 module PatientResults
+  # Patient results presenter
   class Presenter
     class << self
       include Rails.application.routes.url_helpers
@@ -7,7 +8,7 @@ module PatientResults
       def for_encounter(patient_results)
         patient_results.map do |patient_result|
           {
-            id: patient_result.id,
+            id:          patient_result.id,
             testType:    patient_result.test_name.to_s,
             sampleId:    patient_result.serial_number.to_s,
             examinedBy:  patient_result.examined_by.to_s,

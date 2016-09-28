@@ -20,8 +20,7 @@ class PatientResult < ActiveRecord::Base
 
   class << self
     def find_all_results_for_patient(patient_id)
-      PatientResult.joins(:encounter)
-        .where('patient_results.patient_id = ? OR encounters.patient_id = ?', patient_id, patient_id)
+      PatientResult.joins(:encounter).where('patient_results.patient_id = ? OR encounters.patient_id = ?', patient_id, patient_id)
     end
 
     def status_options
