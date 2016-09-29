@@ -1,21 +1,21 @@
 require 'spec_helper'
 
 describe TestOrders::StatusAuditor do
-  let(:user) { User.make }
-  let(:encounter) { Encounter.make }
+  let(:user)       { User.make }
+  let(:test_order) { Encounter.make }
 
   describe 'create_status_log' do
     before :each do
       User.current = user
-      described_class.create_status_log(encounter, %w(old_status new_status))
+      described_class.create_status_log(test_order, %w(old_status new_status))
     end
 
     it 'should add a new log for the encounter' do
-      expect(AuditLog.first.title).to eq('t{encounters.update.status_tracking}')
+      expect(AuditLog.first.title).to eq("t{encounters.update.status_tracking}: #{test_order.batch_id}")
     end
 
     it 'should assign the log to the encounter' do
-      expect(AuditLog.first.encounter).to eq(encounter)
+      expect(AuditLog.first.encounter).to eq(test_order)
     end
 
     it 'should save the old status' do

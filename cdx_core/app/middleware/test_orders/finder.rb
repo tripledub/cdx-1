@@ -1,3 +1,5 @@
+# Generic finder for test orders.
+# Automatically filters by institution or site based on navigation context.
 class TestOrders::Finder
   attr_reader :filter_query
 
@@ -18,6 +20,7 @@ class TestOrders::Finder
     filter_by_testing_for
     filter_by_start_time
     filter_by_patient_result_status
+    include_audit_logs
   end
 
   def init_query
@@ -46,6 +49,7 @@ class TestOrders::Finder
 
   def filter_by_status
     if @params['status'].present?
+      return if @params['status'] == 'all'
       @filter_query = filter_query.where("encounters.status = ?", @params['status'])
     else
       @filter_query = filter_query.where("encounters.status IN('new', 'pending', 'received', 'in_progress', 'pending_approval') ")
@@ -77,5 +81,12 @@ class TestOrders::Finder
 
   def end_date
     @params['until'].present? ? @params['until'] : Date.today.strftime("%Y-%m-%d")
+  end
+
+  def include_audit_logs
+    return unless @params['audit_logs']
+
+    @filter_query = @filter_query.includes(audit_logs: :audit_updates)
+    @filter_query = @filter_query.order('audit_logs.encounter_id, audit_logs.created_at desc')
   end
 end

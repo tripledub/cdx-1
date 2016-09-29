@@ -17,3 +17,8 @@ en:
       date: 'Date'
       test_order_id: 'Test order id'
       status: 'Status'
+    state:
+      order_id: 'Order ID'
+      old_state: 'Previous state'
+      new_state: 'Current state'
+      created_at: 'Date'

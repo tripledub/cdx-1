@@ -51,6 +51,8 @@ Rails.application.routes.draw do
 
   get 'settings' => 'home#settings'
 
+  resources :test_orders_state, only: [:index, :show]
+
   resources :encounters do
     resource :encounter_payments, only: [] do
       post :set_as_paid

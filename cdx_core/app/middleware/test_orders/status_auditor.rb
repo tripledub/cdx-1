@@ -4,7 +4,7 @@ module TestOrders
   class StatusAuditor
     class << self
       def create_status_log(test_order, values)
-        Audit::Auditor.new(test_order).log_status_change('t{encounters.update.status_tracking}', values)
+        Audit::Auditor.new(test_order).log_status_change("t{encounters.update.status_tracking}: #{test_order.batch_id}", values)
       end
     end
   end
