@@ -290,6 +290,7 @@ module TestOrders
 
     def store_create_encounter_audit_log
       Audit::Auditor.new(@encounter).log_action("t{encounters.create.test_order_created}: #{@encounter.batch_id}", @encounter.batch_id)
+      TestOrders::StatusAuditor.create_status_log(self, ['', 'new'])
     end
 
     def new_sample_for_site

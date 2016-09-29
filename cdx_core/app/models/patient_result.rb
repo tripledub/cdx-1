@@ -81,4 +81,8 @@ class PatientResult < ActiveRecord::Base
       I18n.t('select.culture.media_options.liquid')
     end
   end
+
+  def add_new_status_log
+    PatientResults::StatusAuditor.create_status_log(self, ['', 'new'])
+  end
 end
