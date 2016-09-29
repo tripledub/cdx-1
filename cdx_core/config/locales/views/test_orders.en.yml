@@ -19,6 +19,7 @@ en:
       status: 'Status'
     state:
       order_id: 'Order ID'
+      sample_id: 'Sample ID'
       old_state: 'Previous state'
       new_state: 'Current state'
       created_at: 'Date'
