@@ -15,12 +15,12 @@ module TestOrders
         end
       end
 
-      protected
-
       def update_and_log(encounter, new_status)
         TestOrders::StatusAuditor.create_status_log(encounter, [encounter.status, new_status])
         encounter.update_attribute(:status, new_status)
       end
+
+      protected
 
       def order_is_pending?(encounter)
         encounter.payment_done == true && encounter.status == 'samples_received'
