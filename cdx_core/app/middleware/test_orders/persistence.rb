@@ -35,7 +35,7 @@ module TestOrders
       if encounter.status == 'new'
         begin
           Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: encounter.uuid, ignore: 404
-          encounter.destroy_and_audit(current_user, "#{encounter.uuid} t{encounters.destroy.log_action}")
+          encounter.destroy_and_audit("#{encounter.uuid} t{encounters.destroy.log_action}")
           I18n.t('encounters.destroy.success')
         rescue => ex
           Rails.logger.error ex.message
@@ -289,7 +289,7 @@ module TestOrders
     end
 
     def store_create_encounter_audit_log
-      Audit::Auditor.new(@encounter, current_user.id).log_action("t{encounters.create.test_order_created}: #{@encounter.batch_id}", @encounter.batch_id)
+      Audit::Auditor.new(@encounter).log_action("t{encounters.create.test_order_created}: #{@encounter.batch_id}", @encounter.batch_id)
     end
 
     def new_sample_for_site

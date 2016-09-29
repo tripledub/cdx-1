@@ -3,11 +3,12 @@ require 'spec_helper'
 describe PatientResults::StatusAuditor do
   let(:user)           { User.make }
   let(:encounter)      { Encounter.make }
-  let(:patient_result) { MicroscopyResult.make encounter: encounter}
+  let(:patient_result) { MicroscopyResult.make encounter: encounter }
 
   describe 'create_status_log' do
     before :each do
-      described_class.create_status_log(patient_result, user, %w(old_status new_status))
+      User.current = user
+      described_class.create_status_log(patient_result, %w(old_status new_status))
     end
 
     it 'should add a new log for the encounter' do

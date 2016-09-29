@@ -65,7 +65,7 @@ class PatientResult < ActiveRecord::Base
   def update_batch_status
     return unless encounter.present?
 
-    TestOrders::Status.update_status(encounter, User.current)
+    TestOrders::Status.update_status(encounter)
   end
 
   def set_status_to_new

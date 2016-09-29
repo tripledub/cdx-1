@@ -46,7 +46,7 @@ class PatientsController < ApplicationController
     @patient      = @institution.patients.new(patient_params)
     @patient.site = @navigation_context.site
 
-    if validate_name_and_entity_id && @patient.save_and_audit(current_user, "t{patients.create.audit_log}: #{@patient.name}")
+    if validate_name_and_entity_id && @patient.save_and_audit("t{patients.create.audit_log}: #{@patient.name}")
       next_url = if params[:next_url].blank?
                    patient_path(@patient)
                  else
@@ -70,7 +70,7 @@ class PatientsController < ApplicationController
     return unless authorize_resource(@patient, UPDATE_PATIENT)
     parse_date_of_birth
 
-    if name_is_present? && @patient.update_and_audit(patient_params, current_user, "#{@patient.name} t{patients.update.audit_log}")
+    if name_is_present? && @patient.update_and_audit(patient_params, "#{@patient.name} t{patients.update.audit_log}")
       redirect_to patient_path(@patient), notice: I18n.t('patients.update.success')
     else
       render action: 'edit'
@@ -80,7 +80,7 @@ class PatientsController < ApplicationController
   def destroy
     return unless authorize_resource(@patient, DELETE_PATIENT)
 
-    @patient.destroy_and_audit(current_user, "#{@patient.name} t{patients.destroy.audit_log}")
+    @patient.destroy_and_audit("#{@patient.name} t{patients.destroy.audit_log}")
 
     redirect_to patients_path, notice: I18n.t('patients.destroy.success')
   end

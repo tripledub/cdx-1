@@ -6,7 +6,8 @@ describe TestOrders::StatusAuditor do
 
   describe 'create_status_log' do
     before :each do
-      described_class.create_status_log(encounter, user.id, %w(old_status new_status))
+      User.current = user
+      described_class.create_status_log(encounter, %w(old_status new_status))
     end
 
     it 'should add a new log for the encounter' do

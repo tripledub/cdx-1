@@ -16,6 +16,7 @@ module PatientResults
           result.update_attribute(:serial_number, sample_id[1])
         end
 
+        TestOrders::StatusAuditor.create_status_log(encounter, [encounter.status, 'samples_collected'])
         encounter.update_attribute(:status, 'samples_collected')
       end
 
@@ -33,11 +34,11 @@ module PatientResults
         end
       end
 
-      def update_result(patient_result, params, current_user, audit_text)
-        if patient_result.update_and_audit(params, current_user, audit_text)
+      def update_result(patient_result, params, audit_text)
+        if patient_result.update_and_audit(params, audit_text)
           old_value = patient_result.result_status
           patient_result.update_attribute(:result_status, 'pending_approval')
-          create_status_log(patient_result, current_user, [old_value, 'pending_approval'])
+          create_status_log(patient_result, [old_value, 'pending_approval'])
         else
           false
         end
@@ -46,21 +47,21 @@ module PatientResults
       protected
 
       def update_patient_result(patient_result, params, current_user)
-        patient_result.result_status = params[:result_status] if params[:result_status].present? && can_approve_results?(params, current_user)
+        patient_result.result_status = params[:result_status] if params[:result_status].present? && can_update_results?(params, current_user)
         patient_result.comment = params[:comment]
         patient_result.feedback_message = patient_result.encounter.institution.feedback_messages.find(params[:feedback_message_id]) if params[:feedback_message_id].to_i > 0
-        create_status_log(patient_result, current_user, [patient_result.result_status_was, patient_result.result_status]) if patient_result.result_status_changed?
+        create_status_log(patient_result, [patient_result.result_status_was, patient_result.result_status]) if patient_result.result_status_changed?
         patient_result.save(validate: false)
       end
 
-      def can_approve_results?(params, current_user)
+      def can_update_results?(params, current_user)
         return true unless params[:result_status] == 'completed'
 
         Policy.can?(Policy::Actions::APPROVE_ENCOUNTER, Encounter, current_user)
       end
 
-      def create_status_log(patient_result, current_user, values)
-        PatientResults::StatusAuditor.create_status_log(patient_result, current_user, values)
+      def create_status_log(patient_result, values)
+        PatientResults::StatusAuditor.create_status_log(patient_result, values)
       end
     end
   end

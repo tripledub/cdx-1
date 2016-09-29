@@ -5,6 +5,10 @@ describe PatientResult do
   let(:encounter)   { Encounter.make }
   let(:test_result) { MicroscopyResult.make created_at: 3.days.ago, encounter: encounter, result_name: 'requested_microscopy' }
 
+  before :each do
+    User.current = user
+  end
+
   context "validations" do
     it { should belong_to(:encounter) }
     it { should belong_to(:feedback_message) }
@@ -27,8 +31,7 @@ describe PatientResult do
 
   context 'after_save' do
     it 'should update status' do
-      User.current = user
-      expect(TestOrders::Status).to receive(:update_status).with(test_result.encounter, user)
+      expect(TestOrders::Status).to receive(:update_status).with(test_result.encounter)
 
       test_result.save
     end
