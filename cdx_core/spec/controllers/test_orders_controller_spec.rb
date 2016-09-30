@@ -35,7 +35,7 @@ describe TestOrdersController, elasticsearch: true do
           end
 
           it 'should display the outstanding test orders' do
-            outstanding_test_orders = institution.encounters.where("encounters.status IN ('new', 'pending', 'received', 'in_progress', 'pending_approval')").count
+            outstanding_test_orders = institution.encounters.where("encounters.status IN ('new', 'pending', 'samples_received', 'samples_collected', 'in_progress', 'pending_approval')").count
             expect(assigns(:total)).to eq(outstanding_test_orders)
           end
         end

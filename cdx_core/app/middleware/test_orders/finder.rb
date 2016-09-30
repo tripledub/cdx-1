@@ -65,7 +65,7 @@ class TestOrders::Finder
     if @params['status'].present?
       @filter_query = filter_query.where("encounters.status = ?", @params['status'])
     else
-      @filter_query = filter_query.where("encounters.status IN('new', 'pending', 'received', 'in_progress', 'pending_approval') ")
+      @filter_query = filter_query.where("encounters.status IN('new', 'samples_received', 'samples_collected', 'pending', 'received', 'in_progress', 'pending_approval') ")
     end
   end
 
