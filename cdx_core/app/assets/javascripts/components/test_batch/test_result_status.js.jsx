@@ -69,8 +69,9 @@ class TestResultStatus extends React.Component {
         { this.state.currentStatus === 'pending_approval' && this.props.userCanApprove ?
           <TestResultActions actionInfo={ testApproved } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
         { this.state.currentStatus === 'rejected' ?
-          <ShowRejectedWithComment commentValue={ this.state.commentValue } feedbackMessage={ this.props.feedbackMessage }/> : null }
-        { this.state.currentStatus === 'completed' ? I18n.t('components.test_result_status.test_completed') : null }
+          <ShowRejectedWithComment commentValue={ this.state.commentValue } showResultUrl={ this.props.showResultUrl } feedbackMessage={ this.props.feedbackMessage }/> : null }
+        { this.state.currentStatus === 'completed' ?
+          <ShowCompletedTestResult showResultUrl={ this.props.showResultUrl } /> : null }
       </div>
 
     );
@@ -79,6 +80,7 @@ class TestResultStatus extends React.Component {
 
 TestResultStatus.propTypes = {
   currentStatus: React.PropTypes.string.isRequired,
+  showResultUrl: React.PropTypes.string.isRequired,
   updateResultUrl: React.PropTypes.string.isRequired,
   editResultUrl: React.PropTypes.string.isRequired,
   paymentDone: React.PropTypes.bool.isRequired,

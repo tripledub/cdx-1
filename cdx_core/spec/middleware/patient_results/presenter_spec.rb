@@ -30,7 +30,8 @@ describe PatientResults::Presenter do
         completedAt: Extras::Dates::Format.datetime_with_time_zone(patient_result.completed_at),
         createdAt:   Extras::Dates::Format.datetime_with_time_zone(patient_result.created_at),
         feedbackMessage: FeedbackMessages::Finder.find_text_from_patient_result(patient_result),
-        editUrl:     Rails.application.routes.url_helpers.edit_encounter_microscopy_result_path(patient_result.encounter, patient_result)
+        editUrl:         Rails.application.routes.url_helpers.edit_encounter_microscopy_result_path(patient_result.encounter, patient_result),
+        showResultUrl:   Rails.application.routes.url_helpers.encounter_microscopy_result_path(patient_result.encounter, patient_result)
       )
     end
   end
