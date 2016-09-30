@@ -1,8 +1,8 @@
 var PatientAddress = React.createClass({
   render: function() {
-    if( this.props.addresscount == 1 ) 
-      addr_label = 'components.patient_card.address_col'; 
-    else 
+    if( this.props.addresscount == 1 )
+      addr_label = 'components.patient_card.address_col';
+    else
       addr_label = 'components.patient_card.alt_address_col';
     return (
       <span>
@@ -27,12 +27,6 @@ var PatientCard = React.createClass({
     function patientInfo(patient)
     {
       var string = "";
-      if (patient.gender) {
-        string += patient.gender;
-        if (patient.birth_date_on) {
-          string += " - "
-        }
-      }
       if (patient.birth_date_on) {
         string += patient.birth_date_on
         if( patient.age > 0)
@@ -75,7 +69,7 @@ var PatientCard = React.createClass({
                 </li>
                 <li>
                   { this.props.patient.multi_address.map(function(addr)
-                    { 
+                    {
                       addresscount++
                       return <PatientAddress address={addr} addresscount={addresscount}/>
                     })
