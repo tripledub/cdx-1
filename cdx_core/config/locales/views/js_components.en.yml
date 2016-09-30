@@ -27,6 +27,7 @@ en:
       test_completed: 'Test completed'
       test_new:  'New test'
       test_rejected: 'Test rejected'
+      show_test_result: 'View results'
     payment_action:
       mark_as_paid: 'Mark test order as paid'
     add_samples_action:
