@@ -7,6 +7,7 @@ class TestBatchTable extends React.Component{
             <th>{ I18n.t('components.test_batch_table.type') }</th>
             <th>{ I18n.t('components.test_batch_table.sample_id') }</th>
             <th>{ I18n.t('components.test_batch_table.examined_by') }</th>
+            <th>{ I18n.t('components.test_batch_table.status') }</th>
             <th>{ I18n.t('components.test_batch_table.options') }</th>
           </tr>
         </thead>

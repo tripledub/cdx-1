@@ -28,6 +28,13 @@ en:
       test_new:  'New test'
       test_rejected: 'Test rejected'
       show_test_result: 'View results'
+    patient_results:
+      new: 'New'
+      sample_collected: 'Sample collected'
+      sample_received: 'Sample received'
+      pending_approval: 'Pending approval'
+      rejected: 'Rejected'
+      completed: 'Completed'
     payment_action:
       mark_as_paid: 'Mark test order as paid'
     add_samples_action:
@@ -39,6 +46,7 @@ en:
       type: 'Type'
       sample_id: 'Sample id'
       examined_by: 'Examined by'
+      status: 'Status'
       options: 'Options'
     alert_groups:
       col_name: 'Name'
