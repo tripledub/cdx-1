@@ -249,12 +249,12 @@ en:
       name_col: "Name"
       gender_col: "Gender"
       date_of_birth_col: "Date of Birth"
-      address_col: "Address"
+      address_col: "Permanent address"
       phone_col: "Phone"
       email_col: "Email"
       edit: "Edit"
       create_test_order: "Create Test Order"
-      alt_address_col: "Address"
+      alt_address_col: "Contact address"
 
     patient_select:
       search_patient_placeholder: "Search by name or patient id"
