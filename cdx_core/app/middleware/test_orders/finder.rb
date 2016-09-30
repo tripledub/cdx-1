@@ -1,3 +1,12 @@
+# Generic finder for Test Orders.
+# If filters data based on the navigation context and the following params:
+# selectedItems -> A list of ids selected on the CSV checkboxes
+# encounter_id -> The uuid of an encounter_id
+# batch_id -> The batch id content works both for 'CDP-0011' or just '11'
+# status -> If present if filters data by that specific status if not present it display all ongoing test orders.
+# testing_for -> The site this test order is being tested for.
+# since -> Will return test orders created since this date.
+# until -> Will return test orders created until this date.
 class TestOrders::Finder
   attr_reader :filter_query
 
@@ -14,6 +23,7 @@ class TestOrders::Finder
     filter_by_navigation_context
     filter_by_checkboxes
     filter_by_encounter_id
+    filter_by_batch_id
     filter_by_status
     filter_by_testing_for
     filter_by_start_time
@@ -42,6 +52,13 @@ class TestOrders::Finder
 
   def filter_by_encounter_id
     @filter_query = filter_query.where("encounters.uuid = ?", @params['encounter_id']) if @params['encounter_id'].present?
+  end
+
+  def filter_by_batch_id
+    if @params['batch_id'].present?
+      @params['batch_id'].slice!('CDP-')
+      @filter_query = filter_query.where("encounters.id = ?", @params['batch_id'])
+    end
   end
 
   def filter_by_status
