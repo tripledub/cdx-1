@@ -11,7 +11,6 @@ var PatientTestOrders = React.createClass({
         { title: I18n.t("components.patients.show.history.col_test_order_id"),              fieldName: 'batchId' },
         { title: I18n.t("components.patients.show.history.col_test_order_by_user"),         fieldName: 'requester' },
         { title: I18n.t("components.patients.show.history.col_test_order_request_date"),    fieldName: 'requestDate' },
-        { title: I18n.t("components.patients.show.history.col_test_order_time"),            fieldName: '' },
         { title: I18n.t("components.patients.show.history.col_test_order_status"),          fieldName: 'status' }
       ]
     };
