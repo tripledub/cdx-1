@@ -26,7 +26,7 @@ class AddSamplesAction extends React.Component{
               }.bind(this)) }
             </div>
             <div className="col">
-              <button className="btn-link" onClick={ this.closeAndCancel.bind(this) }>{ I18n.t('components.cancel') }</button>
+              <button className="btn-link" type="reset" onClick={ this.closeAndCancel.bind(this) }>{ I18n.t('components.cancel') }</button>
               <button className="btn-primary save" type="submit" >{ I18n.t('components.add_samples_action.save_sample_ids') }</button>
             </div>
           </form>
