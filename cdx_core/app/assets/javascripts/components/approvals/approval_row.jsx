@@ -19,7 +19,6 @@ var ApprovalRow = React.createClass({
       <td title={this.props.testOrder.requestedBy} onClick={this.visitLink}>{this.props.testOrder.requestedBy}</td>
       <td title={this.props.testOrder.requestDate} onClick={this.visitLink}>{this.props.testOrder.requestDate}</td>
       <td title={this.props.testOrder.testsRequiringApproval} onClick={this.visitLink}>{this.props.testOrder.testsRequiringApproval}</td>
-      <td title={this.props.testOrder.id} onClick={this.visitLink}>{this.props.testOrder.id}</td>
     </tr>);
   }
 });
