@@ -131,7 +131,7 @@ en:
       col_new_value: "New value"
       col_title: "Patients"
       col_name: "Name"
-      col_patient_id: "Patient Id"
+      col_patient_id: "Patient ID"
       col_date_of_birth: "Date of birth"
       col_address: "Address"
 
@@ -148,7 +148,8 @@ en:
         msg_no_order: "There are no test orders."
         col_request_by: "Request By"
         col_request_to: "Request To"
-        col_order_id: "Order Id"
+        col_order_id: "Order ID"
+        col_batch_id: "Batch ID"
         col_order_by: "Order by User"
         col_request_date: "Request Date"
         col_due_date: "Due Date"
