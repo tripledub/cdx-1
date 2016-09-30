@@ -311,7 +311,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
     context 'log changes' do
       it 'should log the newly created test order' do
-        expect(AuditLog.count).to eq 1
+        expect(AuditLog.count).to eq 2
         expect(AuditLog.first.title).to include 't{encounters.create.test_order_created}'
       end
     end
