@@ -16,6 +16,12 @@
             .row
               .col-6
                 %label
+                  = MicroscopyResult.human_attribute_name(:result_status)
+              .col-6
+                = I18n.t("select.patient_result.status_options.#{@microscopy_result.result_status}")
+            .row
+              .col-6
+                %label
                   = MicroscopyResult.human_attribute_name(:sample_collected_on)
               .col-6
                 = I18n.l(@microscopy_result.sample_collected_on, format: :full_date)
@@ -55,3 +61,9 @@
                   = MicroscopyResult.human_attribute_name(:result_on)
               .col-6
                 = I18n.l(@microscopy_result.result_on, format: :full_date)
+            .row
+              .col-6
+                %label
+                  = MicroscopyResult.human_attribute_name(:comment)
+              .col-6
+                = simple_format(@microscopy_result.comment)

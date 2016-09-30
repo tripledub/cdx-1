@@ -67,7 +67,7 @@ class TestResultStatus extends React.Component {
         { this.state.currentStatus === 'in_progress' ?
           <TestResultActions actionInfo={ inProgress } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
         { this.state.currentStatus === 'pending_approval' && this.props.userCanApprove ?
-          <TestResultActions actionInfo={ testApproved } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
+          <ShowApproveTestResult showResultUrl={ this.props.showResultUrl } testApproved={ testApproved } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
         { this.state.currentStatus === 'rejected' ?
           <ShowRejectedWithComment commentValue={ this.state.commentValue } showResultUrl={ this.props.showResultUrl } feedbackMessage={ this.props.feedbackMessage }/> : null }
         { this.state.currentStatus === 'completed' ?
