@@ -2,6 +2,7 @@ en:
   activerecord:
     attributes:
       dst_lpa_result:
+        result_status: 'Status'
         sample_collected_on: 'Date sample collected'
         media_used: 'Method'
         serial_number: 'Lab serial number'
