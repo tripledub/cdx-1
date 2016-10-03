@@ -2,6 +2,7 @@ module TestOrders
   # Logic to handle all different test order status
   class Status
     class << self
+      # After patient results have been updated update test order status
       def update_status(encounter)
         encounter.reload
         if all_finished?(encounter)
@@ -12,6 +13,20 @@ module TestOrders
           encounter.update_attribute(:status, 'samples_received')
         elsif order_is_pending?(encounter)
           encounter.update_attribute(:status, 'pending')
+        end
+      end
+
+      # Change test order status (financial approvement/reject)
+      def update_and_comment(encounter, params)
+        if encounter.update(params)
+          [
+            {
+              testOrderStatus: encounter.status
+            },
+            :ok
+          ]
+        else
+          [encounter.errors.messages, :unprocessable_entity]
         end
       end
 

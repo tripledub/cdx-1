@@ -8,6 +8,10 @@ en:
     test_result_actions:
       update_failed: 'Can not update status.'
     test_result_status:
+      approve_payment:
+        action_label: 'Finance approved'
+        reject_label: 'Finance rejected'
+        reject_header: 'Please explain why this payment is rejected'
       sample_received:
         action_label: 'Sample received'
         reject_label: 'Reject sample'
@@ -36,7 +40,8 @@ en:
       rejected: 'Rejected'
       completed: 'Completed'
     payment_action:
-      mark_as_paid: 'Mark test order as paid'
+      mark_as_paid: 'Finance approved'
+      reject: 'Finance rejected'
     add_samples_action:
       add_result: 'Add result'
       submit_samples:  'Submit samples'

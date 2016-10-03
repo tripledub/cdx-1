@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   end
 
   devise_scope :user do
-    root to: "sessions#new"
+    root to: 'sessions#new'
   end
 
   get 'verify' => 'home#verify'
@@ -133,8 +133,8 @@ Rails.application.routes.draw do
     resources :patient_logs, only: [:index, :show] do
       resources :audit_updates, only: [:index]
     end
-    resources :patient_test_results , only: [:index]
-    resources :patient_test_orders ,  only: [:index]
+    resources :patient_test_results, only: [:index]
+    resources :patient_test_orders,  only: [:index, :update]
     resources :episodes
   end
 
