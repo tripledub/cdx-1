@@ -16,3 +16,8 @@ en:
     edit: 'Edit'
     edit_institution: 'Edit institutions'
     show_institution: 'Show institutions'
+
+  helpers:
+    submit:
+      create: "Save"
+      update: "Save"

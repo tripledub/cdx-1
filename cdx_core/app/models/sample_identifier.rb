@@ -1,6 +1,7 @@
 # sample identifiers
 class SampleIdentifier < ActiveRecord::Base
   include AutoUUID
+  include NotificationObserver
 
   belongs_to :sample, inverse_of: :sample_identifiers
   belongs_to :site, -> { with_deleted }, inverse_of: :sample_identifiers

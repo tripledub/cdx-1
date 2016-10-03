@@ -14,6 +14,9 @@ class Site < ActiveRecord::Base
   has_many :children, class_name: "Site", foreign_key: "parent_id"
   has_many :roles, dependent: :destroy
 
+  has_many :notification_sites, class_name: 'Notification::Site'
+  has_many :notifications,      through: :notification_sites
+
   acts_as_paranoid
 
   validates_presence_of :institution

@@ -55,3 +55,6 @@ Cheffile.lock
 .byebug_history
 public/javascripts/translations.js
 public/javascripts/i18n.js
+
+# Redis dump files
+*.rdb

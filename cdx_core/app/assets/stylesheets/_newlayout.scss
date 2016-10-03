@@ -445,15 +445,6 @@ body {
 
 /* FORM */
 
-.testflow fieldset {
-  background-color: #dc602e;
-  color: white;
-  padding: 0.5em;
-  border: none;
-  display: inline-block;
-}
-
-
 @media only screen and (max-width: 480px) {
   .testflow fieldset {
     margin-top: 0.5em;
@@ -810,7 +801,7 @@ form#new_comment {
 .testflow ul.tabs li a:hover {background-color: #ddd;}
 
 /* Create an active/current tablink class */
-.testflow ul.tabs li a:focus, .testflow .active {background-color: #dbdae2;}
+.testflow ul.tabs li a:focus, .testflow .active, .testflow .content-only-block {background-color: #dbdae2;}
 
 /* Style the tab content */
 .testflow .tabcontent {
@@ -1280,18 +1271,18 @@ form#filters-form.filteroptions #clear_button:hover{
 }
 
 
-.historylogs{
-min-width:550px !important;
-float:right;
+.historylogs {
+  min-width:550px !important;
+  float:right;
 }
 
-.historylogs label{
-min-width:135px !important;
+.historylogs label {
+  min-width:135px !important;
 }
 
-.historylogs li{
-width:50%;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
+.historylogs li {
+  width:50%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -1,0 +1,97 @@
+en:
+  notifications:
+    index:
+      notification: Alerts
+      your_team: Keep your team notified about important stuff.
+      messages_sent: Alert messages sent
+      incidents: Incidents
+      empty: No alerts
+      empty_message: Create alert groups in order to keep your team notified on current events
+    new:
+      new_notification: New Alert
+      title: New Alert
+    edit:
+      update_notification: Update alert
+      title: Update alert
+    flash:
+      create_success: Alert created successfully
+      create_failure: Alert was not created
+      update_success: Alert updated successfully
+      update_failure: Alert was not updated
+    filters:
+      title: Alerts
+      btn_add_notification: Add Alert
+      alert_group: Alert groups
+    tabs:
+      test_results: Test results
+      device_errors: Device errors
+      anomalies: Anomalies
+      utilisation_efficiency: Utilisation efficiency
+    form:
+      legends:
+        ad-hoc_recipients: Ad-hoc recipients
+      placeholder:
+        name: Name
+        description: Description
+        patient_identifier: Patient ID
+        test_identifier: Order ID
+        sample_identifier: Sample ID
+        detection: Not monitored
+        detection_condition: Not monitored
+        detection_quantitative_result: Not monitored
+        device_error_code: Error code (range)
+        frequency: Aggregation frequency
+        frequency_value: Aggregation frequency
+        email: Email?
+        email_message: Email message
+        sms: SMS?
+        sms_message: SMS message
+        site_ids: All
+        device_ids: All
+        user_ids: None
+        role_ids: None
+        notification_statuses_names: Any
+        anomaly_type: Don't check
+        utilisation_efficiency_sample_identifier: Sample ID
+        utilisation_efficiency_threshold: UE Threshold
+      tooltip:
+        institution_id: Institution
+        test_order_id: Test order
+        name: Descriptive Name for this Alert
+        description: Short description of the purpose of this Alert
+        enabled: Is this Alert Enabled?
+        patient_identifier: Patient ID
+        test_identifier: ID of Test Order
+        sample_identifier: ID of the Sample that produced this Alert
+        detection: Detection
+        detection_condition: Detection condition
+        detection_quantitative_result: Quantitative result
+        device_error_code: Range of Error Codes
+        frequency: Aggregation frequency
+        email: Delivery by E-mail?
+        email_message: Email message
+        email_limit: Maximum number of Email messages per day this alert can send
+        sms: Deliver by SMS?
+        sms_message: SMS message
+        sms_limit: Maximum number of SMS messages per day this alert can send
+        site_ids: Sites using this Alert
+        device_ids: Which Device provides this Alert
+        user_ids: Internal Recipient Tooltip
+        role_ids: Roles this Alert applies to
+        notification_statuses_names: What test status to trigger on?
+        anomaly_type: What type of anomalous reading do you want to alert on?
+        utilisation_efficiency_sample_identifier: ID of the Sample that produced this Alert
+        utilisation_efficiency_threshold: How many checks to allow?
+
+  notification_recipients:
+    form:
+      placeholder:
+        first_name: First name
+        last_name: Last name
+        email: E-mail address
+        telephone: Phone number
+      tooltip:
+        first_name: Recipient's first name
+        last_name: Recipient's last name
+        email: Recipient's e-mail address
+        telephone: Recipient's phone number

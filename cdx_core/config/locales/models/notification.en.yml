@@ -1,0 +1,50 @@
+en:
+  activerecord:
+    errors:
+      models:
+        notification:
+          base:
+            sms_or_email: You must choose either SMS or E-mail as a delivery method.
+    attributes:
+      notification:
+        institution_id: Institution
+        test_order_id: Test order
+        name: Name
+        description: Description
+        enabled: Enabled
+        patient_identifier: Patient ID
+        test_identifier: Test ID
+        sample_identifier: Sample ID
+        detection: Detection
+        detection_condition: Detection condition
+        device_error_code: Device error code
+        frequency: Frequency
+        email: Email?
+        email_message: Email message
+        email_limit: Email limit
+        sms: SMS?
+        sms_message: SMS message
+        sms_limit: SMS limit
+        last_notification_at: Last notification at
+        deleted_at: Deleted at
+        created_at: Created at
+        updated_at: Updated at
+        site_ids: Sites
+        device_ids: Devices
+        user_ids: Internal recipients
+        role_ids: Roles
+        recipient_ids: Ad-hoc recipients
+        notification_statuses_names: Test statuses
+        anomaly_type: Anomaly type
+        utilisation_efficiency_threshold: UE Threshold
+        utilisation_efficiency_last_checked_at: UE Last Checked at
+        utilisation_efficiency_sample_identifier: Sample ID
+
+      notification_recipient:
+        first_name: First name
+        last_name: Last name
+        email: E-mail addresss
+        telephone: Phone number
+        deleted_at: Deleted at
+        created_at: Created at
+        updated_at: Updated at

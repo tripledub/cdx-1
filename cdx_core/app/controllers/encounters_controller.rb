@@ -122,7 +122,6 @@ class EncountersController < ApplicationController
 
   def find_institution_and_patient
     @institution = @navigation_context.institution
-
-    redirect_to test_orders_path, notice: I18n.t('encounters.new.no_patient') unless @patient = Patients::Finder.find_by_institution(@institution, current_user).where(id: params[:patient_id]).first
+    redirect_to(test_orders_path, notice: I18n.t('encounters.new.no_patient')) unless @patient = Patients::Finder.find_by_institution(@institution, current_user).where(id: params[:patient_id]).first
   end
 end

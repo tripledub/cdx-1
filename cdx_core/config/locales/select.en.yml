@@ -124,3 +124,16 @@ en:
         rif: 'Rifampicin resistance'
         prexdr: 'Pre XDR'
         unknown: 'Unknown'
+    notification:
+      anomaly_type:
+        missing_sample_id: Missing sample ID
+        invalid_test_date: Invalid test date
+      frequency:
+        instant: Instant
+        aggregate: Aggregated
+        targeted: Targeted
+      frequency_value:
+        hourly: Hourly
+        daily: Daily
+        weekly: Weekly
+        monthly: Monthly

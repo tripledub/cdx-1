@@ -55,6 +55,9 @@ gem 'sidekiq', '3.5.0'
 gem 'sinatra'
 gem 'sidekiq-cron', '~> 0.3.1'
 
+# SMS library
+gem 'twilio-ruby', '~> 4.11.1'
+
 group :development do
   gem 'letter_opener'
   gem 'letter_opener_web'

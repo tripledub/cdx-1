@@ -9,6 +9,9 @@ class Role < ActiveRecord::Base
 
   has_many :alert_recipients
 
+  has_many :notification_roles, class_name: 'Notification::Role'
+  has_many :notifications, through: :notification_roles
+
   attr_accessor :definition
 
   validates_presence_of :name

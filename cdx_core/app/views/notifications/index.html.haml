@@ -1,0 +1,22 @@
+= render "filters"
+
+.row.paginationHeader
+  .small-12.columns.box
+    - if @notifications.empty?
+      = empty_data title: I18n.t('notifications.index.empty'), icon: 'icon-outline-alert xx-large' do |c|
+        - c.body do
+          %h1
+            = I18n.t('notifications.index.empty', entity_name: truncated_navigation_context_entity_name)
+          %p
+            = I18n.t('notifications.index.empty_message')
+    - else
+      %section.row
+        .small-12.columns.box
+          %header
+            = image_tag('img/device.png')
+            %h3
+              = I18n.t('notifications.index.notification', count: @total)
+          .box-content
+            = react_component "NotificationsIndexTable", alerts: Notifications::Presenter.index_table(@notifications), orderBy: @order_by
+            .pagination
+              = render 'shared/pagination'

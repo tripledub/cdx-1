@@ -1,10 +1,14 @@
 class MicroscopyResult < PatientResult
+  include NotificationObserver
+
   validates_presence_of  :sample_collected_at, :examined_by, :result_at, :specimen_type, :appearance, :test_result, on: :update
   validates_inclusion_of :test_result, in: %w(negative 1to9 1plus 2plus 3plus), allow_nil: true
   validates_inclusion_of :appearance,  in: %w(blood mucopurulent saliva), allow_nil: true
   validates_inclusion_of :result_status, in: %w(new sample_collected allocated pending_approval rejected completed), allow_nil: true
 
   delegate :patient, to: 'encounter'
+
+  notification_observe_fields :appearance, :specimen_type, :test_result
 
   def localised_name
     I18n.t('microscopy_results.localised_name')

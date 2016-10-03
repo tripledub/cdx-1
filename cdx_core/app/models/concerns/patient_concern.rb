@@ -11,13 +11,14 @@ module PatientConcern
     include SiteContained
     include Auditable
 
-    has_many :test_results, dependent: :restrict_with_error
-    has_many :samples,      dependent: :restrict_with_error
-    has_many :encounters,   dependent: :restrict_with_error
-    has_many :comments,     dependent: :destroy
-    has_many :audit_logs,   dependent: :destroy
-    has_many :episodes,     dependent: :destroy
-    has_many :addresses,    dependent: :destroy, as: :addressable
+    has_many :test_results,  dependent: :restrict_with_error
+    has_many :samples,       dependent: :restrict_with_error
+    has_many :encounters,    dependent: :restrict_with_error
+    has_many :comments,      dependent: :destroy
+    has_many :audit_logs,    dependent: :destroy
+    has_many :episodes,      dependent: :destroy
+    has_many :addresses,     dependent: :destroy, as: :addressable
+    has_many :notifications, dependent: :destroy
 
     belongs_to :external_system
 
@@ -25,7 +26,7 @@ module PatientConcern
     validates_uniqueness_of :entity_id, scope: :institution_id, allow_nil: true
     validate                :entity_id_not_changed
 
-    accepts_nested_attributes_for :addresses
+    accepts_nested_attributes_for :addresses, reject_if: :all_blank
 
     scope :within, -> (institution_or_site, exclude_subsites = false) {
       if institution_or_site.is_a?(Institution)
