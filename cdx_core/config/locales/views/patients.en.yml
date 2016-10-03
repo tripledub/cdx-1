@@ -51,6 +51,8 @@ en:
       medical_insurance_num_label: 'Medical Insurance Number'
       entity_id_label: 'Entity id'
       external_id_label: 'External Patient ID'
+      external_id_tooltip: 'External Patient ID'
+      external_patient_system_tooltip: 'The System that the External Patient ID is from'
       gender_label: 'Gender'
       birth_date_on_label: 'Birth date on'
       email_label: 'Email'

@@ -14,10 +14,10 @@ en:
       status_options:
         new: 'New'
         pending: 'Pending'
-        received: 'Received'
+        samples_collected: 'Samples collected'
+        samples_received: 'Samples received'
         in_progress: 'In progress'
         pending_approval: 'Pending approval'
-        approved: 'Approved'
         closed: 'Closed'
     test_batch:
       status_options:

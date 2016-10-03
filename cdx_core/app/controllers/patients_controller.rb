@@ -94,7 +94,7 @@ class PatientsController < ApplicationController
   def patient_params
     params.require(:patient).permit(
       :name, :entity_id, :gender, :nickname, :medical_insurance_num, :social_security_code, :external_id,
-      :birth_date_on, :address, :email, :phone, :city, :state, :zip_code,
+      :external_patient_system, :birth_date_on, :address, :email, :phone, :city, :state, :zip_code,
       addresses_attributes: [:id, :address, :city, :state, :zip_code]
     )
   end
@@ -107,12 +107,12 @@ class PatientsController < ApplicationController
   def validate_name_and_entity_id
     @patient.valid?
     @patient.errors.add(:entity_id, I18n.t('patients.create.no_entity')) if @patient.new_record? && !@patient.entity_id.present?
-    @patient.errors.add(:name, I18n.t('patients.create.no_entity'))      unless @patient.name.present?
+    @patient.errors.add(:name, I18n.t('patients.create.no_name'))      unless @patient.name.present?
     @patient.errors.empty?
   end
 
   def name_is_present?
-    @patient.errors.add(:name, I18n.t('patients.create.no_entity')) if params['patient'].key?('name') && params['patient']['name'].empty?
+    @patient.errors.add(:name, I18n.t('patients.create.no_name')) if params['patient'].key?('name') && params['patient']['name'].empty?
     @patient.errors.empty?
   end
 

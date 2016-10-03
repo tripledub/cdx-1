@@ -16,6 +16,12 @@
             .row
               .col-6
                 %label
+                  = CultureResult.human_attribute_name(:result_status)
+              .col-6
+                = I18n.t("select.patient_result.status_options.#{@culture_result.result_status}")
+            .row
+              .col-6
+                %label
                   = CultureResult.human_attribute_name(:sample_collected_on)
               .col-6
                 = I18n.l(@culture_result.sample_collected_on, format: :full_date)
@@ -49,3 +55,15 @@
                   = CultureResult.human_attribute_name(:result_on)
               .col-6
                 = I18n.l(@culture_result.result_on, format: :full_date)
+            .row
+              .col-6
+                %label
+                  = CultureResult.human_attribute_name(:comment)
+              .col-6
+                = simple_format(@culture_result.comment)
+            .row
+              .col-6
+                %label
+                  = CultureResult.human_attribute_name(:comment)
+              .col-6
+                = simple_format(@culture_result.comment)

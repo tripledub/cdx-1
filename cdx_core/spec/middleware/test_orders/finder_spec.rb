@@ -97,6 +97,24 @@ RSpec.describe TestOrders::Finder do
       end
     end
 
+    describe 'search by batch id' do
+      context 'search by full id' do
+        subject { described_class.new(navigation_context, params.merge!('batch_id' => test_order.batch_id)) }
+
+        it 'should return all test orders from that site and subsites' do
+          expect(subject.filter_query.count).to eq(1)
+        end
+      end
+
+      context 'search by id' do
+        subject { described_class.new(navigation_context, params.merge!('batch_id' => test_order2.id.to_s)) }
+
+        it 'should return all test orders from that site and subsites' do
+          expect(subject.filter_query.count).to eq(1)
+        end
+      end
+    end
+
     context 'when navigation context is a site with subsites' do
       let(:navigation_context) { NavigationContext.new(user, site2.uuid) }
 

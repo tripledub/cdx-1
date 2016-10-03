@@ -27,6 +27,14 @@ en:
       test_completed: 'Test completed'
       test_new:  'New test'
       test_rejected: 'Test rejected'
+      show_test_result: 'View results'
+    patient_results:
+      new: 'New'
+      sample_collected: 'Sample collected'
+      sample_received: 'Sample received'
+      pending_approval: 'Pending approval'
+      rejected: 'Rejected'
+      completed: 'Completed'
     payment_action:
       mark_as_paid: 'Mark test order as paid'
     add_samples_action:
@@ -38,6 +46,7 @@ en:
       type: 'Type'
       sample_id: 'Sample id'
       examined_by: 'Examined by'
+      status: 'Status'
       options: 'Options'
     alert_groups:
       col_name: 'Name'
@@ -131,7 +140,7 @@ en:
       col_new_value: "New value"
       col_title: "Patients"
       col_name: "Name"
-      col_patient_id: "Patient Id"
+      col_patient_id: "Patient ID"
       col_date_of_birth: "Date of birth"
       col_address: "Address"
 
@@ -148,7 +157,8 @@ en:
         msg_no_order: "There are no test orders."
         col_request_by: "Request By"
         col_request_to: "Request To"
-        col_order_id: "Order Id"
+        col_order_id: "Order ID"
+        col_batch_id: "Batch ID"
         col_order_by: "Order by User"
         col_request_date: "Request Date"
         col_due_date: "Due Date"
@@ -208,7 +218,6 @@ en:
       tooltip_user: "Number of users who have this role."
 
     test_orders:
-      col_sample_id: "Sample Id"
       col_status: "Status"
       col_request_by: "Request by"
       col_request_to: "Request to"
@@ -218,6 +227,7 @@ en:
       col_tests_requiring_approval: "Tests requiring approval"
       col_due_date: "Due date"
       col_id: "Order Id"
+      col_sample_id: 'Sample Ids'
 
     test_results:
       col_sample: "Sample collected on"

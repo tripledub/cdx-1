@@ -16,6 +16,11 @@
             .row
               .col-12
                 %label
+                  = DstLpaResult.human_attribute_name(:result_status)
+                = I18n.t("select.patient_result.status_options.#{@dst_lpa_result.result_status}")
+            .row
+              .col-12
+                %label
                   = DstLpaResult.human_attribute_name(:sample_collected_on)
                 = I18n.l(@dst_lpa_result.sample_collected_on, format: :full_date)
             .row
@@ -81,6 +86,10 @@
                 %label
                   = DstLpaResult.human_attribute_name(:results_fq)
                 = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_fq)
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:comment)
+                = I18n.t("select.patient_result.status_options.#{@dst_lpa_result.comment}")
 
 
           .col-4

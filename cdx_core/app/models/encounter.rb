@@ -22,7 +22,7 @@ class Encounter < ActiveRecord::Base
   validates_presence_of :site, if: Proc.new { |encounter| encounter.institution }
 
   validates_inclusion_of :culture_format, :allow_nil => true, in: ['solid', 'liquid'], if: Proc.new { |encounter| encounter.testing_for == 'TB' }
-  validates_inclusion_of :status,  in: %w(new samples_received samples_collected pending received in_progress pending_approval closed)
+  validates_inclusion_of :status,  in: %w(new samples_received samples_collected pending in_progress pending_approval closed)
 
   validate :validate_patient
 
@@ -52,11 +52,12 @@ class Encounter < ActiveRecord::Base
     def status_options
       [
         ['new', I18n.t('select.encounter.status_options.new')],
+        ['samples_received', I18n.t('select.encounter.status_options.samples_received')],
+        ['samples_collected', I18n.t('select.encounter.status_options.samples_collected')],
         ['pending', I18n.t('select.encounter.status_options.pending')],
         ['in_progress', I18n.t('select.encounter.status_options.in_progress')],
-        ['received', I18n.t('select.encounter.status_options.received')],
         ['pending_approval', I18n.t('select.encounter.status_options.pending_approval')],
-        ['approved', I18n.t('select.encounter.status_options.approved')]
+        ['closed', I18n.t('select.encounter.status_options.closed')]
       ]
     end
 

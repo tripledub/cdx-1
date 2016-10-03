@@ -2,6 +2,7 @@ en:
   activerecord:
     attributes:
       culture_result:
+        result_status: 'Status'
         sample_collected_on: 'Date sample collected'
         examined_by: 'Examined by'
         result_on: 'Date of result'
