@@ -32,37 +32,8 @@ User.blueprint do
   confirmed_at { Time.now - 1.day }
 end
 
-Alert.blueprint do
-  name { Faker::Name.first_name }
-  description { Faker::Name.last_name }
-  message { 'test message' }
-  category_type {"anomalies"}
-  sms_limit {10000}
-  institution { object.site.try(:institution) || Institution.make }
-  site { Site.make(institution: (object.institution || Institution.make)) }
-  user { institution.user }
-end
-
-AlertRecipient.blueprint do
-  user
-  alert
-  recipient_type {AlertRecipient.recipient_types["external_user"]}
-  email {"aaa@aaa.com"}
-  telephone {123}
-  first_name {"bob"}
-  last_name {'smith'}
-end
-
-AlertHistory.blueprint do
-  user
-  alert
-  test_result
-end
-
-RecipientNotificationHistory.blueprint do
-  user
-  alert
-  message_sent Faker::Lorem.sentence
+User.blueprint(:with_contacts) do
+  telephone { Faker::PhoneNumber.phone_number }
 end
 
 Comment.blueprint do
@@ -108,6 +79,10 @@ end
 Institution.blueprint do
   user
   name
+end
+
+Institution.blueprint(:with_contacts) do
+  user :with_contacts
 end
 
 Institution.blueprint(:manufacturer) do
@@ -277,6 +252,17 @@ XpertResult.blueprint do
   result_on { 7.days.from_now }
 end
 
+AssayResult.blueprint do
+  assayable { TestResult.make }
+  name      { Faker::Name.name }
+  condition { ['mtb', 'rif'].sample }
+  result    { ['positive', 'negative'].sample }
+  quantitative_result { [nil, 'HIGH', 'LOW', 'MEDIUM', 'VERY LOW'].sample }
+  assay_data {
+      { condition: object.condition, result: object.result, quantitative_result: object.quantitative_result }
+  }
+end
+
 DeviceMessage.blueprint do
   device
 end
@@ -323,4 +309,97 @@ end
 Site.blueprint :child do
   parent { nil }
   institution { parent.institution }
+end
+
+Notification.blueprint do
+  institution
+  encounter { nil }
+  user
+  patient { nil }
+  name { Faker::Name.name }
+  description { Faker::Lorem.sentence(10, true) }
+  enabled { true }
+  test_identifier { nil }
+  sample_identifier { nil }
+  patient_identifier { nil }
+  detection { nil }
+  detection_condition { nil }
+  detection_quantitative_result { nil }
+  device_error_code { nil }
+  anomaly_type { nil }
+  utilisation_efficiency_threshold { nil }
+  utilisation_efficiency_last_checked_at { nil }
+  frequency { Notification::FREQUENCY_TYPES.map(&:last).sample }
+  frequency_value { object.frequency == 'aggregate' ? Notification::FREQUENCY_VALUES.map(&:last).sample : nil }
+  email { true }
+  email_message { Faker::Lorem.sentence(10, true) }
+  email_limit { 100 }
+  sms { true }
+  sms_message { Faker::Lorem.sentence(10, true) }
+  sms_limit { 100 }
+  site { nil }
+  site_prefix { nil }
+  last_notification_at { nil }
+end
+
+Notification.blueprint(:instant) do
+  frequency { 'instant' }
+  frequency_value { nil }
+end
+
+Notification::Notice.blueprint do
+  notification { Notification.make }
+  alertable { Encounter.make }
+  status { 'pending' }
+end
+
+Notification::Status.blueprint do
+  notification
+  test_status Encounter.status_options.map(&:reverse).sample.last
+end
+
+Notification::Device.blueprint do
+  device
+  notification
+end
+
+Notification::NoticeGroup.blueprint do
+  email_data { { Faker::Internet.email => 1 } }
+  telephone_data { { Faker::PhoneNumber.phone_number => 1 } }
+  status { 'pending' }
+  frequency { Notification::FREQUENCY_TYPES.map(&:last).sample }
+  frequency_value { object.frequency == 'aggregate' ? Notification::FREQUENCY_VALUES.map(&:last).sample : nil }
+  triggered_at { Time.now }
+end
+
+Notification::NoticeRecipient.blueprint do
+  notification { Notification.make }
+  notification_notice { Notification::Notice.make(notification: object.notification, alertable: Encounter.make) }
+  first_name { Faker::Name.first_name }
+  last_name { Faker::Name.last_name }
+  email { Faker::Internet.email  }
+  telephone { Faker::PhoneNumber.phone_number }
+  status { 'pending' }
+end
+
+Notification::Recipient.blueprint do
+  notification
+  first_name { Faker::Name.first_name }
+  last_name { Faker::Name.last_name }
+  email { Faker::Internet.email  }
+  telephone { Faker::PhoneNumber.phone_number }
+end
+
+Notification::Role.blueprint do
+  role
+  notification
+end
+
+Notification::Site.blueprint do
+  notification
+end
+
+Notification::User.blueprint do
+  notification
+  user
 end

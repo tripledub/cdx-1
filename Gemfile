@@ -55,6 +55,9 @@ end
 
 gem 'puma', '~>3.5'
 
+# View based gems
+gem "select2-rails"
+
 # Use Sidekiq for background jobs
 gem 'sidekiq'
 gem 'sinatra'
@@ -102,6 +105,8 @@ gem 'cdx_api_vietnam', path: 'cdx_api_vietnam'
 source 'https://rails-assets.org' do
   gem 'rails-assets-urijs'
 end
+
+gem 'twilio-ruby', '~> 4.11.1'
 
 group :development, :test do
   gem 'pry-byebug'

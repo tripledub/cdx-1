@@ -25,6 +25,10 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :audit_logs
 
+  has_many :notifications, through: :notification_users
+  has_many :notification_notices, through: :notifications
+  has_many :notification_users, class_name: 'Notification::User'
+
   include Resource
 
   after_create :update_computed_policies

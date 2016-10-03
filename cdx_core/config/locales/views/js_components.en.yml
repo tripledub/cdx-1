@@ -98,7 +98,11 @@ en:
       col_date: "Date"
       col_channels: "Channels"
       col_message: "Message"
-
+    notification_notices:
+      col_name: Name
+      col_date: Date
+      col_status: Status
+      col_message: Message
     canvas-charts:
       err_chart_msg: "There was an error displaying the graph."
 

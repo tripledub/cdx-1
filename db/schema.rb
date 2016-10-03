@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161011170242) do
+ActiveRecord::Schema.define(version: 20161017075019) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -459,6 +459,127 @@ ActiveRecord::Schema.define(version: 20161011170242) do
     t.datetime "updated_at"
     t.string   "api_version",     limit: 255
     t.integer  "device_model_id", limit: 4
+  end
+
+  create_table "notification_devices", force: :cascade do |t|
+    t.integer  "notification_id", limit: 4
+    t.integer  "device_id",       limit: 4
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notification_notice_groups", force: :cascade do |t|
+    t.text     "email_data",      limit: 65535
+    t.text     "telephone_data",  limit: 65535
+    t.string   "status",          limit: 255,   default: "pending"
+    t.string   "frequency",       limit: 255
+    t.string   "frequency_value", limit: 255
+    t.datetime "triggered_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "institution_id",  limit: 4
+  end
+
+  create_table "notification_notice_recipients", force: :cascade do |t|
+    t.integer  "notification_id",        limit: 4
+    t.integer  "notification_notice_id", limit: 4
+    t.string   "first_name",             limit: 255
+    t.string   "last_name",              limit: 255
+    t.string   "email",                  limit: 255
+    t.string   "telephone",              limit: 255
+    t.string   "status",                 limit: 255, default: "pending"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notification_notices", force: :cascade do |t|
+    t.integer  "notification_id",              limit: 4
+    t.string   "alertable_type",               limit: 255
+    t.integer  "alertable_id",                 limit: 4
+    t.text     "data",                         limit: 65535
+    t.string   "status",                       limit: 255,   default: "pending"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "notification_notice_group_id", limit: 4
+  end
+
+  create_table "notification_recipients", force: :cascade do |t|
+    t.integer  "notification_id", limit: 4
+    t.string   "first_name",      limit: 255
+    t.string   "last_name",       limit: 255
+    t.string   "email",           limit: 255
+    t.string   "telephone",       limit: 255
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notification_roles", force: :cascade do |t|
+    t.integer  "notification_id", limit: 4
+    t.integer  "role_id",         limit: 4
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notification_sites", force: :cascade do |t|
+    t.integer  "notification_id", limit: 4
+    t.integer  "site_id",         limit: 4
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notification_statuses", force: :cascade do |t|
+    t.integer  "notification_id", limit: 4
+    t.string   "test_status",     limit: 255
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notification_users", force: :cascade do |t|
+    t.integer  "notification_id", limit: 4
+    t.integer  "user_id",         limit: 4
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "institution_id",                         limit: 4
+    t.integer  "encounter_id",                           limit: 4
+    t.integer  "user_id",                                limit: 4
+    t.integer  "patient_id",                             limit: 4
+    t.string   "name",                                   limit: 255
+    t.string   "description",                            limit: 255
+    t.boolean  "enabled",                                              default: false
+    t.string   "test_identifier",                        limit: 255
+    t.string   "sample_identifier",                      limit: 255
+    t.string   "patient_identifier",                     limit: 255
+    t.string   "detection",                              limit: 255
+    t.string   "detection_condition",                    limit: 255
+    t.string   "device_error_code",                      limit: 255
+    t.string   "anomaly_type",                           limit: 255
+    t.integer  "utilisation_efficiency_threshold",       limit: 4
+    t.datetime "utilisation_efficiency_last_checked_at"
+    t.string   "frequency",                              limit: 255,   default: "aggregate"
+    t.string   "frequency_value",                        limit: 255,   default: "daily"
+    t.boolean  "email",                                                default: false
+    t.text     "email_message",                          limit: 65535
+    t.integer  "email_limit",                            limit: 4,     default: 100
+    t.boolean  "sms",                                                  default: false
+    t.text     "sms_message",                            limit: 65535
+    t.integer  "sms_limit",                              limit: 4,     default: 100
+    t.integer  "site_id",                                limit: 4
+    t.string   "site_prefix",                            limit: 255
+    t.datetime "last_notification_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "detection_quantitative_result",          limit: 255
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|

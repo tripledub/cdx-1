@@ -1,10 +1,14 @@
 # Xpert results model
 class XpertResult < PatientResult
+  include NotificationObserver
+
   validates_presence_of  :sample_collected_on, :examined_by, :tuberculosis, :rifampicin, :result_on, on: :update
   validates_inclusion_of :tuberculosis, in: %w(detected not_detected indeterminate), allow_nil: true
   validates_inclusion_of :rifampicin,   in: %w(detected not_detected indeterminate), allow_nil: true
   validates_inclusion_of :result_status, in: %w(new sample_collected allocated pending_approval rejected completed), allow_nil: true
   validate :rifampicin_detected
+
+  notification_observe_fields :tuberculosis, :rifampicin
 
   delegate :patient, to: 'encounter'
 

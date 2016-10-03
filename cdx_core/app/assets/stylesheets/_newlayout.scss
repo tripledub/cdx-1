@@ -445,15 +445,6 @@ body {
 
 /* FORM */
 
-.testflow fieldset {
-  background-color: #dc602e;
-  color: white;
-  padding: 0.5em;
-  border: none;
-  display: inline-block;
-}
-
-
 @media only screen and (max-width: 480px) {
   .testflow fieldset {
     margin-top: 0.5em;
@@ -810,7 +801,7 @@ form#new_comment {
 .testflow ul.tabs li a:hover {background-color: #ddd;}
 
 /* Create an active/current tablink class */
-.testflow ul.tabs li a:focus, .testflow .active {background-color: #dbdae2;}
+.testflow ul.tabs li a:focus, .testflow .active, .testflow .content-only-block {background-color: #dbdae2;}
 
 /* Style the tab content */
 .testflow .tabcontent {
@@ -1277,5 +1268,4 @@ form#filters-form.filteroptions #clear_button:hover{
 
 .testflow .panel.patient-details label, .testflow .panel.patient-details .custom-fields-title > .col {
     min-width: 202px;
-} 
-    
+}

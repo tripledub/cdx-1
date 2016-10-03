@@ -307,7 +307,7 @@ a[title="Back"] {
 }
 
 .nodisplay {
-  display: none;
+  display: none !important;
 }
 
 .deleted {

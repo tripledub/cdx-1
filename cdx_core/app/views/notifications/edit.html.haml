@@ -1,0 +1,27 @@
+- content_for(:subheader) do
+  .row.center.add-new.collapse
+    .col.pe-10
+      %h2
+        = link_to [:notifications], class: 'side-link', title: I18n.t('views.back') do
+          = image_tag "arrow-left-white.png"
+        = I18n.t('notifications.edit.update_notification')
+  
+.notification.testflow
+  .container
+    .row.labelHeader
+      .col-6
+        %h3 
+          = I18n.t('notifications.edit.title')
+      .col-6
+    .panel.box-content
+
+      = form_for @notification, url: [@notification] do |f|
+        = render :partial => 'form', :object => f
+
+        .row.button-actions
+          .col
+            = f.submit class: 'btn-primary'
+            = link_to I18n.t('views.cancel'), [:notifications], class: 'btn-link'
+
+:javascript
+  $('.bettertabs').bettertabs();

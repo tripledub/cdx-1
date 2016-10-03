@@ -51,6 +51,8 @@ Rails.application.routes.draw do
 
   get 'settings' => 'home#settings'
 
+  resources :notifications
+
   resources :encounters do
     resource :patient_results, only: [:update] do
       collection do
@@ -140,10 +142,10 @@ Rails.application.routes.draw do
 
   resources :ftp_settings, only: [:edit, :update]
 
-  resources :alerts, except: [:show]
-  resources :incidents, only: [:index]
+  resources :incidents, controller: 'notification_notices', only: [:index]
+  resources :alerts, only: [:index, :new]
   resources :alert_messages, only: [:index]
-  resources :alert_groups, except: [:show]
+  resources :alert_groups, controller: 'notifications', except: [:show]
 
   scope :dashboards, controller: :dashboards do
     get :index, as: :dashboard

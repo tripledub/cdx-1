@@ -19,6 +19,9 @@ class Institution < ActiveRecord::Base
   has_many :alerts
   has_many :feedback_messages, dependent: :destroy
 
+  has_many :notifications, dependent: :destroy
+  has_many :notification_notice_groups, class_name: 'Notification::NoticeGroup', dependent: :destroy
+
   composed_of :ftp_info, mapping: FtpInfo.mapping('ftp_')
 
   validates_presence_of :name

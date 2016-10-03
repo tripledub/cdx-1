@@ -31,6 +31,17 @@ $(document).on("ready", function(){
 
 $(document).ready(function(){
 
+  $('.select2').each(function() {
+    var $select = $(this);
+    $select.select2({
+      placeholder: {
+        id: "-1",
+        text: $select.attr('placeholder'),
+        selected:'selected'
+      }
+    })
+  });
+
   function setFilledClass(elem) {
     window.setTimeout(function(){
       if(elem.val().length > 0) {
@@ -177,5 +188,57 @@ $(document).ready(function(){
   $(".filtershow").click(function(){
     // We want to set overflow visible after the expand animation has completed
     $(".custom_filters").toggle();
+  });
+
+  // Notifications#_form
+  // Only show frequency_value when frequency == aggregated
+  $('#notification_frequency').on('change', function() {
+    if($('#notification_frequency').val() == 'aggregate')
+      $('.row.frequency-options').removeClass('nodisplay');
+    else
+      $('.row.frequency-options').addClass('nodisplay');
+  })
+
+  // Notifications#_form
+  // Show/Hide elements based on boolean with the class in data-show-optional
+  $('input[data-show-optional]').on('change', function() {
+    var $input = $(this);
+    if($input.is(':checked')) {
+      $('.row.' + $input.data('show-optional')).removeClass('nodisplay');
+    } else {
+      $('.row.' + $input.data('show-optional')).addClass('nodisplay');
+    }
+  })
+
+  $('.notification-recipient-fields__close').on('click', function(e) {
+    e.preventDefault(); e.stopPropagation();
+    var $parentFields = $(this).parent();
+    var $destroyInput = $parentFields.prev();
+    $destroyInput.val(true)
+    $parentFields.remove();
+  });
+
+  $('.notification-recipient-fields__new').on('click', function(e) {
+    e.preventDefault(); e.stopPropagation();
+
+    var notificationIndex = $('.notification-recipient-fields').length;
+    var $recipientFields = $('.notification-recipient-fields:last').clone();
+
+    $recipientFields.find('input').each(function() {
+      var $field = $(this);
+      var newId = $field.attr('id').replace(/_\d_/, '_' + notificationIndex + '_');
+      var newName = $field.attr('name').replace(/\[\d\]/, '[' + notificationIndex + ']');
+      $field.attr('id', newId);
+      $field.attr('name', newName);
+      $field.val(null);
+    })
+
+    $recipientFields.find('label').each(function() {
+      var $field = $(this);
+      var newFor = $field.attr('for').replace(/_\d_/, '_' + notificationIndex + '_');
+      $field.attr('for', newFor);
+    })
+
+    $('.notification-recipient-fields:last').after($recipientFields);
   });
 });

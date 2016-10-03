@@ -16,9 +16,14 @@
   rejectReasons: FeedbackMessages::Presenter.reject_reasons(@encounter.institution),
   authenticityToken: form_authenticity_token)
 
+.row
+  .col-6
+    = link_to I18n.t('encounters.show.create_notification'), new_alert_path(encounter_id: @encounter.id), class: 'btn-primary'
+
+
 - if @encounter.status == 'new'
   .row
-    .col
+    .col-6
       = button_to I18n.t('encounters.show.delete_test_order'), encounter_path(@encounter), method: :delete, class: 'btn-danger', data: { confirm: I18n.t('views.are_you_sure')}
 
 - content_for(:print_content) do

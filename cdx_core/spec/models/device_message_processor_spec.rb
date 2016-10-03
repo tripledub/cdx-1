@@ -138,7 +138,7 @@ describe DeviceMessageProcessor, elasticsearch: true do
     expect(Encounter.count).to eq(0)
   end
 
-  xit "should create a patient" do
+  it "should create a patient" do
     device_message_processor.process
 
     expect(Patient.count).to eq(1)
@@ -1207,23 +1207,4 @@ describe DeviceMessageProcessor, elasticsearch: true do
       end
     end
   end
-
-   context 'check invalid time' do
-      let(:device_message_processor) {DeviceMessageProcessor.new(device_message)}
-
-      it "the start time is greater than today and generates and alert" do
-        alert = Alert.make(:category_type =>"anomalies", :anomalie_type => "invalid_test_date")
-        alert.query = {"test.error_code"=>"155"}
-        alert.institution_id = institution.id
-        alert.sample_id=""
-        alert.user = institution.user
-        alert.site_id=nil
-        alert.save!
-
-        @check_invalid_test=TRUE
-        device_message_processor.process
-        expect(AlertHistory.count).to equal (1)
-      end
-    end
-
 end

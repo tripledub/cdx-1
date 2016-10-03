@@ -39,9 +39,12 @@
 //= require jquery-resizable-table-columns.min
 //= require turbolinks
 //= require_tree .
+//= require select2-full
+//= require select2_locale_vi
 //= require moment.min
 //= require jquery-ui.min
 //= require jquery.comiseo.daterangepicker.min
 //= require jquery.bettertabs.min
 //= require cdx_core
 //= require menu
+//
