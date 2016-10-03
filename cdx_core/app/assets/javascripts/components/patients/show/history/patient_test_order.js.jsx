@@ -4,7 +4,6 @@ var PatientTestOrder = React.createClass({
   },
 
   render: function(){
-    console.log(this.props.patientTestOrder);
     return (
       <tr onClick={this.navigateTo.bind(this, this.props.patientTestOrder.viewLink)}>
         <td>{this.props.patientTestOrder.requestedSiteName}</td>
