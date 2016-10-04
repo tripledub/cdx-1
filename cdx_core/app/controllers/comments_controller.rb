@@ -21,7 +21,7 @@ class CommentsController < ApplicationController
     @comment              = @patient.comments.new(comment_params)
     @comment.user         = current_user
 
-    if @comment.save_and_audit(current_user, 't{comments.create.audit_comment}', @comment.comment)
+    if @comment.save_and_audit('t{comments.create.audit_comment}', @comment.comment)
       redirect_to patient_path(@patient), notice: I18n.t('comments.create.comment_ok')
     else
       render action: 'new'

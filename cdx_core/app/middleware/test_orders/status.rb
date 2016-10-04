@@ -2,17 +2,32 @@ module TestOrders
   # Logic to handle all different test order status
   class Status
     class << self
+      # After patient results have been updated update test order status
       def update_status(encounter)
         encounter.reload
         if all_finished?(encounter)
-          encounter.update_attribute(:status, 'closed')
+          update_and_log(encounter, 'closed')
         elsif any_pending_approval_or_finished?(encounter)
-          encounter.update_attribute(:status, 'in_progress')
+          update_and_log(encounter, 'in_progress')
         elsif any_sample_received?(encounter)
-          encounter.update_attribute(:status, 'samples_received')
+          update_and_log(encounter, 'samples_received')
         elsif order_is_pending?(encounter)
-          encounter.update_attribute(:status, 'pending')
+          update_and_log(encounter, 'pending')
         end
+      end
+
+      # Change test order status (financial approvement/reject)
+      def update_and_comment(encounter, params)
+        if can_finance_test_orders?(encounter)
+          update_financial_info(encounter, params)
+        else
+          [I18n.t('test_orders.update.not_allowed'), :unprocessable_entity]
+        end
+      end
+
+      def update_and_log(encounter, new_status)
+        TestOrders::StatusAuditor.create_status_log(encounter, [encounter.status, new_status])
+        encounter.update_attribute(:status, new_status)
       end
 
       protected
@@ -39,6 +54,24 @@ module TestOrders
 
       def any_sample_received?(encounter)
         encounter.patient_results.any? { |result| result.result_status == 'sample_received' }
+      end
+
+      def can_finance_test_orders?(encounter)
+        Policy.can?(Policy::Actions::FINANCE_APPROVAL_ENCOUNTER, encounter, User.current)
+      end
+
+      def update_financial_info(encounter, params)
+        update_and_log(encounter, params[:status]) if params[:status].present?
+        if encounter.update(params)
+          [
+            {
+              testOrderStatus: encounter.status
+            },
+            :ok
+          ]
+        else
+          [encounter.errors.messages, :unprocessable_entity]
+        end
       end
     end
   end

@@ -11,7 +11,7 @@ class XpertResultsController < PatientResultsController
   end
 
   def update
-    if PatientResults::Persistence.update_result(@xpert_result, xpert_result_params, current_user, 't{xpert_results.update.audit}')
+    if PatientResults::Persistence.update_result(@xpert_result, xpert_result_params, 't{xpert_results.update.audit}')
       redirect_to encounter_path(@encounter), notice: I18n.t('xpert_results.update.notice')
     else
       render action: 'edit'

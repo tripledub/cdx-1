@@ -5,6 +5,8 @@ class AuditLog < ActiveRecord::Base
 
   belongs_to :patient
   belongs_to :user
+  belongs_to :encounter
+  belongs_to :patient_result
 
   has_many   :audit_updates, dependent: :destroy
 

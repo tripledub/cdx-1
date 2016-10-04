@@ -10,4 +10,13 @@ module EncountersHelper
     site = sites.sort_by(&:name).first
     return { name: site.name, uuid: site.uuid } if site
   end
+
+  def encounter_routes(encounter)
+    {
+      submitSamplesUrl: update_samples_encounter_patient_results_path(encounter),
+      submitPaymentUrl: set_as_paid_encounter_encounter_payments_path(encounter),
+      updateResultUrl: encounter_patient_results_path(encounter),
+      updateTestOrderUrl: patient_patient_test_order_path(encounter.patient, encounter)
+    }
+  end
 end

@@ -6,13 +6,17 @@ describe Audit::Auditor do
   let(:address2) { Address.make address: '22 Acacia Avenue' }
   let(:patient)  { Patient.make name: 'Ruben Barichello', addresses: [address1, address2] }
 
+  before :each do
+    User.current = user
+  end
+
   describe 'create' do
     before :each do
-      described_class.new(patient, user.id).log_action("New patient #{patient.name} added")
+      described_class.new(patient).log_action("New patient #{patient.name} added")
     end
 
     it 'should add a new audit log' do
-      expect { described_class.new(patient, user.id).log_action("New patient #{patient.name} added") }.to change { AuditLog.count }.by(1)
+      expect { described_class.new(patient).log_action("New patient #{patient.name} added") }.to change { AuditLog.count }.by(1)
     end
 
     it 'should add a title' do
@@ -29,7 +33,7 @@ describe Audit::Auditor do
 
     context 'when language translations are present' do
       before :each do
-        described_class.new(patient, user.id).log_action("t{patients.show.new_episode} #{patient.name} added")
+        described_class.new(patient).log_action("t{patients.show.new_episode} #{patient.name} added")
       end
 
       it 'should return the translated version of the string' do
@@ -42,12 +46,12 @@ describe Audit::Auditor do
     before :each do
       patient.name                    = 'Graham Hill'
       patient.addresses.first.address = '1428 Elm Street'
-      described_class.new(patient, user.id).log_changes("#{patient.name} patient details have been updated")
+      described_class.new(patient).log_changes("#{patient.name} patient details have been updated")
     end
 
     it 'should add a new audit log' do
       expect {
-        described_class.new(patient, user.id).log_changes("#{patient.name} patient details have been updated")
+        described_class.new(patient).log_changes("#{patient.name} patient details have been updated")
       }.to change { AuditLog.count }.by(1)
     end
 

@@ -1,12 +1,18 @@
 require 'spec_helper'
 
 describe PatientResult do
+  let(:user)        { User.make }
   let(:encounter)   { Encounter.make }
   let(:test_result) { MicroscopyResult.make created_at: 3.days.ago, encounter: encounter, result_name: 'requested_microscopy' }
+
+  before :each do
+    User.current = user
+  end
 
   context "validations" do
     it { should belong_to(:encounter) }
     it { should belong_to(:feedback_message) }
+    it { have_many :audit_logs }
   end
 
   context 'when status is rejected' do

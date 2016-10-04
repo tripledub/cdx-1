@@ -11,19 +11,17 @@ class Encounter < ActiveRecord::Base
   has_many :samples, dependent: :restrict_with_error
   has_many :test_results, dependent: :restrict_with_error
   has_many :patient_results
+  has_many :audit_logs
 
   belongs_to :performing_site, class_name: 'Site'
-
   belongs_to :patient
   belongs_to :user
+  belongs_to :feedback_message
 
   validates_presence_of :patient
-
   validates_presence_of :site, if: Proc.new { |encounter| encounter.institution }
-
   validates_inclusion_of :culture_format, :allow_nil => true, in: ['solid', 'liquid'], if: Proc.new { |encounter| encounter.testing_for == 'TB' }
-  validates_inclusion_of :status,  in: %w(new samples_received samples_collected pending in_progress pending_approval closed)
-
+  validates_inclusion_of :status,  in: %w(new financed not_financed samples_received samples_collected pending in_progress pending_approval closed)
   validate :validate_patient
 
   before_save :ensure_entity_id
@@ -31,7 +29,7 @@ class Encounter < ActiveRecord::Base
 
   class << self
     def entity_scope
-      "encounter"
+      'encounter'
     end
 
     def testing_for_options
@@ -52,6 +50,8 @@ class Encounter < ActiveRecord::Base
     def status_options
       [
         ['new', I18n.t('select.encounter.status_options.new')],
+        ['financed', I18n.t('select.encounter.status_options.financed')],
+        ['not_financed', I18n.t('select.encounter.status_options.not_financed')],
         ['samples_received', I18n.t('select.encounter.status_options.samples_received')],
         ['samples_collected', I18n.t('select.encounter.status_options.samples_collected')],
         ['pending', I18n.t('select.encounter.status_options.pending')],

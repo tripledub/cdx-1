@@ -15,13 +15,16 @@ var EncounterShow = React.createClass({
       requestedTests: this.props.requestedTests,
       disable_all_selects: disable_all_selects,
       testOrderStatus: this.props.encounter.status,
+      paymentDone: this.props.encounter.paymentDone,
     };
   },
 
   onUpdateStatus: function(updatedStatus) {
-    this.setState({
-      testOrderStatus: updatedStatus['testOrderStatus'],
-    });
+    this.setState({ testOrderStatus: updatedStatus['testOrderStatus'] });
+
+    if (updatedStatus['testOrderStatus'] === 'financed') {
+      this.setState({ paymentDone: true });
+    }
   },
 
   componentDidMount: function() {
@@ -150,8 +153,7 @@ var EncounterShow = React.createClass({
           </div>
         </div>
 
-        <TestBatchList encounter={ this.props.encounter } patientResults={ this.props.patientResults } submitSamplesUrl={ this.props.submitSamplesUrl } submitPaymentUrl={ this.props.submitPaymentUrl } updateResultUrl={ this.props.updateResultUrl } rejectReasons={ this.props.rejectReasons } authenticityToken={ this.props.authenticityToken } />
-
+        <TestBatchList encounter={ this.props.encounter } testOrderStatus={ this.state.testOrderStatus } patientResults={ this.props.patientResults } encounterRoutes={ this.props.encounterRoutes } rejectReasons={ this.props.rejectReasons } authenticityToken={ this.props.authenticityToken } />
       </div>
       );
     },

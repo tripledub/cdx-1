@@ -11,10 +11,8 @@
   encounter: @encounter_as_json,
   patientResults: PatientResults::Presenter.for_encounter(@encounter.patient_results),
   context: @navigation_context,
-  submitSamplesUrl: update_samples_encounter_patient_results_path(@encounter),
-  submitPaymentUrl: set_as_paid_encounter_encounter_payments_path(@encounter),
+  encounterRoutes: encounter_routes(@encounter),
   rejectReasons: FeedbackMessages::Presenter.reject_reasons(@encounter.institution),
-  updateResultUrl: encounter_patient_results_path(@encounter),
   authenticityToken: form_authenticity_token)
 
 - if @encounter.status == 'new'

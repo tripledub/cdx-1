@@ -1,5 +1,5 @@
 # Generic finder for Test Orders.
-# If filters data based on the navigation context and the following params:
+# # Automatically filters by institution or site based on navigation context.
 # selectedItems -> A list of ids selected on the CSV checkboxes
 # encounter_id -> The uuid of an encounter_id
 # batch_id -> The batch id content works both for 'CDP-0011' or just '11'
@@ -28,6 +28,7 @@ class TestOrders::Finder
     filter_by_testing_for
     filter_by_start_time
     filter_by_patient_result_status
+    include_audit_logs
   end
 
   def init_query
@@ -63,9 +64,10 @@ class TestOrders::Finder
 
   def filter_by_status
     if @params['status'].present?
+      return if @params['status'] == 'all'
       @filter_query = filter_query.where("encounters.status = ?", @params['status'])
     else
-      @filter_query = filter_query.where("encounters.status IN('new', 'samples_received', 'samples_collected', 'pending', 'received', 'in_progress', 'pending_approval') ")
+      @filter_query = filter_query.where("encounters.status != 'closed'")
     end
   end
 
@@ -94,5 +96,12 @@ class TestOrders::Finder
 
   def end_date
     @params['until'].present? ? @params['until'] : Date.today.strftime("%Y-%m-%d")
+  end
+
+  def include_audit_logs
+    return unless @params['audit_logs']
+
+    @filter_query = @filter_query.includes(audit_logs: :audit_updates)
+    @filter_query = @filter_query.order('audit_logs.encounter_id, audit_logs.created_at desc')
   end
 end

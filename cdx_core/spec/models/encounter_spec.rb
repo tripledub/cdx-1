@@ -1,12 +1,14 @@
 require 'spec_helper'
 
 describe Encounter do
-  let(:status_options) { %w(new samples_received samples_collected pending in_progress pending_approval closed) }
+  let(:status_options) { %w(new financed not_financed samples_received samples_collected pending in_progress pending_approval closed) }
   let(:patient)    { Patient.make }
   let(:encounter)  { Encounter.make institution: patient.institution, patient: patient }
 
   describe 'validations' do
+    it { belong_to :feedback_message }
     it { have_many :patient_results }
+    it { have_many :audit_logs }
     it { is_expected.to validate_presence_of :institution }
     it { should validate_inclusion_of(:status).in_array(status_options) }
   end

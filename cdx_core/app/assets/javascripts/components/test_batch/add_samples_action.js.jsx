@@ -18,7 +18,7 @@ class AddSamplesAction extends React.Component{
         <button className="btn-secondary" onClick={ this.submitSamples.bind(this) }>{ I18n.t('components.add_samples_action.submit_samples') }</button>
         <Modal ref="addSamplesModal">
           <h1>{ I18n.t('components.add_samples_action.sample_ids') }: { this.props.batchId }</h1>
-          <form method="post" action={ this.props.submitSamplesUrl }>
+          <form method="post" action={ this.props.encounterRoutes['submitSamplesUrl'] }>
             <input type='hidden' name='authenticity_token' value={this.props.authenticityToken} />
             <div className="col">
               { this.props.patientResults.map(function(patientResult, element) {
@@ -39,6 +39,6 @@ class AddSamplesAction extends React.Component{
 AddSamplesAction.propTypes = {
   batchId: React.PropTypes.string.isRequired,
   patientResults: React.PropTypes.array.isRequired,
-  submitSamplesUrl: React.PropTypes.string.isRequired,
+  encounterRoutes: React.PropTypes.object.isRequired,
   authenticityToken: React.PropTypes.string.isRequired,
 };

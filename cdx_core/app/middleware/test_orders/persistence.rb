@@ -1,4 +1,6 @@
 module TestOrders
+  # This huge class was extracted from encounters controller.
+  # It needs more refactor. It's doing too many things and some of them related to samples not to test orders.
   class Persistence
     attr_reader :params, :current_user, :localization_helper, :encounter_param
 
@@ -35,7 +37,7 @@ module TestOrders
       if encounter.status == 'new'
         begin
           Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: encounter.uuid, ignore: 404
-          encounter.destroy_and_audit(current_user, "#{encounter.uuid} t{encounters.destroy.log_action}")
+          encounter.destroy_and_audit("#{encounter.uuid} t{encounters.destroy.log_action}")
           I18n.t('encounters.destroy.success')
         rescue => ex
           Rails.logger.error ex.message
@@ -124,8 +126,10 @@ module TestOrders
         json.(@encounter, :status)
         json.(@encounter, :testdue_date)
         json.(@encounter, :testing_for)
+        json.(@encounter, :comment)
         json.paymentDone @encounter.payment_done
         json.userCanApprove Policy.can?(Policy::Actions::APPROVE_ENCOUNTER, Encounter, current_user)
+        json.userCanFinance Policy.can?(Policy::Actions::FINANCE_APPROVAL_ENCOUNTER, Encounter, current_user)
         json.culture_format Extras::Select.find(Encounter.culture_format_options, @encounter.culture_format)
         json.has_dirty_diagnostic @encounter.has_dirty_diagnostic?
         json.assays (@encounter_blender.core_fields[Encounter::ASSAYS_FIELD] || [])
@@ -289,7 +293,8 @@ module TestOrders
     end
 
     def store_create_encounter_audit_log
-      Audit::Auditor.new(@encounter, current_user.id).log_changes("t{encounters.create.test_order_created}: #{@encounter.batch_id}", @encounter.batch_id)
+      Audit::Auditor.new(@encounter).log_action("t{encounters.create.test_order_created}: #{@encounter.batch_id}", @encounter.batch_id)
+      TestOrders::StatusAuditor.create_status_log(@encounter, ['', 'new'])
     end
 
     def new_sample_for_site

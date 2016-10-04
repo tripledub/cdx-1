@@ -3,7 +3,7 @@ require 'policy_spec_helper'
 
 describe PatientResults::Persistence do
   let(:user)              { User.make }
-  let!(:institution)      { user.institutions.make }
+  let(:institution)      { user.institutions.make }
   let(:patient)           { Patient.make institution: institution }
   let(:encounter)         { Encounter.make institution: institution, patient: patient }
   let(:microscopy_result) { MicroscopyResult.make encounter: encounter }
@@ -11,6 +11,10 @@ describe PatientResults::Persistence do
   let(:feedback_message)  { FeedbackMessage.make institution: institution }
   let(:sample_ids)        { { microscopy_result.id.to_s => '8778', culture_result.id.to_s => 'Random Id' } }
   let(:tests_requested)   { 'microscopy|xpertmtb|culture_cformat_solid|drugsusceptibility1line_cformat_liquid|' }
+
+  before :each do
+    User.current = user
+  end
 
   describe 'build_requested_tests' do
     it 'should build tests from string' do
@@ -85,6 +89,7 @@ describe PatientResults::Persistence do
         let(:user2) { User.make }
 
         it 'should update result status to completed' do
+          User.current = user2
           grant user, user2, Institution, Policy::Actions::READ_INSTITUTION
 
           described_class.update_status(microscopy_result, { result_status: 'completed' }, user2)
@@ -99,7 +104,8 @@ describe PatientResults::Persistence do
     it 'should set result status to pending approval' do
       described_class.update_result(
         microscopy_result,
-        { result_status: 'completed', comment: 'New comment added' }, user, 'Microscopy updated'
+        { result_status: 'completed', comment: 'New comment added' },
+        'Microscopy updated'
       )
 
       expect(microscopy_result.result_status).to eq('pending_approval')

@@ -21,7 +21,7 @@ class TestResultStatus extends React.Component {
       rejectHeader: I18n.t('components.test_result_status.sample_received.reject_header'),
       rejectReasons: this.props.rejectReasons['samplesCollected'],
       resultId: this.props.resultId,
-      updateResultUrl: this.props.updateResultUrl,
+      updateResultUrl: this.props.encounterRoutes['updateResultUrl'],
       commentValue: this.state.commentValue,
     };
     const sampleApproved = {
@@ -30,7 +30,7 @@ class TestResultStatus extends React.Component {
       rejectLabel: I18n.t('components.test_result_status.sample_approved.reject_label'),
       rejectHeader: I18n.t('components.test_result_status.sample_approved.reject_header'),
       resultId: this.props.resultId,
-      updateResultUrl: this.props.updateResultUrl,
+      updateResultUrl: this.props.encounterRoutes['updateResultUrl'],
       commentValue: this.state.commentValue,
       editResultUrl: this.props.editResultUrl,
     };
@@ -42,7 +42,7 @@ class TestResultStatus extends React.Component {
       rejectHeader: I18n.t('components.test_result_status.in_progress.reject_header'),
       rejectReasons: this.props.rejectReasons['approval'],
       resultId: this.props.resultId,
-      updateResultUrl: this.props.updateResultUrl,
+      updateResultUrl: this.props.encounterRoutes['updateResultUrl'],
       commentValue: this.state.commentValue,
     };
     const testApproved = {
@@ -53,14 +53,14 @@ class TestResultStatus extends React.Component {
       rejectHeader: I18n.t('components.test_result_status.test_received.reject_header'),
       rejectReasons: this.props.rejectReasons['labTech'],
       resultId: this.props.resultId,
-      updateResultUrl: this.props.updateResultUrl,
+      updateResultUrl: this.props.encounterRoutes['updateResultUrl'],
       commentValue: this.state.commentValue,
     };
 
     return(
       <div>
         { this.state.currentStatus === 'new' ? I18n.t('components.test_result_status.test_new') : null }
-        { this.state.currentStatus === 'sample_collected' && this.props.paymentDone ?
+        { this.state.currentStatus === 'sample_collected' ?
           <TestResultActions actionInfo={ sampleReceived } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
         { this.state.currentStatus === 'sample_received' ?
           <AddPatientResultAction actionInfo={ sampleApproved } /> : null }
@@ -81,7 +81,7 @@ class TestResultStatus extends React.Component {
 TestResultStatus.propTypes = {
   currentStatus: React.PropTypes.string.isRequired,
   showResultUrl: React.PropTypes.string.isRequired,
-  updateResultUrl: React.PropTypes.string.isRequired,
+  encounterRoutes: React.PropTypes.object.isRequired,
   editResultUrl: React.PropTypes.string.isRequired,
   paymentDone: React.PropTypes.bool.isRequired,
   userCanApprove: React.PropTypes.bool.isRequired,

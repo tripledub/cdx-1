@@ -17,18 +17,35 @@ describe PatientResultsController do
   end
 
   describe 'update_samples' do
-    before :each do
-      post :update_samples, encounter_id: encounter.id, samples: samples_ids
+    context 'valid request' do
+      before :each do
+        encounter.update_attribute(:status, 'financed')
+        post :update_samples, encounter_id: encounter.id, samples: samples_ids
+      end
+
+      it 'should update requested samples' do
+        microscopy_result.reload
+
+        expect(microscopy_result.serial_number).to eq('sample-id')
+      end
+
+      it 'should redirect to encounter view' do
+        expect(response).to redirect_to encounter_path(encounter)
+      end
     end
 
-    it 'should update requested samples' do
-      microscopy_result.reload
+    context 'invalid request' do
+      before :each do
+        post :update_samples, encounter_id: encounter.id, samples: samples_ids
+      end
 
-      expect(microscopy_result.serial_number).to eq('sample-id')
-    end
+      it 'should redirect if test order has not been financed' do
+        expect(response).to redirect_to encounter_path(encounter)
+      end
 
-    it 'should redirect to encounter view' do
-      expect(response).to redirect_to(encounter_path(encounter))
+      it 'should display an error message' do
+        expect(flash[:notice]).to eq(I18n.t('patient_results.update_samples.updated_fail'))
+      end
     end
   end
 
