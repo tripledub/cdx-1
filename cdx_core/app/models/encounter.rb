@@ -28,7 +28,7 @@ class Encounter < ActiveRecord::Base
 
   class << self
     def entity_scope
-      "encounter"
+      'encounter'
     end
 
     def testing_for_options
@@ -49,6 +49,8 @@ class Encounter < ActiveRecord::Base
     def status_options
       [
         ['new', I18n.t('select.encounter.status_options.new')],
+        ['financed', I18n.t('select.encounter.status_options.financed')],
+        ['not_financed', I18n.t('select.encounter.status_options.not_financed')],
         ['samples_received', I18n.t('select.encounter.status_options.samples_received')],
         ['samples_collected', I18n.t('select.encounter.status_options.samples_collected')],
         ['pending', I18n.t('select.encounter.status_options.pending')],
