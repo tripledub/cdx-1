@@ -4,7 +4,6 @@ class XpertResult < PatientResult
   validates_inclusion_of :tuberculosis, in: %w(detected not_detected invalid), allow_nil: true
   validates_inclusion_of :rifampicin,   in: %w(detected not_detected indeterminate), allow_nil: true
   validates_inclusion_of :result_status, in: %w(new sample_collected allocated pending_approval rejected completed), allow_nil: true
-
   validate :rifampicin_detected
 
   delegate :patient, to: 'encounter'

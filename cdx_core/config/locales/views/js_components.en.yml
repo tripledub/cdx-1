@@ -236,6 +236,7 @@ en:
       col_tests_requiring_approval: "Tests requiring approval"
       col_due_date: "Due date"
       col_id: "Order Id"
+      col_sample_id: 'Sample Ids'
 
     test_results:
       col_sample: "Sample collected on"
