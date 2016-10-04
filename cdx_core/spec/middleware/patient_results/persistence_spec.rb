@@ -3,7 +3,7 @@ require 'policy_spec_helper'
 
 describe PatientResults::Persistence do
   let(:user)              { User.make }
-  let!(:institution)      { user.institutions.make }
+  let(:institution)      { user.institutions.make }
   let(:patient)           { Patient.make institution: institution }
   let(:encounter)         { Encounter.make institution: institution, patient: patient }
   let(:microscopy_result) { MicroscopyResult.make encounter: encounter }
