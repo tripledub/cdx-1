@@ -18,16 +18,10 @@ module TestOrders
 
       # Change test order status (financial approvement/reject)
       def update_and_comment(encounter, params)
-        update_and_log(encounter, params[:status]) if params[:status].present?
-        if encounter.update(params)
-          [
-            {
-              testOrderStatus: encounter.status
-            },
-            :ok
-          ]
+        if can_finance_test_orders?(encounter)
+          update_financial_info(encounter, params)
         else
-          [encounter.errors.messages, :unprocessable_entity]
+          [I18n.t('test_orders.update.not_allowed'), :unprocessable_entity]
         end
       end
 
@@ -60,6 +54,24 @@ module TestOrders
 
       def any_sample_received?(encounter)
         encounter.patient_results.any? { |result| result.result_status == 'sample_received' }
+      end
+
+      def can_finance_test_orders?(encounter)
+        Policy.can?(Policy::Actions::FINANCE_APPROVAL_ENCOUNTER, encounter, User.current)
+      end
+
+      def update_financial_info(encounter, params)
+        update_and_log(encounter, params[:status]) if params[:status].present?
+        if encounter.update(params)
+          [
+            {
+              testOrderStatus: encounter.status
+            },
+            :ok
+          ]
+        else
+          [encounter.errors.messages, :unprocessable_entity]
+        end
       end
     end
   end

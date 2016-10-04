@@ -1,4 +1,6 @@
 module TestOrders
+  # This huge class was extracted from encounters controller.
+  # It needs more refactor. It's doing too many things and some of them related to samples not to test orders.
   class Persistence
     attr_reader :params, :current_user, :localization_helper, :encounter_param
 
@@ -127,6 +129,7 @@ module TestOrders
         json.(@encounter, :comment)
         json.paymentDone @encounter.payment_done
         json.userCanApprove Policy.can?(Policy::Actions::APPROVE_ENCOUNTER, Encounter, current_user)
+        json.userCanFinance Policy.can?(Policy::Actions::FINANCE_APPROVAL_ENCOUNTER, Encounter, current_user)
         json.culture_format Extras::Select.find(Encounter.culture_format_options, @encounter.culture_format)
         json.has_dirty_diagnostic @encounter.has_dirty_diagnostic?
         json.assays (@encounter_blender.core_fields[Encounter::ASSAYS_FIELD] || [])

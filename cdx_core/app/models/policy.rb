@@ -66,6 +66,7 @@ class Policy < ActiveRecord::Base
     DELETE_ENCOUNTER = "encounter:delete"
     PII_ENCOUNTER    = "encounter:pii"
     APPROVE_ENCOUNTER = "encounter:approve"
+    FINANCE_APPROVAL_ENCOUNTER = "encounter:financeApproval"
 
     MEDICAL_DASHBOARD = "testResult:medicalDashboard"
 

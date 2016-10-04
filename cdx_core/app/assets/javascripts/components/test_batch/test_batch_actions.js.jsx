@@ -2,7 +2,7 @@ class TestBatchActions extends React.Component{
   render() {
     return(
       <div className="row">
-        { this.props.testOrderStatus === 'new' ?
+        { this.props.testOrderStatus === 'new' && this.props.encounter.userCanFinance ?
           <AddPaymentAction rejectReasons={ this.props.rejectReasons } commentValue={ this.props.encounter.comment } encounterRoutes={ this.props.encounterRoutes } authenticityToken={ this.props.authenticityToken } /> : null }
         { this.props.testOrderStatus === 'financed' ?
           <AddSamplesAction batchId={ this.props.encounter.batch_id } patientResults={ this.props.patientResults } encounterRoutes={ this.props.encounterRoutes } authenticityToken={ this.props.authenticityToken } /> : null }
