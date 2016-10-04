@@ -18,6 +18,7 @@ module TestOrders
 
       # Change test order status (financial approvement/reject)
       def update_and_comment(encounter, params)
+        update_and_log(encounter, params[:status]) if params[:status].present?
         if encounter.update(params)
           [
             {
