@@ -6,7 +6,8 @@ module FeedbackMessages
         {
           samplesCollected: get_messages(institution, 'samples_collected'),
           approval: get_messages(institution, 'approval'),
-          labTech: get_messages(institution, 'lab_tech')
+          labTech: get_messages(institution, 'lab_tech'),
+          finance: get_messages(institution, 'finance')
         }
       end
 
