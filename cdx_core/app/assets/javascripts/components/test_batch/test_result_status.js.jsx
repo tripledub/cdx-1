@@ -60,7 +60,8 @@ class TestResultStatus extends React.Component {
 
     return(
       <div>
-        { this.state.currentStatus === 'new' ? I18n.t('components.test_result_status.test_new') : null }
+        { this.state.currentStatus === 'new' ?
+          I18n.t('components.test_result_status.test_new') : null }
         { this.state.currentStatus === 'sample_collected' ?
           <TestResultActions actionInfo={ sampleReceived } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
         { this.state.currentStatus === 'allocated' ?
@@ -74,7 +75,6 @@ class TestResultStatus extends React.Component {
         { this.state.currentStatus === 'completed' ?
           <ShowCompletedTestResult showResultUrl={ this.props.showResultUrl } /> : null }
       </div>
-
     );
   }
 }
