@@ -4,7 +4,7 @@ $(document).on("ready", function(){
   });
   
   $('body').click(function(e){
-    if (!e.target.matches('.icon-user')){
+    if (!$.contains($("#dropdown-form")[0], e.target) && !e.target.matches('.icon-user')){
       if($('.user').hasClass('show-nav-menu')){
         $('.user').removeClass('show-nav-menu');
       }
