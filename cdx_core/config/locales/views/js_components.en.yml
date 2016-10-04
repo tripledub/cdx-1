@@ -7,6 +7,8 @@ en:
     cancel: 'Cancel'
     test_result_actions:
       update_failed: 'Can not update status.'
+    test_order_actions:
+      update_failed: 'Can not update test order.'
     test_result_status:
       approve_payment:
         action_label: 'Finance approved'
@@ -80,6 +82,8 @@ en:
     test_order:
       new: 'New'
       pending: 'Pending'
+      financed: 'Financed'
+      not_financed: 'Not financed'
       samples_collected: 'Samples collected'
       samples_received: 'Samples received'
       recieved: 'Received'

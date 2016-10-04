@@ -14,6 +14,8 @@ en:
       status_options:
         new: 'New'
         pending: 'Pending'
+        financed: 'Financed'
+        not_financed: 'Not financed'
         samples_collected: 'Samples collected'
         samples_received: 'Samples received'
         in_progress: 'In progress'
