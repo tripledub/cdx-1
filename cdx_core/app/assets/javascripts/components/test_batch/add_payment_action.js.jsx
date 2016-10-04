@@ -19,7 +19,7 @@ class AddPaymentAction extends React.Component{
       actionLabel: I18n.t('components.test_result_status.approve_payment.action_label'),
       rejectLabel: I18n.t('components.test_result_status.approve_payment.reject_label'),
       rejectHeader: I18n.t('components.test_result_status.approve_payment.reject_header'),
-      rejectReasons: this.props.rejectReasons['labTech'],
+      rejectReasons: this.props.rejectReasons['finance'],
       resultId: this.props.resultId,
       updateTestOrderUrl: this.props.encounterRoutes['updateTestOrderUrl'],
       commentValue: this.state.commentValue,

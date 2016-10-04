@@ -1,15 +1,15 @@
+# Patient results controller
 class PatientResultsController < ApplicationController
-
   before_filter :find_encounter, :check_permissions, :check_back_button_mode
 
   def update_samples
-    if PatientResults::Persistence.collect_sample_ids(@encounter, params[:samples])
-      message = I18n.t('patient_results.update_samples.samples_updated')
-    else
-      message = I18n.t('patient_results.update_samples.updated_fail')
-    end
+    message = if encounter_financed? && PatientResults::Persistence.collect_sample_ids(@encounter, params[:samples])
+                I18n.t('patient_results.update_samples.samples_updated')
+              else
+                I18n.t('patient_results.update_samples.updated_fail')
+              end
 
-    redirect_to encounter_path(@encounter), message: message
+    redirect_to encounter_path(@encounter), notice: message
   end
 
   def update
@@ -33,5 +33,9 @@ class PatientResultsController < ApplicationController
 
   def check_back_button_mode
     @return_page_mode = params['test_order_page_mode']
+  end
+
+  def encounter_financed?
+    @encounter.status == 'financed'
   end
 end
