@@ -8,13 +8,14 @@ describe FeedbackMessages::Presenter do
 
     it 'returns a Hash of reject reassons' do
       expect(subject).to be_a(Hash)
-      expect(subject.size).to eq(3)
+      expect(subject.size).to eq(4)
     end
 
     it 'returns an array of localised rejection reasons' do
       expect(subject[:samplesCollected].size).to eq(2)
       expect(subject[:approval].size).to eq(1)
       expect(subject[:labTech].size).to eq(3)
+      expect(subject[:finance].size).to eq(3)
     end
 
     it 'returns all elements correctly formatted' do
