@@ -21,13 +21,13 @@ module FeedbackMessages
         tr003 = institution.feedback_messages.create!({ category: 'lab_tech', code: 'TR0003' })
         tr003.custom_translations.create!({ lang: 'en', text: 'Results unsafe' })
 
-        nf001 = institution.feedback_messages.create!({ category: 'financial', code: 'NF0001' })
+        nf001 = institution.feedback_messages.create!({ category: 'finance', code: 'NF0001' })
         nf001.custom_translations.create!({ lang: 'en', text: 'Payment failed' })
 
-        nf002 = institution.feedback_messages.create!({ category: 'financial', code: 'NF0002' })
+        nf002 = institution.feedback_messages.create!({ category: 'finance', code: 'NF0002' })
         nf002.custom_translations.create!({ lang: 'en', text: 'Fraud detected' })
 
-        nf003 = institution.feedback_messages.create!({ category: 'financial', code: 'NF0003' })
+        nf003 = institution.feedback_messages.create!({ category: 'finance', code: 'NF0003' })
         nf003.custom_translations.create!({ lang: 'en', text: 'Unable to process' })
       end
     end
