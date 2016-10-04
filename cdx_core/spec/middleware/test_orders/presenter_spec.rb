@@ -22,7 +22,7 @@ describe TestOrders::Presenter do
     xpert_result = XpertResult.make encounter: encounter
     dst_lpa_result = DstLpaResult.make encounter: encounter
     microscopy_result.update_attribute(:result_status, 'sample_collected')
-    xpert_result.update_attribute(:result_status, 'sample_received')
+    xpert_result.update_attribute(:result_status, 'allocated')
     dst_lpa_result.update_attribute(:result_status, 'rejected')
     encounter.reload
   }
@@ -44,7 +44,7 @@ describe TestOrders::Presenter do
         batchId:            Encounter.first.batch_id,
         requestDate:        Extras::Dates::Format.datetime_with_time_zone(Encounter.first.start_time),
         dueDate:            Extras::Dates::Format.datetime_with_time_zone(Encounter.first.testdue_date),
-        status:             'In progress: Microscopy (Sample collected) - Culture (New) - Xpert (Sample received) - Dst/Lpa (Rejected)',
+        status:             'In progress: Microscopy (Sample collected) - Culture (New) - Xpert (Allocated) - Dst/Lpa (Rejected)',
         paymentDone:        Encounter.first.payment_done,
         viewLink:           Rails.application.routes.url_helpers.encounter_path(Encounter.first)
       })

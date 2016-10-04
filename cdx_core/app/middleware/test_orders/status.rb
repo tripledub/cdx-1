@@ -53,7 +53,7 @@ module TestOrders
       end
 
       def any_sample_received?(encounter)
-        encounter.patient_results.any? { |result| result.result_status == 'sample_received' }
+        encounter.patient_results.any? { |result| result.result_status == 'allocated' }
       end
 
       def can_finance_test_orders?(encounter)

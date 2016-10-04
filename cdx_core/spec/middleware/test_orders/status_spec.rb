@@ -30,7 +30,7 @@ describe TestOrders::Status do
     end
 
     it 'should set the status to sample received' do
-      culture_result.update_attribute(:result_status, 'sample_received')
+      culture_result.update_attribute(:result_status, 'samples_received')
       encounter.reload
 
       expect(encounter.status).to eq('samples_received')

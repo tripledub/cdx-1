@@ -21,7 +21,7 @@ describe TestOrders::Presenter do
     xpert_result = XpertResult.make encounter: encounter
     dst_lpa_result = DstLpaResult.make encounter: encounter
     microscopy_result.update_attribute(:result_status, 'sample_collected')
-    xpert_result.update_attribute(:result_status, 'sample_received')
+    xpert_result.update_attribute(:result_status, 'allocated')
     dst_lpa_result.update_attribute(:result_status, 'rejected')
     encounter.reload
   end

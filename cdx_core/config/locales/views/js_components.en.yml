@@ -14,7 +14,7 @@ en:
         action_label: 'Finance approved'
         reject_label: 'Finance rejected'
         reject_header: 'Please explain why this payment is rejected'
-      sample_received:
+      allocated:
         action_label: 'Allocate sample'
         reject_label: 'Reject sample'
         reject_header: 'Please explain why this sample is rejected'
@@ -37,7 +37,7 @@ en:
     patient_results:
       new: 'New'
       sample_collected: 'Sample collected'
-      sample_received: 'Sample received'
+      allocated: 'Allocated'
       pending_approval: 'Pending approval'
       rejected: 'Rejected'
       completed: 'Completed'

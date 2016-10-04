@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe CultureResult do
-  let(:media_options)  { ['solid', 'liquid'] }
-  let(:test_result_options)  { ['negative', '1to9', '1plus', '2plus', '3plus', 'ntm', 'contaminated'] }
-  let(:result_status) { ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed'] }
+  let(:media_options) { %w(solid liquid) }
+  let(:test_result_options) { %w(negative 1to9 1plus 2plus 3plus ntm contaminated) }
+  let(:result_status) { %w(new sample_collected allocated pending_approval rejected completed) }
 
   context "validations" do
     it { should validate_presence_of(:sample_collected_on).on(:update) }

@@ -1,8 +1,9 @@
+# Culture result model
 class CultureResult < PatientResult
-  validates_presence_of  :sample_collected_on, :examined_by, :result_on, :media_used, :serial_number, :test_result, :on => :update
-  validates_inclusion_of :test_result, in: ['negative', '1to9', '1plus', '2plus', '3plus', 'ntm', 'contaminated'], allow_nil: true
-  validates_inclusion_of :media_used, in: ['solid', 'liquid'], allow_nil: true
-  validates_inclusion_of :result_status, in: ['new', 'sample_collected', 'sample_received', 'pending_approval', 'rejected', 'completed'], allow_nil: true
+  validates_presence_of  :sample_collected_on, :examined_by, :result_on, :media_used, :serial_number, :test_result, on: :update
+  validates_inclusion_of :test_result, in: %w(negative 1to9 1plus 2plus 3plus ntm contaminated), allow_nil: true
+  validates_inclusion_of :media_used, in: %w(solid liquid), allow_nil: true
+  validates_inclusion_of :result_status, in: %w(new sample_collected allocated pending_approval rejected completed), allow_nil: true
 
   delegate :patient, to: 'encounter'
 

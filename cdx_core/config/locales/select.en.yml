@@ -32,7 +32,7 @@ en:
       status_options:
         new: 'New'
         sample_collected: 'Sample collected'
-        sample_received: 'Sample received'
+        allocated: 'Allocated'
         in_progress: 'In progress'
         pending_approval: 'Pending approval'
         rejected: 'Rejected'

@@ -68,11 +68,11 @@ describe PatientResults::Persistence do
       end
     end
 
-    context 'status is sample received' do
-      it 'should update result status to sample received' do
-        described_class.update_status(microscopy_result, { result_status: 'sample_received' }, user)
+    context 'status is allocated' do
+      it 'should update result status to allocated' do
+        described_class.update_status(microscopy_result, { result_status: 'allocated' }, user)
 
-        expect(microscopy_result.result_status).to eq('sample_received')
+        expect(microscopy_result.result_status).to eq('allocated')
       end
     end
 

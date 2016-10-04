@@ -10,15 +10,16 @@ class TestResultStatus extends React.Component {
 
   updateResultStatus(status, comment) {
     this.setState({ currentStatus: status, commentValue: comment })
+    this.props.updateResultStatus(status);
   }
 
   render() {
     const sampleReceived = {
-      actionStatus: 'sample_received',
+      actionStatus: 'allocated',
       actionStyles: 'btn-danger side-link',
-      actionLabel: I18n.t('components.test_result_status.sample_received.action_label'),
-      rejectLabel: I18n.t('components.test_result_status.sample_received.reject_label'),
-      rejectHeader: I18n.t('components.test_result_status.sample_received.reject_header'),
+      actionLabel: I18n.t('components.test_result_status.allocated.action_label'),
+      rejectLabel: I18n.t('components.test_result_status.allocated.reject_label'),
+      rejectHeader: I18n.t('components.test_result_status.allocated.reject_header'),
       rejectReasons: this.props.rejectReasons['samplesCollected'],
       resultId: this.props.resultId,
       updateResultUrl: this.props.encounterRoutes['updateResultUrl'],
@@ -62,7 +63,7 @@ class TestResultStatus extends React.Component {
         { this.state.currentStatus === 'new' ? I18n.t('components.test_result_status.test_new') : null }
         { this.state.currentStatus === 'sample_collected' ?
           <TestResultActions actionInfo={ sampleReceived } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
-        { this.state.currentStatus === 'sample_received' ?
+        { this.state.currentStatus === 'allocated' ?
           <AddPatientResultAction actionInfo={ sampleApproved } /> : null }
         { this.state.currentStatus === 'in_progress' ?
           <TestResultActions actionInfo={ inProgress } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
@@ -83,10 +84,10 @@ TestResultStatus.propTypes = {
   showResultUrl: React.PropTypes.string.isRequired,
   encounterRoutes: React.PropTypes.object.isRequired,
   editResultUrl: React.PropTypes.string.isRequired,
-  paymentDone: React.PropTypes.bool.isRequired,
   userCanApprove: React.PropTypes.bool.isRequired,
   resultId: React.PropTypes.number.isRequired,
   commentValue: React.PropTypes.string.isRequired,
   feedbackMessage: React.PropTypes.string.isRequired,
   rejectReasons: React.PropTypes.object.isRequired,
+  updateResultStatus: React.PropTypes.func.isRequired,
 };
