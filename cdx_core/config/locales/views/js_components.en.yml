@@ -15,7 +15,7 @@ en:
         reject_label: 'Finance rejected'
         reject_header: 'Please explain why this payment is rejected'
       sample_received:
-        action_label: 'Sample received'
+        action_label: 'Allocate sample'
         reject_label: 'Reject sample'
         reject_header: 'Please explain why this sample is rejected'
       sample_approved:
