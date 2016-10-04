@@ -12,10 +12,7 @@ class MicroscopyResultsController < PatientResultsController
   end
 
   def update
-    if PatientResults::Persistence.update_result(
-      @microscopy_result,
-      microscopy_result_params, current_user, 't{microscopy_results.update.audit}'
-    )
+    if PatientResults::Persistence.update_result(@microscopy_result, microscopy_result_params, 't{microscopy_results.update.audit}')
       redirect_to encounter_path(@encounter), notice: I18n.t('microscopy_results.update.notice')
     else
       render action: 'edit'

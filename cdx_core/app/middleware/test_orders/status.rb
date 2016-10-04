@@ -6,13 +6,13 @@ module TestOrders
       def update_status(encounter)
         encounter.reload
         if all_finished?(encounter)
-          encounter.update_attribute(:status, 'closed')
+          update_and_log(encounter, 'closed')
         elsif any_pending_approval_or_finished?(encounter)
-          encounter.update_attribute(:status, 'in_progress')
+          update_and_log(encounter, 'in_progress')
         elsif any_sample_received?(encounter)
-          encounter.update_attribute(:status, 'samples_received')
+          update_and_log(encounter, 'samples_received')
         elsif order_is_pending?(encounter)
-          encounter.update_attribute(:status, 'pending')
+          update_and_log(encounter, 'pending')
         end
       end
 
@@ -28,6 +28,11 @@ module TestOrders
         else
           [encounter.errors.messages, :unprocessable_entity]
         end
+      end
+
+      def update_and_log(encounter, new_status)
+        TestOrders::StatusAuditor.create_status_log(encounter, [encounter.status, new_status])
+        encounter.update_attribute(:status, new_status)
       end
 
       protected

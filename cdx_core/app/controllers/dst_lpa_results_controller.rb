@@ -13,7 +13,7 @@ class DstLpaResultsController < PatientResultsController
   end
 
   def update
-    if PatientResults::Persistence.update_result(@dst_lpa_result, dst_lpa_result_params, current_user, 't{culture_results.update.audit}')
+    if PatientResults::Persistence.update_result(@dst_lpa_result, dst_lpa_result_params, 't{culture_results.update.audit}')
       redirect_to encounter_path(@encounter), notice: I18n.t('dst_lpa_results.update.notice')
     else
       render action: 'edit'

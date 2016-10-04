@@ -42,6 +42,16 @@ class User < ActiveRecord::Base
     end.uniq
   }
 
+  class << self
+    def current=(user)
+      Thread.current[:current_user] = user
+    end
+
+    def current
+      Thread.current[:current_user]
+    end
+  end
+
   def timeout_in
     Settings.web_session_timeout.try{ |timeout| timeout.to_i.seconds }
   end

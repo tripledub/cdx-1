@@ -154,7 +154,6 @@ var EncounterShow = React.createClass({
         </div>
 
         <TestBatchList encounter={ this.props.encounter } testOrderStatus={ this.state.testOrderStatus } patientResults={ this.props.patientResults } encounterRoutes={ this.props.encounterRoutes } rejectReasons={ this.props.rejectReasons } authenticityToken={ this.props.authenticityToken } />
-
       </div>
       );
     },

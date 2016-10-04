@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   before_action :check_no_institution!
   before_action :ensure_context
   before_action :set_locale
+  before_action :set_current_user
 
   def set_locale
     I18n.locale = current_user.try(:locale) || I18n.default_locale
@@ -153,4 +154,8 @@ class ApplicationController < ActionController::Base
     logger.warn "#{I18n.t('application_controller.authorization_failed')} #{action} #{I18n.t('application_controller.requested_by')} #{current_user.email} #{I18n.t('application_controller.in')} #{resource_name}"
   end
 
+  # Save current user to be able to use it in audit logs callbacks.
+  def set_current_user
+    User.current = current_user
+  end
 end
