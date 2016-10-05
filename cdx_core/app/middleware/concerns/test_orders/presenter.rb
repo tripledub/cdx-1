@@ -21,7 +21,6 @@ module Concerns
               requestDate:        Extras::Dates::Format.datetime_with_time_zone(encounter.start_time),
               dueDate:            Extras::Dates::Format.datetime_with_time_zone(encounter.testdue_date),
               status:             generate_status(encounter),
-              paymentDone:        encounter.payment_done,
               viewLink:           Rails.application.routes.url_helpers.encounter_path(encounter)
             }
           end

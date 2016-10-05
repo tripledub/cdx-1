@@ -44,7 +44,6 @@ describe TestOrders::Presenter do
         requestDate:        Extras::Dates::Format.datetime_with_time_zone(Encounter.first.start_time),
         dueDate:            nil,
         status:             'In progress: Microscopy (pending) - Culture (in progress) - Dst/Lpa (completed) - Xpert (rejected)',
-        paymentDone:        Encounter.first.payment_done,
         viewLink:           Rails.application.routes.url_helpers.encounter_path(Encounter.first)
       })
     end
