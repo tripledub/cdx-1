@@ -45,12 +45,16 @@
       = f.label :examined_by, I18n.t('culture_results.form.examined_by')
     .col
       = f.text_field :examined_by
-
   .row
     .col.pe-2
       = f.label :result_on, I18n.t('culture_results.form.result_on')
     .col
       = f.date_field :result_on
+  .row
+    .col.pe-2
+      = f.label :comment
+    .col
+      = f.text_area :comment, rows: 4, cols: 70
 
   .row.button-actions
     .col

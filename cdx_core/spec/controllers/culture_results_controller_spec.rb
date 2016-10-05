@@ -21,7 +21,8 @@ describe CultureResultsController do
       serial_number:          'LO-3434-P',
       test_result:            'contaminated',
       examined_by:            'Michael Kiske',
-      result_on:              1.day.ago
+      result_on:              1.day.ago,
+      comment:                'Keeper of the seven keys'
     }
   end
 

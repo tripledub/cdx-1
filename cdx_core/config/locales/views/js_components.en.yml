@@ -36,7 +36,7 @@ en:
       show_test_result: 'View results'
     patient_results:
       new: 'New'
-      sample_collected: 'Sample collected'
+      sample_collected: 'Pending'
       allocated: 'Allocated'
       pending_approval: 'Pending approval'
       rejected: 'Rejected'
