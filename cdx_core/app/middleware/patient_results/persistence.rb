@@ -40,7 +40,7 @@ module PatientResults
       protected
 
       def update_patient_result(patient_result, params)
-        patient_result.comment = params[:comment]
+        patient_result.comment = params[:comment] if params[:comment].present?
         patient_result.feedback_message =
           patient_result.encounter.institution.feedback_messages.find(params[:feedback_message_id]) if params[:feedback_message_id].to_i > 0
         patient_result.save(validate: false) && update_status_and_log(patient_result, params[:result_status])

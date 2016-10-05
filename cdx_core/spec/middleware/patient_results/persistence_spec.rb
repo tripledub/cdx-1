@@ -61,14 +61,29 @@ describe PatientResults::Persistence do
     end
 
     context 'comment' do
-      let(:patient_result) { { comment: 'New comment added' } }
+      context 'comment with content' do
+        let(:patient_result) { { comment: 'New comment added' } }
 
-      before :each do
-        described_class.update_status(microscopy_result, patient_result)
+        before :each do
+          described_class.update_status(microscopy_result, patient_result)
+        end
+
+        it 'should update the comment' do
+          expect(microscopy_result.comment).to eq('New comment added')
+        end
       end
 
-      it 'should update the comment' do
-        expect(microscopy_result.comment).to eq('New comment added')
+      context 'blank comment' do
+        let(:patient_result) { { comment: '' } }
+
+        before :each do
+          microscopy_result.update_attribute(:comment, 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor')
+          described_class.update_status(microscopy_result, patient_result)
+        end
+
+        it 'should not update the comment' do
+          expect(microscopy_result.comment).to eq('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor')
+        end
       end
     end
 
