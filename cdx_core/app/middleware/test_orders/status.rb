@@ -10,7 +10,7 @@ module TestOrders
         elsif any_pending_approval_or_finished?(encounter)
           update_and_log(encounter, 'in_progress')
         elsif any_sample_received?(encounter)
-          update_and_log(encounter, 'samples_received')
+          update_and_log(encounter, 'allocated')
         elsif order_is_pending?(encounter)
           update_and_log(encounter, 'pending')
         end

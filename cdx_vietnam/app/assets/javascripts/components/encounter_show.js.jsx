@@ -89,7 +89,7 @@ var EncounterShow = React.createClass({
         </div>
         <div className="row labelHeader">
           <div className="col-6">
-            <h3>{I18n.t("components.encounter_show.site_detail_heading")} jorge</h3>
+            <h3>{I18n.t("components.encounter_show.site_detail_heading")}</h3>
           </div>
           <div className="col-6">
           </div>

@@ -30,7 +30,7 @@ class PatientResult < ActiveRecord::Base
       [
         ['new', I18n.t('select.patient_result.status_options.new')],
         ['sample_collected', I18n.t('select.patient_result.status_options.sample_collected')],
-        ['sample_received', I18n.t('select.patient_result.status_options.sample_received')],
+        ['allocated', I18n.t('select.patient_result.status_options.allocated')],
         ['pending_approval', I18n.t('select.patient_result.status_options.pending_approval')],
         ['rejected', I18n.t('select.patient_result.status_options.rejected')],
         ['completed', I18n.t('select.patient_result.status_options.completed')]
