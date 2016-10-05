@@ -48,19 +48,35 @@ describe PatientResults::Persistence do
   end
 
   describe 'update_status' do
-    context 'status is rejected' do
-      let(:patient_result) { { result_status: 'rejected', comment: 'New comment added', feedback_message_id: feedback_message.id } }
+    context 'status' do
+      let(:patient_result) { { result_status: 'rejected' } }
 
       before :each do
-        described_class.update_status(microscopy_result, patient_result, user)
+        described_class.update_status(microscopy_result, patient_result)
       end
 
       it 'should update result status to rejected' do
         expect(microscopy_result.result_status).to eq('rejected')
       end
+    end
+
+    context 'comment' do
+      let(:patient_result) { { comment: 'New comment added' } }
+
+      before :each do
+        described_class.update_status(microscopy_result, patient_result)
+      end
 
       it 'should update the comment' do
         expect(microscopy_result.comment).to eq('New comment added')
+      end
+    end
+
+    context 'feedback' do
+      let(:patient_result) { { feedback_message_id: feedback_message.id } }
+
+      before :each do
+        described_class.update_status(microscopy_result, patient_result)
       end
 
       it 'should update the feedback message' do
@@ -70,7 +86,7 @@ describe PatientResults::Persistence do
 
     context 'status is allocated' do
       it 'should update result status to allocated' do
-        described_class.update_status(microscopy_result, { result_status: 'allocated' }, user)
+        described_class.update_status(microscopy_result, result_status: 'allocated')
 
         expect(microscopy_result.result_status).to eq('allocated')
       end
@@ -79,7 +95,7 @@ describe PatientResults::Persistence do
     context 'status is completed' do
       context 'user with permission' do
         it 'should update result status to completed' do
-          described_class.update_status(microscopy_result, { result_status: 'completed' }, user)
+          described_class.update_status(microscopy_result, result_status: 'completed')
 
           expect(microscopy_result.result_status).to eq('completed')
         end
@@ -92,7 +108,7 @@ describe PatientResults::Persistence do
           User.current = user2
           grant user, user2, Institution, Policy::Actions::READ_INSTITUTION
 
-          described_class.update_status(microscopy_result, { result_status: 'completed' }, user2)
+          described_class.update_status(microscopy_result, result_status: 'completed')
 
           expect(microscopy_result.result_status).to_not eq('completed')
         end

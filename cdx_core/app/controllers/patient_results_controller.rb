@@ -13,7 +13,7 @@ class PatientResultsController < ApplicationController
   end
 
   def update
-    message, status = PatientResults::Persistence.update_status(@encounter.patient_results.find(params[:id]), patient_results_params, current_user)
+    message, status = PatientResults::Persistence.update_status(@encounter.patient_results.find(params[:id]), patient_results_params)
     render json: { result: message }, status: status
   end
 

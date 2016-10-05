@@ -1,41 +1,40 @@
 = form_for([@encounter, @xpert_result], url: encounter_xpert_result_path(@encounter, @xpert_result), html: { autocomplete: 'off' }) do |f|
   = validation_errors @xpert_result
-
   .row
     .col.pe-2
       = f.label :sample_collected_on
     .col
       = f.date_field :sample_collected_on
-
   .row
     .col.pe-2
       = f.label :tuberculosis
     .col
       = f.collection_radio_buttons(:tuberculosis, XpertResult.tuberculosis_options, :first, :last)
-
   .row.tb-trace{:style => ('display: none;' if @xpert_result.tuberculosis != 'detected')}
     .col.pe-2
       = f.label :trace
     .col
       = f.collection_radio_buttons(:trace, XpertResult.trace_options, :first, :last)
-
   .row
     .col.pe-2
       = f.label :rifampicin
     .col
       = f.collection_radio_buttons(:rifampicin, XpertResult.rifampicin_options, :first, :last)
-
   .row
     .col.pe-2
       = f.label :examined_by
     .col
       = f.text_field :examined_by
-
   .row
     .col.pe-2
       = f.label :result_on
     .col
       = f.date_field :result_on
+  .row
+    .col.pe-2
+      = f.label :comment
+    .col
+      = f.text_area :comment, rows: 4, cols: 70
 
   .row.button-actions
     .col
