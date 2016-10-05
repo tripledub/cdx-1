@@ -127,7 +127,6 @@ module TestOrders
         json.(@encounter, :testdue_date)
         json.(@encounter, :testing_for)
         json.(@encounter, :comment)
-        json.paymentDone @encounter.payment_done
         json.userCanApprove Policy.can?(Policy::Actions::APPROVE_ENCOUNTER, Encounter, current_user)
         json.userCanFinance Policy.can?(Policy::Actions::FINANCE_APPROVAL_ENCOUNTER, Encounter, current_user)
         json.culture_format Extras::Select.find(Encounter.culture_format_options, @encounter.culture_format)

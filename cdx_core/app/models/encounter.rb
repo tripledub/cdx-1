@@ -20,7 +20,7 @@ class Encounter < ActiveRecord::Base
 
   validates_presence_of :patient
   validates_presence_of :site, if: Proc.new { |encounter| encounter.institution }
-  validates_inclusion_of :culture_format, :allow_nil => true, in: ['solid', 'liquid'], if: Proc.new { |encounter| encounter.testing_for == 'TB' }
+  validates_inclusion_of :culture_format, allow_nil: true, in: %w(solid liquid), if: Proc.new { |encounter| encounter.testing_for == 'TB' }
   validates_inclusion_of :status,  in: %w(new financed not_financed samples_received samples_collected pending in_progress pending_approval closed)
   validate :validate_patient
 
