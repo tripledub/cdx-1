@@ -49,6 +49,17 @@ module PatientConcern
     attribute_field :entity_id, field: :id, copy: true
     attribute_field :gender, :email, :phone
 
+    after_create :modify_entity_id_after_create
+
+    def modify_entity_id_after_create
+      return if self.name.blank?
+      self.entity_id = 'COR' << self.id.to_s.rjust(6,'0') if self.entity_id.blank?
+      # this next bit is required here because the patient is set to be a phantom, if the entity id is null, when created.
+      # if the name is not blank then this is probably not a phantom.
+      self.is_phantom = false
+      self.save
+    end
+
     def age
       years_between birth_date_on, Time.now rescue nil
     end
@@ -98,7 +109,9 @@ module PatientConcern
     end
 
     def gender_options
-      [['male', I18n.t('select.patient.gender_options.male')], ['female', I18n.t('select.patient.gender_options.female')], ['other', I18n.t('select.patient.gender_options.other')]]
+      [ ['male', I18n.t('select.patient.gender_options.male')],
+        ['female', I18n.t('select.patient.gender_options.female')],
+        ['other', I18n.t('select.patient.gender_options.other')]]
     end
   end
 end

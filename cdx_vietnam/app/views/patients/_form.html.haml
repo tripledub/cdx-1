@@ -27,11 +27,11 @@
     .row
       .col.pe-2
         %div.tooltip
-          = f.label :patient_id
+          = f.label :entity_id
           %div.tooltiptext_r
-            = I18n.t('patients.form.patient_id_tooltip')
+            = I18n.t('patients.form.entity_id_tooltip')
       .col
-        = @patient.patient_id_display
+        = @patient.entity_id
 
   .row.nickname
     .col.pe-2
@@ -56,11 +56,20 @@
   .row
     .col.pe-2
       %div.tooltip
-        = f.label :entity_id
+        = f.label :external_id
         %div.tooltiptext_r
-          = I18n.t('patients.form.entity_id_tooltip')
+          = I18n.t('patients.form.external_id_tooltip')
     .col
-      = f.text_field :entity_id, :class => 'input-large', readonly: !@patient.new_record?
+      = f.text_field :external_id, :class => 'input-large'
+
+  .row
+    .col.pe-2
+      %div.tooltip
+        = f.label :external_patient_system
+        %div.tooltiptext_r
+          = I18n.t('patients.form.external_patient_system_tooltip')
+    .col
+      = f.text_field :external_patient_system, :class => 'input-large'
 
   .row
     .col.pe-2
@@ -103,17 +112,16 @@
       = render partial: 'addresses/form', locals: { address_form: addresses_form, prefix: I18n.t(prefix) }
 
   - if count > 1
-    %script
+    :javascript
       $(document).ready( function() {
-      $('#copy_addr').on('click', function(event){
-      event.preventDefault();
-      // copy address fields
-      $('#patient_addresses_attributes_1_id').val(       $('#patient_addresses_attributes_0_id').val() );
-      $('#patient_addresses_attributes_1_address').val(  $('#patient_addresses_attributes_0_address').val() );
-      $('#patient_addresses_attributes_1_city').val(     $('#patient_addresses_attributes_0_city').val() );
-      $('#patient_addresses_attributes_1_state').val(    $('#patient_addresses_attributes_0_state').val() );
-      $('#patient_addresses_attributes_1_country').val(  $('#patient_addresses_attributes_0_country').val() );
-      });
+        $('#copy_addr').on('click', function(event){
+          event.preventDefault();
+          // copy address fields
+          $('#patient_addresses_attributes_1_address').val(  $('#patient_addresses_attributes_0_address').val() );
+          $('#patient_addresses_attributes_1_city').val(     $('#patient_addresses_attributes_0_city').val() );
+          $('#patient_addresses_attributes_1_state').val(    $('#patient_addresses_attributes_0_state').val() );
+          $('#patient_addresses_attributes_1_country').val(  $('#patient_addresses_attributes_0_country option:selected').val() ).change();
+        });
       });
 
     .row

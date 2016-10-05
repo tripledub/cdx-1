@@ -110,18 +110,17 @@
       = render partial: 'addresses/form', locals: { address_form: addresses_form, prefix: I18n.t(prefix) }
 
   - if count > 1
-    %script
+    :javascript
       $(document).ready( function() {
-      $('#copy_addr').on('click', function(event){
-      event.preventDefault();
-      // copy address fields
-      $('#patient_addresses_attributes_1_id').val(       $('#patient_addresses_attributes_0_id').val() );
-      $('#patient_addresses_attributes_1_address').val(  $('#patient_addresses_attributes_0_address').val() );
-      $('#patient_addresses_attributes_1_city').val(     $('#patient_addresses_attributes_0_city').val() );
-      $('#patient_addresses_attributes_1_state').val(    $('#patient_addresses_attributes_0_state').val() );
-      $('#patient_addresses_attributes_1_country').val(  $('#patient_addresses_attributes_0_country').val() );
-      $('#patient_addresses_attributes_1_zip_code').val( $('#patient_addresses_attributes_0_zip_code').val() );
-      });
+        $('#copy_addr').on('click', function(event){
+          event.preventDefault();
+          // copy address fields
+          $('#patient_addresses_attributes_1_address').val(  $('#patient_addresses_attributes_0_address').val() );
+          $('#patient_addresses_attributes_1_city').val(     $('#patient_addresses_attributes_0_city').val() );
+          $('#patient_addresses_attributes_1_state').val(    $('#patient_addresses_attributes_0_state').val() );
+          $('#patient_addresses_attributes_1_country').val(  $('#patient_addresses_attributes_0_country option:selected').val() ).change();
+          $('#patient_addresses_attributes_1_zip_code').val( $('#patient_addresses_attributes_0_zip_code').val() );
+        });
       });
 
     .row

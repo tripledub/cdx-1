@@ -210,6 +210,7 @@ Address.blueprint do
 end
 
 Patient.blueprint :phantom do
+  name nil
   institution
   is_phantom { true }
   plain_sensitive_data {
