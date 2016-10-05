@@ -31,7 +31,7 @@ en:
     patient_result:
       status_options:
         new: 'New'
-        sample_collected: 'Sample collected'
+        sample_collected: 'Pending'
         allocated: 'Allocated'
         in_progress: 'In progress'
         pending_approval: 'Pending approval'

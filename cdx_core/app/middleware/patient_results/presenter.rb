@@ -18,9 +18,15 @@ module PatientResults
             createdAt:       Extras::Dates::Format.datetime_with_time_zone(patient_result.created_at),
             feedbackMessage: FeedbackMessages::Finder.find_text_from_patient_result(patient_result),
             editUrl:         edit_polymorphic_path([patient_result.encounter, patient_result]),
-            showResultUrl:   polymorphic_path([patient_result.encounter, patient_result])
+            showResultUrl:   show_result_url(patient_result)
           }
         end
+      end
+
+      protected
+
+      def show_result_url(patient_result)
+        patient_result.valid? ? polymorphic_path([patient_result.encounter, patient_result]) : ''
       end
     end
   end

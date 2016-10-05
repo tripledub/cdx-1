@@ -3,7 +3,8 @@ class ShowRejectedWithComment extends React.Component {
     return(
       <p>
         <strong>{ I18n.t('components.test_result_status.test_rejected') } - { this.props.feedbackMessage }</strong> -
-        <a className="btn" href={ this.props.showResultUrl }>{ I18n.t('components.test_result_status.show_test_result') }</a>
+        { this.props.showResultUrl ?
+          <a className="btn" href={ this.props.showResultUrl }>{ I18n.t('components.test_result_status.show_test_result') }</a> : null }
         <br />
         <em>{ this.props.commentValue }</em>
       </p>
