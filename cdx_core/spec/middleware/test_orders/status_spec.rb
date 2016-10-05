@@ -29,11 +29,18 @@ describe TestOrders::Status do
       expect(encounter.status).to eq('new')
     end
 
-    it 'should set the status to sample received' do
-      culture_result.update_attribute(:result_status, 'sample_received')
+    it 'should set the status to sample collected' do
+      culture_result.update_attribute(:result_status, 'allocated')
       encounter.reload
 
-      expect(encounter.status).to eq('allocated')
+      expect(encounter.status).to eq('samples_received')
+    end
+
+    it 'should set the status to sample received' do
+      culture_result.update_attribute(:result_status, 'sample_collected')
+      encounter.reload
+
+      expect(encounter.status).to eq('samples_collected')
     end
 
     it 'should set the status to in progress' do

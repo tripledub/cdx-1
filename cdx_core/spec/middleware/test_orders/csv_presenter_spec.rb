@@ -4,7 +4,7 @@ describe TestOrders::CsvPresenter do
   let(:institution)       { Institution.make }
   let(:user)              { institution.user }
   let(:patient)           { Patient.make institution: institution }
-  let!(:test_order)       { Encounter.make patient: patient, payment_done: true }
+  let!(:test_order)       { Encounter.make patient: patient }
   let(:microscopy_result) { MicroscopyResult.make encounter: test_order }
   let(:default_params)    { { context: institution.uuid } }
 
@@ -38,6 +38,7 @@ describe TestOrders::CsvPresenter do
       User.current = user
       PatientResults::StatusAuditor.create_status_log(microscopy_result, %w(new pending_approval))
       PatientResults::StatusAuditor.create_status_log(microscopy_result, %w(pending_approval rejected))
+      microscopy_result.reload
     end
 
     it 'should return an array of patient results status update' do

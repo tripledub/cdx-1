@@ -15,16 +15,11 @@ var EncounterShow = React.createClass({
       requestedTests: this.props.requestedTests,
       disable_all_selects: disable_all_selects,
       testOrderStatus: this.props.encounter.status,
-      paymentDone: this.props.encounter.paymentDone,
     };
   },
 
   onUpdateStatus: function(updatedStatus) {
     this.setState({ testOrderStatus: updatedStatus['testOrderStatus'] });
-
-    if (updatedStatus['testOrderStatus'] === 'financed') {
-      this.setState({ paymentDone: true });
-    }
   },
 
   componentDidMount: function() {
@@ -140,7 +135,6 @@ var EncounterShow = React.createClass({
                 <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.sample_type_label")} fieldValue={ sample_type } />
 
                 <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.status_label")} fieldValue={ I18n.t('components.test_order.' + this.state.testOrderStatus) } />
-                <DisplayFieldWithLabel fieldLabel={ I18n.t('components.test_batch.payment') } fieldValue={ I18n.t('components.test_batch.' + this.props.encounter.paymentDone) } />
               </div>
 
               <div className="col-6 patientCard">

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161003144201) do
+ActiveRecord::Schema.define(version: 20161005141603) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -351,7 +351,6 @@ ActiveRecord::Schema.define(version: 20161003144201) do
     t.string   "testing_for",         limit: 255,   default: ""
     t.string   "culture_format",      limit: 255
     t.boolean  "presumptive_rr"
-    t.boolean  "payment_done",                      default: false
     t.string   "comment",             limit: 255,   default: ""
     t.integer  "feedback_message_id", limit: 4
   end
