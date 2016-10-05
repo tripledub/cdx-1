@@ -25,6 +25,6 @@ class XpertResultsController < PatientResultsController
   end
 
   def xpert_result_params
-    params.require(:xpert_result).permit(:sample_collected_on, :tuberculosis, :trace, :rifampicin, :examined_by, :result_on)
+    params.require(:xpert_result).permit(:sample_collected_on, :tuberculosis, :trace, :rifampicin, :examined_by, :result_on, :comment)
   end
 end
