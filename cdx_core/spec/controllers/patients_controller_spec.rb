@@ -356,7 +356,7 @@ RSpec.describe PatientsController, type: :controller do
   context "update" do
     let(:patient) { institution.patients.make }
 
-    xit "should update existing patient" do
+    it "should update existing patient" do
       post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', 'birth_date_on(1i)': '2000', 'birth_date_on(2i)': '1', 'birth_date_on(3i)': '18', address: "1 street", city: 'london', state: "aa", zip_code: 'sw11' }
       expect(response).to be_redirect
 
