@@ -49,15 +49,17 @@ module PatientConcern
     attribute_field :entity_id, field: :id, copy: true
     attribute_field :gender, :email, :phone
 
-    after_create :modify_entity_id_after_create
+    attr_accessor :created_from_controller
+
+    after_create :modify_entity_id_after_create, if: :created_from_controller
 
     def modify_entity_id_after_create
-      return if self.name.blank?
-      self.entity_id = 'COR' << self.id.to_s.rjust(6,'0') if self.entity_id.blank?
-      # this next bit is required here because the patient is set to be a phantom, if the entity id is null, when created.
-      # if the name is not blank then this is probably not a phantom.
-      self.is_phantom = false
+      self.entity_id = display_patient_id if self.entity_id.blank?
       self.save
+    end
+
+    def display_patient_id
+      'COR' << self.id.to_s.rjust(6,'0')
     end
 
     def age
@@ -82,10 +84,6 @@ module PatientConcern
 
     def last_encounter=(value)
       @last_encounter = value
-    end
-
-    def patient_id_display
-      self.id
     end
 
     def as_json_card(json)

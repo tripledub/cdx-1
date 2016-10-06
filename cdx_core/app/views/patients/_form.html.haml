@@ -42,14 +42,15 @@
     .col
       = f.text_field :medical_insurance_num, :class => 'input-large'
 
-  .row
-    .col.pe-2
-      %div.tooltip
-        = f.label :entity_id
-        %div.tooltiptext_r
-          = I18n.t('patients.form.entity_id_tooltip')
-    .col
-      = f.text_field :entity_id, :class => 'input-large', readonly: !@patient.new_record?
+  - unless @patient.id.nil?
+    .row
+      .col.pe-2
+        %div.tooltip
+          = f.label :entity_id
+          %div.tooltiptext_r
+            = I18n.t('patients.form.entity_id_tooltip')
+      .col
+        = @patient.display_patient_id
 
   .row
     .col.pe-2
@@ -95,11 +96,15 @@
 
     .col
       = f.text_field 'age', :class=>'input-large'
-      %script
+      :javascript
         $('#patient_age').on('blur', function(){
-        var cyear = new Date().getFullYear();
-        var tyear = cyear - $(this).val();
-        $('#patient_birth_date_on_1i').val(tyear);
+          var estage = $(this).val();
+          if('' != estage)
+          {
+            var cyear = new Date().getFullYear();
+            var tyear = cyear - estage;
+            $('#patient_birth_date_on_1i').val(tyear);
+          }
         });
 
   - count = 0

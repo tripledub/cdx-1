@@ -239,13 +239,13 @@ RSpec.describe PatientsController, type: :controller do
       expect(response).to render_template("patients/new")
     end
 
-    it "should require entity_id" do
+    #now front end will always fill in a default entity_id
+    it "should always set entity_id even if blank" do
       expect {
         post :create, patient: build_patient_form_plan(entity_id: '')
-      }.to change(institution.patients, :count).by(0)
-
-      expect(assigns(:patient).errors).to have_key(:entity_id)
-      expect(response).to render_template("patients/new")
+      }.to change(institution.patients, :count).by(1)
+      expect(assigns(:patient).errors).to_not have_key(:entity_id)
+      #expect(response).to render_template("patients/new")
     end
 
     it "should validate entity_id uniqness" do
@@ -424,7 +424,7 @@ RSpec.describe PatientsController, type: :controller do
       expect(response).to render_template("patients/edit")
     end
 
-    xit "should require entity_id" do
+    it "should require entity_id" do
       patient = institution.patients.make :phantom
       post :update, id: patient.id, patient: { entity_id: '' }
 
