@@ -1,5 +1,10 @@
 vi:
   dst_lpa_results:
+    dst_lpa: 'Dst/Lpa'
+    dst:
+      localised_name: 'Kiểm tra nhạy cảm thuốc'
+    lpa:
+      localised_name: 'Dòng dò khảo nghiệm'
     new:
       header: 'Kết quả tính nhạy cảm với thuốc'
       add_new: 'Thêm kết quả xét nghiệm Dst & LPA cho: %{patient_name}'

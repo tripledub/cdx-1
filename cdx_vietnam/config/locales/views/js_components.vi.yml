@@ -1,5 +1,44 @@
 ﻿vi:
   components:
+    created: 'Đã tạo'
+    updated: 'Cập nhật mới nhất'
+    previous: 'Trước'
+    next: 'Kế tiếp'
+    cancel: 'Hủy bỏ'
+    test_result_actions:
+      update_failed: 'Không thể cập nhật trạng thái'
+    test_result_status:
+      sample_received:
+        action_label: 'Tiếp nhận mẫu'
+        reject_label: 'Từ chối mẫu'
+        reject_header: 'Vui lòng giải thích tại sao mẫu này bị từ chối'
+      sample_approved:
+        action_label: 'Nhập vào kết quả'
+        reject_label: 'Thêm bình luận'
+        reject_header: 'Bình luận'
+      in_progress:
+        action_label: 'Chấp thuận mẫu'
+        reject_label: 'Từ chố mẫu'
+        reject_header: 'Vui lòng giải thích tại sao mẫu này bị từ chối'
+      test_received:
+        action_label: 'Chấp thuận xét nghiệm'
+        reject_label: 'Từ chối xết nghiệm'
+        reject_header: 'Vui lòng giải thích tại sao xét nghiệm này bị từ chối'
+      test_completed: 'Xét nghiệm hoàn tất'
+      test_new:  'Xét nghiệm mới'
+      test_rejected: 'Xét nghiệm từ chối'
+    payment_action:
+      mark_as_paid: 'Đánh giá yêu cầu xét nghiệm được trả'
+    add_samples_action:
+      add_result: 'Thêm kết quả'
+      submit_samples:  'Nhập mẫu'
+      sample_ids: 'Mẫu Ids cho hàng loạt xét nghiệm'
+      save_sample_ids: 'Lưu mẫu ids'
+    test_batch_table:
+      type: 'Loại'
+      sample_id: 'Mã mẫu'
+      examined_by: 'Kiểm tra bởi'
+      options: 'Tùy chọn'
     alert_groups:
       col_name: "Tên cảnh báo"
       tooltip_name: "Đây là tên của cảnh báo."
@@ -13,7 +52,26 @@
       tooltip_roles: "Đôi điều về các vai trò."
       col_last_incident: "Sự cố sau cùng"
       tooltip_last_incident: "Khi sự cố sau cùng được báo cáo."
-
+    test_batch:
+      test_order_header: 'Trạng thái yêu cầu xét nghiệm'
+      header: 'Hàng loạt xét nghiệm'
+      status: 'trạng thái'
+      new: 'Mới'
+      samples_collected: 'Các mẫu thu thập'
+      samples_received: 'Các mẫu đã nhận'
+      in_progress: 'Đang xử lý'
+      payment: 'Thanh toán'
+      false: 'Chưa giải quyết'
+      true: 'Hoàn tất'
+    test_order:
+      new: 'Mới'
+      pending: 'Chưa giải quyết'
+      samples_collected: 'Các mẫu thu thập'
+      samples_received: 'Các mẫu đã nhận'
+      recieved: 'Đã nhận'
+      in_progress: 'Đang xử lý'
+      pending_approval: 'Chờ chấp thuận'
+      closed: 'Đã đóng'
     alert_messages:
       col_name: "Tên"
       col_date: "Ngày"
@@ -41,13 +99,13 @@
       lbl_culture: "Nuôi cấy"
       lbl_liquid_culture: "Môi trường lỏng"
       lbl_solid_culture: "Môi trường rắn"
-      lbl_drug_first_line: "Drug Susceptibility First Line"
-      lbl_drug_second_line: "Drug Susceptibility Second Line"
-      lbl_line_first_line: "Line probe assay First Line"
-      lbl_line_second_line: "Line probe assay Second Line"
-      lbl_cd4_count: "CD4 Count"
-      lbl_viral_count: "Viral Load Count"
-      lbl_hiv_detect: "HIV 1/2 Detect"
+      lbl_drug_first_line: "Khả năng kháng thuốc dòng một"
+      lbl_drug_second_line: "Khả năng kháng thuốc dòng hai"
+      lbl_line_first_line: "Dò khảo nghiệm dòng 1"
+      lbl_line_second_line: "Dò khảo nghiệm dòng 2"
+      lbl_cd4_count: "Đếm tế bào CD4"
+      lbl_viral_count: "Lượt tải Viral"
+      lbl_hiv_detect: " Phát hiện HIV 1/2"
       lbl_rdt: "RDT"
       lbl_xpert_ebola: "Xpert Ebola"
 
@@ -158,6 +216,7 @@
       col_request_date: "Ngày yêu cầu"
       col_due_date: "Ngày hết hạn"
       col_id: "Mã yêu cầu"
+
 
     test_results:
       col_sample: "Mẫu được thu thập ngày"
