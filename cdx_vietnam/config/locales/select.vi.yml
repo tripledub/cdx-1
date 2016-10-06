@@ -11,6 +11,30 @@ vi:
         tb: 'Bệnh lao'
         hiv: 'H.I.V.'
         ebola: 'Ebola'
+      status_options:
+        new: 'Tạo mới'
+        pending: 'Chưa tiến hành'
+        received: 'Đã nhận'
+        in_progress: 'Đang xử lý'
+        pending_approval: 'Chờ phê duyệt'
+        approved: 'Đã được duyệt'
+        closed: 'Đã đóng'
+    test_batch:
+      status_options:
+        new: 'Tạo mới'
+        samples_collected: 'Mẫu thử đã được thu gom'
+        samples_received: 'Mẫu thử đã được nhận'
+        in_progress: 'Đang xử lý'
+        closed: 'Đã đóng'
+    patient_result:
+      status_options:
+        new: 'Tạo mới'
+        sample_collected: 'Mẫu thử đã được thu gom'
+        sample_received: 'Mẫu thử đã được nhận'
+        in_progress: 'Đang xử lý'
+        pending_approval: 'Chờ phê duyệt'
+        rejected: 'Bị từ chối'
+        completed: 'Đã hoàn thành'
     microscopy:
       visual_appearance:
         blood: 'Nhuốm máu'
