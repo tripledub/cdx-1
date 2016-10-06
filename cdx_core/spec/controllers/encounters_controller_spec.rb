@@ -592,11 +592,10 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       expect(json_response['message']).to eq('Cannot add a test or sample that belongs to a different patient')
     end
 
-    #disabled due to test not creating actual phantom patients
-    xit "it merges data from another patient if both are phantom" do
+    it "it merges data from another patient if both are phantom" do
       device = Device.make institution: institution
       DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(test:{assays:[condition: "flu_a"]}, sample: {id: 'a'}, patient: {gender: 'male'})
-      DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(test:{assays:[condition: "flu_a"]}, sample: {id: 'b'}, patient: {gender: 'male'})
+      DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(test:{assays:[condition: "flu_a"]}, sample: {id: 'b'}, patient: {name: 'Doe'})
 
       sample_with_patient1, sample_with_patient2 = Sample.all.to_a
 
@@ -613,7 +612,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       json_response = JSON.parse(response.body).with_indifferent_access
 
       expect(json_response['status']).to eq('ok')
-      expect(json_response['encounter']['patient']).to include({'gender' => 'male'})
+      expect(json_response['encounter']['patient']).to include({'name' => 'Doe', 'gender' => 'male'})
     end
 
     it "it merges data from another patient if one of them phantom" do
