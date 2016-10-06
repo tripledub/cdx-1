@@ -1,0 +1,10 @@
+vi:
+  patient_results:
+    validations:
+      rejected_no_comment: 'Bạn phải giải thích tại sao xét nghiệm này bị từ chối.'
+    update_samples:
+      samples_updated: 'Mẫu thử đã được cập nhật thành công.'
+      updated_fail: 'Mẫu thử không được cập nhật.'
+    update:
+      success: 'Kết quả đã được cập nhật thành công.'
+      failure: 'Kết quả không được cập nhật.'
