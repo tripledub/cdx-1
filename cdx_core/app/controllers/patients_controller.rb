@@ -45,7 +45,7 @@ class PatientsController < ApplicationController
     parse_date_of_birth
     @patient      = @institution.patients.new(patient_params)
     @patient.site = @navigation_context.site
-
+    @patient.created_from_controller = true
     if validate_name_and_entity_id && @patient.save_and_audit("t{patients.create.audit_log}: #{@patient.name}")
       next_url = if params[:next_url].blank?
                    patient_path(@patient)
@@ -94,8 +94,8 @@ class PatientsController < ApplicationController
   def patient_params
     params.require(:patient).permit(
       :name, :entity_id, :gender, :nickname, :medical_insurance_num, :social_security_code, :external_id,
-      :external_patient_system, :birth_date_on, :address, :email, :phone, :city, :state, :zip_code,
-      addresses_attributes: [:id, :address, :city, :state, :zip_code]
+      :external_patient_system, :birth_date_on, :address, :email, :phone, :city, :state, :zip_code, :created_from_controller,
+      addresses_attributes: [:id, :address, :city, :state, :country, :zip_code]
     )
   end
 
@@ -103,10 +103,10 @@ class PatientsController < ApplicationController
     (2 - @patient.addresses.size).times { @patient.addresses.build }
   end
 
-  # Only patients from form need this validation. Phantom patients don't have name or entity_id
+  # Only patients from form need this validation. Phantom patients don't have entity_id
   def validate_name_and_entity_id
     @patient.valid?
-    @patient.errors.add(:entity_id, I18n.t('patients.create.no_entity')) if @patient.new_record? && !@patient.entity_id.present?
+    #@patient.errors.add(:entity_id, I18n.t('patients.create.no_entity')) if @patient.new_record? && !@patient.entity_id.present?
     @patient.errors.add(:name, I18n.t('patients.create.no_name'))      unless @patient.name.present?
     @patient.errors.empty?
   end

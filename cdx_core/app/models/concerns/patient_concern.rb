@@ -49,6 +49,19 @@ module PatientConcern
     attribute_field :entity_id, field: :id, copy: true
     attribute_field :gender, :email, :phone
 
+    attr_accessor :created_from_controller
+
+    after_create :modify_entity_id_after_create, if: :created_from_controller
+
+    def modify_entity_id_after_create
+      self.entity_id = display_patient_id if self.entity_id.blank?
+      self.save
+    end
+
+    def display_patient_id
+      'COR' << self.id.to_s.rjust(6,'0')
+    end
+
     def age
       years_between birth_date_on, Time.now rescue nil
     end
@@ -73,10 +86,6 @@ module PatientConcern
       @last_encounter = value
     end
 
-    def patient_id_display
-      self.id
-    end
-
     def as_json_card(json)
       json.(self, :id, :name, :age, :age_months, :gender, :address, :multi_address, :phone, :email, :entity_id, :city, :zip_code, :state)
       json.birth_date_on Extras::Dates::Format.datetime_with_time_zone(birth_date_on)
@@ -98,7 +107,9 @@ module PatientConcern
     end
 
     def gender_options
-      [['male', I18n.t('select.patient.gender_options.male')], ['female', I18n.t('select.patient.gender_options.female')], ['other', I18n.t('select.patient.gender_options.other')]]
+      [ ['male', I18n.t('select.patient.gender_options.male')],
+        ['female', I18n.t('select.patient.gender_options.female')],
+        ['other', I18n.t('select.patient.gender_options.other')]]
     end
   end
 end
