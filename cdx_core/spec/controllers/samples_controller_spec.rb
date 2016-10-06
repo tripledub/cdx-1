@@ -6,7 +6,7 @@ describe SamplesController do
   let(:patient)           { Patient.make institution: institution }
   let(:encounter)         { Encounter.make institution: institution, patient: patient }
   let(:default_params)    { { context: institution.uuid } }
-  let(:samples_ids)       { { '0' => 'sample-id', '1' => 'FX-3333-0' } }
+  let(:samples_ids)       { ['sample-id', 'FX-3333-0'] }
 
   before(:each) do
     sign_in user

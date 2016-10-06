@@ -9,6 +9,10 @@ class AddSamplesAction extends React.Component{
     event.preventDefault();
   }
 
+  sendStatusUpdates(result) {
+    StatusActions.updateStatus(result);
+  }
+
   closeAndCancel() {
     this.refs.addSamplesModal.hide();
   }
@@ -19,14 +23,34 @@ class AddSamplesAction extends React.Component{
     this.setState({ sampleResults: newResults });
   }
 
+  createSamples(event) {
+    if (event) { event.preventDefault() }
+    const that = this;
+    let sampleIds = [];
+
+    $('#samplesForm input[type=text]').each( function(index) {
+      sampleIds.push(this.value);
+    });
+
+    $.ajax({
+      url: this.props.encounterRoutes['submitSamplesUrl'],
+      method: 'POST',
+      data: { samples: sampleIds }
+    }).done( function(data) {
+      //that.sendStatusUpdates(data['result']);
+      location.reload(true);
+    }).fail( function(data) {
+      alert(data['responseText'])
+    });
+  }
+
   render() {
     return(
       <div className="col-6">
         <button className="btn-secondary" onClick={ this.submitSamples.bind(this) }>{ I18n.t('components.add_samples_action.submit_samples') }</button>
         <Modal ref="addSamplesModal">
           <h1>{ I18n.t('components.add_samples_action.sample_ids') }: { this.props.batchId }</h1>
-          <form method="post" action={ this.props.encounterRoutes['submitSamplesUrl'] }>
-            <input type='hidden' name='authenticity_token' value={this.props.authenticityToken} />
+          <form id="samplesForm" onSubmit={ this.createSamples.bind(this) }>
             <div className="col">
               { this.state.sampleResults.map(function(sampleResult, element) {
                  return <SampleRow key={ element } elementId={ element } />;

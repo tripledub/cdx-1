@@ -3,13 +3,13 @@ class SamplesController < ApplicationController
   before_filter :find_encounter
 
   def create
-    message = if @encounter.financed?
+    message, status = if @encounter.financed?
                 Samples::Persistence.collect_sample_ids(@encounter, params[:samples])
               else
-                I18n.t('patient_results.update_samples.updated_fail')
+                [I18n.t('patient_results.update_samples.updated_fail'), :unprocessable_entity]
               end
 
-    render json: { result: message }, status: message.empty? ? :ok : :unprocessable_entity
+    render json: { result: message }, status: status
   end
 
   protected

@@ -10,7 +10,7 @@ describe Samples::Persistence do
   let(:culture_result)    { CultureResult.make encounter: encounter }
   let(:feedback_message)  { FeedbackMessage.make institution: institution }
   let(:sample_identifier) { SampleIdentifier.make lab_sample_id: '8778' }
-  let(:sample_ids)        { { '0' => '8778', '1' => 'Random Id' } }
+  let(:sample_ids)        { ['8778', 'Random Id'] }
 
   before :each do
     User.current = user
@@ -39,7 +39,7 @@ describe Samples::Persistence do
     context 'sample id exists but has been assigned to a test result' do
       before :each do
         microscopy_result.update_attribute(:sample_identifier_id, sample_identifier.id)
-        described_class.collect_sample_ids(encounter, '0' => '8778')
+        described_class.collect_sample_ids(encounter, ['8778'])
       end
 
       it 'should create a new sample id' do
@@ -55,7 +55,7 @@ describe Samples::Persistence do
     end
 
     it 'should return an error message' do
-      expect(described_class.collect_sample_ids(encounter, '0' => '8778' ).first).to eq('Sample: 8778 has already been added to the test order.')
+      expect(described_class.collect_sample_ids(encounter, ['8778']).first).to eq('Sample: 8778 has already been added to the test order.')
     end
   end
 end

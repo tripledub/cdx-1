@@ -4,15 +4,25 @@ module Samples
     class << self
       def collect_sample_ids(encounter, sample_ids)
         @error_messages = []
-        sample_ids.each do |sample_id|
-          add_sample(encounter, sample_id[1]) if sample_is_valid?(sample_id[1])
-        end
+        create_sample_ids(encounter, sample_ids)
 
-        TestOrders::Status.update_and_log(encounter, 'samples_collected') unless @error_messages.present?
-        @error_messages
+        @error_messages.present? ? [@error_messages.join(', '), :unprocessable_entity] : [{ testOrderStatus: 'samples_collected' }, :ok]
       end
 
       protected
+
+      def create_sample_ids(encounter, sample_ids)
+        sample_ids.each do |sample_id|
+          add_sample(encounter, sample_id) if sample_is_valid?(sample_id)
+        end
+
+        unless @error_messages.present?
+          TestOrders::Status.update_and_log(encounter, 'samples_collected')
+          encounter.patient_results.each do |patient_result|
+            PatientResults::Persistence.update_status_and_log(patient_result, 'sample_collected')
+          end
+        end
+      end
 
       def sample_is_valid?(sample_id)
         sample_identifiers = SampleIdentifiers::Finder.find_all_by_sample_id(sample_id)
