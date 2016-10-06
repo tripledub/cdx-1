@@ -10,7 +10,6 @@ describe CultureResult do
     it { should validate_presence_of(:examined_by).on(:update) }
     it { should validate_presence_of(:result_on).on(:update) }
     it { should validate_presence_of(:media_used).on(:update) }
-    it { should validate_presence_of(:serial_number).on(:update) }
     it { should validate_presence_of(:test_result).on(:update) }
     it { should validate_inclusion_of(:media_used).in_array(media_options) }
     it { should validate_inclusion_of(:test_result).in_array(test_result_options) }

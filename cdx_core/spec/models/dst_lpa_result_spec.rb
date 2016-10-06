@@ -11,7 +11,6 @@ describe DstLpaResult do
     it { should validate_presence_of(:examined_by).on(:update) }
     it { should validate_presence_of(:result_on).on(:update) }
     it { should validate_presence_of(:media_used).on(:update) }
-    it { should validate_presence_of(:serial_number).on(:update) }
     it { should validate_presence_of(:results_h).on(:update) }
     it { should validate_presence_of(:results_r).on(:update) }
     it { should validate_presence_of(:results_e).on(:update) }

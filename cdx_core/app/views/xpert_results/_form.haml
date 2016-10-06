@@ -7,6 +7,11 @@
       = f.date_field :sample_collected_on
   .row
     .col.pe-2
+      = f.label :sample_identifier_id
+    .col
+      = f.select :sample_identifier_id, SampleIdentifiers::Presenter.available_samples(@encounter)
+  .row
+    .col.pe-2
       = f.label :tuberculosis
     .col
       = f.collection_radio_buttons(:tuberculosis, XpertResult.tuberculosis_options, :first, :last)
