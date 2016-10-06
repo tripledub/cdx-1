@@ -2,6 +2,7 @@ vi:
   activerecord:
     attributes:
       culture_result:
+        result_status: 'Trạng thái'
         sample_collected_on: 'Ngày lấy mẫu'
         examined_by: 'Kiểm tra bởi'
         result_on: 'Kết quả ngày'

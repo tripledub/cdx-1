@@ -277,6 +277,7 @@ vi:
       at_site_and_subsites: " tại trang và những trang con"
       no_actions_granted: "Không có hoạt động nào được phép"
       new_policy: "Chính sách mới"
+      encounter: 'Yêu cầu xét nghiệm'
 
     policy_item_detail:
       resources_label: "Tài nguyên"

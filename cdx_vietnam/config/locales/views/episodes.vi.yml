@@ -3,11 +3,12 @@ vi:
     form:
       header: 'Tập cho %{patient_name}'
       history: 'Lịch sử điều trị trước đây'
-    history_tb: 'Previous history of TB'
+      history_tb: 'Lịch sử trước đây của TB'
       select_type_of_episode: 'Chọn loại tập'
       episode_details: 'Thông tin tập'
       episode_type_not_available: 'Loại tập này hiện không có có sẵn'
-    hiv_status: 'Trạng thái HIV hiện tại'
+      hiv_status: 'Trạng thái HIV hiện tại'
+      episode_previous_history_required: 'Bắt buộc có lịch sử tập trước đây'
     create:
       new_episode: 'Tập mới đã được tạo'
       episode_created: 'Tập đã được tạo thành công.'

@@ -17,3 +17,11 @@ vi:
       date: 'Ngày'
       test_order_id: 'Mã của yêu cầu xét nghiệm'
       status: 'Trạng thái'
+    state:
+      order_id: 'Mã yêu cầu'
+      sample_id: 'Mã mẫu'
+      old_state: 'Trạng thái trước đó'
+      new_state: 'Trạng thái hiện tại'
+      created_at: 'Ngày'
+    update:
+      not_allowed: "Bạn không có quyền cập nhật yêu cầu xét nghiệm này."

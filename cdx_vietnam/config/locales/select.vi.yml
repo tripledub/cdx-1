@@ -14,10 +14,12 @@ vi:
       status_options:
         new: 'Tạo mới'
         pending: 'Chưa tiến hành'
-        received: 'Đã nhận'
+        financed: 'Được tài trợ'
+        not_financed: 'Không được tài trợ'
+        samples_collected: 'Mẫu đã được thu thập'
+        samples_received: 'Mẫu đã được tiếp nhận'
         in_progress: 'Đang xử lý'
         pending_approval: 'Chờ phê duyệt'
-        approved: 'Đã được duyệt'
         closed: 'Đã đóng'
     test_batch:
       status_options:
@@ -55,10 +57,12 @@ vi:
         contaminated: 'Nhiễm xạ'
     dst_lpa:
       dst_lpa_options:
+        not_selected: 'Vui lòng chọn'
         resistant: 'Đề kháng'
         susceptible: 'Nhạy cảm'
         contaminated: 'Nhiễm xạ'
         not_done: 'Không hoàn tất'
+        not_selected_long: 'Vui lòng chọn'
         resistant_long: 'Đề kháng'
         susceptible_long: 'Nhạy cảm'
         contaminated_long: 'Nhiễm xạ'
@@ -78,6 +82,7 @@ vi:
         not_detected: 'Không tìm thấy'
         indeterminate:  'Không rõ kết quả'
       trace:
+        trace: 'Dấu vết'
         very_low: 'Rất ít'
         low: 'Ít'
         medium: 'Vừa'
@@ -107,6 +112,8 @@ vi:
         lost_to_follow_up: 'Mất theo dõi'
         not_evaluated: 'Không đánh giá'
         success: 'Điều trị thành công'
+        in_error: 'Tập đã được nêu trong lỗi'
+        other: 'Khác'
       drug_resistance:
         mono: 'Đơn kháng thuốc'
         poly: 'Kháng nhiều hơn 1 loại thuốc'
