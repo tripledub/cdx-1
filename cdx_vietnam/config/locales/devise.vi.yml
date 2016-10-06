@@ -43,7 +43,7 @@ vi:
       signed_up_but_unconfirmed: "Một tin nhắn với liên kết xác nhận đã được gửi vào địa chỉ email của bạn. Vui lòng mở liên kết để kích hoạt tài khoản của bạn."
       update_needs_confirmation: "Bạn đã cập nhật tài khoản của bạn thành công, nhưng chúng tôi cần xác minh địa chỉ email mới của bạn. Vui lòng kiểm tra email của bạn và nhấp vào liên kết xác nhận để hoàn thành xác nhận địa chỉ email mới của bạn."
       updated: "Bạn đã cập nhật tài khoản của bạn thành công."
-edit:
+    edit:
       my_account: 'Tài khoản của tôi'
       current_password: 'Mật khẩu hiện tại'
       new_password: 'Mật khẩu mới'

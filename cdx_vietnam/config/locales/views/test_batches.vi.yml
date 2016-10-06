@@ -1,5 +1,5 @@
 vi:
   test_batches:
     set_as_paid:
-      payment_done: 'Lo?t x�t nghi?m d� du?c thi?t l?p l� thanh to�n.'
-      not_allowed: 'Xin l?i, b?n kh�ng du?c cho ph�p thi?t l?p lo?t x�t nghi?m l� thanh to�n.'
+      payment_done: 'Loạt xác nghiệm này đã được thanh toán.'
+      not_allowed: 'Xin lỗi, bạn không có quyền thiết lập các xét nghiệm này là đã thanh toán.'

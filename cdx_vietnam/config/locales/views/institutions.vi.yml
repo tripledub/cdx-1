@@ -35,7 +35,7 @@ vi:
     pending_approval:
       contact_admin: 'Vui lòng liên hệ với ban quản trị hệ thống của bạn'
       acc_need_active: 'Tài khoản của bạn cần được kích hoạt để có quyền truy cập vào hệ thống'
- 	create:
+    create:
       success: 'Tạo tạo Tổ chức  thành công.'
     update:
       success: 'Cập nhật tổ chức thành công.'
