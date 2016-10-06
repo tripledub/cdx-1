@@ -1,0 +1,5 @@
+vi:
+  test_batches:
+    set_as_paid:
+      payment_done: 'Lo?t xét nghi?m dã du?c thi?t l?p là thanh toán.'
+      not_allowed: 'Xin l?i, b?n không du?c cho phép thi?t l?p lo?t xét nghi?m là thanh toán.'

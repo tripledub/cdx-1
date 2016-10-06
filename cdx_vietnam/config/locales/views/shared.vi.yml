@@ -1,6 +1,6 @@
 vi:
   shared:
-    address: 
+    address:
       street: 'Địa chỉ đường'
       city: 'Tên thành phố'
       state: 'Tên bang/nước'

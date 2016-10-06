@@ -1,0 +1,7 @@
+vi:
+  patient_test_results:
+    index:
+      xpert_result: 'Kết quả Xpert'
+      culture_result: 'Kết quả Culture'
+      dst_lpa_result: 'Kết quả Dst/Lpa'
+      microscopy_result: 'Kết quả Microscopy'
