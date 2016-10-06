@@ -3,7 +3,7 @@ require 'policy_spec_helper'
 
 describe PatientResults::Persistence do
   let(:user)              { User.make }
-  let(:institution)      { user.institutions.make }
+  let(:institution)       { user.institutions.make }
   let(:patient)           { Patient.make institution: institution }
   let(:encounter)         { Encounter.make institution: institution, patient: patient }
   let(:microscopy_result) { MicroscopyResult.make encounter: encounter }
@@ -25,25 +25,6 @@ describe PatientResults::Persistence do
 
     it 'should create a valid batch of tests' do
       expect(encounter.valid?).to be true
-    end
-  end
-
-  describe 'collect_sample_ids' do
-    before :each do
-      described_class.collect_sample_ids(encounter, sample_ids)
-      encounter.reload
-    end
-
-    it 'should populate serial number with lab Id.' do
-      expect(encounter.patient_results.first.serial_number).to eq('8778')
-    end
-
-    it 'should populate serial number with lab Id.' do
-      expect(encounter.patient_results.last.serial_number).to eq('Random Id')
-    end
-
-    it 'should update encounter status to samples collected' do
-      expect(encounter.status).to eq('samples_collected')
     end
   end
 

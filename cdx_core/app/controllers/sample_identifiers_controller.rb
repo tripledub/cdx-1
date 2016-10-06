@@ -1,3 +1,4 @@
+# Sample identifiers controller
 class SampleIdentifiersController < ApplicationController
   respond_to :json
 

@@ -56,11 +56,9 @@ Rails.application.routes.draw do
       post :set_as_paid
     end
 
-    resource :patient_results, only: [:update] do
-      collection do
-        post :update_samples
-      end
-    end
+    resource :patient_results, only: [:update]
+    resource :samples, only: [:create]
+    resources :sample_identifiers, only: [:update]
     resources :xpert_results, only: [:show, :edit, :update]
     resources :microscopy_results, only: [:show, :edit, :update]
     resources :dst_lpa_results, only: [:show, :edit, :update]
@@ -80,7 +78,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :sample_identifiers, only: [:update]
   resources :devices do
     member do
       get  :regenerate_key

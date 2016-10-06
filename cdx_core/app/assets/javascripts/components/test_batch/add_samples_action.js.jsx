@@ -1,6 +1,7 @@
 class AddSamplesAction extends React.Component{
   constructor(props, context) {
     super(props, context);
+    this.state = { sampleResults: ['sample'] }
   }
 
   submitSamples(event) {
@@ -12,6 +13,12 @@ class AddSamplesAction extends React.Component{
     this.refs.addSamplesModal.hide();
   }
 
+  addSampleInput() {
+    let newResults = this.state.sampleResults;
+    newResults.push('sample');
+    this.setState({ sampleResults: newResults });
+  }
+
   render() {
     return(
       <div className="col-6">
@@ -21,9 +28,15 @@ class AddSamplesAction extends React.Component{
           <form method="post" action={ this.props.encounterRoutes['submitSamplesUrl'] }>
             <input type='hidden' name='authenticity_token' value={this.props.authenticityToken} />
             <div className="col">
-              { this.props.patientResults.map(function(patientResult, element) {
-                 return <SampleRow key={ patientResult.id } elementId={ 'input' + element } resultId={ patientResult.id } resultName={ patientResult.testType } resultSampleId={ patientResult.sampleId } />;
+              { this.state.sampleResults.map(function(sampleResult, element) {
+                 return <SampleRow key={ element } elementId={ element } />;
               }.bind(this)) }
+            </div>
+            <div className="row">
+              <div className="col-6"></div>
+              <div className="col-6">
+                <a className="btn-primary" href="#" onClick={ this.addSampleInput.bind(this) }>Add another sample</a>
+              </div>
             </div>
             <div className="col">
               <button className="btn-link" type="reset" onClick={ this.closeAndCancel.bind(this) }>{ I18n.t('components.cancel') }</button>
@@ -38,7 +51,6 @@ class AddSamplesAction extends React.Component{
 
 AddSamplesAction.propTypes = {
   batchId: React.PropTypes.string.isRequired,
-  patientResults: React.PropTypes.array.isRequired,
   encounterRoutes: React.PropTypes.object.isRequired,
   authenticityToken: React.PropTypes.string.isRequired,
 };

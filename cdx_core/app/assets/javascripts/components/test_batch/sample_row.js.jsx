@@ -3,10 +3,10 @@ class SampleRow extends React.Component{
     return(
       <div className="row">
         <div className="col-6">
-          <label>{ this.props.resultName }</label>
+          <label>{ I18n.t('components.add_samples_action.enter_sample_id') }</label>
         </div>
         <div className="col-6">
-          <input type="text" required refs={ this.props.elementId } name={ 'samples['+this.props.resultId+']' } defaultValue={ this.props.resultSampleId }/>
+          <input type="text" required name={ 'samples['+this.props.elementId+']' } />
         </div>
       </div>
     )
@@ -14,7 +14,5 @@ class SampleRow extends React.Component{
 }
 
 SampleRow.propTypes = {
-  resultName: React.PropTypes.string,
-  resultSampleId: React.PropTypes.string,
   resultId: React.PropTypes.number,
 };

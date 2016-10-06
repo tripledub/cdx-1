@@ -10,15 +10,6 @@ module PatientResults
         end
       end
 
-      def collect_sample_ids(encounter, sample_ids)
-        sample_ids.each do |sample_id|
-          result = encounter.patient_results.find(sample_id[0])
-          result.update_attribute(:serial_number, sample_id[1])
-        end
-
-        TestOrders::Status.update_and_log(encounter, 'samples_collected')
-      end
-
       def update_status(patient_result, params)
         if update_patient_result(patient_result, params)
           [
