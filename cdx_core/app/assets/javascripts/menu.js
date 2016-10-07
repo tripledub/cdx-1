@@ -1,18 +1,17 @@
+var menu_open = false;
+
+function close_accounts_menu()
+{
+  if( menu_open )
+  {
+    $('#dropdown-form').parent().removeClass('show-nav-menu');
+    $('#account_menu_back').remove();
+    menu_open = false;
+  }
+}
+
 $(document).ready( function()
 {
-  var menu_open = false;
-
-  function close_accounts_menu()
-  {
-    if( menu_open )
-    {
-      $('#dropdown-form').parent().removeClass('show-nav-menu');
-      menu_open = false;
-    }
-  }
-
-  $('body').on('click', close_accounts_menu );
-
   $(".icon-user").on('click', function()
   {
     var $dropdown = $(this).parent();
@@ -20,8 +19,9 @@ $(document).ready( function()
       close_accounts_menu();
     else
     {
+      $dropdown.before('<div id="account_menu_back" onclick="close_accounts_menu()">' );
       $dropdown.addClass('show-nav-menu');
-      setTimeout(function(){ menu_open = true; }, 1000);
+      menu_open = true;
     }
   });
 
