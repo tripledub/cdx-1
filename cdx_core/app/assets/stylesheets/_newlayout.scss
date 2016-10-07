@@ -1030,3 +1030,173 @@ text-transform: capitalize;
 #diagnosis_label {
   margin-right: 16px;
 }
+
+
+
+
+
+
+
+/* PATIENT LAYOUT ALTERATIONS. */
+
+
+
+
+.new_patient, .edit_patient{
+  background : transparent !important;
+  border: 0px !important;
+}
+
+
+.whitebox {
+  background:white;
+  border: 1px solid #e2e2e2;
+  margin-bottom:20px;
+}
+
+.whitebox .purpleheader{
+    background-color: #5c5b82;
+    border: 1px solid #c7c7c7;
+    color: white;
+    font-family: "Raleway",sans-serif;
+    font-weight: 400;
+    height: 40px;
+    padding: 10px 15px;
+    clear:both;
+}
+
+.whitebox .fieldrow{
+  width:50%;
+  float:left;
+  height:50px;
+}
+
+.whitebox .fieldlabel{
+  float:left;
+  width:40%;
+  padding:5px 15px 5px 15px;
+}
+
+.whitebox .fieldvalue{
+  float:left;
+  width:60%;
+  padding:5px 15px 5px 15px;
+}
+
+
+.add2 {
+  position:static !important;
+}
+
+#copy_addr{
+    background: #2196f3 none repeat scroll 0 0;
+    font-size: 12px;
+    color: #fff;
+    height: 30px;
+    line-height: 15px;
+    margin: 0 0 0 0px;
+    padding: 0.5em 2em;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Titillium Web",sans-serif;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+#copy_addr:hover{
+    background: #2C8ADC;
+}
+
+
+.hideme{
+display:none !important;
+}
+
+
+
+.add1 {
+  float:left;
+  width:50%;
+}
+
+.add2 {
+  float:left;
+  width:50%;
+}
+
+.whitebox .addresslabels{
+  float:left;
+  width:40%;
+  padding:5px 15px 5px 15px;
+}
+
+.whitebox .addressfields{
+  float:left;
+  width:60%;
+  padding:5px 15px 5px 15px;
+}
+
+.add2 .addresslabels{
+  float:left;
+  width:40%;
+  padding:5px 15px 5px 15px;
+}
+
+.whitebox .addressfields input, .whitebox .addressfields select{
+margin-top:5px;
+margin-bottom:5px;
+}
+
+
+#pname .fieldlabel {
+    margin-left:-15px;
+    margin-right:15px;
+    float: left;
+    padding: 5px 15px;
+    width: 40%;
+}
+
+
+
+.fieldlabel label {
+  width:100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fieldvalue input, .fieldvalue select, .addressfields input, .addressfields select {
+  width:100% !important;
+  max-width:236px;
+}
+
+
+
+#pdob .fieldvalue select#patient_birth_date_on_3i {
+  width:32% !important;
+  max-width:50px;
+}
+
+#pdob .fieldvalue select#patient_birth_date_on_2i {
+  width:32% !important;
+  max-width:95px;
+}
+
+#pdob .fieldvalue select#patient_birth_date_on_1i {
+  width:32% !important;
+  max-width:85px;
+}
+
+
+#patient_name{
+  margin-left:-3px;
+}
+
+.textblock {
+  padding: 10px 5px 5px 0px;
+}
