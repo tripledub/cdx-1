@@ -34,9 +34,9 @@
             .row
               .col-6
                 %label
-                  = MicroscopyResult.human_attribute_name(:serial_number)
+                  = MicroscopyResult.human_attribute_name(:sample_identifier_id)
               .col-6
-                = @microscopy_result.serial_number
+                = @microscopy_result.sample_identifier.lab_sample_id
             .row
               .col-6
                 %label

@@ -26,6 +26,12 @@
         .row
           .col-6
             %label
+              = XpertResult.human_attribute_name(:sample_identifier_id)
+          .col-6
+            = @xpert_result.sample_identifier.lab_sample_id
+        .row
+          .col-6
+            %label
               = XpertResult.human_attribute_name(:tuberculosis)
           .col-6
             = Extras::Select.find(XpertResult.tuberculosis_options, @xpert_result.tuberculosis)

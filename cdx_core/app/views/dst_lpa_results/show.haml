@@ -36,8 +36,8 @@
             .row
               .col-12
                 %label
-                  = DstLpaResult.human_attribute_name(:serial_number)
-                = @dst_lpa_result.serial_number
+                  = DstLpaResult.human_attribute_name(:sample_identifier_id)
+                = @dst_lpa_result.sample_identifier.lab_sample_id
             .row
               .col-12
                 %label
