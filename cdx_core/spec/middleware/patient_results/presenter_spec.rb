@@ -5,7 +5,7 @@ describe PatientResults::Presenter do
 
   describe 'for_encounter' do
     before :each do
-      MicroscopyResult.make encounter: encounter, feedback_message: FeedbackMessage.make(institution: encounter.institution)
+      MicroscopyResult.make encounter: encounter, feedback_message: FeedbackMessage.make(institution: encounter.institution), sample_identifier: SampleIdentifier.make
       CultureResult.make encounter: encounter
       DstLpaResult.make encounter: encounter
       encounter.reload
@@ -23,7 +23,7 @@ describe PatientResults::Presenter do
       expect(subject.first).to eq(
         id:          patient_result.id,
         testType:    patient_result.test_name.to_s,
-        sampleId:    patient_result.serial_number.to_s,
+        sampleId:    patient_result.sample_identifier.lab_sample_id.to_s,
         examinedBy:  patient_result.examined_by.to_s,
         comment:     patient_result.comment.to_s,
         status:      patient_result.result_status,
