@@ -29,6 +29,18 @@ describe Device do
     end
   end
 
+  context 'is_gene_xpert?' do
+    it 'should return true if model is a gene xpert' do
+      device = Device.make device_model: DeviceModel.make(name: 'GeneXpert (Institute One)')
+      expect(device.model_is_gen_expert?).to be true
+    end
+
+    it 'should return false if model is not a gene xpert' do
+      device = Device.make device_model: DeviceModel.make(name: 'Deki Reader (Institute One)')
+      expect(device.model_is_gen_expert?).to be false
+    end
+  end
+
   context "validations" do
 
     it { is_expected.to validate_presence_of :device_model }

@@ -46,6 +46,10 @@ class Device < ActiveRecord::Base
     institution.user_id == user.id ? self : nil
   end
 
+  def model_is_gen_expert?
+    device_model.name.downcase.include? 'genexpert'
+  end
+
   def self.filter_by_query(query)
     result = self
     if (institution = query['institution'])
