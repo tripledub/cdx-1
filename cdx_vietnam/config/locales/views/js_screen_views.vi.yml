@@ -249,12 +249,12 @@ vi:
       name_col: "Tên"
       gender_col: "Giới tính"
       date_of_birth_col: "Ngày sinh"
-      address_col: "Địa chỉ"
+      address_col: "Địa chỉ thường trú"
       phone_col: "Số điện thoại"
       email_col: "Email"
       edit: "Sửa"
       create_test_order: "Tạo mới yêu cầu xét nghiệm"
-      alt_address_col: "Địa chỉ"
+      alt_address_col: "Địa chỉ liên hệ"
 
     patient_select:
       search_patient_placeholder: "Tìm bằng tên hoặc Mã bệnh nhân"
