@@ -1,0 +1,13 @@
+{
+  "event" : {
+    "result":"MTB DETECTED MEDIUM|Rif Resistance DETECTED",
+    "assay_name":"MTB-RIF Ultra RUO",
+    "sample_ID":"123",
+    "system_user":"Test User",
+    "device_serial_number":"1",
+    "end_time":"2016-10-08T17:30:00-05:00",
+    "start_time":"2016-10-08T16:30:00-05:00",
+    "event_id":"ZUZZ6SIPXBSI2JYFBE6V8RX6C7HKIQZC",
+    "test_type":"0"
+  }
+}

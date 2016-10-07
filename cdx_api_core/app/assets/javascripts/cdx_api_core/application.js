@@ -10,4 +10,28 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require_tree .
+//= require jquery
+//= require jquery.turbolinks
+//= require jquery_ujs
+//= require i18n
+//= require i18n/translations
+//= require jquery.are-you-sure
+//= require urijs
+//= require lodash
+//= require polyfills
+//= require leaflet
+//= require Leaflet.Sleep
+//= require leaflet-control-geocoder
+//= require classnames
+//= require react
+//= require react_ujs
+//= require react-dom
+//= require reflux
+//= require react-autosuggest
+//= require react-input-autosize
+//= require react-select
+//= require react-leaflet
+//= require react_rails_img
+//= require store.min
+//= require components
+//= require cdx_api_core/playground
