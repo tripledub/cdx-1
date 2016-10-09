@@ -50,7 +50,7 @@ describe XpertResults::Persistence do
 
   describe 'update_from_device_message' do
     before :each do
-      described_class.update_from_parsed_message(encounter, parsed_message)
+      described_class.update_from_parsed_message(xpert_result, parsed_message)
       xpert_result.reload
     end
 
