@@ -12,6 +12,10 @@ class XpertResult < PatientResult
     I18n.t('xpert_results.localised_name')
   end
 
+  def is_linkable?
+    result_status == 'allocated'
+  end
+
   class << self
     def tuberculosis_options
       [

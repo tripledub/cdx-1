@@ -6,8 +6,13 @@ describe XpertResult do
   let(:site)                { institution.sites.make }
   let(:patient)             { Patient.make(institution: institution) }
   let(:encounter)           { Encounter.make institution: institution, site: site, patient: patient }
+  let(:xpert_result)        { XpertResult.make encounter: encounter }
   let(:result_status)       { %w(new sample_collected allocated pending_approval rejected completed) }
   let(:test_result_options) { %w(detected not_detected indeterminate) }
+
+  before :each do
+    User.current = user
+  end
 
   context 'validations' do
     it { should validate_presence_of(:sample_collected_on).on(:update) }
@@ -36,6 +41,17 @@ describe XpertResult do
         it 'should be valid' do
           expect(subject.valid?).to be
         end
+      end
+    end
+
+    context 'is_linkable?' do
+      it 'should return true if status is allocated' do
+        xpert_result.update_attribute(:result_status, 'allocated')
+        expect(xpert_result.is_linkable?).to be true
+      end
+
+      it 'should return false if status is not allocated' do
+        expect(xpert_result.is_linkable?).to be false
       end
     end
   end
