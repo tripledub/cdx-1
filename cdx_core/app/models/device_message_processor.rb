@@ -8,8 +8,8 @@ class DeviceMessageProcessor
 
   def process
     @device_message.parsed_messages.map do |parsed_message|
-      if @device_message.device.model_is_gen_expert?
-        XpertResults::Importer.link_or_create_xpert_result(parsed_message, @device_message.device)
+      if XpertResults::Importer.valid_gene_xpert_result_and_sample?(@device_message.device, parsed_message)
+        XpertResults::Importer.link_xpert_result(parsed_message, @device_message.device)
       else
         SingleMessageProcessor.new(self, parsed_message).process
       end

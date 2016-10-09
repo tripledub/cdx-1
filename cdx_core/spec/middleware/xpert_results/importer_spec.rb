@@ -5,7 +5,7 @@ describe XpertResults::Importer do
   let(:encounter)          { Encounter.make }
   let(:sample)             { Sample.make encounter: encounter }
   let!(:sample_identifier) { SampleIdentifier.make lab_sample_id: '731254_99394632_D0_S2', sample: sample }
-  let!(:xpert_result)      { XpertResult.make encounter: encounter }
+  let(:xpert_result)       { XpertResult.make encounter: encounter }
   let(:device)             { Device.make }
   let(:parsed_message) do
     {
@@ -53,13 +53,14 @@ describe XpertResults::Importer do
 
   before :each do
     User.current = user
+    xpert_result.update_attribute(:result_status, 'allocated')
   end
 
   describe 'link_or_create_xpert_result' do
     context 'when there is an available sample id and a test result' do
       context 'test result has been allocated' do
         before :each do
-          described_class.link_or_create_xpert_result(parsed_message, device)
+          described_class.link_xpert_result(parsed_message, device)
           xpert_result.reload
         end
 
@@ -79,35 +80,35 @@ describe XpertResults::Importer do
           expect(xpert_result.device).to eq(device)
         end
       end
+    end
+  end
 
-      context 'test result has not allocated' do
-        it 'should create an orphan test result' do
-
-        end
+  describe 'valid_gene_xpert_result_and_sample?' do
+    context 'valid device, sample and xpert result' do
+      it 'should return true' do
+        device.stub(:model_is_gen_expert?).and_return(true)
+        expect(described_class.valid_gene_xpert_result_and_sample?(device, parsed_message)).to be true
       end
     end
 
-    context 'when there is an available sample id but no test result' do
-      it 'should link the sample id with the new test result' do
-
-      end
-
-      it 'should update the test result info' do
-
-      end
-
-      it 'should set the test result status to pending approval' do
-
+    context 'valid device and xpert result' do
+      it 'should return false' do
+        sample_identifier.update_attribute(:lab_sample_id, 'not_valid')
+        expect(described_class.valid_gene_xpert_result_and_sample?(device, parsed_message)).to be false
       end
     end
 
-    context 'when there is no sample id available' do
-      it 'should create a new sample id' do
-
+    context 'valid device and sample' do
+      it 'should return false' do
+        xpert_result.update_attribute(:result_status, 'rejected')
+        expect(described_class.valid_gene_xpert_result_and_sample?(device, parsed_message)).to be false
       end
+    end
 
-      it 'should create an orphan test result' do
-
+    context 'valid sample and xpert result' do
+      it 'should return false' do
+        device.stub(:model_is_gen_expert?).and_return(false)
+        expect(described_class.valid_gene_xpert_result_and_sample?(device, parsed_message)).to be false
       end
     end
   end

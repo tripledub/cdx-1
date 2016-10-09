@@ -4,32 +4,34 @@ module XpertResults
     class << self
       # Tries to link an automated result to an existent one based on sample Id
       # If no test result exists then it creates an orphan xpert result
-      def link_or_create_xpert_result(parsed_message, device)
-        sample_identifier = sample_id_exists?(parsed_message['sample']['core']['id'])
-        if sample_identifier.present?
-          link_to_current_result(sample_identifier, parsed_message, device)
-        else
-          create_orphan_result(parsed_message)
-        end
+      def link_xpert_result(parsed_message, device)
+        sample_identifier = SampleIdentifiers::Finder.find_first_sample_available(parsed_message['sample']['core']['id'])
+        xpert_result = XpertResults::Finder.available_test(sample_identifier.sample.encounter)
+        link_to_current_result(xpert_result, sample_identifier, parsed_message, device)
+      end
+
+      def valid_gene_xpert_result_and_sample?(device, parsed_message)
+        return false unless device.model_is_gen_expert?
+
+        sample_identifier = SampleIdentifiers::Finder.find_first_sample_available(parsed_message['sample']['core']['id'])
+        return false unless sample_identifier
+
+        xpert_result = XpertResults::Finder.available_test(sample_identifier.sample.encounter)
+        xpert_result.present? && xpert_result.is_linkable?
       end
 
       protected
 
-      def sample_id_exists?(sample_id)
-        SampleIdentifiers::Finder.find_first_sample_available(sample_id)
+      def link_to_current_result(xpert_result, sample_identifier, parsed_message, device)
+        if XpertResults::Persistence.update_from_parsed_message(xpert_result, parsed_message)
+          xpert_result.sample_identifier = sample_identifier
+          xpert_result.device = device
+          xpert_result.result_on = Date.today
+          xpert_result.save!
+          PatientResults::Persistence.update_status_and_log(xpert_result, 'pending_approval')
+        end
       end
 
-      def link_to_current_result(sample_identifier, parsed_message, device)
-        xpert_result = XpertResults::Persistence.update_from_parsed_message(sample_identifier.sample.encounter, parsed_message)
-        xpert_result.sample_identifier = sample_identifier
-        xpert_result.device = device
-        xpert_result.result_on = Date.today
-        xpert_result.save!
-        PatientResults::Persistence.update_status_and_log(xpert_result, 'pending_approval')
-      end
-
-      def create_orphan_result(parsed_message)
-      end
     end
   end
 end
