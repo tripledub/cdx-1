@@ -1,20 +1,23 @@
 require 'spec_helper'
 
 describe XpertResult do
-  let(:institution)    { Institution.make }
-  let(:user)           { institution.user }
-  let(:site)           { institution.sites.make }
-  let(:patient)        { Patient.make( institution: institution) }
-  let(:encounter)      { Encounter.make institution: institution, site: site ,patient: patient }
-  let(:result_status) { ['new', 'sample_collected', 'allocated', 'pending_approval', 'rejected', 'completed'] }
+  let(:institution)         { Institution.make }
+  let(:user)                { institution.user }
+  let(:site)                { institution.sites.make }
+  let(:patient)             { Patient.make(institution: institution) }
+  let(:encounter)           { Encounter.make institution: institution, site: site, patient: patient }
+  let(:result_status)       { %w(new sample_collected allocated pending_approval rejected completed) }
+  let(:test_result_options) { %w(detected not_detected indeterminate) }
 
-  context "validations" do
+  context 'validations' do
     it { should validate_presence_of(:sample_collected_on).on(:update) }
     it { should validate_presence_of(:tuberculosis).on(:update) }
     it { should validate_presence_of(:rifampicin).on(:update) }
     it { should validate_presence_of(:examined_by).on(:update) }
     it { should validate_presence_of(:result_on).on(:update) }
     it { should validate_inclusion_of(:result_status).in_array(result_status) }
+    it { should validate_inclusion_of(:tuberculosis).in_array(test_result_options).allow_nil }
+    xit { should validate_inclusion_of(:rifampicin).in_array(test_result_options).allow_nil }
 
     context 'rifampicin' do
       context 'if is detected and tuberculosis is not detected' do
