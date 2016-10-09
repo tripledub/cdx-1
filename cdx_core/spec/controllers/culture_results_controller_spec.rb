@@ -11,7 +11,7 @@ describe CultureResultsController do
   let(:sample)              { Sample.make(institution: institution, patient: patient, encounter: encounter) }
   let!(:sample_identifier1) { SampleIdentifier.make(site: site, entity_id: 'sample-id', sample: sample) }
   let!(:sample_identifier2) { SampleIdentifier.make(site: site, entity_id: 'sample-2', sample: sample) }
-  let!(:culture_result)     { CultureResult.make encounter: encounter }
+  let!(:culture_result)     { CultureResult.make encounter: encounter, sample_identifier: sample_identifier1 }
   let(:default_params)      { { context: institution.uuid } }
   let(:valid_params) do
     {

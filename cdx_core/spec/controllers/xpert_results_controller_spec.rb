@@ -3,13 +3,14 @@ require 'policy_spec_helper'
 
 describe XpertResultsController do
   render_views
-  let(:user)           { User.make }
-  let!(:institution)   { user.institutions.make }
-  let(:patient)        { Patient.make institution: institution }
-  let(:encounter)      { Encounter.make institution: institution , user: user, patient: patient }
-  let(:default_params) { { context: institution.uuid } }
-  let!(:xpert_result)  { XpertResult.make encounter: encounter }
-  let(:valid_params)   { {
+  let(:user)              { User.make }
+  let!(:institution)      { user.institutions.make }
+  let(:patient)           { Patient.make institution: institution }
+  let(:encounter)         { Encounter.make institution: institution, user: user, patient: patient }
+  let(:default_params)    { { context: institution.uuid } }
+  let(:sample_identifier) { SampleIdentifier.make }
+  let!(:xpert_result)     { XpertResult.make encounter: encounter, sample_identifier: sample_identifier }
+  let(:valid_params)      { {
     sample_collected_on: 4.days.ago,
     tuberculosis:        'detected',
     rifampicin:          'not_detected',

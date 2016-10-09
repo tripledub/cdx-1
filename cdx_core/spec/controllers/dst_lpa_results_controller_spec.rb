@@ -3,17 +3,17 @@ require 'policy_spec_helper'
 
 describe DstLpaResultsController do
   render_views
-  let(:user)                { User.make }
-  let!(:institution)        { user.institutions.make }
-  let(:site)                { Site.make institution: institution }
-  let(:patient)             { Patient.make institution: institution }
-  let(:encounter)           { Encounter.make institution: institution , user: user, patient: patient }
-  let(:sample)              { Sample.make(institution: institution, patient: patient, encounter: encounter) }
-  let!(:sample_identifier1) { SampleIdentifier.make(site: site, entity_id: 'sample-id', sample: sample) }
-  let!(:sample_identifier2) { SampleIdentifier.make(site: site, entity_id: 'sample-2', sample: sample) }
-  let!(:dst_lpa_result)      { DstLpaResult.make encounter: encounter }
-  let(:default_params)      { { context: institution.uuid } }
-  let(:valid_params)        { {
+  let(:user)                 { User.make }
+  let!(:institution)         { user.institutions.make }
+  let(:site)                 { Site.make institution: institution }
+  let(:patient)              { Patient.make institution: institution }
+  let(:encounter)            { Encounter.make institution: institution , user: user, patient: patient }
+  let(:sample)               { Sample.make(institution: institution, patient: patient, encounter: encounter) }
+  let!(:sample_identifier1)  { SampleIdentifier.make(site: site, entity_id: 'sample-id', sample: sample) }
+  let!(:sample_identifier2)  { SampleIdentifier.make(site: site, entity_id: 'sample-2', sample: sample) }
+  let!(:dst_lpa_result)      { DstLpaResult.make encounter: encounter, sample_identifier: sample_identifier1 }
+  let(:default_params)       { { context: institution.uuid } }
+  let(:valid_params)         { {
     sample_collected_on: 4.days.ago,
     media_used:          'solid',
     method_used:         'direct',

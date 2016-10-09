@@ -11,9 +11,9 @@ describe MicroscopyResultsController do
   let(:sample)              { Sample.make(institution: institution, patient: patient, encounter: encounter) }
   let!(:sample_identifier1) { SampleIdentifier.make(site: site, entity_id: 'sample-id', sample: sample) }
   let!(:sample_identifier2) { SampleIdentifier.make(site: site, entity_id: 'sample-2', sample: sample) }
-  let(:microscopy_result)   { MicroscopyResult.make encounter: encounter }
-  let(:default_params) { { context: institution.uuid } }
-  let(:valid_params)   { {
+  let(:microscopy_result)   { MicroscopyResult.make encounter: encounter, sample_identifier: sample_identifier1 }
+  let(:default_params)      { { context: institution.uuid } }
+  let(:valid_params)        { {
     sample_collected_on: 4.days.ago,
     specimen_type:       'blood',
     serial_number:       'LO-3434-P',
