@@ -50,7 +50,7 @@ describe XpertResults::Persistence do
 
   describe 'update_from_device_message' do
     before :each do
-      described_class.update_from_device_message(encounter, parsed_message)
+      described_class.update_from_parsed_message(encounter, parsed_message)
       xpert_result.reload
     end
 
@@ -73,46 +73,3 @@ describe XpertResults::Persistence do
     end
   end
 end
-
-# DeviceMessage.parsed_message
-#   {
-#     "test" => {
-#       "core" => {
-#         "site_user" => "DataGen",
-#         "start_time" => "2016-10-13T09:00:00-05:00",
-#         "end_time" => "2016-10-13T10:00:00-05:00",
-#         "id" => "PL2M1YD4TF7F4GJCSREKU9N5XKCKEUAJ",
-#         "name" => "MTB-RIF Ultra RUO",
-#         "type" => "specimen",
-#         "status" => "success",
-#         "assays" => [
-#           {
-#             "condition"=>"mtb",
-#             "result"=>"positive",
-#             "quantitative_result"=>"MEDIUM"
-#           },
-#           {
-#             "condition"=>"rif",
-#             "result"=>"positive"
-#           }
-#         ]
-#       },
-#       "pii"=> { "custom"=> {} },
-#       "custom"=> {}
-#     },
-#     "sample"=>{
-#       "core"=>{ "id"=>"731254_99394632_D0_S2" },
-#       "pii"=>{ "custom"=>{} },
-#       "custom"=>{}
-#     },
-#     "patient"=>{
-#       "core"=>{},
-#       "pii"=>{ "custom"=>{} },
-#       "custom"=>{}
-#     },
-#     "encounter"=>{
-#       "core"=>{},
-#       "pii"=>{ "custom"=>{} },
-#       "custom"=>{}
-#     }
-#   }

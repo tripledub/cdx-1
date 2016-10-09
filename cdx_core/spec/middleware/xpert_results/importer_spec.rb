@@ -1,11 +1,13 @@
 require 'spec_helper'
 
-describe TestResults::Importer do
-  let(:encounter)         { Encounter.make }
-  let(:sample)            { Sample.make encounter: encounter }
-  let(:sample_identifier) { SampleIdentifier.make lab_sample_id: '731254_99394632_D0_S2', sample: sample }
-  let(:xpert_result)      { XpertResult.make encounter: encounter }
-  let(:gene_xpert_message) do
+describe XpertResults::Importer do
+  let(:user)               { User.make }
+  let(:encounter)          { Encounter.make }
+  let(:sample)             { Sample.make encounter: encounter }
+  let!(:sample_identifier) { SampleIdentifier.make lab_sample_id: '731254_99394632_D0_S2', sample: sample }
+  let!(:xpert_result)      { XpertResult.make encounter: encounter }
+  let(:device)             { Device.make }
+  let(:parsed_message) do
     {
       "test" => {
         "core" => {
@@ -49,15 +51,28 @@ describe TestResults::Importer do
     }
   end
 
+  before :each do
+    User.current = user
+  end
+
   describe 'link_or_create_xpert_result' do
     context 'when there is an available sample id and a test result' do
       context 'test result has been allocated' do
+        before :each do
+          described_class.link_or_create_xpert_result(parsed_message, device)
+          xpert_result.reload
+        end
+
         it 'should link the sample id with the test result' do
           expect(xpert_result.sample_identifier).to eq(sample_identifier)
         end
 
         it 'should set the test result status to pending approval' do
           expect(xpert_result.result_status).to eq('pending_approval')
+        end
+
+        it 'should link the test device to the test result' do
+          expect(xpert_result.device).to eq(device)
         end
       end
 

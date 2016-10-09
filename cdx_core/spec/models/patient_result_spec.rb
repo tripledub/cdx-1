@@ -11,6 +11,7 @@ describe PatientResult do
 
   context "validations" do
     it { should belong_to(:encounter) }
+    it { should belong_to(:device) }
     it { should belong_to(:feedback_message) }
     it { should belong_to(:sample_identifier) }
     it { have_many :audit_logs }

@@ -2,7 +2,7 @@ module XpertResults
   # create/update actions on xpert results
   class Persistence
     class << self
-      def update_from_device_message(encounter, parsed_message)
+      def update_from_parsed_message(encounter, parsed_message)
         xpert_result = XpertResults::Finder.available_test(encounter)
         return unless xpert_result
 
@@ -10,6 +10,7 @@ module XpertResults
         xpert_result.rifampicin = get_test_result(parsed_message['test']['core']['assays'], 'rif')
         xpert_result.test_id = parsed_message['test']['core']['id']
         xpert_result.save!
+        xpert_result
       end
 
       protected

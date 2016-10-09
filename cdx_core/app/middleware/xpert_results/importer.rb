@@ -4,14 +4,12 @@ module XpertResults
     class << self
       # Tries to link an automated result to an existent one based on sample Id
       # If no test result exists then it creates an orphan xpert result
-      def link_or_create_xpert_result(device_message)
-        device_message.parsed_messages.each do |parsed_message|
-          sample_identifier = sample_id_exists?(parsed_message['sample']['core']['id'])
-          if sample_identifier.present?
-            link_to_current_result(sample_identifier, parsed_message, device_message.device)
-          else
-            create_orphan_result(parsed_message)
-          end
+      def link_or_create_xpert_result(parsed_message, device)
+        sample_identifier = sample_id_exists?(parsed_message['sample']['core']['id'])
+        if sample_identifier.present?
+          link_to_current_result(sample_identifier, parsed_message, device)
+        else
+          create_orphan_result(parsed_message)
         end
       end
 
@@ -22,11 +20,11 @@ module XpertResults
       end
 
       def link_to_current_result(sample_identifier, parsed_message, device)
-        xpert_result = XpertResults::Persistence.update_from_device_message(sample_identifier.encounter, parsed_message)
+        xpert_result = XpertResults::Persistence.update_from_parsed_message(sample_identifier.sample.encounter, parsed_message)
         xpert_result.sample_identifier = sample_identifier
         xpert_result.device = device
         xpert_result.save!
-        #xpert_result.result_status).to eq('pending_approval'
+        PatientResults::Persistence.update_status_and_log(xpert_result, 'pending_approval')
       end
 
       def create_orphan_result(parsed_message)
