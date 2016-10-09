@@ -20,6 +20,7 @@ module Samples
           TestOrders::Status.update_and_log(encounter, 'samples_collected')
           encounter.patient_results.each do |patient_result|
             PatientResults::Persistence.update_status_and_log(patient_result, 'sample_collected')
+            patient_result.update_attribute(:sample_collected_on, Date.today)
           end
         end
       end

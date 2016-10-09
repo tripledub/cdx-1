@@ -23,6 +23,7 @@ module XpertResults
         xpert_result = XpertResults::Persistence.update_from_parsed_message(sample_identifier.sample.encounter, parsed_message)
         xpert_result.sample_identifier = sample_identifier
         xpert_result.device = device
+        xpert_result.result_on = Date.today
         xpert_result.save!
         PatientResults::Persistence.update_status_and_log(xpert_result, 'pending_approval')
       end
