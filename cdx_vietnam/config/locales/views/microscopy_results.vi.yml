@@ -1,5 +1,6 @@
 vi:
   microscopy_results:
+    localised_name: 'Kính hiển vi'
     new:
       header: 'Thêm kết quả xét nghiệm kính hiển vi cho: %{patient_name}'
       back: 'Quay lại'

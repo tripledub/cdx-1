@@ -11,6 +11,10 @@ vi:
         address: 'Địa chỉ'
         created_at: 'Ngày tạo'
         nickname: 'Biệt danh'
+        social_security_code: 'Số chứng minh nhân dân'
+        medical_insurance_num: 'Số bảo hiểm'
+        external_id: 'Mã bệnh nhân hệ thống ngoài'
+        external_patient_system: 'Hệ thống bệnh nhân ngoài'
   patient:
     model_form:
       wrong_date: 'nên là một ngày trong %{birth_date_on_placeholder}'

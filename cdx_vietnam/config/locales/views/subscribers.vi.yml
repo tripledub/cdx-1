@@ -1,6 +1,6 @@
 vi:
   subscribers:
-    form: 
+    form:
       error: 'lỗi'
       prohibited: 'khiến cho Thuê bao đăng ký nhận tin này không được lưu'
       user_label: 'Người dùng (Không bắt buộc)'
@@ -18,4 +18,4 @@ vi:
       add_subscriber_title: 'Thêm Thuê bao đăng ký nhận tin'
       no_subscriber: 'Không có thuê bao đăng ký nhận tin nào'
       subscribers_title: 'Thuê bao đăng ký nhận tin'
-      name: 'Name'
+      name: 'Tên'

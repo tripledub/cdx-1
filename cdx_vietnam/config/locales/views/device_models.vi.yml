@@ -1,5 +1,20 @@
 vi:
   device_models:
+    create:
+      success: 'Mẫu thiết bị được tạo thành công.'
+    update:
+      success: 'Mẫu thiết bị %{device_name} được cập nhật thành công.'
+      cannot_delete_manifest: 'Bạn phải tải lên một bản kê'
+    destroy:
+      success: 'Mẫu thiết bị được xóa thành công.'
+    publish:
+      success: 'Mẫu thiết bị %{device_name} được %{device_action} thành công.'
+      published: 'Đây là mẫu thiết bị được phát hành; tất cả tổ chức trong CDX có thể đăng ký để sử dụng.'
+      can_unpublish: 'bạn có thể rút lại nó miễn là không có thiết bị nào bên ngoài tổ chức sử dụng mẫu thiết bị này.'
+      withdraw: 'Rút lại'
+      not_published: 'Mẫu thiết bị này chưa được phát hành.'
+      publishing: 'Bản phát hành sẽ có sắn cho tất cả tổ chức trong CDX.'
+      publish: 'Phát hành'
     index:
       device_model:
         zero: 'Không có kiểu thiết bị nào'

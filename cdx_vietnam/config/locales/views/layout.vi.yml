@@ -8,6 +8,7 @@ vi:
       patients: 'Bệnh nhân'
       test_orders: 'Yêu cầu xét nghiệm'
       test_results: 'Kết quả xét nghiệm'
+      approvals: 'Phê duyệt'
       devices: 'Thiết bị'
       settings: 'Cài đặt'
       my_account: 'Tài khoản của tôi'

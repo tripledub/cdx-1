@@ -1,0 +1,5 @@
+vi:
+  test_batches:
+    set_as_paid:
+      payment_done: 'Loạt xác nghiệm này đã được thanh toán.'
+      not_allowed: 'Xin lỗi, bạn không có quyền thiết lập các xét nghiệm này là đã thanh toán.'

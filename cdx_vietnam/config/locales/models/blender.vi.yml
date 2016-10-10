@@ -8,9 +8,9 @@ vi:
       from_a_different_institution: 'từ một tổ chức khác nhau'
       Cannot_merge_two_identified: 'Không thể hợp nhất hai identified'
       cannot_add_child: "Không thể thêm con từ một tổ chức khác"
-      entity_blender_add_child: "Entity blender add child must receive an entity blender"
-      cannot_merge_different_institution: "Cannot merge entity blender từ một tổ chức khác"
-      cannot_merge_different_type: "Cannot merge entity blender từ một loại khác"
+      entity_blender_add_child: "Thực thể blender nhận thêm con phải nhận được một entity blender"
+      cannot_merge_different_institution: "Không thể gộp thực thể blender từ một tổ chức khác"
+      cannot_merge_different_type: "Không thể gộp thực thể blender từ một loại khác"
       Multiple_entities: "Nhiều thực thể tìm thấy trên các cuộc gọi đến thực thể duy nhất"
       cannot_change: "Không thể thay đổi mã thực thể của"
       from: "từ"

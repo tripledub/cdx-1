@@ -42,6 +42,7 @@ vi:
       additional_data: 'Dữ liệu bổ sung'
       sample: 'Mẫu'
       other_tests: 'Những xét nghiệm khác'
+      test_details: 'Chi tiết xét nghiệm'
       no_other_test: 'Không có xét nghiệm khác được thực hiện với mẫu này'
       was_also_made: 'cũng đã được thực hiện với mẫu này'
       were_also_made: 'cũng đã được thực hiện với mẫu này'

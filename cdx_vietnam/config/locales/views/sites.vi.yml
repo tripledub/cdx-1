@@ -1,5 +1,12 @@
 vi:
   sites:
+    create:
+      success: 'Trang đã được tạo thành công.'
+    update:
+      success: 'Trang đã được cập nhật thành công.'
+      not_allowed: 'Bạn không được cho phép cập nhật %{site_name}.'
+    destroy:
+      success: 'Trang đã được xóa thành công.'
     index:
       no_dependencies: '%{entity_name} này không phụ thuộc.'
       create_sites: "tạo các trang ở đây để giữ cho các hệ thông phân cấp của các cơ quan của bạn được sắp xếp."

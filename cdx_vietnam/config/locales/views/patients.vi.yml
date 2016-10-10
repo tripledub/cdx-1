@@ -32,6 +32,14 @@ vi:
     create:
       no_entity: "Mã thực thể không được để trống"
       no_name: "Tên không được để trống"
+      success: 'Bệnh nhân đã được tạo thành công.'
+      audit_log: 'Đã thêm bệnh nhân mới'
+    update:
+      success: 'Bệnh nhân đã được cập nhật thành công.'
+      audit_log: 'chi tiết về bệnh nhân đã được cập nhật'
+    destroy:
+      success: 'Bệnh nhân đã được xóa thành công.'
+      audit_log: 'bệnh nhân đã được xóa thành công.'
     form:
       institution_label: 'Tổ chức'
       select_day: 'Chọn ngày'
@@ -42,6 +50,9 @@ vi:
       nickname_label: 'Biệt danh'
       medical_insurance_num: 'Số sổ bảo hiểm y tế'
       entity_id_label: 'Mã thực thể'
+      external_id_label: 'Mã bệnh nhân bên ngoài'
+      external_id_tooltip: 'Mã bệnh nhân hệ thống bên ngoài'
+      external_patient_system_tooltip: 'Hệ thống bên ngoài mà Mã bệnh nhân có'
       gender_label: 'Giới tính'
       birth_date_on_label: 'Ngày sinh'
       email_label: 'Email'
@@ -57,6 +68,7 @@ vi:
       phone_tooltip: 'Một số điện thoại có thể liên hệ được của bệnh nhân'
       social_security_code_tooltip: 'Số CMND của bệnh nhân'
       medical_insurance_num_tooltip: 'Số sổ bảo hiểm y tế của bệnh nhân.'
+      copy_addr_button: 'Sao chép địa chỉ thành'
     index:
       no_patients: 'Không có bệnh nhân nào đăng ký'
       keep_organized: 'Giữ cho yêu cầu xét nghiệm của bạn được tổ chức theo lịch sử y tế của bệnh nhân'

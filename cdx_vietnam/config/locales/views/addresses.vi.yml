@@ -1,11 +1,16 @@
 vi:
   addresses:
     form:
-      street_tooltip:   'Địa chỉ một đường'
-      city_tooltip:     'Tên một thành phố'
-      state_tooltip:    'Tên một bang/nước'
-      zip_code_tooltip: 'Mã bưu điện'
-      address: 'Địa Chỉ'
-      city: 'Thành Phố'
-      state: 'Bang/Nước'
+      street_tooltip:   'Địa chỉ đường'
+      city_tooltip:     'Tên thành phố'
+      state_tooltip:    'Tỉnh/Quận'
+      country_tooltip:     'Tên đất nước'
+      zip_code_tooltip: 'Mã bưu chính/Mã bưu điện'
+      address: 'Địa chỉ'
+      city: 'Thành phố'
+      state: 'Tỉnh'
       zip_code: 'Mã bưu điện'
+      address_prefix: ''
+      address1_prefix: 'Thường trú '
+      address2_prefix: 'Liên hệ '
+      country: 'Quốc gia'
