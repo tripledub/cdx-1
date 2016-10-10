@@ -62,6 +62,10 @@ describe XpertResults::Persistence do
       expect(xpert_result.examined_by).to eq('DataGen')
     end
 
+    it 'should update the date of the result' do
+      expect(xpert_result.result_on).to be
+    end
+
     it 'should update the rifampicin result info' do
       expect(xpert_result.rifampicin).to eq('detected')
     end

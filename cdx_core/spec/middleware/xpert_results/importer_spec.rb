@@ -72,10 +72,6 @@ describe XpertResults::Importer do
           expect(xpert_result.result_status).to eq('pending_approval')
         end
 
-        it 'should update the result collection date' do
-          expect(xpert_result.result_on).to be
-        end
-
         it 'should link the test device to the test result' do
           expect(xpert_result.device).to eq(device)
         end
