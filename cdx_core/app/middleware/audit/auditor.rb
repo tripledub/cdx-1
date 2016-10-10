@@ -3,7 +3,6 @@ module Audit
   class Auditor
     def initialize(auditable_model)
       @auditable_model = auditable_model
-      @user_id         = User.current.id
     end
 
     def log_action(title, comment = '')
@@ -26,7 +25,8 @@ module Audit
       AuditLog.create do |log|
         log.title = title
         log.patient_id = patient_id
-        log.user_id = @user_id
+        log.user_id = active_user
+        log.device_id = active_device
         log.comment = comment
         log.encounter_id = encounter_id
         log.patient_result_id = patient_result_id
@@ -68,6 +68,14 @@ module Audit
       addresses.each_with_index do |address, index|
         address.changes.each { |key, value| create_log_update(audit_log, "#{key} - #{index}", value) }
       end
+    end
+
+    def active_user
+      User.current.id if User.current
+    end
+
+    def active_device
+      Device.current.id if Device.current
     end
   end
 end

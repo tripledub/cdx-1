@@ -9,9 +9,10 @@ var PatientAuditLogs = React.createClass({
       loadingMessasge: I18n.t("components.patients.show.history.msg_loading"),
       orderedColumns: {},
       availableColumns: [
-        { title: I18n.t("components.patients.show.history.col_title"),      fieldName: 'title' },
-        { title: I18n.t("components.patients.show.history.col_user"),       fieldName: 'user' },
-        { title: I18n.t("components.patients.show.history.col_date"), fieldName: 'date' }
+        { title: I18n.t("components.patients.show.history.col_title"),  fieldName: 'title' },
+        { title: I18n.t("components.patients.show.history.col_user"),   fieldName: 'user' },
+        { title: I18n.t("components.patients.show.history.col_device"), fieldName: 'device' },
+        { title: I18n.t("components.patients.show.history.col_date"),   fieldName: 'date' }
       ]
     };
   },

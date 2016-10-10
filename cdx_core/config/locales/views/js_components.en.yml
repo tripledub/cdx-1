@@ -209,6 +209,7 @@ en:
           col_test_order_status: "status"
           col_title: "Title"
           col_user: "User"
+          col_device: "Device"
           col_date: "Date added"
           msg_loading: "Loading logs..."
           msg_no_log: "There are no logs available."

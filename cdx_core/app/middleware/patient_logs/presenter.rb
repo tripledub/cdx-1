@@ -23,11 +23,20 @@ module PatientLogs
           {
             id:       log.uuid,
             date:     I18n.l(log.created_at, format: :short),
-            user:     log.user.full_name,
+            user:     logged_user(log),
+            device:   logged_device(log),
             title:    Audit::TextTranslator.localise(log.title),
             viewLink: Rails.application.routes.url_helpers.patient_patient_log_path(log.patient, log)
           }
         end
+      end
+
+      def logged_user(log)
+        log.user.full_name if log.user.present?
+      end
+
+      def logged_device(log)
+        log.device.full_name if log.device.present?
       end
     end
   end

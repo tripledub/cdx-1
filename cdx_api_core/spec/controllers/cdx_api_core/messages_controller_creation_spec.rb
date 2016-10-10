@@ -23,7 +23,6 @@ describe CdxApiCore::MessagesController, elasticsearch: true, validate_manifest:
   end
 
   context "Creation" do
-
     it "should create message in the database" do
       response = post :create, data, device_id: device.uuid, authentication_token: device.plain_secret_key
       expect(response.status).to eq(200)

@@ -7,8 +7,9 @@ class AuditLog < ActiveRecord::Base
   belongs_to :user
   belongs_to :encounter
   belongs_to :patient_result
+  belongs_to :device
 
   has_many   :audit_updates, dependent: :destroy
 
-  validates_presence_of :title, :patient_id, :user_id
+  validates_presence_of :title, :patient_id
 end
