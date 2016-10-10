@@ -148,7 +148,23 @@ header {
   ul {
     opacity: 1;
     visibility: visible;
+    position: fixed;
+    top: 30px;
+    right: 20px;
+    width: 130px;
+    z-index: 30000 !important;
   }
+}
+#account_menu_back
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3000px;
+  height: 2000px;
+  background-color: black;
+  z-index: 21000;
+  opacity: 0.2;
 }
 
 .content {
