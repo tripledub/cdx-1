@@ -1,17 +1,27 @@
 vi:
   test_orders:
     index:
-      header: ''
       tests: 'xét nghiệm'
+      header: 'Lệnh xét nghiệm'
       not_applicable: 'Không thể áp dụng'
-      header: 'Không có yêu cầu xét nghiệm nào được tạo'
+      no_test_orders: 'Không có yêu cầu xét nghiệm nào được tạo'
       test_order:
         zero: 'Yêu cầu xét nghiệm'
         one: 'Yêu cầu xét nghiệm'
         other: '%{count} Yêu cầu xét nghiệm'
     filters:
       show_all: 'Hiển thị tất cả'
+      show_all_outstanding: 'Hiện tất cả đang giải quyết'
       show_filters: 'Hiển thị bộ lọc'
       testing_for: 'xét nghiệm cho'
       date: 'Ngày'
       test_order_id: 'Mã của yêu cầu xét nghiệm'
+      status: 'Trạng thái'
+    state:
+      order_id: 'Mã yêu cầu'
+      sample_id: 'Mã mẫu'
+      old_state: 'Trạng thái trước đó'
+      new_state: 'Trạng thái hiện tại'
+      created_at: 'Ngày'
+    update:
+      not_allowed: "Bạn không có quyền cập nhật yêu cầu xét nghiệm này."

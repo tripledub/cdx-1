@@ -48,7 +48,7 @@ var PatientTestOrders = React.createClass({
   },
 
   componentDidMount: function() {
-    this.getData('site');
+    this.getData('requestDate');
   },
 
   componentWillUnmount: function() {

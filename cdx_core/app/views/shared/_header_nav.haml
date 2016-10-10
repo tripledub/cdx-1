@@ -48,7 +48,7 @@
   .user{:tabindex => "0"}
     - if current_user
       %span.icon-user.medium.icon-gray-light{title: current_user.email}
-      %ul
+      %ul#dropdown-form
         - unless @hide_my_account #|| Settings.single_tenant
           %li= link_to I18n.t('layout.header_nav.my_account'), edit_user_registration_path
         - if current_user && !@hide_nav_bar

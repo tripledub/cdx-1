@@ -1,9 +1,12 @@
 vi:
   encounters:
     status:
+      new: 'Mới'
       pending: 'Chưa tiến hành'
       in_progress: 'Đang tiến hành'
       completed: 'Hoàn thành'
+      pending_approval: 'Đang chờ phê duyệt'
+      approved: 'Đã phê duyệt'
       site_id: 'Yêu cầu bởi'
       performing_site_id: 'Yêu cầu cho'
       user_id: 'Đặt hàng cho'

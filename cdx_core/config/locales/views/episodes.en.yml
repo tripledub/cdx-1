@@ -22,7 +22,7 @@ en:
       episode_type_not_available: 'This Episode Type is not currently available'
     edit:
       back: 'Back'
-      header: 'New episode'
+      header: 'Edit episode'
     new:
       back: 'Back'
-      header: 'Edit episode'
+      header: 'New episode'

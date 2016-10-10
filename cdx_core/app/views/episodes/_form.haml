@@ -9,8 +9,23 @@
       // is_new_entry is added in the new or edit files
       if(is_new_entry)
       {
+        var eih = $('#episode_initial_history').val();
         $('#episode_previous_history').hide();
-        $('.questions').hide();
+        if( eih != '')
+        {
+          $('#outcome').show();
+          $('.questions').show();
+          $('#drugres').hide();
+          if(eih == 'previous')
+          {
+            $('#episode_previous_history').show();
+            require_prev_value = true;
+          }
+        }
+        else
+        {
+          $('.questions').hide();
+        }
       }
       else
       {

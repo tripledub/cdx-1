@@ -224,7 +224,7 @@ en:
       reason_for_examination_label: "Reason for Examination"
       collection_sample_type_label: "Collection Sample Type"
       please_select_option: "Please Select..."
-      sputum_option: "sputum"
+      sputum_option: "Sputum"
       blood_option: "Blood"
       other_option: "Other - Please Specify"
       test_due_date_label: "Collection Date"

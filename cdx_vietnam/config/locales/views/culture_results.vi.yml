@@ -1,5 +1,6 @@
 vi:
   culture_results:
+    localised_name: 'Văn hóa'
     new:
       header: 'Thêm kết quả xét nghiệm nuôi cấy cho: %{patient_name}'
       back: 'Quay lại'

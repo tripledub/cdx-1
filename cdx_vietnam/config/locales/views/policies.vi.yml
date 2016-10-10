@@ -1,6 +1,6 @@
 vi:
   policies:
-    new: 
+    new:
       new_policy: 'Chính sách mới'
     index:
       policies_header: 'Chính sách'
@@ -21,4 +21,3 @@ vi:
       error_count:
         one: '1 lỗi'
         other: '%{count} lỗi'
-

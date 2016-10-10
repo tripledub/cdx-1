@@ -1,0 +1,5 @@
+vi:
+  activerecord:
+    attributes:
+      patient:
+        social_security_code: 'SSID'
