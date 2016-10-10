@@ -58,6 +58,10 @@ describe XpertResults::Persistence do
       expect(xpert_result.tuberculosis).to eq('detected')
     end
 
+    it 'should update the user result info' do
+      expect(xpert_result.examined_by).to eq('DataGen')
+    end
+
     it 'should update the rifampicin result info' do
       expect(xpert_result.rifampicin).to eq('detected')
     end

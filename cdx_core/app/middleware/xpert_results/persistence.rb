@@ -6,6 +6,7 @@ module XpertResults
         xpert_result.tuberculosis = get_test_result(parsed_message['test']['core']['assays'], 'mtb')
         xpert_result.rifampicin = get_test_result(parsed_message['test']['core']['assays'], 'rif')
         xpert_result.test_id = parsed_message['test']['core']['id']
+        xpert_result.examined_by = parsed_message['test']['core']['site_user']
         xpert_result.save
       end
 
