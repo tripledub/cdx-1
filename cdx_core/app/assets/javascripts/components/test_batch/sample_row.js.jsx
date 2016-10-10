@@ -6,7 +6,7 @@ class SampleRow extends React.Component{
           <label>{ I18n.t('components.add_samples_action.enter_sample_id') }</label>
         </div>
         <div className="col-6">
-          <input type="text" required ref={ 'sampleInput' + this.props.elementId } name={ 'samples['+this.props.elementId+']' } />
+          <input type="text" ref={ 'sampleInput' + this.props.elementId } name={ 'samples['+this.props.elementId+']' } />
         </div>
       </div>
     )

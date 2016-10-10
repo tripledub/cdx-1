@@ -127,6 +127,7 @@ module TestOrders
         json.(@encounter, :testdue_date)
         json.(@encounter, :testing_for)
         json.(@encounter, :comment)
+        json.sampleIds encounter_sample_ids
         json.userCanApprove Policy.can?(Policy::Actions::APPROVE_ENCOUNTER, Encounter, current_user)
         json.userCanFinance Policy.can?(Policy::Actions::FINANCE_APPROVAL_ENCOUNTER, Encounter, current_user)
         json.culture_format Extras::Select.find(Encounter.culture_format_options, @encounter.culture_format)
@@ -329,6 +330,10 @@ module TestOrders
       test_result_blender = @blender.load(test_result)
       @blender.merge_parent(test_result_blender, @encounter_blender)
       test_result_blender
+    end
+
+    def encounter_sample_ids
+      @encounter.samples.map { |sample| sample.sample_identifiers.map(&:lab_sample_id) }.compact.join(', ')
     end
   end
 end

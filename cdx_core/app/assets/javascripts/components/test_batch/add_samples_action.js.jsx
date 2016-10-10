@@ -29,7 +29,9 @@ class AddSamplesAction extends React.Component{
     let sampleIds = [];
 
     $('#samplesForm input[type=text]').each( function(index) {
-      sampleIds.push(this.value);
+      if (!(this.value.length === 0 || !this.value.trim())) {
+        sampleIds.push(this.value);
+      };
     });
 
     $.ajax({
