@@ -14,6 +14,7 @@ module CdxApiCore
       if !authenticate_create(device)
         head :unauthorized
       else
+        User.current = current_user
         data = request.body.read rescue nil
         save_device_message(device, data, true)
       end
@@ -25,6 +26,7 @@ module CdxApiCore
       if !authenticate_create(device)
         head :unauthorized
       else
+        User.current = current_user
         data = request.body.read rescue nil
         saved_ok = true
         repeatDemo =  params['repeat_demo'].to_i
