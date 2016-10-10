@@ -15,10 +15,15 @@ describe TestOrders::Presenter do
   let(:requested_tests) do
     User.current = user
     encounter = Encounter.first
-    microscopy_result = MicroscopyResult.make encounter: encounter, serial_number: 'XF-999'
-    culture_result = CultureResult.make encounter: encounter, serial_number: 'XF-966'
-    xpert_result = XpertResult.make encounter: encounter, serial_number: 'XF-977'
-    dst_lpa_result = DstLpaResult.make encounter: encounter, serial_number: 'XF-988'
+    sample = Sample.make encounter: encounter
+    SampleIdentifier.make(lab_sample_id: 'XF-999', sample: sample)
+    SampleIdentifier.make(lab_sample_id: 'XF-966', sample: sample)
+    SampleIdentifier.make(lab_sample_id: 'XF-977', sample: sample)
+    SampleIdentifier.make(lab_sample_id: 'XF-988', sample: sample)
+    microscopy_result = MicroscopyResult.make encounter: encounter
+    culture_result = CultureResult.make encounter: encounter
+    xpert_result = XpertResult.make encounter: encounter
+    dst_lpa_result = DstLpaResult.make encounter: encounter
     microscopy_result.update_attribute(:result_status, 'sample_collected')
     xpert_result.update_attribute(:result_status, 'allocated')
     dst_lpa_result.update_attribute(:result_status, 'rejected')
