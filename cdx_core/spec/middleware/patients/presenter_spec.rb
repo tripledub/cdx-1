@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Presenters::Patients do
+describe Patients::Presenter do
   include PatientsHelper
   let(:user)           { User.make }
   let!(:institution)   { user.institutions.make }

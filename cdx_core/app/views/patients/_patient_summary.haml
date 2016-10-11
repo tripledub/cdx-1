@@ -52,7 +52,7 @@
             %label
               = I18n.t(patient_address_label)
             - if patient_address_label == "patients.show.address" then patient_address_label = "patients.show.alt_address" end
-            = Presenters::Patients.show_full_address(address)
+            = Patients::Presenter.show_full_address(address)
 
       %ul
         %li

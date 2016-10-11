@@ -69,7 +69,7 @@ module PatientConcern
     def multi_address
       address_array = []
       addresses.each do |address|
-        address_array << Presenters::Patients.show_full_address(address)
+        address_array << Patients::Presenter.show_full_address(address)
       end
       address_array
     end
