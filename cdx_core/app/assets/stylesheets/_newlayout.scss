@@ -1202,34 +1202,49 @@ margin-bottom:5px;
 }
 
 
-.field_with_errors input[type="radio"]{
-    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-    border: 2px solid black;
-    border-radius: 50%;
-    color: white;
-    content: "";
-    font-family: "Open Sans",sans-serif;
-    font-size: 12px;
-    font-weight: 300;
-    height: 18px;
-    left: -32px;
-    line-height: 14px;
-    float:left;
-    margin-top:10px;
-    margin-left:-2px;
-    margin-right:6px;
-    text-align: center;
-    top: 10px;
-    transition: all 0.4s ease 0s;
-    width: 18px;
-    display:block !important;
+.insitutionlist{
+  padding:15px;
+  margin-top:44px;
 }
 
-.testflow .panel.patient-summary {
-    height: 186px;
-    overflow-y: scroll;
+
+.instituteform form{ 
+width:100%;
 }
 
-.testflow .panel.patient-details label, .testflow .panel.patient-details .custom-fields-title > .col {
-    min-width: 202px;
+.instituteform .patient-details{ 
+padding:15px;
+}
+
+.instituteform .institution-name{ 
+margin-top:0px;
+}
+
+.instituteform .row{ 
+border:0px !important;
+}
+
+.instituteform .ftprow, .instituteform .loginrow{ 
+display:block !important;
+clear:both;
+}
+
+
+.instituteform .col.pe-2 {
+    flex: none;
+}
+
+.ftp1, .ftp2, .ftp3, .ftp4, .ftp5, .ftp6, .ftp7, .ftp8, .ftp9, .ftp10, .ftp11, .ftp12{ 
+float:left !important;
+}
+
+.ftp1, .ftp7, .ftp10{ width:140px; }
+.ftp2, .ftp8, .ftp9, .ftp11, .ftp12{ width:210px; }
+.ftp3{ width:200px;}
+.ftp4{ width:55px; }
+.ftp5{ width:40px; }
+.ftp6{ width:200px; }
+
+.instituteform a.btn-link{
+background:#ddd;
 }

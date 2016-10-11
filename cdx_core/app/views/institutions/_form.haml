@@ -38,24 +38,24 @@
           = label_tag "kind", I18n.t('institutions.form.type'), :class => 'block'
         .col
           .value= f.object.kind.humanize.titleize
-    .row
-      .col.pe-2= f.label :ftp_hostname, I18n.t('institutions.form.ftp')
-      .col.pe-2= f.text_field :ftp_hostname, placeholder: I18n.t('institutions.form.host')
-      .col.pe-2= f.number_field :ftp_port, min: 0, max: 65535, placeholder: I18n.t('institutions.form.port')
-      .col.pe-1
+    .row.ftprow
+      .col.pe-2.ftp1= f.label :ftp_hostname, I18n.t('institutions.form.ftp')
+      .col.pe-2.ftp2= f.text_field :ftp_hostname, placeholder: I18n.t('institutions.form.host')
+      .col.pe-2.ftp3= f.number_field :ftp_port, min: 0, max: 65535, placeholder: I18n.t('institutions.form.port')
+      .col.pe-1.ftp4
         = f.label :ftp_passive, I18n.t('institutions.form.passive')
-      .col.pe-1
+      .col.pe-1.ftp5
         = f.check_box :ftp_passive
         = f.label :ftp_passive, "&nbsp;".html_safe
-      .col.pe-2= f.text_field :ftp_directory, placeholder: I18n.t('institutions.form.folder')
-    .row{style: 'visibility:hidden; height: 1px'}
-      .col.pe-2= f.label :fake_username, I18n.t('institutions.form.login')
-      .col.pe-2= text_field :fake_username, placeholder: I18n.t('institutions.form.username'), autocomplete: 'on'
-      .col.pe-2= f.password_field :fake_password, value: '', placeholder: I18n.t('institutions.form.password'), autocomplete: 'off'
-    .row
-      .col.pe-2= f.label :ftp_username, I18n.t('institutions.form.login')
-      .col.pe-2= f.text_field :ftp_username, placeholder: I18n.t('institutions.form.username'), autocomplete: 'off'
-      .col.pe-2= f.password_field :ftp_password, value: @institution.ftp_password, placeholder: I18n.t('institutions.form.password'), autocomplete: 'off'
+      .col.pe-2.ftp6= f.text_field :ftp_directory, placeholder: I18n.t('institutions.form.folder')
+    .row.loginrow{style: 'visibility:hidden; height: 1px'}
+      .col.pe-2.ftp7= f.label :fake_username, I18n.t('institutions.form.login')
+      .col.pe-2.ftp8= text_field :fake_username, placeholder: I18n.t('institutions.form.username'), autocomplete: 'on'
+      .col.pe-2.ftp9= f.password_field :fake_password, value: '', placeholder: I18n.t('institutions.form.password'), autocomplete: 'off'
+    .row.loginrow
+      .col.pe-2.ftp10= f.label :ftp_username, I18n.t('institutions.form.login')
+      .col.pe-2.ftp11= f.text_field :ftp_username, placeholder: I18n.t('institutions.form.username'), autocomplete: 'off'
+      .col.pe-2.ftp12= f.password_field :ftp_password, value: @institution.ftp_password, placeholder: I18n.t('institutions.form.password'), autocomplete: 'off'
 
     .row.button-actions
       .col
