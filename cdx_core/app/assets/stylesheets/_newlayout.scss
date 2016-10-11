@@ -1200,3 +1200,36 @@ margin-bottom:5px;
 .textblock {
   padding: 10px 5px 5px 0px;
 }
+
+
+.field_with_errors input[type="radio"]{
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: 2px solid black;
+    border-radius: 50%;
+    color: white;
+    content: "";
+    font-family: "Open Sans",sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    height: 18px;
+    left: -32px;
+    line-height: 14px;
+    float:left;
+    margin-top:10px;
+    margin-left:-2px;
+    margin-right:6px;
+    text-align: center;
+    top: 10px;
+    transition: all 0.4s ease 0s;
+    width: 18px;
+    display:block !important;
+}
+
+.testflow .panel.patient-summary {
+    height: 186px;
+    overflow-y: scroll;
+}
+
+.testflow .panel.patient-details label, .testflow .panel.patient-details .custom-fields-title > .col {
+    min-width: 202px;
+}
