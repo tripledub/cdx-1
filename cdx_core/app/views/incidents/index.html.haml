@@ -17,6 +17,6 @@
             %h3
               = I18n.t('incidents.index.incident', count: @total)
           .box-content
-            = react_component "IncidentsIndexTable", incidents: Presenters::Incidents.index_table(@incidents), orderBy: @order_by
+            = react_component "IncidentsIndexTable", incidents: Incidents::Presenter.index_table(@incidents), orderBy: @order_by
             .pagination
               = render 'shared/pagination'
