@@ -20,7 +20,7 @@ describe Institution do
     it 'creates feedback messages for new institutions' do
       institution = Institution.make
 
-      expect(institution.feedback_messages.count).to eq(9)
+      expect(institution.feedback_messages.count).to eq(10)
     end
   end
 
