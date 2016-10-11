@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe XpertResults::Presenters do
+describe XpertResults::Presenter do
   let(:user)                { User.make }
   let!(:institution)        { user.institutions.make }
   let(:site)                { Site.make institution: institution }
