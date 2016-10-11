@@ -83,9 +83,9 @@ class AlertGroupsController < ApplicationController
     @alert_condition_results = @alert_condition_results.join(",")
 
     @alert_number_incidents = current_user.alert_histories.where("alert_id=? and for_aggregation_calculation=?", alert_info.id, false).count
-    @alert_last_incident = Presenters::AlertGroups.display_latest_alert_date(alert_info)
+    @alert_last_incident = AlertGroups::Presenter.display_latest_alert_date(alert_info)
 
-    @alert_created_at  = alert_info.created_at.to_formatted_s(:long)
+    @alert_created_at = alert_info.created_at.to_formatted_s(:long)
     respond_with alert_info, location: alert_path
   end
 
@@ -168,11 +168,11 @@ class AlertGroupsController < ApplicationController
   private
 
   def alert_params
-    params.require(:alert).permit(:name, :description, :devices_info, :users_info, :enabled, :sites_info, :error_code, 
-                                  :message, :sms_message, :sample_id, :site_id, :category_type, :notify_patients, :aggregation_type, 
-                                  :anomalie_type, :aggregation_frequency, :channel_type, :sms_limit, :email_limit, 
-                                  :aggregation_threshold, :roles, :external_users, :conditions_info, :condition_results_info, 
-                                  :condition_result_statuses_info, :test_result_min_threshold, :test_result_max_threshold, 
+    params.require(:alert).permit(:name, :description, :devices_info, :users_info, :enabled, :sites_info, :error_code,
+                                  :message, :sms_message, :sample_id, :site_id, :category_type, :notify_patients, :aggregation_type,
+                                  :anomalie_type, :aggregation_frequency, :channel_type, :sms_limit, :email_limit,
+                                  :aggregation_threshold, :roles, :external_users, :conditions_info, :condition_results_info,
+                                  :condition_result_statuses_info, :test_result_min_threshold, :test_result_max_threshold,
                                   :utilization_efficiency_number, :use_aggregation_percentage, :institution_id,:site_id,
                                   alert_recipients_attributes: [:user, :user_id, :email, :role, :role_id, :id] )
   end

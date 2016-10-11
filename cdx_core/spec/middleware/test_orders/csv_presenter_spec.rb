@@ -13,8 +13,8 @@ describe TestOrders::CsvPresenter do
 
     before :each do
       User.current = user
-      TestOrders::Status.update_and_log(test_order, 'samples_received')
       TestOrders::Status.update_and_log(test_order, 'samples_collected')
+      TestOrders::Status.update_and_log(test_order, 'allocated')
     end
 
     it 'should return an array of test order status updates' do
@@ -24,7 +24,7 @@ describe TestOrders::CsvPresenter do
         [
           test_order.batch_id,
           'new',
-          'samples_received',
+          'samples_collected',
           Extras::Dates::Format.datetime_with_time_zone(test_order.created_at)
         ]
       )
