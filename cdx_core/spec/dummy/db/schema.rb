@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927143636) do
+ActiveRecord::Schema.define(version: 20161005141603) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -323,38 +323,40 @@ ActiveRecord::Schema.define(version: 20160927143636) do
   add_index "devices", ["deleted_at"], name: "index_devices_on_deleted_at", using: :btree
 
   create_table "encounters", force: :cascade do |t|
-    t.integer  "institution_id",     limit: 4
-    t.integer  "patient_id",         limit: 4
-    t.string   "uuid",               limit: 255
-    t.string   "entity_id",          limit: 255
-    t.binary   "sensitive_data",     limit: 65535
-    t.text     "custom_fields",      limit: 65535
-    t.text     "core_fields",        limit: 65535
+    t.integer  "institution_id",      limit: 4
+    t.integer  "patient_id",          limit: 4
+    t.string   "uuid",                limit: 255
+    t.string   "entity_id",           limit: 255
+    t.binary   "sensitive_data",      limit: 65535
+    t.text     "custom_fields",       limit: 65535
+    t.text     "core_fields",         limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_phantom",                       default: true
+    t.boolean  "is_phantom",                        default: true
     t.datetime "deleted_at"
-    t.integer  "site_id",            limit: 4
+    t.integer  "site_id",             limit: 4
     t.datetime "user_updated_at"
-    t.string   "site_prefix",        limit: 255
+    t.string   "site_prefix",         limit: 255
     t.datetime "start_time"
-    t.integer  "user_id",            limit: 4
-    t.string   "exam_reason",        limit: 255
-    t.string   "tests_requested",    limit: 255
-    t.string   "coll_sample_type",   limit: 255
-    t.string   "coll_sample_other",  limit: 255
-    t.string   "diag_comment",       limit: 255
+    t.integer  "user_id",             limit: 4
+    t.string   "exam_reason",         limit: 255
+    t.string   "tests_requested",     limit: 255
+    t.string   "coll_sample_type",    limit: 255
+    t.string   "coll_sample_other",   limit: 255
+    t.string   "diag_comment",        limit: 255
     t.date     "testdue_date"
-    t.integer  "treatment_weeks",    limit: 4
-    t.integer  "performing_site_id", limit: 4
-    t.string   "status",             limit: 255
-    t.string   "testing_for",        limit: 255,   default: ""
-    t.string   "culture_format",     limit: 255
+    t.integer  "treatment_weeks",     limit: 4
+    t.integer  "performing_site_id",  limit: 4
+    t.string   "status",              limit: 255
+    t.string   "testing_for",         limit: 255,   default: ""
+    t.string   "culture_format",      limit: 255
     t.boolean  "presumptive_rr"
-    t.boolean  "payment_done",                     default: false
+    t.string   "comment",             limit: 255,   default: ""
+    t.integer  "feedback_message_id", limit: 4
   end
 
   add_index "encounters", ["deleted_at"], name: "index_encounters_on_deleted_at", using: :btree
+  add_index "encounters", ["feedback_message_id"], name: "index_encounters_on_feedback_message_id", using: :btree
   add_index "encounters", ["performing_site_id"], name: "index_encounters_on_performing_site_id", using: :btree
   add_index "encounters", ["site_id"], name: "index_encounters_on_site_id", using: :btree
   add_index "encounters", ["status"], name: "index_encounters_on_status", using: :btree
@@ -575,33 +577,33 @@ ActiveRecord::Schema.define(version: 20160927143636) do
   add_index "patient_results", ["uuid"], name: "index_patient_results_on_uuid", using: :btree
 
   create_table "patients", force: :cascade do |t|
-    t.binary   "sensitive_data",        limit: 65535
-    t.text     "custom_fields",         limit: 65535
-    t.text     "core_fields",           limit: 65535
-    t.string   "entity_id_hash",        limit: 255
-    t.string   "uuid",                  limit: 255
-    t.integer  "institution_id",        limit: 4
+    t.binary   "sensitive_data",          limit: 65535
+    t.text     "custom_fields",           limit: 65535
+    t.text     "core_fields",             limit: 65535
+    t.string   "entity_id_hash",          limit: 255
+    t.string   "uuid",                    limit: 255
+    t.integer  "institution_id",          limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_phantom",                          default: true
+    t.boolean  "is_phantom",                            default: true
     t.datetime "deleted_at"
-    t.string   "location_geoid",        limit: 60
-    t.float    "lat",                   limit: 24
-    t.float    "lng",                   limit: 24
-    t.string   "address",               limit: 255
-    t.string   "name",                  limit: 255
-    t.string   "entity_id",             limit: 255
-    t.integer  "site_id",               limit: 4
-    t.string   "site_prefix",           limit: 255
-    t.string   "state",                 limit: 255
-    t.string   "city",                  limit: 255
-    t.string   "zip_code",              limit: 255
-    t.string   "nickname",              limit: 255
+    t.string   "location_geoid",          limit: 60
+    t.float    "lat",                     limit: 24
+    t.float    "lng",                     limit: 24
+    t.string   "address",                 limit: 255
+    t.string   "name",                    limit: 255
+    t.string   "entity_id",               limit: 255
+    t.integer  "site_id",                 limit: 4
+    t.string   "site_prefix",             limit: 255
+    t.string   "state",                   limit: 255
+    t.string   "city",                    limit: 255
+    t.string   "zip_code",                limit: 255
+    t.string   "nickname",                limit: 255
     t.date     "birth_date_on"
-    t.string   "social_security_code",  limit: 255,   default: ""
-    t.string   "medical_insurance_num", limit: 255
-    t.string   "external_id",           limit: 255
-    t.string   "external_patient_system",           limit: 255
+    t.string   "social_security_code",    limit: 255,   default: ""
+    t.string   "medical_insurance_num",   limit: 255
+    t.string   "external_id",             limit: 255
+    t.string   "external_patient_system", limit: 255
   end
 
   add_index "patients", ["birth_date_on"], name: "index_patients_on_birth_date_on", using: :btree

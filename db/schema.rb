@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161010141244) do
+ActiveRecord::Schema.define(version: 20161011170242) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -382,6 +382,13 @@ ActiveRecord::Schema.define(version: 20161010141244) do
 
   add_index "episodes", ["patient_id"], name: "index_episodes_on_patient_id", using: :btree
 
+  create_table "external_systems", force: :cascade do |t|
+    t.string   "prefix",     limit: 255
+    t.string   "name",       limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "feedback_messages", force: :cascade do |t|
     t.integer  "institution_id", limit: 4,   null: false
     t.string   "category",       limit: 255
@@ -606,10 +613,12 @@ ActiveRecord::Schema.define(version: 20161010141244) do
     t.string   "medical_insurance_num",   limit: 255
     t.string   "external_id",             limit: 255
     t.string   "external_patient_system", limit: 255
+    t.integer  "external_system_id",      limit: 4
   end
 
   add_index "patients", ["birth_date_on"], name: "index_patients_on_birth_date_on", using: :btree
   add_index "patients", ["deleted_at"], name: "index_patients_on_deleted_at", using: :btree
+  add_index "patients", ["external_system_id"], name: "index_patients_on_external_system_id", using: :btree
   add_index "patients", ["institution_id"], name: "index_patients_on_institution_id", using: :btree
   add_index "patients", ["site_id"], name: "index_patients_on_site_id", using: :btree
 
