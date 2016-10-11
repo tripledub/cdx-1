@@ -1,0 +1,4 @@
+en:
+  samples:
+    collect_samples:
+      sample_exists: 'Sample: %{sample_id} has already been added to the test order.'

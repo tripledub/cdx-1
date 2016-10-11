@@ -2,13 +2,17 @@
 class DeviceMessageProcessor
   attr_reader :device_message
 
-  def initialize device_message
+  def initialize(device_message)
     @device_message = device_message
   end
 
   def process
     @device_message.parsed_messages.map do |parsed_message|
-      SingleMessageProcessor.new(self, parsed_message).process
+      if XpertResults::Importer.valid_gene_xpert_result_and_sample?(@device_message.device, parsed_message)
+        XpertResults::Importer.link_xpert_result(parsed_message, @device_message.device)
+      else
+        SingleMessageProcessor.new(self, parsed_message).process
+      end
     end
   end
 
@@ -63,14 +67,14 @@ class DeviceMessageProcessor
         original_blender = test_blender.send(klazz.entity_scope)
         new_entity ||= klazz.new(institution: institution) if entity_id_does_not_match || original_blender.nil?
 
-        if new_entity && klazz.to_s == "Encounter"
+        if new_entity && klazz.to_s == 'Encounter'
           is_there_an_encounter = false
         else
           parent_blenders[klazz] = if new_entity
-            @blender.load(new_entity)
-          else
-            original_blender
-          end
+                                     @blender.load(new_entity)
+                                   else
+                                     original_blender
+                                   end
           @blender.set_parent(test_blender, parent_blenders[klazz])
         end
       end
@@ -125,7 +129,7 @@ class DeviceMessageProcessor
     end
 
     def attributes_for(scope)
-      keys = {'core' => 'core_fields', 'custom' => 'custom_fields', 'pii' => 'plain_sensitive_data'}
+      keys = { 'core' => 'core_fields', 'custom' => 'custom_fields', 'pii' => 'plain_sensitive_data' }
       Hash[keys.map do |msg_key, attr_key|
         [attr_key, parsed_message.get_in(scope, msg_key) || {}]
       end]
@@ -152,9 +156,9 @@ class DeviceMessageProcessor
       sample_id_reset_policy = @parent.device_message.device.site.try(:sample_id_reset_policy)
       @sample_id_reset_time_span =
         case sample_id_reset_policy
-        when "monthly"
-           1.month
-        when "weekly"
+        when 'monthly'
+          1.month
+        when 'weekly'
           1.week
         else
           1.year
@@ -168,6 +172,5 @@ class DeviceMessageProcessor
         1.year
       end
     end
-
   end
 end

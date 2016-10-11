@@ -5,7 +5,7 @@ class TestBatchActions extends React.Component{
         { this.props.testOrderStatus === 'new' && this.props.encounter.userCanFinance ?
           <AddPaymentAction rejectReasons={ this.props.rejectReasons } commentValue={ this.props.encounter.comment } encounterRoutes={ this.props.encounterRoutes } authenticityToken={ this.props.authenticityToken } /> : null }
         { this.props.testOrderStatus === 'financed' ?
-          <AddSamplesAction batchId={ this.props.encounter.batch_id } patientResults={ this.props.patientResults } encounterRoutes={ this.props.encounterRoutes } authenticityToken={ this.props.authenticityToken } /> : null }
+          <AddSamplesAction batchId={ this.props.encounter.batch_id } manualSampleId={ this.props.manualSampleId } patientResults={ this.props.patientResults } encounterRoutes={ this.props.encounterRoutes } authenticityToken={ this.props.authenticityToken } /> : null }
       </div>
     );
   }
@@ -18,4 +18,5 @@ TestBatchActions.propTypes = {
   encounter: React.PropTypes.object.isRequired,
   authenticityToken: React.PropTypes.string.isRequired,
   testOrderStatus: React.PropTypes.string.isRequired,
+  manualSampleId: React.PropTypes.bool.isRequired,
 };

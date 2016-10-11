@@ -34,9 +34,9 @@
             .row
               .col-6
                 %label
-                  = CultureResult.human_attribute_name(:serial_number)
+                  = CultureResult.human_attribute_name(:sample_identifier_id)
               .col-6
-                = @culture_result.serial_number
+                = @culture_result.sample_identifier.lab_sample_id
             .row
               .col-6
                 %label

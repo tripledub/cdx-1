@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe Device do
+  context 'relationship' do
+    it { is_expected.to have_many(:audit_logs) }
+    it { is_expected.to validate_presence_of :device_model }
+    it { is_expected.to validate_presence_of :name }
+    it { is_expected.to validate_presence_of :institution }
+  end
 
   context "blueprint" do
     def should_be_valid_with_instition_and_site(device)
@@ -29,12 +35,26 @@ describe Device do
     end
   end
 
-  context "validations" do
+  describe 'is_gene_xpert?' do
+    it 'should return true if model is a gene xpert' do
+      device = Device.make device_model: DeviceModel.make(name: 'GeneXpert (Institute One)')
+      expect(device.model_is_gen_expert?).to be true
+    end
 
-    it { is_expected.to validate_presence_of :device_model }
-    it { is_expected.to validate_presence_of :name }
-    it { is_expected.to validate_presence_of :institution }
+    it 'should return false if model is not a gene xpert' do
+      device = Device.make device_model: DeviceModel.make(name: 'Deki Reader (Institute One)')
+      expect(device.model_is_gen_expert?).to be false
+    end
+  end
 
+  describe 'full_name' do
+    it 'should return the name and the serial number' do
+      device = Device.make
+      expect(device.full_name).to eq("#{device.name} - #{device.serial_number}")
+    end
+  end
+
+  describe "validations" do
     it "should validate unpublished device model to belong to the same institution" do
       device = Device.make_unsaved institution: Institution.make
       device.device_model = DeviceModel.make(:unpublished, institution: Institution.make)

@@ -45,10 +45,11 @@ en:
       mark_as_paid: 'Finance approved'
       reject: 'Finance rejected'
     add_samples_action:
+      enter_sample_id: 'Enter Sample ID'
       add_result: 'Add result'
       submit_samples:  'Submit samples'
       sample_ids: 'Sample Ids for test batch'
-      save_sample_ids: 'Save sample ids'
+      save_sample_ids: 'Save'
     test_batch_table:
       type: 'Type'
       sample_id: 'Sample id'
@@ -208,6 +209,7 @@ en:
           col_test_order_status: "status"
           col_title: "Title"
           col_user: "User"
+          col_device: "Device"
           col_date: "Date added"
           msg_loading: "Loading logs..."
           msg_no_log: "There are no logs available."

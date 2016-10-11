@@ -1,4 +1,5 @@
 module CdxApiCore
+  # Base class for api controller. Other controllers inherit from this one.
   class ApiController < ::ApplicationController
     include ApplicationHelper
     include Policy::Actions
@@ -7,7 +8,7 @@ module CdxApiCore
     skip_before_filter :verify_authenticity_token
     skip_before_filter :ensure_context
 
-    before_action :doorkeeper_authorize!, unless: lambda { current_user }
+    before_action :doorkeeper_authorize!, unless: -> { current_user }
     before_action :set_nav
 
     # We redefine current_user to also take into account the oauth token
@@ -16,11 +17,12 @@ module CdxApiCore
         @doorkeeper_user_cached = true
         @doorkeeper_user = super || (doorkeeper_token && User.find(doorkeeper_token.resource_owner_id))
       end
+      User.current = @doorkeeper_user
       @doorkeeper_user
     end
 
-    def build_csv prefix, builder
-      @csv_options = { :col_sep => ',' }
+    def build_csv(prefix, builder)
+      @csv_options = { col_sep: ',' }
       @csv_builder = builder
       @filename = "#{prefix}-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
     end

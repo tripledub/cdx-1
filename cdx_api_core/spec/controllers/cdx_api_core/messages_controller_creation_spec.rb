@@ -1,19 +1,21 @@
 require 'spec_helper'
 
 describe CdxApiCore::MessagesController, elasticsearch: true, validate_manifest: false do
+  let(:user)         { User.make }
+  let(:institution)  { Institution.make user_id: user.id }
+  let(:site)         { Site.make institution: institution }
+  let(:device_model) { DeviceModel.make name: 'genexpert-2000' }
+  let(:device)       { Device.make institution_id: institution.id, site: site }
+  let(:data)         { Oj.dump test: { assays: [result: :positive] } }
+  let(:datas) do
+    Oj.dump [
+      { test: { assays: [result: :positive] } },
+      { test: { assays: [result: :negative] } }
+    ]
+  end
+  before(:each) { sign_in user }
 
-  let(:user) {User.make}
-  let(:institution) {Institution.make user_id: user.id}
-  let(:site) {Site.make institution: institution}
-  let(:device) {Device.make institution_id: institution.id, site: site}
-  let(:data)  {Oj.dump test: {assays: [result: :positive]}}
-  let(:datas) {Oj.dump [
-    {test: {assays: [result: :positive]}},
-    {test: {assays: [result: :negative]}}
-  ]}
-  before(:each) {sign_in user}
-
-  def get_updates(options, body="")
+  def get_updates(options, body = "")
     refresh_index
     response = get :index, body, options.merge(format: 'json')
     expect(response.status).to eq(200)
@@ -21,7 +23,6 @@ describe CdxApiCore::MessagesController, elasticsearch: true, validate_manifest:
   end
 
   context "Creation" do
-
     it "should create message in the database" do
       response = post :create, data, device_id: device.uuid, authentication_token: device.plain_secret_key
       expect(response.status).to eq(200)

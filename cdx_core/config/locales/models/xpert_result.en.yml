@@ -9,3 +9,4 @@ en:
         rifampicin: 'Rifampicin resistance'
         trace: 'Trace'
         tuberculosis: 'M. Tuberculosis Detection Volume'
+        sample_identifier_id: 'Sample ID'

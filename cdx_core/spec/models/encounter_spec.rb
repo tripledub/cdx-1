@@ -13,6 +13,17 @@ describe Encounter do
     it { should validate_inclusion_of(:status).in_array(status_options) }
   end
 
+  describe 'financed?' do
+    it 'should return true if test orders has been financed' do
+      encounter.update_attribute(:status, 'financed')
+      expect(encounter.financed?).to be true
+    end
+
+    it 'should return true if test orders has been financed' do
+      expect(encounter.financed?).to be false
+    end
+  end
+
   it "#human_diagnose" do
     encounter.core_fields[Encounter::ASSAYS_FIELD] = [{"condition" => "flu_a", "name" => "flu_a", "result" => "positive", "quantitative_result" => nil}]
     expect(encounter.human_diagnose).to eq("FLU_A detected.")

@@ -1,6 +1,7 @@
 class AddSamplesAction extends React.Component{
   constructor(props, context) {
     super(props, context);
+    this.state = { sampleResults: ['sample'] }
   }
 
   submitSamples(event) {
@@ -8,8 +9,40 @@ class AddSamplesAction extends React.Component{
     event.preventDefault();
   }
 
+  sendStatusUpdates(result) {
+    StatusActions.updateStatus(result);
+  }
+
   closeAndCancel() {
     this.refs.addSamplesModal.hide();
+  }
+
+  addSampleInput() {
+    let newResults = this.state.sampleResults;
+    newResults.push('sample');
+    this.setState({ sampleResults: newResults });
+  }
+
+  createSamples(event) {
+    if (event) { event.preventDefault() }
+    const that = this;
+    let sampleIds = [];
+
+    $('#samplesForm input[type=text]').each( function(index) {
+      if (!(this.value.length === 0 || !this.value.trim())) {
+        sampleIds.push(this.value);
+      };
+    });
+
+    $.ajax({
+      url: this.props.encounterRoutes['submitSamplesUrl'],
+      method: 'POST',
+      data: { samples: sampleIds }
+    }).done( function(data) {
+      location.reload(true);
+    }).fail( function(data) {
+      alert(data['responseText']);
+    });
   }
 
   render() {
@@ -18,12 +51,17 @@ class AddSamplesAction extends React.Component{
         <button className="btn-secondary" onClick={ this.submitSamples.bind(this) }>{ I18n.t('components.add_samples_action.submit_samples') }</button>
         <Modal ref="addSamplesModal">
           <h1>{ I18n.t('components.add_samples_action.sample_ids') }: { this.props.batchId }</h1>
-          <form method="post" action={ this.props.encounterRoutes['submitSamplesUrl'] }>
-            <input type='hidden' name='authenticity_token' value={this.props.authenticityToken} />
+          <form id="samplesForm" onSubmit={ this.createSamples.bind(this) }>
             <div className="col">
-              { this.props.patientResults.map(function(patientResult, element) {
-                 return <SampleRow key={ patientResult.id } elementId={ 'input' + element } resultId={ patientResult.id } resultName={ patientResult.testType } resultSampleId={ patientResult.sampleId } />;
+              { this.state.sampleResults.map(function(sampleResult, element) {
+                 return <SampleRow key={ element } elementId={ element } batchId={ this.props.batchId } manualSampleId={ this.props.manualSampleId } />;
               }.bind(this)) }
+            </div>
+            <div className="row">
+              <div className="col-6"></div>
+              <div className="col-6">
+                <a className="btn-primary" href="#" onClick={ this.addSampleInput.bind(this) }>Add another sample</a>
+              </div>
             </div>
             <div className="col">
               <button className="btn-link" type="reset" onClick={ this.closeAndCancel.bind(this) }>{ I18n.t('components.cancel') }</button>
@@ -38,7 +76,7 @@ class AddSamplesAction extends React.Component{
 
 AddSamplesAction.propTypes = {
   batchId: React.PropTypes.string.isRequired,
-  patientResults: React.PropTypes.array.isRequired,
   encounterRoutes: React.PropTypes.object.isRequired,
   authenticityToken: React.PropTypes.string.isRequired,
+  manualSampleId: React.PropTypes.bool.isRequired,
 };

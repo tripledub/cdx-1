@@ -57,6 +57,8 @@ Rails.application.routes.draw do
         post :update_samples
       end
     end
+
+    resource  :samples, only: [:create]
     resources :xpert_results, only: [:show, :edit, :update]
     resources :microscopy_results, only: [:show, :edit, :update]
     resources :dst_lpa_results, only: [:show, :edit, :update]

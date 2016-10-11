@@ -1,4 +1,5 @@
 module PatientResults
+  # Finder for patient results
   class Finder
     class << self
       def instance_from_string(test_type)

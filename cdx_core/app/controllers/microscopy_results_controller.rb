@@ -27,6 +27,6 @@ class MicroscopyResultsController < PatientResultsController
 
   def microscopy_result_params
     params.require(:microscopy_result)
-          .permit(:sample_collected_on, :examined_by, :result_on, :specimen_type, :serial_number, :appearance, :test_result, :comment)
+          .permit(:sample_collected_on, :examined_by, :result_on, :specimen_type, :sample_identifier_id, :appearance, :test_result, :comment)
   end
 end

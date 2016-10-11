@@ -4,6 +4,7 @@ class TestResultStatus extends React.Component {
 
     this.state = {
       commentValue: props.commentValue,
+      testOrderStatus: 'new',
       actionInfo: {
         sampleReceived: {
           actionStatus: 'allocated',
@@ -61,7 +62,7 @@ class TestResultStatus extends React.Component {
     return(
       <div>
         { this.props.currentStatus === 'new' ?
-          I18n.t('components.test_result_status.test_new') : null }
+          <div>{ I18n.t('components.test_result_status.test_new') }</div> : null }
         { this.props.currentStatus === 'sample_collected' ?
           <TestResultActions actionInfo={ this.state.actionInfo['sampleReceived'] } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
         { this.props.currentStatus === 'allocated' ?

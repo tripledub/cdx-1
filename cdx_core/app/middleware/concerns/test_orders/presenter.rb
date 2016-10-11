@@ -46,7 +46,7 @@ module Concerns
         end
 
         def samples_for_encounter(encounter)
-          encounter.patient_results.map { |patient_result| patient_result.serial_number }.join(', ')
+          encounter.samples.map { |sample| sample.sample_identifiers.map(&:lab_sample_id) }.compact.join(', ')
         end
       end
     end

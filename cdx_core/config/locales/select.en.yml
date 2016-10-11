@@ -76,7 +76,7 @@ en:
       tuberculosis:
         detected: 'Detected'
         not_detected: 'Not Detected'
-        invalid: 'Invalid / No result / Error'
+        indeterminate: 'Invalid / No result / Error'
       rifampicin:
         detected: 'Detected'
         not_detected: 'Not Detected'
