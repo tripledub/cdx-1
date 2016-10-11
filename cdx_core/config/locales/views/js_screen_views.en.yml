@@ -212,6 +212,8 @@ en:
       alert_exam_reason: "Please choose an Examination Reason."
       alert_tests_requested: "Please choose one or more Test types."
       alert_add_samples: "Please add one or more Samples."
+      alert_unknown: "Please check you have entered all required fields."
+      alert_performing_site: "Please select a performing site"
       test_order_details_heading: "Test Order Details"
       testing_for_label: "Testing For"
       TB_option: "TB"
