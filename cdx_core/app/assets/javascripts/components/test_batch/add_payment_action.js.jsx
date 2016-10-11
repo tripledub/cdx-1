@@ -23,6 +23,7 @@ class AddPaymentAction extends React.Component{
       resultId: this.props.resultId,
       updateTestOrderUrl: this.props.encounterRoutes['updateTestOrderUrl'],
       commentValue: this.state.commentValue,
+      forcePageReload: true,
     };
 
     return(

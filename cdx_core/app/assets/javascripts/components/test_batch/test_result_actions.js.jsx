@@ -19,6 +19,7 @@ class TestResultActions extends React.Component{
       method: 'PUT',
       data: { id: this.props.actionInfo.resultId, patient_result: { result_status: status, comment: comment, feedback_message_id: reasonId } }
     }).done( function(data) {
+      location.reload(true);
       that.props.updateResultStatus(data['result']['resultStatus'], comment);
       that.sendStatusUpdates(data['result']);
     }).fail( function(data) {

@@ -29,6 +29,9 @@ module FeedbackMessages
 
         nf003 = institution.feedback_messages.create!({ category: 'finance', code: 'NF0003' })
         nf003.custom_translations.create!({ lang: 'en', text: 'Unable to process' })
+
+        nf004 = institution.feedback_messages.create!({ category: 'result_finance', code: 'F0001' })
+        nf004.custom_translations.create!({ lang: 'en', text: 'Not financed' })
       end
     end
   end

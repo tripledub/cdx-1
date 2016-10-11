@@ -52,11 +52,12 @@ Rails.application.routes.draw do
   get 'settings' => 'home#settings'
 
   resources :encounters do
-    resource :encounter_payments, only: [] do
-      post :set_as_paid
+    resource :patient_results, only: [:update] do
+      collection do
+        post :update_samples
+      end
     end
 
-    resource  :patient_results, only: [:update]
     resource  :samples, only: [:create]
     resources :xpert_results, only: [:show, :edit, :update]
     resources :microscopy_results, only: [:show, :edit, :update]

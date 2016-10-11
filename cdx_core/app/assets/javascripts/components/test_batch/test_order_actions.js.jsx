@@ -22,8 +22,12 @@ class TestOrderActions extends React.Component{
         encounter: { status: status, comment: comment, feedback_message_id: reasonId }
       }
     }).done( function(data) {
-      that.props.updateResultStatus(data['result']['testOrderStatus'], comment);
-      that.sendStatusUpdates(data['result']);
+      if (that.props.actionInfo.forcePageReload == true) {
+        location.reload(true);
+      } else {
+        that.props.updateResultStatus(data['result']['testOrderStatus'], comment);
+        that.sendStatusUpdates(data['result']);
+      };
     }).fail( function(data) {
       alert(I18n.t('components.test_order_actions.update_failed'))
     });

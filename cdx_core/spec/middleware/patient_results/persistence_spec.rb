@@ -28,6 +28,46 @@ describe PatientResults::Persistence do
     end
   end
 
+  describe 'results_not_financed' do
+    before :each do
+      culture_result
+      microscopy_result
+      described_class.results_not_financed(encounter)
+      culture_result.reload
+      microscopy_result.reload
+    end
+
+    it 'should change all results status to rejected' do
+      expect(microscopy_result.result_status).to eq('rejected')
+      expect(culture_result.result_status).to eq('rejected')
+    end
+
+    it 'should change feedback message to Not financed' do
+      feedback_message = FeedbackMessages::Finder.patient_result_not_financed(institution)
+      expect(microscopy_result.feedback_message).to eq(feedback_message)
+      expect(culture_result.feedback_message).to eq(feedback_message)
+    end
+  end
+
+  describe 'collect_sample_ids' do
+    before :each do
+      described_class.collect_sample_ids(encounter, sample_ids)
+      encounter.reload
+    end
+
+    it 'should populate serial number with lab Id.' do
+      expect(encounter.patient_results.first.serial_number).to eq('8778')
+    end
+
+    it 'should populate serial number with lab Id.' do
+      expect(encounter.patient_results.last.serial_number).to eq('Random Id')
+    end
+
+    it 'should update encounter status to samples collected' do
+      expect(encounter.status).to eq('samples_collected')
+    end
+  end
+
   describe 'update_status' do
     context 'status' do
       let(:patient_result) { { result_status: 'rejected' } }

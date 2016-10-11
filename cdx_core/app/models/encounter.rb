@@ -125,6 +125,10 @@ class Encounter < ActiveRecord::Base
     core_fields["id"]
   end
 
+  def not_financed?
+    status == 'not_financed'
+  end
+
   def financed?
     status == 'financed'
   end
