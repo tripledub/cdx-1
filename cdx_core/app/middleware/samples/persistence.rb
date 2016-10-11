@@ -12,15 +12,20 @@ module Samples
       protected
 
       def create_sample_ids(encounter, sample_ids)
-        sample_ids.each do |sample_id|
-          add_sample(encounter, sample_id) if sample_is_valid?(sample_id)
-        end
+        Sample.transaction do
+          sample_ids.each do |sample_id|
+            add_sample(encounter, sample_id) if sample_is_valid?(sample_id)
+          end
 
-        unless @error_messages.present?
-          TestOrders::Status.update_and_log(encounter, 'samples_collected')
-          encounter.patient_results.each do |patient_result|
-            PatientResults::Persistence.update_status_and_log(patient_result, 'sample_collected')
-            patient_result.update_attribute(:sample_collected_on, Date.today)
+          if @error_messages.present?
+            # If one sample id is wrong we don't want to save the others.
+            raise ActiveRecord::Rollback
+          else
+            TestOrders::Status.update_and_log(encounter, 'samples_collected')
+            encounter.patient_results.each do |patient_result|
+              PatientResults::Persistence.update_status_and_log(patient_result, 'sample_collected')
+              patient_result.update_attribute(:sample_collected_on, Date.today)
+            end
           end
         end
       end

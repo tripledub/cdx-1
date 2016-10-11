@@ -39,10 +39,9 @@ class AddSamplesAction extends React.Component{
       method: 'POST',
       data: { samples: sampleIds }
     }).done( function(data) {
-      //that.sendStatusUpdates(data['result']);
       location.reload(true);
     }).fail( function(data) {
-      alert(data['responseText'])
+      alert(data['responseText']);
     });
   }
 
@@ -55,7 +54,7 @@ class AddSamplesAction extends React.Component{
           <form id="samplesForm" onSubmit={ this.createSamples.bind(this) }>
             <div className="col">
               { this.state.sampleResults.map(function(sampleResult, element) {
-                 return <SampleRow key={ element } elementId={ element } />;
+                 return <SampleRow key={ element } elementId={ element } batchId={ this.props.batchId } manualSampleId={ this.props.manualSampleId } />;
               }.bind(this)) }
             </div>
             <div className="row">
