@@ -52,10 +52,6 @@ Rails.application.routes.draw do
   get 'settings' => 'home#settings'
 
   resources :encounters do
-    resource :encounter_payments, only: [] do
-      post :set_as_paid
-    end
-
     resource :patient_results, only: [:update] do
       collection do
         post :update_samples

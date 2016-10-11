@@ -124,6 +124,10 @@ class Encounter < ActiveRecord::Base
     core_fields["id"]
   end
 
+  def not_financed?
+    status == 'not_financed'
+  end
+
   def has_entity_id?
     entity_id.not_nil?
   end

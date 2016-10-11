@@ -14,7 +14,6 @@ module EncountersHelper
   def encounter_routes(encounter)
     {
       submitSamplesUrl: update_samples_encounter_patient_results_path(encounter),
-      submitPaymentUrl: set_as_paid_encounter_encounter_payments_path(encounter),
       updateResultUrl: encounter_patient_results_path(encounter),
       updateTestOrderUrl: patient_patient_test_order_path(encounter.patient, encounter)
     }

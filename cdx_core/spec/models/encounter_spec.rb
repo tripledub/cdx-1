@@ -18,6 +18,17 @@ describe Encounter do
     expect(encounter.human_diagnose).to eq("FLU_A detected.")
   end
 
+  describe 'not_financed?' do
+    it 'should return true if test order has not_financed status' do
+      encounter.status = 'not_financed'
+      expect(encounter.not_financed?).to be true
+    end
+
+    it 'should return false it test order does not have not_financed status' do
+      expect(encounter.not_financed?).to be false
+    end
+  end
+
   describe "merge assays" do
     def merge(a, b)
       Encounter.merge_assays(a, b)

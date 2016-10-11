@@ -5,6 +5,8 @@ module TestOrders
       # After patient results have been updated update test order status
       def update_status(encounter)
         encounter.reload
+        return if encounter.not_financed?
+
         if all_finished?(encounter)
           update_and_log(encounter, 'closed')
         elsif any_pending_approval_or_finished?(encounter)
@@ -21,7 +23,9 @@ module TestOrders
       # Change test order status (financial approvement/reject)
       def update_and_comment(encounter, params)
         if can_finance_test_orders?(encounter)
-          update_financial_info(encounter, params)
+          message, status = update_financial_info(encounter, params)
+          PatientResults::Persistence.results_not_financed(encounter) if encounter.not_financed?
+          [message, status]
         else
           [I18n.t('test_orders.update.not_allowed'), :unprocessable_entity]
         end

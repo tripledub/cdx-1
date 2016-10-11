@@ -19,6 +19,15 @@ module PatientResults
         TestOrders::Status.update_and_log(encounter, 'samples_collected')
       end
 
+      # If test order is not financed change all results to rejected with feedback message F0001
+      def results_not_financed(encounter)
+        feedback_message = FeedbackMessages::Finder.patient_result_not_financed(encounter.institution)
+        encounter.patient_results.each do |patient_result|
+          update_status_and_log(patient_result, 'rejected')
+          patient_result.update_attribute(:feedback_message_id, feedback_message.id)
+        end
+      end
+
       def update_status(patient_result, params)
         if update_patient_result(patient_result, params)
           [

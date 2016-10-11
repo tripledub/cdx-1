@@ -3,7 +3,7 @@ require 'policy_spec_helper'
 
 describe PatientResults::Persistence do
   let(:user)              { User.make }
-  let(:institution)      { user.institutions.make }
+  let(:institution)       { user.institutions.make }
   let(:patient)           { Patient.make institution: institution }
   let(:encounter)         { Encounter.make institution: institution, patient: patient }
   let(:microscopy_result) { MicroscopyResult.make encounter: encounter }
@@ -25,6 +25,27 @@ describe PatientResults::Persistence do
 
     it 'should create a valid batch of tests' do
       expect(encounter.valid?).to be true
+    end
+  end
+
+  describe 'results_not_financed' do
+    before :each do
+      culture_result
+      microscopy_result
+      described_class.results_not_financed(encounter)
+      culture_result.reload
+      microscopy_result.reload
+    end
+
+    it 'should change all results status to rejected' do
+      expect(microscopy_result.result_status).to eq('rejected')
+      expect(culture_result.result_status).to eq('rejected')
+    end
+
+    it 'should change feedback message to Not financed' do
+      feedback_message = FeedbackMessages::Finder.patient_result_not_financed(institution)
+      expect(microscopy_result.feedback_message).to eq(feedback_message)
+      expect(culture_result.feedback_message).to eq(feedback_message)
     end
   end
 
