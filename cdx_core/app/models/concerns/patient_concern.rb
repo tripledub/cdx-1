@@ -19,6 +19,8 @@ module PatientConcern
     has_many :episodes,     dependent: :destroy
     has_many :addresses,    dependent: :destroy, as: :addressable
 
+    belongs_to :external_system
+
     validates_presence_of   :institution
     validates_uniqueness_of :entity_id, scope: :institution_id, allow_nil: true
     validate                :entity_id_not_changed
