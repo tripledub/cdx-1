@@ -17,9 +17,9 @@
       = f.collection_select :method_used, DstLpaResult.method_options, :first, :last
   .row
     .col.pe-2
-      = f.label :serial_number
+      = f.label :sample_identifier_id
     .col
-      = f.text_field :serial_number
+      = f.select :sample_identifier_id, SampleIdentifiers::Presenter.available_samples(@encounter)
   .row
     .col.pe-2
       = f.label :results_h

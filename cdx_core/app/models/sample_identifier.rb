@@ -3,7 +3,8 @@ class SampleIdentifier < ActiveRecord::Base
 
   belongs_to :sample, inverse_of: :sample_identifiers
   belongs_to :site, -> { with_deleted }, inverse_of: :sample_identifiers
-  has_many :test_results, inverse_of: :sample_identifier, dependent: :restrict_with_error
+  has_many   :test_results, inverse_of: :sample_identifier, dependent: :restrict_with_error
+  has_many   :patient_results
 
   validates_presence_of :sample
   validate :site_and_uniqueness_of_entity_id_in_site_time_window

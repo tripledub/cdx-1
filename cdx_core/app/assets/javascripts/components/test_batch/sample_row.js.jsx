@@ -1,12 +1,19 @@
 class SampleRow extends React.Component{
+  automaticSampleId() {
+    let batchNumber = this.props.batchId.substr(this.props.batchId.length - 5);;
+    return parseInt(batchNumber) * 1000 + (this.props.elementId + 1);
+  }
+
   render(){
     return(
       <div className="row">
         <div className="col-6">
-          <label>{ this.props.resultName }</label>
+          <label>{ I18n.t('components.add_samples_action.enter_sample_id') }</label>
         </div>
         <div className="col-6">
-          <input type="text" required refs={ this.props.elementId } name={ 'samples['+this.props.resultId+']' } defaultValue={ this.props.resultSampleId }/>
+          { this.props.manualSampleId ?
+            <input type="text" ref={ 'sampleInput' + this.props.elementId } name={ 'samples['+this.props.elementId+']' } /> :
+            <input type="text" readOnly ref={ 'sampleInput' + this.props.elementId } name={ 'samples['+this.props.elementId+']' } value={ this.automaticSampleId() }/> }
         </div>
       </div>
     )
@@ -14,7 +21,7 @@ class SampleRow extends React.Component{
 }
 
 SampleRow.propTypes = {
-  resultName: React.PropTypes.string,
-  resultSampleId: React.PropTypes.string,
-  resultId: React.PropTypes.number,
+  elementId: React.PropTypes.number,
+  manualSampleId: React.PropTypes.bool.isRequired,
+  batchId: React.PropTypes.string.isRequired,
 };

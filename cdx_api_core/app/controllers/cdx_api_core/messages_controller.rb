@@ -27,28 +27,29 @@ module CdxApiCore
       else
         data = request.body.read rescue nil
         saved_ok = true
-        repeatDemo =  params['repeat_demo'].to_i
-        repeatDemo.times do |n|
-          changed_data=randomise_device_data(device, data.clone, params['start_datetime'], params['end_datetime'])
+        repeat_demo = params['repeat_demo'].to_i
+        repeat_demo.times do |n|
+          changed_data = randomise_device_data(device, data.clone, params['start_datetime'], params['end_datetime'])
           saved_ok = save_device_message(device, changed_data, false)
           break if saved_ok == false
         end
 
-        render :create, :json =>  {} ,:status => :ok if saved_ok == true
+        render :create, :json =>  {}, :status => :ok if saved_ok == true
       end
     end
 
     private
 
-   ##
-   # save the device test result and redender an error.
-   #
-   # if no error occurs [and render_ok=true] then do not render as this is used by
-   # the demo data generator.
-   #
-   # return true if the data was saved.
+    ##
+    # save the device test result and redender an error.
+    #
+    # if no error occurs [and render_ok=true] then do not render as this is used by
+    # the demo data generator.
+    #
+    # return true if the data was saved.
 
-   def save_device_message(device, data, render_ok)
+    def save_device_message(device, data, render_ok)
+      Device.current = device
       device_message = DeviceMessage.new(device: device, plain_text_data: data)
       saved_ok = false
 
@@ -59,19 +60,20 @@ module CdxApiCore
           device_message.process
           saved_ok = true
 
-          #only do a render now if not used to generate demo data
+          # only do a render now if not used to generate demo data
           render :status => :ok, :json => { :messages => device_message.parsed_messages } if render_ok == true
         end
       else
         render :status => :unprocessable_entity, :json => { :errors => device_message.errors.full_messages.join(', ') }
       end
 
-    return saved_ok
+      saved_ok
     end
 
     def authenticate_create(device)
       token = params[:authentication_token]
       if current_user && !token
+        User.current = current_user
         return authorize_resource(device, REPORT_MESSAGE)
       end
       token ||= basic_password

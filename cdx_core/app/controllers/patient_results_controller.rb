@@ -2,16 +2,6 @@
 class PatientResultsController < ApplicationController
   before_filter :find_encounter, :check_permissions, :check_back_button_mode
 
-  def update_samples
-    message = if encounter_financed? && PatientResults::Persistence.collect_sample_ids(@encounter, params[:samples])
-                I18n.t('patient_results.update_samples.samples_updated')
-              else
-                I18n.t('patient_results.update_samples.updated_fail')
-              end
-
-    redirect_to encounter_path(@encounter), notice: message
-  end
-
   def update
     message, status = PatientResults::Persistence.update_status(@encounter.patient_results.find(params[:id]), patient_results_params)
     render json: { result: message }, status: status
@@ -33,9 +23,5 @@ class PatientResultsController < ApplicationController
 
   def check_back_button_mode
     @return_page_mode = params['test_order_page_mode']
-  end
-
-  def encounter_financed?
-    @encounter.status == 'financed'
   end
 end

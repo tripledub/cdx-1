@@ -6,6 +6,8 @@ class PatientResult < ActiveRecord::Base
 
   belongs_to :encounter
   belongs_to :feedback_message
+  belongs_to :sample_identifier
+  belongs_to :device
   has_many   :assay_results, as: :assayable
   has_many   :audit_logs
 

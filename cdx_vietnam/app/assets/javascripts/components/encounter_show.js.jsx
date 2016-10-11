@@ -116,10 +116,10 @@ var EncounterShow = React.createClass({
                   : null
                   : null
                 }
-                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.comment_label")} fieldValue={ this.props.encounter.diag_comment } />
+                <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.comment_label") } fieldValue={ this.props.encounter.diag_comment } />
                 {
                   this.props.encounter.exam_reason === 'follow' ?
-                  <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.weeks_in_treatment_label")} fieldValue={ this.props.encounter.treatment_weeks } />
+                  <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.weeks_in_treatment_label") } fieldValue={ this.props.encounter.treatment_weeks } />
                   : null
                 }
                 {
@@ -127,14 +127,9 @@ var EncounterShow = React.createClass({
                   <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.presumptive")} fieldValue={ this.props.encounter.presumptive_rr } />
                   : null
                 }
-                {
-                  this.props.showEdit ?
-                  <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.samples_id_label")}   fieldValue={ <LabSamplesList context={this.props.context} samples={this.props.encounter.samples}  /> } /> : null
-                }
-
-                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.sample_type_label")} fieldValue={ sample_type } />
-
-                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.status_label")} fieldValue={ I18n.t('components.test_order.' + this.state.testOrderStatus) } />
+                <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.sample_type_label") } fieldValue={ sample_type } />
+                <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.samples_id_label") }   fieldValue={ this.props.encounter.sampleIds }  />
+                <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.status_label") } fieldValue={ I18n.t('components.test_order.' + this.state.testOrderStatus) } />
               </div>
 
               <div className="col-6 patientCard">
@@ -147,7 +142,7 @@ var EncounterShow = React.createClass({
           </div>
         </div>
 
-        <TestBatchList encounter={ this.props.encounter } testOrderStatus={ this.state.testOrderStatus } patientResults={ this.props.patientResults } encounterRoutes={ this.props.encounterRoutes } rejectReasons={ this.props.rejectReasons } authenticityToken={ this.props.authenticityToken } />
+        <TestBatchList encounter={ this.props.encounter } manualSampleId={ this.props.manualSampleId } testOrderStatus={ this.state.testOrderStatus } patientResults={ this.props.patientResults } encounterRoutes={ this.props.encounterRoutes } rejectReasons={ this.props.rejectReasons } authenticityToken={ this.props.authenticityToken } />
       </div>
       );
     },

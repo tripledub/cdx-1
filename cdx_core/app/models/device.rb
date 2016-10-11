@@ -14,6 +14,7 @@ class Device < ActiveRecord::Base
   has_many :device_logs
   has_many :device_commands
   has_many :file_messages
+  has_many :audit_logs
   has_and_belongs_to_many :alerts
 
   serialize :custom_mappings, JSON
@@ -34,11 +35,29 @@ class Device < ActiveRecord::Base
 
   CUSTOM_FIELD_TARGETS = ['patient.id', 'sample.id', 'encounter.id']
 
-  def self.filter_by_owner(user, check_conditions)
-    if check_conditions
-      joins(:institution).where(institutions: { user_id: user.id })
-    else
-      self
+  class << self
+    def filter_by_owner(user, check_conditions)
+      if check_conditions
+        joins(:institution).where(institutions: { user_id: user.id })
+      else
+        self
+      end
+    end
+
+    def filter_by_query(query)
+      result = self
+      if (institution = query['institution'])
+        result = result.where(institution_id: institution)
+      end
+      result
+    end
+
+    def current=(device)
+      Thread.current[:current_device] = device
+    end
+
+    def current
+      Thread.current[:current_device]
     end
   end
 
@@ -46,12 +65,12 @@ class Device < ActiveRecord::Base
     institution.user_id == user.id ? self : nil
   end
 
-  def self.filter_by_query(query)
-    result = self
-    if (institution = query['institution'])
-      result = result.where(institution_id: institution)
-    end
-    result
+  def model_is_gen_expert?
+    device_model.name.downcase.include? 'genexpert'
+  end
+
+  def full_name
+    "#{name} - #{serial_number}"
   end
 
   def filter_by_query(query)
