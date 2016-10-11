@@ -57,7 +57,7 @@ class TestResultsController < TestsController
     @page            = 1 if @page < 1
     @order_by        = params["order_by"] || "-device_messages.created_at"
     offset           = (@page - 1) * @page_size
-    @device_messages = Presenters::DeviceMessages.index_view(device_messages.order(@order_by).limit(@page_size).offset(offset))
+    @device_messages = DeviceMessages::Presenter.index_view(device_messages.order(@order_by).limit(@page_size).offset(offset))
   end
 
   private

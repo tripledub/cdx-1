@@ -4,7 +4,7 @@ class AuditUpdatesController < ApplicationController
   before_filter :find_patient_and_log
 
   def index
-    render json: Presenters::AuditUpdates.patient_view(@audit_log.audit_updates.order(set_order_from_params).limit(30).offset(params[:page] || 0))
+    render json: AuditUpdates::Presenter.patient_view(@audit_log.audit_updates.order(set_order_from_params).limit(30).offset(params[:page] || 0))
   end
 
   protected

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Presenters::Comments do
+describe Comments::Presenter do
   let(:patient) { Patient.make }
 
   describe 'patient_view' do

@@ -7,7 +7,7 @@ class EpisodesController < ApplicationController
   before_filter :check_access, only: [:new, :create, :edit, :update]
 
   def index
-    render json: Presenters::Episodes.patient_episodes(@patient.episodes.where('closed = ?', params['status']).order(created_at: :desc))
+    render json: Episodes::Presenter.patient_episodes(@patient.episodes.where('closed = ?', params['status']).order(created_at: :desc))
   end
 
   def create

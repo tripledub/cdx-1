@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Presenters::Episodes do
+describe Episodes::Presenter do
   let(:institution) { Institution.make }
   let(:site)        { Site.make institution: institution }
   let(:patient)     { Patient.make institution: institution }

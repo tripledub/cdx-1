@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Presenters::AuditUpdates do
+describe AuditUpdates::Presenter do
   let(:audit_log) { AuditLog.make }
 
   describe 'patient_view' do
@@ -9,11 +9,11 @@ describe Presenters::AuditUpdates do
     end
 
     it 'should return an array of formated comments' do
-      expect(Presenters::AuditUpdates.patient_view(audit_log.audit_updates).size).to eq(27)
+      expect(described_class.patient_view(audit_log.audit_updates).size).to eq(27)
     end
 
     it 'should return elements formated' do
-      expect(Presenters::AuditUpdates.patient_view(audit_log.audit_updates).first).to eq({
+      expect(described_class.patient_view(audit_log.audit_updates).first).to eq({
         id:        audit_log.audit_updates.first.id,
         fieldName: audit_log.audit_updates.first.field_name,
         oldValue:  audit_log.audit_updates.first.old_value,

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Presenters::DeviceModels do
+describe DeviceModels::Presenter do
   let(:user)        { User.make }
   let(:institution) { user.institutions.make }
   let(:site)        { Site.make institution: institution }
