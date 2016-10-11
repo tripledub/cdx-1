@@ -28,7 +28,6 @@ var EncounterNew = React.createClass({
     this.setState(React.addons.update(this.state, {
       encounter: {
         site: { $set: site },
-        performing_site: { $set: site },
         patient_id: { $set: this.props.patient_id },
         samples: { $set: [] },
         new_samples: { $set: [] },
