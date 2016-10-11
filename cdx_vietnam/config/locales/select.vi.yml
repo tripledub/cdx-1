@@ -32,7 +32,7 @@ vi:
       status_options:
         new: 'Tạo mới'
         sample_collected: 'Mẫu thử đã được thu gom'
-        sample_received: 'Mẫu thử đã được nhận'
+        allocated: "Mẫu đạt chuẩn"
         in_progress: 'Đang xử lý'
         pending_approval: 'Chờ phê duyệt'
         rejected: 'Bị từ chối'
