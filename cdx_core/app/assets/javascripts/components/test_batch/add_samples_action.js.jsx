@@ -79,4 +79,5 @@ AddSamplesAction.propTypes = {
   batchId: React.PropTypes.string.isRequired,
   encounterRoutes: React.PropTypes.object.isRequired,
   authenticityToken: React.PropTypes.string.isRequired,
+  manualSampleId: React.PropTypes.bool.isRequired,
 };

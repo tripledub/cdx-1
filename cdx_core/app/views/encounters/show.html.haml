@@ -11,6 +11,7 @@
   encounter: @encounter_as_json,
   patientResults: PatientResults::Presenter.for_encounter(@encounter.patient_results),
   context: @navigation_context,
+  manualSampleId: @encounter.site.allows_manual_entry,
   encounterRoutes: encounter_routes(@encounter),
   rejectReasons: FeedbackMessages::Presenter.reject_reasons(@encounter.institution),
   authenticityToken: form_authenticity_token)
