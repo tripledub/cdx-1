@@ -21,7 +21,7 @@ module AlertGroups
       end
 
       def display_latest_alert_date(alert)
-        if alert_history == alert.alert_histories.order(:created_at).last
+        if alert_history = alert.alert_histories.order(:created_at).last
           time_ago_in_words(alert_history.created_at) + I18n.t('alert_groups.index.ago')
         else
           I18n.t('alert_groups.index.never')

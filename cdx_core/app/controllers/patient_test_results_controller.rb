@@ -5,7 +5,7 @@ class PatientTestResultsController < ApplicationController
   before_filter :find_patient
 
   def index
-    render json: Presenters::PatientTestResults.patient_view(PatientResult.find_all_results_for_patient(@patient.id).order(set_order_from_params).limit(30).offset(params[:page] || 0))
+    render json: PatientTestResults::Presenter.patient_view(PatientResult.find_all_results_for_patient(@patient.id).order(set_order_from_params).limit(30).offset(params[:page] || 0))
   end
 
   protected
