@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Presenters::DstLpaResults do
+describe DstLpaResults::Presenter do
   let(:user)                { User.make }
   let!(:institution)        { user.institutions.make }
   let(:site)                { Site.make institution: institution }

@@ -53,6 +53,6 @@
               = link_to users_path(filters_params.merge(format: :csv)), title: I18n.t('users.index.download_csv') do
                 %span.icon-download.icon-gray
           .box-content
-            = react_component "UsersIndexTable", users: Presenters::Users.index_table(@users, @navigation_context), orderBy: @order_by
+            = react_component "UsersIndexTable", users: Users::Presenter.index_table(@users, @navigation_context), orderBy: @order_by
             .pagination
               = render 'shared/pagination'

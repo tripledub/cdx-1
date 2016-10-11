@@ -14,16 +14,16 @@ class TestResultsController < TestsController
         @selected_tab         = default_selected_tab
         case @selected_tab
         when 'microscopy'
-          load_manual_test_results(Finder::MicroscopyResults, Presenters::MicroscopyResults)
+          load_manual_test_results(Finder::MicroscopyResults, MicroscopyResults::Presenter)
           cookies[:test_result_tab] = { value: 'microscopy', expires: 1.year.from_now }
         when 'xpert'
-          load_manual_test_results(Finder::XpertResults, Presenters::XpertResults)
+          load_manual_test_results(Finder::XpertResults, XpertResults::Presenter)
           cookies[:test_result_tab] = { value: 'xpert', expires: 1.year.from_now }
         when 'culture'
-          load_manual_test_results(Finder::CultureResults, Presenters::CultureResults)
+          load_manual_test_results(Finder::CultureResults, CultureResults::Presenter)
           cookies[:test_result_tab] = { value: 'culture', expires: 1.year.from_now }
         when 'dst_lpa'
-          load_manual_test_results(Finder::DstLpaResults, Presenters::DstLpaResults)
+          load_manual_test_results(Finder::DstLpaResults, DstLpaResults::Presenter)
           cookies[:test_result_tab] = { value: 'dst_lpa', expires: 1.year.from_now }
         else
           load_device_test_results

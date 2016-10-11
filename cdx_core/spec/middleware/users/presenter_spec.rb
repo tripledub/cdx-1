@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'policy_spec_helper'
 
-describe Presenters::Users do
+describe Users::Presenter do
   let(:user)               { User.make }
   let(:institution)        { user.institutions.make }
   let(:site)               { Site.make institution: institution }

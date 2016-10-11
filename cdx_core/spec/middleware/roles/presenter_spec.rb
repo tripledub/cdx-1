@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'policy_spec_helper'
 
-describe Presenters::Roles do
+describe Roles::Presenter do
   let(:user)               { User.make }
   let(:institution)        { user.institutions.make }
   let(:site)               { Site.make institution: institution }
@@ -10,10 +10,10 @@ describe Presenters::Roles do
   describe 'index_table' do
     before :each do
       policy = grant nil, nil, institution, [Policy::Actions::CREATE_INSTITUTION]
-      7.times {
+      7.times do
         role = Role.make institution: institution, policy: policy
         role.users << user
-      }
+      end
     end
 
     it 'should return an array of formated devices' do

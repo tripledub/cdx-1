@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Presenters::Sites do
-  let(:institution)  { Institution.make }
+describe Sites::Presenter do
+  let(:institution) { Institution.make }
 
   describe 'patient_view' do
     before :each do

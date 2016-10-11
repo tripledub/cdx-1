@@ -9,6 +9,6 @@
           %h3
             = I18n.t('roles.index.role', count: @total)
         .box-content
-          = react_component "RolesIndexTable", roles: Presenters::Roles.index_table(@roles, current_user, @navigation_context), orderBy: @order_by
+          = react_component "RolesIndexTable", roles: Roles::Presenter.index_table(@roles, current_user, @navigation_context), orderBy: @order_by
           .pagination
             = render 'shared/pagination'
