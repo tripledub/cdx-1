@@ -214,6 +214,8 @@ en:
       alert_add_samples: "Please add one or more Samples."
       alert_unknown: "Please check you have entered all required fields."
       alert_performing_site: "Please select a performing site"
+      alert_col_sample_type: "Please select a Collection Sample Type"
+      alert_othercomment: "Please specify Collection Sample Type"      
       test_order_details_heading: "Test Order Details"
       testing_for_label: "Testing For"
       TB_option: "TB"

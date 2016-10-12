@@ -37,6 +37,8 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     if (this.state.encounter.testing_for == undefined)     { alert(I18n.t("components.fresh_tests_encounter_form.alert_testing_for"));     return; }
     if (this.state.encounter.exam_reason == undefined)     { alert(I18n.t("components.fresh_tests_encounter_form.alert_exam_reason"));     return; }
     if (this.state.encounter.tests_requested == '')        { alert(I18n.t("components.fresh_tests_encounter_form.alert_tests_requested")); return; }
+    if (this.state.encounter.coll_sample_type == '')       { alert(I18n.t("components.fresh_tests_encounter_form.alert_col_sample_type"));  return; }   
+    if ( (this.state.encounter.coll_sample_type == 'other') && (this.state.encounter.coll_sample_other == ''))       { alert(I18n.t("components.fresh_tests_encounter_form.alert_othercomment"));     return; }   
     this.save();
   },
 
