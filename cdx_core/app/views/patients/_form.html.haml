@@ -21,6 +21,16 @@
     .fieldrow#pgender
       .fieldlabel
         %div.tooltip
+          = f.label :gender
+          %div.tooltiptext_r
+            = I18n.t('patients.form.gender_tooltip')
+      .fieldvalue
+        = f.collection_select :gender, Patient.gender_options, :first, :last
+        
+    
+    .fieldrow#ssid
+      .fieldlabel
+        %div.tooltip
           = f.label :social_security_code
           %div.tooltiptext_r
             = I18n.t('patients.form.social_security_code_tooltip')
@@ -99,15 +109,17 @@
             = I18n.t('patients.form.phone_tooltip')
       .fieldvalue
         = f.text_field :phone, :class => 'input-large'
-    .fieldrow#p
-      .fieldlabel
-        %div.tooltip
-          = f.label :entity_id
-          %div.tooltiptext_r
-            = I18n.t('patients.form.entity_id_tooltip')
-      .fieldvalue
-        .textblock
-          = @patient.display_patient_id
+    
+    - unless @patient.id.nil?
+      .fieldrow#p
+        .fieldlabel
+          %div.tooltip
+            = f.label :entity_id
+            %div.tooltiptext_r
+              = I18n.t('patients.form.entity_id_tooltip')
+        .fieldvalue
+          .textblock
+            = @patient.display_patient_id
 
     %br{:clear => "both"}/
   
