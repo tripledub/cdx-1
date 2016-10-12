@@ -1,4 +1,8 @@
+# Device models Controller
 class DeviceModelsController < ApplicationController
+
+  before_action :find_device_model, only: [:show, :edit, :update, :publish, :manifest]
+  before_action :find_unpublished_device_model, only: [:destroy]
 
   include DeviceModelsHelper
 
@@ -18,12 +22,12 @@ class DeviceModelsController < ApplicationController
   end
 
   def show
-    @device_model = authorize_resource(DeviceModel.find(params[:id]), READ_DEVICE_MODEL) or return
+    @device_model = authorize_resource(device_model, READ_DEVICE_MODEL) or return
     @manifest = @device_model.current_manifest
   end
 
   def new
-    @device_model = DeviceModel.new
+    @device_model = @navigation_context.institution.device_models.new
     @device_model.manifest = Manifest.new
 
     return unless authorize_resource(@device_model, REGISTER_INSTITUTION_DEVICE_MODEL)
@@ -31,7 +35,7 @@ class DeviceModelsController < ApplicationController
 
   def create
     load_manifest_upload
-    @device_model = DeviceModel.new(device_model_create_params)
+    @device_model = @navigation_context.institution.device_models.new(device_model_create_params)
     return unless authorize_resource(@device_model, REGISTER_INSTITUTION_DEVICE_MODEL)
     set_published_status(@device_model)
 
@@ -49,12 +53,12 @@ class DeviceModelsController < ApplicationController
   end
 
   def edit
-    @device_model = authorize_resource(DeviceModel.find(params[:id]), UPDATE_DEVICE_MODEL)
+    authorize_resource(@device_model, UPDATE_DEVICE_MODEL)
   end
 
   def update
-    @device_model = (authorize_resource(DeviceModel.find(params[:id]), UPDATE_DEVICE_MODEL) or return)
-    @device_model = (authorize_resource(@device_model, PUBLISH_DEVICE_MODEL) or return) if @device_model.published?
+    authorize_resource(@device_model, UPDATE_DEVICE_MODEL) || return
+    (authorize_resource(@device_model, PUBLISH_DEVICE_MODEL) || return) if @device_model.published?
     set_published_status(@device_model)
 
     if params[:device_model][:manifest_attributes] &&
@@ -82,7 +86,7 @@ class DeviceModelsController < ApplicationController
   end
 
   def publish
-    @device_model = authorize_resource(DeviceModel.find(params[:id]), PUBLISH_DEVICE_MODEL) or return
+    authorize_resource(@device_model, PUBLISH_DEVICE_MODEL) or return
     set_published_status(@device_model)
     @device_model.save!
 
@@ -93,8 +97,7 @@ class DeviceModelsController < ApplicationController
   end
 
   def destroy
-    @device_model = DeviceModel.unpublished.find(params[:id])
-    @device_model = authorize_resource(@device_model, DELETE_DEVICE_MODEL) or return
+    authorize_resource(@device_model, DELETE_DEVICE_MODEL) or return
     @device_model.destroy!
 
     respond_to do |format|
@@ -104,13 +107,27 @@ class DeviceModelsController < ApplicationController
   end
 
   def manifest
-    @device_model = authorize_resource(DeviceModel.find(params[:id]), READ_DEVICE_MODEL) or return
+    authorize_resource(@device_model, READ_DEVICE_MODEL) or return
     @manifest = @device_model.current_manifest
 
     send_data @manifest.definition, type: :json, disposition: "attachment", filename: @manifest.filename
   end
 
-  private
+  protected
+
+  def find_device_model
+    unless @device_model = @navigation_context.institution.device_models.where(id: params[:id]).first
+      head :forbidden
+      return false
+    end
+  end
+
+  def find_unpublished_device_model
+    unless @device_model = @navigation_context.institution.device_models.unpublished.find(params[:id])
+      head :forbidden
+      return false
+    end
+  end
 
   CREATE_PARAMS = [:institution_id]
   UPDATE_PARAMS = [:name, :picture, :delete_picture, :setup_instructions, :delete_setup_instructions, :supports_ftp, :filename_pattern, :supports_activation, :support_url, manifest_attributes: [:definition]]
