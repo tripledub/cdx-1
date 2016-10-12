@@ -36,7 +36,7 @@ class PatientsController < ApplicationController
 
     add_two_addresses
 
-    authorize_resource(@patient, CREATE_INSTITUTION_PATIENT)
+    authorize_resource(@navigation_context.institution, CREATE_INSTITUTION_PATIENT)
   end
 
   def create

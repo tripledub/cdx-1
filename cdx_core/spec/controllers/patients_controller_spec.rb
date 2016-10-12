@@ -147,7 +147,7 @@ RSpec.describe PatientsController, type: :controller do
       expect(response).to be_success
     end
 
-    it "should be allowed it can create" do
+    it "should be allowed if can create" do
       grant user, other_user, institution, CREATE_INSTITUTION_PATIENT
       sign_in other_user
       get :new
