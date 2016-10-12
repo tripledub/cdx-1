@@ -26,13 +26,13 @@ class DeviceModelsController < ApplicationController
     @device_model = DeviceModel.new
     @device_model.manifest = Manifest.new
 
-    return unless prepare_for_institution_and_authorize(@device_model, REGISTER_INSTITUTION_DEVICE_MODEL)
+    return unless authorize_resource(@device_model, REGISTER_INSTITUTION_DEVICE_MODEL)
   end
 
   def create
     load_manifest_upload
     @device_model = DeviceModel.new(device_model_create_params)
-    return unless prepare_for_institution_and_authorize(@device_model, REGISTER_INSTITUTION_DEVICE_MODEL)
+    return unless authorize_resource(@device_model, REGISTER_INSTITUTION_DEVICE_MODEL)
     set_published_status(@device_model)
 
     respond_to do |format|
