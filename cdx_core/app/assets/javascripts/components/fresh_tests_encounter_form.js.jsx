@@ -1,6 +1,5 @@
 var FreshTestsEncounterForm = React.createClass(_.merge({
   componentDidMount: function() {
-    $('#sample_other').hide();
     $('.test_for_ebola').attr('checked', false).parent().hide();
     $('.test_for_tb').attr('checked', false).parent().hide();
     $('.test_for_hiv').attr('checked', false).parent().hide();
@@ -44,8 +43,8 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     if (this.state.encounter.exam_reason == undefined)     { alert(I18n.t("components.fresh_tests_encounter_form.alert_exam_reason"));     return; }
     if (this.state.encounter.tests_requested == '')        { alert(I18n.t("components.fresh_tests_encounter_form.alert_tests_requested")); return; }
     if (this.state.encounter.new_samples == [])            { alert(I18n.t("components.fresh_tests_encounter_form.alert_add_samples"));     return; }
-    if (this.state.encounter.coll_sample_type == '')       { alert(I18n.t("components.fresh_tests_encounter_form.alert_col_sample_type"));  return; }   
-    if ( (this.state.encounter.coll_sample_type == 'other') && (this.state.encounter.coll_sample_other == ''))       { alert(I18n.t("components.fresh_tests_encounter_form.alert_othercomment"));     return; }   
+    if (this.state.encounter.coll_sample_type == '')       { alert(I18n.t("components.fresh_tests_encounter_form.alert_col_sample_type"));  return; }
+    if ( (this.state.encounter.coll_sample_type == 'other') && (this.state.encounter.coll_sample_other == ''))       { alert(I18n.t("components.fresh_tests_encounter_form.alert_othercomment"));     return; }
     this.save();
   },
 
@@ -115,7 +114,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
 
           <div className="row">
             <div className="col-6">
-              <label>{I18n.t("components.fresh_tests_encounter_form.collection_sample_type_label")}</label>
+              <label>{ I18n.t("components.fresh_tests_encounter_form.collection_sample_type_label") }</label>
             </div>
             <div className="col-6">
               <label>
@@ -131,10 +130,12 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
 
           <div className="row">
             <div className="col-6">
-              &nbsp;
+              <label htmlFor="sample_other">
+                { I18n.t("components.fresh_tests_encounter_form.comments") }
+              </label>
             </div>
             <div className="col-6">
-              <textarea name="sample_other" id="sample_other" onChange={this.sample_other_change}></textarea>
+              <textarea name="sample_other" id="sample_other" cols="60" rows="5" onChange={ this.sample_other_change }></textarea>
             </div>
           </div>
 
@@ -276,10 +277,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
 
   sample_type_change: function() {
     var xx = $('#coll_sample_type').val();
-    if (xx == 'other')
-      $('#sample_other').show();
-    else
-      $('#sample_other').hide();
     this.setState(React.addons.update(this.state, {
       encounter: {
         coll_sample_type: {
@@ -311,7 +308,7 @@ var ReasonDiag = React.createClass({
     return (
       <div className="row">
         <div className="col-6 flexStart">
-          <label>{I18n.t("components.fresh_tests_encounter_form.comment")}</label>
+          <label>{I18n.t("components.fresh_tests_encounter_form.comments")}</label>
         </div>
         <div className="col-6">
           <textarea name="diag_comment" maxLength="200" id="diag_comment" rows="5" cols="60" onChange={this.updateComment}></textarea>
