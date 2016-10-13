@@ -69,17 +69,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # filters/authorize navigation_context institutions by action. Assign calls resource.institution= if action is allowed
-  def prepare_for_institution_and_authorize(resource, action)
-    if authorize_resource(@navigation_context.institution, action).blank?
-      log_authorization_warn resource, action
-      head :forbidden
-      nil
-    else
-      resource.institution = @navigation_context.institution
-    end
-  end
-
   def default_url_options(options = {})
     if params[:context].present?
       return {:context => params[:context]}

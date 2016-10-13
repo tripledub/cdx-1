@@ -6,7 +6,7 @@ class AlertGroupsController < ApplicationController
   expose(:alert_info, model: :alert, attributes: :alert_params)
 
   def new
-    return unless prepare_for_institution_and_authorize(alert_info, CREATE_ALERT)
+    return unless authorize_resource(alert_info, CREATE_ALERT)
 
     @can_update = true
     new_alert_request_variables

@@ -36,7 +36,7 @@ class DevicesController < ApplicationController
     @device.time_zone = "UTC"
     @device.site = check_access(@navigation_context.site, ASSIGN_DEVICE_SITE) if @navigation_context.site
     @device.site = @sites[0] if !@allow_to_pick_site && @sites.count == 1
-    return unless prepare_for_institution_and_authorize(@device, REGISTER_INSTITUTION_DEVICE)
+    return unless authorize_resource(@device, REGISTER_INSTITUTION_DEVICE)
   end
 
   def create
