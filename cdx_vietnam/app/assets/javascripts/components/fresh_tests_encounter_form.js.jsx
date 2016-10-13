@@ -37,8 +37,8 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     if (this.state.encounter.testing_for == undefined)     { alert(I18n.t("components.fresh_tests_encounter_form.alert_testing_for"));     return; }
     if (this.state.encounter.exam_reason == undefined)     { alert(I18n.t("components.fresh_tests_encounter_form.alert_exam_reason"));     return; }
     if (this.state.encounter.tests_requested == '')        { alert(I18n.t("components.fresh_tests_encounter_form.alert_tests_requested")); return; }
-    if (this.state.encounter.coll_sample_type == '')       { alert(I18n.t("components.fresh_tests_encounter_form.alert_col_sample_type"));  return; }   
-    if ( (this.state.encounter.coll_sample_type == 'other') && (this.state.encounter.coll_sample_other == ''))       { alert(I18n.t("components.fresh_tests_encounter_form.alert_othercomment"));     return; }   
+    if (this.state.encounter.coll_sample_type == '')       { alert(I18n.t("components.fresh_tests_encounter_form.alert_col_sample_type"));  return; }
+    if ( (this.state.encounter.coll_sample_type == 'other') && (this.state.encounter.coll_sample_other == ''))       { alert(I18n.t("components.fresh_tests_encounter_form.alert_othercomment"));     return; }
     this.save();
   },
 
@@ -94,7 +94,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
 
           <div className="row">
             <div className="col-6">
-              <label>{I18n.t("components.fresh_tests_encounter_form.collection_sample_type_label")}</label>
+              <label>{ I18n.t("components.fresh_tests_encounter_form.collection_sample_type_label") }</label>
             </div>
             <div className="col-6">
               <label>
@@ -110,10 +110,12 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
 
           <div className="row">
             <div className="col-6">
-              &nbsp;
+              <label htmlFor="sample_other">
+                { I18n.t("components.fresh_tests_encounter_form.comments") }
+              </label>
             </div>
             <div className="col-6">
-              <textarea name="sample_other" id="sample_other" onChange={this.sample_other_change}></textarea>
+              <textarea name="sample_other" id="sample_other" cols="60" rows="5" onChange={ this.sample_other_change }></textarea>
             </div>
           </div>
 
@@ -134,10 +136,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
         </div>
       </div>
     );
-  },
-
-  getInitialState: function() {
-    $('#sample_other').hide();
   },
 
   checkme: function(what) {
@@ -224,10 +222,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
 
   sample_type_change: function() {
     var xx = $('#coll_sample_type').val();
-    if (xx == 'other')
-      $('#sample_other').show();
-    else
-      $('#sample_other').hide();
     this.setState(React.addons.update(this.state, {
       encounter: {
         coll_sample_type: {

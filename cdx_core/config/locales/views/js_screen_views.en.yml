@@ -215,7 +215,7 @@ en:
       alert_unknown: "Please check you have entered all required fields."
       alert_performing_site: "Please select a performing site"
       alert_col_sample_type: "Please select a Collection Sample Type"
-      alert_othercomment: "Please specify Collection Sample Type"      
+      alert_othercomment: "Please specify Collection Sample Type"
       test_order_details_heading: "Test Order Details"
       testing_for_label: "Testing For"
       TB_option: "TB"
@@ -237,7 +237,7 @@ en:
       diagnosis_lable: "Diagnosis"
       follow_up_lable: "Follow-Up"
       weeks_in_treatment_label: "Weeks in treatment"
-      comment: "Comment"
+      comments: "Comments"
       presumptive: "RR-TB/MDR-TB Suspect"
 
     outstanding_tests_table:
