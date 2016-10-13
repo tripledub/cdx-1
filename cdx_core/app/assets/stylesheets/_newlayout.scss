@@ -1049,10 +1049,24 @@ form#filters-form.filteroptions #clear_button:hover{
   clear:both;
 }
 
-.whitebox .fieldrow{
+.whitebox .fieldrow {
   width:50%;
   float:left;
   height:50px;
+
+  &.header {
+    border-bottom:1px solid #2196f3;
+    margin-bottom: 1em;
+
+    label, .fieldvalue {
+      font-weight:600;
+      font-size:12px;
+    }
+
+    #patient_site_id {
+      margin-top: 5px;
+    }
+  }
 }
 
 .whitebox .fieldlabel{
@@ -1065,6 +1079,10 @@ form#filters-form.filteroptions #clear_button:hover{
   float:left;
   width:60%;
   padding:5px 15px 5px 15px;
+
+  &.no-input {
+    padding-top:16px;
+  }
 }
 
 

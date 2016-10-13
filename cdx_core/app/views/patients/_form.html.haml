@@ -5,7 +5,25 @@
   = validation_errors @patient
 
   .whitebox
-  
+
+    .fieldrow.header#pinstitution
+      .fieldlabel
+        %div.tooltip
+          = f.label :institution
+          %div.tooltiptext_r
+            = I18n.t('patients.form.institution_tooltip')
+      .fieldvalue.no-input
+        = f.object.institution
+
+    .fieldrow.header#psite
+      .fieldlabel
+        %div.tooltip
+          = f.label :site_id
+          %div.tooltiptext_r
+            = I18n.t('patients.form.site_tooltip')
+      .fieldvalue
+        = f.collection_select :site_id, @sites, :id, :name, { prompt: I18n.t('forms.please_select') }, { :required => true }
+
     .fieldrow#pname
       = react_component 'PatientInputName', fieldValue: @patient.name, patientsSearchUrl: patient_search_index_path
     .fieldrow#pnickname

@@ -33,7 +33,10 @@ class PatientsController < ApplicationController
 
   def new
     @patient = @navigation_context.institution.patients.new
+    @navigation_context.site &&
+      @patient.site = @navigation_context.site
 
+    accessible_sites
     add_two_addresses
 
     authorize_resource(@navigation_context.institution, CREATE_INSTITUTION_PATIENT)
@@ -44,8 +47,8 @@ class PatientsController < ApplicationController
     return unless authorize_resource(@institution, CREATE_INSTITUTION_PATIENT)
     parse_date_of_birth
     @patient      = @institution.patients.new(patient_params)
-    @patient.site = @navigation_context.site
     @patient.created_from_controller = true
+    @patient.site = @navigation_context.site
     if validate_name_and_entity_id && @patient.save_and_audit("t{patients.create.audit_log}: #{@patient.name}")
       next_url = if params[:next_url].blank?
                    patient_path(@patient)
@@ -55,14 +58,15 @@ class PatientsController < ApplicationController
 
       redirect_to next_url, notice: I18n.t('patients.create.success')
     else
+      accessible_sites
       render action: 'new'
     end
   end
 
   def edit
     return unless authorize_resource(@patient, UPDATE_PATIENT)
+    accessible_sites
     add_two_addresses
-
     @can_delete = has_access?(@patient, DELETE_PATIENT)
   end
 
@@ -73,6 +77,7 @@ class PatientsController < ApplicationController
     if name_is_present? && @patient.update_and_audit(patient_params, "#{@patient.name} t{patients.update.audit_log}")
       redirect_to patient_path(@patient), notice: I18n.t('patients.update.success')
     else
+      accessible_sites
       render action: 'edit'
     end
   end
@@ -93,6 +98,7 @@ class PatientsController < ApplicationController
 
   def patient_params
     params.require(:patient).permit(
+      :site_id,
       :name,
       :entity_id,
       :gender,
@@ -115,6 +121,10 @@ class PatientsController < ApplicationController
 
   def add_two_addresses
     (2 - @patient.addresses.size).times { @patient.addresses.build }
+  end
+
+  def accessible_sites
+    @sites = check_access(Site.within(@navigation_context.institution), READ_SITE)
   end
 
   # Only patients from form need this validation. Phantom patients don't have entity_id

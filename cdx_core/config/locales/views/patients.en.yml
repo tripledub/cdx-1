@@ -62,6 +62,7 @@ en:
       phone_label: 'Phone'
       patient_id_tooltip: 'The Patient ID'
       institution_tooltip: 'Institution handling this Patient'
+      site_tooltip: 'Site handling this Patient'
       nickname_tooltip: 'The Patients Nickname - if they have one'
       entity_id_tooltip: 'The Patients ID'
       gender_tooltip: 'The Patients Gender'
