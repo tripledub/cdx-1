@@ -9,7 +9,7 @@ module TestOrders
 
         if all_finished?(encounter)
           update_and_log(encounter, 'closed')
-        elsif any_pending_approval_or_finished?(encounter)
+        elsif any_pending_approval?(encounter)
           update_and_log(encounter, 'in_progress')
         elsif any_sample_received?(encounter)
           update_and_log(encounter, 'samples_received')
@@ -40,10 +40,6 @@ module TestOrders
 
       def order_is_pending?(encounter)
         encounter.status == 'samples_received'
-      end
-
-      def any_pending_approval_or_finished?(encounter)
-        any_pending_approval?(encounter) || any_finished?(encounter)
       end
 
       def any_finished?(encounter)
