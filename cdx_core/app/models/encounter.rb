@@ -134,7 +134,7 @@ class Encounter < ActiveRecord::Base
   end
 
   def has_sample_ids?
-    samples && samples.first.sample_identifiers
+    samples.present? && samples.first.sample_identifiers
   end
 
   def has_entity_id?

@@ -17,6 +17,7 @@
 /tmp
 */tmp
 */spec/dummy/tmp
+*/spec/dummy/public
 
 backend/_build
 backend/deps
