@@ -20,3 +20,10 @@
   .row
     .col
       = button_to I18n.t('encounters.show.delete_test_order'), encounter_path(@encounter), method: :delete, class: 'btn-danger', data: { confirm: I18n.t('views.are_you_sure')}
+
+- content_for(:print_content) do
+  - if @encounter.has_sample_ids?
+    .row.center
+      = sample_id_barcode(@encounter.samples.first.sample_identifiers.first.lab_sample_id)
+    .row.center
+      = @encounter.samples.first.sample_identifiers.first.lab_sample_id

@@ -33,6 +33,7 @@ VERSION
 /etc/shapes/*
 /public/polygons/*
 /public/nndd
+/public/barcode_sample_id.png
 
 bin/rspec
 bin/rake

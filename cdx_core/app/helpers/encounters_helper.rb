@@ -18,4 +18,14 @@ module EncountersHelper
       updateTestOrderUrl: patient_patient_test_order_path(encounter.patient, encounter)
     }
   end
+
+  def sample_id_barcode(sample_id)
+    barcode_png = File.open("#{Rails.root}/public/barcode_sample_id.png", 'wb')
+    image_barcode(sample_id.to_s) do |file|
+      barcode_png.write file.read
+    end
+    barcode_png.close
+
+    image_tag('/barcode_sample_id.png')
+  end
 end
