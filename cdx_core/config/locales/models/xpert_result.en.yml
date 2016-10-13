@@ -10,3 +10,4 @@ en:
         trace: 'Trace'
         tuberculosis: 'M. Tuberculosis Detection Volume'
         sample_identifier_id: 'Sample ID'
+        feedback_message_id: 'Feedback message'

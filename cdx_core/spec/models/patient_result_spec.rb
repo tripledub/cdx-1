@@ -9,7 +9,7 @@ describe PatientResult do
     User.current = user
   end
 
-  context "validations" do
+  describe 'validations' do
     it { should belong_to(:encounter) }
     it { should belong_to(:device) }
     it { should belong_to(:feedback_message) }
@@ -17,7 +17,18 @@ describe PatientResult do
     it { have_many :audit_logs }
   end
 
-  context 'when status is rejected' do
+  describe 'any_feedback?' do
+    it 'should return true if result has feedback' do
+      test_result.feedback_message = FeedbackMessage.make(institution: encounter.institution)
+      expect(test_result.any_feedback?).to be true
+    end
+
+    it 'should return false if result does not have feedback' do
+      expect(test_result.any_feedback?).to be false
+    end
+  end
+
+  describe 'when status is rejected' do
     it 'should not validate if comment is empty' do
       test_result.result_status = 'rejected'
       test_result.comment = ' '
@@ -31,7 +42,7 @@ describe PatientResult do
     end
   end
 
-  context 'after_save' do
+  describe 'after_save' do
     it 'should update status' do
       expect(TestOrders::Status).to receive(:update_status).with(test_result.encounter)
 

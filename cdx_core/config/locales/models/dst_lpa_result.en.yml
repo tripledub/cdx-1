@@ -21,3 +21,4 @@ en:
         examined_by: 'Examined by'
         result_on: 'Date of result'
         sample_identifier_id: 'Sample ID'
+        feedback_message_id: 'Feedback message'

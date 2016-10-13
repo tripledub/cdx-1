@@ -19,6 +19,13 @@
                   = CultureResult.human_attribute_name(:result_status)
               .col-6
                 = I18n.t("select.patient_result.status_options.#{@culture_result.result_status}")
+            - if @culture_result.any_feedback?
+              .row
+                .col-6
+                  %label
+                    = CultureResult.human_attribute_name(:feedback_message_id)
+                .col-6
+                  = FeedbackMessages::Finder.find_text_from_patient_result(@culture_result)
             .row
               .col-6
                 %label

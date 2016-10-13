@@ -19,6 +19,13 @@
                   = MicroscopyResult.human_attribute_name(:result_status)
               .col-6
                 = I18n.t("select.patient_result.status_options.#{@microscopy_result.result_status}")
+            - if @microscopy_result.any_feedback?
+              .row
+                .col-6
+                  %label
+                    = MicroscopyResult.human_attribute_name(:feedback_message_id)
+                .col-6
+                  = FeedbackMessages::Finder.find_text_from_patient_result(@microscopy_result)
             .row
               .col-6
                 %label

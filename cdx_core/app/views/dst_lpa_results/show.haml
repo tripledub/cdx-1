@@ -18,6 +18,13 @@
                 %label
                   = DstLpaResult.human_attribute_name(:result_status)
                 = I18n.t("select.patient_result.status_options.#{@dst_lpa_result.result_status}")
+            - if @dst_lpa_result.any_feedback?
+              .row
+                .col-6
+                  %label
+                    = DstLpaResult.human_attribute_name(:feedback_message_id)
+                .col-6
+                  = FeedbackMessages::Finder.find_text_from_patient_result(@dst_lpa_result)
             .row
               .col-12
                 %label

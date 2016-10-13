@@ -40,6 +40,10 @@ class PatientResult < ActiveRecord::Base
     end
   end
 
+  def any_feedback?
+    feedback_message.present?
+  end
+
   def test_name
     [localised_name, format_name].compact.join(' ')
   end
