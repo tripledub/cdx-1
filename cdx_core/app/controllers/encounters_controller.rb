@@ -29,6 +29,7 @@ class EncountersController < ApplicationController
 
     @test_order.prepare_blender_and_json(@encounter)
     @encounter_as_json = @test_order.as_json_edit.attributes!
+    @barcode_available = @encounter.has_sample_ids?
     determine_referal
   end
 
