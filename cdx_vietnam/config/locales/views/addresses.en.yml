@@ -1,14 +1,14 @@
 en:
   addresses:
     form:
-      street_tooltip:   'A Street address'
-      city_tooltip:     'A City name'
-      state_tooltip:    'A State / County name'
+      street_tooltip:   'Street and District'
+      city_tooltip:     'A province name'
+      state_tooltip:    'A region name'
       country_tooltip:     'A Country name'
       zip_code_tooltip: 'A Postal / Zip Code'
       address: 'Address'
-      city: 'City'
-      state: 'State'
+      city: 'Province'
+      state: 'Region'
       zip_code: 'Zip Code'
       address_prefix: ''
       address1_prefix: 'Permanent '

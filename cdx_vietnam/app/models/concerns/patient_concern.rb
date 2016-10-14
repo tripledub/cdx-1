@@ -111,8 +111,7 @@ module PatientConcern
     def gender_options
       [
         ['male', I18n.t('select.patient.gender_options.male')],
-        ['female', I18n.t('select.patient.gender_options.female')],
-        ['other', I18n.t('select.patient.gender_options.other')]
+        ['female', I18n.t('select.patient.gender_options.female')]
       ]
     end
   end
