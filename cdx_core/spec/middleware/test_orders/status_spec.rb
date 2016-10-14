@@ -44,17 +44,17 @@ describe TestOrders::Status do
     end
 
     it 'should set the status to in progress' do
-      culture_result.update_attribute(:result_status, 'completed')
+      culture_result.update_attribute(:result_status, 'pending_approval')
       encounter.reload
 
       expect(encounter.status).to eq('in_progress')
     end
 
-    it 'should set the status to in progress' do
+    it 'should not set the status to in progress' do
       culture_result.update_attribute(:result_status, 'rejected')
       encounter.reload
 
-      expect(encounter.status).to eq('in_progress')
+      expect(encounter.status).to_not eq('in_progress')
     end
 
     it 'should set the status to closed' do

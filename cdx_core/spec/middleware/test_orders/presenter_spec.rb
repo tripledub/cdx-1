@@ -47,7 +47,7 @@ describe TestOrders::Presenter do
         batchId:            Encounter.first.batch_id,
         requestDate:        Extras::Dates::Format.datetime_with_time_zone(Encounter.first.start_time),
         dueDate:            Extras::Dates::Format.datetime_with_time_zone(Encounter.first.testdue_date),
-        status:             'In progress: Microscopy (Pending) - Culture (New) - Xpert (Allocated) - Dst/Lpa (Rejected)',
+        status:             'Samples received: Microscopy (Pending) - Culture (New) - Xpert (Allocated) - Dst/Lpa (Rejected)',
         viewLink:           Rails.application.routes.url_helpers.encounter_path(Encounter.first)
       })
     end
