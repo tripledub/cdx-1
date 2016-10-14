@@ -4,7 +4,7 @@ describe XpertResults::Importer do
   let(:user)               { User.make }
   let(:encounter)          { Encounter.make }
   let(:sample)             { Sample.make encounter: encounter }
-  let!(:sample_identifier) { SampleIdentifier.make lab_sample_id: '731254_99394632_D0_S2', sample: sample }
+  let!(:sample_identifier) { SampleIdentifier.make cpd_id_sample: '731254_99394632_D0_S2', sample: sample }
   let(:xpert_result)       { XpertResult.make encounter: encounter }
   let(:device)             { Device.make }
   let(:parsed_message) do
@@ -89,7 +89,7 @@ describe XpertResults::Importer do
 
     context 'valid device and xpert result' do
       it 'should return false' do
-        sample_identifier.update_attribute(:lab_sample_id, 'not_valid')
+        sample_identifier.update_attribute(:cpd_id_sample, 'not_valid')
         expect(described_class.valid_gene_xpert_result_and_sample?(device, parsed_message)).to be false
       end
     end

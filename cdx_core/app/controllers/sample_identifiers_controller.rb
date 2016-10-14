@@ -15,7 +15,7 @@ class SampleIdentifiersController < ApplicationController
   protected
 
   def sample_identifier_params
-    params.require(:sample_identifier).permit(:lab_sample_id)
+    params.require(:sample_identifier).permit(:cpd_id_sample)
   end
 
   def find_sample_identifier

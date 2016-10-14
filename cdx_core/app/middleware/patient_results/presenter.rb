@@ -30,7 +30,7 @@ module PatientResults
       end
 
       def sample_id(patient_result)
-        patient_result.sample_identifier.present? ? patient_result.sample_identifier.lab_sample_id.to_s : ''
+        patient_result.sample_identifier.present? ? patient_result.sample_identifier.cpd_id_sample.to_s : ''
       end
     end
   end

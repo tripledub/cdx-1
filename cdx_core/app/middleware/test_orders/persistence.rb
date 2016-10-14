@@ -82,7 +82,7 @@ module TestOrders
     def add_sample_manually
       perform_encounter_action "adding manual sample" do
         prepare_encounter_from_json
-        sample = { entity_id: params[:entity_id], lab_sample_id: params[:lab_sample_id]}
+        sample = { entity_id: params[:entity_id], cpd_id_sample: params[:cpd_id_sample]}
         if validate_manual_sample_non_existant(sample)
           @encounter.new_samples << sample
           @extended_respone = { sample: sample }
@@ -220,7 +220,7 @@ module TestOrders
       end
 
       encounter_param['new_samples'].each do |new_sample_param|
-        @encounter.new_samples << { entity_id: new_sample_param['entity_id'], lab_sample_id: new_sample_param['lab_sample_id'] }
+        @encounter.new_samples << { entity_id: new_sample_param['entity_id'], cpd_id_sample: new_sample_param['cpd_id_sample'] }
       end
 
       encounter_param['test_results'].each do |test_param|
@@ -284,7 +284,7 @@ module TestOrders
       sample.sample_identifiers.build(
         site: @encounter.site,
         entity_id: sample_identifier[:entity_id],
-        lab_sample_id: sample_identifier[:lab_sample_id]
+        cpd_id_sample: sample_identifier[:cpd_id_sample]
       )
 
       sample_blender = @blender.load(sample)
@@ -333,7 +333,7 @@ module TestOrders
     end
 
     def encounter_sample_ids
-      @encounter.samples.map { |sample| sample.sample_identifiers.map(&:lab_sample_id) }.compact.join(', ')
+      @encounter.samples.map { |sample| sample.sample_identifiers.map(&:cpd_id_sample) }.compact.join(', ')
     end
   end
 end

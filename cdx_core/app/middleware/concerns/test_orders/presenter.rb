@@ -46,7 +46,7 @@ module Concerns
         end
 
         def samples_for_encounter(encounter)
-          encounter.samples.map { |sample| sample.sample_identifiers.map(&:lab_sample_id) }.compact.join(', ')
+          encounter.samples.map { |sample| sample.sample_identifiers.map(&:cpd_id_sample) }.compact.join(', ')
         end
       end
     end

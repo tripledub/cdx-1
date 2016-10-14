@@ -21,7 +21,7 @@ module EncountersHelper
 
   def sample_id_barcode(sample_id)
     barcode_png = File.open("#{Rails.root}/public/barcode_sample_id.png", 'wb')
-    image_barcode(sample_id.to_s) do |file|
+    image_barcode("CDPSAMPLE#{sample_id}CDPSAMPLE") do |file|
       barcode_png.write file.read
     end
     barcode_png.close
