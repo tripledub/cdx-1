@@ -112,7 +112,7 @@ RSpec.describe Episode, type: :model do
     end
 
     it 'includes mono, poly, multi, extensive rif and unkown' do
-      expect(drug_resistance_options.size).to eq(6)
+      expect(drug_resistance_options.size).to eq(7)
       %w(mono poly multi extensive rif unknown).each do |status|
         id = status.to_sym
         expected = drug_resistance_options.select { |st| st.id == id }
