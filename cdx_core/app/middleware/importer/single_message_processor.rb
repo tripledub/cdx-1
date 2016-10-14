@@ -12,8 +12,15 @@ module Importer
       @blender = Blender.new(institution)
     end
 
-
     def process
+      if XpertResults::Importer.valid_gene_xpert_result_and_sample?(@parent.device, @parsed_message)
+        XpertResults::Importer.link_xpert_result(@parsed_message, @parent.device)
+      else
+        process_automatic_message
+      end
+    end
+
+    def process_automatic_message
       # Load original test if we are updating one
       test_id = parsed_message.get_in('test', 'core', 'id')
       original_test = test_id && TestResult.within_time(1.year, @parent.device_message.created_at).find_by(test_id: test_id, device_id: device.id, site_id: device.site_id)
