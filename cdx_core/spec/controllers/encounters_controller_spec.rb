@@ -98,7 +98,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     it "returns http success if allowed" do
       patient = Patient.make institution: institution
       encounter = Encounter.make institution: institution, patient: patient
-      sample_identifier = SampleIdentifier.make(site: site, entity_id: "entity random", lab_sample_id: 'Random lab sample', sample: Sample.make(institution: institution, encounter: encounter, patient: patient))
+      #sample_identifier = SampleIdentifier.make(site: site, entity_id: "entity random", lab_sample_id: '1030001', sample: Sample.make(institution: institution, encounter: encounter, patient: patient))
       get :show, id: encounter.id
 
       expect(response).to have_http_status(:success)
@@ -286,8 +286,8 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     it "creates an encounter as non phantom" do
-      expect(Time.parse(created_encounter.core_fields["start_time"])).to eq(created_encounter.created_at)
-      expect(Time.parse(created_encounter.core_fields["end_time"])).to eq(created_encounter.created_at)
+      expect(Time.parse(created_encounter.core_fields["start_time"]).strftime("%Y-%m-%d")).to eq(created_encounter.created_at.strftime("%Y-%m-%d"))
+      expect(Time.parse(created_encounter.core_fields["end_time"]).strftime("%Y-%m-%d")).to eq(created_encounter.created_at.strftime("%Y-%m-%d"))
     end
 
     it "creates new_samples assigned to encounter" do

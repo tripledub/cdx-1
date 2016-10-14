@@ -133,8 +133,16 @@ class Encounter < ActiveRecord::Base
     status == 'financed'
   end
 
+  def has_sample_ids?
+    samples.present? && samples.first.sample_identifiers
+  end
+
   def has_entity_id?
     entity_id.not_nil?
+  end
+
+  def has_dirty_diagnostic?
+    test_results_not_in_diagnostic.count > 0
   end
 
   def phantom?
@@ -169,10 +177,6 @@ class Encounter < ActiveRecord::Base
   end
 
   attribute_field OBSERVATIONS_FIELD
-
-  def has_dirty_diagnostic?
-    test_results_not_in_diagnostic.count > 0
-  end
 
   def updated_diagnostic
     assays_to_merge = test_results_not_in_diagnostic\

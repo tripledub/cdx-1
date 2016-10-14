@@ -1,16 +1,9 @@
 class Paginator extends React.Component {
   render () {
-    let pagination = this.props.pages;
-    let current_page = pagination.current_page;
-    let prevPage = pagination.prev_page;
-    let nextPage = pagination.next_page;
-    let firstPage = pagination.first_page;
-    let lastPage = pagination.last_page;
-
     return(
       <div className="pagination">
-        <PagePrev firstPage={firstPage} prevPage={prevPage} pageData={this.props.pageData} /> |
-        <PageNext lastPage={lastPage} nextPage={nextPage} pageData={this.props.pageData} />
+        <PagePrev firstPage={ this.props.pages.firstPage } prevPage={ this.props.pages.prevPage } pageData={ this.props.pageData } /> |
+        <PageNext lastPage={ this.props.pages.lastPage } nextPage={ this.props.pages.nextPage } pageData={ this.props.pageData } />
       </div>
     )
   }
@@ -53,25 +46,22 @@ class PageNext extends React.Component {
   }
 
   render () {
-    let nextPage = this.props.nextPage;
-    let hasNext = !this.props.lastPage;
-    let nextButton, nextText;
-    nextText = I18n.t('components.next');
+    let nextButton;
 
-    if(hasNext) {
+    if (!this.props.lastPage) {
       nextButton = React.createElement(
         'a',
         {
           onClick: this._getNext.bind(this)
         },
-        nextText
+        I18n.t('components.next')
       );
     } else {
-      nextButton = nextText;
+      nextButton = I18n.t('components.next');
     }
 
     return(
-      <span>{nextButton}</span>
+      <span>{ nextButton }</span>
     )
   }
 }

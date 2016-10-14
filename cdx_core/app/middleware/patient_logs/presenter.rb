@@ -6,12 +6,12 @@ module PatientLogs
         log_data = {}
         log_data['rows'] = get_patient_info(patient_logs)
         log_data['pages'] = {
-          total_pages: patient_logs.total_pages,
-          current_page: patient_logs.current_page,
-          first_page: patient_logs.first_page?,
-          last_page: patient_logs.last_page?,
-          prev_page: patient_logs.prev_page,
-          next_page: patient_logs.next_page
+          totalPages: patient_logs.total_pages,
+          currentPage: patient_logs.current_page,
+          firstPage: patient_logs.first_page?,
+          lastPage: patient_logs.last_page?,
+          prevPage: patient_logs.prev_page,
+          nextPage: patient_logs.next_page
         }
         log_data
       end

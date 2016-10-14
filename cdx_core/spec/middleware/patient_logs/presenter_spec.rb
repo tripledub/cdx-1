@@ -29,12 +29,12 @@ describe PatientLogs::Presenter do
 
     it 'includes pagination data' do
       expect(described_class.patient_view(@logs)['pages']).to eq(
-        current_page: 1,
-        first_page: true,
-        last_page: true,
-        next_page: nil,
-        prev_page: nil,
-        total_pages: 1
+        currentPage: 1,
+        firstPage: true,
+        lastPage: true,
+        nextPage: nil,
+        prevPage: nil,
+        totalPages: 1
       )
     end
   end

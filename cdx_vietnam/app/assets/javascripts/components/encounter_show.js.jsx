@@ -128,7 +128,12 @@ var EncounterShow = React.createClass({
                   : null
                 }
                 <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.sample_type_label") } fieldValue={ sample_type } />
-                <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.samples_id_label") }   fieldValue={ this.props.encounter.sampleIds }  />
+                <div className="row">
+                  <div className="col pe-5">
+                    <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.samples_id_label")  }   fieldValue={ this.props.encounter.sampleIds }  />
+                  </div>
+                  { this.props.encounter.sampleIds ? <PrintSampleIdButton /> : null }
+                </div>
                 <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.status_label") } fieldValue={ I18n.t('components.test_order.' + this.state.testOrderStatus) } />
               </div>
 

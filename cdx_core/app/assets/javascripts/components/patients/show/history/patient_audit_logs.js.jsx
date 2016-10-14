@@ -17,9 +17,9 @@ var PatientAuditLogs = React.createClass({
     };
   },
 
-  getData: function(field, e) {
+  getData: function(field, pageNumber, e) {
     if (e) { e.preventDefault(); }
-    this.serverRequest = $.get(this.props.patientLogsUrl + this.getParams(field), function (results) {
+    this.serverRequest = $.get(this.props.patientLogsUrl + this.getParams(field, pageNumber), function (results) {
       if (results['rows'].length > 0) {
         this.setState({ pagination: results['pages'] });
         this.setState({ patientLogs: results['rows'] });
@@ -32,14 +32,21 @@ var PatientAuditLogs = React.createClass({
   },
 
   pageData: function(pageNumber) {
-    this.setState({pageNumber: pageNumber});
-    this.getData(this.state.activeField);
+    this.getData(this.state.activeField, pageNumber);
   },
 
-  getParams: function(field) {
-    this.state.queryOrder = !this.state.queryOrder;
+  getParams: function(field, pageNumber) {
+    let queryOrder = this.state.queryOrder;
+
+    if (!pageNumber) {
+      pageNumber = this.state.pageNumber
+      queryOrder = !this.state.queryOrder;
+      this.setState({ queryOrder: queryOrder });
+    };
+
     this.setState({ activeField: field });
-    return '&field='+ this.state.activeField + '&order=' + this.state.queryOrder + '&page=' + this.state.pageNumber;
+    this.setState({ pageNumber: pageNumber });
+    return '&field='+ field + '&order=' + queryOrder + '&page=' + pageNumber;
   },
 
   updateOrderIcon: function(orderedField) {
@@ -56,7 +63,7 @@ var PatientAuditLogs = React.createClass({
   },
 
   componentDidMount: function() {
-    this.getData('date');
+    this.getData('date', this.state.pageNumber);
   },
 
   componentWillUnmount: function() {
@@ -69,28 +76,30 @@ var PatientAuditLogs = React.createClass({
     var that       = this;
     this.state.patientLogs.forEach(
       function(patientLog) {
-        rows.push(<PatientLog patientLog={patientLog} key={patientLog.id} />);
+        rows.push(<PatientLog patientLog={ patientLog } key={ patientLog.id } />);
       }
     );
 
     this.state.availableColumns.forEach(
       function(availableColumn) {
-        rowHeaders.push(<OrderedColumnHeader key={availableColumn.fieldName} title={availableColumn.title} fieldName={availableColumn.fieldName} orderEvent={that.getData} orderIcon={that.state.orderedColumns[availableColumn.fieldName]} />);
+        rowHeaders.push(<OrderedColumnHeader key={ availableColumn.fieldName } title={ availableColumn.title } fieldName={ availableColumn.fieldName } orderEvent={ that.getData } orderIcon={ that.state.orderedColumns[availableColumn.fieldName] } />);
       }
     );
     return (
       <div className="row">
         {
-          this.state.patientLogs.length < 1 ? <LoadingResults loadingMessage={this.state.loadingMessage} /> :
+          this.state.patientLogs.length < 1 ? <LoadingResults loadingMessage={ this.state.loadingMessage } /> :
           <table className="table patient-audit-logs" data-resizable-columns-id="patient-audit-logs">
             <thead>
               <tr>
-               {rowHeaders}
+               { rowHeaders }
               </tr>
             </thead>
             <tfoot>
               <tr>
-                <td><Paginator pages={this.state.pagination} pageData={this.pageData}/></td>
+                <td>
+                  <Paginator pages={ this.state.pagination } pageData={ this.pageData }/>
+                </td>
               </tr>
             </tfoot>
             <tbody>

@@ -91,6 +91,8 @@ en:
       in_progress: 'In progress'
       pending_approval: 'Pending approval'
       closed: 'Closed'
+      print_label: 'Print label'
+      print_label_title: 'Print a barcode with the first sample id'
     alert_messages:
       col_name: "Name"
       col_date: "Date"

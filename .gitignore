@@ -17,6 +17,7 @@
 /tmp
 */tmp
 */spec/dummy/tmp
+*/spec/dummy/public
 
 backend/_build
 backend/deps
@@ -33,6 +34,7 @@ VERSION
 /etc/shapes/*
 /public/polygons/*
 /public/nndd
+/public/barcode_sample_id.png
 
 bin/rspec
 bin/rake

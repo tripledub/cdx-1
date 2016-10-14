@@ -128,6 +128,10 @@ module ApplicationHelper
     @navigation_context.try(:site).try(:name) || @navigation_context.institution.name
   end
 
+  def print_theme
+    @barcode_available ? 'barcode-print' : 'page-print'
+  end
+
   def institution_name
     institutions = check_access(Institution, READ_INSTITUTION) || []
     if institutions.one?
