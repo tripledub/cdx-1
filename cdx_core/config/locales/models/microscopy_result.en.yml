@@ -11,3 +11,4 @@ en:
         appearance: 'Visual appearance'
         test_result: 'Result'
         sample_identifier_id: 'Sample ID'
+        feedback_message_id: 'Feedback message'

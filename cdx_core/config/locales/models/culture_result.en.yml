@@ -9,3 +9,4 @@ en:
         media_used: 'Media used'
         serial_number: 'Laboratory serial number(s)'
         sample_identifier_id: 'Sample ID'
+        feedback_message_id: 'Feedback message'
