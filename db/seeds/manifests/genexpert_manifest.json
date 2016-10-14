@@ -10,16 +10,26 @@
     }
   },
   "custom_fields" : {
+    "sample.xpert_notes" : {},
+    "test.xpert_patient_number"      : {},
+    "test.xpert_patient_family_name" : {},
+    "test.xpert_patient_given_name"  : {},
+    "test.xpert_patient_middle_name" : {}
   },
   "field_mapping": {
-    "sample.id" : { "lookup": "event.sample_ID" },
-    "test.site_user" : { "lookup": "event.system_user" },
-    "test.start_time" : { "lookup": "event.start_time" },
-    "test.end_time" : { "lookup": "event.end_time" },
-    "test.id" : { "lookup": "event.event_id" },
-    "test.error_code" : { "lookup": "event.error_code" },
-    "test.error_description" : { "lookup": "event.error_description" },
-    "test.name" : { "lookup": "event.assay_name" },
+    "sample.id"                      : { "lookup" : "event.sample_ID" },
+    "sample.xpert_notes"             : { "lookup" : "event.notes" },
+    "test.site_user"                 : { "lookup" : "event.system_user" },
+    "test.start_time"                : { "lookup" : "event.start_time" },
+    "test.end_time"                  : { "lookup" : "event.end_time" },
+    "test.id"                        : { "lookup" : "event.event_id" },
+    "test.error_code"                : { "lookup" : "event.error_code" },
+    "test.error_description"         : { "lookup" : "event.error_description" },
+    "test.name"                      : { "lookup" : "event.assay_name" },
+    "test.xpert_patient_number"      : { "lookup" : "event.patient_ID" },
+    "test.xpert_patient_family_name" : { "lookup" : "event.family_name" },
+    "test.xpert_patient_given_name"  : { "lookup" : "event.given_name" },
+    "test.xpert_patient_middle_name" : { "lookup" : "event.middle_name" },
     "test.type" : { "case" : [
       { "lookup": "event.test_type" },
       [
