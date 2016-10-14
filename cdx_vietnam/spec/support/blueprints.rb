@@ -13,3 +13,11 @@ Patient.blueprint do
     end
   }
 end
+
+Address.blueprint do
+  address  { Faker::Address.street_address }
+  city     { Faker::Address.city }
+  state    { Faker::Address.state }
+  country  { Faker::Address.country }
+  zip_code { nil }
+end

@@ -38,7 +38,7 @@ describe Patients::Presenter do
     end
 
     it 'should not display the commas if any field is empty' do
-      address = Address.make address: '', state: ''
+      address = Address.make address: nil, state: nil, country: nil, zip_code: nil
       patient = Patient.make institution: institution, addresses: [address]
 
       expect(described_class.show_full_address(patient.addresses.first)).to eq("#{address.city}")

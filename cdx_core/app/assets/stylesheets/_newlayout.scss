@@ -1247,7 +1247,7 @@ form#filters-form.filteroptions #clear_button:hover{
 }
 
 
-.field_with_errors input[type="radio"]{
+.field_with_errors input[type="radio"] {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     border: 2px solid black;
     border-radius: 50%;
@@ -1268,6 +1268,7 @@ form#filters-form.filteroptions #clear_button:hover{
     transition: all 0.4s ease 0s;
     width: 18px;
     display:block !important;
+}
 
 .testflow .panel.patient-summary {
     height: 186px;
