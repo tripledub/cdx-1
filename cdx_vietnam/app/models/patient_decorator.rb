@@ -5,5 +5,4 @@ class Patient < ActiveRecord::Base
   def display_patient_id
     'VPN' << id.to_s.rjust(6,'0')
   end
-
 end

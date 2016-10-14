@@ -5,7 +5,7 @@ module XpertResults
       # Tries to link an automated result to an existent one based on sample Id
       # If no test result exists then it creates an orphan xpert result
       def link_xpert_result(parsed_message, device)
-        sample_identifier = SampleIdentifiers::Finder.find_first_sample_available(parsed_message['sample']['core']['id'])
+        sample_identifier = SampleIdentifiers::Finder.find_first_sample_available(sample_id_from_parsed_message(parsed_message['sample']))
         xpert_result = XpertResults::Finder.available_test(sample_identifier.sample.encounter)
         link_to_current_result(xpert_result, sample_identifier, parsed_message, device)
       end
@@ -13,7 +13,7 @@ module XpertResults
       def valid_gene_xpert_result_and_sample?(device, parsed_message)
         return false unless device.model_is_gen_expert?
 
-        sample_identifier = SampleIdentifiers::Finder.find_first_sample_available(parsed_message['sample']['core']['id'])
+        sample_identifier = SampleIdentifiers::Finder.find_first_sample_available(sample_id_from_parsed_message(parsed_message['sample']))
         return false unless sample_identifier
 
         xpert_result = XpertResults::Finder.available_test(sample_identifier.sample.encounter)
@@ -31,6 +31,9 @@ module XpertResults
         end
       end
 
+      def sample_id_from_parsed_message(sample_data)
+        sample_data['core']['id']
+      end
     end
   end
 end
