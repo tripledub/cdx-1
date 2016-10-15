@@ -44,7 +44,7 @@
               .col-12
                 %label
                   = DstLpaResult.human_attribute_name(:sample_identifier_id)
-                = @dst_lpa_result.sample_identifier.cpd_id_sample
+                = SampleIdentifiers::Finder.result_sample_id_with_deleted(@dst_lpa_result)
             .row
               .col-12
                 %label

@@ -8,6 +8,12 @@ module SampleIdentifiers
         nil
       end
 
+      def result_sample_id_with_deleted(patient_result)
+        return unless patient_result.sample_identifier_id
+
+        SampleIdentifier.with_deleted.where(id: patient_result.sample_identifier_id).first.cpd_id_sample
+      end
+
       def find_all_by_sample_id(sample_id)
         SampleIdentifier.where('sample_identifiers.cpd_id_sample = ?', sample_id).all
       end

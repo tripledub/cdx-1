@@ -43,7 +43,7 @@
                 %label
                   = CultureResult.human_attribute_name(:sample_identifier_id)
               .col-6
-                = @culture_result.sample_identifier.cpd_id_sample
+                = SampleIdentifiers::Finder.result_sample_id_with_deleted(@culture_result)
             .row
               .col-6
                 %label
