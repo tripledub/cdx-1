@@ -15,7 +15,7 @@ module SampleIdentifiers
       end
 
       def find_all_by_sample_id(sample_id)
-        SampleIdentifier.where('sample_identifiers.cpd_id_sample = ?', sample_id).all
+        SampleIdentifier.where('UPPER(sample_identifiers.cpd_id_sample) = ?', sample_id.upcase).all
       end
     end
   end
