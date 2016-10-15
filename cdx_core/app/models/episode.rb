@@ -55,6 +55,7 @@ class Episode < ActiveRecord::Base
       OpenStruct.new(id: :multi, name: I18n.t('select.episode.drug_resistance.multi')),
       OpenStruct.new(id: :extensive, name: I18n.t('select.episode.drug_resistance.extensive')),
       OpenStruct.new(id: :rif, name: I18n.t('select.episode.drug_resistance.rif')),
+      OpenStruct.new(id: :prexdr, name: I18n.t('select.episode.drug_resistance.prexdr')),
       OpenStruct.new(id: :unknown, name: I18n.t('select.episode.drug_resistance.unknown'))
     ]
   end

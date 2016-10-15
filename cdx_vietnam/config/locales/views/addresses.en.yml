@@ -1,0 +1,9 @@
+en:
+  addresses:
+    form:
+      street_tooltip:   'Street and District'
+      city_tooltip:     'A province name'
+      state_tooltip:    'A region name'
+      city: 'Province'
+      state: 'Region'
+

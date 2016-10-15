@@ -104,6 +104,12 @@ vi:
         relapsed: 'Điều trị tái phát Aft.'
         loss: 'Mất theo dõi'
         other: 'Các lần điều trị trước'
+        failcati: 'Failed Cat I'
+        failcatii: 'Failed Cat II'
+        noncon: 'Non-converters after 2 or 3 months of Cat I or Cat II treatment'
+        relepsecat: 'Relapse of Cat I or/and Cat II'
+        retreatcat: 'Retreatment after lost to follow up of Cat I or/and Cat II'
+        tbmdr: 'TB cases or TB suspects who have contacts with MDR-TB index cases'
       treatment_outcome:
         cured: 'Chữa khỏi'
         completed: 'Hoàn thành điều trị'
@@ -120,4 +126,5 @@ vi:
         multi: 'Đa kháng thuốc'
         extensive: 'Siêu kháng thuốc'
         rif: 'Kháng thuốc'
+        prexdr: 'Pre XDR'
         unknown: 'Không rõ'
