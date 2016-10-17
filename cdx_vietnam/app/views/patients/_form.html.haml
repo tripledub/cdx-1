@@ -14,7 +14,7 @@
   = validation_errors @patient
 
   .whitebox
-  
+
     .fieldrow#pname
       = react_component 'PatientInputName', fieldValue: @patient.name, patientsSearchUrl: patient_search_index_path
     .fieldrow#pnickname
@@ -25,8 +25,8 @@
             = I18n.t('patients.form.nickname_tooltip')
       .fieldvalue
         = f.text_field :nickname, :class => 'input-large'
-        
-    
+
+
     .fieldrow#pgender
       .fieldlabel
         %div.tooltip
@@ -36,10 +36,10 @@
       .fieldvalue
         = f.collection_select :gender, Patient.gender_options, :first, :last
     .fieldrow#pcmdn
-      = react_component 'SocialSecurityCode', fieldValue: @patient.social_security_code
-    
-        
-    
+      = react_component 'SocialSecurityCode', sscValue: @patient.social_security_code, skipValidationValue: @patient.skip_ssc_validation
+
+
+
     .fieldrow#pdob
       .fieldlabel
         %div.tooltip
@@ -88,7 +88,7 @@
             = I18n.t('patients.form.email_tooltip')
       .fieldvalue
         = f.text_field :email, :class => 'input-large'
-    
+
     - if ExternalSystem.any?
       .fieldrow#pexsys
         .fieldlabel
@@ -98,7 +98,7 @@
               = I18n.t('patients.form.external_patient_system_tooltip')
         .fieldvalue
           = f.collection_select :external_system, ExternalSystem.all, :id, :name, prompt: I18n.t('forms.please_select')
-    
+
 
     .fieldrow#pphone
       .fieldlabel
@@ -108,7 +108,7 @@
             = I18n.t('patients.form.phone_tooltip')
       .fieldvalue
         = f.text_field :phone, :class => 'input-large'
-    
+
     - unless @patient.id.nil?
       .fieldrow#p
         .fieldlabel
@@ -119,13 +119,13 @@
         .fieldvalue
           .textblock
             = @patient.display_patient_id
- 
+
     %br{:clear => "both"}/
-  
+
   .whitebox
     .purpleheader
       %h3 ADDRESS DETAILS
-    
+
 
     .row.hideme
       .col.pe-2
@@ -137,7 +137,7 @@
         = f.text_field :entity_id, :class => 'input-large', readonly: !@patient.new_record?
 
 
-        
+
     - count = 0
     = f.fields_for :addresses do |addresses_form|
       - count = count + 1
@@ -160,10 +160,10 @@
 
       %br{:clear => "both"}/
       .row.button
-        %button.input-large#copy_addr 
+        %button.input-large#copy_addr
           = I18n.t('patients.form.copy_addr_button')
 
-            
+
     %br{:clear => "both"}/
 
 
