@@ -5,6 +5,6 @@ class InvitationMailer < ApplicationMailer
     @token = user.raw_invitation_token
     @message = message
 
-    mail(:to => @user.email, :subject => "Invitation to Connected Diagnostics")
+    mail(:to => @user.email, :subject => I18n.t("invitation_mailer.subject"))
   end
 end
