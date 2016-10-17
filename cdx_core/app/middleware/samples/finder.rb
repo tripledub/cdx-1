@@ -17,7 +17,7 @@ module Samples
 
 
       def as_json(json, sample)
-        json.(sample, :uuids, :entity_ids, :lab_sample_ids)
+        json.(sample, :uuids, :entity_ids, :cpd_id_samples)
         json.uuid sample.uuids[0]
       end
 

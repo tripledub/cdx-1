@@ -48,7 +48,7 @@ class DeviceMessage < ActiveRecord::Base
 
   def process
     Device.current = device
-    DeviceMessageProcessor.new(self).process
+    Importer::DeviceMessageProcessor.new(self).process
   rescue => e
     self.record_failure e
     self.save

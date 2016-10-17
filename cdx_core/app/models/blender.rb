@@ -553,8 +553,8 @@ class Blender
       @entities.map(&:entity_ids).flatten
     end
 
-    def lab_sample_ids
-      @entities.map(&:lab_sample_ids).flatten
+    def cpd_id_samples
+      @entities.map(&:cpd_id_samples).flatten
     end
 
     def merge_entity_id(entity_id)

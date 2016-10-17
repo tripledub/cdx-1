@@ -45,7 +45,7 @@ module Samples
           sample.institution = encounter.institution
           sample.patient = encounter.patient
           sample.sample_identifiers.new do |sample_identifier|
-            sample_identifier.lab_sample_id = sample_id
+            sample_identifier.cpd_id_sample = sample_id
           end
         end
 

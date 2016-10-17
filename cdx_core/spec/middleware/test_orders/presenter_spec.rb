@@ -16,10 +16,10 @@ describe TestOrders::Presenter do
     User.current = user
     encounter = Encounter.first
     sample = Sample.make encounter: encounter
-    SampleIdentifier.make(lab_sample_id: 'XF-999', sample: sample)
-    SampleIdentifier.make(lab_sample_id: 'XF-966', sample: sample)
-    SampleIdentifier.make(lab_sample_id: 'XF-977', sample: sample)
-    SampleIdentifier.make(lab_sample_id: 'XF-988', sample: sample)
+    SampleIdentifier.make(cpd_id_sample: 'XF-999', sample: sample)
+    SampleIdentifier.make(cpd_id_sample: 'XF-966', sample: sample)
+    SampleIdentifier.make(cpd_id_sample: 'XF-977', sample: sample)
+    SampleIdentifier.make(cpd_id_sample: 'XF-988', sample: sample)
     microscopy_result = MicroscopyResult.make encounter: encounter
     culture_result = CultureResult.make encounter: encounter
     xpert_result = XpertResult.make encounter: encounter

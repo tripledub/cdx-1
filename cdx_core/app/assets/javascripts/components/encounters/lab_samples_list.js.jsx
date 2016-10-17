@@ -17,8 +17,8 @@ var LabSamplesList = React.createClass({
 
 var LabSample = React.createClass({
   componentDidMount: function() {
-    this.props.sample.lab_sample_ids ?
-      React.findDOMNode(this.refs.manualLabSampleEntry).value = this.props.sample.lab_sample_ids[0] : null
+    this.props.sample.cpd_id_samples ?
+      React.findDOMNode(this.refs.manualLabSampleEntry).value = this.props.sample.cpd_id_samples[0] : null
   },
 
   addLabId: function () {
@@ -30,7 +30,7 @@ var LabSample = React.createClass({
     $.ajax({
       url: '/sample_identifiers/' + sampleId,
       type: 'PUT',
-      data: { sample_identifier: { lab_sample_id: labSampleId }, context: this.props.context.full_context },
+      data: { sample_identifier: { cpd_id_sample: labSampleId }, context: this.props.context.full_context },
       success: function(result) {
       }
     });
