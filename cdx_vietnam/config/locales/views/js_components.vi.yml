@@ -208,6 +208,7 @@
           col_test_order_status: "Trạng thái"
           col_title: "Tiêu đề"
           col_user: "Người dùng"
+          col_device: "Thiết bị"
           col_date: "Ngày thêm"
           msg_loading: "Đang tải nhật ký..."
           msg_no_log: "Không có nhật ký."
