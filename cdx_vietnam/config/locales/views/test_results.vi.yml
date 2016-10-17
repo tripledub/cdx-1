@@ -68,3 +68,7 @@ vi:
       tab_xpert: 'Xpert'
       tab_culture: 'Nuôi cấy'
       tab_dst_lpa: 'Dst_Lpa'
+      specimen_type:
+        sputum: "Đờm"
+        blood: "Máu"
+        other: "Khác"
