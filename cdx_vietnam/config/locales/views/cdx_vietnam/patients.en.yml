@@ -1,6 +1,8 @@
 en:
   patients:
     form:
-      social_security_code: 'CMND'
+      social_security_code: CMND
+      vitimes_id: Vitimes Log ID
+      vitimes_id_tooltip: Enter the Vitimes Log ID
       wrong_social_security_number: "Your input does not confirm to the validation criteria (Min 9 characters Max 15). Do you want to save anyway?"
       social_security_code_tooltip: "CMND (Min 9 characters Max 15)"
