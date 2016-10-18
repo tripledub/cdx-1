@@ -22,12 +22,14 @@ Capybara.javascript_driver = :poltergeist
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
+Dir[Rails.root.join("cdx_vietnam/app/middleware/**/*.rb")].each { |f| require f }
 require "#{Rails.root}/cdx_core/features/support/page_objects/cdx_page_helper.rb"
 require Rails.root.join("cdx_core/features/support/page_objects/tests_run.rb")
 require Rails.root.join("cdx_core/features/support/page_objects/file_input.rb")
-Dir[Rails.root.join("cdx_core/features/support/page_objects/*.rb")].each {|f| require f}
+Dir[Rails.root.join("cdx_core/features/support/page_objects/*.rb")].sort.each {|f| require f}
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 Dir[Rails.root.join("cdx_core/spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("cdx_vietnam/spec/support/**/*.rb")].each {|f| require f}
 
 WebMock.disable_net_connect!(:allow_localhost => true, allow: [/fonts\.googleapis\.com/, /manastech\.testrail\.com/])
 

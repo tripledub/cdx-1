@@ -36,7 +36,7 @@
         = f.collection_select :gender, Patient.gender_options, :first, :last
 
     .fieldrow#pcmdn
-      = react_component 'SocialSecurityCode', fieldValue: @patient.social_security_code
+      = react_component 'SocialSecurityCode', sscValue: @patient.social_security_code, skipValidationValue: @patient.skip_ssc_validation
 
     .fieldrow#pdob
       .fieldlabel

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161014124920) do
+ActiveRecord::Schema.define(version: 20161017140902) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -614,6 +614,7 @@ ActiveRecord::Schema.define(version: 20161014124920) do
     t.string   "external_id",             limit: 255
     t.string   "external_patient_system", limit: 255
     t.integer  "external_system_id",      limit: 4
+    t.boolean  "skip_ssc_validation",                   default: false
   end
 
   add_index "patients", ["birth_date_on"], name: "index_patients_on_birth_date_on", using: :btree
