@@ -70,6 +70,7 @@ vi:
       short: "%b %d"
       full_date: "%d/%m/%Y"
       etb_short: "%m/%d/%Y"
+      etb_long: "%Y-%m-%dT00:00:00.000Z"
     month_names:
     -
     - Tháng 1
