@@ -5,7 +5,7 @@ class Notification::Recipient < ActiveRecord::Base
   belongs_to :notification
 
   # Validations
-  validates :notification, presence: true
+  validates :notification, presence: true, on: :update
   validates :email,        presence: { if: :missing_telephone? }, format: { with: Devise.email_regexp }
   validates :telephone,    presence: { if: :missing_email? }
 

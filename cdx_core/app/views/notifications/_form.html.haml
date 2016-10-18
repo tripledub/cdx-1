@@ -3,14 +3,6 @@
 = bettertabs :static do |tab|
   = tab.only_content_block do
     .row
-      //.col.pe-2
-      .col
-        %div.tooltip
-          = form.check_box :enabled
-          = form.label :enabled, I18n.t('notifications.form.tooltip.enabled')
-      .col
-      //.col
-    .row
       .col.pe-2
         %div.tooltip
           = form.label :name
@@ -235,7 +227,7 @@
           %div.tooltiptext_r
             = I18n.t('notifications.form.tooltip.frequency')
       .col
-        = form.select :frequency, Notification::FREQUENCY_TYPES, {prompt: true}, { class: 'select2' }
+        = form.select :frequency, Notification::FREQUENCY_TYPES, { prompt: true }, { class: 'select2' }
     .row.frequency-options{:class => @notification.frequency == 'aggregate' ? '' : 'nodisplay'}
       .col.pe-2
         %div.tooltip
@@ -243,4 +235,12 @@
           %div.tooltiptext_r
             = I18n.t('notifications.form.tooltip.frequency_value')
       .col
-        = form.select :frequency_value, Notification::FREQUENCY_VALUES, {prompt: true}, { class: 'select2' }
+        = form.select :frequency_value, Notification::FREQUENCY_VALUES, { prompt: true }, { class: 'select2' }
+.row
+  //.col.pe-2
+  .col
+    %div.tooltip
+      = form.check_box :enabled
+      = form.label :enabled, I18n.t('notifications.form.tooltip.enabled')
+  .col
+  //.col

@@ -43,20 +43,21 @@ class Notification < ActiveRecord::Base
   has_many :notification_notices,    class_name: 'Notification::Notice'
 
   # Validations
-  validates :institution,     presence:  true
-  validates :user,            presence:  true
-  validates :patient,         presence:  { if: :on_patient }
-  validates :encounter,       presence:  { if: :on_test_order }
-  validates :name,            presence:  true
-  validates :frequency,       presence:  true
-  validates :email_message,   presence:  { if: :email }
-  validates :sms_message,     presence:  { if: :sms }
-  validates :anomaly_type,    inclusion: { in: Notification::ANOMALY_TYPES.map(&:last) },
-                              allow_nil: true, allow_blank: true
-  validates :frequency,       inclusion: { in: Notification::FREQUENCY_TYPES.map(&:last) }
-  validates :frequency_value, presence:  { if: :aggregate? },
-                              inclusion: { in: Notification::FREQUENCY_VALUES.map(&:last) },
-                              allow_nil: true, allow_blank: true
+  validates :institution,         presence:  true
+  validates :user,                presence:  true
+  validates :patient,             presence:  { if: :on_patient }
+  validates :encounter,           presence:  { if: :on_test_order }
+  validates :name,                presence:  true
+  validates :frequency,           presence:  true
+  validates :email_message,       presence:  { if: :email }
+  validates :sms_message,         presence:  { if: :sms }
+  validates :anomaly_type,        inclusion: { in: Notification::ANOMALY_TYPES.map(&:last) },
+                                  allow_nil: true, allow_blank: true
+  validates :frequency,           inclusion: { in: Notification::FREQUENCY_TYPES.map(&:last) }
+  validates :frequency_value,     presence:  { if: :aggregate? },
+                                  inclusion: { in: Notification::FREQUENCY_VALUES.map(&:last) },
+                                  allow_nil: true, allow_blank: true
+  validates :detection_condition, presence:  { if: :detection? }
   validate :validate_delivery_method
 
   alias_attribute :utilisation_efficiency_sample_identifier, :sample_identifier
@@ -82,6 +83,10 @@ class Notification < ActiveRecord::Base
 
   def on_test_order
     !(test_identifier.blank? && sample_identifier.blank?)
+  end
+
+  def detection?
+    !detection.blank?
   end
 
   def instant?
