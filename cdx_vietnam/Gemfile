@@ -55,6 +55,7 @@ gem 'sidekiq', '3.5.0'
 gem 'sinatra'
 gem 'sidekiq-cron', '~> 0.3.1'
 gem 'cdx_core', path: '../'
+gem 'activesupport-decorators', '~> 2.1'
 
 group :development do
   gem 'letter_opener'
@@ -82,7 +83,6 @@ group :development, :test do
 end
 
 group :test do
-  gem 'activesupport-decorators', '~> 2.1'
   gem 'machinist', '~> 1.0'
   gem 'capybara'
   gem 'database_cleaner'
@@ -93,5 +93,4 @@ group :test do
   gem 'capybara-screenshot'
   gem 'webmock', '1.21.0', require: false
   gem 'site_prism'
-  gem 'activesupport-decorators', '~> 2.1'
 end
