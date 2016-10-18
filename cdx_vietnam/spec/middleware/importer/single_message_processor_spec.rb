@@ -41,7 +41,7 @@ describe Importer::SingleMessageProcessor do
           "custom"=>{}
         },
         "custom"=> {
-          "xpert_notes"=>"CPDSAMPLE99999CPDSAMPLE"
+          "xpert_notes"=>"CDPSAMPLE99999CDPSAMPLE"
         }
       },
       "patient"=>{
