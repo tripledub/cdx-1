@@ -12,3 +12,13 @@ alert_sms_account_name: "CDx"
 alert_sms_application_name: "CDx-Dev"
 alert_sms_application_password: "cdx123cdx"
 alert_sms_from_tel: "sms://442393162302"
+
+# for the eTB/VTM scraper program
+etb_username: <%= ENV['ETB_USERNAME'] %>
+etb_password: <%= ENV['ETB_PASSWORD'] %>
+etb_endpoint: <%= ENV['ETB_ENDPOINT'] %>
+
+vtm_username: <%= ENV['VTM_USERNAME'] %>
+vtm_password: <%= ENV['VTM_PASSWORD'] %>
+vtm_endpoint: <%= ENV['VTM_ENDPOINT'] %>
+

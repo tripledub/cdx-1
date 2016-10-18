@@ -25,7 +25,7 @@ Capybara.javascript_driver = :poltergeist
 require "#{Rails.root}/cdx_core/features/support/page_objects/cdx_page_helper.rb"
 require Rails.root.join("cdx_core/features/support/page_objects/tests_run.rb")
 require Rails.root.join("cdx_core/features/support/page_objects/file_input.rb")
-Dir[Rails.root.join("cdx_core/features/support/page_objects/*.rb")].each {|f| require f}
+Dir[Rails.root.join("cdx_core/features/support/page_objects/*.rb")].sort.each {|f| require f}
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 Dir[Rails.root.join("cdx_core/spec/support/**/*.rb")].each {|f| require f}
 
