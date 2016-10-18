@@ -105,8 +105,8 @@ module Integration
         get(patient_list_page_url)
 
         params.merge!({
-          'ngayKhamBenh' => DateTime.strptime(params['diagnosis_date'], '%m/%d/%Y').strftime('%Y-%m-%dT00:00:00.000Z'),
-          'strngayKhamBenh' => DateTime.strptime(params['diagnosis_date'], '%m/%d/%Y').strftime('%d/%m/%Y 00:00:00')
+          'ngayKhamBenh' => Extras::Date::Format.datetime_with_time_zone(DateTime.strptime(params['diagnosis_date'], '%m/%d/%Y'), :etb_long),
+          'strngayKhamBenh' => Extras::Date::Format.datetime_with_time_zone(DateTime.strptime(params['diagnosis_date'], '%m/%d/%Y'), :etb_short)
         })
         
         create_patient_url = uri('api/sokhambenh/SaveSKB')
