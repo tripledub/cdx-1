@@ -25,7 +25,7 @@ describe MicroscopyResults::Presenter do
         sampleCollectedOn: Extras::Dates::Format.datetime_with_time_zone(MicroscopyResult.first.sample_collected_on),
         examinedBy:        MicroscopyResult.first.examined_by,
         resultOn:          Extras::Dates::Format.datetime_with_time_zone(MicroscopyResult.first.result_on),
-        specimenType:      MicroscopyResult.first.specimen_type,
+        specimenType:      MicroscopyResult.first.specimen_type.blank? ? "" : I18n.t("test_results.index.specimen_type.#{MicroscopyResult.first.specimen_type}"),
         serialNumber:      MicroscopyResult.first.serial_number,
         testResult:        Extras::Select.find(MicroscopyResult.test_result_options, MicroscopyResult.first.test_result),
         appearance:        Extras::Select.find(MicroscopyResult.visual_appearance_options, MicroscopyResult.first.appearance),
