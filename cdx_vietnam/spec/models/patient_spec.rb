@@ -42,4 +42,23 @@ RSpec.describe Patient, type: :model do
       end
     end
   end
+
+  describe '#vitimes_id' do
+    context 'is added to #custom_fields' do
+      let(:patient) { Patient.make(vitimes_id: '12345') }
+      before { patient.reload }
+      it { expect(patient.custom_fields['vitimes_id']).to eq('12345') }
+    end
+
+    context 'is removed from #custom_fields' do
+      let(:patient) { Patient.make(vitimes_id: '12345') }
+      before {
+        patient.reload
+        patient.vitimes_id = nil
+        patient.save
+        patient.reload
+      }
+      it { expect(patient.custom_fields['vitimes_id']).to eq(nil) }
+    end
+  end
 end

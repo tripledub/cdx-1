@@ -12,4 +12,12 @@ class Patient < ActiveRecord::Base
       ['female', I18n.t('select.patient.gender_options.female')]
     ]
   end
+
+  def vitimes_id
+    custom_fields['vitimes_id']
+  end
+
+  def vitimes_id=(value)
+    custom_fields['vitimes_id'] = value
+  end
 end
