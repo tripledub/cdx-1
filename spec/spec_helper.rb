@@ -28,6 +28,7 @@ require Rails.root.join("cdx_core/features/support/page_objects/file_input.rb")
 Dir[Rails.root.join("cdx_core/features/support/page_objects/*.rb")].sort.each {|f| require f}
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 Dir[Rails.root.join("cdx_core/spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join("cdx_vietnam/spec/support/**/*.rb")].each {|f| require f}
 
 WebMock.disable_net_connect!(:allow_localhost => true, allow: [/fonts\.googleapis\.com/, /manastech\.testrail\.com/])
 
