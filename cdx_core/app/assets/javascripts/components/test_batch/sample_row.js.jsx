@@ -4,6 +4,11 @@ class SampleRow extends React.Component{
     return parseInt(batchNumber) * 1000 + (this.props.elementId + 1);
   }
 
+  componentDidMount() {
+    let inputName = 'sampleInput' + this.props.elementId;
+    $( "." + inputName ).focus();
+  }
+
   render(){
     return(
       <div className="row">
@@ -12,8 +17,8 @@ class SampleRow extends React.Component{
         </div>
         <div className="col-6">
           { this.props.manualSampleId ?
-            <input type="text" ref={ 'sampleInput' + this.props.elementId } name={ 'samples['+this.props.elementId+']' } /> :
-            <input type="text" readOnly ref={ 'sampleInput' + this.props.elementId } name={ 'samples['+this.props.elementId+']' } value={ this.automaticSampleId() }/> }
+            <input type="text" className={ 'sampleInput' + this.props.elementId } name={ 'samples['+this.props.elementId+']' } /> :
+            <input type="text" readOnly  name={ 'samples['+this.props.elementId+']' } value={ this.automaticSampleId() }/> }
         </div>
       </div>
     )

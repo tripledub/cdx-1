@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe DeviceMessageProcessor, elasticsearch: true do
+describe Importer::DeviceMessageProcessor, elasticsearch: true do
   TEST_ID   = "4"
   TEST_ID_2 = "5"
   TEST_ID_3 = "6"
@@ -89,7 +89,7 @@ describe DeviceMessageProcessor, elasticsearch: true do
     device_message
   end
 
-  let(:device_message_processor) {DeviceMessageProcessor.new(device_message)}
+  let(:device_message_processor) {described_class.new(device_message)}
 
   def assert_sample_data(sample)
     expect(sample.plain_sensitive_data).to eq(SAMPLE_PII_FIELDS)
@@ -484,7 +484,7 @@ describe DeviceMessageProcessor, elasticsearch: true do
 
     it "should store all parsed data" do
       device_message_processor.process
-      DeviceMessageProcessor.new(device_message).process
+      described_class.new(device_message).process
 
       expect(TestResult.count).to eq(1)
       test = TestResult.first

@@ -46,8 +46,8 @@ class Sample < ActiveRecord::Base
     self.sample_identifiers.map(&:entity_id)
   end
 
-  def lab_sample_ids
-    self.sample_identifiers.map(&:lab_sample_id)
+  def cpd_id_samples
+    self.sample_identifiers.map(&:cpd_id_sample)
   end
 
   def uuids

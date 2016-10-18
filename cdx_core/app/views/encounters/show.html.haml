@@ -29,6 +29,6 @@
 - content_for(:print_content) do
   - if @encounter.has_sample_ids?
     .row.center
-      = sample_id_barcode(@encounter.samples.first.sample_identifiers.first.lab_sample_id)
+      = sample_id_barcode(@encounter.samples.first.sample_identifiers.first.cpd_id_sample)
     .row.center
-      = @encounter.samples.first.sample_identifiers.first.lab_sample_id
+      = "CDPSAMPLE#{@encounter.samples.first.sample_identifiers.first.cpd_id_sample}CDPSAMPLE"

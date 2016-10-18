@@ -9,7 +9,7 @@ describe Samples::Persistence do
   let(:microscopy_result) { MicroscopyResult.make encounter: encounter }
   let(:culture_result)    { CultureResult.make encounter: encounter }
   let(:feedback_message)  { FeedbackMessage.make institution: institution }
-  let(:sample_identifier) { SampleIdentifier.make lab_sample_id: '8778' }
+  let(:sample_identifier) { SampleIdentifier.make cpd_id_sample: '8778' }
   let(:sample_ids)        { ['8778', 'Random Id'] }
 
   before :each do
@@ -24,11 +24,11 @@ describe Samples::Persistence do
       end
 
       it 'should populate serial number with lab Id.' do
-        expect(encounter.samples.first.sample_identifiers.first.lab_sample_id).to eq('8778')
+        expect(encounter.samples.first.sample_identifiers.first.cpd_id_sample).to eq('8778')
       end
 
       it 'should populate serial number with lab Id.' do
-        expect(encounter.samples.last.sample_identifiers.first.lab_sample_id).to eq('Random Id')
+        expect(encounter.samples.last.sample_identifiers.first.cpd_id_sample).to eq('Random Id')
       end
 
       it 'should update encounter status to samples collected' do
@@ -43,7 +43,7 @@ describe Samples::Persistence do
       end
 
       it 'should create a new sample id' do
-        expect(SampleIdentifier.where('lab_sample_id = ?', '8778').count).to eq(2)
+        expect(SampleIdentifier.where('cpd_id_sample = ?', '8778').count).to eq(2)
       end
     end
   end
