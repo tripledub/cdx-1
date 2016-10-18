@@ -12,7 +12,7 @@ module Notifications
     end
 
     def sample_identifier_ids
-      SampleIdentifier.includes(:sample => :encounter).where(encounters: { id: alertable.id }).pluck(:lab_sample_id)
+      SampleIdentifier.includes(:sample => :encounter).where(encounters: { id: alertable.id }).pluck(:cpd_id_sample)
     end
 
     def self.prepare_notifications(record_id, changed_attributes = {})

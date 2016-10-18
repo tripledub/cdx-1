@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161012225339) do
+ActiveRecord::Schema.define(version: 20161017075019) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -565,8 +565,8 @@ ActiveRecord::Schema.define(version: 20161012225339) do
     t.string   "anomaly_type",                           limit: 255
     t.integer  "utilisation_efficiency_threshold",       limit: 4
     t.datetime "utilisation_efficiency_last_checked_at"
-    t.string   "frequency",                              limit: 255,   default: "instant"
-    t.string   "frequency_value",                        limit: 255
+    t.string   "frequency",                              limit: 255,   default: "aggregate"
+    t.string   "frequency_value",                        limit: 255,   default: "daily"
     t.boolean  "email",                                                default: false
     t.text     "email_message",                          limit: 65535
     t.integer  "email_limit",                            limit: 4,     default: 100
@@ -809,12 +809,12 @@ ActiveRecord::Schema.define(version: 20161012225339) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "lab_sample_id", limit: 255
+    t.string   "cpd_id_sample", limit: 255
   end
 
+  add_index "sample_identifiers", ["cpd_id_sample"], name: "index_sample_identifiers_on_cpd_id_sample", using: :btree
   add_index "sample_identifiers", ["deleted_at"], name: "index_sample_identifiers_on_deleted_at", using: :btree
   add_index "sample_identifiers", ["entity_id"], name: "index_sample_identifiers_on_entity_id", using: :btree
-  add_index "sample_identifiers", ["lab_sample_id"], name: "index_sample_identifiers_on_lab_sample_id", using: :btree
   add_index "sample_identifiers", ["sample_id"], name: "index_sample_identifiers_on_sample_id", using: :btree
   add_index "sample_identifiers", ["uuid"], name: "index_sample_identifiers_on_uuid", unique: true, using: :btree
 

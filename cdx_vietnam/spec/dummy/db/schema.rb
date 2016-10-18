@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161003143025) do
+ActiveRecord::Schema.define(version: 20161017075019) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -158,8 +158,10 @@ ActiveRecord::Schema.define(version: 20161003143025) do
     t.integer  "encounter_id",      limit: 4
     t.integer  "requested_test_id", limit: 4
     t.integer  "patient_result_id", limit: 4
+    t.integer  "device_id",         limit: 4
   end
 
+  add_index "audit_logs", ["device_id"], name: "index_audit_logs_on_device_id", using: :btree
   add_index "audit_logs", ["encounter_id"], name: "fk_rails_242face86a", using: :btree
   add_index "audit_logs", ["patient_id"], name: "index_audit_logs_on_patient_id", using: :btree
   add_index "audit_logs", ["patient_result_id"], name: "fk_rails_2fc931c99d", using: :btree
@@ -323,38 +325,40 @@ ActiveRecord::Schema.define(version: 20161003143025) do
   add_index "devices", ["deleted_at"], name: "index_devices_on_deleted_at", using: :btree
 
   create_table "encounters", force: :cascade do |t|
-    t.integer  "institution_id",     limit: 4
-    t.integer  "patient_id",         limit: 4
-    t.string   "uuid",               limit: 255
-    t.string   "entity_id",          limit: 255
-    t.binary   "sensitive_data",     limit: 65535
-    t.text     "custom_fields",      limit: 65535
-    t.text     "core_fields",        limit: 65535
+    t.integer  "institution_id",      limit: 4
+    t.integer  "patient_id",          limit: 4
+    t.string   "uuid",                limit: 255
+    t.string   "entity_id",           limit: 255
+    t.binary   "sensitive_data",      limit: 65535
+    t.text     "custom_fields",       limit: 65535
+    t.text     "core_fields",         limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_phantom",                       default: true
+    t.boolean  "is_phantom",                        default: true
     t.datetime "deleted_at"
-    t.integer  "site_id",            limit: 4
+    t.integer  "site_id",             limit: 4
     t.datetime "user_updated_at"
-    t.string   "site_prefix",        limit: 255
+    t.string   "site_prefix",         limit: 255
     t.datetime "start_time"
-    t.integer  "user_id",            limit: 4
-    t.string   "exam_reason",        limit: 255
-    t.string   "tests_requested",    limit: 255
-    t.string   "coll_sample_type",   limit: 255
-    t.string   "coll_sample_other",  limit: 255
-    t.string   "diag_comment",       limit: 255
+    t.integer  "user_id",             limit: 4
+    t.string   "exam_reason",         limit: 255
+    t.string   "tests_requested",     limit: 255
+    t.string   "coll_sample_type",    limit: 255
+    t.string   "coll_sample_other",   limit: 255
+    t.string   "diag_comment",        limit: 255
     t.date     "testdue_date"
-    t.integer  "treatment_weeks",    limit: 4
-    t.integer  "performing_site_id", limit: 4
-    t.string   "status",             limit: 255
-    t.string   "testing_for",        limit: 255,   default: ""
-    t.string   "culture_format",     limit: 255
+    t.integer  "treatment_weeks",     limit: 4
+    t.integer  "performing_site_id",  limit: 4
+    t.string   "status",              limit: 255
+    t.string   "testing_for",         limit: 255,   default: ""
+    t.string   "culture_format",      limit: 255
     t.boolean  "presumptive_rr"
-    t.boolean  "payment_done",                     default: false
+    t.string   "comment",             limit: 255,   default: ""
+    t.integer  "feedback_message_id", limit: 4
   end
 
   add_index "encounters", ["deleted_at"], name: "index_encounters_on_deleted_at", using: :btree
+  add_index "encounters", ["feedback_message_id"], name: "index_encounters_on_feedback_message_id", using: :btree
   add_index "encounters", ["performing_site_id"], name: "index_encounters_on_performing_site_id", using: :btree
   add_index "encounters", ["site_id"], name: "index_encounters_on_site_id", using: :btree
   add_index "encounters", ["status"], name: "index_encounters_on_status", using: :btree
@@ -377,6 +381,13 @@ ActiveRecord::Schema.define(version: 20161003143025) do
   end
 
   add_index "episodes", ["patient_id"], name: "index_episodes_on_patient_id", using: :btree
+
+  create_table "external_systems", force: :cascade do |t|
+    t.string   "prefix",     limit: 255
+    t.string   "name",       limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "feedback_messages", force: :cascade do |t|
     t.integer  "institution_id", limit: 4,   null: false
@@ -458,12 +469,48 @@ ActiveRecord::Schema.define(version: 20161003143025) do
     t.datetime "updated_at"
   end
 
+  create_table "notification_notice_groups", force: :cascade do |t|
+    t.text     "email_data",      limit: 65535
+    t.text     "telephone_data",  limit: 65535
+    t.string   "status",          limit: 255,   default: "pending"
+    t.string   "frequency",       limit: 255
+    t.string   "frequency_value", limit: 255
+    t.datetime "triggered_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "institution_id",  limit: 4
+  end
+
+  create_table "notification_notice_recipients", force: :cascade do |t|
+    t.integer  "notification_id",        limit: 4
+    t.integer  "notification_notice_id", limit: 4
+    t.string   "first_name",             limit: 255
+    t.string   "last_name",              limit: 255
+    t.string   "email",                  limit: 255
+    t.string   "telephone",              limit: 255
+    t.string   "status",                 limit: 255, default: "pending"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notification_notices", force: :cascade do |t|
+    t.integer  "notification_id",              limit: 4
+    t.string   "alertable_type",               limit: 255
+    t.integer  "alertable_id",                 limit: 4
+    t.text     "data",                         limit: 65535
+    t.string   "status",                       limit: 255,   default: "pending"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "notification_notice_group_id", limit: 4
+  end
+
   create_table "notification_recipients", force: :cascade do |t|
     t.integer  "notification_id", limit: 4
     t.string   "first_name",      limit: 255
     t.string   "last_name",       limit: 255
-    t.string   "email_address",   limit: 255
-    t.string   "phone_number",    limit: 255
+    t.string   "email",           limit: 255
+    t.string   "telephone",       limit: 255
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -503,7 +550,9 @@ ActiveRecord::Schema.define(version: 20161003143025) do
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "institution_id",                         limit: 4
-    t.integer  "test_order_id",                          limit: 4
+    t.integer  "encounter_id",                           limit: 4
+    t.integer  "user_id",                                limit: 4
+    t.integer  "patient_id",                             limit: 4
     t.string   "name",                                   limit: 255
     t.string   "description",                            limit: 255
     t.boolean  "enabled",                                              default: false
@@ -516,20 +565,21 @@ ActiveRecord::Schema.define(version: 20161003143025) do
     t.string   "anomaly_type",                           limit: 255
     t.integer  "utilisation_efficiency_threshold",       limit: 4
     t.datetime "utilisation_efficiency_last_checked_at"
-    t.string   "frequency",                              limit: 255,   default: "instant"
-    t.string   "frequency_value",                        limit: 255
+    t.string   "frequency",                              limit: 255,   default: "aggregate"
+    t.string   "frequency_value",                        limit: 255,   default: "daily"
     t.boolean  "email",                                                default: false
     t.text     "email_message",                          limit: 65535
     t.integer  "email_limit",                            limit: 4,     default: 100
     t.boolean  "sms",                                                  default: false
     t.text     "sms_message",                            limit: 65535
     t.integer  "sms_limit",                              limit: 4,     default: 100
+    t.integer  "site_id",                                limit: 4
+    t.string   "site_prefix",                            limit: 255
     t.datetime "last_notification_at"
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "site_id",                                limit: 4
-    t.string   "site_prefix",                            limit: 255
+    t.string   "detection_quantitative_result",          limit: 255
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
@@ -684,10 +734,12 @@ ActiveRecord::Schema.define(version: 20161003143025) do
     t.string   "medical_insurance_num",   limit: 255
     t.string   "external_id",             limit: 255
     t.string   "external_patient_system", limit: 255
+    t.integer  "external_system_id",      limit: 4
   end
 
   add_index "patients", ["birth_date_on"], name: "index_patients_on_birth_date_on", using: :btree
   add_index "patients", ["deleted_at"], name: "index_patients_on_deleted_at", using: :btree
+  add_index "patients", ["external_system_id"], name: "index_patients_on_external_system_id", using: :btree
   add_index "patients", ["institution_id"], name: "index_patients_on_institution_id", using: :btree
   add_index "patients", ["site_id"], name: "index_patients_on_site_id", using: :btree
 
@@ -750,16 +802,19 @@ ActiveRecord::Schema.define(version: 20161003143025) do
   end
 
   create_table "sample_identifiers", force: :cascade do |t|
-    t.integer  "sample_id",     limit: 4
-    t.string   "entity_id",     limit: 255
-    t.string   "uuid",          limit: 255
-    t.integer  "site_id",       limit: 4
+    t.integer  "sample_id",      limit: 4
+    t.string   "entity_id",      limit: 255
+    t.string   "uuid",           limit: 255
+    t.integer  "site_id",        limit: 4
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "lab_sample_id", limit: 255
+    t.string   "cpd_id_sample",  limit: 255
+    t.string   "lab_id_sample",  limit: 255
+    t.string   "lab_id_patient", limit: 255
   end
 
+  add_index "sample_identifiers", ["cpd_id_sample"], name: "index_sample_identifiers_on_cpd_id_sample", using: :btree
   add_index "sample_identifiers", ["deleted_at"], name: "index_sample_identifiers_on_deleted_at", using: :btree
   add_index "sample_identifiers", ["entity_id"], name: "index_sample_identifiers_on_entity_id", using: :btree
   add_index "sample_identifiers", ["sample_id"], name: "index_sample_identifiers_on_sample_id", using: :btree

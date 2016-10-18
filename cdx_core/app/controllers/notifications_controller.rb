@@ -5,6 +5,8 @@ class NotificationsController < ApplicationController
   def index
     @notifications = @navigation_context.institution.notifications
 
+    @can_create = has_access?(Alert, CREATE_ALERT)
+
     @total = @notifications.count
     order_by, offset = perform_pagination('notifications.last_notification_at')
 
@@ -30,6 +32,7 @@ class NotificationsController < ApplicationController
 
   def create
     @notification = @navigation_context.institution.notifications.build(notification_params)
+    @notification.user = current_user
 
     if @notification.save
       redirect_to([:edit, @notification], notice: I18n.t('notifications.flash.create_success'))

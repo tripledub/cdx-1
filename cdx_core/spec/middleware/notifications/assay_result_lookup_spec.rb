@@ -13,10 +13,10 @@ describe Notifications::AssayResultLookup do
   let!(:notification_on_other_institution) { Notification.make(name: 'Other Patient & encounter alert', institution: other_patient.institution, encounter: encounter_other_patient, patient: other_patient) }
   let!(:notification_on_site)              { Notification.make(name: 'Site alert', institution: patient.institution, site_ids: [test_result.device.site.id]) }
 
-  let!(:notification_on_detected_mtb)      { Notification.make(name: 'd mtb', institution: patient.institution, detection: 'mtb') }
-  let!(:notification_on_detected_rif)      { Notification.make(name: 'd rif', institution: patient.institution, detection: 'rif') }
+  let!(:notification_on_detected_mtb)      { Notification.make(name: 'Checking for mtb', institution: patient.institution, detection: 'mtb', detection_condition: 'positive') }
+  let!(:notification_on_detected_rif)      { Notification.make(name: 'Detected rif', institution: patient.institution, detection: 'rif', detection_condition: 'positive') }
 
-  let!(:notification_on_detected_mtb_negative) { Notification.make(name: 'd mtb-', institution: patient.institution, detection: 'mtb', detection_condition: 'negative') }
+  let!(:notification_on_detected_mtb_negative) { Notification.make(name: 'Detected mtb-', institution: patient.institution, detection: 'mtb', detection_condition: 'negative') }
   let!(:notification_on_detected_rif_negative) { Notification.make(name: 'd rif-', institution: patient.institution, detection: 'rif', detection_condition: 'negative') }
   let!(:notification_on_detected_mtb_high)     { Notification.make(name: 'd mtb h', institution: patient.institution, detection: 'mtb', detection_condition: 'positive', detection_quantitative_result: 'HIGH') }
 
@@ -38,7 +38,7 @@ describe Notifications::AssayResultLookup do
         @lookup.check_notifications
       end
 
-      it { expect(@lookup.notifications.size).to eq(4) }
+      it { expect(@lookup.notifications.size).to eq(3) }
     end
 
     context 'when mtb \'HIGH\' is detected' do
