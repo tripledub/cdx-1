@@ -39,20 +39,6 @@ var RequestedTests = React.createClass({
               <label htmlFor="requested_xpertmtb">{I18n.t("components.encounters.lbl_xpert_mtb")}</label>
             </li>
             <li>
-              <input type="checkbox" onChange={this.reqtestsChange} className="test_for_tb culture" id="requested_culture"/>
-              <label htmlFor="requested_culture">{I18n.t("components.encounters.lbl_culture")}</label>
-              <ul className="cformatIndented" id="culture_cultformat_section">
-                <li>
-                  <input data-parent-target='requested_culture' type="checkbox" onChange={this.reqtestsChange} className="cultureformat" id="culture_cformat_liquid" name="culture_cformat_liquid"/>
-                  <label htmlFor="culture_cformat_liquid">{I18n.t("components.encounters.lbl_liquid_culture")}</label>
-                </li>
-                <li>
-                  <input data-parent-target='requested_culture' type="checkbox" onChange={this.reqtestsChange} className="cultureformat" id="culture_cformat_solid" name="culture_cformat_solid"/>
-                  <label htmlFor="culture_cformat_solid">{I18n.t("components.encounters.lbl_solid_culture")}</label>
-                </li>
-              </ul>
-            </li>
-            <li>
               <input type="checkbox" onChange={this.reqtestsChange} name="cd4" className="test_for_hiv" id="requested_cd4"/>
               <label htmlFor="requested_cd4">{I18n.t("components.encounters.lbl_cd4_count")}</label>
             </li>
