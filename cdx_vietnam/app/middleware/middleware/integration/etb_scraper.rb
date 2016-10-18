@@ -7,10 +7,11 @@
 require 'mechanize'
 require 'json'
 require 'time'
+require_relative 'cdp_scraper'
 
 module Integration
   module CdpScraper
-    class EtbScraper < Base
+    class EtbScraper < Integration::CdpScraper::Base
       # Get authenticated using the provided credentials
       # After logged in, the session's cookie will be used for subsequent requests
       def login
