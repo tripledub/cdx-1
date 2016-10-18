@@ -18,7 +18,7 @@ class IntegrationLogsController < ApplicationController
   def retry
     log = IntegrationLog.where(id: params[:id], status: ["In progress", "Error"]).first
     if log
-      RetryJob.perform_later()
+      RetryJob.perform_later(log.id)
       render json: {success: true}
     else
       render json: {success: false}
