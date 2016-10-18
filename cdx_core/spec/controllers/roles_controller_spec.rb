@@ -2,18 +2,17 @@ require 'spec_helper'
 require 'policy_spec_helper'
 
 describe RolesController do
+  let!(:institution)   { Institution.make }
+  let!(:user)          { institution.user }
+  let!(:site)          { Site.make institution: institution }
+  let!(:institution2)  { Institution.make }
+  let(:default_params) { { context: institution.uuid } }
 
-  let!(:institution) {Institution.make}
-  let!(:user)        {institution.user}
-  let!(:site)        {Site.make institution: institution}
+  before :each do
+    sign_in user
+  end
 
-  let!(:institution2) { Institution.make }
-
-  before(:each) {sign_in user}
-  let(:default_params) { {context: institution.uuid} }
-
-  context "create" do
-
+  describe "create" do
     it "should infer the institution from current context" do
       expect {
         post :create, role: {
@@ -52,7 +51,7 @@ describe RolesController do
 
   end
 
-  context "update" do
+  describe "update" do
     let!(:role) { Role.make institution: institution }
     let!(:initial_action) { role.policy.definition["statement"][0]["action"][0] }
 
@@ -114,10 +113,35 @@ describe RolesController do
     end
   end
 
-  context "authorizations" do
+  describe 'delete' do
+    let(:role) { Role.make institution: institution, name: 'Laboratory' }
 
+    context 'user with permission' do
+      context 'role is institution reader' do
+        before :each do
+          role = Role.where(name: "Institution #{institution.name} Reader").first
+          delete :destroy, id: role.id
+        end
+
+        it 'should not delete the role' do
+          expect(Role.where(id: role.id).first).to eq(role)
+        end
+      end
+
+      context 'role is not institution reader' do
+        before :each do
+          delete :destroy, id: role.id
+        end
+
+        it 'should delete the role' do
+          expect(Role.where(id: role.id).first).to be(nil)
+        end
+      end
+    end
+  end
+
+  describe "authorizations" do
     let(:grantee) { User.make }
-
     let!(:site)  { Site.make(institution: institution) }
     let!(:site2) { Site.make(institution: institution2) }
     let!(:device) { Device.make(site: site, institution: institution) }
@@ -168,7 +192,5 @@ describe RolesController do
       assert_cannot grantee, device2, 'device:read'
       assert_can grantee, device, 'device:read'
     end
-
   end
-
 end

@@ -13,7 +13,10 @@ module XpertResults
       def valid_gene_xpert_result_and_sample?(device, parsed_message)
         return false unless device.model_is_gen_expert?
 
-        sample_identifier = SampleIdentifiers::Finder.find_first_sample_available(sample_id_from_parsed_message(parsed_message['sample']))
+        sample_id = sample_id_from_parsed_message(parsed_message['sample'])
+        return false unless sample_id
+
+        sample_identifier = SampleIdentifiers::Finder.find_first_sample_available(sample_id)
         return false unless sample_identifier
 
         xpert_result = XpertResults::Finder.available_test(sample_identifier.sample.encounter)

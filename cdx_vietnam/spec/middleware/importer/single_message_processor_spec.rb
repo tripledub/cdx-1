@@ -1,8 +1,12 @@
 require 'spec_helper'
 
 describe Importer::SingleMessageProcessor do
-  let(:device_message) { DeviceMessage.make }
+  let(:encounter)                { Encounter.make }
+  let(:device_message)           { DeviceMessage.make }
   let(:device_message_processor) { Importer::DeviceMessageProcessor.new(device_message) }
+  let(:sample)                   { Sample.make encounter: encounter }
+  let!(:sample_identifier)       { SampleIdentifier.make cpd_id_sample: '99999', sample: sample }
+  let(:xpert_result)             { XpertResult.make encounter: encounter }
   let(:parsed_message) do
     {
       "test"=>{
@@ -41,7 +45,7 @@ describe Importer::SingleMessageProcessor do
           "custom"=>{}
         },
         "custom"=> {
-          "xpert_notes"=>"CPDSAMPLE99999CPDSAMPLE"
+          "xpert_notes"=>"CDPSAMPLE99999CDPSAMPLE"
         }
       },
       "patient"=>{
@@ -62,12 +66,33 @@ describe Importer::SingleMessageProcessor do
   end
 
   describe 'process' do
-    subject { described_class.new(device_message_processor, parsed_message) }
-
     it 'should call the vietnam importer' do
       expect(XpertResults::VietnamImporter).to receive(:valid_gene_xpert_result_and_sample?)
 
-      subject.process
+      described_class.new(device_message_processor, parsed_message).process
+    end
+
+    context 'when there is a valid sample id' do
+      it 'should call the linker' do
+        xpert_result.update_attribute(:result_status, 'allocated')
+        Device.any_instance.stub(:model_is_gen_expert?).and_return(true)
+        expect(XpertResults::VietnamImporter).to receive(:link_xpert_result)
+
+        described_class.new(device_message_processor, parsed_message).process
+      end
+    end
+
+    context 'when there is not an available sample id and a test result' do
+      before :each do
+        xpert_result.update_attribute(:result_status, 'allocated')
+        parsed_message['sample']['custom']['xpert_notes'] = ''
+        Device.any_instance.stub(:model_is_gen_expert?).and_return(true)
+        described_class.new(device_message_processor, parsed_message).process
+      end
+
+      it 'should generate an orphan result' do
+        expect(TestResult.count).to eq(1)
+      end
     end
   end
 end

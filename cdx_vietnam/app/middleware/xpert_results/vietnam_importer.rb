@@ -12,7 +12,7 @@ module XpertResults
 
       def sample_id_from_parsed_message(sample_data)
         notes = sample_data['custom']['xpert_notes']
-        any_match = notes.match(/CPDSAMPLE(.*)CPDSAMPLE/)
+        any_match = notes.match(/CDPSAMPLE(.*)CDPSAMPLE/)
         any_match ? any_match[1] : nil
       end
 
