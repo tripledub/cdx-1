@@ -101,7 +101,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
                 <select className="input-large" id="coll_sample_type" name="coll_sample_type" onChange={this.sample_type_change} datavalue={this.state.encounter.coll_sample_type}>
                   <option value="">{I18n.t("components.fresh_tests_encounter_form.please_select_option")}</option>
                   <option value="sputum">{I18n.t("components.fresh_tests_encounter_form.sputum_option")}</option>
-                  <option value="blood">{I18n.t("components.fresh_tests_encounter_form.blood_option")}</option>
                   <option value="other">{I18n.t("components.fresh_tests_encounter_form.other_option")}</option>
                 </select>
               </label>
