@@ -11,6 +11,7 @@ module CdxVietnam
         @patient_result = patient_result
         @encounter = patient_result.encounter
         @patient = @encounter.patient
+        @espisode = @encounter.patient.espisodes.last
       end
 
       def create_patient
@@ -39,14 +40,14 @@ module CdxVietnam
             registration_region: 'MIỀN BẮC', # OK hard-coded
             registration_province: 'Hà Nội', # OK hard-coded
             registraiton_district: 'Cầu Giấy', # OK hard-coded
-            located_at_different_address: 'FALSE', # @TODO: nếu patient.addresses[1].address ==  patient.addresses[0].address --> TRUE, otherwise FALSE 
+            located_at_different_address: located_at_different_address, # @TODO: nếu patient.addresses[1].address ==  patient.addresses[0].address --> TRUE, otherwise FALSE 
             current_address: patient.addresses[0].address, # lấy dòng đầu tiên của PERMANENT ADDRESS
             healthcare_unit_location: 'Miền Nam', # OK
             healthcare_unit_name: 'Quận 1', # OK
-            healthcare_unit_registration_date: '10/01/2016', # @TODO, ngày tạo patient
+            healthcare_unit_registration_date: Extras::Dates::Format.datetime_with_time_zone(patient.created_at, I18n.t('date.formats.etb_short')), # ngày tạo patient
             suspect_mdr_case_type: "VN_SPT_FAILED_CAT_II",
             diagnosis_date: diagnosis_date, 
-            tb_drug_resistance_type: 'RIF_RESISTANCE', # @TODO, LIST VALUE
+            tb_drug_resistance_type: tb_drug_resistance_type, # LIST VALUE
             registration_group: "VN_2015_NEW", # @TODO
             site_of_disease: "PULMONARY", # @TODO
             number_of_previous_tb_treatment: '0',
@@ -62,6 +63,14 @@ module CdxVietnam
 
       private
 
+      def located_at_different_address
+        if patient.addresses[1].address ==  patient.addresses[0].address
+          'TRUE'
+        else
+          'FALSE'
+        end
+      end
+
       def test_order
         test_order_to_send = patient_result # @TODO, get test order result should be send, which test order result will be choice? Can trigger with test order instead of patient.
         order_type = get_order_type(test_order_to_send.result_name)
@@ -75,7 +84,7 @@ module CdxVietnam
             laboratory_serial_number: 'N3432',# @TODO, cdp not have this field
             laboratory_region: 'MIỀN BẮC', # OK - HARD CODE
             laboratory_name: 'LAB - HƯNG YÊN', # OK - HARD CODE
-            date_of_release: test_order_to_send.sample_collected_on.strftime('%m/%d/%Y'), # @TODO
+            date_of_release: Extras::Dates::Format.datetime_with_time_zone(test_order_to_send.sample_collected_on, I18n.t('date.formats.etb_short')), 
             result: 2, # @TODO, make sure list value, result of cdp not suitable with eTB
             comment: test_order_to_send.comment
           }
@@ -84,7 +93,7 @@ module CdxVietnam
             type: get_order_type(test_order_to_send.result_name), # @TODO
             order_id: encounter.batch_id.to_s, # @TODO
             cdp_order_id: patient_result.id.to_s,
-            sample_collected_date: test_order_to_send.sample_collected_on.strftime('%m/%d/%Y'), # @TODO
+            sample_collected_date: Extras::Dates::Format.datetime_with_time_zone(test_order_to_send.sample_collected_on, I18n.t('date.formats.etb_short')), # @TODO
             month: 2, # @TODO, sample on cdp not have month field
             specimen_type: specimen_type(test_order_to_send), # @TODO, make sure valid LIST VALUE
             laboratory_serial_number: 'N3432',# @TODO, cdp not have this field
@@ -92,7 +101,7 @@ module CdxVietnam
             laboratory_region: 'MIỀN BẮC', # OK - HARD CODE
             laboratory_name: 'LAB - HƯNG YÊN', # OK - HARD CODE
             next_exam_date: '',
-            date_of_release: test_order_to_send.sample_collected_on.strftime('%m/%d/%Y'), # @TODO
+            date_of_release: Extras::Dates::Format.datetime_with_time_zone(test_order_to_send.sample_collected_on, I18n.t('date.formats.etb_short')), 
             result: 'NEGATIVE', # @TODO, make sure list value, result of cdp not suitable with eTB
             comment: test_order_to_send.comment
           }
@@ -101,6 +110,7 @@ module CdxVietnam
       end
 
       def get_order_type(cdp_order_type)
+        puts "=======get order type ===========#{cdp_order_type}"
         return "xpert" if cdp_order_type == 'xpertmtb'
         return "microscopy" if cdp_order_type == 'microscopy'
         return ""
@@ -123,14 +133,16 @@ module CdxVietnam
       end
 
       def tb_drug_resistance_type
-        accepted_list = ["RIF_RESISTANCE", "MULTIDRUG_RESISTANCE", "PRE_XDR", "EXTENSIVEDRUG_RESISTANCE",
-                         "MONO_RESISTANCE", "POLY_RESISTANCE"]
-        # @TODO, patient not have tb_drug_resistance_type
-        if patient.has_attribute?('tb_drug_resistance_type') && patient.tb_drug_resistance_type.present? && accepted_list.include?(patient.tb_drug_resistance_type.upcase)
-          return patient.tb_drug_resistance_type.upcase
-        else
-          return ""
-        end
+        mapping_drug = {
+                          "mono" => "MONO_RESISTANCE",
+                          "poly" => "POLY_RESISTANCE",
+                          "multi" => "MULTIDRUG_RESISTANCE",
+                          "extensive" => "EXTENSIVEDRUG_RESISTANCE",
+                          "rif" => "RIF_RESISTANCE",
+                          "prexdr" => "PRE_XDR"
+                        } 
+        return mapping_drug[espisode.drug_resistance] if mapping_drug[espisode.drug_resistance].present?
+        return ""
       end
 
       def suspect_mdr_case_type
@@ -138,6 +150,17 @@ module CdxVietnam
                         "VN_SPT_NON_CONVERTER_AFTER_2_OR_3_MONTH", "VN_SPT_RELAPSE_OF_CAT_I_OR_CAT_II", 
                         "VN_SPT_RETREATMENT_AFTER_LOST2FOLLOWUP", "VN_SPT_TB_HIV", "VN_SPT_OTHERS",
                         "VN_SPT_NEW_TB_CASES"]
+        mapping_list = {
+          "failcatii" => "VN_SPT_FAILED_CAT_II",
+          "tbmdr" => "VN_SPT_CONTACT_MDR_INDEX_CASE",
+          "failcati" => "VN_SPT_FAILED_CAT_I",
+          "noncon" => "VN_SPT_NON_CONVERTER_AFTER_2_OR_3_MONTH",
+          "relepsecat" => "VN_SPT_RELAPSE_OF_CAT_I_OR_CAT_II",
+          "retreatcat" => "VN_SPT_RETREATMENT_AFTER_LOST2FOLLOWUP",
+          "" => "VN_SPT_TB_HIV",
+          "other" => "VN_SPT_OTHERS",
+          "" => "VN_SPT_NEW_TB_CASES"
+        }
         # @TODO, patient not have suspect_mdr_case_type
         if patient.has_attribute?('suspect_mdr_case_type') && patient.suspect_mdr_case_type.present? && accepted_list.include?(patient.suspect_mdr_case_type.upcase)
           return patient.suspect_mdr_case_type.upcase
@@ -153,15 +176,15 @@ module CdxVietnam
       end
 
       def consulting_date
-        patient.created_at.strftime('%m/%d/%Y')
+        Extras::Dates::Format.datetime_with_time_zone(patient.created_at, I18n.t('date.formats.etb_short'))
       end
 
       def dob
-        patient.birth_date_on.strftime('%m/%d/%Y')
+        Extras::Dates::Format.datetime_with_time_zone(patient.birth_date_on, I18n.t('date.formats.etb_short'))
       end
 
       def diagnosis_date
-        encounter.updated_at.strftime('%m/%d/%Y')
+        Extras::Dates::Format.datetime_with_time_zone(encounter.updated_at, I18n.t('date.formats.etb_short'))
       end
 
       def gender
