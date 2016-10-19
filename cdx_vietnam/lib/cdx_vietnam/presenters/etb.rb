@@ -17,6 +17,7 @@ module CdxVietnam
         {
           patient: {
             case_type: 'patient', # OK, luôn là patient
+            cdp_id: patient.id.to_s,
             target_system: 'etb', # OK
             patient_etb_id: '', # @TODO, nếu là vtm thì nó sẽ là 1 bộ json khác, lần đầu gửi có thể NULL,  ''
             bdq_id: '000000', # OK, hard-coded
@@ -67,7 +68,8 @@ module CdxVietnam
         if order_type == "xpert"
           rs = {
             type: get_order_type(test_order_to_send.result_name), # @TODO
-            order_id: 'CDP000034', # @TODO
+            order_id: encounter.batch_id.to_s, # @TODO
+            cdp_order_id: patient_result.id.to_s,
             sample_collected_date: test_order_to_send.sample_collected_on.strftime('%m/%d/%Y'), # @TODO
             month: 2, # @TODO, sample on cdp not have month field
             laboratory_serial_number: 'N3432',# @TODO, cdp not have this field
@@ -80,7 +82,8 @@ module CdxVietnam
         else
           rs = {
             type: get_order_type(test_order_to_send.result_name), # @TODO
-            order_id: 'CDP000034', # @TODO
+            order_id: encounter.batch_id.to_s, # @TODO
+            cdp_order_id: patient_result.id.to_s,
             sample_collected_date: test_order_to_send.sample_collected_on.strftime('%m/%d/%Y'), # @TODO
             month: 2, # @TODO, sample on cdp not have month field
             specimen_type: specimen_type(test_order_to_send), # @TODO, make sure valid LIST VALUE
@@ -98,7 +101,6 @@ module CdxVietnam
       end
 
       def get_order_type(cdp_order_type)
-        puts "=======get order type ===========#{cdp_order_type}"
         return "xpert" if cdp_order_type == 'xpertmtb'
         return "microscopy" if cdp_order_type == 'microscopy'
         return ""

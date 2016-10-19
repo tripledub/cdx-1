@@ -151,10 +151,19 @@ module Integration
       
       return false if !log
       
+      order_id = log.json["patient"]["test_order"]["cdp_order_id"]
+      
+      order = PatientResult.where(id: order_id, is_sync: false).first
+      
+      return false if !order
+      
+      json = CdxVietnam::Presenters::Etb.create_patient(order)
+      
       if log.fail_step == 'patient'
-        integration(log.json, log)
+        integration(json, log)
       else
-        test_order = {"test_order" => log.json["patient"]["test_order"]}
+        json = JSON.parse(json)
+        test_order = {"test_order" => json["patient"]["test_order"]}
         create_test_order(test_order, log.system, log)
       end
     end
