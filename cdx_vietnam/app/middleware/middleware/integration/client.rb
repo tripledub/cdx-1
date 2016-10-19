@@ -35,6 +35,30 @@ module Integration
           status: "In progress"
         })
       end
+
+      # micro waiting for xpert test transfer to etb success
+      try_count = 0
+      loop do
+        break unless (test_order['type'] == 'microscopy' && patient["patient_#{system}_id"].blank?) || try_count > @max_retry
+        sleep 10
+        try_count += 1
+        patient_temp = Patient.where(id: patient["cdp_id"]).first
+        patient["patient_#{system}_id"] = patient_temp.external_id if patient_temp.present?
+        log.update_attributes({
+          try_n_times: try_count, 
+          error_message: "microscopy not have etb_patient_id",
+          status: "wait_xpert"
+        })
+      end
+
+      if test_order['type'] == 'microscopy' && patient["patient_#{system}_id"].blank?
+        log.update_attributes({
+          try_n_times: try_count, 
+          error_message: "microscopy not have etb_patient_id",
+          status: "Error"
+        })
+        return
+      end
       
       patient_id = add_update_patient(patient, system, log)
       
@@ -110,7 +134,7 @@ module Integration
     # create test order and update test result
     def create_test_order(test_order, system, log)
       log.update_attributes({
-        fail_step: "test_order"
+        fail_step: "create_test_order"
       })
       # Sync order data to external system
       try_count = 0

@@ -8,10 +8,11 @@ module CdxVietnam
       attr_reader :encounter, :patient, :patient_result
 
       def initialize(patient_result)
+        patient_result.reload
         @patient_result = patient_result
         @encounter = patient_result.encounter
         @patient = @encounter.patient
-        @espisode = @encounter.patient.espisodes.last
+        @episode = @encounter.patient.episodes.last
       end
 
       def create_patient
@@ -20,7 +21,7 @@ module CdxVietnam
             case_type: 'patient', # OK, luôn là patient
             cdp_id: patient.id.to_s,
             target_system: 'etb', # OK
-            patient_etb_id: patient.external_id.to_s, # @TODO, nếu là vtm thì nó sẽ là 1 bộ json khác, lần đầu gửi có thể NULL,  ''
+            patient_etb_id: patient.external_id, # @TODO, nếu là vtm thì nó sẽ là 1 bộ json khác, lần đầu gửi có thể NULL,  ''
             bdq_id: '000000', # OK, hard-coded
             name: patient.name,  
             registration_number: '', # not required
@@ -35,20 +36,20 @@ module CdxVietnam
             cellphone_number: '23711', # OK, just hard-code like this
             supervisor2_cellphone: '23711', # OK, just hard-code like this
             nationallity: 'NATIVE', # OK, just hard-code like this
-            registration_address1: patient.addresses[1].address, # line đầu tiên của Contact Address
+            registration_address1: etb_address(patient.addresses[1].address), # line đầu tiên của Contact Address
             registration_address2: '', # OK
             registration_region: 'MIỀN BẮC', # OK hard-coded
             registration_province: 'Hà Nội', # OK hard-coded
             registraiton_district: 'Cầu Giấy', # OK hard-coded
             located_at_different_address: located_at_different_address, # @TODO: nếu patient.addresses[1].address ==  patient.addresses[0].address --> TRUE, otherwise FALSE 
-            current_address: patient.addresses[0].address, # lấy dòng đầu tiên của PERMANENT ADDRESS
+            current_address: etb_address(patient.addresses[0].address), # lấy dòng đầu tiên của PERMANENT ADDRESS
             healthcare_unit_location: 'Miền Nam', # OK
             healthcare_unit_name: 'Quận 1', # OK
             healthcare_unit_registration_date: Extras::Dates::Format.datetime_with_time_zone(patient.created_at, I18n.t('date.formats.etb_short')), # ngày tạo patient
             suspect_mdr_case_type: "VN_SPT_FAILED_CAT_II",
             diagnosis_date: diagnosis_date, 
             tb_drug_resistance_type: tb_drug_resistance_type, # LIST VALUE
-            registration_group: "VN_2015_NEW", # @TODO
+            registration_group: "VN_2015_OTHER", # @TODO
             site_of_disease: "PULMONARY", # @TODO
             number_of_previous_tb_treatment: '0',
             consulting_date: consulting_date, # @TODO, ngày tạo patient
@@ -63,6 +64,14 @@ module CdxVietnam
 
       private
 
+      def etb_address(addresses)
+        if patient.addresses[1].address.blank?
+          return "Missing in CDP"
+        else
+          return patient.addresses[1].address.blank
+        end
+      end
+
       def located_at_different_address
         if patient.addresses[1].address ==  patient.addresses[0].address
           'TRUE'
@@ -76,7 +85,7 @@ module CdxVietnam
         order_type = get_order_type(test_order_to_send.result_name)
         if order_type == "xpert"
           rs = {
-            type: get_order_type(test_order_to_send.result_name), # @TODO
+            type: order_type, # @TODO
             order_id: encounter.batch_id.to_s, # @TODO
             cdp_order_id: patient_result.id.to_s,
             sample_collected_date: test_order_to_send.sample_collected_on.strftime('%m/%d/%Y'), # @TODO
@@ -90,7 +99,7 @@ module CdxVietnam
           }
         else
           rs = {
-            type: get_order_type(test_order_to_send.result_name), # @TODO
+            type: order_type, # @TODO
             order_id: encounter.batch_id.to_s, # @TODO
             cdp_order_id: patient_result.id.to_s,
             sample_collected_date: Extras::Dates::Format.datetime_with_time_zone(test_order_to_send.sample_collected_on, I18n.t('date.formats.etb_short')), # @TODO
@@ -110,7 +119,6 @@ module CdxVietnam
       end
 
       def get_order_type(cdp_order_type)
-        puts "=======get order type ===========#{cdp_order_type}"
         return "xpert" if cdp_order_type == 'xpertmtb'
         return "microscopy" if cdp_order_type == 'microscopy'
         return ""
@@ -141,15 +149,11 @@ module CdxVietnam
                           "rif" => "RIF_RESISTANCE",
                           "prexdr" => "PRE_XDR"
                         } 
-        return mapping_drug[espisode.drug_resistance] if mapping_drug[espisode.drug_resistance].present?
+        return mapping_drug[@episode.drug_resistance] if mapping_drug[@episode.drug_resistance].present?
         return ""
       end
 
       def suspect_mdr_case_type
-        accepted_list = ["VN_SPT_FAILED_CAT_II", "VN_SPT_CONTACT_MDR_INDEX_CASE", "VN_SPT_FAILED_CAT_I", 
-                        "VN_SPT_NON_CONVERTER_AFTER_2_OR_3_MONTH", "VN_SPT_RELAPSE_OF_CAT_I_OR_CAT_II", 
-                        "VN_SPT_RETREATMENT_AFTER_LOST2FOLLOWUP", "VN_SPT_TB_HIV", "VN_SPT_OTHERS",
-                        "VN_SPT_NEW_TB_CASES"]
         mapping_list = {
           "failcatii" => "VN_SPT_FAILED_CAT_II",
           "tbmdr" => "VN_SPT_CONTACT_MDR_INDEX_CASE",
@@ -157,16 +161,13 @@ module CdxVietnam
           "noncon" => "VN_SPT_NON_CONVERTER_AFTER_2_OR_3_MONTH",
           "relepsecat" => "VN_SPT_RELAPSE_OF_CAT_I_OR_CAT_II",
           "retreatcat" => "VN_SPT_RETREATMENT_AFTER_LOST2FOLLOWUP",
-          "" => "VN_SPT_TB_HIV",
+          # "" => "VN_SPT_TB_HIV", # @TODO
           "other" => "VN_SPT_OTHERS",
-          "" => "VN_SPT_NEW_TB_CASES"
+          "" => "VN_SPT_NEW_TB_CASES" # @TODO
         }
         # @TODO, patient not have suspect_mdr_case_type
-        if patient.has_attribute?('suspect_mdr_case_type') && patient.suspect_mdr_case_type.present? && accepted_list.include?(patient.suspect_mdr_case_type.upcase)
-          return patient.suspect_mdr_case_type.upcase
-        else
-          return ""
-        end
+        return mapping_list[@episode.previous_history] if mapping_list[@episode.previous_history].present?
+        return "" 
       end
 
       def age
