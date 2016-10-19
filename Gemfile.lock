@@ -711,6 +711,7 @@ DEPENDENCIES
   letter_opener_web
   lodash-rails
   machinist (~> 1.0)
+  mechanize
   mysql2
   newrelic_rpm
   nokogiri (~> 1.6)
