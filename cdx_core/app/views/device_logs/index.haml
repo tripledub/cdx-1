@@ -13,7 +13,7 @@
       - @device_logs.each do |log|
         %tr
           %td
-            = Extras::Dates::Format.datetime_with_time_zone(log.created_at, :long, @device.time_zone)
+            = Extras::Dates::Format.datetime_with_time_zone(log.created_at, :full_time, @device.time_zone)
           %td
             = truncate log.message, length: 100
           %td

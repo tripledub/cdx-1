@@ -14,7 +14,7 @@ describe DstLpaResultsController do
   let!(:dst_lpa_result)      { DstLpaResult.make encounter: encounter, sample_identifier: sample_identifier1 }
   let(:default_params)       { { context: institution.uuid } }
   let(:valid_params)         { {
-    sample_collected_on: 4.days.ago,
+    sample_collected_at: 4.days.ago,
     media_used:          'solid',
     method_used:         'direct',
     serial_number:       'LO-3434-P',
@@ -31,7 +31,7 @@ describe DstLpaResultsController do
     results_other3:      'other 3',
     results_other4:      'other 4',
     examined_by:         'Michael Kiske',
-    result_on:           1.day.ago
+    result_at:           1.day.ago
   } }
 
   context 'user with test orders permission' do

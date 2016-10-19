@@ -18,7 +18,7 @@
               .col-12
                 %label
                   = AuditLog.human_attribute_name(:created_at)
-                = I18n.l(@patient_log.created_at, format: :full_time)
+                = Extras::Dates::Format.datetime_with_time_zone(@patient_log.created_at, :full_time)
             .row
               .col-12
                 %label

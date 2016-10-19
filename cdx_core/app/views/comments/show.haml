@@ -16,7 +16,7 @@
               .col-12
                 %label
                   = Comment.human_attribute_name(:created_at)
-                = I18n.l(@comment.created_at, format: :long)
+                = Extras::Dates::Format.datetime_with_time_zone(@comment.created_at, :full_time)
             .row
               .col-12
                 %label

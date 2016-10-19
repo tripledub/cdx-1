@@ -22,9 +22,9 @@ describe DstLpaResults::Presenter do
     it 'should return elements formated' do
       expect(described_class.index_table(DstLpaResult.all).first).to eq({
         id:                DstLpaResult.first.uuid,
-        sampleCollectedOn: Extras::Dates::Format.datetime_with_time_zone(DstLpaResult.first.sample_collected_on),
+        sampleCollectedAt: Extras::Dates::Format.datetime_with_time_zone(DstLpaResult.first.sample_collected_at, :full_time),
         examinedBy:        DstLpaResult.first.examined_by,
-        resultOn:          Extras::Dates::Format.datetime_with_time_zone(DstLpaResult.first.result_on),
+        resultOn:          Extras::Dates::Format.datetime_with_time_zone(DstLpaResult.first.result_at, :full_time),
         mediaUsed:         Extras::Select.find(DstLpaResult.method_options, DstLpaResult.first.media_used),
         serialNumber:      DstLpaResult.first.serial_number,
         resultH:           Extras::Select.find(DstLpaResult.dst_lpa_options, DstLpaResult.first.results_h),

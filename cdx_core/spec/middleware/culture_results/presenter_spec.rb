@@ -22,9 +22,9 @@ describe CultureResults::Presenter do
     it 'should return elements formated' do
       expect(described_class.index_table(PatientResult.all).first).to eq({
         id:                CultureResult.first.uuid,
-        sampleCollectedOn: Extras::Dates::Format.datetime_with_time_zone(CultureResult.first.sample_collected_on),
+        sampleCollectedAt: Extras::Dates::Format.datetime_with_time_zone(CultureResult.first.sample_collected_at, :full_time),
         examinedBy:        CultureResult.first.examined_by,
-        resultOn:          Extras::Dates::Format.datetime_with_time_zone(CultureResult.first.result_on),
+        resultOn:          Extras::Dates::Format.datetime_with_time_zone(CultureResult.first.result_at, :full_time),
         mediaUsed:         Extras::Select.find(CultureResult.media_options, CultureResult.first.media_used),
         serialNumber:      CultureResult.first.serial_number,
         testResult:        Extras::Select.find(CultureResult.test_result_options, CultureResult.first.test_result),

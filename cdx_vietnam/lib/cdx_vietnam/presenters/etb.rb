@@ -68,12 +68,12 @@ module CdxVietnam
           rs = {
             type: get_order_type(test_order_to_send.result_name), # @TODO
             order_id: 'CDP000034', # @TODO
-            sample_collected_date: test_order_to_send.sample_collected_on.strftime('%m/%d/%Y'), # @TODO
+            sample_collected_date: test_order_to_send.sample_collected_at.strftime('%m/%d/%Y'), # @TODO
             month: 2, # @TODO, sample on cdp not have month field
             laboratory_serial_number: 'N3432',# @TODO, cdp not have this field
             laboratory_region: 'MIỀN BẮC', # OK - HARD CODE
             laboratory_name: 'LAB - HƯNG YÊN', # OK - HARD CODE
-            date_of_release: test_order_to_send.sample_collected_on.strftime('%m/%d/%Y'), # @TODO
+            date_of_release: test_order_to_send.sample_collected_at.strftime('%m/%d/%Y'), # @TODO
             result: 2, # @TODO, make sure list value, result of cdp not suitable with eTB
             comment: test_order_to_send.comment
           }
@@ -81,7 +81,7 @@ module CdxVietnam
           rs = {
             type: get_order_type(test_order_to_send.result_name), # @TODO
             order_id: 'CDP000034', # @TODO
-            sample_collected_date: test_order_to_send.sample_collected_on.strftime('%m/%d/%Y'), # @TODO
+            sample_collected_date: test_order_to_send.sample_collected_at.strftime('%m/%d/%Y'), # @TODO
             month: 2, # @TODO, sample on cdp not have month field
             specimen_type: specimen_type(test_order_to_send), # @TODO, make sure valid LIST VALUE
             laboratory_serial_number: 'N3432',# @TODO, cdp not have this field
@@ -89,7 +89,7 @@ module CdxVietnam
             laboratory_region: 'MIỀN BẮC', # OK - HARD CODE
             laboratory_name: 'LAB - HƯNG YÊN', # OK - HARD CODE
             next_exam_date: '',
-            date_of_release: test_order_to_send.sample_collected_on.strftime('%m/%d/%Y'), # @TODO
+            date_of_release: test_order_to_send.sample_collected_at.strftime('%m/%d/%Y'), # @TODO
             result: 'NEGATIVE', # @TODO, make sure list value, result of cdp not suitable with eTB
             comment: test_order_to_send.comment
           }

@@ -67,7 +67,7 @@
         %li
           %label
             = Patient.human_attribute_name(:created_at)
-          = I18n.l(patient.created_at, format: :long)
+          = Extras::Dates::Format.datetime_with_time_zone(patient.created_at, :full_time)
 
 
 

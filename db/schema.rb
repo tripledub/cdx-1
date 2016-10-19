@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161017140902) do
+ActiveRecord::Schema.define(version: 20161019123324) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -554,8 +554,8 @@ ActiveRecord::Schema.define(version: 20161017140902) do
     t.string   "site_prefix",          limit: 255
     t.datetime "deleted_at"
     t.string   "type",                 limit: 255
-    t.date     "sample_collected_on"
-    t.date     "result_on"
+    t.datetime "sample_collected_at"
+    t.datetime "result_at"
     t.string   "specimen_type",        limit: 255
     t.string   "serial_number",        limit: 255
     t.string   "appearance",           limit: 255

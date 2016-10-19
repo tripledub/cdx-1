@@ -6,9 +6,9 @@ module DstLpaResults
         dst_lpa_results.map do |dst_lpa_result|
           {
             id:                dst_lpa_result.uuid,
-            sampleCollectedOn: Extras::Dates::Format.datetime_with_time_zone(dst_lpa_result.sample_collected_on),
+            sampleCollectedAt: Extras::Dates::Format.datetime_with_time_zone(dst_lpa_result.sample_collected_at, :full_time),
             examinedBy:        dst_lpa_result.examined_by,
-            resultOn:          Extras::Dates::Format.datetime_with_time_zone(dst_lpa_result.result_on),
+            resultOn:          Extras::Dates::Format.datetime_with_time_zone(dst_lpa_result.result_at, :full_time),
             mediaUsed:         Extras::Select.find(DstLpaResult.method_options, dst_lpa_result.media_used),
             serialNumber:      dst_lpa_result.serial_number,
             resultH:           Extras::Select.find(DstLpaResult.dst_lpa_options, dst_lpa_result.results_h),

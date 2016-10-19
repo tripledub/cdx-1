@@ -286,8 +286,8 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     it "creates an encounter as non phantom" do
-      expect(Time.parse(created_encounter.core_fields["start_time"]).strftime("%Y-%m-%d")).to eq(created_encounter.created_at.strftime("%Y-%m-%d"))
-      expect(Time.parse(created_encounter.core_fields["end_time"]).strftime("%Y-%m-%d")).to eq(created_encounter.created_at.strftime("%Y-%m-%d"))
+      expect(Time.parse(created_encounter.core_fields["start_time"]).in_time_zone('UTC').strftime("%Y-%m-%d")).to eq(created_encounter.created_at.in_time_zone('UTC').strftime("%Y-%m-%d"))
+      expect(Time.parse(created_encounter.core_fields["end_time"]).in_time_zone('UTC').strftime("%Y-%m-%d")).to eq(created_encounter.created_at.in_time_zone('UTC').strftime("%Y-%m-%d"))
     end
 
     it "creates new_samples assigned to encounter" do
@@ -1076,8 +1076,8 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       uuid: test_result.uuid,
       test_id: test_result.test_id,
       name: test_result.core_fields[TestResult::NAME_FIELD],
-      start_time: test_result.core_fields[TestResult::START_TIME_FIELD].try { |d| d.strftime('%B %e, %Y') },
-      end_time: test_result.core_fields[TestResult::END_TIME_FIELD].try { |d| d.strftime('%B %e, %Y') },
+      start_time: Extras::Dates::Format.datetime_with_time_zone(test_result.core_fields[TestResult::START_TIME_FIELD], :full_time),
+      end_time: Extras::Dates::Format.datetime_with_time_zone(test_result.core_fields[TestResult::END_TIME_FIELD], :full_time),
       assays: test_result.core_fields[TestResult::ASSAYS_FIELD] || [],
       site: {
         name: test_result.device.site.name

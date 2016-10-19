@@ -15,13 +15,13 @@ describe CultureResultsController do
   let(:default_params)      { { context: institution.uuid } }
   let(:valid_params) do
     {
-      sample_collected_on:    4.days.ago,
+      sample_collected_at:    4.days.ago,
       media_used:             'solid',
       method_used:            'direct',
       serial_number:          'LO-3434-P',
       test_result:            'contaminated',
       examined_by:            'Michael Kiske',
-      result_on:              1.day.ago,
+      result_at:              1.day.ago,
       comment:                'Keeper of the seven keys'
     }
   end
