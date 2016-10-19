@@ -248,7 +248,7 @@ en:
       col_exam_by: "Examined by"
       col_media_used: "Media used"
       col_test_result: "Test result"
-      col_result_on: "Result on"
+      col_result_at: "Result on"
       col_h: "Results H"
       col_r: "Results R"
       col_e: "Results E"

@@ -7,8 +7,8 @@ class DstLpaResultsController < PatientResultsController
   end
 
   def edit
-    @dst_lpa_result.sample_collected_on = @dst_lpa_result.sample_collected_on || Date.today
-    @dst_lpa_result.result_on           = @dst_lpa_result.result_on  || Date.today
+    @dst_lpa_result.sample_collected_at = @dst_lpa_result.sample_collected_at || Date.today
+    @dst_lpa_result.result_at           = @dst_lpa_result.result_at  || Date.today
     @dst_lpa_result.media_used          = @dst_lpa_result.media_used || params['media']
   end
 
@@ -27,6 +27,6 @@ class DstLpaResultsController < PatientResultsController
   end
 
   def dst_lpa_result_params
-    params.require(:dst_lpa_result).permit(:sample_collected_on, :examined_by, :result_on, :media_used, :sample_identifier_id, :results_h, :results_r, :results_e, :results_s, :results_amk, :results_km, :results_cm, :results_fq, :results_other1, :results_other2, :results_other3, :results_other4, :method_used, :comment)
+    params.require(:dst_lpa_result).permit(:sample_collected_at, :examined_by, :result_at, :media_used, :sample_identifier_id, :results_h, :results_r, :results_e, :results_s, :results_amk, :results_km, :results_cm, :results_fq, :results_other1, :results_other2, :results_other3, :results_other4, :method_used, :comment)
   end
 end

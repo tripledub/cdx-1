@@ -63,7 +63,7 @@ describe XpertResults::Persistence do
     end
 
     it 'should update the date of the result' do
-      expect(xpert_result.result_on).to be
+      expect(xpert_result.result_at).to be
     end
 
     it 'should update the rifampicin result info' do

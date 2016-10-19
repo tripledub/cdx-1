@@ -29,9 +29,9 @@
             .row
               .col-6
                 %label
-                  = MicroscopyResult.human_attribute_name(:sample_collected_on)
+                  = MicroscopyResult.human_attribute_name(:sample_collected_at)
               .col-6
-                = I18n.l(@microscopy_result.sample_collected_on, format: :full_date)
+                = I18n.l(@microscopy_result.sample_collected_at, format: :full_date)
             .row
               .col-6
                 %label
@@ -65,9 +65,9 @@
             .row
               .col-6
                 %label
-                  = MicroscopyResult.human_attribute_name(:result_on)
+                  = MicroscopyResult.human_attribute_name(:result_at)
               .col-6
-                = I18n.l(@microscopy_result.result_on, format: :full_date)
+                = I18n.l(@microscopy_result.result_at, format: :full_date)
             .row
               .col-6
                 %label

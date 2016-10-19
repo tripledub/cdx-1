@@ -28,8 +28,8 @@
             .row
               .col-12
                 %label
-                  = DstLpaResult.human_attribute_name(:sample_collected_on)
-                = I18n.l(@dst_lpa_result.sample_collected_on, format: :full_date)
+                  = DstLpaResult.human_attribute_name(:sample_collected_at)
+                = I18n.l(@dst_lpa_result.sample_collected_at, format: :full_date)
             .row
               .col-12
                 %label
@@ -53,8 +53,8 @@
             .row
               .col-12
                 %label
-                  = DstLpaResult.human_attribute_name(:result_on)
-                = I18n.l(@dst_lpa_result.result_on, format: :full_date)
+                  = DstLpaResult.human_attribute_name(:result_at)
+                = I18n.l(@dst_lpa_result.result_at, format: :full_date)
 
           .col-4
             .row

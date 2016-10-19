@@ -27,14 +27,14 @@ var DstLpaResultsIndex = React.createClass({
 
   render: function() {
     var sortableHeader = function (title, field) {
-      return <SortableColumnHeader title={title} field={field} orderBy='patient_results.sample_collected_on' />
+      return <SortableColumnHeader title={title} field={field} orderBy='patient_results.sample_collected_at' />
     }.bind(this);
 
     return (
       <table className="table" cellPadding="0" cellSpacing="0" data-resizable-columns-id="dstlpa-test-results-table">
         <thead>
           <tr>
-            {sortableHeader(I18n.t("components.test_results.col_sample"), 'patient_results.sample_collected_on')}
+            {sortableHeader(I18n.t("components.test_results.col_sample"), 'patient_results.sample_collected_at')}
             {sortableHeader(I18n.t("components.test_results.col_number"),       'patient_results.serial_number')}
             {sortableHeader(I18n.t("components.test_results.col_exam_by"),         'patient_results.examined_by')}
             {sortableHeader(I18n.t("components.test_results.col_media_used"),          'patient_results.media_used')}
@@ -46,7 +46,7 @@ var DstLpaResultsIndex = React.createClass({
             {sortableHeader(I18n.t("components.test_results.col_km"),          'patient_results.results_km')}
             {sortableHeader(I18n.t("components.test_results.col_cm"),          'patient_results.results_cm')}
             {sortableHeader(I18n.t("components.test_results.col_fq"),          'patient_results.results_fq')}
-            {sortableHeader(I18n.t("components.test_results.col_on"),           'patient_results.result_on')}
+            {sortableHeader(I18n.t("components.test_results.col_on"),           'patient_results.result_at')}
           </tr>
         </thead>
         <tbody>

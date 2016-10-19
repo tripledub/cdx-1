@@ -3,9 +3,9 @@ en:
     attributes:
       xpert_result:
         result_status: 'Status'
-        sample_collected_on: 'Date sample collected'
+        sample_collected_at: 'Date sample collected'
         examined_by: 'Examined by'
-        result_on: 'Date of result'
+        result_at: 'Date of result'
         rifampicin: 'Rifampicin resistance'
         trace: 'Trace'
         tuberculosis: 'M. Tuberculosis Detection Volume'

@@ -244,7 +244,7 @@
       col_exam_by: "Kiểm tra bởi"
       col_media_used: "Phương tiện sử dụng"
       col_test_result: "Kết quả kiểm tra"
-      col_result_on: "Kết quả ngày"
+      col_result_at: "Kết quả ngày"
       col_h: "Kết quả H"
       col_r: "Kết quả R"
       col_e: "Kết quả E"

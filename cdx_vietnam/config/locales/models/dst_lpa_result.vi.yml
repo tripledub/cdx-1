@@ -3,7 +3,7 @@ vi:
     attributes:
       dst_lpa_result:
         result_status: 'Trạng thái'
-        sample_collected_on: 'Ngày lấy mẫu'
+        sample_collected_at: 'Ngày lấy mẫu'
         media_used: 'Phương thức'
         serial_number: 'Số seri phòng thí nghiệm'
         results_h: 'Kết quả H'
@@ -19,4 +19,4 @@ vi:
         results_other3: 'Kết quả khác'
         results_other4: 'Kết quả khác'
         examined_by: 'Kiểm tra bởi'
-        result_on: 'Kết quả ngày'
+        result_at: 'Kết quả ngày'

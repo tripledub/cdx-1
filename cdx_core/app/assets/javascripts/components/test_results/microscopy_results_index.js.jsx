@@ -21,20 +21,20 @@ var MicroscopyResultsIndex = React.createClass({
 
   render: function() {
     var sortableHeader = function (title, field) {
-      return <SortableColumnHeader title={title} field={field} orderBy='patient_results.sample_collected_on' />
+      return <SortableColumnHeader title={title} field={field} orderBy='patient_results.sample_collected_at' />
     }.bind(this);
 
     return (
       <table className="table" cellPadding="0" cellSpacing="0" data-resizable-columns-id="microscopy-test-results-table">
         <thead>
           <tr>
-            {sortableHeader(I18n.t("components.test_results.col_sample"), 'patient_results.sample_collected_on')}
+            {sortableHeader(I18n.t("components.test_results.col_sample"), 'patient_results.sample_collected_at')}
             {sortableHeader(I18n.t("components.test_results.col_number"),       'patient_results.serial_number')}
             {sortableHeader(I18n.t("components.test_results.col_exam_by"),         'patient_results.examined_by')}
             {sortableHeader(I18n.t("components.test_results.col_specimen"),       'patient_results.specimen_type')}
             {sortableHeader(I18n.t("components.test_results.col_appearance"),          'patient_results.appearance')}
             {sortableHeader(I18n.t("components.test_results.col_test_result"),         'patient_results.test_result')}
-            {sortableHeader(I18n.t("components.test_results.col_result_on"),           'patient_results.result_on')}
+            {sortableHeader(I18n.t("components.test_results.col_result_at"),           'patient_results.result_at')}
           </tr>
         </thead>
         <tbody>
