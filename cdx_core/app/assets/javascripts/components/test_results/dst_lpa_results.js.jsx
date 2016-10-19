@@ -2,7 +2,7 @@ var DstLpaResultRow = React.createClass({
   render: function() {
     return (
       <tr data-href={this.props.testResult.viewLink}>
-        <td>{this.props.testResult.sampleCollectedOn}</td>
+        <td>{this.props.testResult.sampleCollectedAt}</td>
         <td>{this.props.testResult.serialNumber}</td>
         <td>{this.props.testResult.examinedBy}</td>
         <td>{this.props.testResult.mediaUsed}</td>

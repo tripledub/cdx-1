@@ -22,9 +22,9 @@ describe XpertResults::Presenter do
     it 'should return elements formated' do
       expect(described_class.index_table(XpertResult.all).first).to eq({
         id:                XpertResult.first.uuid,
-        sampleCollectedOn: Extras::Dates::Format.datetime_with_time_zone(XpertResult.first.sample_collected_at),
+        sampleCollectedAt: Extras::Dates::Format.datetime_with_time_zone(XpertResult.first.sample_collected_at, :full_time),
         examinedBy:        XpertResult.first.examined_by,
-        resultOn:          Extras::Dates::Format.datetime_with_time_zone(XpertResult.first.result_at),
+        resultOn:          Extras::Dates::Format.datetime_with_time_zone(XpertResult.first.result_at, :full_time),
         tuberculosis:      Extras::Select.find(XpertResult.tuberculosis_options, XpertResult.first.specimen_type),
         rifampicin:        Extras::Select.find(XpertResult.rifampicin_options, XpertResult.first.serial_number),
         trace:             Extras::Select.find(XpertResult.trace_options, XpertResult.first.trace),

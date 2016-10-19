@@ -24,7 +24,7 @@ describe DeviceMessages::Presenter do
         deviceName:        DeviceMessage.first.device.name,
         numberOfFailures:  DeviceMessage.first.index_failure_data[:number_of_failures],
         errorField:        DeviceMessage.first.index_failure_data[:target_field],
-        createdAt:         Extras::Dates::Format.datetime_with_time_zone(DeviceMessage.first.created_at, :long, DeviceMessage.first.device.time_zone),
+        createdAt:         Extras::Dates::Format.datetime_with_time_zone(DeviceMessage.first.created_at, :full_time, DeviceMessage.first.device.time_zone),
         rawLink:           Rails.application.routes.url_helpers.raw_device_message_path(DeviceMessage.first)
       })
     end

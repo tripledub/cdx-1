@@ -31,7 +31,13 @@
                 %label
                   = MicroscopyResult.human_attribute_name(:sample_collected_at)
               .col-6
-                = I18n.l(@microscopy_result.sample_collected_at, format: :full_date)
+                = Extras::Dates::Format.datetime_with_time_zone(@microscopy_result.sample_collected_at, :full_time)
+            .row
+              .col-6
+                %label
+                  = MicroscopyResult.human_attribute_name(:result_at)
+              .col-6
+                = Extras::Dates::Format.datetime_with_time_zone(@microscopy_result.result_at, :full_time)
             .row
               .col-6
                 %label
@@ -62,12 +68,6 @@
                   = MicroscopyResult.human_attribute_name(:examined_by)
               .col-6
                 = @microscopy_result.examined_by
-            .row
-              .col-6
-                %label
-                  = MicroscopyResult.human_attribute_name(:result_at)
-              .col-6
-                = I18n.l(@microscopy_result.result_at, format: :full_date)
             .row
               .col-6
                 %label

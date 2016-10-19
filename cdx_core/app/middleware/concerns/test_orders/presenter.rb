@@ -18,8 +18,8 @@ module Concerns
               testingFor:         encounter.testing_for,
               requestedBy:        encounter.user.full_name,
               batchId:            encounter.batch_id,
-              requestDate:        Extras::Dates::Format.datetime_with_time_zone(encounter.start_time),
-              dueDate:            Extras::Dates::Format.datetime_with_time_zone(encounter.testdue_date),
+              requestDate:        Extras::Dates::Format.datetime_with_time_zone(encounter.start_time, :full_time),
+              dueDate:            Extras::Dates::Format.datetime_with_time_zone(encounter.testdue_date, :full_date),
               status:             generate_status(encounter),
               viewLink:           Rails.application.routes.url_helpers.encounter_path(encounter)
             }
