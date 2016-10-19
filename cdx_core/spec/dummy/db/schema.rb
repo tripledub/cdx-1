@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161005141603) do
+ActiveRecord::Schema.define(version: 20161014095751) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -158,8 +158,10 @@ ActiveRecord::Schema.define(version: 20161005141603) do
     t.integer  "encounter_id",      limit: 4
     t.integer  "requested_test_id", limit: 4
     t.integer  "patient_result_id", limit: 4
+    t.integer  "device_id",         limit: 4
   end
 
+  add_index "audit_logs", ["device_id"], name: "index_audit_logs_on_device_id", using: :btree
   add_index "audit_logs", ["encounter_id"], name: "fk_rails_242face86a", using: :btree
   add_index "audit_logs", ["patient_id"], name: "index_audit_logs_on_patient_id", using: :btree
   add_index "audit_logs", ["patient_result_id"], name: "fk_rails_2fc931c99d", using: :btree
@@ -379,6 +381,13 @@ ActiveRecord::Schema.define(version: 20161005141603) do
   end
 
   add_index "episodes", ["patient_id"], name: "index_episodes_on_patient_id", using: :btree
+
+  create_table "external_systems", force: :cascade do |t|
+    t.string   "prefix",     limit: 255
+    t.string   "name",       limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "feedback_messages", force: :cascade do |t|
     t.integer  "institution_id", limit: 4,   null: false
@@ -604,10 +613,12 @@ ActiveRecord::Schema.define(version: 20161005141603) do
     t.string   "medical_insurance_num",   limit: 255
     t.string   "external_id",             limit: 255
     t.string   "external_patient_system", limit: 255
+    t.integer  "external_system_id",      limit: 4
   end
 
   add_index "patients", ["birth_date_on"], name: "index_patients_on_birth_date_on", using: :btree
   add_index "patients", ["deleted_at"], name: "index_patients_on_deleted_at", using: :btree
+  add_index "patients", ["external_system_id"], name: "index_patients_on_external_system_id", using: :btree
   add_index "patients", ["institution_id"], name: "index_patients_on_institution_id", using: :btree
   add_index "patients", ["site_id"], name: "index_patients_on_site_id", using: :btree
 
@@ -677,9 +688,10 @@ ActiveRecord::Schema.define(version: 20161005141603) do
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "lab_sample_id", limit: 255
+    t.string   "cpd_id_sample", limit: 255
   end
 
+  add_index "sample_identifiers", ["cpd_id_sample"], name: "index_sample_identifiers_on_cpd_id_sample", using: :btree
   add_index "sample_identifiers", ["deleted_at"], name: "index_sample_identifiers_on_deleted_at", using: :btree
   add_index "sample_identifiers", ["entity_id"], name: "index_sample_identifiers_on_entity_id", using: :btree
   add_index "sample_identifiers", ["sample_id"], name: "index_sample_identifiers_on_sample_id", using: :btree
