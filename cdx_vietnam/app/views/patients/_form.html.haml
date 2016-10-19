@@ -35,7 +35,7 @@
       .fieldvalue
         = f.collection_select :gender, Patient.gender_options, :first, :last
 
-    .fieldrow#pcmdn
+    .fieldrow#cmnd
       = react_component 'SocialSecurityCode', sscValue: @patient.social_security_code, skipValidationValue: @patient.skip_ssc_validation
 
     .fieldrow#pdob
@@ -48,13 +48,7 @@
         = f.date_select :birth_date_on, order: [:day, :month, :year], prompt: { day: I18n.t('patients.form.select_day'), month: I18n.t('patients.form.select_month'), year: I18n.t('patients.form.select_year') }, start_year: Date.today.year, end_year: Date.today.year - 100
 
     .fieldrow#pmis
-      .fieldlabel
-        %div.tooltip
-          = f.label :medical_insurance_num
-          %div.tooltiptext_r
-            = I18n.t('patients.form.medical_insurance_num_tooltip')
-      .fieldvalue
-        = f.text_field :medical_insurance_num, :class => 'input-large'
+      = react_component 'MedicalInsuranceNum', fieldValue: @patient.medical_insurance_num
 
     .fieldrow#pestimateage
       .fieldlabel
@@ -133,7 +127,7 @@
 
   .whitebox
     .purpleheader
-      %h3 
+      %h3
         = I18n.t('patients.form.address_details')
 
     .row.hideme
