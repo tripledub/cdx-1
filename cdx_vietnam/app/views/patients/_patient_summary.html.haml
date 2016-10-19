@@ -49,7 +49,7 @@
         %li
           %label
             = Patient.human_attribute_name(:external_patient_system)
-          = patient.external_patient_system
+          = patient.external_patient_system_name
 
         - patient_address_label = "patients.show.address"
         - patient.addresses.each do |address|
