@@ -25,7 +25,7 @@ describe XpertResult do
     context 'rifampicin' do
       context 'tuberculosis has been detected' do
         context 'rifampicin is not present' do
-          subject { XpertResult.new encounter: encounter, result_on: 3.days.from_now, examined_by: 'The doctor', sample_collected_on: 1.day.ago, tuberculosis: 'detected', rifampicin: nil }
+          subject { XpertResult.new encounter: encounter, result_at: 3.days.from_now, examined_by: 'The doctor', sample_collected_at: 1.day.ago, tuberculosis: 'detected', rifampicin: nil }
 
           it 'should be invalid' do
             expect(subject.valid?).to be false
@@ -33,7 +33,7 @@ describe XpertResult do
         end
 
         context 'if is detected and tuberculosis is not detected' do
-          subject { XpertResult.new encounter: encounter, result_on: 3.days.from_now, examined_by: 'The doctor', sample_collected_on: 1.day.ago, tuberculosis: 'not_detected', rifampicin: 'detected' }
+          subject { XpertResult.new encounter: encounter, result_at: 3.days.from_now, examined_by: 'The doctor', sample_collected_at: 1.day.ago, tuberculosis: 'not_detected', rifampicin: 'detected' }
 
           it 'should not be valid' do
             expect(subject.valid?).to be false
@@ -44,7 +44,7 @@ describe XpertResult do
 
         context 'tuberculosis has not been detected' do
           context 'rifampicin is not present' do
-            subject { XpertResult.new encounter: encounter, result_on: 3.days.from_now, examined_by: 'The doctor', sample_collected_on: 1.day.ago, tuberculosis: 'indeterminate', rifampicin: nil }
+            subject { XpertResult.new encounter: encounter, result_at: 3.days.from_now, examined_by: 'The doctor', sample_collected_at: 1.day.ago, tuberculosis: 'indeterminate', rifampicin: nil }
 
             it 'should be valid' do
               expect(subject.valid?).to be true
