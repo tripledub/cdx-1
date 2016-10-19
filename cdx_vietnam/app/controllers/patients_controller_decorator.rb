@@ -8,8 +8,25 @@ class PatientsController
 
   def patient_params
     params.require(:patient).permit(
-      :name, :entity_id, :gender, :nickname, :medical_insurance_num, :social_security_code, :external_id, :vitimes_id, :skip_ssc_validation,
-      :external_patient_system, :birth_date_on, :address, :email, :phone, :city, :state, :zip_code, :created_from_controller,
+      :name,
+      :entity_id,
+      :gender,
+      :nickname,
+      :medical_insurance_num,
+      :social_security_code,
+      :external_id,
+      :external_system_id,
+      :vitimes_id,
+      :skip_ssc_validation,
+      :external_patient_system,
+      :birth_date_on,
+      :address,
+      :email,
+      :phone,
+      :city,
+      :state,
+      :zip_code,
+      :created_from_controller,
       addresses_attributes: [:id, :address, :city, :state, :country, :zip_code]
     )
   end

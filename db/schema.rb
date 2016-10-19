@@ -452,6 +452,19 @@ ActiveRecord::Schema.define(version: 20161017140902) do
 
   add_index "institutions", ["user_id"], name: "index_institutions_on_user_id", using: :btree
 
+  create_table "integration_logs", force: :cascade do |t|
+    t.string   "patient_name",  limit: 255
+    t.string   "order_id",      limit: 255
+    t.text     "json",          limit: 65535
+    t.string   "fail_step",     limit: 255
+    t.string   "system",        limit: 255
+    t.string   "error_message", limit: 255
+    t.integer  "try_n_times",   limit: 4
+    t.string   "status",        limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "manifests", force: :cascade do |t|
     t.string   "version",         limit: 255
     t.text     "definition",      limit: 65535
