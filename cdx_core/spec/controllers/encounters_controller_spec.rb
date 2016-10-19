@@ -1076,8 +1076,8 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       uuid: test_result.uuid,
       test_id: test_result.test_id,
       name: test_result.core_fields[TestResult::NAME_FIELD],
-      start_time: test_result.core_fields[TestResult::START_TIME_FIELD].try { |d| d.strftime('%B %e, %Y') },
-      end_time: test_result.core_fields[TestResult::END_TIME_FIELD].try { |d| d.strftime('%B %e, %Y') },
+      start_time: Extras::Dates::Format.datetime_with_time_zone(test_result.core_fields[TestResult::START_TIME_FIELD], :full_time),
+      end_time: Extras::Dates::Format.datetime_with_time_zone(test_result.core_fields[TestResult::END_TIME_FIELD], :full_time),
       assays: test_result.core_fields[TestResult::ASSAYS_FIELD] || [],
       site: {
         name: test_result.device.site.name
