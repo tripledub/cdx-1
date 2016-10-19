@@ -19,7 +19,7 @@ module CdxVietnam
             case_type: 'patient', # OK, luôn là patient
             cdp_id: patient.id.to_s,
             target_system: 'etb', # OK
-            patient_etb_id: '', # @TODO, nếu là vtm thì nó sẽ là 1 bộ json khác, lần đầu gửi có thể NULL,  ''
+            patient_etb_id: patient.external_id.to_s, # @TODO, nếu là vtm thì nó sẽ là 1 bộ json khác, lần đầu gửi có thể NULL,  ''
             bdq_id: '000000', # OK, hard-coded
             name: patient.name,  
             registration_number: '', # not required

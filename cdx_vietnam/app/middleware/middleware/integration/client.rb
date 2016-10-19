@@ -15,6 +15,12 @@ module Integration
       patient = json['patient']
       test_order = patient['test_order']
       
+      order = PatientResult.where(id: test_order["cdp_order_id"]).first
+      
+      return if !order || order.is_sync
+      
+      order.update_attributes({is_sync: true})
+      
       system = patient['target_system']
       
       if !log
@@ -76,15 +82,17 @@ module Integration
           error_message: res[:error],
           status: "Error"
         })
+        order = PatientResult.where(id: log.json["patient"]["test_order"]["cdp_order_id"]).first
+        order.update_attributes({is_sync: false}) if order
         return false
       end
       
       patient["patient_#{system}_id"] = res["patient_#{system}_id".to_sym]
-      patient = Patient.where(id: patient["cpd_id"]).first
+      cdp_patient = Patient.where(id: patient["cdp_id"]).first
       
       # update external system id into current patient
-      if patient
-        patient.update_attributes({
+      if cdp_patient
+        cdp_patient.update_attributes({
           external_patient_system: system,
           external_id: res["patient_#{system}_id".to_sym]
         })
@@ -134,6 +142,8 @@ module Integration
           error_message: res[:error],
           status: "Error"
         })
+        order = PatientResult.where(id: log.json["patient"]["test_order"]["cdp_order_id"]).first
+        order.update_attributes({is_sync: false}) if order
         return false
       end
       
@@ -163,8 +173,7 @@ module Integration
         integration(json, log)
       else
         json = JSON.parse(json)
-        test_order = {"test_order" => json["patient"]["test_order"]}
-        create_test_order(test_order, log.system, log)
+        create_test_order(json["patient"]["test_order"], log.system, log)
       end
     end
   end
