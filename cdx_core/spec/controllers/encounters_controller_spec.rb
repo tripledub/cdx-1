@@ -286,8 +286,8 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     it "creates an encounter as non phantom" do
-      expect(Time.parse(created_encounter.core_fields["start_time"]).strftime("%Y-%m-%d")).to eq(created_encounter.created_at.strftime("%Y-%m-%d"))
-      expect(Time.parse(created_encounter.core_fields["end_time"]).strftime("%Y-%m-%d")).to eq(created_encounter.created_at.strftime("%Y-%m-%d"))
+      expect(Time.parse(created_encounter.core_fields["start_time"]).in_time_zone('UTC').strftime("%Y-%m-%d")).to eq(created_encounter.created_at.in_time_zone('UTC').strftime("%Y-%m-%d"))
+      expect(Time.parse(created_encounter.core_fields["end_time"]).in_time_zone('UTC').strftime("%Y-%m-%d")).to eq(created_encounter.created_at.in_time_zone('UTC').strftime("%Y-%m-%d"))
     end
 
     it "creates new_samples assigned to encounter" do
