@@ -45,10 +45,11 @@
       mark_as_paid: 'Đánh giá yêu cầu xét nghiệm được trả'
       reject: 'Tài trợ đã bị từ chối'
     add_samples_action:
+      enter_sample_id: 'Nhập mã mẫu'
       add_result: 'Thêm kết quả'
       submit_samples:  'Nhập mẫu'
       sample_ids: 'Mẫu Ids cho hàng loạt xét nghiệm'
-      save_sample_ids: 'Lưu mẫu ids'
+      save_sample_ids: 'Lưu mã mẫu'
     test_batch_table:
       type: 'Loại'
       sample_id: 'Mã mẫu'

@@ -235,7 +235,7 @@ vi:
       diagnosis_lable: "Chuẩn đoán"
       follow_up_lable: "Theo dõi"
       weeks_in_treatment_label: "Số tuần điều trị"
-      comment: "Bình luận"
+      comments: "Bình luận"
       presumptive: "Giả định RR-TB/MDR-TB"
 
     outstanding_tests_table:
