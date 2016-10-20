@@ -244,11 +244,11 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
   },
 
   testingForChange: function() {
-    var xx = $('#testing_for').val();
+    var testingFor = $('#testing_for').val();
     this.setState(React.addons.update(this.state, {
       encounter: {
         testing_for: {
-          $set: xx
+          $set: testingFor
         }
       }
     }));
@@ -256,7 +256,8 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     $('.test_for_ebola').attr('checked', false).parent().hide();
     $('.test_for_tb').attr('checked', false).parent().hide();
     $('.test_for_hiv').attr('checked', false).parent().hide();
-    switch(xx)
+
+    switch(testingFor)
     {
       case 'TB':
         $('.test_for_tb').parent().show();
