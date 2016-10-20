@@ -63,9 +63,11 @@ var EncounterNew = React.createClass({
 
   render: function() {
     var sitesUrl = URI("/encounters/sites").query({context: this.props.context.institution.uuid});
-    var siteUuid = this.props.context.site ? this.props.context.site.uuid : null
-    var siteSelect = <SiteSelect onChange={this.setSite} url={sitesUrl} fieldLabel= {I18n.t("components.encounter_new.requesting_label")} defaultSiteUuid={siteUuid} allow_manual_entry_callback={this.allow_manual_entry_callback} />;
-    var performingSiteSelect = <SiteSelect onChange={this.setPerformingSite} url={sitesUrl} fieldLabel= {I18n.t("components.encounter_new.performing_label")} defaultSiteUuid={_.get(this.props.context.performingsite, 'uuid')} />;
+    var siteUuid = this.props.context.site ? this.props.context.site.uuid : null;
+    var performingSiteUuid = _.get(this.props.context.performingsite, 'uuid');
+    performingSiteUuid = performingSiteUuid ? performingSiteUuid : siteUuid;
+    var siteSelect = <SiteSelect onChange={ this.setSite } url={ sitesUrl } fieldLabel= { I18n.t("components.encounter_new.requesting_label")} defaultSiteUuid={ siteUuid } allow_manual_entry_callback={ this.allow_manual_entry_callback } />;
+    var performingSiteSelect = <SiteSelect onChange={ this.setPerformingSite } url={ sitesUrl } fieldLabel= { I18n.t("components.encounter_new.performing_label") } defaultSiteUuid={ performingSiteUuid } />;
 
     if (this.state.encounter.site == null) {
       return (
@@ -83,8 +85,8 @@ var EncounterNew = React.createClass({
           </div>
         </div>
         <div className="panel">
-          {siteSelect}
-          {performingSiteSelect}
+          { siteSelect }
+          { performingSiteSelect }
         </div>
 
         {(function(){
