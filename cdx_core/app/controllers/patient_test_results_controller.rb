@@ -5,7 +5,9 @@ class PatientTestResultsController < ApplicationController
   before_filter :find_patient
 
   def index
-    render json: PatientTestResults::Presenter.patient_view(PatientResult.find_all_results_for_patient(@patient.id).order(set_order_from_params).limit(30).offset(params[:page] || 0))
+    render json: PatientTestResults::Presenter.patient_view(
+      PatientResult.find_all_results_for_patient(@patient.id).order(set_order_from_params).limit(30).offset(params[:page] || 0)
+    )
   end
 
   protected
@@ -16,9 +18,11 @@ class PatientTestResultsController < ApplicationController
 
   def set_order_from_params
     order = params[:order] == 'true' ? 'asc' : 'desc'
-    case params[:field].to_s == 'name'
-    when 'site'
-      "patient.name #{order}"
+    case params[:field].to_s
+    when 'name'
+      "patient_results.type #{order}"
+    when 'status'
+      "patient_results.result_status #{order}"
     else
       "patient_results.created_at #{order}"
     end
