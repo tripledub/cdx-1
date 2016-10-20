@@ -4,8 +4,19 @@ class Paginator extends React.Component {
       <div className="pagination">
         <PagePrev firstPage={ this.props.pages.firstPage } prevPage={ this.props.pages.prevPage } pageData={ this.props.pageData } /> |
         <PageNext lastPage={ this.props.pages.lastPage } nextPage={ this.props.pages.nextPage } pageData={ this.props.pageData } />
+        <PageIndicator pages={this.props.pages} pageData={ this.props.pageData } />
       </div>
     )
+  }
+}
+
+class PageIndicator extends React.Component {
+  render() {
+    let currentPage = this.props.pages.currentPage;
+    let totalPages = this.props.pages.totalPages;
+    return (
+      <span className='page-indicator'> - page {currentPage} of {totalPages}</span>
+    );
   }
 }
 
