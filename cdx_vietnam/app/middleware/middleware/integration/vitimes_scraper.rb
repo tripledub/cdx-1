@@ -7,6 +7,7 @@
 require 'mechanize'
 require 'json'
 require 'time'
+require_relative 'cdp_scraper'
 
 module Integration
   module CdpScraper

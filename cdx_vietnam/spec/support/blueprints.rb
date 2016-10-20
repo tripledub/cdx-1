@@ -19,3 +19,6 @@ IntegrationLog.blueprint do
   order_id "CDP00001"
 end
 
+PatientResult.blueprint do
+  
+end
