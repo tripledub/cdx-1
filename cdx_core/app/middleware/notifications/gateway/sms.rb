@@ -42,6 +42,8 @@ module Notifications
           body: body
         )
 
+        Rails.logger.info @response.inspect
+
         true
       end
 

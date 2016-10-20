@@ -15,6 +15,6 @@ describe Notifications::DstLpaResultLookup do
   describe '#check_notifications' do
     let(:lookup) { described_class.new(dstlpa_result) }
     before { lookup.check_notifications }
-    it { expect(lookup.notifications).to be_empty }
+    it { expect(lookup.notifications).to include(notification_on_patient) }
   end
 end

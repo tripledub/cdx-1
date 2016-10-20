@@ -1,6 +1,7 @@
 module Notifications
-  class DstLpaResultLookup < Notifications::BaseLookup
+  class DstLpaResultLookup < Notifications::PatientResultLookup
     def check_notifications
+      super
       # TODO: Currently Notification needs support added. Additions need
       # to be made to Notification model to accept more results
       # not just 'detection', 'detection_condition'.
@@ -17,7 +18,6 @@ module Notifications
       #  "results_amk"=>[nil, "not_done"], "results_km"=>[nil, "contaminated"],
       #  "results_cm"=>[nil, "not_done"], "results_fq"=>[nil, "susceptible"],
       #  "results_other1"=>[nil, "Some other things"]}
-      @notifications = []
     end
 
     def self.prepare_notifications(record_id, changed_attributes = {})

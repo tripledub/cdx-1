@@ -16,7 +16,8 @@ class DstLpaResult < PatientResult
                               :results_r, :results_e,
                               :results_s, :results_amk,
                               :results_km, :results_cm,
-                              :results_fq, :results_other1
+                              :results_fq, :results_other1,
+                              :result_status
 
   def localised_name
     return I18n.t('dst_lpa_results.dst_lpa') unless result_name

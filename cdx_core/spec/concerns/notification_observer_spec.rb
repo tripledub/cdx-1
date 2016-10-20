@@ -14,14 +14,17 @@ describe 'NotificationObserver' do
     end
 
     describe '#_fire_check_notification_job' do
+      before(:each) { TestAfterCommit.enabled = true  }
+      after(:each)  { TestAfterCommit.enabled = false }
+
       let!(:encounter) { Encounter.make }
 
       before { CheckNotificationJob.jobs.clear }
 
       context 'when observed field changes number of jobs' do
         before do
-          encounter.status = 'samples_received'
-          encounter.save
+          encounter.status = 'financed'
+          encounter.save!
         end
 
         it { expect(CheckNotificationJob.jobs.size).to eq(1) }

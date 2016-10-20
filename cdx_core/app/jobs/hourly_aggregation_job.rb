@@ -9,5 +9,3 @@ class HourlyAggregationJob
 
   end
 end
-
-Sidekiq::Cron::Job.create(name: 'Hourly Aggregation Job', cron: '0 * * * *', klass: 'HourlyAggregationJob')

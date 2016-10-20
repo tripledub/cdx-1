@@ -21,7 +21,7 @@ describe Notifications::Presenter do
         sites:        notification.sites.map(&:name).join(', '),
         roles:        notification.roles.map(&:name).join(', '),
         lastIncident: notification.last_notification_at,
-        viewLink:     Rails.application.routes.url_helpers.edit_notification_path(notification)
+        viewLink:     Rails.application.routes.url_helpers.edit_alert_group_path(notification)
       })
     end
   end

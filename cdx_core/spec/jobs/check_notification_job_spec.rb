@@ -4,6 +4,8 @@ require 'sidekiq/testing'
 Sidekiq::Testing.fake!
 
 describe CheckNotificationJob do
+  before(:all) { TestAfterCommit.enabled = true  }
+  after(:all)  { TestAfterCommit.enabled = false }
   describe '#perform' do
     let!(:encounter) { Encounter.make }
     before(:each) { described_class.jobs.clear }

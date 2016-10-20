@@ -46,14 +46,14 @@ class Notification::Notice < ActiveRecord::Base
         telephone:    recipient.telephone
       }
     end)
-
+    Rails.logger.info '[Notice] Built reciepients'
     true
   end
 
   def deliver_to_all_recipients
     notification_notice_recipients.each do |recipient|
-      recipient.send_sms
-      recipient.send_email
+      recipient.send_sms && Rails.logger.info("[SMS] Delivered to recipient: ##{recipient.id}")
+      recipient.send_email && Rails.logger.info("[Email] Delivered to recipient: # #{recipient.id}")
     end
   end
 

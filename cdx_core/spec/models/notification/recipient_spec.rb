@@ -3,7 +3,6 @@ require 'spec_helper'
 describe Notification::Recipient do
   describe '#notification' do
     it { is_expected.to belong_to(:notification).class_name('Notification') }
-    it { is_expected.to validate_presence_of(:notification) }
   end
 
   let(:recipient) { described_class.make(notification: Notification.make(:instant)) }
@@ -26,14 +25,14 @@ describe Notification::Recipient do
     end
   end
 
-  describe '#missing_email?' do
+  describe '#email_present?' do
     before { recipient.email = nil }
-    it { expect(recipient.missing_email?).to be(true) }
+    it { expect(recipient.email_present?).to be(false) }
   end
 
-  describe '#missing_telephone?' do
+  describe '#telephone_present?' do
     before { recipient.telephone = nil }
-    it { expect(recipient.missing_telephone?).to be(true) }
+    it { expect(recipient.telephone_present?).to be(false) }
   end
 
 end

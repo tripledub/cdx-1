@@ -2,7 +2,7 @@
   .row.center.add-new.collapse
     .col.pe-10
       %h2
-        = link_to [:notifications], class: 'side-link', title: I18n.t('views.back') do
+        = link_to [:alert_groups], class: 'side-link', title: I18n.t('views.back') do
           = image_tag "arrow-left-white.png"
         = I18n.t('notifications.new.new_notification')
 
@@ -15,13 +15,13 @@
       .col-6
     .panel.box-content
 
-      = form_for @notification, url: [:notifications] do |f|
+      = form_for @notification, url: [:alert_groups] do |f|
         = render :partial => 'form', :object => f
 
         .row.button-actions
           .col
             = f.submit class: 'btn-primary'
-            = link_to I18n.t('views.cancel'), [:notifications], class: 'btn-link'
+            = link_to I18n.t('views.cancel'), [:alert_groups], class: 'btn-link'
 
 :javascript
   $('.bettertabs').bettertabs();

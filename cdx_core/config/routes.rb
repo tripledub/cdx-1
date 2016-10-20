@@ -53,8 +53,6 @@ Rails.application.routes.draw do
 
   resources :test_orders_state, only: [:index, :show]
 
-  resources :notifications
-
   resources :encounters do
     resource :patient_results, only: [:update] do
       collection do

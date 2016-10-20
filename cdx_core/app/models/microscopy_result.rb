@@ -8,7 +8,7 @@ class MicroscopyResult < PatientResult
 
   delegate :patient, to: 'encounter'
 
-  notification_observe_fields :appearance, :specimen_type, :test_result
+  notification_observe_fields :appearance, :specimen_type, :test_result, :result_status
 
   def localised_name
     I18n.t('microscopy_results.localised_name')

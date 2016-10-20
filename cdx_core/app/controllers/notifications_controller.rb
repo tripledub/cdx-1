@@ -3,9 +3,10 @@ class NotificationsController < ApplicationController
   before_action :find_notification
 
   def index
-    @notifications = @navigation_context.institution.notifications
+    @notifications = check_access(Notification, READ_ALERT)
+    @notifications = @notifications.within(@navigation_context.entity, @navigation_context.exclude_subsites)
 
-    @can_create = has_access?(Alert, CREATE_ALERT)
+    @can_create = has_access?(Notification, CREATE_ALERT)
 
     @total = @notifications.count
     order_by, offset = perform_pagination('notifications.last_notification_at')
@@ -35,7 +36,7 @@ class NotificationsController < ApplicationController
     @notification.user = current_user
 
     if @notification.save
-      redirect_to([:edit, @notification], notice: I18n.t('notifications.flash.create_success'))
+      redirect_to(edit_alert_group_path(@notification), notice: I18n.t('notifications.flash.create_success'))
     else
       notification_form_variables
       flash.now[:alert] = I18n.t('notifications.flash.create_failure')
@@ -45,7 +46,7 @@ class NotificationsController < ApplicationController
 
   def update
     if @notification.update_attributes(notification_params)
-      redirect_to([:edit, @notification], notice: I18n.t('notifications.flash.update_success'))
+      redirect_to(edit_alert_group_path(@notification), notice: I18n.t('notifications.flash.update_success'))
     else
       notification_form_variables
       flash.now[:alert] = I18n.t('notifications.flash.update_failure')
@@ -91,11 +92,28 @@ class NotificationsController < ApplicationController
     end
 
     def notification_params
-      params.require(:notification).permit(:enabled, :name, :description, :patient_identifier,
-        :test_identifier, :sample_identifier, :detection, :detection_condition,
-        :detection_quantitative_result, :device_error_code, :anomaly_type,
-        :utilisation_efficiency_sample_identifier, :utilisation_efficiency_threshold, :email,
-        :email_limit, :email_message, :sms, :sms_limit, :sms_message, :frequency, :frequency_value,
+      params.require(:notification).permit(
+        :enabled,
+        :name,
+        :description,
+        :patient_identifier,
+        :test_identifier,
+        :sample_identifier,
+        :detection,
+        :detection_condition,
+        :detection_quantitative_result,
+        :device_error_code,
+        :anomaly_type,
+        :utilisation_efficiency_sample_identifier,
+        :utilisation_efficiency_threshold,
+        :email,
+        :email_limit,
+        :email_message,
+        :sms,
+        :sms_limit,
+        :sms_message,
+        :frequency,
+        :frequency_value,
         notification_recipients_attributes: [ :id, :first_name, :last_name, :email, :telephone, :_destroy ],
         notification_statuses_names: [],
         site_ids:   [],

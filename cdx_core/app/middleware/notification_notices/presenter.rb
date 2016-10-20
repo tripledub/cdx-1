@@ -13,7 +13,7 @@ module NotificationNotices
             date:         Extras::Dates::Format.datetime_with_time_zone(notification_notice.created_at),
             status:       notification_notice.status,
             message:      friendly_data(notification_notice.data),
-            viewLink:     Rails.application.routes.url_helpers.edit_notification_path(notification_notice.notification)
+            viewLink:     Rails.application.routes.url_helpers.edit_alert_group_path(notification_notice.notification)
           }
         end
       end

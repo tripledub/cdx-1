@@ -9,7 +9,7 @@ class CultureResult < PatientResult
 
   delegate :patient, to: 'encounter'
 
-  notification_observe_fields :media_used, :test_result
+  notification_observe_fields :result_status, :media_used, :test_result
 
   def localised_name
     I18n.t('culture_results.localised_name')

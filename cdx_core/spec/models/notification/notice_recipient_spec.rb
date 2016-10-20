@@ -12,7 +12,32 @@ describe Notification::NoticeRecipient do
   end
 
   describe '#email' do
-    it { expect(described_class.new).to have(2).error_on(:email)}
+    let(:notice_recipient) { Notification::NoticeRecipient.make(notification: Notification.make(:instant)) }
+
+    context 'is missing' do
+      before do
+        notice_recipient.email = nil
+      end
+
+      it { expect(notice_recipient.valid?).to be(true) }
+    end
+
+    context 'is invalid' do
+      before do
+        notice_recipient.email = 'invalidemail(at)example.com'
+      end
+
+      it { expect(notice_recipient.valid?).not_to be(true) }
+    end
+
+    context 'is missing and #telephone is missing' do
+      before do
+        notice_recipient.telephone = nil
+        notice_recipient.email = nil
+      end
+
+      it { expect(notice_recipient.valid?).not_to be(true) }
+    end
   end
 
   describe '#telephone' do
@@ -20,7 +45,7 @@ describe Notification::NoticeRecipient do
   end
 
   describe '#send_sms' do
-    let(:notice_recipient) { Notification::NoticeRecipient.make }
+    let(:notice_recipient) { Notification::NoticeRecipient.make(notification: Notification.make(:instant)) }
     after { Twilio::REST::Client.messages = [] }
 
     context 'when #telephone is blank' do
@@ -41,7 +66,7 @@ describe Notification::NoticeRecipient do
   end
 
   describe '#send_email' do
-    let(:notice_recipient) { Notification::NoticeRecipient.make }
+    let(:notice_recipient) { Notification::NoticeRecipient.make(notification: Notification.make(:instant)) }
     after { ActionMailer::Base.deliveries.clear }
 
     context 'when #email is blank' do
