@@ -1,25 +1,28 @@
 var EncounterNew = React.createClass({
   getInitialState: function() {
-    return {encounter: {
-      institution: this.props.context.institution,
-      site: null,
-      performing_site: null,
-      patient_id: this.props.patient_id,
-      samples: [],
-      new_samples: [],
-      test_results: [],
-      assays: [],
-      observations: '',
-      coll_sample_type: '',
-      coll_sample_other: '',
-      exam_reason: '',
-      tests_requested: '',
-      diag_comment: '',
-      treatment_weeks: 0,
-      status: 'new',
-      testdue_date: '',
-      allows_manual_entry: null
-    }};
+    return {
+      encounter: {
+        institution: this.props.context.institution,
+        site: null,
+        performing_site: null,
+        patient_id: this.props.patient_id,
+        samples: [],
+        new_samples: [],
+        test_results: [],
+        assays: [],
+        observations: '',
+        coll_sample_type: '',
+        coll_sample_other: '',
+        exam_reason: '',
+        tests_requested: '',
+        diag_comment: '',
+        treatment_weeks: 0,
+        status: 'new',
+        testdue_date: '',
+        presumptive_rr: null,
+        allows_manual_entry: null
+      }
+    };
 
     this.setState({ 'defaultSiteUuid': _.get(this.props.context.site, 'uuid') });
   },
