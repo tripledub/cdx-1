@@ -93,6 +93,10 @@ module PatientConcern
       json.birth_date_on Extras::Dates::Format.datetime_with_time_zone(birth_date_on)
     end
 
+    def external_patient_system_name
+      external_system ? external_system.name : ''
+    end
+
     private
 
     def entity_id_not_changed

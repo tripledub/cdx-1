@@ -88,7 +88,7 @@ var OptionList = React.createClass({
             return (<li key={item.value}>
               <span>{item.label}</span>
               <a className="remove" href="#" onClick={this.removeItem.bind(this, item)}>
-                <Img src="/assets/ic-cross.png" />
+                <Img src="/img/ic-cross.png" />
               </a>
             </li>);
           }.bind(this))}

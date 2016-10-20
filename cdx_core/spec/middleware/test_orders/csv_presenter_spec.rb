@@ -9,7 +9,7 @@ describe TestOrders::CsvPresenter do
   let(:default_params)    { { context: institution.uuid } }
 
   describe 'export_all' do
-    subject { described_class.new(Encounter.all).export_all }
+    subject { described_class.new(Encounter.all.order(:created_at)).export_all }
 
     before :each do
       User.current = user

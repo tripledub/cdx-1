@@ -11,11 +11,11 @@ describe XpertResultsController do
   let(:sample_identifier) { SampleIdentifier.make }
   let!(:xpert_result)     { XpertResult.make encounter: encounter, sample_identifier: sample_identifier }
   let(:valid_params)      { {
-    sample_collected_on: 4.days.ago,
+    sample_collected_at: 4.days.ago,
     tuberculosis:        'detected',
     rifampicin:          'not_detected',
     examined_by:         'Michael Kiske',
-    result_on:           1.day.ago
+    result_at:           1.day.ago
   } }
 
   context 'user with test orders permission' do

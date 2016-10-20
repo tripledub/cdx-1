@@ -6,8 +6,8 @@ class XpertResultsController < PatientResultsController
   end
 
   def edit
-    @xpert_result.sample_collected_on = @xpert_result.sample_collected_on || Date.today
-    @xpert_result.result_on           = @xpert_result.result_on || Date.today
+    @xpert_result.sample_collected_at = @xpert_result.sample_collected_at || Date.today
+    @xpert_result.result_at           = @xpert_result.result_at || Date.today
   end
 
   def update
@@ -25,6 +25,6 @@ class XpertResultsController < PatientResultsController
   end
 
   def xpert_result_params
-    params.require(:xpert_result).permit(:sample_collected_on, :sample_identifier_id, :tuberculosis, :trace, :rifampicin, :examined_by, :result_on, :comment)
+    params.require(:xpert_result).permit(:sample_collected_at, :sample_identifier_id, :tuberculosis, :trace, :rifampicin, :examined_by, :result_at, :comment)
   end
 end

@@ -1,6 +1,6 @@
 # Dst/Lpa results model.
 class DstLpaResult < PatientResult
-  validates_presence_of  :sample_collected_on, :examined_by, :result_on, :media_used, :results_h, :results_r, :results_e, :results_s, :results_amk, :results_km, :results_cm, :results_fq, on: :update
+  validates_presence_of  :sample_collected_at, :examined_by, :result_at, :media_used, :results_h, :results_r, :results_e, :results_s, :results_amk, :results_km, :results_cm, :results_fq, on: :update
   validates_inclusion_of :results_h, :results_r, :results_e, :results_s, :results_amk, :results_km, :results_cm, :results_fq, in: %w(resistant susceptible contaminated not_done), allow_nil: true
   validates_inclusion_of :media_used, in: %w(solid liquid), allow_nil: true
   validates_inclusion_of :method_used, in: %w(direct indirect), allow_nil: true

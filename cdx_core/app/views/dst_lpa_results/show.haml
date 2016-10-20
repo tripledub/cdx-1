@@ -28,8 +28,13 @@
             .row
               .col-12
                 %label
-                  = DstLpaResult.human_attribute_name(:sample_collected_on)
-                = I18n.l(@dst_lpa_result.sample_collected_on, format: :full_date)
+                  = DstLpaResult.human_attribute_name(:sample_collected_at)
+                = Extras::Dates::Format.datetime_with_time_zone(@dst_lpa_result.sample_collected_at, :full_time)
+            .row
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:result_at)
+                = Extras::Dates::Format.datetime_with_time_zone(@dst_lpa_result.result_at, :full_time)
             .row
               .col-12
                 %label
@@ -50,12 +55,6 @@
                 %label
                   = DstLpaResult.human_attribute_name(:examined_by)
                 = @dst_lpa_result.examined_by
-            .row
-              .col-12
-                %label
-                  = DstLpaResult.human_attribute_name(:result_on)
-                = I18n.l(@dst_lpa_result.result_on, format: :full_date)
-
           .col-4
             .row
               .col-12

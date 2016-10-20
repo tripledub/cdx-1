@@ -27,9 +27,15 @@
         .row
           .col-6
             %label
-              = XpertResult.human_attribute_name(:sample_collected_on)
+              = XpertResult.human_attribute_name(:sample_collected_at)
           .col-6
-            = I18n.l(@xpert_result.sample_collected_on, format: :full_date)
+            = Extras::Dates::Format.datetime_with_time_zone(@xpert_result.sample_collected_at, :full_time)
+        .row
+          .col-6
+            %label
+              = XpertResult.human_attribute_name(:result_at)
+          .col-6
+            = Extras::Dates::Format.datetime_with_time_zone(@xpert_result.result_at, :full_time)
         .row
           .col-6
             %label
@@ -61,12 +67,6 @@
               = XpertResult.human_attribute_name(:examined_by)
           .col-6
             = @xpert_result.examined_by
-        .row
-          .col-6
-            %label
-              = XpertResult.human_attribute_name(:result_on)
-          .col-6
-            = I18n.l(@xpert_result.result_on, format: :full_date)
         .row
           .col-6
             %label

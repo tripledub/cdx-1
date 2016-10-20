@@ -88,12 +88,12 @@ module CdxVietnam
             type: order_type, # @TODO
             order_id: encounter.batch_id.to_s, # @TODO
             cdp_order_id: patient_result.id.to_s,
-            sample_collected_date: test_order_to_send.sample_collected_on.strftime('%m/%d/%Y'), # @TODO
+            sample_collected_date: Extras::Dates::Format.datetime_with_time_zone(test_order_to_send.sample_collected_at, I18n.t('date.formats.etb_short')),
             month: 2, # @TODO, sample on cdp not have month field
             laboratory_serial_number: 'N3432',# @TODO, cdp not have this field
             laboratory_region: 'MIỀN BẮC', # OK - HARD CODE
             laboratory_name: 'LAB - HƯNG YÊN', # OK - HARD CODE
-            date_of_release: Extras::Dates::Format.datetime_with_time_zone(test_order_to_send.sample_collected_on, I18n.t('date.formats.etb_short')), 
+            date_of_release: Extras::Dates::Format.datetime_with_time_zone(test_order_to_send.sample_collected_at, I18n.t('date.formats.etb_short')), 
             result: 2, # @TODO, make sure list value, result of cdp not suitable with eTB
             comment: test_order_to_send.comment
           }
@@ -102,7 +102,7 @@ module CdxVietnam
             type: order_type, # @TODO
             order_id: encounter.batch_id.to_s, # @TODO
             cdp_order_id: patient_result.id.to_s,
-            sample_collected_date: Extras::Dates::Format.datetime_with_time_zone(test_order_to_send.sample_collected_on, I18n.t('date.formats.etb_short')), # @TODO
+            sample_collected_date: Extras::Dates::Format.datetime_with_time_zone(test_order_to_send.sample_collected_at, I18n.t('date.formats.etb_short')), # @TODO
             month: 2, # @TODO, sample on cdp not have month field
             specimen_type: specimen_type(test_order_to_send), # @TODO, make sure valid LIST VALUE
             laboratory_serial_number: 'N3432',# @TODO, cdp not have this field
@@ -110,7 +110,7 @@ module CdxVietnam
             laboratory_region: 'MIỀN BẮC', # OK - HARD CODE
             laboratory_name: 'LAB - HƯNG YÊN', # OK - HARD CODE
             next_exam_date: '',
-            date_of_release: Extras::Dates::Format.datetime_with_time_zone(test_order_to_send.sample_collected_on, I18n.t('date.formats.etb_short')), 
+            date_of_release: Extras::Dates::Format.datetime_with_time_zone(test_order_to_send.sample_collected_at, I18n.t('date.formats.etb_short')), 
             result: 'NEGATIVE', # @TODO, make sure list value, result of cdp not suitable with eTB
             comment: test_order_to_send.comment
           }

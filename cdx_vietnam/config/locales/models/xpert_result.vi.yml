@@ -3,9 +3,9 @@ vi:
     attributes:
       xpert_result:
         result_status: 'Trạng thái'
-        sample_collected_on: 'Ngày lấy mẫu'
+        sample_collected_at: 'Ngày lấy mẫu'
         examined_by: 'Kiểm tra bởi'
-        result_on: 'Kết quả ngày'
+        result_at: 'Kết quả ngày'
         rifampicin: 'Kháng sinh'
         trace: 'Dấu vết'
         tuberculosis: 'Vi khuẩn lao'

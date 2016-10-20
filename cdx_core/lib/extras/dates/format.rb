@@ -22,6 +22,8 @@ module Extras
         end
 
         def datetime_with_time_zone(time_value, formatValue = :long, tz = nil)
+          return '' unless time_value
+
           time_value = parse_select(time_value['1'], time_value['2'], time_value['3']) if time_value.is_a? Hash
           return nil unless time_value.present?
 

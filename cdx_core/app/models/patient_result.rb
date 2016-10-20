@@ -56,8 +56,8 @@ class PatientResult < ActiveRecord::Base
   protected
 
   def convert_string_to_dates
-    sample_collected_on = Extras::Dates::Format.string_to_pattern(sample_collected_on) if sample_collected_on.present? && sample_collected_on.is_a?(String)
-    result_on           = Extras::Dates::Format.string_to_pattern(result_on) if result_on.present? && result_on.is_a?(String)
+    sample_collected_at = Extras::Dates::Format.string_to_pattern(sample_collected_at) if sample_collected_at.present? && sample_collected_at.is_a?(String)
+    result_at           = Extras::Dates::Format.string_to_pattern(result_at) if result_at.present? && result_at.is_a?(String)
   end
 
   def complete_test
