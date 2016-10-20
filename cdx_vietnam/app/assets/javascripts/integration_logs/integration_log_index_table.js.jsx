@@ -38,7 +38,7 @@ var IntegrationLogRow = React.createClass({
     }
 
     return (
-    <tr data-href={this.props.record.id}>
+    <tr>
       <td>{this.props.record.patientName}</td>
       <td>{this.props.record.orderId}</td>
       <td>{this.props.record.failStep}</td>
