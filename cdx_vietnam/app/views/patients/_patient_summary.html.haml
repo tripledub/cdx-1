@@ -32,6 +32,16 @@
           %label
             = Patient.human_attribute_name(:vitimes_id)
           = patient.vitimes_id
+          
+        %li
+          %label
+            = Patient.human_attribute_name(:social_security_code)
+          = patient.social_security_code
+
+        %li
+          %label
+            = Patient.human_attribute_name(:medical_insurance_num)
+          = patient.medical_insurance_num
 
       %ul
         %li
@@ -49,7 +59,7 @@
         %li
           %label
             = Patient.human_attribute_name(:external_patient_system)
-          = patient.external_patient_system_name
+          = patient.external_patient_system
 
         - patient_address_label = "patients.show.address"
         - patient.addresses.each do |address|
@@ -59,20 +69,11 @@
             - if patient_address_label == "patients.show.address" then patient_address_label = "patients.show.alt_address" end
             = Patients::Presenter.show_full_address(address)
 
-      %ul
-        %li
-          %label
-            = Patient.human_attribute_name(:social_security_code)
-          = patient.social_security_code
 
         %li
           %label
-            = Patient.human_attribute_name(:medical_insurance_num)
-          = patient.medical_insurance_num
-        %li
-          %label
             = Patient.human_attribute_name(:created_at)
-          = Extras::Dates::Format.datetime_with_time_zone(patient.created_at, :full_time)
+          = I18n.l(patient.created_at, format: :long)
 
         - if has_access?(@patient, Policy::Actions::UPDATE_PATIENT)
           %ul.button-container

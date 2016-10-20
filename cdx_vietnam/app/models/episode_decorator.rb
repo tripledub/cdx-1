@@ -15,4 +15,17 @@ class Episode < ActiveRecord::Base
       OpenStruct.new(id: :other, name: I18n.t('select.episode.history.other'))
     ]
   end
+
+  def self.drug_resistance_options
+    [
+      OpenStruct.new(id: :mono, name: I18n.t('select.episode.drug_resistance.mono')),
+      OpenStruct.new(id: :poly, name: I18n.t('select.episode.drug_resistance.poly')),
+      OpenStruct.new(id: :multi, name: I18n.t('select.episode.drug_resistance.multi')),
+      OpenStruct.new(id: :extensive, name: I18n.t('select.episode.drug_resistance.extensive')),
+      OpenStruct.new(id: :rif, name: I18n.t('select.episode.drug_resistance.rif')),
+      OpenStruct.new(id: :prexdr, name: I18n.t('select.episode.drug_resistance.prexdr')),
+      OpenStruct.new(id: :etbval, name: I18n.t('select.episode.drug_resistance.etbval')),
+      OpenStruct.new(id: :unknown, name: I18n.t('select.episode.drug_resistance.unknown'))
+    ]
+  end
 end
