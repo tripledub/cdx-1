@@ -124,7 +124,7 @@ var EncounterShow = React.createClass({
                 }
                 {
                   this.props.encounter.presumptive_rr ?
-                  <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.presumptive")} fieldValue={ this.props.encounter.presumptive_rr } />
+                  <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.presumptive") } fieldValue={ this.props.encounter.presumptive_rr ? I18n.t('views.say_yes') : I18n.t('views.say_no') } />
                   : null
                 }
                 <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.sample_type_label") } fieldValue={ sample_type } />
