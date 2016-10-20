@@ -46,7 +46,7 @@ module Integration
         patient["patient_#{system}_id"] = patient_temp.external_id if patient_temp.present?
         log.update_attributes({
           try_n_times: try_count, 
-          error_message: "microscopy not have etb_patient_id",
+          error_message: "microscopy not have #{system}_patient_id",
           status: "wait_xpert"
         })
       end
@@ -54,7 +54,7 @@ module Integration
       if test_order['type'] == 'microscopy' && patient["patient_#{system}_id"].blank?
         log.update_attributes({
           try_n_times: try_count, 
-          error_message: "microscopy not have etb_patient_id",
+          error_message: "microscopy not have #{system}_patient_id",
           status: "Error"
         })
         return
@@ -85,7 +85,8 @@ module Integration
           x = CdpScraper::EtbScraper::new(Settings.etb_username, Settings.etb_password, Settings.etb_endpoint)
           x.login
         else
-          # VTM system
+          x = CdpScraper::VitimesScraper::new(Settings.vtm_username, Settings.vtm_password, Settings.vtm_endpoint)
+          x.login
         end
         res = x.create_patient({"patient" => patient})
         
@@ -145,7 +146,8 @@ module Integration
           x = CdpScraper::EtbScraper::new(Settings.etb_username, Settings.etb_password, Settings.etb_endpoint)
           x.login
         else
-          # VTM system
+          x = CdpScraper::VitimesScraper::new(Settings.vtm_username, Settings.vtm_password, Settings.vtm_endpoint)
+          x.login
         end
         res = x.create_test_order({"test_order" => test_order})
         try_count += 1
@@ -191,7 +193,7 @@ module Integration
       
       return false if !order
       
-      json = CdxVietnam::Presenters::Etb.create_patient(order)
+      json = "CdxVietnam::Presenters::#{order.patient.external_patient_system.camelize}".constantize.create_patient(order)
       
       if log.fail_step == 'patient'
         integration(json, log)
