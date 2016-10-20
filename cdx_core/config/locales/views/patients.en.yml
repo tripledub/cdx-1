@@ -15,6 +15,9 @@ en:
       episode_summary: 'Episode Summary'
       address: 'Permanent Address'
       alt_address: 'Contact Address'
+      male: "Male"
+      female: "Female"
+      other: "Other"
     filters:
       add_patient: 'Add patient'
       show_all: 'Show all'
@@ -69,6 +72,7 @@ en:
       social_security_code_tooltip: 'Social security Id. of the patient.'
       medical_insurance_num_tooltip: 'Medical Insurance Number of the patient.'
       copy_addr_button: 'Copy Address to other'
+      address_details: "Address Details"
     index:
       no_patients: 'No patients registered'
       keep_organized: 'Keep your test orders organized under patients medical history'

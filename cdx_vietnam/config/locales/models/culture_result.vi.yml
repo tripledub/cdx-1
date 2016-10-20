@@ -8,3 +8,5 @@ vi:
         result_at: 'Kết quả ngày'
         media_used: 'Phương tiện truyền thông sử dụng'
         serial_number: 'Số seri phòng thí nghiệm'
+        sample_identifier_id: 'Mã số mẫu'
+        feedback_message_id: 'Phản hồi'
