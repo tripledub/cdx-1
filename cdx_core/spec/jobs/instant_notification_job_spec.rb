@@ -4,7 +4,8 @@ require 'sidekiq/testing'
 Sidekiq::Testing.fake!
 
 describe InstantNotificationJob do
-
+  before(:all) { TestAfterCommit.enabled = true  }
+  after(:all)  { TestAfterCommit.enabled = false }
   before(:all) { InstantNotificationJob.jobs.clear }
 
   describe '#perform' do
@@ -14,8 +15,16 @@ describe InstantNotificationJob do
         institution: encounter.institution,
         encounter:   encounter,
         patient:     encounter.patient,
-        notification_statuses_names: ['samples_received'],
+        notification_statuses_names: ['sample_collected'],
         frequency:  'instant'
+      )
+    end
+
+    let!(:xpert_result) do
+      XpertResult.make(
+        institution: encounter.patient.institution,
+        encounter: encounter,
+        result_status: 'new'
       )
     end
 
@@ -30,10 +39,10 @@ describe InstantNotificationJob do
 
     before { CheckNotificationJob.clear }
 
-    context 'when encounter#status is \'samples_received\'' do
+    context 'when xpert_result#status is \'sample_collected\'' do
       before do
-        encounter.status = 'samples_received'
-        encounter.save!
+        xpert_result.result_status = 'sample_collected'
+        xpert_result.save!
         CheckNotificationJob.drain
       end
 

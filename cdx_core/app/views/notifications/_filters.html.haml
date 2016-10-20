@@ -1,12 +1,15 @@
 - content_for(:subheader) do
-
-  .filterbar.filterbartest
-    .heading
-      .title
-        %h3
+  .notification-subheader.notification-subheader--filters
+    .row.center.add-new.collapse
+      .col.pe-10
+        %h2
+          = link_to [:alerts], class: 'side-link', title: I18n.t('views.back') do
+            = image_tag "arrow-left-white.png"
           = I18n.t('notifications.filters.title')
-    .topfilteropt
-      - if @can_create
-        = link_to("+", [:new, :notification], class: 'btn-add side-link fix', title: I18n.t('notifications.filters.btn_add_notification'))
-  %form#filters-form.filteroptions{action: notifications_path, "data-auto-submit" => true}
+
+        .topfilteropt
+          - if @can_create
+            = link_to("+", [:new, :alert_group], class: 'btn-add side-link fix', title: I18n.t('notifications.filters.btn_add_notification'))
+
+  %form#filters-form.filteroptions{action: alert_groups_path, "data-auto-submit" => true}
     %input{type: "hidden", name: "page_size", value: @page_size}

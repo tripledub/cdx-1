@@ -15,6 +15,6 @@ describe Notifications::MicroscopyResultLookup do
   describe '#check_notifications' do
     let(:lookup) { described_class.new(microscopy_result) }
     before { lookup.check_notifications }
-    it { expect(lookup.notifications).to be_empty }
+    it { expect(lookup.notifications).to include(notification_on_patient) }
   end
 end

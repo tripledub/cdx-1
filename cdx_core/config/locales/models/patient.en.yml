@@ -12,7 +12,7 @@ en:
         created_at: 'Created at'
         nickname: 'Nickname'
         social_security_code: 'Social security ID'
-        medical_insurance_num: 'MI Number'
+        medical_insurance_num: 'Medical Insurance Number'
         external_id: 'External Patient ID'
         external_patient_system: 'External Patient System'
   patient:

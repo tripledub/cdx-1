@@ -464,6 +464,8 @@ GEM
     sshkit (1.11.2)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    test_after_commit (1.1.0)
+      activerecord (>= 3.2)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
@@ -571,6 +573,7 @@ DEPENDENCIES
   site_prism
   spring
   spring-commands-rspec
+  test_after_commit
   therubyracer
   timecop
   twilio-ruby (~> 4.11.1)

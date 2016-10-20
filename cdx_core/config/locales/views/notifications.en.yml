@@ -2,7 +2,7 @@ en:
   notifications:
     index:
       notification: Alerts
-      your_team: Keep your team notified about important stuff.
+      your_team: Keep your team notified about important events.
       messages_sent: Alert messages sent
       incidents: Incidents
       empty: No alerts

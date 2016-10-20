@@ -40,7 +40,7 @@
         - if @notification.patient
           .notification-lookup-record
             %strong [#{link_to(@notification.patient.entity_id, patient_path(@notification.patient), target: '_blank')}]
-            #{@notification.patient.name}
+            = @notification.patient.name
       .col
     .row
       .col.pe-2
@@ -54,7 +54,7 @@
         - if @notification.encounter
           .notification-lookup-record
             %strong [#{link_to(@notification.encounter.batch_id, encounter_path(@notification.encounter), target: '_blank')}]
-            #{I18n.t("select.patient_result.status_options.#{@notification.encounter.status}")}
+            = I18n.t("select.patient_result.status_options.#{@notification.encounter.status}")
       .col
     .row
       .col.pe-2
@@ -71,7 +71,7 @@
           %div.tooltiptext_r
             = I18n.t('notifications.form.tooltip.notification_statuses_names')
       .col
-        = form.select :notification_statuses_names, Encounter.status_options.map(&:reverse), {}, { class: 'select2', multiple: true, placeholder: I18n.t('notifications.form.placeholder.notification_statuses_names') }
+        = form.select :notification_statuses_names, PatientResult.status_options.map(&:reverse), {}, { class: 'select2', multiple: true, placeholder: I18n.t('notifications.form.placeholder.notification_statuses_names') }
     .row
       .col.pe-2
         %div.tooltip

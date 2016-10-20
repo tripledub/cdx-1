@@ -1,3 +1,13 @@
+.notification-subheader {
+  &.notification-subheader--filters {
+    .topfilteropt {
+      float: none;
+      position: absolute;
+      right: 10px;
+    }
+  }
+}
+
 .notification, .notification.testflow {
   .container {
     .bettertabs {

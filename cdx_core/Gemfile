@@ -93,4 +93,5 @@ group :test do
   gem 'capybara-screenshot'
   gem 'webmock', '1.21.0', require: false
   gem 'site_prism'
+  gem 'test_after_commit'
 end

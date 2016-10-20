@@ -21,30 +21,6 @@ describe Notifications::EncounterLookup do
       it { expect(lookup.notifications).to include(notification_on_patient, notification_on_site) }
     end
 
-    context 'when status is \'samples_received\'' do
-      before do
-        encounter.status = 'samples_received'
-        encounter.save!
-        lookup.check_notifications
-      end
-
-      it { expect(lookup.notifications.size).to eq(3) }
-      it { expect(lookup.notifications).to include(notification_on_patient, notification_on_site, notification_on_samples_received) }
-    end
-
-    context 'when status is \'pending_approval\'' do
-      before do
-        encounter.status = 'pending_approval'
-        encounter.save!
-        lookup.check_notifications
-      end
-
-      it { expect(lookup.notifications.size).to eq(3) }
-      it { expect(lookup.notifications).to include(notification_on_patient, notification_on_site, notification_on_pending_approval) }
-      it { expect(lookup.notifications).not_to include(notification_on_samples_received) }
-    end
-
-
     context 'notification from different institution' do
       before { lookup.check_notifications }
       it { expect(lookup.notifications).not_to include(notification_on_other_institution) }
@@ -59,28 +35,6 @@ describe Notifications::EncounterLookup do
       end
 
       it { expect { lookup.create_notices_from_notifications }.to change { Notification::Notice.count }.by(2)}
-    end
-
-    context 'when status is \'samples_received\'' do
-      before do
-        encounter.status = 'samples_received'
-        encounter.save!
-        lookup.check_notifications
-        lookup.create_notices_from_notifications
-
-        it { expect { lookup.create_notices_from_notifications }.to change { Notification::Notice.count }.by(3)}
-      end
-    end
-
-    context 'when status is \'pending_approval\'' do
-      before do
-        encounter.status = 'pending_approval'
-        encounter.save!
-        lookup.check_notifications
-        lookup.create_notices_from_notifications
-
-        it { expect { lookup.create_notices_from_notifications }.to change { Notification::Notice.count }.by(3)}
-      end
     end
 
     context 'notification from different institution' do

@@ -41,7 +41,7 @@ en:
     settings:
       header: 'Settings'
       alert: 'Alerts'
-      alerts_notice: 'Keep your team notified about important stuff.'
+      alerts_notice: 'Keep your team notified about important events.'
       role:
         zero: 'No roles'
         one: "1 Role"

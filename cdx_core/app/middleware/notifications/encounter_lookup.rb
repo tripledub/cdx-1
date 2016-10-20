@@ -6,7 +6,7 @@ module Notifications
                     .includes(:institution, :sites, :notification_statuses, :patient)
                     .where(institutions: { id: alertable.institution_id })
                     .where('sites.id is null OR sites.id = ?', alertable.site_id)
-                    .where('notification_statuses.id is null OR notification_statuses.test_status = ?', alertable.status)
+                    .where('notification_statuses.id is null')
                     .where('patients.id is null OR patients.id = ?', alertable.patient_id)
                     .where('notifications.sample_identifier is null OR notifications.sample_identifier in (?)', sample_identifier_ids)
     end

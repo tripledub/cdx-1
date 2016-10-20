@@ -1,27 +1,7 @@
 module Notifications
-  class XpertResultLookup < Notifications::BaseLookup
+  class XpertResultLookup < Notifications::PatientResultLookup
     def check_notifications
-
-      @notifications =
-        Notification.enabled
-                    .includes(:institution, :sites, :notification_statuses, :patient)
-                    .where(institutions: { id: alertable.institution_id })
-
-      if alertable.encounter
-        @notifications =
-          @notifications.where('notification_statuses.id is null OR notification_statuses.test_status = ?', alertable.encounter.status)
-                        .where('sites.id is null OR sites.id = ?', alertable.encounter.site_id)
-      else
-        @notifications =
-          @notifications.where('notification_statuses.id is null')
-                        .where('sites.id is null')
-      end
-
-      if alertable.patient
-        @notifications = @notifications.where('patients.id is null OR patients.id = ?', alertable.patient.id)
-      else
-        @notifications = @notifications.where('patients.id is null')
-      end
+      super
 
       # Currently Notification needs support added
       # TODO: notify on detection quantity
