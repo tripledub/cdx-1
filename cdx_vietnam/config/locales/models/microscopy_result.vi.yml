@@ -12,3 +12,4 @@ vi:
         test_result: 'Kết quả'
         sample_identifier_id: 'Mã số mẫu'
         feedback_message_id: 'Phản hồi'
+        comment: "Ghi chú"

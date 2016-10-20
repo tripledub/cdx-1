@@ -8,7 +8,7 @@ class MicroscopyResultsController < PatientResultsController
   def edit
     @microscopy_result.sample_collected_at = @microscopy_result.sample_collected_at || Date.today
     @microscopy_result.result_at           = @microscopy_result.result_at || Date.today
-    @microscopy_result.specimen_type       = @encounter.coll_sample_type
+    @microscopy_result.specimen_type       = I18n.t("test_results.index.specimen_type.#{@encounter.coll_sample_type}")
   end
 
   def update

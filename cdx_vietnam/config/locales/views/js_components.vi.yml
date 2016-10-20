@@ -91,6 +91,8 @@
       in_progress: 'Đang xử lý'
       pending_approval: 'Chờ chấp thuận'
       closed: 'Đã đóng'
+      print_label: 'In nhãn'
+      print_label_title: 'In mã vạch cho mẫu đầu tiên'
     alert_messages:
       col_name: "Tên"
       col_date: "Ngày"
