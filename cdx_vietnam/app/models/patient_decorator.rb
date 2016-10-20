@@ -1,9 +1,9 @@
+# Vietnam specific logic for patients
 class Patient < ActiveRecord::Base
-
-  validates :social_security_code, length: { in: 9..15 }
+  validates :social_security_code, length: { in: 9..15, message: I18n.t('patient.validations.cmnd') }, unless: Proc.new { |patient| patient.skip_ssc_validation }
 
   def display_patient_id
-    'VPN' << id.to_s.rjust(6,'0')
+    'VPN' << id.to_s.rjust(6, '0')
   end
 
   def self.gender_options
@@ -11,5 +11,13 @@ class Patient < ActiveRecord::Base
       ['male', I18n.t('select.patient.gender_options.male')],
       ['female', I18n.t('select.patient.gender_options.female')]
     ]
+  end
+
+  def vitimes_id
+    custom_fields['vitimes_id']
+  end
+
+  def vitimes_id=(value)
+    custom_fields['vitimes_id'] = value
   end
 end

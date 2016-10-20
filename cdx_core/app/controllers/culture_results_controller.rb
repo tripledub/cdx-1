@@ -6,8 +6,8 @@ class CultureResultsController < PatientResultsController
   end
 
   def edit
-    @culture_result.sample_collected_on = @culture_result.sample_collected_on || Date.today
-    @culture_result.result_on           = @culture_result.result_on || Date.today
+    @culture_result.sample_collected_at = @culture_result.sample_collected_at || Date.today
+    @culture_result.result_at           = @culture_result.result_at || Date.today
     @culture_result.media_used          = @culture_result.media_used || @encounter.culture_format
   end
 
@@ -26,6 +26,6 @@ class CultureResultsController < PatientResultsController
   end
 
   def culture_result_params
-    params.require(:culture_result).permit(:sample_collected_on, :examined_by, :result_on, :media_used, :sample_identifier_id, :test_result, :method_used, :comment)
+    params.require(:culture_result).permit(:sample_collected_at, :examined_by, :result_at, :media_used, :sample_identifier_id, :test_result, :method_used, :comment)
   end
 end

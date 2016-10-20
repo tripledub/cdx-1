@@ -12,7 +12,7 @@ module DeviceMessages
             deviceName:        device_message.device.name,
             numberOfFailures:  device_message.index_failure_data[:number_of_failures],
             errorField:        device_message.index_failure_data[:target_field],
-            createdAt:         Extras::Dates::Format.datetime_with_time_zone(device_message.created_at, :long, device_message.device.time_zone),
+            createdAt:         Extras::Dates::Format.datetime_with_time_zone(device_message.created_at, :full_time, device_message.device.time_zone),
             rawLink:           Rails.application.routes.url_helpers.raw_device_message_path(device_message)
           }
         end

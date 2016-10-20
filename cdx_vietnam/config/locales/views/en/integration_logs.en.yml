@@ -1,0 +1,10 @@
+en:
+  integration_logs:
+    index:
+      no_log: "No integration logs created"
+      log:
+        zero: 'No Logs'
+        one:  'One Log'
+        other: '%{count} logs'
+    filters:
+      header: "Integration Logs"

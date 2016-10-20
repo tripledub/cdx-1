@@ -6,9 +6,9 @@ class MicroscopyResultsController < PatientResultsController
   end
 
   def edit
-    @microscopy_result.sample_collected_on = @microscopy_result.sample_collected_on || Date.today
-    @microscopy_result.result_on           = @microscopy_result.result_on || Date.today
-    @microscopy_result.specimen_type       = @encounter.coll_sample_type
+    @microscopy_result.sample_collected_at = @microscopy_result.sample_collected_at || Date.today
+    @microscopy_result.result_at           = @microscopy_result.result_at || Date.today
+    @microscopy_result.specimen_type       = I18n.t("test_results.index.specimen_type.#{@encounter.coll_sample_type}")
   end
 
   def update
@@ -27,6 +27,6 @@ class MicroscopyResultsController < PatientResultsController
 
   def microscopy_result_params
     params.require(:microscopy_result)
-          .permit(:sample_collected_on, :examined_by, :result_on, :specimen_type, :sample_identifier_id, :appearance, :test_result, :comment)
+          .permit(:sample_collected_at, :examined_by, :result_at, :specimen_type, :sample_identifier_id, :appearance, :test_result, :comment)
   end
 end

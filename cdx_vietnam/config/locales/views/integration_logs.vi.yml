@@ -1,0 +1,10 @@
+vi:
+  integration_logs:
+    index:
+      no_log: "Không có lịch sử tích hợp nào"
+      log:
+        zero: 'Không có lịch sử tích hợp nào'
+        one:  'Một dòng'
+        other: '%{count} Dòng'
+    filters:
+      header: "Lịch sử tích hợp"

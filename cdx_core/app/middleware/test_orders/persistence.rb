@@ -122,6 +122,7 @@ module TestOrders
         json.(@encounter, :coll_sample_type)
         json.(@encounter, :coll_sample_other)
         json.(@encounter, :diag_comment)
+        json.(@encounter, :presumptive_rr)
         json.(@encounter, :treatment_weeks)
         json.(@encounter, :status)
         json.(@encounter, :testdue_date)

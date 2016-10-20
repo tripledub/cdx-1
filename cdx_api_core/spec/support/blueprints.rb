@@ -217,16 +217,16 @@ TestResult.blueprint do
 end
 
 CultureResult.blueprint do
-  sample_collected_on { 23.days.ago}
+  sample_collected_at { 23.days.ago}
   serial_number { 'some random serial numbers' }
   media_used { 'solid' }
   test_result { 'contaminated' }
   examined_by { Faker::Name.name }
-  result_on { 7.days.from_now }
+  result_at { 7.days.from_now }
 end
 
 DstLpaResult.blueprint do
-  sample_collected_on { 23.days.ago}
+  sample_collected_at { 23.days.ago}
   serial_number { 'some random serial numbers' }
   media_used { 'solid' }
   method_used { 'direct' }
@@ -240,25 +240,25 @@ DstLpaResult.blueprint do
   results_fq { 'susceptible' }
   results_other1 'Some other things'
   examined_by { Faker::Name.name }
-  result_on { 7.days.from_now }
+  result_at { 7.days.from_now }
 end
 
 MicroscopyResult.blueprint do
-  sample_collected_on { 23.days.ago}
+  sample_collected_at { 23.days.ago}
   serial_number { 'some random serial numbers' }
   appearance { 'blood' }
   specimen_type { 'some type' }
   test_result { '1to9' }
   examined_by { Faker::Name.name }
-  result_on { 7.days.from_now }
+  result_at { 7.days.from_now }
 end
 
 XpertResult.blueprint do
-  sample_collected_on { 23.days.ago}
+  sample_collected_at { 23.days.ago}
   tuberculosis { 'invalid' }
   rifampicin { 'detected' }
   examined_by { Faker::Name.name }
-  result_on { 7.days.from_now }
+  result_at { 7.days.from_now }
 end
 
 DeviceMessage.blueprint do

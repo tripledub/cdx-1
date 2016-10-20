@@ -5,3 +5,10 @@ vi:
       culture_result: 'Kết quả Culture'
       dst_lpa_result: 'Kết quả Dst/Lpa'
       microscopy_result: 'Kết quả Microscopy'
+    status:
+      new: 'Mới'
+      sample_collected: 'Đang chờ'
+      allocated: 'Đã tiếp nhận'
+      pending_approval: 'Đang chờ phê duyệt'
+      rejected: 'Đã từ chối'
+      completed: 'Đã hoàn thành'

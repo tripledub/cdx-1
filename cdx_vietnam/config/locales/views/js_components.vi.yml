@@ -45,10 +45,11 @@
       mark_as_paid: 'Đánh giá yêu cầu xét nghiệm được trả'
       reject: 'Tài trợ đã bị từ chối'
     add_samples_action:
+      enter_sample_id: 'Nhập mã mẫu'
       add_result: 'Thêm kết quả'
       submit_samples:  'Nhập mẫu'
       sample_ids: 'Mẫu Ids cho hàng loạt xét nghiệm'
-      save_sample_ids: 'Lưu mẫu ids'
+      save_sample_ids: 'Lưu mã mẫu'
     test_batch_table:
       type: 'Loại'
       sample_id: 'Mã mẫu'
@@ -90,6 +91,8 @@
       in_progress: 'Đang xử lý'
       pending_approval: 'Chờ chấp thuận'
       closed: 'Đã đóng'
+      print_label: 'In nhãn'
+      print_label_title: 'In mã vạch cho mẫu đầu tiên'
     alert_messages:
       col_name: "Tên"
       col_date: "Ngày"
@@ -208,6 +211,7 @@
           col_test_order_status: "Trạng thái"
           col_title: "Tiêu đề"
           col_user: "Người dùng"
+          col_device: "Thiết bị"
           col_date: "Ngày thêm"
           msg_loading: "Đang tải nhật ký..."
           msg_no_log: "Không có nhật ký."
@@ -244,7 +248,7 @@
       col_exam_by: "Kiểm tra bởi"
       col_media_used: "Phương tiện sử dụng"
       col_test_result: "Kết quả kiểm tra"
-      col_result_on: "Kết quả ngày"
+      col_result_at: "Kết quả ngày"
       col_h: "Kết quả H"
       col_r: "Kết quả R"
       col_e: "Kết quả E"
@@ -276,3 +280,15 @@
       col_role: "Chức vụ"
       col_status: "Trạng thái"
       col_last_activity: "Hoạt động cuối cùng"
+    integration_logs:
+      col_title: "Lịch sử tích hợp"
+      col_patient_name: "Tên bệnh nhân"
+      col_order_id: "Mã Yêu cầu"
+      col_json: "Dữ liệu Json"
+      col_fail_step: "Bước bị lỗi"
+      col_system: "Hệ thống"
+      col_error_message: "Lỗi"
+      col_try_n_times: "Số lần thử"
+      col_updated_at: "Ngày cập nhật"
+      col_status: "Trạng thái"
+      retry: "Thử lại"

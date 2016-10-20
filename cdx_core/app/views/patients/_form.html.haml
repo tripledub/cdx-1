@@ -99,7 +99,7 @@
             %div.tooltiptext_r
               = I18n.t('patients.form.external_patient_system_tooltip')
         .fieldvalue
-          = f.collection_select :external_system, ExternalSystem.all, :id, :name, prompt: I18n.t('forms.please_select')
+          = f.collection_select :external_system_id, ExternalSystem.all, :id, :name, prompt: I18n.t('forms.please_select')
 
     .fieldrow#pphone
       .fieldlabel
@@ -125,7 +125,8 @@
   
   .whitebox
     .purpleheader
-      %h3 ADDRESS DETAILS
+      %h3 
+        = I18n.t('patients.form.address_details')
     
 
     .row.hideme

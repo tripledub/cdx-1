@@ -13,3 +13,9 @@ Patient.blueprint do
     end
   }
 end
+
+IntegrationLog.blueprint do
+  patient_name Faker::Name.name
+  order_id "CDP00001"
+end
+

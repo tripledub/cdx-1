@@ -22,10 +22,10 @@ describe MicroscopyResults::Presenter do
     it 'should return elements formated' do
       expect(described_class.index_table(PatientResult.all).first).to eq({
         id:                MicroscopyResult.first.uuid,
-        sampleCollectedOn: Extras::Dates::Format.datetime_with_time_zone(MicroscopyResult.first.sample_collected_on),
+        sampleCollectedAt: Extras::Dates::Format.datetime_with_time_zone(MicroscopyResult.first.sample_collected_at, :full_time),
         examinedBy:        MicroscopyResult.first.examined_by,
-        resultOn:          Extras::Dates::Format.datetime_with_time_zone(MicroscopyResult.first.result_on),
-        specimenType:      MicroscopyResult.first.specimen_type,
+        resultOn:          Extras::Dates::Format.datetime_with_time_zone(MicroscopyResult.first.result_at, :full_time),
+        specimenType:      MicroscopyResult.first.specimen_type.blank? ? "" : I18n.t("test_results.index.specimen_type.#{MicroscopyResult.first.specimen_type}"),
         serialNumber:      MicroscopyResult.first.serial_number,
         testResult:        Extras::Select.find(MicroscopyResult.test_result_options, MicroscopyResult.first.test_result),
         appearance:        Extras::Select.find(MicroscopyResult.visual_appearance_options, MicroscopyResult.first.appearance),

@@ -15,6 +15,9 @@ vi:
       episode_summary: 'Tóm tắt tập'
       address: 'Địa chỉ'
       alt_address: 'Địa chỉ thay thế'
+      male: "Nam"
+      female: "Nữ"
+      other: "Khác"
     filters:
       add_patient: 'Thêm bệnh nhân'
       show_all: 'Hiển thị tất cả'
@@ -69,6 +72,7 @@ vi:
       social_security_code_tooltip: 'Số CMND của bệnh nhân'
       medical_insurance_num_tooltip: 'Số sổ bảo hiểm y tế của bệnh nhân.'
       copy_addr_button: 'Sao chép địa chỉ thành'
+      address_details: "Địa chỉ chi tiết"
     index:
       no_patients: 'Không có bệnh nhân nào đăng ký'
       keep_organized: 'Giữ cho yêu cầu xét nghiệm của bạn được tổ chức theo lịch sử y tế của bệnh nhân'

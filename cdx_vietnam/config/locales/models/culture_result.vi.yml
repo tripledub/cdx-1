@@ -3,8 +3,10 @@ vi:
     attributes:
       culture_result:
         result_status: 'Trạng thái'
-        sample_collected_on: 'Ngày lấy mẫu'
+        sample_collected_at: 'Ngày lấy mẫu'
         examined_by: 'Kiểm tra bởi'
-        result_on: 'Kết quả ngày'
+        result_at: 'Kết quả ngày'
         media_used: 'Phương tiện truyền thông sử dụng'
         serial_number: 'Số seri phòng thí nghiệm'
+        sample_identifier_id: 'Mã số mẫu'
+        feedback_message_id: 'Phản hồi'

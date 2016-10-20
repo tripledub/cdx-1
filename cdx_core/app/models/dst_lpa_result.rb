@@ -2,7 +2,7 @@
 class DstLpaResult < PatientResult
   include NotificationObserver
 
-  validates_presence_of :sample_collected_on, :examined_by, :result_on, :media_used,
+  validates_presence_of :sample_collected_at, :examined_by, :result_at, :media_used,
                         :results_h, :results_r, :results_e, :results_s, :results_amk,
                         :results_km, :results_cm, :results_fq, on: :update
   validates_inclusion_of :results_h, :results_r, :results_e, :results_s,

@@ -25,8 +25,8 @@ module PatientTestResults
         {
           id:              test_result.uuid,
           name:            test_result.device.name,
-          date:            Extras::Dates::Format.datetime_with_time_zone(test_result.core_fields[TestResult::START_TIME_FIELD]),
-          status:          test_result.core_fields[TestResult::STATUS_FIELD],
+          date:            Extras::Dates::Format.datetime_with_time_zone(test_result.core_fields[TestResult::START_TIME_FIELD], :full_time),
+          status:          test_result.core_fields[TestResult::STATUS_FIELD].blank? ? "" : I18n.t("patient_test_results.status.#{test_result.core_fields[TestResult::STATUS_FIELD]}"),
           viewLink:        Rails.application.routes.url_helpers.test_result_path(id: test_result.uuid)
         }
       end
@@ -35,8 +35,8 @@ module PatientTestResults
         {
           id:              xpert_result.uuid,
           name:            I18n.t('patient_test_results.index.xpert_result'),
-          date:            Extras::Dates::Format.datetime_with_time_zone(xpert_result.sample_collected_on),
-          status:          xpert_result.result_status,
+          date:            Extras::Dates::Format.datetime_with_time_zone(xpert_result.sample_collected_at, :full_time),
+          status:          xpert_result.result_status.blank? ? "" : I18n.t("patient_test_results.status.#{xpert_result.result_status}"),
           viewLink:        Rails.application.routes.url_helpers.encounter_xpert_result_path(xpert_result.encounter, xpert_result)
         }
       end
@@ -45,8 +45,8 @@ module PatientTestResults
         {
           id:              microscopy_result.uuid,
           name:            I18n.t('patient_test_results.index.microscopy_result'),
-          date:            Extras::Dates::Format.datetime_with_time_zone(microscopy_result.sample_collected_on),
-          status:          microscopy_result.result_status,
+          date:            Extras::Dates::Format.datetime_with_time_zone(microscopy_result.sample_collected_at, :full_time),
+          status:          microscopy_result.result_status.blank? ? "" : I18n.t("patient_test_results.status.#{microscopy_result.result_status}"),
           viewLink:        Rails.application.routes.url_helpers.encounter_microscopy_result_path(microscopy_result.encounter, microscopy_result)
         }
       end
@@ -55,8 +55,8 @@ module PatientTestResults
         {
           id:              culture_result.uuid,
           name:            I18n.t('patient_test_results.index.culture_result'),
-          date:            Extras::Dates::Format.datetime_with_time_zone(culture_result.sample_collected_on),
-          status:          culture_result.result_status,
+          date:            Extras::Dates::Format.datetime_with_time_zone(culture_result.sample_collected_at, :full_time),
+          status:          culture_result.result_status.blank? ? "" : I18n.t("patient_test_results.status.#{culture_result.result_status}"),
           viewLink:        Rails.application.routes.url_helpers.encounter_culture_result_path(culture_result.encounter, culture_result)
         }
       end
@@ -65,8 +65,8 @@ module PatientTestResults
         {
           id:              dst_lpa_result.uuid,
           name:            I18n.t('patient_test_results.index.dst_lpa_result'),
-          date:            Extras::Dates::Format.datetime_with_time_zone(dst_lpa_result.sample_collected_on),
-          status:          dst_lpa_result.result_status,
+          date:            Extras::Dates::Format.datetime_with_time_zone(dst_lpa_result.sample_collected_at, :full_time),
+          status:          dst_lpa_result.result_status.blank? ? "" : I18n.t("patient_test_results.status.#{dst_lpa_result.result_status}"),
           viewLink:        Rails.application.routes.url_helpers.encounter_dst_lpa_result_path(dst_lpa_result.encounter, dst_lpa_result)
         }
       end
