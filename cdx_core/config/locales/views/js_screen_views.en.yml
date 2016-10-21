@@ -239,6 +239,7 @@ en:
       weeks_in_treatment_label: "Weeks in treatment"
       comments: "Comments"
       presumptive: "RR-TB/MDR-TB Suspect"
+      sample_other: 'Please specify your sample type'
 
     outstanding_tests_table:
       outstanding_tests_title: "Outstanding Tests"

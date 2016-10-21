@@ -17,7 +17,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
   },
 
   updateEncounterField: function(fieldName, fieldValue) {
-    console.log(fieldName + ' value is ' + fieldValue);
     let encounter = this.state.encounter;
     encounter[fieldName] = fieldValue;
     this.setState({ encounter: encounter });

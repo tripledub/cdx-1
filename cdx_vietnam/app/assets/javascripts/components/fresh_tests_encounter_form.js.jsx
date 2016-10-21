@@ -52,12 +52,12 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
         <div className="panel">
           <EncounterTestingFor />
           <EncounterExaminationReason reasonClicked={ this.reasonClicked } encounter={ this.state.encounter } />
-          { this.state.encounter.exam_reason === 'follow' ? <ReasonFollow treatmentDateChange={ this.updateEncounterField } defaultValue={ this.state.encounter.treatment_weeks }/> : null }
-          { this.state.encounter.exam_reason === 'diag' ? <PresumptiveRR updatePresumptiveRR={ this.updateEncounterField } /> : null }
+          { this.state.encounter.exam_reason === 'follow' ? <ReasonFollow treatmentDateChange={ this.updateEncounterField } defaultValue={ parseInt(this.state.encounter.treatment_weeks) }/> : null }
+          { this.state.encounter.exam_reason === 'diag' ? <PresumptiveRR checked={ false } updatePresumptiveRR={ this.updateEncounterField } /> : null }
           <RequestedTests onChange={ this.updateEncounterField } />
           <EncounterSampleType onChange={ this.updateEncounterField } options={ this.props.sampleTestOptions } selectValue={ this.state.encounter.coll_sample_type } commentValue={ this.state.encounter.coll_sample_other } />
           <input type="hidden" name="testdue_date" value="2020-12-01" />
-          <EncounterComment defaultValue={ this.state.encounter.diag_comment } diagCommentChange={ this.updateEncounterField } />
+          <EncounterComment defaultValue={ this.state.encounter.diag_comment || '' } diagCommentChange={ this.updateEncounterField } />
           <EncounterFooter cancelUrl ={ cancelUrl } validateThenSave={ this.validateThenSave } />
         </div>
       </div>

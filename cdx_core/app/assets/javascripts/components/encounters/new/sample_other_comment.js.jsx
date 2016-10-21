@@ -7,10 +7,10 @@ class SampleOtherComment extends React.Component {
     return(
       <RowContainer>
         <EncounterFormColumn>
-          <FormLabel htmlFor="sampleOther" title={ I18n.t("components.fresh_tests_encounter_form.sample_type") } />
+          <FormLabel htmlFor="sampleOther" title={ I18n.t("components.fresh_tests_encounter_form.sample_other") } />
         </EncounterFormColumn>
         <EncounterFormColumn>
-          <input type="text" name="sample_other" id="sampleOther" value={ this.props.commentValue } onChange={ this.onChange.bind(this) } />
+          <FormInputText name="sample_other" id="sampleOther" defaultValue={ this.props.commentValue } onChange={ this.onChange.bind(this) } />
         </EncounterFormColumn>
       </RowContainer>
     );

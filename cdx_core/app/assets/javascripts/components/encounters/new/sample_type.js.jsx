@@ -17,7 +17,7 @@ class EncounterSampleType extends React.Component{
     return(
       <div>
         <SampleSelect onChange={ this.onChange.bind(this) } options={ this.props.options } defaultValue={ this.props.selectValue } />
-        { this.state.showCommentBox === true ? <SampleOtherComment onChange={ this.onChange.bind(this) } defaultValue={ this.props.commentValue } /> : null }
+        { this.state.showCommentBox === true ? <SampleOtherComment onChange={ this.onChange.bind(this) } defaultValue={ this.props.commentValue || '' } /> : null }
       </div>
     );
   }

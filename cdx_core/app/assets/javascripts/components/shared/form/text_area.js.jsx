@@ -3,9 +3,10 @@ class FormTextArea extends React.Component {
     return (
       <textarea
         type="date"
-        min={ this.props.minValue }
-        max={ this.props.maxValue }
         onChange={ this.props.onChange }
+        rows={ this.props.rows }
+        maxLength={ this.props.maxLength }
+        cols={ this.props.cols }
         value={ this.props.defaultValue }
         id={ this.props.id }
         name={ this.props.name }>
