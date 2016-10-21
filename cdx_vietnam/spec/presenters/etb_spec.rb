@@ -156,7 +156,11 @@ RSpec.describe CdxVietnam::Presenters::Etb do
 
   describe 'create_patient' do
     it 'returns a JSON representation of patient and microscopy test result of patient for ETB API' do
-      expect(described_class.create_patient(encounter)).to eq(expected)
+      expect(described_class.create_patient(encounter)).to eq(expected_microcopy)
+    end
+
+    it 'returns a JSON representation of patient and xpert test result of patient for ETB API' do
+      expect(described_class.create_patient(encounter)).to eq(expected_xpert)
     end
 
   end
