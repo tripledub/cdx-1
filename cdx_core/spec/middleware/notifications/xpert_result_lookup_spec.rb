@@ -13,9 +13,9 @@ describe Notifications::XpertResultLookup do
   let!(:notification_on_pending_approval)  { Notification.make(institution: patient.institution, detection: 'mtb', detection_condition: 'positive', notification_statuses_names: ['pending_approval'] ) }
   let!(:notification_on_detected_rif)      { Notification.make(institution: patient.institution, detection: 'rif', detection_condition: 'positive') }
 
-  let!(:xpert_result_no_detection) { XpertResult.make(institution: patient.institution, encounter: encounter, tuberculosis: 'not_detected', rifampicin: 'not_detected') }
-  let!(:xpert_result_tb_and_rif)   { XpertResult.make(institution: patient.institution, encounter: encounter, tuberculosis: 'detected',     rifampicin: 'detected') }
-  let!(:xpert_result_tb_only)      { XpertResult.make(institution: patient.institution, encounter: encounter, tuberculosis: 'detected',     rifampicin: 'not_detected') }
+  let!(:xpert_result_no_detection) { XpertResult.make(encounter: encounter, tuberculosis: 'not_detected', rifampicin: 'not_detected') }
+  let!(:xpert_result_tb_and_rif)   { XpertResult.make(encounter: encounter, tuberculosis: 'detected',     rifampicin: 'detected') }
+  let!(:xpert_result_tb_only)      { XpertResult.make(encounter: encounter, tuberculosis: 'detected',     rifampicin: 'not_detected') }
 
   let(:lookup_no_detection) { described_class.new(xpert_result_no_detection) }
   let(:lookup_tb_and_rif)   { described_class.new(xpert_result_tb_and_rif) }

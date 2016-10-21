@@ -14,6 +14,7 @@ class Notification::Notice < ActiveRecord::Base
     pending
     complete
     deferred
+    failed
   ).freeze
 
   # Validations
@@ -21,7 +22,7 @@ class Notification::Notice < ActiveRecord::Base
   validates :status,    inclusion: { in: STATUSES }
 
   # Callbacks
-  after_create :run_instant_job, if: -> { notification.instant? }
+  after_commit :run_instant_job, on: :create, if: :instant_notification?
 
   serialize :data, Hash
 
@@ -37,24 +38,42 @@ class Notification::Notice < ActiveRecord::Base
   end
 
   def create_recipients
-    notification_notice_recipients.create(recipients_union.map do |recipient|
-      {
+    recipients_union.each do |recipient|
+      Rails.logger.info "[Notification::Notice] Create recipient #{recipient.inspect}"
+
+      hash = {
         notification: notification,
         first_name:   recipient.first_name,
         last_name:    recipient.last_name,
         email:        recipient.email,
         telephone:    recipient.telephone
       }
-    end)
-    Rails.logger.info '[Notice] Built reciepients'
+
+      notification_notice_recipients.create!(hash) unless notification_notice_recipients.where(hash).first
+    end
+
+    Rails.logger.info '[Notice] Built recipients'
     true
   end
 
   def deliver_to_all_recipients
+    return if complete?
     notification_notice_recipients.each do |recipient|
       recipient.send_sms && Rails.logger.info("[SMS] Delivered to recipient: ##{recipient.id}")
       recipient.send_email && Rails.logger.info("[Email] Delivered to recipient: # #{recipient.id}")
     end
+  end
+
+  def instant_notification?
+    notification.instant?
+  end
+
+  def pending?
+    status == 'pending'
+  end
+
+  def complete?
+    status == 'complete'
   end
 
   def complete!
@@ -62,9 +81,13 @@ class Notification::Notice < ActiveRecord::Base
     update_column(:status, 'complete')
   end
 
+  def failed!
+    update_column(:status, 'failed')
+  end
+
   private
 
-    def run_instant_job
-      InstantNotificationJob.perform_async(id)
-    end
+  def run_instant_job
+    InstantNotificationJob.perform_async(id)
+  end
 end

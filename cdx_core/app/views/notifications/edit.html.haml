@@ -22,6 +22,8 @@
           .col
             = f.submit class: 'btn-primary'
             = link_to I18n.t('views.cancel'), [:alert_groups], class: 'btn-link'
+          .col
+            = link_to(I18n.t('views.delete'), alert_group_path(@notification), method: :delete, data: { confirm: I18n.t('views.are_you_sure') }, class: 'btn-secondary pull-right')
 
 :javascript
   $('.bettertabs').bettertabs();

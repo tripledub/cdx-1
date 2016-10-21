@@ -22,33 +22,27 @@ describe Notifications::AssayResultLookup do
 
   describe '#check_notifications' do
     context 'when mtb is detected' do
-      before do
-        assay_result = AssayResult.make(assayable: test_result, condition: 'mtb', result: 'positive')
-        @lookup = described_class.new(assay_result)
-        @lookup.check_notifications
-      end
+      let(:assay_result) { AssayResult.make(assayable: test_result, condition: 'mtb', result: 'positive', quantitative_result: 'LOW') }
+      let(:lookup) { described_class.new(assay_result) }
+      before { lookup.check_notifications }
 
-      it { expect(@lookup.notifications.size).to eq(3) }
+      it { expect(lookup.notifications.size).to eq(3) }
     end
 
     context 'when mtb is not detected' do
-      before do
-        assay_result = AssayResult.make(assayable: test_result, condition: 'mtb', result: 'negative')
-        @lookup = described_class.new(assay_result)
-        @lookup.check_notifications
-      end
+      let(:assay_result) { AssayResult.make(assayable: test_result, condition: 'mtb', result: 'negative', quantitative_result: nil) }
+      let(:lookup) { described_class.new(assay_result) }
+      before { lookup.check_notifications }
 
-      it { expect(@lookup.notifications.size).to eq(3) }
+      it { expect(lookup.notifications.size).to eq(3) }
     end
 
     context 'when mtb \'HIGH\' is detected' do
-      before do
-        assay_result = AssayResult.make(assayable: test_result, condition: 'mtb', result: 'positive', quantitative_result: 'HIGH')
-        @lookup = described_class.new(assay_result)
-        @lookup.check_notifications
-      end
+      let(:assay_result) { AssayResult.make(assayable: test_result, condition: 'mtb', result: 'positive', quantitative_result: 'HIGH') }
+      let(:lookup) { described_class.new(assay_result) }
+      before { lookup.check_notifications }
 
-      it { expect(@lookup.notifications.size).to eq(4) }
+      it { expect(lookup.notifications.size).to eq(4) }
     end
   end
 end

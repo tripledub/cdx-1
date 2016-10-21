@@ -5,7 +5,7 @@ module Notifications
 
       def self.aggregated(email_address, aggregated_count, aggregated_at)
         gateway = new(email_address: email_address, aggregated_count: aggregated_count, aggregated_at: aggregated_at)
-        gateway.body = I18n.t('middleware.notifications.gateway.email.aggregated_body', count: aggregated_count, date: aggregated_at)
+        gateway.body = I18n.t('middleware.notifications.gateway.email.aggregated_body', count: aggregated_count, date: I18n.l(aggregated_at, format: :long))
         gateway.send_aggregated
       end
 

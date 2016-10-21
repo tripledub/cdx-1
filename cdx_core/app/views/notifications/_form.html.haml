@@ -88,14 +88,15 @@
             = I18n.t('notifications.form.tooltip.detection_condition')
       .col
         = form.select :detection_condition, @condition_results, { prompt: I18n.t('notifications.form.placeholder.detection_condition') }, { class: 'select2' }
-    .row
-      .col.pe-2
-        %div.tooltip
-          = form.label :detection_quantitative_result
-          %div.tooltiptext_r
-            = I18n.t('notifications.form.tooltip.detection_quantitative_result')
-      .col
-        = form.text_field :detection_quantitative_result, placeholder: I18n.t('notifications.form.placeholder.detection_quantitative_result')
+    -#
+      .row
+        .col.pe-2
+          %div.tooltip
+            = form.label :detection_quantitative_result
+            %div.tooltiptext_r
+              = I18n.t('notifications.form.tooltip.detection_quantitative_result')
+        .col
+          = form.text_field :detection_quantitative_result, placeholder: I18n.t('notifications.form.placeholder.detection_quantitative_result')
 
   -#
     = tab.static :device_errors, I18n.t('notifications.tabs.device_errors') do

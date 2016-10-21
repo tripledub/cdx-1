@@ -18,6 +18,7 @@ en:
       create_failure: Alert was not created
       update_success: Alert updated successfully
       update_failure: Alert was not updated
+      destroy_success: Alert was deleted
     filters:
       title: Alerts
       btn_add_notification: Add Alert

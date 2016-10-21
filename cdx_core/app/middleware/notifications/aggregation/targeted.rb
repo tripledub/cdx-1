@@ -13,6 +13,7 @@ module Notifications
       def notices_by_notification
         @notices_by_notification ||= begin
           notices_by_user.each do |user, grouped_notices|
+            # Trigger every day at 8am, 2pm, and 4pm in the creating users timezone
             current_hour = triggered_at.in_time_zone(user.time_zone).hour
             current_hour == 8 || current_hour == 14 || current_hour == 16 &&
               @notices |= grouped_notices

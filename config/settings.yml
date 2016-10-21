@@ -7,6 +7,15 @@ single_tenant: <%= ENV['SINGLE_TENANT'] %>
 db_per_branch: false
 use_demo_data: false
 
+sidekiq_web: false
+sidekiq_web_username: <%= ENV['SIDEKIQ_USERNAME'] %>
+sidekiq_web_password: <%= ENV['SIDEKIQ_PASSWORD'] %>
+
+twilio_enabled: false
+twilio_sid: <%= ENV['TWILIO_SID'] %>
+twilio_auth_token: <%= ENV['TWILIO_KEY'] %>
+twilio_phone_number: <%= ENV['TWILIO_NUMBER'] %>
+
 # for the eTB/VTM scraper program
 etb_username: <%= ENV['ETB_USERNAME'] %>
 etb_password: <%= ENV['ETB_PASSWORD'] %>
@@ -15,9 +24,3 @@ etb_endpoint: <%= ENV['ETB_ENDPOINT'] %>
 vtm_username: <%= ENV['VTM_USERNAME'] %>
 vtm_password: <%= ENV['VTM_PASSWORD'] %>
 vtm_endpoint: <%= ENV['VTM_ENDPOINT'] %>
-
-twilio:
-  enabled: false
-  sid: ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  auth_token: yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-  phone_number: "+4401234456789"

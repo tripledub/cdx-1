@@ -8,7 +8,7 @@ module Notifications
                                 .where('notification_notices.created_at < ?', triggered_at)
                                 .where(notifications: { frequency: frequency, frequency_value: frequency_value })
                                 .order('notification_notices.created_at DESC')
-                                .group_by(&:notification)
+          @notices.group_by(&:notification)
         end
       end
     end

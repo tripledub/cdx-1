@@ -10,13 +10,13 @@ class Notification::Recipient < ActiveRecord::Base
   validates :telephone,    presence: { unless: :email_present? }
 
   def send_sms
-    notification.sms? && telephone_present? && notification.instant? &&
+    notification && notification.sms? && telephone_present? && notification.instant? &&
       Notifications::Gateway::Sms.single(telephone, notification.sms_message) &&
       Rails.logger.info("[SMS] Notification::Recipient: ##{telephone} Notification: #{notification.id}")
   end
 
   def send_email
-    notification.email? && email_present? && notification.instant? &&
+    notification && notification.email? && email_present? && notification.instant? &&
       Notifications::Gateway::Email.single(email, notification.email_message) &&
       Rails.logger.info("[Email] Notification::Recipient: ##{email} Notification: #{notification.id}")
   end

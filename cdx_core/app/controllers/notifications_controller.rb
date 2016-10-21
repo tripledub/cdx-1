@@ -54,6 +54,11 @@ class NotificationsController < ApplicationController
     end
   end
 
+  def destroy
+    @notification.destroy
+    redirect_to(alert_groups_path, notice: I18n.t('notifications.flash.destroy_success'))
+  end
+
   def notification_form_variables
     @sites = check_access(Site.within(@navigation_context.entity), READ_SITE)
     @roles = check_access(Role, READ_ROLE)

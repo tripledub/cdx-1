@@ -10,7 +10,7 @@ describe Notifications::DstLpaResultLookup do
   let!(:notification_on_other_institution) { Notification.make(institution: other_patient.institution, encounter: encounter_without_patient, patient: other_patient) }
   let!(:notification_on_site)              { Notification.make(institution: patient.institution, site_ids: [dstlpa_result.encounter.site.id]) }
 
-  let!(:dstlpa_result) { DstLpaResult.make(institution: patient.institution, encounter: encounter) }
+  let!(:dstlpa_result) { DstLpaResult.make(encounter: encounter) }
 
   describe '#check_notifications' do
     let(:lookup) { described_class.new(dstlpa_result) }

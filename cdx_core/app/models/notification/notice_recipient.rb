@@ -11,13 +11,13 @@ class Notification::NoticeRecipient < ActiveRecord::Base
   def send_sms
     notification.sms? && telephone_present? && notification.instant? &&
       Notifications::Gateway::Sms.single(telephone, notification.sms_message) &&
-      Rails.logger.info("[SMS] Notification::Recipient: ##{telephone} Notification: #{notification.id}")
+      Rails.logger.info("[SMS] Notification::NoticeRecipient: ##{telephone} Notification: #{notification.id}")
   end
 
   def send_email
     notification.email? && email_present? && notification.instant? &&
       Notifications::Gateway::Email.single(email, notification.email_message) &&
-      Rails.logger.info("[Email] Notification::Recipient: ##{email} Notification: #{notification.id}")
+      Rails.logger.info("[Email] Notification::NoticeRecipient: ##{email} Notification: #{notification.id}")
   end
 
   def email_present?

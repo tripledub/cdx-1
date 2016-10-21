@@ -21,6 +21,10 @@ module Notifications
           notices_by_notification.map { |_notification, grouped_notices| grouped_notices.first }
       end
 
+      def notice_ids
+        @notice_ids ||= @notices.map(&:id)
+      end
+
       def latest_notice_ids
         @latest_notice_ids ||= latest_notices.map(&:id)
       end
@@ -30,11 +34,11 @@ module Notifications
         # Will return {nil => 2} where 2 is number of notifications if there are no delivery methods.
         @distinct_emails_with_count ||=
           Notification::NoticeRecipient.where(notifications: { email: true })
-                                       .where(notification_notices: { id: latest_notice_ids })
+                                       .where(notification_notices: { id: notice_ids })
                                        .includes(:notification_notice => :notification)
                                        .select(:email, :notification_id)
                                        .group(:email)
-                                       .count(:notification_id)
+                                       .count(:notification_notice_id)
       end
 
       def distinct_telephones_with_count
@@ -42,15 +46,15 @@ module Notifications
         # Will return {nil => 2} where 2 is number of notifications if there are no delivery methods.
         @distinct_telephones_with_count ||=
           Notification::NoticeRecipient.where(notifications: { sms: true })
-                                       .where(notification_notices: { id: latest_notice_ids })
+                                       .where(notification_notices: { id: notice_ids })
                                        .includes(:notification_notice => :notification)
                                        .select(:telephone, :notification_id)
                                        .group(:telephone)
-                                       .count(:notification_id)
+                                       .count(:notification_notice_id)
       end
 
       def defer_redundant_notices!
-        Notification::Notice.where(id: notices.map(&:id))
+        Notification::Notice.where(id: notice_ids)
                             .where.not(id: latest_notice_ids)
                             .update_all(status: 'deferred')
       end
@@ -58,19 +62,21 @@ module Notifications
       def process
         return if latest_notices.empty?
 
-        latest_notices.map(&:create_recipients)
+        notices.map(&:create_recipients)
 
         notice_group = Notification::NoticeGroup.new(
-          notice_ids: latest_notice_ids,
+          notification_notice_ids: latest_notice_ids,
           frequency: frequency,
           frequency_value: frequency_value,
           triggered_at: triggered_at
         )
 
-        notice_group[:email_data][:counts]     = distinct_emails_with_count
-        notice_group[:telephone_data][:counts] = distinct_telephones_with_count
+        notice_group.email_data     = distinct_emails_with_count
+        notice_group.telephone_data = distinct_telephones_with_count
 
         defer_redundant_notices!
+
+        notice_group.save!
 
         true
       end

@@ -2,10 +2,12 @@ schedule_monthly_aggregation_job:
   cron: "0 * 1 * *"
   class: "MonthlyAggregationJob"
   queue: default
-  active_job: true
+  active_job: false
+  retry: 0
 
 schedule_hourly_aggregation_job:
   cron: "0 * * * *"
   class: "HourlyAggregationJob"
   queue: default
-  active_job: true
+  active_job: false
+  retry: 0

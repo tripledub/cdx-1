@@ -4,6 +4,8 @@ require 'sidekiq/testing'
 Sidekiq::Testing.fake!
 
 describe Notification::Notice do
+  before(:all) { TestAfterCommit.enabled = true  }
+  after(:all)  { TestAfterCommit.enabled = false }
 
   before do
     InstantNotificationJob.jobs.clear

@@ -5,7 +5,7 @@ module Notifications
 
       def self.aggregated(phone_number, aggregated_count, aggregated_at)
         gateway = new(phone_number: phone_number)
-        gateway.body = I18n.t('middleware.notifications.gateway.sms.aggregated_body', count: aggregated_count, date: aggregated_at)
+        gateway.body = I18n.t('middleware.notifications.gateway.sms.aggregated_body', count: aggregated_count, date: I18n.l(aggregated_at, format: :long))
         gateway.send_message
       end
 
@@ -36,18 +36,24 @@ module Notifications
         return unless credentials?
         #sanitize_phone_number!
 
-        @response = twilio_client.messages.create(
-          from: Settings.twilio.phone_number,
-          to: phone_number,
-          body: body
-        )
-
-        Rails.logger.info @response.inspect
+        if Settings.twilio_enabled
+          @response = twilio_client.messages.create(
+            from: Settings.twilio_phone_number,
+            to: phone_number,
+            body: body
+          )
+          Rails.logger.info @response.inspect
+        else
+          Rails.logger.info "[SMS] Twilio not setup or disabled"
+          Rails.logger.info "[SMS] To: #{phone_number}"
+        end
 
         true
       end
 
       def valid?
+        return true unless Settings.twilio_enabled
+
         begin
           phone_number = twilio_number.phone_number
           true

@@ -82,4 +82,22 @@ describe Notification do
       it { expect(notification_with_statuses.notification_statuses_names).to include(notification_status.test_status) }
     end
   end
+
+  describe '#enforce_nil_values' do
+    context 'when empty strings' do
+      let(:notification_with_blanks) { Notification.make(detection: '', detection_condition: '') }
+
+      it { expect(notification_with_blanks).to be_valid }
+      it { expect(notification_with_blanks.detection).to eq(nil) }
+      it { expect(notification_with_blanks.detection_condition).to eq(nil) }
+    end
+
+    context 'with values' do
+      let(:notification_with_blanks) { Notification.make(detection: 'mtb', detection_condition: 'positive') }
+
+      it { expect(notification_with_blanks).to be_valid }
+      it { expect(notification_with_blanks.detection).not_to eq(nil) }
+      it { expect(notification_with_blanks.detection_condition).not_to eq(nil) }
+    end
+  end
 end

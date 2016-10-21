@@ -2,6 +2,7 @@ en:
   views:
     back: 'Back'
     cancel: 'Cancel'
+    delete: 'Delete'
     save: 'Save'
     say_yes: 'Yes'
     say_no: 'No'

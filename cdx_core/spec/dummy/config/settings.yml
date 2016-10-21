@@ -4,8 +4,9 @@ single_tenant: <%= ENV['SINGLE_TENANT'] %>
 db_per_branch: false
 use_demo_data: false
 
-twilio:
-  enabled: true
-  sid: ACxxxxxx
-  auth_token: xxxxxxx
-  phone_number: "+441202286349"
+sidekiq_web: false
+
+twilio_enabled: true
+twilio_sid: ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+twilio_auth_token: yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+twilio_phone_number: "+4401234456789"

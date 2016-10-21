@@ -67,11 +67,9 @@ class Notification < ActiveRecord::Base
 
   # Callbacks
   after_save :create_notification_statuses
+  before_validation :enforce_nil_values
   before_validation :patient_lookup
   before_validation :test_lookup
-
-  # Don't store blank strings for #sample_identifier in the database.
-  before_validation { self.sample_identifier = nil if self.sample_identifier.blank? }
 
   # Scopes
   scope :enabled, -> { where(enabled: true) }
@@ -154,6 +152,14 @@ class Notification < ActiveRecord::Base
       encounters = patient ? patient.encounters : Encounter
       self.encounter = encounters.where(is_phantom: false, institution_id: institution_id)
                                  .find_by(id: test_identifier)
+    end
+
+    # The Lookup for notifications queries on NULL, not on an empty string.
+    def enforce_nil_values
+      self.sample_identifier = nil             if self.sample_identifier.blank?
+      self.detection = nil                     if self.detection.blank?
+      self.detection_condition = nil           if self.detection_condition.blank?
+      self.detection_quantitative_result = nil if self.detection_quantitative_result.blank?
     end
 end
 

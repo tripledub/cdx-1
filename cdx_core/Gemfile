@@ -51,9 +51,9 @@ gem 'therubyracer'
 gem 'country_select'
 gem 'dotiw'
 gem 'rchardet'
-gem 'sidekiq', '3.5.0'
+gem 'sidekiq'
 gem 'sinatra'
-gem 'sidekiq-cron', '~> 0.3.1'
+gem 'sidekiq-cron'
 
 # SMS library
 gem 'twilio-ruby', '~> 4.11.1'

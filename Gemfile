@@ -62,7 +62,7 @@ gem "select2-rails"
 # Use Sidekiq for background jobs
 gem 'sidekiq'
 gem 'sinatra'
-gem 'sidekiq-cron', '~> 0.3.1'
+gem 'sidekiq-cron'
 gem 'i18n-js',">= 3.0.0.rc13"
 group :development do
   gem 'letter_opener'
