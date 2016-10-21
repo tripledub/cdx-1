@@ -19,7 +19,7 @@ var RequestedTests = React.createClass({
         $('#' + currentTest + '_cultformat_section').show();
       }
     });
-    this.props.reqtestsChange(requestedTests);
+    this.props.onChange('tests_requested', requestedTests);
   },
 
   render: function() {

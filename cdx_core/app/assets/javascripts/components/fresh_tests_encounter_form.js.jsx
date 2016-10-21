@@ -1,4 +1,8 @@
 var FreshTestsEncounterForm = React.createClass(_.merge({
+  getDefaultProps: function() {
+    return ({ sampleTestOptions: [ 'please_select', 'sputum', 'blood', 'other' ] });
+  },
+
   componentDidMount: function() {
     $('.test_for_ebola').attr('checked', false).parent().hide();
     $('.test_for_tb').attr('checked', false).parent().hide();
@@ -6,20 +10,17 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     $('.cformatIndented').hide();
   },
 
-  reasonClicked: function(clk) {
-    var reason = '';
+  reasonClicked: function(event) {
+    $('.test_for_tb').attr('checked', false).parent().show();
 
-    if (clk === 0) { reason = 'diag'; }
+    this.updateEncounterField('exam_reason', event.currentTarget.value);
+  },
 
-    if (clk === 1) { reason = 'follow'; }
-
-    this.setState(React.addons.update(this.state, {
-      encounter: {
-        exam_reason: {
-          $set: reason
-        }
-      }
-    }));
+  updateEncounterField: function(fieldName, fieldValue) {
+    console.log(fieldName + ' value is ' + fieldValue);
+    let encounter = this.state.encounter;
+    encounter[fieldName] = fieldValue;
+    this.setState({ encounter: encounter });
   },
 
   validateAndSetManualEntry: function (event) {
@@ -37,7 +38,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
 
   validateThenSave: function(event)
   {
-    event.preventDefault();
     if (this.state.encounter.performing_site == undefined) { alert(I18n.t("components.fresh_tests_encounter_form.alert_performing_site"));  return; }
     if (this.state.encounter.testing_for == undefined)     { alert(I18n.t("components.fresh_tests_encounter_form.alert_testing_for"));     return; }
     if (this.state.encounter.exam_reason == undefined)     { alert(I18n.t("components.fresh_tests_encounter_form.alert_exam_reason"));     return; }
@@ -49,10 +49,6 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
   },
 
   render: function() {
-    var now = new Date();
-    var day = ("0" + now.getDate()).slice(-2);
-    var month = ("0" + (now.getMonth() + 1)).slice(-2);
-    var today = now.getFullYear() + "-" + (month) + "-" + (day);
     var show_auto_sample = '';
     var show_manual_sample = '';
     var cancelUrl = "javascript:history.back();";
@@ -94,164 +90,25 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
               </label>
             </div>
           </div>
-
-          <div className="row">
-            <div className="col-6 flexStart">
-              <label>{I18n.t("components.fresh_tests_encounter_form.reason_for_examination_label")}</label>
-            </div>
-            <div className="col-6 flexStart">
-              <input type="radio" onChange={this.reasonClicked.bind(this, 0)} checked={this.state.encounter.exam_reason == 'diag'} name="exam_reason" id="exam_reason_diag" value="diag"/>
-              <label htmlFor="exam_reason_diag">{I18n.t("components.fresh_tests_encounter_form.diagnosis_lable")}</label>
-              <input type="radio" onChange={this.reasonClicked.bind(this, 1)} checked={this.state.encounter.exam_reason == 'follow'} name="exam_reason" id="exam_reason_follow" value="follow"/>
-              <label htmlFor="exam_reason_follow">{I18n.t("components.fresh_tests_encounter_form.follow_up_lable")}</label>
-            </div>
-          </div>
-
-          { this.state.encounter.exam_reason === 'follow' ? <ReasonFollow treatmentDateChange={this.treatmentDateChange} /> : null }
-          { this.state.encounter.exam_reason === 'diag' ? <PresumptiveRR updatePresumptiveRR={this.updatePresumptiveRR} /> : null }
-
-          <RequestedTests reqtestsChange={this.reqtestsChange} />
-
-          <div className="row">
-            <div className="col-6">
-              <label>{ I18n.t("components.fresh_tests_encounter_form.collection_sample_type_label") }</label>
-            </div>
-            <div className="col-6">
-              <label>
-                <select className="input-large" id="coll_sample_type" name="coll_sample_type" onChange={this.sample_type_change} datavalue={this.state.encounter.coll_sample_type}>
-                  <option value="">{I18n.t("components.fresh_tests_encounter_form.please_select_option")}</option>
-                  <option value="sputum">{I18n.t("components.fresh_tests_encounter_form.sputum_option")}</option>
-                  <option value="blood">{I18n.t("components.fresh_tests_encounter_form.blood_option")}</option>
-                  <option value="other">{I18n.t("components.fresh_tests_encounter_form.other_option")}</option>
-                </select>
-              </label>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-6">
-              <label htmlFor="sample_other">
-                { I18n.t("components.fresh_tests_encounter_form.comments") }
-              </label>
-            </div>
-            <div className="col-6">
-              <textarea name="sample_other" id="sample_other" cols="60" rows="5" onChange={ this.sample_other_change }></textarea>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-6">
-              <label>{I18n.t("components.fresh_tests_encounter_form.test_due_date_label")}</label>
-            </div>
-            <div className="col-6">
-              <input type="date" id="testdue_date" min={today} onChange={this.testDueDateChange} value={this.state.encounter.testdue_date}/>
-            </div>
-          </div>
-
-          { this.state.encounter.exam_reason === 'diag' ? <ReasonDiag diagCommentChange={this.diagCommentChange} /> : null }
-
-          <div className="row labelfooter">
-            <div className="col-12">
-              <ul>
-                <li>
-                  <a href="#" id="encountersave" className="button save" onClick={this.validateThenSave}>{I18n.t("components.fresh_tests_encounter_form.save_btn")}</a>
-                </li>
-                <li>
-                  <a href={cancelUrl} className="button cancel">{I18n.t("components.fresh_tests_encounter_form.cancel_btn")}</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-
+          <EncounterExaminationReason reasonClicked={ this.reasonClicked } encounter={ this.state.encounter } />
+          { this.state.encounter.exam_reason === 'follow' ? <ReasonFollow treatmentDateChange={ this.updateEncounterField } defaultValue={ parseInt(this.state.encounter.treatment_weeks) } /> : null }
+          { this.state.encounter.exam_reason === 'diag' ? <PresumptiveRR checked={ false } updatePresumptiveRR={ this.updateEncounterField } /> : null }
+          <RequestedTests onChange={ this.updateEncounterField } />
+          <EncounterSampleType onChange={ this.updateEncounterField } options={ this.props.sampleTestOptions } selectValue={ this.state.encounter.coll_sample_type } commentValue={ this.state.encounter.coll_sample_other } />
+          <EncounterDueDate onChange={ this.updateEncounterField } defaultValue={ this.state.encounter.testdue_date } />
+          <EncounterComment defaultValue={ this.state.encounter.diag_comment } diagCommentChange={ this.updateEncounterField } />
+          <EncounterFooter cancelUrl ={ cancelUrl } validateThenSave={ this.validateThenSave } />
           <Modal ref="addNewSamplesModal">
             <h1>
               <a href="#" className="modal-back" onClick={this.closeAddNewSamplesModal}></a>
               {I18n.t("components.fresh_tests_encounter_form.add_sample")}
             </h1>
-
             <p><input type="text" className="input-block" placeholder={I18n.t("components.fresh_tests_encounter_form.sample_id_placeholder")} ref="manualSampleEntry"/></p>
             <p><button type="button" className="btn-primary pull-right" onClick={this.validateAndSetManualEntry}>OK</button></p>
           </Modal>
         </div>
       </div>
     );
-  },
-
-  getInitialState: function() {
-    $('#sample_other').hide();
-  },
-
-  checkme: function(what) {
-    if (this.state.encounter.tests_requested.indexOf(what) != false)
-      return 'selected ';
-    return '';
-  },
-
-  reqtestsChange: function(requestedTests) {
-    this.setState(React.addons.update(this.state, {
-      encounter: {
-        tests_requested: {
-          $set: requestedTests
-        }
-      }
-    }));
-  },
-
-
-  diagCommentChange: function() {
-    var comment = $('#diag_comment').val();
-    this.setState(React.addons.update(this.state, {
-      encounter: {
-        diag_comment: {
-          $set: comment
-        }
-      }
-    }));
-  },
-
-  treatmentDateChange: function() {
-    var treatmentdate = $('#treatment_weeks').val();
-    this.setState(React.addons.update(this.state, {
-      encounter: {
-        treatment_weeks: {
-          $set: treatmentdate
-        }
-      }
-    }));
-  },
-
-  updatePresumptiveRR: function(e){
-    var presumptiveRR = $('#presumptive_rr').is(':checked');
-    this.setState(React.addons.update(this.state, {
-      encounter: {
-        presumptive_rr: {
-          $set: presumptiveRR
-        }
-      }
-    }));
-  },
-
-  cultureFormatChange: function() {
-    var cultureFormat = $('#cultureFormat').val();
-    this.setState(React.addons.update(this.state, {
-      encounter: {
-        culture_format: {
-          $set: cultureFormat
-        }
-      }
-    }));
-  },
-
-  testDueDateChange: function() {
-    var testduedate = $('#testdue_date').val();
-    this.setState(React.addons.update(this.state, {
-      encounter: {
-        testdue_date: {
-          $set: testduedate
-        }
-      }
-    }));
-    this.state.encounter.testdue_date = testduedate;
   },
 
   testingForChange: function() {
@@ -287,45 +144,4 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     }
   },
 
-  sample_type_change: function() {
-    var xx = $('#coll_sample_type').val();
-    this.setState(React.addons.update(this.state, {
-      encounter: {
-        coll_sample_type: {
-          $set: xx
-        }
-      }
-    }));
-  },
-
-  sample_other_change: function() {
-    var xx = $('#sample_other').val();
-    this.setState(React.addons.update(this.state, {
-      encounter: {
-        coll_sample_other: {
-          $set: xx
-        }
-      }
-    }));
-  }
-
 }, BaseEncounterForm));
-
-var ReasonDiag = React.createClass({
-  updateComment: function (e) {
-    this.props.diagCommentChange();
-  },
-
-  render: function() {
-    return (
-      <div className="row">
-        <div className="col-6 flexStart">
-          <label>{I18n.t("components.fresh_tests_encounter_form.comments")}</label>
-        </div>
-        <div className="col-6">
-          <textarea name="diag_comment" maxLength="200" id="diag_comment" rows="5" cols="60" onChange={this.updateComment}></textarea>
-        </div>
-      </div>
-    );
-  }
-});

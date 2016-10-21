@@ -8,10 +8,14 @@ class PresumptiveRR extends React.Component {
       <RowContainer>
         <EncounterFormColumn />
         <EncounterFormColumn>
-          <FormCheckBox type="checkbox" onChange={ this.onChange.bind(this) } className="presumptive_rr" id="presumptiveRR" name="presumptive_rr" />
+          <FormCheckBox type="checkbox" checked={ this.props.checked } onChange={ this.onChange.bind(this) } className="presumptive_rr" id="presumptiveRR" name="presumptive_rr" />
           <FormLabel title={ I18n.t("components.fresh_tests_encounter_form.presumptive") } htmlFor="presumptiveRR" />
         </EncounterFormColumn>
       </RowContainer>
     )
   }
+};
+
+PresumptiveRR.propTypes = {
+  checked: React.PropTypes.bool.isRequired,
 };
