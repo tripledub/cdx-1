@@ -167,9 +167,20 @@ RSpec.describe PatientsController, type: :controller do
     end
   end
 
-  context "create" do
+  describe 'create' do
     let(:patient_form_plan) {
-      { name: 'Lorem', entity_id: '1001', gender: 'female', 'birth_date_on(1i)': '2000', 'birth_date_on(2i)': '1', 'birth_date_on(3i)': '18' }
+      {
+        name: 'Peter Parker',
+        entity_id: '100000',
+        nickname: 'Spiderman',
+        medical_insurance_num: 123_456_789,
+        social_security_code: 987_654_321,
+        external_id: '1234567890',
+        external_system_id: 1,
+        'birth_date_on(1i)': '2000',
+        'birth_date_on(2i)': '1',
+        'birth_date_on(3i)': '18'
+      }
     }
 
     let(:patient_form_plan_birth_date_on) { Date.new(2000, 1, 18) }
