@@ -178,4 +178,9 @@ $(document).ready(function(){
     // We want to set overflow visible after the expand animation has completed
     $(".custom_filters").toggle();
   });
+
+  Mousetrap.bind('alt+p', function(e) {
+    window.location.pathname = '/patients/new';
+    Mousetrap.unbind('alt+p');
+  });
 });

@@ -1,0 +1,11 @@
+.testflow
+  = bettertabs :test_results_tabs, :selected_tab => @selected_tab do |tab|
+    = tab.link :devices, I18n.t('test_results.index.tab_device') do
+      = render :partial => 'device_results'
+    = tab.link :microscopy, I18n.t('test_results.index.tab_microscopy') do
+      = render :partial => 'microscopy_results'
+    = tab.link :xpert, I18n.t('test_results.index.tab_xpert') do
+      = render :partial => 'xpert_results'
+
+:javascript
+  $('.bettertabs').bettertabs();

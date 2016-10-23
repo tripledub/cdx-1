@@ -42,6 +42,8 @@ vi:
       header: 'Cài đặt'
       alert: 'Cảnh báo'
       alerts_notice: 'Thông báo cho nhóm của bạn về những chuyện quan trọng.'
+      test_results: Test Results
+      test_results_notice: Manage test results
       role:
         zero: 'Không có vai trò'
         one: "1 Vai trò"

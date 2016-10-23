@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :audit_logs
 
+  validates :locale, presence: true
+
   include Resource
 
   after_create :update_computed_policies
