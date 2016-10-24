@@ -21,14 +21,14 @@ module CdxVietnam
             case_type: 'patient', # OK, luôn là patient
             cdp_id: patient.id.to_s,
             target_system: 'etb', # OK
-            patient_etb_id: patient.external_id, # @TODO, nếu là vtm thì nó sẽ là 1 bộ json khác, lần đầu gửi có thể NULL,  ''
+            patient_etb_id: patient.etb_patient_id,
             bdq_id: '000000', # OK, hard-coded
             name: patient.name,  
             registration_number: '', # not required
             gender: gender, # that ok but eTB:gender not have 'other' value
             date_of_birth: dob, 
             age: patient.age, # OK
-            national_id_number: '023232323', # @TODO, cdp not have this field
+            national_id_number: patient.social_security_code,
             mother_name: '', # OK, hard-code
             sending_sms: 'FALSE', # OK
             treatment_sms: 'FALSE', # OK
@@ -36,13 +36,13 @@ module CdxVietnam
             cellphone_number: '23711', # OK, just hard-code like this
             supervisor2_cellphone: '23711', # OK, just hard-code like this
             nationallity: 'NATIVE', # OK, just hard-code like this
-            registration_address1: etb_address(patient.addresses[1].address), # line đầu tiên của Contact Address
+            registration_address1: cdp_address(patient.addresses[1].address), # line đầu tiên của Contact Address
             registration_address2: '', # OK
             registration_region: 'MIỀN BẮC', # OK hard-coded
             registration_province: 'Hà Nội', # OK hard-coded
             registraiton_district: 'Cầu Giấy', # OK hard-coded
-            located_at_different_address: located_at_different_address, # @TODO: nếu patient.addresses[1].address ==  patient.addresses[0].address --> TRUE, otherwise FALSE 
-            current_address: etb_address(patient.addresses[0].address), # lấy dòng đầu tiên của PERMANENT ADDRESS
+            located_at_different_address: located_at_different_address, 
+            current_address: cdp_address(patient.addresses[0].address), # lấy dòng đầu tiên của PERMANENT ADDRESS
             healthcare_unit_location: 'Miền Nam', # OK
             healthcare_unit_name: 'Quận 1', # OK
             healthcare_unit_registration_date: Extras::Dates::Format.datetime_with_time_zone(patient.created_at, I18n.t('date.formats.etb_short')), # ngày tạo patient
@@ -52,7 +52,7 @@ module CdxVietnam
             registration_group: "VN_2015_OTHER", # @TODO
             site_of_disease: "PULMONARY", # @TODO
             number_of_previous_tb_treatment: '0',
-            consulting_date: consulting_date, # @TODO, ngày tạo patient
+            consulting_date: consulting_date, 
             consulting_professional: '[FROM CDP]',
             consulting_height: '',
             consulting_weight: '100',
@@ -64,11 +64,11 @@ module CdxVietnam
 
       private
 
-      def etb_address(addresses)
+      def cdp_address(addresses)
         if patient.addresses[1].address.blank?
           return "Missing in CDP"
         else
-          return patient.addresses[1].address.blank
+          return patient.addresses[1].address
         end
       end
 
@@ -81,41 +81,77 @@ module CdxVietnam
       end
 
       def test_order
-        test_order_to_send = patient_result # @TODO, get test order result should be send, which test order result will be choice? Can trigger with test order instead of patient.
-        order_type = get_order_type(test_order_to_send.result_name)
+        order_type = get_order_type(patient_result.result_name)
         if order_type == "xpert"
           rs = {
-            type: order_type, # @TODO
-            order_id: encounter.batch_id.to_s, # @TODO
+            type: order_type, 
+            order_id: encounter.batch_id.to_s, 
             cdp_order_id: patient_result.id.to_s,
-            sample_collected_date: Extras::Dates::Format.datetime_with_time_zone(test_order_to_send.sample_collected_at, I18n.t('date.formats.etb_short')),
+            sample_collected_date: Extras::Dates::Format.datetime_with_time_zone(patient_result.sample_collected_at, I18n.t('date.formats.etb_short')),
             month: 2, # @TODO, sample on cdp not have month field
             laboratory_serial_number: 'N3432',# @TODO, cdp not have this field
             laboratory_region: 'MIỀN BẮC', # OK - HARD CODE
             laboratory_name: 'LAB - HƯNG YÊN', # OK - HARD CODE
-            date_of_release: Extras::Dates::Format.datetime_with_time_zone(test_order_to_send.sample_collected_at, I18n.t('date.formats.etb_short')), 
-            result: 2, # @TODO, make sure list value, result of cdp not suitable with eTB
-            comment: test_order_to_send.comment
+            date_of_release: Extras::Dates::Format.datetime_with_time_zone(patient_result.sample_collected_at, I18n.t('date.formats.etb_short')), 
+            result: xpert_result, 
+            comment: patient_result.comment
           }
         else
           rs = {
-            type: order_type, # @TODO
-            order_id: encounter.batch_id.to_s, # @TODO
+            type: order_type,
+            order_id: encounter.batch_id.to_s,
             cdp_order_id: patient_result.id.to_s,
-            sample_collected_date: Extras::Dates::Format.datetime_with_time_zone(test_order_to_send.sample_collected_at, I18n.t('date.formats.etb_short')), # @TODO
+            sample_collected_date: Extras::Dates::Format.datetime_with_time_zone(patient_result.sample_collected_at, I18n.t('date.formats.etb_short')), # @TODO
             month: 2, # @TODO, sample on cdp not have month field
-            specimen_type: specimen_type(test_order_to_send), # @TODO, make sure valid LIST VALUE
+            specimen_type: specimen_type(patient_result), 
             laboratory_serial_number: 'N3432',# @TODO, cdp not have this field
-            visual_appearance: 'BLOOD_STAINED', # @TODO, make sure valid LIST VALUE, cdp not have this field
+            visual_appearance: visual_appearance, 
             laboratory_region: 'MIỀN BẮC', # OK - HARD CODE
             laboratory_name: 'LAB - HƯNG YÊN', # OK - HARD CODE
             next_exam_date: '',
-            date_of_release: Extras::Dates::Format.datetime_with_time_zone(test_order_to_send.sample_collected_at, I18n.t('date.formats.etb_short')), 
-            result: 'NEGATIVE', # @TODO, make sure list value, result of cdp not suitable with eTB
-            comment: test_order_to_send.comment
+            date_of_release: Extras::Dates::Format.datetime_with_time_zone(patient_result.sample_collected_at, I18n.t('date.formats.etb_short')), 
+            result: micro_result, 
+            comment: patient_result.comment
           }
         end
         return rs
+      end
+
+      def visual_appearance
+        mapping_list = {
+          "blood" => "BLOOD_STAINED",
+          "mucopurulent" => "MUCOPURULENT",
+          "saliva" => "SALIVA"
+        }
+        return mapping_list[patient_result.appearance] if patient_result.appearance.present? && mapping_list[patient_result.appearance].present?
+        return "BLOOD_STAINED"
+      end
+
+      def xpert_result
+        return 0 if patient_result.tuberculosis == "not_detected"
+        if patient_result.tuberculosis == "detected"
+          if patient_result.rifampicin == "detected"
+            return 2
+          elsif patient_result.rifampicin == "not_detected"
+            return 1
+          else
+            return 3
+          end
+        else
+          return 4 #invalid
+        end
+      end
+
+      def micro_result
+        mapping_list = {
+          "negative" => "NEGATIVE",
+          "1to9" => "POSITIVE",
+          "1plus" => "PLUS",
+          "2plus" => "PLUS2",
+          "3plus" => "PLUS3",
+        }
+        return mapping_list[patient_result.test_result] if patient_result.test_result.present? && mapping_list[patient_result.test_result].present?
+        return "POSITIVE"
       end
 
       def get_order_type(cdp_order_type)
@@ -149,7 +185,7 @@ module CdxVietnam
                           "rif" => "RIF_RESISTANCE",
                           "prexdr" => "PRE_XDR"
                         } 
-        return mapping_drug[@episode.drug_resistance] if mapping_drug[@episode.drug_resistance].present?
+        return mapping_drug[@episode.drug_resistance] if @episode.present? && mapping_drug[@episode.drug_resistance].present?
         return ""
       end
 

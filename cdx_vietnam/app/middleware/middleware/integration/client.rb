@@ -36,26 +36,50 @@ module Integration
         })
       end
 
-      # micro waiting for xpert test transfer to etb success
-      try_count = 0
-      loop do
-        break unless (test_order['type'] == 'microscopy' && patient["patient_#{system}_id"].blank?) || try_count > @max_retry
-        sleep 10
-        try_count += 1
-        patient_temp = Patient.where(id: patient["cdp_id"]).first
-        patient["patient_#{system}_id"] = patient_temp.external_id if patient_temp.present?
-        log.update_attributes({
-          try_n_times: try_count, 
-          error_message: "microscopy not have #{system}_patient_id",
-          status: "wait_xpert"
-        })
+      is_wait = true
+
+      patient_temp = Patient.where(id: patient["cdp_id"]).first
+      if patient_temp.present?
+        if system == 'vtm'
+          if patient_temp.vtm_patient_id.blank?
+            patient_temp.update_attributes({vtm_patient_id: '0'})
+            is_wait = false
+          end
+        elsif system == 'etb'
+          if patient_temp.etb_patient_id.blank?
+            patient_temp.update_attributes({etb_patient_id: '0'})
+            is_wait = false
+          end
+        end
       end
 
-      if test_order['type'] == 'microscopy' && patient["patient_#{system}_id"].blank?
+      try_count = 0
+      if is_wait
+        loop do
+          patient_temp = Patient.where(id: patient["cdp_id"]).first
+          if patient_temp.present?
+            if system == 'etb'
+              patient["patient_#{system}_id"] = patient_temp.etb_patient_id
+            elsif system == 'vtm'
+              patient["patient_#{system}_id"] = patient_temp.vtm_patient_id
+            end
+          end
+          break unless (patient["patient_#{system}_id"].blank? || patient["patient_#{system}_id"] == '0') || try_count > @max_retry
+          try_count += 1
+          sleep 10
+          log.update_attributes({
+            try_n_times: try_count, 
+            error_message: "microscopy not have #{system}_patient_id",
+            status: "wait_patient_id"
+          })
+        end
+      end
+
+      if (patient["patient_#{system}_id"].blank? || patient["patient_#{system}_id"] == '0') && is_wait
         log.update_attributes({
           try_n_times: try_count, 
           error_message: "microscopy not have #{system}_patient_id",
-          status: "Error"
+          status: "timeout_for_patient_id"
         })
         return
       end
@@ -75,7 +99,7 @@ module Integration
       patient_id = patient["patient_#{system}_id"]
       
       # By-pass if there is already external patient id
-      return patient_id if !patient_id.blank?
+      return patient_id if !(patient_id.blank? || patient["patient_#{system}_id"] == '0')
       
       # Sync patient data to external system
       try_count = 0
@@ -99,6 +123,8 @@ module Integration
         sleep 3
       end
       
+      cdp_patient = Patient.where(id: patient["cdp_id"]).first
+
       # Still fail after @max_retry time
       if !res[:success]
         log.update_attributes({
@@ -108,18 +134,33 @@ module Integration
         })
         order = PatientResult.where(id: log.json["patient"]["test_order"]["cdp_order_id"]).first
         order.update_attributes({is_sync: false}) if order
+        if cdp_patient
+          if system == 'etb'
+            cdp_patient.update_attributes({
+              etb_patient_id: nil
+            })
+          elsif system == 'vtm'
+            cdp_patient.update_attributes({
+              vtm_patient_id: nil
+            })
+          end
+        end
         return false
       end
       
       patient["patient_#{system}_id"] = res["patient_#{system}_id".to_sym]
-      cdp_patient = Patient.where(id: patient["cdp_id"]).first
       
       # update external system id into current patient
       if cdp_patient
-        cdp_patient.update_attributes({
-          external_patient_system: system,
-          external_id: res["patient_#{system}_id".to_sym]
-        })
+        if system == 'etb'
+          cdp_patient.update_attributes({
+            etb_patient_id: res["patient_#{system}_id".to_sym]
+          })
+        elsif system == 'vtm'
+          cdp_patient.update_attributes({
+            vtm_patient_id: res["patient_#{system}_id".to_sym]
+          })
+        end
       end
       
       log.update_attributes({
@@ -186,12 +227,13 @@ module Integration
       return false if !log
       
       order_id = log.json["patient"]["test_order"]["cdp_order_id"]
+      system = log.json["patient"]['target_system']
       
       order = PatientResult.where(id: order_id, is_sync: false).first
       
       return false if !order
       
-      json = "CdxVietnam::Presenters::#{order.patient.external_patient_system.camelize}".constantize.create_patient(order)
+      json = "CdxVietnam::Presenters::#{system.camelize}".constantize.create_patient(order)
       
       if log.fail_step == 'patient'
         integration(json, log)
