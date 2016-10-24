@@ -2,9 +2,9 @@ module Reports
   class DrugPercentage < Results
     def generate_chart
       data           = []
-      data << { label: 'INH detected',       value: sum_inh }
-      data << { label: 'RIF detected',       value: sum_rif }
-      data << { label: 'RIF & INH detected', value: sum_both_detected }
+      data << { label: I18n.t('drug_per.inh_detected'),       value: sum_inh }
+      data << { label: I18n.t('drug_per.rif_detected'),       value: sum_rif }
+      data << { label: I18n.t('drug_per.rif_inh_detected'), value: sum_both_detected }
       {
         columns: data.each_with_index.map { |slice, i| { y: slice[:value], color: slice_colors[i], indexLabel: "#{slice[:label]} #percent%", legendText: slice[:label] } }
       }

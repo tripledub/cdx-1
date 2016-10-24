@@ -20,3 +20,5 @@ vi:
       wrong_date: 'nên là một ngày trong %{birth_date_on_placeholder}'
       wrong_gender: 'giá trị không hợp lệ (nên là một trong %{gender_values})'
       cant_change: "không thể thay đổi sau khi đã được phân công"
+    validations:
+      cmnd: 'phải dài từ 9 đến 15 ký tự.'

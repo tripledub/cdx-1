@@ -1,0 +1,24 @@
+vi:
+  all_tests:
+    number_tests: "Số lượng bài kiểm tra"
+    number_errors: "Số lượng lỗi"
+    tests: "Bài kiểm tra"
+    errors: "Lỗi"
+  failed:
+    success: "Thành công"
+    fail: "Thất bại"
+  drtb_per:
+    drtb_not_detected: "Không phát hiện DR-TB"
+    drtb_detected: "Phát hiện DR-TB"
+  drug_per:
+    inh_detected: "Phát hiện INH"
+    rif_detected: "Phát hiện RIF"
+    rif_inh_detected: "Phát hiện RIF & INH"
+  ave_tec_tests:
+    peak: "Đỉnh"
+    peak_tests: "Các kiểm tra đỉnh"
+    average: "Trung bình"
+    average_tests: "Các kiểm tra trung bình"
+  device_not_report:
+    day: "Ngày"
+    device: "Thiết bị"
