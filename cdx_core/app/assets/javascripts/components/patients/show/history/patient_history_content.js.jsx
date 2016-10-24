@@ -4,15 +4,15 @@ var PatientHistoryContent = React.createClass({
       <div className="row">
         <div className="col-12">
           {this.props.currentTab === 1 ?
-            <PatientAuditLogs patientLogsUrl={this.props.patientLogsUrl} />
-            :null}
-
-          {this.props.currentTab === 2 ?
             <PatientTestOrders testOrdersUrl={this.props.testOrdersUrl} />
             :null}
 
-          {this.props.currentTab === 3 ?
+          {this.props.currentTab === 2 ?
             <PatientResults testResultsUrl={this.props.testResultsUrl} />
+            :null}
+
+          {this.props.currentTab === 3 ?
+            <PatientAuditLogs patientLogsUrl={this.props.patientLogsUrl} />
             :null}
 
           {this.props.currentTab === 4 ?
