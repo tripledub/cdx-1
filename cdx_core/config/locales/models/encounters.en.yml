@@ -1,4 +1,7 @@
 en:
+  activerecord:
+    models:
+      encounter: 'Test order'
   encounters:
     status:
       new: 'New'
