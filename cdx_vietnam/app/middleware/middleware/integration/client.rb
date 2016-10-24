@@ -85,8 +85,7 @@ module Integration
           x = CdpScraper::EtbScraper::new(Settings.etb_username, Settings.etb_password, Settings.etb_endpoint)
           x.login
         else
-          x = CdpScraper::VitimesScraper::new(Settings.vtm_username, Settings.vtm_password, Settings.vtm_endpoint)
-          x.login
+          x = CdpScraper::VitimesScraper::new(Settings.vtm_username, Settings.vtm_password, Settings.vtm_endpoint, 'Content-Type' => 'application/json;charset=UTF-8')
         end
         res = x.create_patient({"patient" => patient})
         
@@ -146,8 +145,7 @@ module Integration
           x = CdpScraper::EtbScraper::new(Settings.etb_username, Settings.etb_password, Settings.etb_endpoint)
           x.login
         else
-          x = CdpScraper::VitimesScraper::new(Settings.vtm_username, Settings.vtm_password, Settings.vtm_endpoint)
-          x.login
+          x = CdpScraper::VitimesScraper::new(Settings.vtm_username, Settings.vtm_password, Settings.vtm_endpoint, 'Content-Type' => 'application/json;charset=UTF-8')
         end
         res = x.create_test_order({"test_order" => test_order})
         try_count += 1
