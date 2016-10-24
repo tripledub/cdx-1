@@ -1,6 +1,7 @@
 # Xpert results model
 class XpertResult < PatientResult
-  validates_presence_of  :sample_collected_at, :examined_by, :tuberculosis, :rifampicin, :result_at, on: :update
+  validates_presence_of  :sample_collected_at, :examined_by, :tuberculosis, :result_at, on: :update
+  validates_presence_of  :rifampicin,    if: Proc.new { |xpert_result| xpert_result.tuberculosis == 'detected' }
   validates_inclusion_of :tuberculosis, in: %w(detected not_detected indeterminate), allow_nil: true
   validates_inclusion_of :rifampicin,   in: %w(detected not_detected indeterminate), allow_nil: true
   validates_inclusion_of :result_status, in: %w(new sample_collected allocated pending_approval rejected completed), allow_nil: true

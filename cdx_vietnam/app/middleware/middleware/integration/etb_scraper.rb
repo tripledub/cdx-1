@@ -273,8 +273,8 @@ module Integration
           raise 'Invalid `case_type`'
         end
           
-      rescue StandardError => ex
-        return { success: false, error: ex.message, patient_etb_id: nil }
+      #rescue StandardError => ex
+      #  return { success: false, error: ex.message, patient_etb_id: nil }
       end
       
       # Create patient in eTB
@@ -297,7 +297,11 @@ module Integration
         check_valid 'gender', params, ['MALE', 'FEMALE']
         check_valid 'nationallity', params, ['NATIVE', 'FOREIGN']
 
-        get('custom/vi/cases/index.seam')
+        if params['date_of_birth']
+          params['date_of_birth'] = '' if DateTime.strptime(params['date_of_birth'], '%m/%d/%Y') >= Date.today
+        end
+
+        get(uri('custom/vi/cases/index.seam'))
         # go to the search page
         search_page_url = uri('cases/newnotif.seam?cla=DRTB&type=CONFIRMED&unitId=-1')
         resp = get(search_page_url)
@@ -458,6 +462,8 @@ module Integration
           _main_create => _main_create
         }
 
+        puts post_data.map{|k,v| "#{k}:#{v}"}
+
         @agent.pre_connect_hooks << lambda { |agent, request| 
           request['Referer'] = uri('/cases/casenew.seam?cla=DRTB&type=CONFIRMED&cid=' + create_patient_form_url[/[0-9]*$/])
         }
@@ -471,8 +477,8 @@ module Integration
         response = {success: true, error: '', patient_etb_id: patient_etb_id}
 
         return response
-      rescue StandardError => ex
-        return { success: false, error: ex.message, patient_etb_id: nil }
+      #rescue StandardError => ex
+      #  return { success: false, error: ex.message, patient_etb_id: nil }
       end
     end
   end

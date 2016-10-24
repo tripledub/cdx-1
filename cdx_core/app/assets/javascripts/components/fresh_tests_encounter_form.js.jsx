@@ -108,7 +108,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
           </div>
 
           { this.state.encounter.exam_reason === 'follow' ? <ReasonFollow treatmentDateChange={this.treatmentDateChange} /> : null }
-          { this.state.encounter.exam_reason === 'diag' ? <PresumptiveRR /> : null }
+          { this.state.encounter.exam_reason === 'diag' ? <PresumptiveRR updatePresumptiveRR={this.updatePresumptiveRR} /> : null }
 
           <RequestedTests reqtestsChange={this.reqtestsChange} />
 
@@ -220,6 +220,17 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     }));
   },
 
+  updatePresumptiveRR: function(e){
+    var presumptiveRR = $('#presumptive_rr').is(':checked');
+    this.setState(React.addons.update(this.state, {
+      encounter: {
+        presumptive_rr: {
+          $set: presumptiveRR
+        }
+      }
+    }));
+  },
+
   cultureFormatChange: function() {
     var cultureFormat = $('#cultureFormat').val();
     this.setState(React.addons.update(this.state, {
@@ -244,11 +255,11 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
   },
 
   testingForChange: function() {
-    var xx = $('#testing_for').val();
+    var testingFor = $('#testing_for').val();
     this.setState(React.addons.update(this.state, {
       encounter: {
         testing_for: {
-          $set: xx
+          $set: testingFor
         }
       }
     }));
@@ -256,7 +267,8 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     $('.test_for_ebola').attr('checked', false).parent().hide();
     $('.test_for_tb').attr('checked', false).parent().hide();
     $('.test_for_hiv').attr('checked', false).parent().hide();
-    switch(xx)
+
+    switch(testingFor)
     {
       case 'TB':
         $('.test_for_tb').parent().show();
@@ -320,7 +332,7 @@ var ReasonDiag = React.createClass({
 
 var PresumptiveRR = React.createClass({
   updatePresumptiveRR: function(e){
-    alert('its changed');
+    this.props.updatePresumptiveRR()
   },
 
   render: function() {
@@ -329,7 +341,7 @@ var PresumptiveRR = React.createClass({
         <div className="col-6">
         </div>
         <div className="col-6">
-          <input type="checkbox" onChnage={this.updatePresumptiveRR} className="presumptive_rr" id="presumptive_rr" name="presumptive_rr"/>
+          <input type="checkbox" onChange={this.updatePresumptiveRR} className="presumptive_rr" id="presumptive_rr" name="presumptive_rr"/>
           <label htmlFor="presumptive_rr">{I18n.t("components.fresh_tests_encounter_form.presumptive")}</label>
         </div>
       </div>

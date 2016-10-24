@@ -9,3 +9,5 @@ vi:
         rifampicin: 'Kháng sinh'
         trace: 'Dấu vết'
         tuberculosis: 'Vi khuẩn lao'
+        sample_identifier_id: 'Mã số mẫu'
+        feedback_message_id: 'Phản hồi'

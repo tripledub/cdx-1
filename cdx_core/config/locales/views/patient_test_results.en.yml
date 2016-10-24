@@ -5,3 +5,10 @@ en:
       culture_result: 'Culture result'
       dst_lpa_result: 'Dst/Lpa result'
       microscopy_result: 'Microscopy result'
+    status:
+      new: 'New'
+      sample_collected: 'Pending'
+      allocated: 'Allocated'
+      pending_approval: 'Pending approval'
+      rejected: 'Rejected'
+      completed: 'Completed'

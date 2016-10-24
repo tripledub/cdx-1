@@ -1,0 +1,4 @@
+vi:
+  samples:
+    collect_samples:
+      sample_exists: 'Mã: %{sample_id} đã được thêm vào yêu cầu xét nghiệm.'

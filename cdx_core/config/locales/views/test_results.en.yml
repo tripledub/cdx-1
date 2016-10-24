@@ -68,3 +68,7 @@ en:
       tab_xpert: 'Xpert'
       tab_culture: 'Culture'
       tab_dst_lpa: 'Dst_Lpa'
+      specimen_type:
+        sputum: "Sputum"
+        blood: "Blood"
+        other: "Other"
