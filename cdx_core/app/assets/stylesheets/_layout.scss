@@ -266,3 +266,39 @@ overflow-y:auto;
 #contentcontainer {
 overflow:auto;
 }
+
+.mainactions{
+width:100%;
+padding:0px;
+}
+
+.financebuttons{
+width:100%;
+}
+.mainactions > .col-6{
+width:100%;
+max-width:100% !important;
+}
+
+.financebuttons .side-link{
+margin-left:0px;
+line-height: 27px;
+}
+
+
+form.button_to{
+float:right;
+margin-top:-77px;
+margin-right:20px;
+}
+
+
+.box-content .row {
+align-items:flex-start !important;
+}
+
+.box-content .row .pe-2 label{
+min-height:30px;
+line-height:25px;
+margin:0px !important;
+}
