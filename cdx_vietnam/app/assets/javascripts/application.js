@@ -43,6 +43,7 @@
 //= require jquery-ui.min
 //= require jquery.comiseo.daterangepicker.min
 //= require jquery.bettertabs.min
+//= require plugins/mousetrap
 //= require cdx_core
 //= require menu
 //= require cdx_vietnam

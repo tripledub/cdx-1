@@ -1,0 +1,5 @@
+vi:
+  home:
+    settings:
+      integration_logs: Integration logs
+      integration_logs_notice: Manage integration logs

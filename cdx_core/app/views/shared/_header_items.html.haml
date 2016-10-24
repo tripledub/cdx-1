@@ -1,0 +1,24 @@
+-# ------------ HOME
+- if has_access?(TestResult, Policy::Actions::MEDICAL_DASHBOARD)
+  %li{ class: is_menu_item_active?('dashboards', request.params) }
+    = link_to(I18n.t('layout.header_nav.home'), dashboard_path)
+-# ------------ PATIENTS
+- if has_access_to_patients_index?
+  %li{ class: is_menu_item_active?('patients', request.params) }
+    = link_to(I18n.t('layout.header_nav.patients'), patients_path)
+-# ------------ TEST Orders
+- if has_access_to_test_orders_index?
+  %li{ class: is_menu_item_active?('test_orders', request.params) }
+    = link_to(I18n.t('layout.header_nav.test_orders'), test_orders_path)
+-# ------------ APPROVALS
+- if has_access?(Encounter, Policy::Actions::APPROVE_ENCOUNTER)
+  %li{ class: is_menu_item_active?('approvals', request.params) }
+    = link_to(I18n.t('layout.header_nav.approvals'), approvals_path)
+-# ------------ DEVICES
+- if has_access_to_devices_index?
+  %li{ class: is_menu_item_active?('devices', request.params) }
+    = link_to(I18n.t('layout.header_nav.devices'), devices_path)
+-# ------------ SETTINGS
+- if has_access_to_settings?
+  %li{ class: is_menu_item_active?('settings', request.params) }
+    = link_to(I18n.t('layout.header_nav.settings'), settings_path)

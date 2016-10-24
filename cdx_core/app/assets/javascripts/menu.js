@@ -1,27 +1,24 @@
-var menu_open = false;
+// JS for shared/_header_dropdown.html.haml
+$(document).ready(function() {
+  $('body').append('<div class=\'menu-overlay\'></div>');
 
-function close_accounts_menu()
-{
-  if( menu_open )
-  {
-    $('#dropdown-form').parent().removeClass('show-nav-menu');
-    $('#account_menu_back').remove();
-    menu_open = false;
-  }
-}
+  var $menuOverlay  = $('.menu-overlay');
+  var $userDropdown = $('.user .user-dropdown');
 
-$(document).ready( function()
-{
-  $(".icon-user").on('click', function()
-  {
-    var $dropdown = $(this).parent();
-    if( $dropdown.hasClass('show-nav-menu') )
-      close_accounts_menu();
-    else
-    {
-      $dropdown.before('<div id="account_menu_back" onclick="close_accounts_menu()">' );
-      $dropdown.addClass('show-nav-menu');
-      menu_open = true;
+  $menuOverlay.on('click', function() {
+    $userDropdown.removeClass('active');
+    $menuOverlay.removeClass('active');
+  });
+
+  $('.user-dropdown-link').on('click', function(e) {
+    e.stopPropagation(); e.preventDefault();
+
+    if($userDropdown.hasClass('active')) {
+      $userDropdown.removeClass('active');
+      $menuOverlay.removeClass('active');
+    } else {
+      $userDropdown.addClass('active');
+      $menuOverlay.addClass('active');
     }
   });
 
@@ -29,7 +26,7 @@ $(document).ready( function()
     var lang = $(this).val();
     $.ajax({
       url: '/users/change_language',
-      data: {language: lang},
+      data: { language: lang },
       success: function(){
         location.reload();
       }

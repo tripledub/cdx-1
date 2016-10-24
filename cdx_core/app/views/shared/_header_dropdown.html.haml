@@ -1,0 +1,15 @@
+.user{:tabindex => '0'}
+  - if current_user
+    = link_to('#', class: 'user-dropdown-link') do
+      %span.icon-user.medium.icon-gray-light{title: current_user.email}
+    %ul.user-dropdown
+      - unless @hide_my_account
+        %li= link_to(I18n.t('layout.header_nav.my_account'), edit_user_registration_path)
+        %li= link_to(institution_name, institutions_path)
+        %li= link_to(I18n.t('layout.header_nav.api_tokens'), api_tokens_path)
+        %li
+          %form
+            = select_tag('language', options_for_select(CdxLocalisation::Languages.active, current_user.locale), class: 'select_lang')
+      %li= link_to(I18n.t('layout.header_nav.log_out'), destroy_session_path(:user), method: :delete)
+  - else
+    = link_to(I18n.t('layout.header_nav.log_in'), new_session_path(:user))
