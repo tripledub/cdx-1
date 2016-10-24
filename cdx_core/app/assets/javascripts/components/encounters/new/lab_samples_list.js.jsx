@@ -6,7 +6,7 @@ var LabSamplesList = React.createClass({
         {
           this.props.samples.map(function(sample) {
             return(
-              <LabSample key={sample.uuid} sample={sample} context={that.props.context} onUnifySample={that.props.onUnifySample} />
+              <LabSample key={ sample.uuid } sample={ sample } context={ that.props.context } onUnifySample={ that.props.onUnifySample } />
             )
           })
         }
