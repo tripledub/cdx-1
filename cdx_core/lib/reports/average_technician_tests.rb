@@ -5,8 +5,8 @@ module Reports
       average_tests
       {
         title:   '',
-        titleY:  'Peak Tests',
-        titleY2: 'Average Tests',
+        titleY:  I18n.t('ave_tec_tests.peak_tests'),
+        titleY2: I18n.t('ave_tec_tests.average_tests'),
         columns: generate_columns
       }
     end
@@ -69,7 +69,7 @@ module Reports
           type: "column",
           color: "#E06023",
           name: "Peak tests",
-          legendText: "Peak",
+          legendText: I18n.t('ave_tec_tests.peak'),
           showInLegend: true,
           dataPoints: data.map { |result| { label: result[:label], y: result[:peak] } }
         },
@@ -78,7 +78,7 @@ module Reports
           type: "column",
           color: "#5C5B82",
           name: "Average tests",
-          legendText: "Average",
+          legendText: I18n.t('ave_tec_tests.average'),
           axisYType: "secondary",
           showInLegend: true,
           dataPoints: data.map { |result| { label: result[:label], y: result[:average] } }

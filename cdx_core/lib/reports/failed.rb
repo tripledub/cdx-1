@@ -19,8 +19,8 @@ module Reports
     end
 
     def sort_pie
-      data << { _label: 'Success', _value: total_tests - failed_tests }
-      data << { _label: 'Fail', _value: failed_tests }
+      data << { _label: I18n.t('failed.success'), _value: total_tests - failed_tests }
+      data << { _label: I18n.t('failed.fail'), _value: failed_tests }
     end
 
     def sum_total
