@@ -72,7 +72,7 @@ module CdxVietnam
             month: 2, # @TODO, sample on cdp not have month field
             laboratory_serial_number: 'N3432',# @TODO, cdp not have this field
             laboratory_region: 'MIỀN BẮC', # OK - HARD CODE
-            laboratory_name: 'LAB - HƯNG YÊN', # OK - HARD CODE
+            laboratory_name: 'LAB - HÀ NỘI', # OK - HARD CODE
             date_of_release: test_order_to_send.sample_collected_at.strftime('%m/%d/%Y'), # @TODO
             result: 2, # @TODO, make sure list value, result of cdp not suitable with eTB
             comment: test_order_to_send.comment
