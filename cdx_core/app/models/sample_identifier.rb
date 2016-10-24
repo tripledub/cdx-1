@@ -1,3 +1,4 @@
+# sample identifiers
 class SampleIdentifier < ActiveRecord::Base
   include AutoUUID
 
@@ -16,7 +17,7 @@ class SampleIdentifier < ActiveRecord::Base
   end
 
   def not_phantom?
-    not phantom?
+    !phantom?
   end
 
   private

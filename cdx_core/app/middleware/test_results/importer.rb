@@ -14,7 +14,7 @@ module TestResults
     protected
 
     def add_assays
-      return if !@parsed_message['test']['core']['assays'].present?
+      return unless @parsed_message['test']['core']['assays'].present?
 
       @parsed_message['test']['core']['assays'].each do |parsed_assay|
         @test_result.assay_results.new.tap do |assay|
