@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'sidekiq/testing'
 
 RSpec.describe Persistence::Users do
   let(:institution)    { Institution.make }
@@ -14,6 +15,7 @@ RSpec.describe Persistence::Users do
     user.save!
     user.grant_superadmin_policy
     existant_user.roles << role
+    Sidekiq::Worker.clear_all
     described_class.new(user).add_and_invite(new_users, message, role)
   end
 
@@ -23,8 +25,9 @@ RSpec.describe Persistence::Users do
       expect(User.find_by_email('new@tester.com')).to be
     end
 
-    it "sends mutiple invitations to new users" do
-      expect(ActionMailer::Base.deliveries.count).to eq(2)
+    it 'sends mutiple invitations to new users' do
+      Sidekiq::Testing.fake!
+      expect(Sidekiq::Extensions::DelayedMailer.jobs.size).to eq(2)
     end
 
     it "adds role to new user" do
