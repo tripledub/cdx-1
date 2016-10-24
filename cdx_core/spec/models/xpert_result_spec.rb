@@ -63,14 +63,14 @@ describe XpertResult do
       end
     end
 
-    context 'is_linkable?' do
+    context 'linkable?' do
       it 'should return true if status is allocated' do
         xpert_result.update_attribute(:result_status, 'allocated')
-        expect(xpert_result.is_linkable?).to be true
+        expect(xpert_result.linkable?).to be true
       end
 
       it 'should return false if status is not allocated' do
-        expect(xpert_result.is_linkable?).to be false
+        expect(xpert_result.linkable?).to be false
       end
     end
   end

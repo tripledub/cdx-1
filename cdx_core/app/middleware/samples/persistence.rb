@@ -31,7 +31,7 @@ module Samples
       end
 
       def sample_is_valid?(sample_id)
-        sample_identifiers = SampleIdentifiers::Finder.find_all_by_sample_id(sample_id)
+        sample_identifiers = SampleIdentifiers::Finder.find_all_samples_available(sample_id)
         if sample_identifiers && !sample_assigned?(sample_identifiers)
           @error_messages << I18n.t('samples.collect_samples.sample_exists', sample_id: sample_id)
           return false

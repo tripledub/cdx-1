@@ -3,9 +3,8 @@ module XpertResults
   class VietnamImporter < XpertResults::Importer
     class << self
       def link_xpert_result(parsed_message, device)
-        sample_identifier = SampleIdentifiers::Finder.find_first_sample_available(sample_id_from_parsed_message(parsed_message['sample']))
         super(parsed_message, device)
-        update_sample_identifier(sample_identifier, parsed_message)
+        update_sample_identifier(@sample_identifier, parsed_message)
       end
 
       protected

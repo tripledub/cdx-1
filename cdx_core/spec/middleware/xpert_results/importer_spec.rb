@@ -77,6 +77,27 @@ describe XpertResults::Importer do
         end
       end
     end
+
+    context 'when sample id has been used in another result of the same test order' do
+      let!(:microscopy_result) { MicroscopyResult.make encounter: encounter, sample_identifier: sample_identifier }
+
+      before :each do
+        described_class.link_xpert_result(parsed_message, device)
+        xpert_result.reload
+      end
+
+      it 'should link the sample id with the test result' do
+        expect(xpert_result.sample_identifier).to eq(sample_identifier)
+      end
+
+      it 'should set the test result status to pending approval' do
+        expect(xpert_result.result_status).to eq('pending_approval')
+      end
+
+      it 'should link the test device to the test result' do
+        expect(xpert_result.device).to eq(device)
+      end
+    end
   end
 
   describe 'valid_gene_xpert_result_and_sample?' do
