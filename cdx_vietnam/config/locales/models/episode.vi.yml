@@ -2,7 +2,7 @@ vi:
   activerecord:
     attributes:
       episode:
-        diagnosis: 'Chẩn đoán'
+        diagnosis: 'Chẩn đoán *'
         hiv_status: 'Tình trạng nhiễm HIV'
         initial_history: 'Lịch sử'
         drug_resistance: 'Kháng thuốc'
