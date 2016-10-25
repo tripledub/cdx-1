@@ -15,6 +15,12 @@ module Integration
       patient = json['patient']
       test_order = patient['test_order']
       
+      order = PatientResult.where(id: test_order["cdp_order_id"]).first
+      
+      return if !order || order.is_sync
+      
+      order.update_attributes({is_sync: true})
+      
       system = patient['target_system']
       
       if !log
@@ -28,6 +34,54 @@ module Integration
           try_n_times: 1,
           status: "In progress"
         })
+      end
+
+      is_wait = true
+
+      patient_temp = Patient.where(id: patient["cdp_id"]).first
+      if patient_temp.present?
+        if system == 'vtm'
+          if patient_temp.vtm_patient_id.blank?
+            patient_temp.update_attributes({vtm_patient_id: '0'})
+            is_wait = false
+          end
+        elsif system == 'etb'
+          if patient_temp.etb_patient_id.blank?
+            patient_temp.update_attributes({etb_patient_id: '0'})
+            is_wait = false
+          end
+        end
+      end
+
+      try_count = 0
+      if is_wait
+        loop do
+          patient_temp = Patient.where(id: patient["cdp_id"]).first
+          if patient_temp.present?
+            if system == 'etb'
+              patient["patient_#{system}_id"] = patient_temp.etb_patient_id
+            elsif system == 'vtm'
+              patient["patient_#{system}_id"] = patient_temp.vtm_patient_id
+            end
+          end
+          break unless (patient["patient_#{system}_id"].blank? || patient["patient_#{system}_id"] == '0') || try_count > @max_retry
+          try_count += 1
+          sleep 10
+          log.update_attributes({
+            try_n_times: try_count, 
+            error_message: "microscopy not have #{system}_patient_id",
+            status: "wait_patient_id"
+          })
+        end
+      end
+
+      if (patient["patient_#{system}_id"].blank? || patient["patient_#{system}_id"] == '0') && is_wait
+        log.update_attributes({
+          try_n_times: try_count, 
+          error_message: "microscopy not have #{system}_patient_id",
+          status: "timeout_for_patient_id"
+        })
+        return
       end
       
       patient_id = add_update_patient(patient, system, log)
@@ -45,7 +99,7 @@ module Integration
       patient_id = patient["patient_#{system}_id"]
       
       # By-pass if there is already external patient id
-      return patient_id if !patient_id.blank?
+      return patient_id if !(patient_id.blank? || patient["patient_#{system}_id"] == '0')
       
       # Sync patient data to external system
       try_count = 0
@@ -55,7 +109,7 @@ module Integration
           x = CdpScraper::EtbScraper::new(Settings.etb_username, Settings.etb_password, Settings.etb_endpoint)
           x.login
         else
-          # VTM system
+          x = CdpScraper::VitimesScraper::new(Settings.vtm_username, Settings.vtm_password, Settings.vtm_endpoint, 'Content-Type' => 'application/json;charset=UTF-8')
         end
         res = x.create_patient({"patient" => patient})
         
@@ -69,6 +123,8 @@ module Integration
         sleep 3
       end
       
+      cdp_patient = Patient.where(id: patient["cdp_id"]).first
+
       # Still fail after @max_retry time
       if !res[:success]
         log.update_attributes({
@@ -76,18 +132,35 @@ module Integration
           error_message: res[:error],
           status: "Error"
         })
+        order = PatientResult.where(id: log.json["patient"]["test_order"]["cdp_order_id"]).first
+        order.update_attributes({is_sync: false}) if order
+        if cdp_patient
+          if system == 'etb'
+            cdp_patient.update_attributes({
+              etb_patient_id: nil
+            })
+          elsif system == 'vtm'
+            cdp_patient.update_attributes({
+              vtm_patient_id: nil
+            })
+          end
+        end
         return false
       end
       
       patient["patient_#{system}_id"] = res["patient_#{system}_id".to_sym]
-      patient = Patient.where(id: patient["cpd_id"]).first
       
       # update external system id into current patient
-      if patient
-        patient.update_attributes({
-          external_patient_system: system,
-          external_id: res["patient_#{system}_id".to_sym]
-        })
+      if cdp_patient
+        if system == 'etb'
+          cdp_patient.update_attributes({
+            etb_patient_id: res["patient_#{system}_id".to_sym]
+          })
+        elsif system == 'vtm'
+          cdp_patient.update_attributes({
+            vtm_patient_id: res["patient_#{system}_id".to_sym]
+          })
+        end
       end
       
       log.update_attributes({
@@ -102,7 +175,7 @@ module Integration
     # create test order and update test result
     def create_test_order(test_order, system, log)
       log.update_attributes({
-        fail_step: "test_order"
+        fail_step: "create_test_order"
       })
       # Sync order data to external system
       try_count = 0
@@ -113,7 +186,7 @@ module Integration
           x = CdpScraper::EtbScraper::new(Settings.etb_username, Settings.etb_password, Settings.etb_endpoint)
           x.login
         else
-          # VTM system
+          x = CdpScraper::VitimesScraper::new(Settings.vtm_username, Settings.vtm_password, Settings.vtm_endpoint, 'Content-Type' => 'application/json;charset=UTF-8')
         end
         res = x.create_test_order({"test_order" => test_order})
         try_count += 1
@@ -134,6 +207,8 @@ module Integration
           error_message: res[:error],
           status: "Error"
         })
+        order = PatientResult.where(id: log.json["patient"]["test_order"]["cdp_order_id"]).first
+        order.update_attributes({is_sync: false}) if order
         return false
       end
       
@@ -151,11 +226,20 @@ module Integration
       
       return false if !log
       
+      order_id = log.json["patient"]["test_order"]["cdp_order_id"]
+      system = log.json["patient"]['target_system']
+      
+      order = PatientResult.where(id: order_id, is_sync: false).first
+      
+      return false if !order
+      
+      json = "CdxVietnam::Presenters::#{system.camelize}".constantize.create_patient(order)
+      
       if log.fail_step == 'patient'
-        integration(log.json, log)
+        integration(json, log)
       else
-        test_order = {"test_order" => log.json["patient"]["test_order"]}
-        create_test_order(test_order, log.system, log)
+        json = JSON.parse(json)
+        create_test_order(json["patient"]["test_order"], log.system, log)
       end
     end
   end

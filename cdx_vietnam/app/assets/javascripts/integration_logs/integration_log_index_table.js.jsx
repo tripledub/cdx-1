@@ -13,7 +13,7 @@ var IntegrationButton = React.createClass({
       type: 'GET',
       dataType: 'json',
       success: function(data) {
-        window.alert("success");
+        location.reload();
       },
       error: function(xhr, status, err) {
         window.alert(err.toString());
@@ -32,13 +32,13 @@ var IntegrationLogRow = React.createClass({
   render: function() {
     var that = this;
     var retry = "";
-    if (this.props.record.status != "Finished")
+    if (this.props.record.status == "Error")
     {
       retry = <IntegrationButton id={this.props.record.id} />;
     }
 
     return (
-    <tr data-href={this.props.record.id}>
+    <tr>
       <td>{this.props.record.patientName}</td>
       <td>{this.props.record.orderId}</td>
       <td>{this.props.record.failStep}</td>

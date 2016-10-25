@@ -7,11 +7,23 @@
 require 'mechanize'
 require 'json'
 require 'time'
+require_relative 'cdp_scraper'
 
 module Integration
   module CdpScraper
     # Implemation of the scraper for Vitimes system
     class VitimesScraper < Base
+      REGION_MAP = {
+        'Hoang Mai District' => 15,
+        'Hai Ba Trung District' => 4,
+        'Hanoi Lung Hospital' => 981
+      }
+
+      TYPE_MAP = {
+        'microscopy' => 1,
+        'xpert' => 6,
+      }
+
       # Get authenticated using the provided credentials
       # After logged in, the session's cookie will be used for subsequent requests
       def login
@@ -32,7 +44,26 @@ module Integration
       
       # create VTM test-order
       def create_test_order(test_order)
+        login
+
         params = test_order['test_order'].clone
+
+        check_key 'type', params
+        check_key 'hiv_status', params
+        check_key 'sample_collected_date1', params
+        check_key 'sample_collected_date2', params
+        check_key 'specimen_type', params
+        check_key 'requesting_site', params
+        check_key 'performing_site', params
+        check_key 'result', params
+
+        check_valid 'type', params, TYPE_MAP.keys
+        check_valid 'hiv_status', params, [0, 1, 2, 3]
+        check_valid 'specimen_type', params, [1, 2]
+        check_valid 'requesting_site', params, REGION_MAP.values
+        check_valid 'performing_site', params, REGION_MAP.values
+
+        params['type'] = TYPE_MAP[params['type']]
 
         post_data_get_patient = { "patientId": params['patient_vtm_id'] }
         resp = post(uri('api/sokhambenh/GetPatient'), post_data_get_patient.to_json)
@@ -43,42 +74,116 @@ module Integration
         post_data = {
           "xn": {
             "id":0,
-            "patientId": params['patient_vtm_id'],
+            "patientId": params['patient_vtm_id'].to_i,
             "examRecordId": vtm_id,
-            "requiredFacilityId":922,
-            "testReason":2,
+            "requiredFacilityId": params['requesting_site'].to_i,
+            "testReason":1,
             "testMonth":0,
             "tbTreatmentHistory":1,
             "hivStatus":1,
-            "loaiBenhPham":"1",
-            "loaiBenhPhamKhacGhiRo":"",
-            "ngayLayMau":"2016-10-15T16:51:42.551Z",
-            "strngayLayMau":"15/10/2016 23:51:42",
-            "gioLayMau":23,
-            "phutLayMau":51,
-            "loaiYeuCauXN":6,
-            "loaiYeuCauXNMauSo":"",
-            "loaiYeuCauXN6LanThu":"77",
-            "loaiYeuCauXN6LanThu2LyDo":"Why 2nd? Again",
-            "chanDoanLao":0,
+            "loaiBenhPham": params['specimen_type'].to_s,
+            "loaiBenhPhamKhacGhiRo": (params['specimen_type'].to_s == '2') ? "khac" : "",
+            "ngayLayMau": params['sample_collected_date1'],
+            "strngayLayMau": params['sample_collected_date2'],
+            "gioLayMau":10,
+            "phutLayMau":10,
+            "loaiYeuCauXN": params['type'].to_i,
+            "loaiYeuCauXNMauSo":1,
+            "loaiYeuCauXN6LanThu":0,
+            "loaiYeuCauXN6LanThu2LyDo":"",
+            "chanDoanLao":3,
             "chanDoanLaoNgoaiPhoiGhiRo":"",
-            "chanDoanLaoMDR":1,
+            "chanDoanLaoMDR":0,
             "chanDoanLaoXDR":0,
             "chanDoanLaoXDR1Month":0,
             "chanDoanLaoXDRKhacGhiRo":"",
-            "nguoiYeuCau":"Who requested",
+            "nguoiYeuCau":"Mr.CDP",
             "creatorId":68,
             "facilityLevelId":4,
             "provinceId":1,
             "districtId":0,
             "communeId":0,
-            "facilityId":981
+            "facilityId": params['performing_site'].to_i
           }
         }
 
         puts post_data.to_json
 
         resp = post(uri('api/sokhambenh/SaveXN'), post_data.to_json)
+        resp_json = JSON.parse(resp.body)
+        if resp_json['status'] != true
+          raise "Failed to create test-order"
+        end
+        
+        # get newly created test order
+        test_order_id = resp_json['data'].max_by{|e| e['id'].to_i }['id']
+        puts test_order_id
+        
+        # update test-order result
+        post_data_result = {
+          "xnresult": {
+            "id":0,
+            "examRecordId": vtm_id.to_i,
+            "patientId": params['patient_vtm_id'].to_i,
+            "requiredFacilityId": params['requesting_site'].to_i,
+            "testId": test_order_id,
+            "testNumber": Time.now.to_i,
+            "ngayNhanMau": params['sample_collected_date1'],
+            "strngayNhanMau": params['sample_collected_date2'],
+            "gioNhanMau":10,
+            "phutNhanMau":10,
+            "ngayXN": params['sample_collected_date1'],
+            "strngayXN":params['sample_collected_date2'],
+            "gioXN":10,
+            "phutXN":10,
+            "trangThaiBenhPhamAFB1_1":1,
+            "ketQuaAFB1_1":(params['type'] == 1) ? params['result'].to_i : 0,
+            "ketQuaAFBItGhiRo1_1":0,
+            "trangThaiBenhPhamAFB1_2":0,
+            "ketQuaAFB1_2":0,
+            "ketQuaAFBItGhiRo1_2":0,
+            "ketQuaAFB1":0,
+            "trangThaiBenhPhamAFB2_1":0,
+            "ketQuaAFB2_1":0,
+            "ketQuaAFBItGhiRo2_1":0,
+            "trangThaiBenhPhamAFB2_2":0,
+            "ketQuaAFB2_2":0,
+            "ketQuaAFBItGhiRo2_2":0,
+            "ketQuaAFB2":0,
+            "trangThaiBenhPhamMTBDinhDanhKhangRMPXpert":"",
+            "ketQuaBenhPhamMTBDinhDanhKhangRMPXpert": (params['type'] == 1) ? 0 : params['result'].to_i,
+            "maLoiBenhPhamMTBDinhDanhKhangRMPXpert":"",
+            "trangThaiBenhPhamMTBNuoiCay":"",
+            "ketQuaMTBNuoiCay":0,
+            "ketQuaDinhDanhMTBNuoiCay":0,
+            "ntmDinhDanhLPA":"",
+            "mtblpaCoMTB":0,
+            "trangThaiBenhPhamMTBLPA":"",
+            "ketQuaMTBLPAIsoniazid":0,
+            "ketQuaMTBLPARifampicin":0,
+            "ketQuaMTBLPAFluoroquinolones":0,
+            "ketQuaMTBLPACapreomycin":0,
+            "ketQuaMTBLPAViomycin":0,
+            "ketQuaMTBLPAAmikacin":0,
+            "ketQuaMTBLPAGhiChu":"",
+            "ketQuaMTBKhangThuocHang1":"",
+            "ketQuaMTBKhangThuocHang2":"",
+            "ketQuaMTBKhangThuocGhiChu":"",
+            "ketQuaINH":0,
+            "ketQuaRMP":0,
+            "ketQuaEMB":0,
+            "ketQuaSM":0,
+            "ketQuaPZA":0,
+            "ketQuaOF":0,
+            "ketQuaAK":0,
+            "ketQuaKM":0,
+            "ketQuaCAP":0
+          }
+        }
+
+        puts post_data_result.to_json
+
+        resp = post(uri('api/sokhambenh/SaveXNResult'), post_data_result.to_json)
         resp_json = JSON.parse(resp.body)
         if resp_json['status'] != true
           raise "Failed to create test-order"
@@ -91,6 +196,8 @@ module Integration
       
       # Create a patient into Vitimes
       def create_patient(patient = {})
+        login
+
         raise 'Invalid JSON format' unless patient['patient']
         params = patient['patient'].clone
 
@@ -103,11 +210,6 @@ module Integration
 
         patient_list_page_url = uri('/#/quanlybenhnhan/sokhambenh')
         get(patient_list_page_url)
-
-        params.merge!({
-          'ngayKhamBenh' => Extras::Date::Format.datetime_with_time_zone(DateTime.strptime(params['diagnosis_date'], '%m/%d/%Y'), :etb_long),
-          'strngayKhamBenh' => Extras::Date::Format.datetime_with_time_zone(DateTime.strptime(params['diagnosis_date'], '%m/%d/%Y'), :etb_short)
-        })
         
         create_patient_url = uri('api/sokhambenh/SaveSKB')
         post_data = {
@@ -128,7 +230,7 @@ module Integration
             "mobile": params['cellphone_number'],
             "hasHealthInsurance":false,
             "healthInsuranceNumber":"",
-            "provinceId":65,
+            "provinceId":1,
             "districtId":0,
             "communeId":0,
             "address": params['registration_address1'],
@@ -150,16 +252,16 @@ module Integration
             "referToConfirmationDate":"2016-10-15T15:53:26.704Z",
             "strreferToConfirmationDate":"",
             "treatmentLevelId":4,
-            "treatmentProvinceId":65, # user dependency problem here
+            "treatmentProvinceId":1,
             "treatmentDistrictId":0,
             "treatmentCommuneId":0,
-            "treatmentFacilityId":922,
+            "treatmentFacilityId": params['healthcare_unit'].to_i,
             "referToLevelId":0,
             "referToProvinceId":0,
             "referToDistrictId":0,
             "referToCommuneId":0,
             "referToFacilityId":0,
-            "referredDate":"2016-10-15T15:53:26.704Z",
+            "referredDate":"2016-10-21T08:24:57.489Z",
             "referFromSKBId":0,
             "strreferredDate":""
           }
