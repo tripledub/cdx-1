@@ -296,8 +296,10 @@ module Integration
         check_valid 'gender', params, ['MALE', 'FEMALE']
         check_valid 'nationallity', params, ['NATIVE', 'FOREIGN']
 
-        if params['date_of_birth']
+        begin
           params['date_of_birth'] = '' if DateTime.strptime(params['date_of_birth'], '%m/%d/%Y') >= Date.today
+        rescue
+          params['date_of_birth'] = ''
         end
 
         get(uri('custom/vi/cases/index.seam'))
