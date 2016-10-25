@@ -74,10 +74,4 @@
           .col-6
             = simple_format(@xpert_result.comment)
 
-- if Policy.can?(Policy::Actions::APPROVE_ENCOUNTER, Encounter, current_user)
-  .row
-    = react_component 'ShowApproveTestResult',
-      resultId: @xpert_result.id,
-      commentValue: @xpert_result.comment,
-      updateResultUrl: encounter_patient_results_path(@encounter),
-      rejectReasons: FeedbackMessages::Presenter.reject_reasons_category(@encounter.institution, 'labTech')
+= render partial: 'shared/approve_test_result', locals: { result: @xpert_result, encounter: @encounter }

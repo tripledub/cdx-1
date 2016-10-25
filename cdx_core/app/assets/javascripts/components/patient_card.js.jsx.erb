@@ -68,10 +68,10 @@ var PatientCard = React.createClass({
                   {patientInfo(patient)}
                 </li>
                 <li>
-                  { this.props.patient.multi_address.map(function(addr)
+                  { this.props.patient.multi_address.map(function(addr, index)
                     {
                       addresscount++
-                      return <PatientAddress address={addr} addresscount={addresscount}/>
+                      return <PatientAddress key={ index } address={ addr } addresscount={ addresscount }/>
                     })
                   }
                 </li>

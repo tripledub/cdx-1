@@ -46,6 +46,10 @@ class PatientResult < ActiveRecord::Base
     feedback_message.present?
   end
 
+  def pending_approval?
+    result_status == 'pending_approval'
+  end
+
   def test_name
     [localised_name, format_name].compact.join(' ')
   end

@@ -74,3 +74,5 @@
                   = CultureResult.human_attribute_name(:comment)
               .col-6
                 = simple_format(@culture_result.comment)
+
+= render partial: 'shared/approve_test_result', locals: { result: @microscopy_result, encounter: @encounter }
