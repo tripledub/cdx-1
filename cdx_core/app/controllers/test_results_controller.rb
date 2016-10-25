@@ -1,3 +1,4 @@
+# Test results controller
 class TestResultsController < TestsController
   include Policy::Actions
 
@@ -6,7 +7,7 @@ class TestResultsController < TestsController
   end
 
   def index
-    @date_options  = Extras::Dates::Filters.date_options_for_filter
+    @date_options = Extras::Dates::Filters.date_options_for_filter
 
     respond_to do |format|
       format.html do
@@ -15,27 +16,24 @@ class TestResultsController < TestsController
         case @selected_tab
         when 'microscopy'
           load_manual_test_results(Finder::MicroscopyResults, MicroscopyResults::Presenter)
-          cookies[:test_result_tab] = { value: 'microscopy', expires: 1.year.from_now }
         when 'xpert'
           load_manual_test_results(Finder::XpertResults, XpertResults::Presenter)
-          cookies[:test_result_tab] = { value: 'xpert', expires: 1.year.from_now }
         when 'culture'
           load_manual_test_results(Finder::CultureResults, CultureResults::Presenter)
-          cookies[:test_result_tab] = { value: 'culture', expires: 1.year.from_now }
         when 'dst_lpa'
           load_manual_test_results(Finder::DstLpaResults, DstLpaResults::Presenter)
-          cookies[:test_result_tab] = { value: 'dst_lpa', expires: 1.year.from_now }
         else
           load_device_test_results
-          cookies[:test_result_tab] = { value: 'devices', expires: 1.year.from_now }
         end
+
+        cookies[:test_result_tab] = { value: @selected_tab, expires: 1.year.from_now }
       end
 
       format.csv do
-        filename                       = "test_results-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
+        csv_content = TestResults::CsvGenerator.new(@selected_tab, params, current_user, @navigation_context, @localization_helper)
         headers["Content-Type"]        = "text/csv"
-        headers["Content-disposition"] = "attachment; filename=#{filename}"
-        self.response_body             = Finder::TestResults.new(params, current_user, @navigation_context, @localization_helper).csv_query(filename)
+        headers["Content-disposition"] = "attachment; filename=#{csv_content.filename}"
+        self.response_body             = csv_content.create
       end
     end
   end
