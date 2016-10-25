@@ -14,7 +14,6 @@ class Encounter < ActiveRecord::Base
   has_many :patient_results
   has_many :xpert_results
   has_many :audit_logs
-
   has_many :notifications
 
   belongs_to :performing_site, class_name: 'Site'
@@ -30,7 +29,6 @@ class Encounter < ActiveRecord::Base
 
   before_save :ensure_entity_id
   before_create :set_default_status
-
   notification_observe_field :status
 
   class << self
@@ -58,8 +56,8 @@ class Encounter < ActiveRecord::Base
         ['new', I18n.t('select.encounter.status_options.new')],
         ['financed', I18n.t('select.encounter.status_options.financed')],
         ['not_financed', I18n.t('select.encounter.status_options.not_financed')],
-        ['samples_received', I18n.t('select.encounter.status_options.samples_received')],
         ['samples_collected', I18n.t('select.encounter.status_options.samples_collected')],
+        ['samples_received', I18n.t('select.encounter.status_options.samples_received')],
         ['pending', I18n.t('select.encounter.status_options.pending')],
         ['in_progress', I18n.t('select.encounter.status_options.in_progress')],
         ['pending_approval', I18n.t('select.encounter.status_options.pending_approval')],

@@ -303,24 +303,18 @@ line-height:25px;
 margin:0px !important;
 }
 
-.bettertabs {
-  margin:1em 0;
+.presumptiveclass .col-6{
+border-top:1px solid #ddd;
+padding-top:10px;
+border-bottom:1px solid #ddd;
+margin-bottom:10px;
 }
 
-.select2-container {
-  font-size: 13px;
-
-  .select2-search__field {
-    font-style: italic;
-    line-height: 20px;
-  }
+.presumptiveclass .col-6 label{
+font-weight:normal !important;
 }
 
-.select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
-  border-color: #dddddd;
-  border-radius: 0;
-}
-
-.select2-container--default.select2-container--focus .select2-selection--multiple {
-  border-color: #aaaaaa;
+.presumptiveclass > .row > .col-6:first-child{
+border-top:0;
+border-bottom:0;
 }
