@@ -54,10 +54,10 @@ namespace :policy do
       UPDATE_DEVICE = "device:update"
       DELETE_DEVICE = "device:delete"
 
-      READ_ALERT   =  "alert:read"
-      UPDATE_ALERT =  "alert:update"
-      DELETE_ALERT =  "alert:delete"
-      CREATE_ALERT =  "alert:create"
+      READ_NOTIFICATION   =  "notification:read"
+      UPDATE_NOTIFICATION =  "notification:update"
+      DELETE_NOTIFICATION =  "notification:delete"
+      CREATE_NOTIFICATION =  "notification:create"
 
       DISPLAY_TEST_ORDER_HEADER  = "pageHeader:displayTestOrder"
       DISPLAY_TEST_RESULT_HEADER = "pageHeader:displayTestResult"
@@ -98,10 +98,10 @@ namespace :policy do
       "#{PREFIX}:queryTest" => NewActions::QUERY_TEST,
       "#{PREFIX}:reportMessage" => NewActions::REPORT_MESSAGE,
 
-      "#{PREFIX}:readAlert" => NewActions::READ_ALERT,
-      "#{PREFIX}:updateAlert" => NewActions::UPDATE_ALERT,
-      "#{PREFIX}:deleteAlert" => NewActions::DELETE_ALERT,
-      "#{PREFIX}:createAlert" => NewActions::CREATE_ALERT,
+      "#{PREFIX}:readNotification" => NewActions::READ_NOTIFICATION,
+      "#{PREFIX}:updateNotification" => NewActions::UPDATE_NOTIFICATION,
+      "#{PREFIX}:deleteNotification" => NewActions::DELETE_NOTIFICATION,
+      "#{PREFIX}:createNotification" => NewActions::CREATE_NOTIFICATION,
 
       "#{PREFIX}:displayTestOrderHeader" => NewActions::DISPLAY_TEST_ORDER_HEADER,
       "#{PREFIX}:displayTestResultHeader" => NewActions::DISPLAY_TEST_RESULT_HEADER,

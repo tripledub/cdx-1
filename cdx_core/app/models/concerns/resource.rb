@@ -13,7 +13,6 @@ module Resource
       Role,
       User,
       Patient,
-      Alert,
       Notification,
       PageHeader,
       SettingsPage

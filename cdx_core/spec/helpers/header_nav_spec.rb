@@ -1,18 +1,18 @@
 require 'spec_helper'
 
 RSpec.describe HeaderNavHelper, type: :helper do
-  let(:params_dashboard)      { { controller: 'dashboards' } }
-  let(:params_patients)       { { controller: 'patients' } }
-  let(:params_test_orders)    { { controller: 'test_orders' } }
-  let(:params_test_results)   { { controller: 'test_results' } }
-  let(:params_devices)        { { controller: 'devices' } }
-  let(:params_roles)          { { controller: 'roles' } }
-  let(:params_policies)       { { controller: 'policies' } }
-  let(:params_incidents)      { { controller: 'incidents' } }
-  let(:params_alert_messages) { { controller: 'alert_messages' } }
-  let(:params_alerts)         { { controller: 'alerts' } }
-  let(:params_device_models)  { { controller: 'device_models' } }
-  let(:params_users)          { { controller: 'users' } }
+  let(:params_dashboard)            { { controller: 'dashboards' } }
+  let(:params_patients)             { { controller: 'patients' } }
+  let(:params_test_orders)          { { controller: 'test_orders' } }
+  let(:params_test_results)         { { controller: 'test_results' } }
+  let(:params_devices)              { { controller: 'devices' } }
+  let(:params_roles)                { { controller: 'roles' } }
+  let(:params_policies)             { { controller: 'policies' } }
+  let(:params_alerts)               { { controller: 'alerts' } }
+  let(:params_notifications)        { { controller: 'notifications' } }
+  let(:params_notification_notices) { { controller: 'notification_notices' } }
+  let(:params_device_models)        { { controller: 'device_models' } }
+  let(:params_users)                { { controller: 'users' } }
 
   describe 'is_menu_item_active?' do
     context 'dashboards' do
@@ -45,16 +45,6 @@ RSpec.describe HeaderNavHelper, type: :helper do
       end
     end
 
-    context 'test_results' do
-      it 'should return true if controller is a test_results' do
-        expect(helper.is_menu_item_active?('test_results', params_test_results)).to eq('active')
-      end
-
-      it 'should return false if controller is not a test_results' do
-        expect(helper.is_menu_item_active?('test_results', params_test_orders)).to eq('')
-      end
-    end
-
     context 'devices' do
       it 'should return true if controller is a devices' do
         expect(helper.is_menu_item_active?('devices', params_devices)).to eq('active')
@@ -78,12 +68,16 @@ RSpec.describe HeaderNavHelper, type: :helper do
         expect(helper.is_menu_item_active?('settings', params_alerts)).to eq('active')
       end
 
-      it 'should return true if controller is a incidents' do
-        expect(helper.is_menu_item_active?('settings', params_incidents)).to eq('active')
+      it 'should return true if controller is a notifications' do
+        expect(helper.is_menu_item_active?('settings', params_notifications)).to eq('active')
       end
 
-      it 'should return true if controller is a alert_messages' do
-        expect(helper.is_menu_item_active?('settings', params_alert_messages)).to eq('active')
+      it 'should return true if controller is a notification_notices' do
+        expect(helper.is_menu_item_active?('settings', params_notification_notices)).to eq('active')
+      end
+
+      it 'should return true if controller is a test_results' do
+        expect(helper.is_menu_item_active?('settings', params_test_results)).to eq('active')
       end
 
       it 'should return true if controller is a device_models' do

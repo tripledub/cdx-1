@@ -17,7 +17,6 @@ class TestResult < PatientResult
 
   has_and_belongs_to_many :device_messages, through: :device_messages_test_results
   has_many :test_result_parsed_data
-  has_many :alert_histories
 
   validates_presence_of :device
   # validates_uniqueness_of :test_id, scope: :device_id, allow_nil: true
