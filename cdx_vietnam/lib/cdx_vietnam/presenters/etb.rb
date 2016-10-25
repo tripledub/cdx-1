@@ -91,7 +91,7 @@ module CdxVietnam
             month: 2, # @TODO, sample on cdp not have month field
             laboratory_serial_number: 'N3432',# @TODO, cdp not have this field
             laboratory_region: 'MIỀN BẮC', # OK - HARD CODE
-            laboratory_name: 'LAB - HƯNG YÊN', # OK - HARD CODE
+            laboratory_name: 'LAB - HÀ NỘI', # OK - HARD CODE
             date_of_release: Extras::Dates::Format.datetime_with_time_zone(patient_result.sample_collected_at, I18n.t('date.formats.etb_short')), 
             result: xpert_result, 
             comment: patient_result.comment
