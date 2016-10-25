@@ -46,7 +46,7 @@ module CdxVietnam
 
       def cdp_address(addresses)
         if patient.addresses[1].address.blank?
-          return "Missing in CDP"
+          return 'Missing in CDP'
         else
           return patient.addresses[1].address
         end
@@ -70,21 +70,13 @@ module CdxVietnam
       end
 
       def hiv_status_patient
-        mapping_list = {
-          "positive_tb" => 3,
-          "negative_tb" => 2,
-          "unknown" => 1
-        }
+        mapping_list = {'positive_tb' => 3, 'negative_tb' => 2, 'unknown' => 1}
         return mapping_list[@episode.hiv_status] if @episode.present? && mapping_list[@episode.hiv_status].present?
         return 0
       end
 
       def hiv_status_test_order
-        mapping_list = {
-          "positive_tb" => 3,
-          "negative_tb" => 2,
-          "unknown" => 0
-        }
+        mapping_list = {'positive_tb' => 3, 'negative_tb' => 2, 'unknown' => 0}
         return mapping_list[@episode.hiv_status] if @episode.present? && mapping_list[@episode.hiv_status].present?
         return 1
       end
@@ -100,11 +92,11 @@ module CdxVietnam
       end
 
       def xpert_result
-        return 1 if patient_result.tuberculosis == "not_detected"
-        if patient_result.tuberculosis == "detected"
-          if patient_result.rifampicin == "detected"
+        return 1 if patient_result.tuberculosis == 'not_detected'
+        if patient_result.tuberculosis == 'detected'
+          if patient_result.rifampicin == 'detected'
             return 3
-          elsif patient_result.rifampicin == "not_detected"
+          elsif patient_result.rifampicin == 'not_detected'
             return 2
           else
             return 4
@@ -115,25 +107,19 @@ module CdxVietnam
       end
 
       def micro_result
-        mapping_list = {
-          "negative" => "1",
-          "1to9" => "2",
-          "1plus" => "3",
-          "2plus" => "4",
-          "3plus" => "5",
-        }
+        mapping_list = {'negative' => '1', '1to9' => '2', '1plus' => '3', '2plus' => '4', '3plus' => '5'}
         return mapping_list[patient_result.test_result] if patient_result.test_result.present? && mapping_list[patient_result.test_result].present?
-        return "POSITIVE"
+        return 'POSITIVE'
       end
 
       def get_order_type(cdp_order_type)
-        return "xpert" if cdp_order_type == 'xpertmtb'
-        return "microscopy" if cdp_order_type == 'microscopy'
-        return ""
+        return 'xpert' if cdp_order_type == 'xpertmtb'
+        return 'microscopy' if cdp_order_type == 'microscopy'
+        return ''
       end
 
       def specimen_type(test_order_to_send)
-        if test_order_to_send.encounter.coll_sample_type.upcase == "SPUTUM"
+        if test_order_to_send.encounter.coll_sample_type.upcase == 'SPUTUM'
           '1'
         else
           '2'
@@ -159,7 +145,7 @@ module CdxVietnam
       end
 
       def gender
-        return '0' if patient.gender.upcase == "FEMALE"
+        return '0' if patient.gender.upcase == 'FEMALE'
         return '1'
       end
     end

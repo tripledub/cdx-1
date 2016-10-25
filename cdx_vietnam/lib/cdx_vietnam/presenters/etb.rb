@@ -46,11 +46,11 @@ module CdxVietnam
             healthcare_unit_location: 'Miền Nam', # OK
             healthcare_unit_name: 'Quận 1', # OK
             healthcare_unit_registration_date: Extras::Dates::Format.datetime_with_time_zone(patient.created_at, I18n.t('date.formats.etb_short')), # ngày tạo patient
-            suspect_mdr_case_type: "VN_SPT_FAILED_CAT_II",
+            suspect_mdr_case_type: 'VN_SPT_FAILED_CAT_II',
             diagnosis_date: diagnosis_date, 
             tb_drug_resistance_type: tb_drug_resistance_type, # LIST VALUE
-            registration_group: "VN_2015_OTHER", # @TODO
-            site_of_disease: "PULMONARY", # @TODO
+            registration_group: 'VN_2015_OTHER', # @TODO
+            site_of_disease: 'PULMONARY', # @TODO
             number_of_previous_tb_treatment: '0',
             consulting_date: consulting_date, 
             consulting_professional: '[FROM CDP]',
@@ -66,7 +66,7 @@ module CdxVietnam
 
       def cdp_address(addresses)
         if patient.addresses[1].address.blank?
-          return "Missing in CDP"
+          return 'Missing in CDP'
         else
           return patient.addresses[1].address
         end
@@ -82,7 +82,7 @@ module CdxVietnam
 
       def test_order
         order_type = get_order_type(patient_result.result_name)
-        if order_type == "xpert"
+        if order_type == 'xpert'
           rs = {
             type: order_type, 
             order_id: encounter.batch_id.to_s, 
@@ -118,21 +118,17 @@ module CdxVietnam
       end
 
       def visual_appearance
-        mapping_list = {
-          "blood" => "BLOOD_STAINED",
-          "mucopurulent" => "MUCOPURULENT",
-          "saliva" => "SALIVA"
-        }
+        mapping_list = {'blood' => 'BLOOD_STAINED', 'mucopurulent' => 'MUCOPURULENT','saliva' => 'SALIVA'}
         return mapping_list[patient_result.appearance] if patient_result.appearance.present? && mapping_list[patient_result.appearance].present?
-        return "BLOOD_STAINED"
+        return 'BLOOD_STAINED'
       end
 
       def xpert_result
-        return 0 if patient_result.tuberculosis == "not_detected"
-        if patient_result.tuberculosis == "detected"
-          if patient_result.rifampicin == "detected"
+        return 0 if patient_result.tuberculosis == 'not_detected'
+        if patient_result.tuberculosis == 'detected'
+          if patient_result.rifampicin == 'detected'
             return 2
-          elsif patient_result.rifampicin == "not_detected"
+          elsif patient_result.rifampicin == 'not_detected'
             return 1
           else
             return 3
@@ -143,28 +139,22 @@ module CdxVietnam
       end
 
       def micro_result
-        mapping_list = {
-          "negative" => "NEGATIVE",
-          "1to9" => "POSITIVE",
-          "1plus" => "PLUS",
-          "2plus" => "PLUS2",
-          "3plus" => "PLUS3",
-        }
+        mapping_list = {'negative' => 'NEGATIVE','1to9' => 'POSITIVE','1plus' => 'PLUS','2plus' => 'PLUS2','3plus' => 'PLUS3'}
         return mapping_list[patient_result.test_result] if patient_result.test_result.present? && mapping_list[patient_result.test_result].present?
-        return "POSITIVE"
+        return 'POSITIVE'
       end
 
       def get_order_type(cdp_order_type)
-        return "xpert" if cdp_order_type == 'xpertmtb'
-        return "microscopy" if cdp_order_type == 'microscopy'
-        return ""
+        return 'xpert' if cdp_order_type == 'xpertmtb'
+        return 'microscopy' if cdp_order_type == 'microscopy'
+        return ''
       end
 
       def specimen_type(test_order_to_send)
-        if test_order_to_send.encounter.coll_sample_type.upcase == "SPUTUM"
-          "SPUTUM"
+        if test_order_to_send.encounter.coll_sample_type.upcase == 'SPUTUM'
+          'SPUTUM'
         else
-          "OTHER"
+          'OTHER'
         end
       end
 
@@ -177,33 +167,15 @@ module CdxVietnam
       end
 
       def tb_drug_resistance_type
-        mapping_drug = {
-                          "mono" => "MONO_RESISTANCE",
-                          "poly" => "POLY_RESISTANCE",
-                          "multi" => "MULTIDRUG_RESISTANCE",
-                          "extensive" => "EXTENSIVEDRUG_RESISTANCE",
-                          "rif" => "RIF_RESISTANCE",
-                          "prexdr" => "PRE_XDR"
-                        } 
+        mapping_drug = {'mono' => 'MONO_RESISTANCE', 'poly' => 'POLY_RESISTANCE', 'multi' => 'MULTIDRUG_RESISTANCE', 'extensive' => 'EXTENSIVEDRUG_RESISTANCE', 'rif' => 'RIF_RESISTANCE', 'prexdr' => 'PRE_XDR'} 
         return mapping_drug[@episode.drug_resistance] if @episode.present? && mapping_drug[@episode.drug_resistance].present?
-        return ""
+        return ''
       end
 
       def suspect_mdr_case_type
-        mapping_list = {
-          "failcatii" => "VN_SPT_FAILED_CAT_II",
-          "tbmdr" => "VN_SPT_CONTACT_MDR_INDEX_CASE",
-          "failcati" => "VN_SPT_FAILED_CAT_I",
-          "noncon" => "VN_SPT_NON_CONVERTER_AFTER_2_OR_3_MONTH",
-          "relepsecat" => "VN_SPT_RELAPSE_OF_CAT_I_OR_CAT_II",
-          "retreatcat" => "VN_SPT_RETREATMENT_AFTER_LOST2FOLLOWUP",
-          # "" => "VN_SPT_TB_HIV", # @TODO
-          "other" => "VN_SPT_OTHERS",
-          "" => "VN_SPT_NEW_TB_CASES" # @TODO
-        }
-        # @TODO, patient not have suspect_mdr_case_type
+        mapping_list = {'failcatii' => 'VN_SPT_FAILED_CAT_II', 'tbmdr' => 'VN_SPT_CONTACT_MDR_INDEX_CASE', 'failcati' => 'VN_SPT_FAILED_CAT_I', 'noncon' => 'VN_SPT_NON_CONVERTER_AFTER_2_OR_3_MONTH', 'relepsecat' => 'VN_SPT_RELAPSE_OF_CAT_I_OR_CAT_II', 'retreatcat' => 'VN_SPT_RETREATMENT_AFTER_LOST2FOLLOWUP', 'other' => 'VN_SPT_OTHERS', '' => 'VN_SPT_NEW_TB_CASES'}
         return mapping_list[@episode.previous_history] if mapping_list[@episode.previous_history].present?
-        return "" 
+        return '' 
       end
 
       def age
