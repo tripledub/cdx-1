@@ -1,12 +1,23 @@
 # Dst/Lpa results model.
 class DstLpaResult < PatientResult
+  include NotificationObserver
+
   validates_presence_of  :sample_collected_at, :examined_by, :result_at, :media_used, :results_h, :results_r, :results_e, :results_s, :results_amk, :results_km, :results_cm, :results_fq, on: :update
   validates_inclusion_of :results_h, :results_r, :results_e, :results_s, :results_amk, :results_km, :results_cm, :results_fq, in: %w(resistant susceptible contaminated not_done), allow_nil: true
+
   validates_inclusion_of :media_used, in: %w(solid liquid), allow_nil: true
   validates_inclusion_of :method_used, in: %w(direct indirect), allow_nil: true
   validates_inclusion_of :result_status, in: %w(new sample_collected allocated pending_approval rejected completed), allow_nil: true
 
   delegate :patient, to: 'encounter'
+
+  notification_observe_fields :serial_number, :media_used,
+                              :method_used, :results_h,
+                              :results_r, :results_e,
+                              :results_s, :results_amk,
+                              :results_km, :results_cm,
+                              :results_fq, :results_other1,
+                              :result_status
 
   def localised_name
     return I18n.t('dst_lpa_results.dst_lpa') unless result_name

@@ -37,6 +37,7 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
+    TestAfterCommit.enabled = false
   end
 
   config.around(:each) do |example|
@@ -78,6 +79,8 @@ RSpec.configure do |config|
   config.before(:each) do
     Timecop.return
     ActionMailer::Base.deliveries.clear
+    stub_const('Twilio::REST::Client', FakeSMS)
+    Twilio::REST::Client.messages = []
   end
 
   config.after(:each) do

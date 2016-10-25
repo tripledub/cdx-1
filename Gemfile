@@ -56,10 +56,13 @@ end
 
 gem 'puma', '~>3.5'
 
+# View based gems
+gem "select2-rails"
+
 # Use Sidekiq for background jobs
 gem 'sidekiq'
 gem 'sinatra'
-gem 'sidekiq-cron', '~> 0.3.1'
+gem 'sidekiq-cron'
 gem 'i18n-js',">= 3.0.0.rc13"
 group :development do
   gem 'letter_opener'
@@ -103,6 +106,8 @@ gem 'cdx_api_vietnam', path: 'cdx_api_vietnam'
 source 'https://rails-assets.org' do
   gem 'rails-assets-urijs'
 end
+
+gem 'twilio-ruby', '~> 4.11.1'
 
 group :development, :test do
   gem 'pry-byebug'

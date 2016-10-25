@@ -7,11 +7,14 @@ single_tenant: <%= ENV['SINGLE_TENANT'] %>
 db_per_branch: false
 use_demo_data: false
 
-alert_sms_service_url: "https://nuntium.instedd.org"
-alert_sms_account_name: "CDx"
-alert_sms_application_name: "CDx-Dev"
-alert_sms_application_password: "cdx123cdx"
-alert_sms_from_tel: "sms://442393162302"
+sidekiq_web: false
+sidekiq_web_username: <%= ENV['SIDEKIQ_USERNAME'] %>
+sidekiq_web_password: <%= ENV['SIDEKIQ_PASSWORD'] %>
+
+twilio_enabled: false
+twilio_sid: <%= ENV['TWILIO_SID'] %>
+twilio_auth_token: <%= ENV['TWILIO_KEY'] %>
+twilio_phone_number: <%= ENV['TWILIO_NUMBER'] %>
 
 # for the eTB/VTM scraper program
 etb_username: <%= ENV['ETB_USERNAME'] %>
@@ -21,4 +24,3 @@ etb_endpoint: <%= ENV['ETB_ENDPOINT'] %>
 vtm_username: <%= ENV['VTM_USERNAME'] %>
 vtm_password: <%= ENV['VTM_PASSWORD'] %>
 vtm_endpoint: <%= ENV['VTM_ENDPOINT'] %>
-

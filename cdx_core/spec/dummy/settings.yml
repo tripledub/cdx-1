@@ -7,8 +7,9 @@ single_tenant: <%= ENV['SINGLE_TENANT'] %>
 db_per_branch: false
 use_demo_data: false
 
-alert_sms_service_url: "https://nuntium.instedd.org"
-alert_sms_account_name: "CDx"
-alert_sms_application_name: "CDx-Dev"
-alert_sms_application_password: "cdx123cdx"
-alert_sms_from_tel: "sms://442393162302"
+sidekiq_web: false
+
+twilio_enabled: true
+twilio_sid: ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+twilio_auth_token: yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+twilio_phone_number: "+4401234456789"

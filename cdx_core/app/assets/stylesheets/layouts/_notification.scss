@@ -1,0 +1,67 @@
+.notification-subheader {
+  &.notification-subheader--filters {
+    .topfilteropt {
+      float: none;
+      position: absolute;
+      right: 10px;
+    }
+  }
+}
+
+.notification, .notification.testflow {
+  .container {
+    .bettertabs {
+      .content {
+        padding-top:0;
+        padding-bottom:0;
+
+        .row {
+          .col {
+            .notification-lookup-record {
+              background-color: #efefef;
+              border: 1px solid #aaa;
+              box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.2);
+              display: inline-block;
+              font-size:.8em;
+              padding: 3px;
+              padding-right: 10px;
+
+              strong {
+                color: $blue;
+                font-weight: 200;
+                margin-right:4px;
+
+                a {
+                  &:hover {
+                    text-decoration: underline;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        input[type=text] {
+          background-color:#fff;
+        }
+
+        .notification-recipient-fields {
+          position: relative;
+        }
+
+        .notification-recipient-fields__close {
+          background: #333;
+          border-radius: 2px;
+          padding: 2px;
+          position: absolute;
+          right:0;
+          top:0;
+
+          img {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}

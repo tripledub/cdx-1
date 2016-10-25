@@ -101,3 +101,4 @@ class Subscriber < ActiveRecord::Base
     filtered_test
   end
 end
+

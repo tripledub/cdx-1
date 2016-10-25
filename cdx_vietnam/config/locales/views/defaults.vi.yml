@@ -1,6 +1,7 @@
 vi:
   views:
     back: 'Quay lại'
+    delete: 'Delete'
     cancel: 'Hủy bỏ'
     save: 'Lưu'
     say_yes: 'Có'

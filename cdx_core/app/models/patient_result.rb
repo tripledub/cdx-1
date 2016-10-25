@@ -4,6 +4,8 @@ class PatientResult < ActiveRecord::Base
   include Auditable
   include ActionView::Helpers::DateHelper
 
+  belongs_to :institution
+  belongs_to :site
   belongs_to :encounter
   belongs_to :feedback_message
   belongs_to :sample_identifier
