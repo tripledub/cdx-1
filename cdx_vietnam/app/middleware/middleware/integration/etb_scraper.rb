@@ -272,9 +272,8 @@ module Integration
         else
           raise 'Invalid `case_type`'
         end
-          
-      #rescue StandardError => ex
-      #  return { success: false, error: ex.message, patient_etb_id: nil }
+      rescue StandardError => ex
+        return { success: false, error: ex.message, patient_etb_id: nil }
       end
       
       # Create patient in eTB
@@ -477,8 +476,8 @@ module Integration
         response = {success: true, error: '', patient_etb_id: patient_etb_id}
 
         return response
-      #rescue StandardError => ex
-      #  return { success: false, error: ex.message, patient_etb_id: nil }
+      rescue StandardError => ex
+        return { success: false, error: ex.message, patient_etb_id: nil }
       end
     end
   end
