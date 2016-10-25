@@ -16,7 +16,6 @@ class Institution < ActiveRecord::Base
   has_many :samples, dependent: :destroy
   has_many :test_results, dependent: :destroy
   has_many :roles, dependent: :destroy
-  has_many :alerts
   has_many :feedback_messages, dependent: :destroy
 
   has_many :notifications, dependent: :destroy

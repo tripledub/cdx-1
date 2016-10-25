@@ -14,7 +14,7 @@ class HomeController < ApplicationController
     end
 
     if has_access_to_test_results_index?
-      @alerts_count = current_user.alerts.count
+      @alerts_count = current_user.notifications.count
     end
 
     load_institution

@@ -73,6 +73,17 @@ class Notification < ActiveRecord::Base
 
   # Scopes
   scope :enabled, -> { where(enabled: true) }
+  scope :within,  -> (institution_or_site, exclude_subsites = false) {
+    if institution_or_site.is_a?(Institution) && exclude_subsites
+      where("notifications.institution_id = ? AND notifications.site_id IS NULL", institution_or_site.id)
+    elsif institution_or_site.is_a?(Institution) && !exclude_subsites
+      where("notifications.institution_id = ?", institution_or_site.id)
+    elsif institution_or_site.is_a?(Site) && exclude_subsites
+      where("notifications.site_id = ?", institution_or_site.id)
+    else
+      where("notifications.site_prefix LIKE concat(?, '%')", institution_or_site.prefix)
+    end
+  }
 
   # Instance methods
   def on_patient

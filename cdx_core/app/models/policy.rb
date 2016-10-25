@@ -78,10 +78,10 @@ class Policy < ActiveRecord::Base
 
     UPDATE_USER = 'user:update'
 
-    READ_ALERT   =  "alert:read"
-    UPDATE_ALERT =  "alert:update"
-    DELETE_ALERT =  "alert:delete"
-    CREATE_ALERT =  "alert:create"
+    READ_NOTIFICATION   =  "notification:read"
+    UPDATE_NOTIFICATION =  "notification:update"
+    DELETE_NOTIFICATION =  "notification:delete"
+    CREATE_NOTIFICATION =  "notification:create"
 
     DISPLAY_TEST_ORDER_HEADER  = "pageHeader:displayTestOrder"
     DISPLAY_TEST_RESULT_HEADER = "pageHeader:displayTestResult"

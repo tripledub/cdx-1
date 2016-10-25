@@ -3,10 +3,10 @@ class NotificationsController < ApplicationController
   before_action :find_notification
 
   def index
-    @notifications = check_access(Notification, READ_ALERT)
+    @notifications = check_access(Notification, READ_NOTIFICATION)
     @notifications = @notifications.within(@navigation_context.entity, @navigation_context.exclude_subsites)
 
-    @can_create = has_access?(Notification, CREATE_ALERT)
+    @can_create = has_access?(Notification, CREATE_NOTIFICATION)
 
     @total = @notifications.count
     order_by, offset = perform_pagination('notifications.last_notification_at')
