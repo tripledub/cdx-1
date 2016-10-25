@@ -44,7 +44,7 @@ class TestOrderActions extends React.Component{
 
   render() {
     return(
-      <div>
+      <div className="financebuttons">
         <button onClick={ this.updateResult.bind(this, this.props.actionInfo.actionStatus, '', 0) } className="btn-primary save side-link">{ this.props.actionInfo.actionLabel }</button>
         <TextInputModal key={ this.props.actionInfo.resultId } showRejectionSelect={ true } rejectReasons={ this.props.actionInfo.rejectReasons } mainHeader={ this.props.actionInfo.rejectHeader } actionStyles={ this.props.actionInfo.actionStyles } linkButton={ this.props.actionInfo.rejectLabel } comment={ this.state.commentValue } commentChanged={ this.commentChanged.bind(this) } edit={ true } ref='inviteModal' />
       </div>

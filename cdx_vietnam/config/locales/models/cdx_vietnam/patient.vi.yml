@@ -2,5 +2,6 @@ vi:
   activerecord:
     attributes:
       patient:
-        social_security_code: CMND
-        vitimes_id: Vitimes Log ID
+        name: 'Name *'
+        social_security_code: 'CMND *'
+        vitimes_id: 'Vitimes Log ID'

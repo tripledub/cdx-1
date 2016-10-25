@@ -1,7 +1,7 @@
 class TestBatchActions extends React.Component{
   render() {
     return(
-      <div className="row">
+      <div className="row mainactions">
         { this.props.testOrderStatus === 'new' && this.props.encounter.userCanFinance ?
           <AddPaymentAction rejectReasons={ this.props.rejectReasons } commentValue={ this.props.encounter.comment } encounterRoutes={ this.props.encounterRoutes } authenticityToken={ this.props.authenticityToken } /> : null }
         { this.props.testOrderStatus === 'financed' ?

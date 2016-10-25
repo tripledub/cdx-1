@@ -26,7 +26,7 @@ var SocialSecurityCode = React.createClass({
     return (
       <div className="fieldrow#cmnd">
         <div className="fieldlabel">
-          <LabelTooltip labelName="patient_social_security_code" labelValue={ I18n.t("patients.form.social_security_code") } labelTooltip={ I18n.t('patients.form.social_security_code_tooltip') } />
+          <LabelTooltip labelName="patient_social_security_code" labelValue={ I18n.t("activerecord.attributes.patient.social_security_code") } labelTooltip={ I18n.t('patients.form.social_security_code_tooltip') } />
         </div>
         <div className="fieldvalue">
           <input className="input-large" ref="ssnInput" onBlur={ this.validateSocialSecurityCode} valueLink={ this.linkState('inputValue') } type="text" name="patient[social_security_code]" id="patient_social_security_code" />

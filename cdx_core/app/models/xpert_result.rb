@@ -22,7 +22,9 @@ class XpertResult < PatientResult
       [
         ['detected', I18n.t('select.xpert.tuberculosis.detected')],
         ['not_detected', I18n.t('select.xpert.tuberculosis.not_detected')],
-        ['indeterminate', I18n.t('select.xpert.tuberculosis.indeterminate')]
+        ['indeterminate', I18n.t('select.xpert.tuberculosis.indeterminate')],
+        ['no_result', I18n.t('select.xpert.tuberculosis.no_result')],
+        ['err', I18n.t('select.xpert.tuberculosis.err')]
       ]
     end
 
