@@ -32,7 +32,8 @@ class Persistence::Users
     end
     user.invitation_sent_at = Time.now.utc
     user.invited_by_id      = @current_user.id
-    InvitationMailer.delay.invite_message(user, role, message)
+    token = user.raw_invitation_token
+    InvitationMailer.delay.invite_message(user, role, message, token)
   end
 
   def add_role(user, role)
