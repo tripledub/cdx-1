@@ -4,16 +4,14 @@ module FeedbackMessages
     class << self
       def reject_reasons(institution)
         {
-          samplesCollected: get_messages(institution, 'samples_collected'),
-          approval: get_messages(institution, 'approval'),
-          labTech: get_messages(institution, 'lab_tech'),
-          finance: get_messages(institution, 'finance')
+          samplesCollected: reject_reasons_category(institution, 'samples_collected'),
+          approval: reject_reasons_category(institution, 'approval'),
+          labTech: reject_reasons_category(institution, 'lab_tech'),
+          finance: reject_reasons_category(institution, 'finance')
         }
       end
 
-      protected
-
-      def get_messages(institution, category)
+      def reject_reasons_category(institution, category)
         feedback_messages = institution.feedback_messages.where(category: category)
         return [] unless feedback_messages
 
@@ -21,6 +19,8 @@ module FeedbackMessages
           get_translated_text(feedback_message)
         end
       end
+
+      protected
 
       def get_translated_text(feedback_message)
         {

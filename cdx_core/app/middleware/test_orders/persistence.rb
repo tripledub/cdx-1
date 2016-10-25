@@ -129,7 +129,6 @@ module TestOrders
         json.(@encounter, :testing_for)
         json.(@encounter, :comment)
         json.sampleIds encounter_sample_ids
-        json.userCanApprove Policy.can?(Policy::Actions::APPROVE_ENCOUNTER, Encounter, current_user)
         json.userCanFinance Policy.can?(Policy::Actions::FINANCE_APPROVAL_ENCOUNTER, Encounter, current_user)
         json.culture_format Extras::Select.find(Encounter.culture_format_options, @encounter.culture_format)
         json.has_dirty_diagnostic @encounter.has_dirty_diagnostic?
