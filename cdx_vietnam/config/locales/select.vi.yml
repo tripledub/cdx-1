@@ -76,7 +76,7 @@ vi:
       tuberculosis:
         detected: 'Tìm thấy'
         not_detected: 'Không tìm thấy'
-        invalid: 'Không hợp lệ / Không có kết quả / Lỗi'
+        indeterminate: 'Không hợp lệ / Không có kết quả / Lỗi'
       rifampicin:
         detected: 'Tìm thấy'
         not_detected: 'Không tìm thấy'
