@@ -1,4 +1,5 @@
 module Finder
+  # Find Test Results
   class TestResults
     attr_reader :params, :filter, :page, :page_size
 

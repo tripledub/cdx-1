@@ -6,13 +6,15 @@ class TestResultsController < TestsController
     head :forbidden unless has_access_to_test_results_index?
   end
 
+  before_action :clean_params
+
   def index
     @date_options = Extras::Dates::Filters.date_options_for_filter
+    @selected_tab = default_selected_tab
 
     respond_to do |format|
       format.html do
         @can_create_encounter = !check_access(@navigation_context.institution.sites, CREATE_SITE_ENCOUNTER).empty?
-        @selected_tab         = default_selected_tab
         case @selected_tab
         when 'microscopy'
           load_manual_test_results(Finder::MicroscopyResults, MicroscopyResults::Presenter)
@@ -58,7 +60,7 @@ class TestResultsController < TestsController
     @device_messages = DeviceMessages::Presenter.index_view(device_messages.order(@order_by).limit(@page_size).offset(offset))
   end
 
-  private
+  protected
 
   def load_manual_test_results(results_finder, presenter)
     patient_results   = results_finder.new(params, @navigation_context)
@@ -91,5 +93,10 @@ class TestResultsController < TestsController
 
   def default_selected_tab
     params['test_results_tabs_selected_tab'] || cookies[:test_result_tab] || 'devices'
+  end
+
+  def clean_params
+    params.delete(:controller)
+    params.delete(:action)
   end
 end

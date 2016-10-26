@@ -15,15 +15,15 @@ module TestResults
     def create
       case @selected_tab
       when 'microscopy'
-        MicroscopyResults::Presenter.csv_query(generate(Finder::MicroscopyResults))
+        MicroscopyResults::Presenter.csv_query(generate(::Finder::MicroscopyResults))
       when 'xpert'
-        XpertResults::Presenter.csv_query(generate(Finder::XpertResults))
+        XpertResults::Presenter.csv_query(generate(::Finder::XpertResults))
       when 'culture'
-        CultureResults::Presenter.csv_query(generate(Finder::CultureResults))
+        CultureResults::Presenter.csv_query(generate(::Finder::CultureResults))
       when 'dst_lpa'
-        DstLpaResults::Presenter.csv_query(generate(Finder::DstLpaResults))
+        DstLpaResults::Presenter.csv_query(generate(::Finder::DstLpaResults))
       else
-        Finder::TestResults.new(@params, @current_user, @navigation_context, @localization_helper).csv_query(@filename)
+        ::Finder::TestResults.new(@params, @current_user, @navigation_context, @localization_helper).csv_query(@filename)
       end
     end
 

@@ -69,10 +69,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def default_url_options(options = {})
-    if params[:context].present?
-      return {:context => params[:context]}
-    end
+  def default_url_options(_options = {})
+    return { context: params[:context] } if params[:context].present?
 
     {}
   end
