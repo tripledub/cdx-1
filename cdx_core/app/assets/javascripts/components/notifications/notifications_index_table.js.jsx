@@ -16,7 +16,7 @@ var NotificationsIndexTable = React.createClass({
   getDefaultProps: function() {
     return {
       allowSorting: true,
-      orderBy: 'alerts.name'
+      orderBy: 'notifications.name'
     }
   },
 
@@ -32,7 +32,7 @@ var NotificationsIndexTable = React.createClass({
 
     this.props.alerts.forEach(
       function(alert) {
-        rows.push(<AlertGroupResultRow key={alert.id} alert={alert} />);
+        rows.push(<NotificationResultRow key={alert.id} alert={alert} />);
       }
     );
 

@@ -144,7 +144,6 @@ Rails.application.routes.draw do
 
   resources :incidents, controller: 'notification_notices', only: [:index]
   resources :alerts, only: [:index, :new]
-  resources :alert_messages, only: [:index]
   resources :alert_groups, controller: 'notifications', except: [:show]
 
   scope :dashboards, controller: :dashboards do

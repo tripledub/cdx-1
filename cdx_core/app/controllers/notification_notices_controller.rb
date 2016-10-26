@@ -2,7 +2,7 @@ class NotificationNoticesController < ApplicationController
   respond_to :html, :json
 
   def index
-    if has_access?(Notification, READ_ALERT)
+    if has_access?(Notification, READ_NOTIFICATION)
       @notification_notices =
         Notification::Notice
           .joins(notification: [:notification_users])

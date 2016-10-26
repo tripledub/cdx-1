@@ -8,15 +8,6 @@ class TestResultIndexer < EntityIndexer
 
   def after_index(options)
     percolate_result = client.percolate index: Cdx::Api.index_name, type: type, id: test_result.uuid
-
-    percolate_result["matches"].each do |match|
-      subscriber_id = match["_id"]
-
-      #TODO   do we remove the subscriber code, needed any more??
-      unless subscriber_id.include? 'alert'
-        NotifySubscriberJob.perform_later subscriber_id, test_result.uuid
-      end
-    end
   end
 
   def document_id

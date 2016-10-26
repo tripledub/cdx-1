@@ -32,39 +32,6 @@ User.blueprint do
   confirmed_at { Time.now - 1.day }
 end
 
-Alert.blueprint do
-  name { Faker::Name.first_name }
-  description { Faker::Name.last_name }
-  message { 'test message' }
-  category_type {"anomalies"}
-  sms_limit {10000}
-  institution { object.site.try(:institution) || Institution.make }
-  site { Site.make(institution: (object.institution || Institution.make)) }
-  user { institution.user }
-end
-
-AlertRecipient.blueprint do
-  user
-  alert
-  recipient_type {AlertRecipient.recipient_types["external_user"]}
-  email {"aaa@aaa.com"}
-  telephone {123}
-  first_name {"bob"}
-  last_name {'smith'}
-end
-
-AlertHistory.blueprint do
-  user
-  alert
-  test_result
-end
-
-RecipientNotificationHistory.blueprint do
-  user
-  alert
-  message_sent Faker::Lorem.sentence
-end
-
 Comment.blueprint do
   patient       { Patient.make }
   commented_on  { Faker::Date.between(60.days.ago, Date.today) }

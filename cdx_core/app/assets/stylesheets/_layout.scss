@@ -324,7 +324,6 @@ border-bottom:0;
   margin:1em 0;
 }
 
-
 .select2-container {
 font-size: 13px;
 }
@@ -337,9 +336,10 @@ font-size: 13px;
 .select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
   border-color: #dddddd;
   border-radius: 0;
+  width: 90%;
 }
 
 .select2-container--default.select2-container--focus .select2-selection--multiple {
   border-color: #aaaaaa;
+  width: 90%;
 }
-

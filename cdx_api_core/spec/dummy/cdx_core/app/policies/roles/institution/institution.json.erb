@@ -54,7 +54,7 @@
           "delegable": true
         },
         {
-          "resource": "alert?institution=<%= institution_id %>",
+          "resource": "notification?institution=<%= institution_id %>",
           "action": "*",
           "delegable": true
         },
@@ -122,8 +122,8 @@
           "action": "deviceModel:read"
         },
         {
-          "resource": "alert?institution=<%= institution_id %>",
-          "action": "alert:read"
+          "resource": "notification?institution=<%= institution_id %>",
+          "action": "notification:read"
         },
        {
           "resource": "pageHeader?institution=<%= institution_id %>",

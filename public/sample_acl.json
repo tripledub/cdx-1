@@ -52,12 +52,12 @@ Institution Admin:
     },
     {
       "action" : [
-        "cdxp:readAlert",
-        "cdxp:updateAlert",
-        "cdxp:deleteAlert",
-        "cdxp:createAlert"
+        "cdxp:readNotification",
+        "cdxp:updateNotification",
+        "cdxp:deleteNotification",
+        "cdxp:createNotification"
       ],
-      "resource" : "cdxp:alert?institution=1"
+      "resource" : "cdxp:notification?institution=1"
     },
     {
       "action" : [

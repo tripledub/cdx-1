@@ -213,14 +213,18 @@ $(document).ready(function(){
     } else {
       $('.row.' + $input.data('show-optional')).addClass('nodisplay');
     }
-  })
+  });
 
   $('.notification-recipient-fields__close').on('click', function(e) {
     e.preventDefault(); e.stopPropagation();
     var $parentFields = $(this).parent();
     var $destroyInput = $parentFields.prev();
-    $destroyInput.val(true)
-    $parentFields.remove();
+    $destroyInput.val(true);
+    if($('.notification-recipient-fields').length > 1) {
+      $parentFields.remove();
+    } else {
+      $('.notification-recipient-fields input[type=text]').val(null)
+    }
   });
 
   $('.notification-recipient-fields__new').on('click', function(e) {
