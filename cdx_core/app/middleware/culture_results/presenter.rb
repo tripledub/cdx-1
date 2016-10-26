@@ -20,6 +20,9 @@ module CultureResults
       def csv_query(culture_results)
         CSV.generate do |csv|
           csv << [
+            Encounter.human_attribute_name(:id),
+            Encounter.human_attribute_name(:status),
+            Encounter.human_attribute_name(:testing_for),
             MicroscopyResult.human_attribute_name(:id),
             MicroscopyResult.human_attribute_name(:sample_collected_at),
             MicroscopyResult.human_attribute_name(:examined_by),
@@ -39,6 +42,9 @@ module CultureResults
 
       def add_csv_row(csv, culture_result)
         csv << [
+          culture_result.encounter.batch_id,
+          Extras::Select.find(Encounter.status_options, culture_result.encounter.status),
+          Extras::Select.find(Encounter.testing_for_options, culture_result.encounter.testing_for),
           culture_result.uuid,
           Extras::Dates::Format.datetime_with_time_zone(culture_result.sample_collected_at, :full_time),
           culture_result.examined_by,

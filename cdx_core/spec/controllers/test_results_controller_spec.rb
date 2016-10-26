@@ -58,7 +58,7 @@ describe TestResultsController, elasticsearch: true do
     expect(assigns(:total)).to eq(1)
   end
 
-  context 'tabs' do
+  describe 'tabs' do
     it 'should return xpert test results only' do
       get :index, test_results_tabs_selected_tab: 'xpert'
 
@@ -72,7 +72,7 @@ describe TestResultsController, elasticsearch: true do
     end
   end
 
-  context 'filters' do
+  describe 'filters' do
     it 'should return tests filtered by serial number' do
       get :index, test_results_tabs_selected_tab: 'xpert', 'sample.id': '23'
 
@@ -80,7 +80,7 @@ describe TestResultsController, elasticsearch: true do
     end
   end
 
-  context "scoping" do
+  describe "scoping" do
     it "should show all tests for institution" do
       user.update_attribute(:last_navigation_context, institution.uuid)
       test_result = TestResult.create_and_index(
@@ -118,7 +118,7 @@ describe TestResultsController, elasticsearch: true do
     end
   end
 
-  context "loading entities" do
+  describe "loading entities" do
     before(:each) do
       other_user; other_institution; other_site; other_device
       subsite; site2; device2
@@ -144,7 +144,7 @@ describe TestResultsController, elasticsearch: true do
     end
   end
 
-  context "CSV" do
+  describe "CSV" do
     let!(:patient) do
       Patient.make(
         institution: institution,
@@ -266,7 +266,6 @@ describe TestResultsController, elasticsearch: true do
       it "should format duration fields" do
         expect(csv[0]).to contain_field("Encounter patient age", "12 years")
       end
-
     end
 
     context "multiple tests" do
@@ -292,9 +291,39 @@ describe TestResultsController, elasticsearch: true do
           expect(csv[1]).to contain_field(name, value)
         end
       end
-
     end
 
+    context 'xpert results csv' do
+      it 'should generate a csv result' do
+        get :index, test_results_tabs_selected_tab: 'xpert', format: :csv
+
+        expect(CSV.parse(response.body).size).to eq(3)
+      end
+    end
+
+    context 'microscopy results csv' do
+      it 'should generate a csv result' do
+        get :index, test_results_tabs_selected_tab: 'microscopy', format: :csv
+
+        expect(CSV.parse(response.body).size).to eq(3)
+      end
+    end
+
+    context 'dst results csv' do
+      it 'should generate a csv result' do
+        get :index, test_results_tabs_selected_tab: 'dst_lpa', format: :csv
+
+        expect(CSV.parse(response.body).size).to eq(4)
+      end
+    end
+
+    context 'culture results csv' do
+      it 'should generate a csv result' do
+        get :index, test_results_tabs_selected_tab: 'culture', format: :csv
+
+        expect(CSV.parse(response.body).size).to eq(6)
+      end
+    end
   end
 
   describe "show single test result" do

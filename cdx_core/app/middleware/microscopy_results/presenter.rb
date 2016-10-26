@@ -21,6 +21,9 @@ module MicroscopyResults
       def csv_query(microscopy_results)
         CSV.generate do |csv|
           csv << [
+            Encounter.human_attribute_name(:id),
+            Encounter.human_attribute_name(:status),
+            Encounter.human_attribute_name(:testing_for),
             MicroscopyResult.human_attribute_name(:id),
             MicroscopyResult.human_attribute_name(:sample_collected_at),
             MicroscopyResult.human_attribute_name(:examined_by),
@@ -40,6 +43,9 @@ module MicroscopyResults
 
       def add_csv_row(csv, microscopy_result)
         csv << [
+          microscopy_result.encounter.batch_id,
+          Extras::Select.find(Encounter.status_options, microscopy_result.encounter.status),
+          Extras::Select.find(Encounter.testing_for_options, microscopy_result.encounter.testing_for),
           microscopy_result.uuid,
           Extras::Dates::Format.datetime_with_time_zone(microscopy_result.sample_collected_at, :full_time),
           microscopy_result.examined_by,

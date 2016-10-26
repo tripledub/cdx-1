@@ -20,6 +20,9 @@ module XpertResults
       def csv_query(xpert_results)
         CSV.generate do |csv|
           csv << [
+            Encounter.human_attribute_name(:id),
+            Encounter.human_attribute_name(:status),
+            Encounter.human_attribute_name(:testing_for),
             XpertResult.human_attribute_name(:id),
             XpertResult.human_attribute_name(:sample_collected_at),
             XpertResult.human_attribute_name(:examined_by),
@@ -39,6 +42,9 @@ module XpertResults
 
       def add_csv_row(csv, xpert_result)
         csv << [
+          xpert_result.encounter.batch_id,
+          Extras::Select.find(Encounter.status_options, xpert_result.encounter.status),
+          Extras::Select.find(Encounter.testing_for_options, xpert_result.encounter.testing_for),
           xpert_result.uuid,
           Extras::Dates::Format.datetime_with_time_zone(xpert_result.sample_collected_at, :full_time),
           xpert_result.examined_by,

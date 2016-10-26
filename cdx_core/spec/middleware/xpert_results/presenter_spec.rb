@@ -35,22 +35,27 @@ describe XpertResults::Presenter do
 
   describe 'csv_query' do
     it 'should return an array of formated comments' do
-      expect(described_class.csv_query(XpertResult.all).size).to eq(7)
+      expect(CSV.parse(described_class.csv_query(XpertResult.all)).size).to eq(8)
     end
 
     it 'should return elements formated' do
-      expect(described_class.csv_query(XpertResult.all).first).to eq({
-        id:                XpertResult.first.uuid,
-        sampleCollectedAt: Extras::Dates::Format.datetime_with_time_zone(XpertResult.first.sample_collected_at, :full_time),
-        examinedBy:        XpertResult.first.examined_by,
-        resultOn:          Extras::Dates::Format.datetime_with_time_zone(XpertResult.first.result_at, :full_time),
-        tuberculosis:      Extras::Select.find(XpertResult.tuberculosis_options, XpertResult.first.specimen_type),
-        rifampicin:        Extras::Select.find(XpertResult.rifampicin_options, XpertResult.first.serial_number),
-        trace:             Extras::Select.find(XpertResult.trace_options, XpertResult.first.trace),
-        resultStatus:      Extras::Select.find(XpertResult.status_options, XpertResult.first.result_status),
-        feedbackMessage:   FeedbackMessages::Finder.find_text_from_patient_result(XpertResult.first),
-        comment:           XpertResult.first.comment
-      })
+      expect(CSV.parse(described_class.csv_query(XpertResult.all))[1]).to eq(
+        [
+          XpertResult.first.encounter.batch_id,
+          Extras::Select.find(Encounter.status_options, XpertResult.first.encounter.status),
+          Extras::Select.find(Encounter.testing_for_options, XpertResult.first.encounter.testing_for),
+          XpertResult.first.uuid,
+          Extras::Dates::Format.datetime_with_time_zone(XpertResult.first.sample_collected_at, :full_time),
+          XpertResult.first.examined_by,
+          Extras::Dates::Format.datetime_with_time_zone(XpertResult.first.result_at, :full_time),
+          Extras::Select.find(XpertResult.tuberculosis_options, XpertResult.first.specimen_type),
+          Extras::Select.find(XpertResult.rifampicin_options, XpertResult.first.serial_number),
+          Extras::Select.find(XpertResult.trace_options, XpertResult.first.trace),
+          Extras::Select.find(XpertResult.status_options, XpertResult.first.result_status),
+          FeedbackMessages::Finder.find_text_from_patient_result(XpertResult.first),
+          XpertResult.first.comment.to_s
+        ]
+      )
     end
   end
 end
