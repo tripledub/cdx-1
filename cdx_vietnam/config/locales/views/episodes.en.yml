@@ -1,0 +1,5 @@
+en:
+  episodes:
+    form:
+      history_tb: 'Previous history of TB *'
+      hiv_status: 'Current HIV Status *'
