@@ -240,6 +240,7 @@ vi:
       weeks_in_treatment_label: "Số tuần điều trị"
       comments: "Bình luận"
       presumptive: "Giả định RR-TB/MDR-TB"
+      sample_other: 'Nhập vào loại mẫu của bạn'
 
     outstanding_tests_table:
       outstanding_tests_title: "Các xét nghiệm nỗi bật"
