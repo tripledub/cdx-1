@@ -41,7 +41,7 @@ var PolicyItem = React.createClass({
         <div>
           <div className="resource-type">
             {statement.resourceType == 'encounter' ? I18n.t("components.policy_item.encounter") : statement.resourceType}{withSubsites}
-            <img src="/img/ic-corss.png" className="pull-right" onClick={this.remove} />
+            <img src="/img/ic-cross.png" className="pull-right" onClick={this.remove} />
           </div>
           <div className="description">{description}</div>
         </div>
