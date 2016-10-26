@@ -16,6 +16,23 @@ module XpertResults
           }
         end
       end
+
+      def csv_query(xpert_results)
+        xpert_results.map do |xpert_result|
+          {
+            id:                xpert_result.uuid,
+            sampleCollectedAt: Extras::Dates::Format.datetime_with_time_zone(xpert_result.sample_collected_at, :full_time),
+            examinedBy:        xpert_result.examined_by,
+            resultOn:          Extras::Dates::Format.datetime_with_time_zone(xpert_result.result_at, :full_time),
+            tuberculosis:      Extras::Select.find(XpertResult.tuberculosis_options, xpert_result.specimen_type),
+            rifampicin:        Extras::Select.find(XpertResult.rifampicin_options, xpert_result.serial_number),
+            trace:             Extras::Select.find(XpertResult.trace_options, xpert_result.trace),
+            resultStatus:      Extras::Select.find(XpertResult.status_options, xpert_result.result_status),
+            feedbackMessage:   FeedbackMessages::Finder.find_text_from_patient_result(xpert_result),
+            comment:           xpert_result.comment
+          }
+        end
+      end
     end
   end
 end
