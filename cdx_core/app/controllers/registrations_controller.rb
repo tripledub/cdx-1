@@ -2,7 +2,7 @@ class RegistrationsController < Devise::RegistrationsController
   include Concerns::Context
 
   before_action :authenticate_user!
-  before_action :ensure_context
+  before_action :ensure_context, only: [:edit]
 
   protected
 
