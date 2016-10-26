@@ -33,7 +33,7 @@ en:
       test_completed: 'Test completed'
       test_new:  'New test'
       test_rejected: 'Test rejected'
-      show_test_result: 'View results'
+      show_test_result: 'View result'
     patient_results:
       new: 'New'
       sample_collected: 'Pending'

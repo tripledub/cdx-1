@@ -1,0 +1,7 @@
+- if show_approval_buttons?(result, current_user)
+  .row
+    = react_component 'ShowApproveTestResult',
+      resultId: result.id,
+      commentValue: result.comment,
+      updateResultUrl: encounter_patient_results_path(encounter),
+      rejectReasons: FeedbackMessages::Presenter.reject_reasons_category(encounter.institution, 'lab_tech')
