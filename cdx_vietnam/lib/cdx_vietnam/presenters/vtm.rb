@@ -16,6 +16,9 @@ module CdxVietnam
       end
 
       def create_patient
+        exam_date1 = Extras::Dates::Format.datetime_with_time_zone(encounter.updated_at, I18n.t('date.formats.vtm_long'))
+        exam_date2 = Extras::Dates::Format.datetime_with_time_zone(encounter.updated_at, I18n.t('date.formats.vtm_long2'))
+
         {
           patient: {
             case_type: 'patient', # OK, luôn là patient
@@ -23,6 +26,8 @@ module CdxVietnam
             target_system: 'vtm', # OK
             patient_vtm_id: patient.vtm_patient_id, 
             registration_number: '', # OK
+            ngayKhamBenh: exam_date1,
+            strngayKhamBenh: exam_date2,
             consulting_professional: '[FROM CDP]', # OK
             diagnosis_date: diagnosis_date,
             name: patient.name,
