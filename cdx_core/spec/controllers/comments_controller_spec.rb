@@ -27,28 +27,28 @@ describe CommentsController do
       it 'should return a json with comments' do
         get 'index', patient_id: patient.id
 
-        expect(JSON.parse(response.body).size).to eq(7)
+        expect(JSON.parse(response.body)['rows'].size).to eq(7)
       end
 
       it 'should return a json with comments ordered by comment date ascending' do
         first_comment = patient.comments.order(created_at: :desc).first
         get 'index', patient_id: patient.id
 
-        expect(JSON.parse(response.body).first['title']).to eq(first_comment.description)
+        expect(JSON.parse(response.body)['rows'].first['title']).to eq(first_comment.description)
       end
 
       it 'should return a json with comments ordered by user name ascending' do
         first_user = User.where.not(id: user.id).order(first_name: :desc).first
         get 'index', patient_id: patient.id, field: 'name', order: 0
 
-        expect(JSON.parse(response.body).first['commenter']).to eq(first_user.full_name)
+        expect(JSON.parse(response.body)['rows'].first['commenter']).to eq(first_user.full_name)
       end
 
       it 'should return a json with comments ordered by user name ascending' do
         first_user = User.where.not(id: user.id).order(first_name: :asc).first
         get 'index', patient_id: patient.id, field: 'name', order: 'true'
 
-        expect(JSON.parse(response.body).first['commenter']).to eq(first_user.full_name)
+        expect(JSON.parse(response.body)['rows'].first['commenter']).to eq(first_user.full_name)
       end
     end
 
