@@ -8,8 +8,9 @@ class CommentsController < ApplicationController
   before_filter :find_comment, only: [:show]
 
   def index
-    render json: Comments::Presenter.patient_view(@patient.comments.joins(:user)
-      .order(set_order_from_params).limit(30).offset(params[:page] || 0))
+    page = params[:page] || 1
+    comments = @patient.comments.joins(:user).order(set_order_from_params).page(page).per(10)
+    render json: Comments::Presenter.patient_view(comments)
   end
 
   def new
