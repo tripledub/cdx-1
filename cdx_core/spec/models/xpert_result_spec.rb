@@ -8,7 +8,7 @@ describe XpertResult do
   let(:encounter)           { Encounter.make institution: institution, site: site, patient: patient }
   let(:xpert_result)        { XpertResult.make encounter: encounter }
   let(:result_status)       { %w(new sample_collected allocated pending_approval rejected completed) }
-  let(:test_result_options) { %w(detected not_detected indeterminate) }
+  let(:test_result_options) { %w(detected not_detected indeterminate no_result err) }
 
   before :each do
     User.current = user
