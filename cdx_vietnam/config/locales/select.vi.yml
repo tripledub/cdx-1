@@ -1,6 +1,11 @@
 vi:
   select:
     default: Vui lòng chọn
+    address:
+      regions:
+        northern: 'Northern'
+        southern: 'Southern'
+        central: 'Central'
     patient:
       gender_options:
         male: 'Nam'

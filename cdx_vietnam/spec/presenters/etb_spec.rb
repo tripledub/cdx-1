@@ -16,7 +16,7 @@ RSpec.describe CdxVietnam::Presenters::Etb do
     )
   end
   let(:encounter) { Encounter.make patient: patient }
-  
+
   let(:patient_result) { PatientResult.make encounter: encounter }
 
   let(:expected_microcopy) do
@@ -36,7 +36,7 @@ RSpec.describe CdxVietnam::Presenters::Etb do
         mother_name: '',
         sending_sms: 'FALSE',
         treatment_sms: 'FALSE',
-        phone_number: '23711', 
+        phone_number: '23711',
         cellphone_number: '23711',
         supervisor2_cellphone: '23711',
         nationallity: 'NATIVE',
@@ -101,7 +101,7 @@ RSpec.describe CdxVietnam::Presenters::Etb do
         mother_name: '',
         sending_sms: 'FALSE',
         treatment_sms: 'FALSE',
-        phone_number: '23711', 
+        phone_number: '23711',
         cellphone_number: '23711',
         supervisor2_cellphone: '23711',
         nationallity: 'NATIVE',

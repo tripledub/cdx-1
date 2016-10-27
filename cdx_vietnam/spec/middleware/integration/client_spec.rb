@@ -5,7 +5,7 @@ describe Integration::Client do
   let(:encounter) {Encounter.make patient: patient}
   let(:patient_result) {PatientResult.make encounter: encounter}
   let(:json) do
-    etb_patient = { 
+    etb_patient = {
       'patient' => {
         'case_type' => 'suspect',
         'target_system' => 'etb',
@@ -62,7 +62,7 @@ describe Integration::Client do
     }
     etb_patient.to_json
   end
-  
+
   before(:example) do
     client = Integration::Client.new
     x = double('x')
@@ -73,16 +73,16 @@ describe Integration::Client do
     allow(CdxVietnam::Presenters::Etb).to receive(:create_patient).with(patient_result).and_return(json)
     client.integration(json)
   end
-  
+
   it 'should update external system id after integrating' do
     expect(patient.reload.external_id).to eq('123456')
   end
-  
+
   it 'should insert log after each integration' do
     expect(IntegrationLog.all.size).to eq(1)
     expect(IntegrationLog.first.status).to eq('Finished')
   end
-  
+
   it 'should mark patient result as is_synced after integration' do
     expect(patient_result.reload.is_sync).to eq(true)
   end
