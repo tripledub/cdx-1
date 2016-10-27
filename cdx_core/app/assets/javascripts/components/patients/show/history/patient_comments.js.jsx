@@ -3,6 +3,9 @@ var PatientComments = React.createClass({
     return {
       patientComments: [],
       queryOrder: true,
+      pagination: {},
+      pageNumber: 1,
+      activeField: 'date',
       loadingMessasge: I18n.t("components.patients.show.history.msg_loading_comment"),
       orderedColumns: {},
       availableColumns: [
@@ -13,11 +16,12 @@ var PatientComments = React.createClass({
     };
   },
 
-  getData: function(field, e) {
+  getData: function(field, pageNumber, e) {
     if (e) { e.preventDefault(); }
-    this.serverRequest = $.get(this.props.commentsUrl + this.getParams(field), function (results) {
-      if (results.length > 0) {
-        this.setState({ patientComments: results });
+    this.serverRequest = $.get(this.props.commentsUrl + this.getParams(field, pageNumber), function (results) {
+      if (results['rows'].length > 0) {
+        this.setState({ pagination: results['pages'] });
+        this.setState({ patientComments: results['rows'] });
         this.updateOrderIcon(field);
         $("table").resizableColumns({store: window.store});
       } else {
@@ -26,9 +30,20 @@ var PatientComments = React.createClass({
     }.bind(this));
   },
 
-  getParams: function(field) {
-    this.state.queryOrder = !this.state.queryOrder;
-    return '&field='+ field + '&order=' + this.state.queryOrder;
+  pageData: function(pageNumber){
+    this.getData(this.state.activeField, pageNumber)
+  },
+
+  getParams: function(field, pageNumber) {
+    var queryOrder = this.state.queryOrder;
+    if(!pageNumber) {
+      pageNumber = this.state.pageNumber;
+      queryOrder = !this.state.queryOrder;
+      this.setState({ queryOrder: queryOrder });
+    }
+    this.setState({ activeField: field });
+    this.setState({ pageNumber: pageNumber });
+    return '&field='+ field + '&order=' + queryOrder + '&page=' + pageNumber;
   },
 
   updateOrderIcon: function(orderedField) {
@@ -79,6 +94,13 @@ var PatientComments = React.createClass({
                 {rowHeaders}
               </tr>
             </thead>
+            <tfoot>
+              <tr>
+                <td>
+                  <Paginator pages={ this.state.pagination } pageData={ this.pageData }/>
+                </td>
+              </tr>
+            </tfoot>
             <tbody>
               {rows}
             </tbody>
