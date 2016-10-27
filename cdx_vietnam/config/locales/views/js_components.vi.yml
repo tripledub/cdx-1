@@ -98,7 +98,11 @@
       col_date: "Ngày"
       col_channels: "Kênh"
       col_message: "Tin nhắn"
-
+    notification_notices:
+      col_name: "Tên"
+      col_date: "Ngày"
+      col_status: "Trạng thái"
+      col_message: "Tin Nhắn"
     canvas-charts:
       err_chart_msg: "Có một lỗi xảy ra khi hiển thị biểu đồ."
 

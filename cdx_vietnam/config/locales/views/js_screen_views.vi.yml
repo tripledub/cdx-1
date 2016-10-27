@@ -22,7 +22,7 @@ vi:
 
     alert_aggregation:
       aggregation_type: "Loại kết hợp"
-      aggregation_type_tooltip: "Loại kết hợp"
+      aggregation_type_tooltip.: "Loại kết hợp"
       aggregation_frequency: "Tần số kết hợp"
       aggregation_frequency_tooltip.: "Tần số kết hợp"
       aggregation_threshold: "Ngưỡng kết hợp"
@@ -59,7 +59,7 @@ vi:
       error_placeholder: "Mã lỗi (phạm vi)"
       site_option_label: "Tất cả"
       site_label: "Trang"
-      site_tootip: "Những trang đang sử dụng thông báo này."
+      site_tooltip: "Những trang đang sử dụng thông báo này."
       site_placeholder: "Tất cả"
       device_option_label: "Tất cả"
       device_label: "Thiết bị"
@@ -94,6 +94,7 @@ vi:
       sms_message_label: "Tin nhắn SMS"
       sms_message_tooltip: "Nội dung SMS sử dụng khi gửi thông báo"
       sms_message_placeholder: "Tin nhắn SMS"
+      select_placeholder: "Tất cả"
 
     alert_conditions:
       condition_option_label: "Tất cả"
@@ -209,14 +210,16 @@ vi:
     fresh_tests_encounter_form:
       alert_new_sample: "Mẫu này đã được thêm"
       alert_testing_for: "Vui lòng chọn một loại xét nghiệm"
-      alert_exam_reason: "Vui lòng chọn một Examination Reason."
+      alert_exam_reason: "Vui lòng chọn một lý do kiểm tra."
       alert_tests_requested: "Vui lòng chọn một hoặc nhiều loại xét nghiệm"
       alert_add_samples: "Vui lòng thêm một hoặc nhiều mẫu thử."      
-      alert_col_sample_type: "Please select a Collection Sample Type"
-      alert_othercomment: "Please specify Collection Sample Type"      
-      test_order_details_heading: "Chi tiết xét nghiệm"
-      testing_for_label: "xét nghiệm cho"
-      TB_option: "Lao"
+      alert_unknown: "Vui lòng kiểm tra và nhập những trường bắt buộc."
+      alert_performing_site: "Vui lòng lựa chọn một site"
+      alert_col_sample_type: "Vui lòng lựa chọn môt tập loại mẫu"
+      alert_othercomment: "Vui lòng xác định một tập loại mẫu"
+      test_order_details_heading: "Chi tiết yêu cầu xét nghiệm"
+      testing_for_label: "Đang xét nghiệm cho"
+      TB_option: "TB"
       HIV_option: "HIV"
       Ebola_option: "Ebola"
       samples_lable: "Các mẫu thử"

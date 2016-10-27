@@ -1,12 +1,15 @@
-vi:
+en:
+  activerecord:
+    models:
+      encounter: 'Yêu cầu xét nghiệm'
   encounters:
     status:
-      new: 'Mới'
-      pending: 'Chưa tiến hành'
-      in_progress: 'Đang tiến hành'
-      completed: 'Hoàn thành'
-      pending_approval: 'Đang chờ phê duyệt'
-      approved: 'Đã phê duyệt'
-      site_id: 'Yêu cầu bởi'
-      performing_site_id: 'Yêu cầu cho'
-      user_id: 'Đặt hàng cho'
+      new: 'New'
+      pending: 'Pending'
+      in_progress: 'In progress'
+      completed: 'Completed'
+      pending_approval: 'Pending approval'
+      approved: 'Approved'
+      site_id: 'Requested by'
+      performing_site_id: 'Request to'
+      user_id: 'Order by user'

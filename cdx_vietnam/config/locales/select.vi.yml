@@ -77,6 +77,8 @@ vi:
         detected: 'Tìm thấy'
         not_detected: 'Không tìm thấy'
         indeterminate: 'Không hợp lệ / Không có kết quả / Lỗi'
+        no_result: 'Không kết quả'
+        err: 'Lỗi'
       rifampicin:
         detected: 'Tìm thấy'
         not_detected: 'Không tìm thấy'
@@ -104,12 +106,6 @@ vi:
         relapsed: 'Điều trị tái phát Aft.'
         loss: 'Mất theo dõi'
         other: 'Các lần điều trị trước'
-        failcati: 'Điều trị Cat I thất bại'
-        failcatii: 'Điều trị Cat II thất bại'
-        noncon: 'Không chuyển đổi sau 2-3 tháng điều trị Cat I hoặc Cat II'
-        relepsecat: 'Tái phát Cat I hoặc/và Cat II'
-        retreatcat: 'Điều trị sau khi mất dấu theo dõi Cat I hoặc/và Cat II'
-        tbmdr: 'Nhiễm lao hoặc nghi ngờ nhiễm lao mà có liên quan tới MDR-TB'
       treatment_outcome:
         cured: 'Chữa khỏi'
         completed: 'Hoàn thành điều trị'
@@ -127,5 +123,25 @@ vi:
         extensive: 'Extensive drug resistance add to CDP dropdown'
         rif: 'Rifampicin resistance Same so no action'
         prexdr: 'Pre XDR add to CDP dropdown'
-        etbval: 'Etb Values Action'
-        unknown: 'Unknown'
+        unknown: 'Không xác định'
+    notification:
+      anomaly_type:
+        missing_sample_id: Mã mẫu thiếu
+        invalid_test_date: Ngày xét nghiệm không hợp lệ
+      frequency:
+        instant: lập tức
+        aggregate: Tổng hợp
+        targeted: Chỉ tiêu
+      frequency_value:
+        hourly: Hàng giờ
+        daily: Hàng ngày
+        weekly: Hàng tuần
+        monthly: Hàng tháng
+
+ 		etbval: 'Etb Values Action'
+		failcati: 'Điều trị Cat I thất bại'
+        failcatii: 'Điều trị Cat II thất bại'
+        noncon: 'Không chuyển đổi sau 2-3 tháng điều trị Cat I hoặc Cat II'
+        relepsecat: 'Tái phát Cat I hoặc/và Cat II'
+        retreatcat: 'Điều trị sau khi mất dấu theo dõi Cat I hoặc/và Cat II'
+        tbmdr: 'Nhiễm lao hoặc nghi ngờ nhiễm lao mà có liên quan tới MDR-TB'

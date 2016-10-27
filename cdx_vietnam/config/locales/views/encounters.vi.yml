@@ -6,10 +6,12 @@ vi:
       existing_test: 'Tồn tại xét nghiệm cho %{patient_name}'
       new_test: 'xét nghiệm mới cho %{patient_name}'
       no_patient: 'Mỗi cuộc gặp phải thuộc về một bệnh nhân. Xin vui lòng đến trang Bệnh nhân và nhấn vào Thêm yêu cầu xét nghiệm'
+      no_site: Bạn không thể chạy xét nghiệm mà không cần bất kỳ  sites nào.
     show:
       test_order: 'Yêu cầu xét nghiệm'
       no_encounter: 'Yêu cầu xét nghiệm không tìm thấy.'
       delete_test_order: 'xóa yêu cầu xét nghiệm'
+      create_notification: 'Tạo một thông báo cho yêu cầu xét nghiệm này'
     perform_encounter_action:
       merge: 'Không thể thêm một xét nghiệm hoặc mẫu thử thuộc về một %{entity_type} khác'
       error: 'Lỗi %{action_name} %{class_name}'
@@ -29,3 +31,4 @@ vi:
       log_action: 'Đã xóa'
       cancelled: 'Yêu cầu xét nghiêm đã xóa'
       not_allowed: 'Bạn không thể xóa yêu cầu xét nghiệm này.'
+

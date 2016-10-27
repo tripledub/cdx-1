@@ -16,3 +16,8 @@ vi:
     edit: 'Chỉnh Sửa'
     edit_institution: 'Chỉnh sửa tổ chức'
     show_institution: 'Hiện tổ chức'
+
+  helpers:
+    submit:
+      create: "Lưu"
+      update: "Lưu"

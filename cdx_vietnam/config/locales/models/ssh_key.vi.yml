@@ -2,4 +2,4 @@ vi:
   models:
     ssh_key:
       key: 'Key'
-      is_invalid: 'is invalid'
+      is_invalid: 'Không có hiệu lực'
