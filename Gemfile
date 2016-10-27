@@ -89,7 +89,7 @@ gem 'encryptor'
 
 gem 'dotiw'
 gem 'rails-i18n', '~> 4.0.0'
-gem 'doorkeeper'
+gem 'doorkeeper', '~> 4.2.0'
 gem 'bettertabs'
 
 gem 'faker'
