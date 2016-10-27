@@ -10,7 +10,7 @@ describe FilterData::TestOrders do
     }
   end
   let(:cookie_values) { default_values.to_json }
-  let(:cookies) { { 'test_orders' => cookie_values } }
+  let(:cookies) { { 'testorders' => cookie_values } }
 
   describe 'params' do
     subject { described_class.new(params, cookies) }

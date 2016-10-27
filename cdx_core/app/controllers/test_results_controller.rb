@@ -102,7 +102,14 @@ class TestResultsController < TestsController
 
   def set_filter_params
     @selected_tab = default_selected_tab
-    filter_model = (@selected_tab == 'devices' ? 'device' : @selected_tab).capitalize
+    filter_model = if @selected_tab == 'devices'
+                     'Device'
+                   elsif @selected_tab == 'dst_lpa'
+                     'DstLpa'
+                   else
+                     @selected_tab.capitalize
+                   end
+
     set_filter_from_params("FilterData::#{filter_model}Results".constantize)
   end
 end
