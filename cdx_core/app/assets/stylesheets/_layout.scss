@@ -288,7 +288,7 @@ line-height: 27px;
 
 form.button_to{
 float:right;
-margin-top:-77px;
+margin-top:-106px;
 margin-right:20px;
 }
 
@@ -342,4 +342,14 @@ font-size: 13px;
 .select2-container--default.select2-container--focus .select2-selection--multiple {
   border-color: #aaaaaa;
   width: 90%;
+}
+
+.button_to .btn-danger{
+  line-height:20px;
+}
+
+.addalertbut{
+  margin-left:15px;
+  margin-top:-50px;
+  line-height:27px;
 }
