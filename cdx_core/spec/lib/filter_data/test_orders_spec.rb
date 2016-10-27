@@ -16,26 +16,24 @@ describe FilterData::TestOrders do
     context 'when params are empty' do
       let(:params) { {} }
 
-
       context 'if there are values stored' do
         it 'should return stored values' do
           filter_data = described_class.new(params, cookies)
           filter_data.update
-          params = filter_data.params
 
-          expect(params).to eq(default_values)
+          expect(filter_data.params).to eq(default_values)
         end
       end
-
     end
 
     context 'if params are present' do
+      let(:params) { default_values.merge('status' => 'samples_collected', 'page_size' => '100') }
+
       it 'should return params values if present' do
+        filter_data = described_class.new(params, cookies)
+        filter_data.update
 
-      end
-
-      it 'should update stored information' do
-
+        expect(params).to eq(filter_data.params)
       end
     end
   end
