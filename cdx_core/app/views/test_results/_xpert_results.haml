@@ -47,6 +47,9 @@
             = image_tag('img/test-tube.png')
             %h3
               = I18n.t('test_results.index.test_result', count: @total)
+            %span.table-actions
+              = link_to test_results_path(params.merge(format: 'csv')), title: I18n.t('test_results.index.test', count: @total) do
+                %span.icon-download.icon-gray
           .box-content
             = react_component 'XpertResultsIndex', testResults: @test_results
             .pagination

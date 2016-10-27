@@ -12,12 +12,12 @@ module Concerns::Context
 
       # if user has no longer access, reset it to anything that make sense
       if default_context.nil? || !NavigationContext.new(current_user, default_context).can_read?
-        some_institution_uuid = check_access(Institution, READ_INSTITUTION).first.try(:uuid)
+        some_institution_uuid = check_access(Institution, Policy::Actions::READ_INSTITUTION).first.try(:uuid)
         current_user.update_attribute(:last_navigation_context, some_institution_uuid)
         default_context = some_institution_uuid
       end
 
-      redirect_to url_for(params.merge({context: default_context})) if default_context
+      redirect_to url_for(params.merge(context: default_context)) if default_context
 
     elsif !params[:context].blank?
       # if there is an explicit context try to use it.
@@ -31,7 +31,7 @@ module Concerns::Context
         @navigation_context = nil
       else
         # or redirect the user to an empty context so a new one is set
-        redirect_to url_for(params.merge({context: nil}))
+        redirect_to url_for(params.merge({ context: nil }))
       end
     end
   end

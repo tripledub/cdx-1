@@ -13,6 +13,7 @@ class TestOrdersStateController < ApplicationController
     respond_to do |format|
       format.csv do
         csv_file = TestOrders::CsvPresenter.new(test_orders.filter_query)
+        headers['Content-Type']        = 'text/csv'
         headers['Content-disposition'] = "attachment; filename=#{csv_file.filename}"
         self.response_body = csv_file.export_all
       end
@@ -23,6 +24,7 @@ class TestOrdersStateController < ApplicationController
     respond_to do |format|
       format.csv do
         csv_file = TestOrders::CsvPresenter.new(@test_order)
+        headers['Content-Type']        = 'text/csv'
         headers['Content-disposition'] = "attachment; filename=#{csv_file.filename}"
         self.response_body = csv_file.export_one
       end

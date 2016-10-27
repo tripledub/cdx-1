@@ -1,3 +1,4 @@
+# Test results controller
 class TestResultsController < TestsController
   include Policy::Actions
 
@@ -5,43 +6,42 @@ class TestResultsController < TestsController
     head :forbidden unless has_access_to_test_results_index?
   end
 
+  before_action :clean_params
+
   def index
-    @date_options  = Extras::Dates::Filters.date_options_for_filter
+    @date_options = Extras::Dates::Filters.date_options_for_filter
+    @selected_tab = default_selected_tab
 
     respond_to do |format|
       format.html do
-        @can_create_encounter = check_access(@navigation_context.institution.sites, CREATE_SITE_ENCOUNTER).size > 0
-        @selected_tab         = default_selected_tab
+        @can_create_encounter = !check_access(@navigation_context.institution.sites, CREATE_SITE_ENCOUNTER).empty?
         case @selected_tab
         when 'microscopy'
           load_manual_test_results(Finder::MicroscopyResults, MicroscopyResults::Presenter)
-          cookies[:test_result_tab] = { value: 'microscopy', expires: 1.year.from_now }
         when 'xpert'
           load_manual_test_results(Finder::XpertResults, XpertResults::Presenter)
-          cookies[:test_result_tab] = { value: 'xpert', expires: 1.year.from_now }
         when 'culture'
           load_manual_test_results(Finder::CultureResults, CultureResults::Presenter)
-          cookies[:test_result_tab] = { value: 'culture', expires: 1.year.from_now }
         when 'dst_lpa'
           load_manual_test_results(Finder::DstLpaResults, DstLpaResults::Presenter)
-          cookies[:test_result_tab] = { value: 'dst_lpa', expires: 1.year.from_now }
         else
           load_device_test_results
-          cookies[:test_result_tab] = { value: 'devices', expires: 1.year.from_now }
         end
+
+        cookies[:test_result_tab] = { value: @selected_tab, expires: 1.year.from_now }
       end
 
       format.csv do
-        filename                       = "test_results-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
-        headers["Content-Type"]        = "text/csv"
-        headers["Content-disposition"] = "attachment; filename=#{filename}"
-        self.response_body             = Finder::TestResults.new(params, current_user, @navigation_context, @localization_helper).csv_query(filename)
+        csv_content = TestResults::CsvGenerator.new(@selected_tab, params, current_user, @navigation_context, @localization_helper)
+        headers['Content-Type']        = 'text/csv'
+        headers['Content-disposition'] = "attachment; filename=#{csv_content.filename}"
+        self.response_body             = csv_content.create
       end
     end
   end
 
   def show
-    @test_result       = TestResult.find_by(uuid: params[:id])
+    @test_result = TestResult.find_by(uuid: params[:id])
     return unless authorize_resource(@test_result, QUERY_TEST)
 
     @other_tests       = @test_result.sample ? @test_result.sample.test_results.where.not(id: @test_result.id) : TestResult.none
@@ -60,7 +60,7 @@ class TestResultsController < TestsController
     @device_messages = DeviceMessages::Presenter.index_view(device_messages.order(@order_by).limit(@page_size).offset(offset))
   end
 
-  private
+  protected
 
   def load_manual_test_results(results_finder, presenter)
     patient_results   = results_finder.new(params, @navigation_context)
@@ -71,16 +71,16 @@ class TestResultsController < TestsController
 
   def load_device_test_results
     @results = Cdx::Fields.test.core_fields.find { |field| field.name == 'result' }.options.map do |result|
-      if result == "n/a"
-        {value: 'n/a', label: I18n.t('test_results_controller.not_applicable')}
+      if result == 'n/a'
+        { value: 'n/a', label: I18n.t('test_results_controller.not_applicable') }
       else
-        {value: result, label: result.capitalize}
+        { value: result, label: result.capitalize }
       end
     end
 
     @test_types    = Cdx::Fields.test.core_fields.find { |field| field.name == 'type' }.options
-    @test_statuses = ['success','error']
-    @conditions    = Condition.all.map &:name
+    @test_statuses = %w(success error)
+    @conditions    = Condition.all.map(&:name)
     @show_sites    = @sites.size > 1
     @show_devices  = @devices.size > 1
 
@@ -93,5 +93,10 @@ class TestResultsController < TestsController
 
   def default_selected_tab
     params['test_results_tabs_selected_tab'] || cookies[:test_result_tab] || 'devices'
+  end
+
+  def clean_params
+    params.delete(:controller)
+    params.delete(:action)
   end
 end
