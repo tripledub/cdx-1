@@ -1,5 +1,7 @@
 # Test orders controller
 class TestOrdersController < TestsController
+  before_action :set_filter_params, only: [:index]
+
   def index
     respond_to do |format|
       format.html do
@@ -34,5 +36,9 @@ class TestOrdersController < TestsController
     filter = {}
     filter['encounter.uuid'] = params['selectedItems'] if params['selectedItems'].present?
     filter
+  end
+
+  def set_filter_params
+    set_filter_from_params(FilterData::TestOrders)
   end
 end

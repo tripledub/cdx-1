@@ -9,6 +9,10 @@ module FilterData
       @current_data = get_cookie
     end
 
+    def name
+      self.class.name.demodulize.downcase
+    end
+
     def update
       current_data.each_key { |key| update_field(key, @params[key.to_s]) }
       set_params

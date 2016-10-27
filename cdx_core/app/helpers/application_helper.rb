@@ -143,9 +143,16 @@ module ApplicationHelper
     end
   end
 
+  def set_filter_from_params(filter_model)
+    filter_data = filter_model.new(params, cookies)
+    filter_data.update
+    params.merge(filter_data.params)
+    cookies[filter_data.name] = { value: filter_data.current_data.to_json, expires: 1.year.from_now }
+  end
+
   def filters_params
     filters_params = params
-    ['controller', 'action', 'page_size', 'page'].each do |param|
+    %w(controller action page_size page).each do |param|
       filters_params.delete(param)
     end
     filters_params

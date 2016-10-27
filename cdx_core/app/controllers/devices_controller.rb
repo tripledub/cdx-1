@@ -5,6 +5,7 @@ class DevicesController < ApplicationController
   before_filter :load_device_models_for_create, only: [:index, :new, :create]
   before_filter :load_device_models_for_update, only: [:edit, :update]
   before_filter :load_filter_resources, only: :index
+  before_action :set_filter_params, only: [:index]
 
   before_filter do
     head :forbidden unless has_access_to_devices_index?
@@ -266,5 +267,9 @@ class DevicesController < ApplicationController
     return { 'date_range' => params['range'] } if params['range']
     return { 'since' => params['since'] } if params['since']
     {}
+  end
+
+  def set_filter_params
+    set_filter_from_params(FilterData::Devices)
   end
 end
