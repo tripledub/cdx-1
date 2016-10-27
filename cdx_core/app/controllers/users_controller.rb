@@ -1,5 +1,7 @@
+# Users controller
 class UsersController < ApplicationController
   before_filter :load_resource, only: [:edit, :update, :assign_role, :unassign_role, :remove, :resend_invite, :find]
+  before_action :set_filter_params, only: [:index]
 
   def index
     site_admin = !has_access?(@navigation_context.entity, READ_INSTITUTION_USERS) && @navigation_context.entity.kind_of?(Institution)
@@ -142,7 +144,7 @@ class UsersController < ApplicationController
       redirect_to users_path, notice: I18n.t('users.resend_invite.resending_failed')
     end
   end
-  
+
   def change_language
     current_user.update_attribute('locale', params[:language])
     render json: 'success'.to_json
@@ -177,5 +179,9 @@ class UsersController < ApplicationController
     @users = @users.where("roles_users.role_id = ?", params["role"].to_i) if params["role"].present?
     @users = @users.where("last_sign_in_at > ? OR (last_sign_in_at IS NULL AND invitation_accepted_at IS NULL AND invitation_created_at > ?)", params["last_activity"], params["last_activity"]) if params["last_activity"].present?
     @users = @users.where("is_active = ?", params["is_active"].to_i) if params["is_active"].present?
+  end
+
+  def set_filter_params
+    set_filter_from_params(FilterData::Users)
   end
 end

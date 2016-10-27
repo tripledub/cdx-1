@@ -22,7 +22,7 @@ class SitesController < ApplicationController
         render layout: false if request.xhr?
       end
       format.csv do
-        csv_file = CsvGenerator::Sites.new(@sites)
+        csv_file = Sites::CsvGenerator.new(@sites)
         headers["Content-disposition"] = "attachment; filename=#{csv_file.filename}"
         self.response_body = csv_file.build_csv
       end

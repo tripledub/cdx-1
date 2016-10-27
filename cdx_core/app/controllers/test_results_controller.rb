@@ -7,10 +7,10 @@ class TestResultsController < TestsController
   end
 
   before_action :clean_params
+  before_action :set_filter_params, only: [:index]
 
   def index
     @date_options = Extras::Dates::Filters.date_options_for_filter
-    @selected_tab = default_selected_tab
 
     respond_to do |format|
       format.html do
@@ -98,5 +98,18 @@ class TestResultsController < TestsController
   def clean_params
     params.delete(:controller)
     params.delete(:action)
+  end
+
+  def set_filter_params
+    @selected_tab = default_selected_tab
+    filter_model = if @selected_tab == 'devices'
+                     'Device'
+                   elsif @selected_tab == 'dst_lpa'
+                     'DstLpa'
+                   else
+                     @selected_tab.capitalize
+                   end
+
+    set_filter_from_params("FilterData::#{filter_model}Results".constantize)
   end
 end

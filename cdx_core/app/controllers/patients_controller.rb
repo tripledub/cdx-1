@@ -1,6 +1,7 @@
 # Patients controller
 class PatientsController < ApplicationController
   before_filter :find_patient, only: %w(show edit update destroy)
+  before_action :set_filter_params, only: [:index]
 
   def search
     @patients = check_access(Patient.where(is_phantom: false)
@@ -18,7 +19,6 @@ class PatientsController < ApplicationController
   end
 
   def index
-    set_session_from_params
     patients          = Patients::Finder.new(current_user, @navigation_context, params).filter_query
     @total            = patients.count
     order_by, offset  = perform_pagination('patients.name')
@@ -136,17 +136,7 @@ class PatientsController < ApplicationController
     end
   end
 
-  def set_session_from_params
-    params[:name]                  = session[:patients_filter_name] if params[:name].nil?
-    session[:patients_filter_name] = params[:name]
-
-    params[:entity_id]                  = session[:patients_filter_entity_id] if params[:entity_id].nil?
-    session[:patients_filter_entity_id] = params[:entity_id]
-
-    params[:page]                  = session[:patients_filter_page] if params[:page].nil?
-    session[:patients_filter_page] = params[:page]
-
-    params[:page_size]                 = session[:patients_filter_pagesize] if params[:page_size].nil?
-    session[:patients_filter_pagesize] = params[:page_size]
+  def set_filter_params
+    set_filter_from_params(FilterData::Patients)
   end
 end
