@@ -61,12 +61,18 @@ module CdxVietnam
           hiv_status: hiv_status_test_order,
           sample_collected_date1: Extras::Dates::Format.datetime_with_time_zone(patient_result.sample_collected_at, I18n.t('date.formats.vtm_long')),
           sample_collected_date2: Extras::Dates::Format.datetime_with_time_zone(patient_result.sample_collected_at, I18n.t('date.formats.vtm_long2')),
-          requesting_site: 981,
-          performing_site: 15,
+          requesting_site: map_vtm_site_id(encounter.site.name),
+          performing_site: map_vtm_site_id(encounter.performing_site.name),
           specimen_type: specimen_type(patient_result),
           requester: 'NGHI',
           result: vtm_result(order_type) 
         }
+      end
+
+      def map_vtm_site_id(name)
+        mapping_list = {'Hanoi Lung Hospital' => 981, 'Hai Ba Trung District' => 4, 'Hoang Mai District' => 15}
+        return mapping_list[name] if name.present? && mapping_list[name].present?
+        return 981
       end
 
       def hiv_status_patient
