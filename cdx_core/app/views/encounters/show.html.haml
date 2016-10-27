@@ -18,12 +18,12 @@
 
 .row
   .col-6
-    = link_to I18n.t('encounters.show.create_notification'), new_alert_path(encounter_id: @encounter.id), class: 'btn-primary'
+    = link_to I18n.t('encounters.show.create_notification'), new_alert_path(encounter_id: @encounter.id), class: 'btn-primary addalertbut'
 
 
 - if @encounter.status == 'new'
   .row
-    .col-6
+    .col
       = button_to I18n.t('encounters.show.delete_test_order'), encounter_path(@encounter), method: :delete, class: 'btn-danger', data: { confirm: I18n.t('views.are_you_sure')}
 
 - content_for(:print_content) do

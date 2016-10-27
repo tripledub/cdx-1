@@ -250,4 +250,19 @@ $(document).ready(function(){
 
     $('.notification-recipient-fields:last').after($recipientFields);
   });
+  
+  
+  //Chrome Browser Notification
+  if ( (/chrom(e|ium)/.test(navigator.userAgent.toLowerCase())) && !(/edge/.test(navigator.userAgent.toLowerCase())) ){
+  } else {
+    var x = document.cookie;
+    
+    if( x.indexOf("shown=yes") >= 0) {
+    } else {
+      alert("CDX is currently only optimised for Chrome - Please change your browser.");
+    }
+    document.cookie = "shown=yes";
+  }
+  
+  
 });
