@@ -15,7 +15,7 @@
         %li
           %label
             = Patient.human_attribute_name(:gender)
-          = I18n.t("patients.show.#{patient.gender}")
+          = patient.gender
         %li
           %label
             = Patient.human_attribute_name(:birth_date_on)
@@ -28,11 +28,6 @@
           %label
             = Patient.human_attribute_name(:email)
           = patient.email
-      %ul
-        %li
-          %label
-            = Patient.human_attribute_name(:nickname)
-          = patient.nickname
         %li
           %label
             = Patient.human_attribute_name(:entity_id)
@@ -41,6 +36,11 @@
           %label
             = Patient.human_attribute_name(:external_id)
           = patient.external_id
+      %ul
+        %li
+          %label
+            = Patient.human_attribute_name(:nickname)
+          = patient.nickname
         %li
           %label
             = Patient.human_attribute_name(:external_patient_system)
@@ -53,8 +53,6 @@
               = I18n.t(patient_address_label)
             - if patient_address_label == "patients.show.address" then patient_address_label = "patients.show.alt_address" end
             = Patients::Presenter.show_full_address(address)
-
-      %ul
         %li
           %label
             = Patient.human_attribute_name(:social_security_code)
