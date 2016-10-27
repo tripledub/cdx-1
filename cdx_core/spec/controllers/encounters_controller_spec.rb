@@ -6,6 +6,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
   let(:site)           { Site.make institution: institution }
   let(:user)           { institution.user }
   let(:patient)        { Patient.make institution: institution }
+  let!(:episode)       { Episode.make patient: patient }
   let(:default_params) { { context: institution.uuid } }
 
   before(:each) do
@@ -91,6 +92,17 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       get :new
 
       expect(response).to redirect_to(test_orders_path)
+    end
+
+    context 'if no episodes are available' do
+      before :each do
+        episode.update_attribute(:closed_at, Date.today)
+        get :new, patient_id: patient.id
+      end
+
+      it 'should redirect to test orders' do
+        expect(response).to redirect_to(test_orders_path)
+      end
     end
   end
 

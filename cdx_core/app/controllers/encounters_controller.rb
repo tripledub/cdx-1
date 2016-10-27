@@ -1,7 +1,8 @@
 # Encounter controller
 class EncountersController < ApplicationController
-  before_filter :load_encounter, only: [:show, :edit, :update, :destroy]
-  before_filter :find_institution_and_patient, only: [:new]
+  before_action :load_encounter, only: [:show, :edit, :update, :destroy]
+  before_action :find_institution_and_patient, only: [:new]
+  before_action :patient_has_active_episodes, only: [:new]
 
   def new_index
     return unless authorize_resource(Site, CREATE_SITE_ENCOUNTER).empty?
@@ -123,5 +124,9 @@ class EncountersController < ApplicationController
   def find_institution_and_patient
     @institution = @navigation_context.institution
     redirect_to(test_orders_path, notice: I18n.t('encounters.new.no_patient')) unless @patient = Patients::Finder.find_by_institution(@institution, current_user).where(id: params[:patient_id]).first
+  end
+
+  def patient_has_active_episodes
+    redirect_to(test_orders_path, notice: I18n.t('encounters.new.no_patient')) unless @patient.active_episodes?
   end
 end
