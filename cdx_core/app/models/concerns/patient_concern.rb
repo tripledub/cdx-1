@@ -56,6 +56,10 @@ module PatientConcern
 
     after_create :modify_entity_id_after_create, if: :created_from_controller
 
+    def active_episodes?
+      episodes.where('episodes.closed_at IS NULL').count > 0
+    end
+
     def modify_entity_id_after_create
       self.entity_id = display_patient_id if self.entity_id.blank?
       self.save
