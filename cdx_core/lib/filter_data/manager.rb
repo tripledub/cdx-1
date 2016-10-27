@@ -1,7 +1,7 @@
 module FilterData
   # Perform basic operations on filters
   class Manager
-    attr_reader :params, :current_data
+    attr_reader :params, :current_data, :name
 
     def initialize(params, cookies)
       @params = params
@@ -10,8 +10,7 @@ module FilterData
     end
 
     def update
-      current_data.each_key { |key| update_field(key, @params[key]) }
-      save_cookie
+      current_data.each_key { |key| update_field(key, @params[key.to_s]) }
       set_params
     end
 
@@ -22,15 +21,11 @@ module FilterData
     end
 
     def get_cookie
-      @cookies[filter_form_name.to_s].present? ? JSON.parse(@cookies[filter_form_name]) : filter_form_data
-    end
-
-    def save_cookie
-      @cookies[filter_form_name.to_s] = { value: current_data.to_json, expires: 1.year.from_now }
+      @cookies[name].present? ? JSON.parse(@cookies[name]) : filter_form_data
     end
 
     def set_params
-      current_data.each { |key, value| @params[key] = value }
+      current_data.each { |key, value| @params[key.to_s] = value }
     end
   end
 end

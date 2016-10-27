@@ -13,15 +13,22 @@ describe FilterData::TestOrders do
   let(:cookies) { { 'test_orders' => cookie_values } }
 
   describe 'params' do
+    subject { described_class.new(params, cookies) }
+
+    before :each do
+      subject.update
+    end
+
     context 'when params are empty' do
       let(:params) { {} }
 
       context 'if there are values stored' do
         it 'should return stored values' do
-          filter_data = described_class.new(params, cookies)
-          filter_data.update
+          expect(subject.params).to eq(default_values)
+        end
 
-          expect(filter_data.params).to eq(default_values)
+        it 'should update filter values' do
+          expect(subject.current_data).to eq(default_values)
         end
       end
     end
@@ -30,10 +37,11 @@ describe FilterData::TestOrders do
       let(:params) { default_values.merge('status' => 'samples_collected', 'page_size' => '100') }
 
       it 'should return params values if present' do
-        filter_data = described_class.new(params, cookies)
-        filter_data.update
+        expect(params).to eq(subject.params)
+      end
 
-        expect(params).to eq(filter_data.params)
+      it 'should update filter values' do
+        expect(subject.current_data).to eq(params)
       end
     end
   end
