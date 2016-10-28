@@ -84,7 +84,7 @@ en:
       new: 'New'
       pending: 'Pending'
       financed: 'Financed'
-      not_financed: 'Not financed'
+      not_financed: 'Finance rejected'
       samples_collected: 'Samples collected'
       samples_received: 'Samples received'
       recieved: 'Received'
