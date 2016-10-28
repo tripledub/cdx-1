@@ -7,8 +7,8 @@ class DstLpaResultsController < PatientResultsController
   end
 
   def edit
-    @dst_lpa_result.sample_collected_at = @dst_lpa_result.sample_collected_at || Date.today
-    @dst_lpa_result.result_at           = @dst_lpa_result.result_at  || Date.today
+    @dst_lpa_result.sample_collected_at = @dst_lpa_result.sample_collected_at || Time.now
+    @dst_lpa_result.result_at           = @dst_lpa_result.result_at  || Time.now
     @dst_lpa_result.media_used          = @dst_lpa_result.media_used || params['media']
   end
 

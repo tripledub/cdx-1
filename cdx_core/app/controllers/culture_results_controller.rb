@@ -6,8 +6,8 @@ class CultureResultsController < PatientResultsController
   end
 
   def edit
-    @culture_result.sample_collected_at = @culture_result.sample_collected_at || Date.today
-    @culture_result.result_at           = @culture_result.result_at || Date.today
+    @culture_result.sample_collected_at = @culture_result.sample_collected_at || Time.now
+    @culture_result.result_at           = @culture_result.result_at || Time.now
     @culture_result.media_used          = @culture_result.media_used || @encounter.culture_format
   end
 

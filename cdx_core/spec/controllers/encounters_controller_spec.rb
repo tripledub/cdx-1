@@ -96,7 +96,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
     context 'if no episodes are available' do
       before :each do
-        episode.update_attribute(:closed_at, Date.today)
+        episode.update_attribute(:closed_at, Time.now)
         get :new, patient_id: patient.id
       end
 
