@@ -5,8 +5,6 @@
   .patientdetailsleft
     .patientimageholder
       = image_tag patient_card[:image]
-    .patientimagebutton
-      = link_to "view patient", patient_path(1)
     - if patient_card[:actions]
       .card-actions
         = patient_card[:actions]

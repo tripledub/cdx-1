@@ -393,27 +393,35 @@ text-align:center;
 color:white;
 }
 
+.patientimagebutton a{
+    color:white !important;
+    font-family: "Titillium Web", sans-serif;
+    font-weight:bold;
+    font-size:12px;
+}
+
+
 .patientdetailsright{
-float:right;
-width:100%;
-padding-left:150px;
+  float:right;
+  width:100%;
+  padding-left:150px;
 }
 
 .patientcardholder label{
-width:140px;
+  width:140px;
 }
 
 .patientcardholder{
-min-width:570px;
-margin-bottom:20px;
+  min-width:490px;
+  margin-bottom:20px;
 }
 
 .newTestOrder .col-6 {
-max-width: 40% !important;
+  max-width: 40% !important;
 }
 
 .newTestOrder .pe-2 {
-min-width:200px !important;
+  min-width:200px !important;
 }
 
 
@@ -421,7 +429,7 @@ min-width:200px !important;
   .patientcardholder{
     min-height:340px;
     position:relative !important;
-    min-width: 490px;
+    min-width: 400px;
   }
 
 .patientimageholder{
@@ -446,15 +454,26 @@ min-width:200px !important;
     line-height:15px;
 }
 
+
 }
 
 @media (max-width: 1150px) {
+  .patientcardholder{
+    min-width: 371px;
+  }
+  
+  .patientdetailsleft {
+    margin-top: -368px;
+  }
+}
+
+@media (max-width: 905px) {
   .patientcardholder{
     min-width: 412px;
   }
   
   .patientdetailsleft {
-    margin-top: -330px;
+    margin-top: -375px;
   }
 }
 

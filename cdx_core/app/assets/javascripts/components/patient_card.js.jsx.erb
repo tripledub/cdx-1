@@ -90,9 +90,16 @@ var PatientCard = React.createClass({
               </ul>
             JSX
           end
-
+          
           c.actions do
             raw <<-JSX
+            {(function(){
+              return (
+                <div className="patientimagebutton">
+                <a href={"/patients/" + patient.id} title="View Patient">VIEW PATIENT</a>
+                </div>);
+            }.bind(this))()}
+
             {(function(){
               if (!this.props.canEdit) return;
 
@@ -115,5 +122,6 @@ var PatientCard = React.createClass({
         end) %>
       );
     }
+    
   }
 });
