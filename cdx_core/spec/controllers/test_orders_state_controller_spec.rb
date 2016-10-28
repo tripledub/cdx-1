@@ -12,8 +12,6 @@ describe TestOrdersStateController do
     sign_in user
     User.current = user
     TestOrders::Status.update_and_log(test_order, 'samples_received')
-    PatientResults::StatusAuditor.create_status_log(microscopy_result, %w(new pending_approval))
-    PatientResults::StatusAuditor.create_status_log(microscopy_result, %w(pending_approval rejected))
   end
 
   describe 'index' do
@@ -34,6 +32,11 @@ describe TestOrdersStateController do
   end
 
   describe 'show' do
+    before :each do
+      PatientResults::StatusAuditor.create_status_log(microscopy_result, %w(new pending_approval))
+      PatientResults::StatusAuditor.create_status_log(microscopy_result, %w(pending_approval rejected))
+    end
+
     it 'should return a CSV file' do
       get :show, id: test_order.id, format: :csv
       csv = CSV.parse(response.body)
