@@ -1,0 +1,50 @@
+en:
+  activerecord:
+    errors:
+      models:
+        notification:
+          base:
+            sms_or_email: Bạn phải chọn một trong hai tin nhắn SMS hoặc Email làm phương pháp phân phối.
+    attributes:
+      notification:
+        institution_id: Tổ chức
+        test_order_id: Yêu cầu xét nghiệm
+        name: Tên
+        description: Mô tả
+        enabled: Bật
+        patient_identifier: Mã bện nhân
+        test_identifier: Mã xét nghiệm
+        sample_identifier: mã mẫu thử
+        detection: Nhận diện
+        detection_condition: Điều kiện nhận diện
+        device_error_code: Mã lỗi thiết bị
+        frequency: Tần suất
+        email: Email?
+        email_message: Tin nhắn Email
+        email_limit: Giới hạn Email
+        sms: SMS?
+        sms_message: Tin nhắn SMS
+        sms_limit: Giới hạn SMS
+        last_notification_at: Lần thông báo cuối cùng 
+        deleted_at: Ngày xóa
+        created_at: Ngày tạo
+        updated_at: Ngày cập nhật
+        site_ids: Sites
+        device_ids: Những thiết bị
+        user_ids: Những người nhận nội bộ
+        role_ids: Vai trò
+        recipient_ids: Người nhận đặc biệt
+        notification_statuses_names: Những trạng thái xét nghiệm
+        anomaly_type: Loại bất thường
+        utilisation_efficiency_threshold: Ngưỡng UE
+        utilisation_efficiency_last_checked_at: Lần kiểm tra UE cuối
+        utilisation_efficiency_sample_identifier: Mã mẫu thử
+
+      notification_recipient:
+        first_name: Tên
+        last_name: Họ
+        email: Địa chỉ Email
+        telephone: Số điện thoại
+        deleted_at: Ngày xóa
+        created_at: Ngày tạo
+        updated_at: Ngày cập nhật
