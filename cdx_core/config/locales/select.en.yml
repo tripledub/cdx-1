@@ -22,7 +22,6 @@ en:
         samples_collected: 'Samples collected'
         samples_received: 'Samples received'
         in_progress: 'In progress'
-        pending_approval: 'Pending approval'
         closed: 'Closed'
     test_batch:
       status_options:

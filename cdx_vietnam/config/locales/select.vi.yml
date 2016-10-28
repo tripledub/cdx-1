@@ -27,7 +27,6 @@ vi:
         samples_collected: 'Mẫu đã được thu thập'
         samples_received: 'Mẫu đã được tiếp nhận'
         in_progress: 'Đang xử lý'
-        pending_approval: 'Chờ phê duyệt'
         closed: 'Đã đóng'
     test_batch:
       status_options:
@@ -152,4 +151,3 @@ vi:
         daily: Hàng ngày
         weekly: Hàng tuần
         monthly: Hàng tháng
-        
