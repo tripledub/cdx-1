@@ -353,3 +353,136 @@ font-size: 13px;
   margin-top:-50px;
   line-height:27px;
 }
+
+
+.patientcardholder, .patientcardholder * {
+box-sizing:border-box;
+}
+
+.patientcardholder{
+border:1px solid #6D6C8B;
+min-height:340px;
+}
+
+.patientheader{
+background:#6D6C8B;
+height:35px;
+}
+
+.patientdetailsleft{
+float:left;
+width:130px;
+padding:15px;
+padding-top:0px;
+margin-top:-302px;
+}
+
+.patientimageholder{
+width:115px;
+height:115px;
+border:1px solid #CECED1;
+}
+
+.patientimagebutton{
+background:#2196F3;
+width:115px;
+border-radius:2px;
+margin-top:20px;
+padding:5px;
+text-align:center;
+color:white;
+}
+
+.patientimagebutton a{
+    color:white !important;
+    font-family: "Titillium Web", sans-serif;
+    font-weight:bold;
+    font-size:12px;
+}
+
+
+.patientdetailsright{
+  float:right;
+  width:100%;
+  padding-left:150px;
+}
+
+.patientcardholder label{
+  width:140px;
+}
+
+.patientcardholder{
+  min-width:490px;
+  margin-bottom:20px;
+}
+
+.newTestOrder .col-6 {
+  max-width: 40% !important;
+}
+
+.newTestOrder .pe-2 {
+  min-width:200px !important;
+}
+
+
+@media (max-width: 1300px) {
+  .patientcardholder{
+    min-height:340px;
+    position:relative !important;
+    min-width: 400px;
+  }
+
+.patientimageholder{
+    display:none;
+}
+
+.patientdetailsright{
+    float:none;
+    padding:0px;
+    padding-left:10px;
+    width:100%;
+}
+
+.patientdetailsleft{
+    margin-top:-330px;
+    margin-left:-4px;
+}
+
+.patientimagebutton{
+    width:100%;
+    height:25px;
+    line-height:15px;
+}
+
+
+}
+
+@media (max-width: 1150px) {
+  .patientcardholder{
+    min-width: 371px;
+  }
+  
+  .patientdetailsleft {
+    margin-top: -368px;
+  }
+}
+
+@media (max-width: 905px) {
+  .patientcardholder{
+    min-width: 412px;
+  }
+  
+  .patientdetailsleft {
+    margin-top: -375px;
+  }
+}
+
+.patientCard {
+    max-width: 100% !important;
+}
+
+.newTestOrder .col-6 {
+    flex:none !important;
+    max-width:50% !important;
+    width:50%;
+}

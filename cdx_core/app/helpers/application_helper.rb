@@ -159,6 +159,7 @@ module ApplicationHelper
   end
 
   define_component :card, sections: [:top, :actions, :bottom], attributes: [:image]
+  define_component :patient_card, sections: [:top, :actions, :bottom], attributes: [:image]
   define_component :cdx_table, sections: [:columns, :thead, :tbody, :actions], attributes: [:title]
   define_component :empty_data, sections: [:body] ,attributes: [:icon, :title]
   define_component :setting_card, sections: [:body], attributes: [:title, :href, :icon]
