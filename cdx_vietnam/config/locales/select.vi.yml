@@ -109,6 +109,13 @@ vi:
         relapsed: 'Điều trị tái phát Aft.'
         loss: 'Mất theo dõi'
         other: 'Các lần điều trị trước'
+        etbval: 'Etb Values Action'
+        failcati: 'Điều trị Cat I thất bại'
+        failcatii: 'Điều trị Cat II thất bại'
+        noncon: 'Không chuyển đổi sau 2-3 tháng điều trị Cat I hoặc Cat II'
+        relepsecat: 'Tái phát Cat I hoặc/và Cat II'
+        retreatcat: 'Điều trị sau khi mất dấu theo dõi Cat I hoặc/và Cat II'
+        tbmdr: 'Nhiễm lao hoặc nghi ngờ nhiễm lao mà có liên quan tới MDR-TB'
       treatment_outcome:
         cured: 'Chữa khỏi'
         completed: 'Hoàn thành điều trị'
@@ -140,11 +147,4 @@ vi:
         daily: Hàng ngày
         weekly: Hàng tuần
         monthly: Hàng tháng
-
-    etbval: 'Etb Values Action'
-    failcati: 'Điều trị Cat I thất bại'
-        failcatii: 'Điều trị Cat II thất bại'
-        noncon: 'Không chuyển đổi sau 2-3 tháng điều trị Cat I hoặc Cat II'
-        relepsecat: 'Tái phát Cat I hoặc/và Cat II'
-        retreatcat: 'Điều trị sau khi mất dấu theo dõi Cat I hoặc/và Cat II'
-        tbmdr: 'Nhiễm lao hoặc nghi ngờ nhiễm lao mà có liên quan tới MDR-TB'
+        
