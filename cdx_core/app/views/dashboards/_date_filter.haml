@@ -5,12 +5,12 @@
         .topdatefrom
           %label.block
             = I18n.t('dashboard.index.date_from')
-          = date_field('range','start_time[gte]', value: (params['range'].nil? ? '' : params['range']['start_time']['gte']), max: Date.today)
+          = date_field('range','start_time[gte]', value: (params['range'].empty? ? '' : params['range']['start_time']['gte']), max: Date.today)
 
         .topdateto
           %label.block
             = I18n.t('dashboard.index.date_to')
-          = date_field('range','start_time[lte]', value: (params['range'].nil? ? '' : params['range']['start_time']['lte']) )
+          = date_field('range','start_time[lte]', value: (params['range'].empty? ? '' : params['range']['start_time']['lte']) )
 
         .topdateperiod
           .filter
