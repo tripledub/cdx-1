@@ -57,11 +57,11 @@ class Encounter < ActiveRecord::Base
       [
         ['new', I18n.t('select.encounter.status_options.new')],
         ['financed', I18n.t('select.encounter.status_options.financed')],
-        ['not_financed', I18n.t('select.encounter.status_options.not_financed')],
         ['samples_collected', I18n.t('select.encounter.status_options.samples_collected')],
         ['samples_received', I18n.t('select.encounter.status_options.samples_received')],
         ['pending', I18n.t('select.encounter.status_options.pending')],
         ['in_progress', I18n.t('select.encounter.status_options.in_progress')],
+        ['not_financed', I18n.t('select.encounter.status_options.not_financed')],
         ['closed', I18n.t('select.encounter.status_options.closed')]
       ]
     end

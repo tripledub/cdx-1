@@ -67,7 +67,7 @@ class TestOrders::Finder
       return if @params['status'] == 'all'
       @filter_query = filter_query.where("encounters.status = ?", @params['status'])
     else
-      @filter_query = filter_query.where("encounters.status != 'closed'")
+      @filter_query = filter_query.where("encounters.status != 'closed' OR encounters.status != 'not_financed'")
     end
   end
 
