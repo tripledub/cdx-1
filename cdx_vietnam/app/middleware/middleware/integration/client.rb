@@ -64,7 +64,7 @@ module Integration
               patient["patient_#{system}_id"] = patient_temp.vtm_patient_id
             end
           end
-          break unless (patient["patient_#{system}_id"].blank? || patient["patient_#{system}_id"] == '0') || try_count > @max_retry
+          break unless (patient["patient_#{system}_id"].blank? || patient["patient_#{system}_id"] == '0') || try_count < @max_retry
           try_count += 1
           sleep 10
           log.update_attributes({
