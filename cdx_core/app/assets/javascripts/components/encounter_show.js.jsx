@@ -90,7 +90,7 @@ var EncounterShow = React.createClass({
                   : null
                   : null
                 }
-                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.comment_label") } fieldValue={ this.props.encounter.diag_comment } />
+                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.testing_for_comment_label") } fieldValue={ this.props.encounter.diag_comment } />
                 {
                   this.props.encounter.exam_reason === 'follow' ?
                   <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.weeks_in_treatment_label") } fieldValue={ this.props.encounter.treatment_weeks } />
@@ -115,6 +115,7 @@ var EncounterShow = React.createClass({
                 </div>
                 <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.test_due_date_label") } fieldValue={ this.props.encounter.testdue_date } />
                 <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.status_label") } fieldValue={ I18n.t('components.test_order.' + this.state.testOrderStatus) } />
+                <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.comment_label") } fieldValue={ this.props.encounter.comment } />
               </div>
 
               <div className="col-6 patientCard">
