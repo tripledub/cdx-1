@@ -1,0 +1,16 @@
+.patientcardholder
+  .patientheader
+  .patientdetailsright
+    = patient_card[:top]
+  .patientdetailsleft
+    .patientimageholder
+      = image_tag patient_card[:image]
+    .patientimagebutton
+      = link_to "view patient", patient_path(1)
+    - if patient_card[:actions]
+      .card-actions
+        = patient_card[:actions]
+
+    - if patient_card[:bottom]
+      .card-detail-bottom
+        = patient_card[:bottom]
