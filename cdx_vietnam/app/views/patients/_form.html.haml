@@ -112,6 +112,15 @@
       .fieldvalue
         = f.text_field :vitimes_id, :class => 'input-large'
 
+    .fieldrow#pnationality
+      .fieldlabel
+        %div.tooltip
+          = f.label :nationality
+          %div.tooltiptext_r
+            = I18n.t('patients.form.nationality_tooltip')
+      .fieldvalue
+        = f.collection_select :nationality, Patient.nationality_options, :first, :last
+
     - unless @patient.id.nil?
       .fieldrow#p
         .fieldlabel

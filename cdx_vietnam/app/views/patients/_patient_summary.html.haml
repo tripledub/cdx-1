@@ -69,6 +69,10 @@
             - if patient_address_label == "patients.show.address" then patient_address_label = "patients.show.alt_address" end
             = Patients::Presenter.show_full_address(address)
 
+        %li
+          %label
+            = Patient.human_attribute_name(:nationality)
+          = I18n.t("select.patient.nationality_option.#{patient.nationality}")
 
         %li
           %label

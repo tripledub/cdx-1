@@ -13,6 +13,13 @@ class Patient < ActiveRecord::Base
     ]
   end
 
+  def self.nationality_options
+    [
+      ['native', I18n.t('select.patient.nationality_option.native')],
+      ['foreign', I18n.t('select.patient.nationality_option.foreign')]
+    ]
+  end
+
   def vitimes_id
     custom_fields['vitimes_id']
   end
