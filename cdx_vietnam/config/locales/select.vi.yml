@@ -138,8 +138,8 @@ vi:
         weekly: Hàng tuần
         monthly: Hàng tháng
 
- 		etbval: 'Etb Values Action'
-		failcati: 'Điều trị Cat I thất bại'
+    etbval: 'Etb Values Action'
+    failcati: 'Điều trị Cat I thất bại'
         failcatii: 'Điều trị Cat II thất bại'
         noncon: 'Không chuyển đổi sau 2-3 tháng điều trị Cat I hoặc Cat II'
         relepsecat: 'Tái phát Cat I hoặc/và Cat II'
