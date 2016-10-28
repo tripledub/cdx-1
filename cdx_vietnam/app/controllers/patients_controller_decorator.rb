@@ -27,6 +27,7 @@ class PatientsController
       :state,
       :zip_code,
       :created_from_controller,
+      :nationality,
       addresses_attributes: [:id, :address, :city, :state, :country, :zip_code]
     )
   end

@@ -35,7 +35,7 @@ module CdxVietnam
             phone_number: '23711', # Hard-coded instead of [patient.phone]
             cellphone_number: '23711', # OK, just hard-code like this
             supervisor2_cellphone: '23711', # OK, just hard-code like this
-            nationallity: 'NATIVE', # OK, just hard-code like this
+            nationality: etb_nationality, 
             registration_address1: cdp_address(patient.addresses[1].address), # line đầu tiên của Contact Address
             registration_address2: '', # OK
             registration_region: 'MIỀN BẮC', # OK hard-coded
@@ -63,6 +63,14 @@ module CdxVietnam
       end
 
       private
+
+      def etb_nationality
+        if patient.present? && patient.nationality == 'native'
+          'NATIVE'
+        else
+          'FOREIGN'
+        end
+      end
 
       def cdp_address(addresses)
         if patient.addresses[1].address.blank?

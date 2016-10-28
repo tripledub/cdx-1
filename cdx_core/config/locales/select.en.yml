@@ -6,6 +6,9 @@ en:
         male: 'Male'
         female: 'Female'
         other: 'Other'
+      nationality_option:
+        native: 'NATIVE'
+        foreign: 'FOREIGN'
     encounter:
       testing_for_options:
         tb: 'Tuberculosis'

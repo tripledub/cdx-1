@@ -6,6 +6,9 @@ vi:
         male: 'Nam'
         female: 'Nữ'
         other: 'Khác'
+      nationality_option:
+        native: 'Việt Nam'
+        foreign: 'Ngoại quốc'
     encounter:
       testing_for_options:
         tb: 'Bệnh lao'
