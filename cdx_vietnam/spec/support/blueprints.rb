@@ -14,11 +14,19 @@ Patient.blueprint do
   }
 end
 
+Address.blueprint do
+  address  { Faker::Address.street_address }
+  city     { Faker::Address.city }
+  state    { Address.regions.map(&:first).sample }
+  country  { Faker::Address.country }
+  zip_code { nil }
+end
+
 IntegrationLog.blueprint do
   patient_name Faker::Name.name
   order_id "CDP00001"
 end
 
 PatientResult.blueprint do
-  
+
 end

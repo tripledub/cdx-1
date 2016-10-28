@@ -1,7 +1,6 @@
 module TestOrders
+  # CdxVietnam extention that handles the presentation of a test order
   class Presenter
-    include Concerns::TestOrders::Presenter
-
     class << self
       alias_method :core_index_view, :index_view
 

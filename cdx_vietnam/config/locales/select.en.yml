@@ -1,5 +1,10 @@
 en:
   select:
+    address:
+      regions:
+        northern: 'Northern'
+        southern: 'Southern'
+        central: 'Central'
     episode:
       history:
         other: 'Other previous treatments'

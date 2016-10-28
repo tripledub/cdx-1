@@ -23,6 +23,6 @@
   .addressfields
     = address_form.text_field :address, :class => 'input-large'
     = address_form.text_field :city, :class => 'input-large'
-    = address_form.text_field :state, :class => 'input-large'
+    = render partial: 'addresses/region_form', locals: { address_form: address_form }
     = render partial: 'addresses/country_select_form', locals: { address_form: address_form }
     = address_form.text_field :zip_code, :class => 'input-large zipcode'
