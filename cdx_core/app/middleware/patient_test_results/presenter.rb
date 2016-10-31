@@ -2,7 +2,24 @@ module PatientTestResults
   # Presenter methods for patient test results
   class Presenter
     class << self
-      def patient_view(patient_results)
+      def patient_view(patient_results, order_by)
+        results_data = {}
+        results_data['rows'] = fetch_rows(patient_results)
+        results_data['pages'] = {
+          totalPages: patient_results.total_pages,
+          currentPage: patient_results.current_page,
+          firstPage: patient_results.first_page?,
+          lastPage: patient_results.last_page?,
+          prevPage: patient_results.prev_page,
+          nextPage: patient_results.next_page
+        }
+        results_data['order_by'] = order_by
+        results_data
+      end
+
+      protected
+
+      def fetch_rows(patient_results)
         patient_results.map do |result|
           case result.class.to_s
           when 'TestResult'
@@ -18,8 +35,6 @@ module PatientTestResults
           end
         end
       end
-
-      protected
 
       def format_test_result(test_result)
         {

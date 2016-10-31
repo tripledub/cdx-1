@@ -8,8 +8,8 @@ class PatientLogsController < ApplicationController
 
   def index
     page = params[:page] || 1
-    logs = @patient.audit_logs.includes(:user, :device).order(set_order_from_params).page(page).per(10)
-    render json: PatientLogs::Presenter.patient_view(logs)
+    logs = @patient.audit_logs.joins(:user, :device).order(set_order_from_params).page(page).per(10)
+    render json: PatientLogs::Presenter.patient_view(logs, params['order_by'])
   end
 
   def show
@@ -26,16 +26,6 @@ class PatientLogsController < ApplicationController
   end
 
   def set_order_from_params
-    order = params[:order] == 'true' ? 'asc' : 'desc'
-    case params[:field]
-    when 'user'
-      "users.first_name #{order}, users.last_name"
-    when 'device'
-      "devices.name #{order}, devices.serial_number"
-    when 'title'
-      "audit_logs.title #{order}"
-    else
-      "audit_logs.created_at #{order}"
-    end
+    default_order(params['order_by'], table: 'patients_logs_index', field_name: 'audit_logs.created_at')
   end
 end

@@ -2,28 +2,26 @@ var PatientAuditLogs = React.createClass({
   getInitialState: function() {
     return {
       patientLogs: [],
-      queryOrder: true,
+      orderBy: this.props.defaultLogsOrder,
       pagination: {},
-      activeField: 'date',
       pageNumber: 1,
-      loadingMessasge: I18n.t("components.patients.show.history.msg_loading"),
-      orderedColumns: {},
+      loadingMessage: I18n.t("components.patients.show.history.msg_loading"),
       availableColumns: [
-        { title: I18n.t("components.patients.show.history.col_title"),  fieldName: 'title' },
-        { title: I18n.t("components.patients.show.history.col_user"),   fieldName: 'user' },
-        { title: I18n.t("components.patients.show.history.col_device"), fieldName: 'device' },
-        { title: I18n.t("components.patients.show.history.col_date"),   fieldName: 'date' }
+        { title: I18n.t("components.patients.show.history.col_title"),  fieldName: 'audit_logs.title' },
+        { title: I18n.t("components.patients.show.history.col_user"),   fieldName: 'users.first_name' },
+        { title: I18n.t("components.patients.show.history.col_device"), fieldName: 'devices.name' },
+        { title: I18n.t("components.patients.show.history.col_date"),   fieldName: 'audit_logs.created_at' }
       ]
     };
   },
 
-  getData: function(field, pageNumber, e) {
-    if (e) { e.preventDefault(); }
+  getData: function(field, pageNumber, event) {
+    if (event) { event.preventDefault(); }
     this.serverRequest = $.get(this.props.patientLogsUrl + this.getParams(field, pageNumber), function (results) {
       if (results['rows'].length > 0) {
         this.setState({ pagination: results['pages'] });
         this.setState({ patientLogs: results['rows'] });
-        this.updateOrderIcon(field);
+        this.setState({ orderBy: results['order_by'] });
         $("table").resizableColumns({store: window.store});
       } else {
         this.setState({ loadingMessage: I18n.t("components.patients.show.history.msg_no_log") });
@@ -36,34 +34,20 @@ var PatientAuditLogs = React.createClass({
   },
 
   getParams: function(field, pageNumber) {
-    let queryOrder = this.state.queryOrder;
-
-    if (!pageNumber) {
-      pageNumber = this.state.pageNumber
-      queryOrder = !this.state.queryOrder;
-      this.setState({ queryOrder: queryOrder });
+    if (!field) {
+      return '';
     };
 
-    this.setState({ activeField: field });
-    this.setState({ pageNumber: pageNumber });
-    return '&field='+ field + '&order=' + queryOrder + '&page=' + pageNumber;
-  },
+    if(!pageNumber) {
+      pageNumber = this.state.pageNumber;
+    }
 
-  updateOrderIcon: function(orderedField) {
-    var that                       = this;
-    var updatedState               = {};
-    var iconValue                  = (this.state.queryOrder == true) ? '&#x25BC;' : '&#x25B2;';
-    this.state.availableColumns.forEach(
-      function(column) {
-        updatedState[column.fieldName] = ''
-      }
-    );
-    updatedState[orderedField] = iconValue;
-    this.setState({ orderedColumns: updatedState });
+    this.setState({ pageNumber: pageNumber });
+    return '&order_by='+ field + '&page=' + pageNumber;
   },
 
   componentDidMount: function() {
-    this.getData('date', this.state.pageNumber);
+    this.getData(this.state.orderBy);
   },
 
   componentWillUnmount: function() {
@@ -82,7 +66,9 @@ var PatientAuditLogs = React.createClass({
 
     this.state.availableColumns.forEach(
       function(availableColumn) {
-        rowHeaders.push(<OrderedColumnHeader key={ availableColumn.fieldName } title={ availableColumn.title } fieldName={ availableColumn.fieldName } orderEvent={ that.getData } orderIcon={ that.state.orderedColumns[availableColumn.fieldName] } />);
+        rowHeaders.push(
+          <OrderedColumnHeader key={ availableColumn.fieldName } title={ availableColumn.title } fieldName={ availableColumn.fieldName } orderEvent={ that.getData } orderBy={ that.state.orderBy } />
+        );
       }
     );
     return (

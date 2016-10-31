@@ -22,7 +22,7 @@ class TestOrdersController < TestsController
   def execute_encounter_query
     test_orders = TestOrders::Finder.new(@navigation_context, params)
     @total = test_orders.filter_query.count
-    order_by, offset = perform_pagination('encounters.testdue_date')
+    order_by, offset = perform_pagination(table: 'test_orders_index', field_name: 'encounters.testdue_date')
     order_by += ', users.last_name' if order_by.include?('users.first_name')
     @tests = test_orders.filter_query.order(order_by).limit(@page_size).offset(offset)
   end

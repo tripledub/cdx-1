@@ -4,7 +4,24 @@ module TestOrders
     class << self
       include PatientsHelper
 
-      def index_view(encounters)
+      def index_view(encounters, order_by)
+        encounters_data = {}
+        encounters_data['rows'] = fetch_rows(encounters)
+        encounters_data['pages'] = {
+          totalPages: encounters.total_pages,
+          currentPage: encounters.current_page,
+          firstPage: encounters.first_page?,
+          lastPage: encounters.last_page?,
+          prevPage: encounters.prev_page,
+          nextPage: encounters.next_page
+        }
+        encounters_data['order_by'] = order_by
+        encounters_data
+      end
+
+      protected
+
+      def fetch_rows(encounters)
         encounters.map do |encounter|
           {
             id:                 encounter.uuid,
@@ -21,8 +38,6 @@ module TestOrders
           }
         end
       end
-
-      protected
 
       def site_name(site)
         return '' unless site

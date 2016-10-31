@@ -20,16 +20,20 @@ var PatientHistory = React.createClass({
     return(
       <div>
         <PatientTabs
-          currentTab={this.state.currentTab}
-          tabList={this.state.tabList}
-          changeTab={this.changeTab}
+          currentTab={ this.state.currentTab }
+          tabList={ this.state.tabList }
+          changeTab={ this.changeTab }
           />
         <PatientHistoryContent
-          currentTab={this.state.currentTab}
-          commentsUrl={this.props.commentsUrl}
-          testOrdersUrl={this.props.testOrdersUrl}
-          patientLogsUrl={this.props.patientLogsUrl}
-          testResultsUrl={this.props.testResultsUrl}
+          currentTab={ this.state.currentTab }
+          commentsUrl={ this.props.commentsUrl }
+          defaultCommentsOrder={ this.props.defaultCommentsOrder }
+          testOrdersUrl={ this.props.testOrdersUrl }
+          defaultOrdersOrder={ this.props.defaultOrdersOrder }
+          patientLogsUrl={ this.props.patientLogsUrl }
+          defaultLogsOrder={ this.props.defaultLogsOrder }
+          testResultsUrl={ this.props.testResultsUrl }
+          defaultResultsOrder={ this.props.defaultResultsOrder }
           />
       </div>
     );

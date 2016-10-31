@@ -17,7 +17,7 @@ class SitesController < ApplicationController
     respond_to do |format|
       format.html do
         @total           = @sites.count
-        order_by, offset = perform_pagination('sites.name')
+        order_by, offset = perform_pagination(table: 'sites_index', field_name: 'sites.name')
         @sites           = @sites.order(order_by).limit(@page_size).offset(offset)
         render layout: false if request.xhr?
       end

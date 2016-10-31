@@ -17,7 +17,7 @@ class DeviceModelsController < ApplicationController
 
     @total = @device_models.count
 
-    order_by, offset = perform_pagination('device_models.name')
+    order_by, offset = perform_pagination(table: 'devices_models_index', field_name: 'device_models.name')
     @device_models   = @device_models.order(order_by).limit(@page_size).offset(offset)
   end
 

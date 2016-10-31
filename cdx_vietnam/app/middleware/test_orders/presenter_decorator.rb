@@ -2,10 +2,10 @@ module TestOrders
   # CdxVietnam extention that handles the presentation of a test order
   class Presenter
     class << self
-      alias_method :core_index_view, :index_view
+      alias_method :core_fetch_rows, :fetch_rows
 
-      def index_view(encounters)
-        core_index_view(encounters).each do |encounter|
+      def fetch_rows(encounters)
+        core_fetch_rows(encounters).each do |encounter|
           encounter.delete(:dueDate)
         end
       end

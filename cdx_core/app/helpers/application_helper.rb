@@ -143,6 +143,23 @@ module ApplicationHelper
     end
   end
 
+  def default_order(new_order, default_order)
+    order_values = cookies['table_order'].present? ? JSON.parse(cookies['table_order']) : {}
+    if new_order.present?
+      order_values[default_order[:table]] = new_order
+    elsif !order_values[default_order[:table]]
+      order_values[default_order[:table]] = default_order[:field_name]
+    end
+    params['order_by'] = order_values[default_order[:table]]
+    cookies['table_order'] = { value: order_values.to_json, expires: 1.year.from_now }
+
+    if (params['order_by'][0] == '-')
+      "#{params['order_by'][1..-1]} DESC"
+    else
+      params['order_by']
+    end
+  end
+
   def set_filter_from_params(filter_model)
     filter_data = filter_model.new(params, cookies)
     filter_data.update

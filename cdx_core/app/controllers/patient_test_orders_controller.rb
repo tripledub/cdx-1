@@ -7,10 +7,13 @@ class PatientTestOrdersController < ApplicationController
   before_action :find_encounter, only: [:update]
 
   def index
-    render json: TestOrders::Presenter.index_view(@patient.encounters
-      .includes(:institution, :patient, :site, :user)
-      .joins('LEFT OUTER JOIN sites as performing_sites ON performing_sites.id=encounters.performing_site_id')
-      .order(set_order_from_params).limit(30).offset(params[:page].to_i || 0))
+    page = params[:page] || 1
+    render json: TestOrders::Presenter.index_view(
+      @patient.encounters.joins(:institution, :patient, :site, :user)
+        .joins('LEFT OUTER JOIN sites as performing_sites ON performing_sites.id=encounters.performing_site_id')
+        .order(set_order_from_params).page(page).per(10),
+      params['order_by']
+    )
   end
 
   def update
@@ -33,22 +36,6 @@ class PatientTestOrdersController < ApplicationController
   end
 
   def set_order_from_params
-    order = params[:order] == 'true' ? 'asc' : 'desc'
-    case params[:field].to_s
-    when 'requestedSiteName'
-      "sites.name #{order}"
-    when 'batchId'
-      "encounters.batch_id #{order}"
-    when 'requester'
-      "users.first_name #{order}, users.last_name"
-    when 'dueDate'
-      "encounters.testdue_date #{order}"
-    when 'status'
-      "encounters.status #{order}"
-    when 'performingSite'
-      "performing_sites.name #{order}"
-    else
-      "encounters.start_time #{order}"
-    end
+    default_order(params['order_by'], table: 'patients_test_orders_index', field_name: 'encounters.start_time')
   end
 end

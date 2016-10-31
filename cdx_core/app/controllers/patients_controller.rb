@@ -21,7 +21,7 @@ class PatientsController < ApplicationController
   def index
     patients          = Patients::Finder.new(current_user, @navigation_context, params).filter_query
     @total            = patients.count
-    order_by, offset  = perform_pagination('patients.name')
+    order_by, offset  = perform_pagination(table: 'patients_index', field_name: 'patients.name')
     @patients         = patients.order(order_by).limit(@page_size).offset(offset)
   end
 
