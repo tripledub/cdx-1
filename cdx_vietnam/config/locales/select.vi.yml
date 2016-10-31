@@ -3,9 +3,9 @@ vi:
     default: Vui lòng chọn
     address:
       regions:
-        northern: 'Northern'
-        southern: 'Southern'
-        central: 'Central'
+        northern: 'Phía bắc'
+        southern: 'Phía nam'
+        central: 'Trung tâm'
     patient:
       gender_options:
         male: 'Nam'
