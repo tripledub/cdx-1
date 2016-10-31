@@ -78,7 +78,7 @@ describe Patient do
     end
 
     it 'should return false if patient has no episodes or they are closed' do
-      episode.update_attribute(:closed_at, Date.today)
+      episode.update_attribute(:closed_at, Time.now)
       expect(patient.active_episodes?).to be false
     end
   end

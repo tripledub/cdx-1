@@ -6,8 +6,8 @@ class XpertResultsController < PatientResultsController
   end
 
   def edit
-    @xpert_result.sample_collected_at = @xpert_result.sample_collected_at || Date.today
-    @xpert_result.result_at           = @xpert_result.result_at || Date.today
+    @xpert_result.sample_collected_at = @xpert_result.sample_collected_at || Time.now
+    @xpert_result.result_at           = @xpert_result.result_at || Time.now
   end
 
   def update
