@@ -7,6 +7,7 @@ class InstantNotificationJob
 
     begin
       notice.create_recipients
+      Rails.info.logger "Changes: #{notice.data}"
       notice.deliver_to_all_recipients
       notice.complete!
     rescue => e
