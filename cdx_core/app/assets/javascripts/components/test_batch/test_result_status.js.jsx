@@ -40,22 +40,17 @@ class TestResultStatus extends React.Component {
         }
       }
     }
-
-  }
-
-  updateResultStatus(status, comment) {
-    this.props.updateResultStatus(status);
   }
 
   render() {
     return(
       <div>
         { this.props.currentStatus === 'sample_collected' ?
-          <TestResultActions actionInfo={ this.state.actionInfo['sampleReceived'] } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
+          <TestResultActions actionInfo={ this.state.actionInfo['sampleReceived'] } updateResultStatus={ this.props.updateResultStatus } /> : null }
         { this.props.currentStatus === 'allocated' ?
           <AddPatientResultAction actionInfo={ this.state.actionInfo['sampleApproved'] } /> : null }
         { this.props.currentStatus === 'in_progress' ?
-          <TestResultActions actionInfo={ this.state.actionInfo['inProgress'] } updateResultStatus={ this.updateResultStatus.bind(this) } /> : null }
+          <TestResultActions actionInfo={ this.state.actionInfo['inProgress'] } updateResultStatus={ this.props.updateResultStatus } /> : null }
         { (this.props.currentStatus === 'pending_approval') ?
           <a className="btn" href={ this.props.showResultUrl }>{ I18n.t('components.test_result_status.show_test_result') }</a> : null }
         { this.props.currentStatus === 'rejected' ?

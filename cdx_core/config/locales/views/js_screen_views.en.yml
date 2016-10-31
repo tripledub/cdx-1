@@ -191,6 +191,7 @@ en:
       culture_format_label: "Culture format:"
       comment_label: "Comment:"
       weeks_in_treatment_label: "Weeks in treatment:"
+      testing_for_comment_label: 'Testing for comment:'
       samples_id_label: "Samples Id:"
       sample_type_label: "Sample type:"
       test_due_date_label: "Collection date:"
