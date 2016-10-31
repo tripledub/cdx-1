@@ -30,6 +30,8 @@ $(document).on("ready", function(){
 
 
 $(document).ready(function(){
+  
+  $('.datetimepicker').datetimepicker();
 
   $('.select2').each(function() {
     var $select = $(this);
@@ -264,5 +266,5 @@ $(document).ready(function(){
     document.cookie = "shown=yes";
   }
   
-  
+    
 });

@@ -43,6 +43,7 @@
 //= require select2_locale_vi
 //= require moment.min
 //= require jquery-ui.min
+//= require jquery-ui-timepicker-addon
 //= require jquery.comiseo.daterangepicker.min
 //= require jquery.bettertabs.min
 //= require plugins/mousetrap
