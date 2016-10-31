@@ -13,6 +13,7 @@ module BarcodeHelper
     barcode = Barby::Code93.new(code)
     file = Tempfile.new(['barcode', '.png'])
     outputter = Barby::PngOutputter.new(barcode)
+    outputter.height = 35
     outputter.xdim = 2
     file.write outputter.to_png
     file.rewind
