@@ -1,4 +1,5 @@
 module Reports
+  # Generates a bar graphic with all test results grouped for a period of time.
   class AllTests < Base
     def self.by_name(*args)
       new(*args).by_name
@@ -20,12 +21,18 @@ module Reports
       manual_results    = get_manual_results_query(automatic_results.filter).group('date(patient_results.created_at)').count
       results           = merge_results(automatic_results, manual_results)
 
-      sorted_data = (results.number_of_months > 1) ? results.sort_by_month.data : results.sort_by_day.data
+      sorted_data = results.number_of_months > 1 ? results.sort_by_month.data : results.sort_by_day.data
 
       {
         title:   '',
         titleY:  I18n.t('all_tests.number_tests'),
         titleY2: I18n.t('all_tests.number_errors'),
+        axisX: {
+          valueFormatString: 'DD-MM-YY',
+          labelAngle: -50,
+          labelFontFamily: 'Verdana',
+          labelFontSize: 12
+        },
         columns: generate_columns(sorted_data)
       }
     end
