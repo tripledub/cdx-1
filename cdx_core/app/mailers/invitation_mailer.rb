@@ -5,6 +5,6 @@ class InvitationMailer < ApplicationMailer
     @token = token
     @message = message
 
-    mail(to: @user.email, subject: I18n.t('invitation_mailer.subject'))
+    mail(to: @user.email, subject: I18n.t('invitation_mailer.invite_message.subject'))
   end
 end
