@@ -66,7 +66,7 @@ module Integration
           end
           break unless (patient["patient_#{system}_id"].blank? || patient["patient_#{system}_id"] == '0') || try_count < @max_retry
           try_count += 1
-          sleep 10
+          sleep 35
           log.update_attributes({
             try_n_times: try_count, 
             error_message: "microscopy not have #{system}_patient_id",
@@ -227,7 +227,7 @@ module Integration
       return false if !log
       
       order_id = log.json["patient"]["test_order"]["cdp_order_id"]
-      system = log.json["patient"]['target_system']
+      system = log.system
       
       order = PatientResult.where(id: order_id, is_sync: false).first
       
@@ -235,12 +235,7 @@ module Integration
       
       json = "CdxVietnam::Presenters::#{system.camelize}".constantize.create_patient(order)
       
-      if log.fail_step == 'patient'
-        integration(json, log)
-      else
-        json = JSON.parse(json)
-        create_test_order(json["patient"]["test_order"], log.system, log)
-      end
+      integration(json, log)
     end
   end
 end
