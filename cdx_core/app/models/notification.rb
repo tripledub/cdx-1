@@ -91,7 +91,7 @@ class Notification < ActiveRecord::Base
   end
 
   def on_test_order
-    !(test_identifier.blank? && sample_identifier.blank?)
+    !test_identifier.blank?
   end
 
   def detection?
@@ -159,10 +159,12 @@ class Notification < ActiveRecord::Base
 
     # TODO: Change this drastically to use ui search lookup.
     def test_lookup
-      return unless test_identifier_changed?
+      return if test_identifier.blank?
+      return if (matches = test_identifier.match(/(\d+\b)/)).blank?
+
       encounters = patient ? patient.encounters : Encounter
       self.encounter = encounters.where(is_phantom: false, institution_id: institution_id)
-                                 .find_by(id: test_identifier)
+                                 .find_by(id: matches[0].to_i)
     end
 
     # The Lookup for notifications queries on NULL, not on an empty string.

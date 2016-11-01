@@ -20,6 +20,12 @@ describe Notification do
     end
   end
 
+  context 'when #patient_identifier is set with `patient#display_patient_id`' do
+    before { notification.patient_identifier = patient.display_patient_id }
+
+    it { expect(notification.on_patient).to be(true) }
+  end
+
   describe '#on_test_order' do
     context 'when #test_identifier is not set' do
       before { notification.test_identifier = nil }
@@ -27,7 +33,13 @@ describe Notification do
       it { expect(notification.on_test_order).to be(false) }
     end
 
-    context 'when #test_identifier is set' do
+    context 'when #test_identifier is set with `encounter#batch_id`' do
+      before { notification.test_identifier = encounter.batch_id }
+
+      it { expect(notification.on_test_order).to be(true) }
+    end
+
+    context 'when #test_identifier is set with `#id`' do
       before { notification.test_identifier = encounter.id }
 
       it { expect(notification.on_test_order).to be(true) }
@@ -37,12 +49,6 @@ describe Notification do
       before { notification.sample_identifier = nil }
 
       it { expect(notification.on_test_order).to be(false) }
-    end
-
-    context 'when #sample_identifier is set' do
-      before { notification.sample_identifier = encounter.id }
-
-      it { expect(notification.on_test_order).to be(true) }
     end
   end
 
