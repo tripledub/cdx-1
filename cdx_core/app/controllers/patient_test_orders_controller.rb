@@ -8,7 +8,7 @@ class PatientTestOrdersController < ApplicationController
 
   def index
     page = params[:page] || 1
-    render json: TestOrders::Presenter.index_view(
+    render json: TestOrders::Presenter.patient_view(
       @patient.encounters.joins(:institution, :patient, :site, :user)
         .joins('LEFT OUTER JOIN sites as performing_sites ON performing_sites.id=encounters.performing_site_id')
         .order(set_order_from_params).page(page).per(10),

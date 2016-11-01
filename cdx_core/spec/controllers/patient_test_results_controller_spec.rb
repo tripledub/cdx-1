@@ -33,10 +33,10 @@ describe PatientTestResultsController do
         XpertResult.make encounter: encounter
       end
 
-      it 'should return a json with test results' do
+      it 'should return a json with test results, order and pagination info' do
         get 'index', patient_id: patient.id
 
-        expect(JSON.parse(response.body).size).to eq(11)
+        expect(JSON.parse(response.body).size).to eq(3)
       end
     end
   end

@@ -30,14 +30,20 @@ describe TestOrders::Presenter do
     encounter.reload
   end
 
+  describe 'index_view' do
+    it 'should return an array of formated comments' do
+      expect(described_class.index_view(patient.encounters).size).to eq(7)
+    end
+  end
+
   describe 'patient_view' do
     it 'should return an array of formated comments' do
-      expect(described_class.index_view(Encounter.all).size).to eq(7)
+      expect(described_class.patient_view(patient.encounters.page, '')['rows'].size).to eq(7)
     end
 
     it 'should return elements formated' do
       requested_tests
-      expect(described_class.index_view(Encounter.all).first).to eq({
+      expect(described_class.patient_view(patient.encounters.page, '')['rows'].first).to eq({
         id:                 Encounter.first.uuid,
         requestedSiteName:  site.name,
         performingSiteName: performing_site.name,
@@ -50,6 +56,17 @@ describe TestOrders::Presenter do
         status:             'Samples received: Microscopy (Pending) - Culture (New) - Xpert (Allocated) - Dst/Lpa (Rejected)',
         viewLink:           Rails.application.routes.url_helpers.encounter_path(Encounter.first)
       })
+    end
+
+    it 'includes pagination data' do
+      expect(described_class.patient_view(patient.encounters.page, '')['pages']).to eq(
+        currentPage: 1,
+        firstPage: true,
+        lastPage: true,
+        nextPage: nil,
+        prevPage: nil,
+        totalPages: 1
+      )
     end
   end
 end

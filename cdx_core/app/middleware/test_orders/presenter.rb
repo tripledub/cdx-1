@@ -4,7 +4,11 @@ module TestOrders
     class << self
       include PatientsHelper
 
-      def index_view(encounters, order_by)
+      def index_view(encounters)
+        fetch_rows(encounters)
+      end
+
+      def patient_view(encounters, order_by)
         encounters_data = {}
         encounters_data['rows'] = fetch_rows(encounters)
         encounters_data['pages'] = {
