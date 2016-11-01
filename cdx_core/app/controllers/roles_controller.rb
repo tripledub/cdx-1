@@ -9,7 +9,7 @@ class RolesController < ApplicationController
     @roles = @roles.where("name LIKE ?", "%#{params[:name]}%") if params[:name].present?
     @total = @roles.count
 
-    order_by, offset = perform_pagination('roles.name')
+    order_by, offset = perform_pagination(table: 'roles_index', field_name: 'roles.name')
     order_by = 'sites.name, institutions.name' if (@order_by == 'sites.name' )
     order_by = 'sites.name desc, institutions.name desc' if (@order_by == '-sites.name' )
     @roles   = @roles.order(order_by).limit(@page_size).offset(offset)

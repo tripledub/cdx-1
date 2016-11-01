@@ -28,7 +28,7 @@ class UsersController < ApplicationController
       format.html do
         @total = @users.count
 
-        order_by, offset = perform_pagination('users.first_name')
+        order_by, offset = perform_pagination(table: 'users_index', field_name: 'users.first_name')
         order_by         = order_by + ', users.last_name' if order_by.include?('users.first_name')
         @users = @users.order(order_by).limit(@page_size).offset(offset)
       end

@@ -56,7 +56,7 @@ var TestOrdersIndexTable = React.createClass({
 
   render: function() {
     var sortableHeader = function (title, field) {
-      return <SortableColumnHeader title={title} field={field} orderBy={this.props.orderBy} />
+      return <SortableColumnHeader title={ title } field={ field } orderBy={ this.props.orderBy } />
     }.bind(this);
 
     return (

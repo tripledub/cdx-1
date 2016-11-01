@@ -22,7 +22,7 @@ class ApprovalsController < TestsController
     @approvals = TestOrders::Finder.new(@navigation_context, params)
 
     @total = @approvals.filter_query.count
-    order_by, offset = perform_pagination('encounters.start_time')
+    order_by, offset = perform_pagination(table: 'approvals_index', field_name: 'encounters.start_time')
 
     @approvals = @approvals.filter_query.order(order_by)
                            .offset(offset)

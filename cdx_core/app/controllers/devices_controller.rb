@@ -17,7 +17,7 @@ class DevicesController < ApplicationController
     @devices = @devices.where(device_model: params[:device_model].to_i) if params[:device_model].present?
 
     @total           = @devices.count
-    order_by, offset = perform_pagination('devices.name')
+    order_by, offset = perform_pagination(table: 'devices_index', field_name: 'devices.name')
     @devices         = @devices.order(order_by).limit(@page_size).offset(offset)
 
     @can_create      = has_access?(Institution, REGISTER_INSTITUTION_DEVICE)

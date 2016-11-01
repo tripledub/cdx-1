@@ -1,7 +1,8 @@
 module Comments
+  # Presenter for comments index table
   class Presenter
     class << self
-      def patient_view(comments)
+      def patient_view(comments, order_by)
         comment_data = {}
         comment_data['rows'] = fetch_rows(comments)
         comment_data['pages'] = {
@@ -12,6 +13,7 @@ module Comments
           prevPage: comments.prev_page,
           nextPage: comments.next_page
         }
+        comment_data['order_by'] = order_by
         comment_data
       end
 

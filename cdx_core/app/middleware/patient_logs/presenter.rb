@@ -2,7 +2,7 @@ module PatientLogs
   # PatientLogs Presenter
   class Presenter
     class << self
-      def patient_view(patient_logs)
+      def patient_view(patient_logs, order_by)
         log_data = {}
         log_data['rows'] = get_patient_info(patient_logs)
         log_data['pages'] = {
@@ -13,6 +13,7 @@ module PatientLogs
           prevPage: patient_logs.prev_page,
           nextPage: patient_logs.next_page
         }
+        log_data['order_by'] = order_by
         log_data
       end
 

@@ -13,11 +13,11 @@ describe PatientLogs::Presenter do
     end
 
     it 'should return an array of formated comments' do
-      expect(described_class.patient_view(@logs)['rows'].size).to eq(7)
+      expect(described_class.patient_view(@logs, '')['rows'].size).to eq(7)
     end
 
     it 'should return elements formated' do
-      expect(described_class.patient_view(@logs)['rows'].first).to eq({
+      expect(described_class.patient_view(@logs, '')['rows'].first).to eq({
         id:       patient.audit_logs.first.uuid,
         date:     I18n.l(patient.audit_logs.first.created_at, format: :short),
         user:     patient.audit_logs.first.user.full_name,
@@ -28,7 +28,7 @@ describe PatientLogs::Presenter do
     end
 
     it 'includes pagination data' do
-      expect(described_class.patient_view(@logs)['pages']).to eq(
+      expect(described_class.patient_view(@logs, '')['pages']).to eq(
         currentPage: 1,
         firstPage: true,
         lastPage: true,

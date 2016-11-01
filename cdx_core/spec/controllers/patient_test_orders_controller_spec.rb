@@ -32,10 +32,10 @@ describe PatientTestOrdersController do
         end
       end
 
-      it 'should return a json with comments' do
+      it 'should return a json with comments, order and pagination info' do
         get 'index', patient_id: patient.id
 
-        expect(JSON.parse(response.body).size).to eq(11)
+        expect(JSON.parse(response.body).size).to eq(3)
       end
     end
 

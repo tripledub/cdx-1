@@ -65,7 +65,7 @@ class TestResultsController < TestsController
   def load_manual_test_results(results_finder, presenter)
     patient_results   = results_finder.new(params, @navigation_context)
     @total            = patient_results.filter_query.count
-    order_by, offset  = perform_pagination('patient_results.sample_collected_at desc')
+    order_by, offset  = perform_pagination(table: 'patient_results_index', field_name: '-patient_results.sample_collected_at')
     @test_results     = presenter.index_table(patient_results.filter_query.order(order_by).limit(@page_size).offset(offset))
   end
 

@@ -9,7 +9,7 @@ class NotificationsController < ApplicationController
     @can_create = has_access?(Notification, CREATE_NOTIFICATION)
 
     @total = @notifications.count
-    order_by, offset = perform_pagination('notifications.last_notification_at')
+    order_by, offset = perform_pagination(table: 'notifications_index', field_name: 'notifications.last_notification_at')
 
     @notifications = @notifications.order(order_by)
                            .offset(offset)

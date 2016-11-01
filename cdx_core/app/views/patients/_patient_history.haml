@@ -10,4 +10,13 @@
       %li
         = link_to I18n.t('patients.show.add_comment'), new_patient_comment_path(patient), class: 'button add', title: I18n.t('patients.show.add_comment')
 .panel.patient-details.patientHistory
-  = react_component 'PatientHistory', defaultTab: set_default_tab, commentsUrl: patient_comments_path(patient), patientLogsUrl: patient_patient_logs_path(patient), testOrdersUrl: patient_patient_test_orders_path(patient), testResultsUrl: patient_patient_test_results_path(patient)
+  = react_component 'PatientHistory',
+    defaultTab: set_default_tab,
+    commentsUrl: patient_comments_path(patient),
+    defaultCommentsOrder: default_order('', table: 'patients_comments_index', field_name: 'comments.created_at'),
+    patientLogsUrl: patient_patient_logs_path(patient),
+    defaultLogsOrder: default_order('', table: 'patients_logs_index', field_name: 'audit_logs.created_at'),
+    testOrdersUrl: patient_patient_test_orders_path(patient),
+    defaultOrdersOrder: default_order('', table: 'patients_test_orders_index', field_name: 'encounters.start_time'),
+    testResultsUrl: patient_patient_test_results_path(patient),
+    defaultResultsOrder: default_order('', table: 'patients_test_results_index', field_name: 'patient_results.created_at')

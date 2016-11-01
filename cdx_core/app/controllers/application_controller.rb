@@ -105,12 +105,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def after_sign_out_path_for(resource_or_scope)
+  def after_sign_out_path_for(_resource_or_scope)
     new_user_session_path
   end
 
   def nndd
-    render text: "NNDD"
+    render text: 'NNDD'
   end if Rails.env.test?
 
   protected
@@ -124,7 +124,7 @@ class ApplicationController < ActionController::Base
     @page_size = 50 if @page_size > 100
     @page      = (params['page'] || 1).to_i
     @page      = 1 if @page < 1
-    @order_by  = params['order_by'] || default_order
+    @order_by  = default_order(params['order_by'], default_order)
     order_by   =  @order_by[0] == '-' ? @order_by[1..90] + ' desc' : @order_by
     offset     = (@page - 1) * @page_size
     [order_by, offset]

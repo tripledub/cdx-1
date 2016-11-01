@@ -52,7 +52,7 @@ var ApprovalTable = React.createClass({
             <thead>
               <tr>
                 <CsvCheckboxColumnHeader columnId="approvals-table" selectedTestOrders={this.selectedTestOrders} />
-                <th data-resizable-column-id="sample-id">{I18n.t("components.test_orders.col_id")}</th>
+                {sortableHeader(I18n.t("components.test_orders.col_id"),        "encounters.id")}
                 {sortableHeader(I18n.t("components.test_orders.col_status"),        "encounters.status")}
                 {sortableHeader(I18n.t("components.test_orders.col_request_by"),    "sites.name")}
                 {sortableHeader(I18n.t("components.test_orders.col_request_to"),    "performing_sites.name")}

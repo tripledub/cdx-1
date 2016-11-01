@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
   def index
     page = params[:page] || 1
     comments = @patient.comments.joins(:user).order(set_order_from_params).page(page).per(10)
-    render json: Comments::Presenter.patient_view(comments)
+    render json: Comments::Presenter.patient_view(comments, params['order_by'])
   end
 
   def new
@@ -51,14 +51,6 @@ class CommentsController < ApplicationController
   end
 
   def set_order_from_params
-    order = params[:order] == 'true' ? 'asc' : 'desc'
-    case params[:field].to_s
-    when 'name'
-      "users.first_name #{order}, users.last_name"
-    when 'description'
-      "comments.description #{order}"
-    else
-      "comments.created_at #{order}"
-    end
+    default_order(params['order_by'], table: 'patients_comments_index', field_name: 'comments.created_at')
   end
 end
