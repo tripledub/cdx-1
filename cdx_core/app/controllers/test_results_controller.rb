@@ -8,6 +8,8 @@ class TestResultsController < TestsController
 
   before_action :clean_params
   before_action :set_filter_params, only: [:index]
+  before_action :find_test_result, only: [:show]
+  before_action :check_permission, only: [:show]
 
   def index
     @date_options = Extras::Dates::Filters.date_options_for_filter
@@ -41,23 +43,15 @@ class TestResultsController < TestsController
   end
 
   def show
-    @test_result = TestResult.find_by(uuid: params[:id])
-    return unless authorize_resource(@test_result, QUERY_TEST)
-
     @other_tests       = @test_result.sample ? @test_result.sample.test_results.where.not(id: @test_result.id) : TestResult.none
     @core_fields_scope = Cdx::Fields.test.core_field_scopes.detect{|x| x.name == 'test'}
     @samples           = @test_result.sample_identifiers.reject{|identifier| identifier.entity_id.blank?}.map {|identifier| [identifier.entity_id, Barby::Code93.new(identifier.entity_id)]}
     @show_institution  = show_institution?(Policy::Actions::QUERY_TEST, TestResult)
 
-    device_messages  = DeviceMessage.where(device_id: @test_result.device_id).joins(device: :device_model)
+    device_messages  = @test_result.device_messages.joins(device: :device_model)
     @total           = device_messages.count
-    @page_size       = (params["page_size"] || 10).to_i
-    @page_size       = 100 if @page_size > 100
-    @page            = (params["page"] || 1).to_i
-    @page            = 1 if @page < 1
-    @order_by        = params["order_by"] || "-device_messages.created_at"
-    offset           = (@page - 1) * @page_size
-    @device_messages = DeviceMessages::Presenter.index_view(device_messages.order(@order_by).limit(@page_size).offset(offset))
+    order_by, offset = perform_pagination(table: 'patient_show_result_index', field_name: '-device_messages.created_at')
+    @device_messages = DeviceMessages::Presenter.index_view(device_messages.order(order_by).limit(@page_size).offset(offset))
   end
 
   protected
@@ -111,5 +105,13 @@ class TestResultsController < TestsController
                    end
 
     set_filter_from_params("FilterData::#{filter_model}Results".constantize)
+  end
+
+  def find_test_result
+    @test_result = @navigation_context.institution.test_results.where(uuid: params[:id]).first
+  end
+
+  def check_permission
+    redirect_to(test_results_path) unless @test_result && has_access?(@test_result, QUERY_TEST)
   end
 end

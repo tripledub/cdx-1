@@ -74,7 +74,7 @@ describe TestResultsController, elasticsearch: true do
 
   describe 'filters' do
     it 'should return tests filtered by serial number' do
-      get :index, test_results_tabs_selected_tab: 'xpert', 'sample.id': '23'
+      get :index, test_results_tabs_selected_tab: 'xpert', 'sample.id' => '23'
 
       expect(assigns(:total)).to eq(2)
     end
@@ -150,7 +150,7 @@ describe TestResultsController, elasticsearch: true do
         institution: institution,
         core_fields: { "gender" => "male" },
         custom_fields: { "custom" => "patient value" },
-        plain_sensitive_data: { "name": "Doe" }
+        plain_sensitive_data: { "name" => "Doe" }
       )
     end
     let!(:encounter) do
@@ -166,7 +166,7 @@ describe TestResultsController, elasticsearch: true do
           ]
         },
         custom_fields: { "custom" => "encounter value" },
-        plain_sensitive_data: { "observations": "HIV POS" }
+        plain_sensitive_data: { "observations" => 'HIV POS' }
       )
     end
     let!(:sample) do
@@ -326,53 +326,48 @@ describe TestResultsController, elasticsearch: true do
     end
   end
 
-  describe "show single test result" do
-
-    let!(:owner) { User.make }
-    let!(:institution) { Institution.make user_id: owner.id }
-    let!(:site)  { Site.make institution: institution }
-    let!(:device) { Device.make institution_id: institution.id, site: site }
-
+  describe 'show single test result' do
+    let!(:user)              { User.make }
+    let!(:institution)       { Institution.make user_id: user.id }
+    let!(:site)              { Site.make institution: institution }
+    let!(:device)            { Device.make institution_id: institution.id, site: site }
+    let!(:other_institution) { Institution.make user_id: user.id }
+    let(:default_params)     { { context: institution.uuid } }
     let!(:test_result) do
       TestResult.create_and_index(
-        core_fields: {"assays" =>["condition" => "mtb", "result" => :positive]},
-        device_messages: [ DeviceMessage.make(device: device) ]
+        institution: institution,
+        core_fields: { 'assays' =>["condition" => "mtb", "result" => :positive] },
+        device_messages: [DeviceMessage.make(institution: institution, device: device)]
       )
     end
 
-    let!(:user) { User.make }
-    let!(:other_institution) { Institution.make user_id: user.id }
-    let!(:other_site)  { Site.make institution: other_institution }
-    let!(:other_device) { Device.make institution_id: other_institution.id, site: other_site }
-
-    before(:each) { sign_in user }
-    let(:default_params) { {context: other_institution.uuid} }
+    before :each do
+      sign_in user
+    end
 
     it "should not authorize outsider user" do
-      get :show, id: test_result.uuid
-      expect(response).to be_forbidden
+      get :show, id: test_result.uuid, context: other_institution.uuid
+
+      expect(response).to redirect_to(test_results_path(context: other_institution.uuid))
     end
 
     it "should authorize user with access to device" do
-      grant owner, user, { :test_result => device }, QUERY_TEST
-
       get :show, id: test_result.uuid
+
       expect(assigns(:test_result)).to eq(test_result)
       expect(response).to be_success
     end
 
     it "should authorize user with access to site" do
-      grant owner, user, { :test_result => site }, QUERY_TEST
-
       get :show, id: test_result.uuid
+
       expect(assigns(:test_result)).to eq(test_result)
       expect(response).to be_success
     end
 
     it "should authorize user with access to institution" do
-      grant owner, user, { :test_result => institution }, QUERY_TEST
-
       get :show, id: test_result.uuid
+
       expect(assigns(:test_result)).to eq(test_result)
       expect(response).to be_success
     end
@@ -388,16 +383,12 @@ describe TestResultsController, elasticsearch: true do
       }
 
       it "should authorize user with access to device" do
-        grant owner, user, { :test_result => device }, QUERY_TEST
-
         get :show, id: test_result.uuid
         expect(assigns(:test_result)).to eq(test_result)
         expect(response).to be_success
       end
 
       it "should authorize user with access to institution" do
-        grant owner, user, { :test_result => institution }, QUERY_TEST
-
         get :show, id: test_result.uuid
         expect(assigns(:test_result)).to eq(test_result)
         expect(response).to be_success
