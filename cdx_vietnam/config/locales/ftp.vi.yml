@@ -1,14 +1,14 @@
 vi:
   monitor:
-    listed_files_from: "Đã liệt kê danh sách các tập tin từ %{ftp_hostname}: %{files_list}"
+    listed_files_from: "Danh sách các tập tin từ %{ftp_hostname}: %{files_list}"
     no_files_to_process: "Không có tập tin nào để xử lý từ %{ftp_hostname}"
     error_downloading_file: "Lỗi khi đang tải tập tin"
     error_downloading_files_from: "Lỗi các tập tin đang tải về từ %{ftp_hostname}: %{files_list}"
     downloaded_files_from: "Các tập tin đã tải về từ %{ftp_hostname}: %{files_list}"
     unexpected_error_processing_file: "Lỗi không mong muốn khi đang xử lý tập tin"
     no_device_matched: "Không có thiết bị phù hợp"
-    multiple_devices_matched: "Nhiều thiết bị phù hợp tập tin %{remote_name}: %{devices_list}"
-    unexpected_error_matching_file: "Lỗi không mong muốn khi so khớp với tập tin"
+    multiple_devices_matched: "Nhiều thiết bị có tập tin trùng khớp %{remote_name}: %{devices_list}"
+    unexpected_error_matching_file: "Lỗi không mong muốn khi đang so tập tin"
     skipping_file: "Bỏ qua tập tin FTP %{remote_name} trên máy chủ tên %{ftp_hostname}: %{reason}"
     ftp_file_failed: "Tập tin FTP %{remote_name} trên máy chủ tên %{ftp_hostname} không thành công: %{reason}"
     ftp_file_success: "Tập tin FTP %{remote_name} trên máy chủ tên %{ftp_hostname} đã xử lý thành công"

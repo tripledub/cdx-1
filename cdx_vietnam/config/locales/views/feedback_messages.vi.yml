@@ -1,4 +1,4 @@
 vi:
   feedback_messages:
     finder:
-      translation_not_found: 'Tin nhắn phản hồi sẵn có trong ngôn ngữ của bạn'
+      translation_not_found: 'Tin nhắn phản hồi có hỗ trợ ngôn ngữ của bạn'

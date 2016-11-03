@@ -1,11 +1,11 @@
 vi:
   encounters:
     create:
-      test_order_created: 'yêu cầu xét nghiệm mới được tạo'
+      test_order_created: 'Yêu cầu xét nghiệm mới được tạo'
     new:
       existing_test: 'Tồn tại xét nghiệm cho %{patient_name}'
       new_test: 'xét nghiệm mới cho %{patient_name}'
-      no_patient: 'Mỗi cuộc gặp phải thuộc về một bệnh nhân. Xin vui lòng đến trang Bệnh nhân và nhấn vào Thêm yêu cầu xét nghiệm'
+      no_patient: 'Mỗi yêu cầu xét nghiệm phải thuộc về một bệnh nhân. Xin vui lòng đến trang Bệnh nhân và nhấn vào Thêm yêu cầu xét nghiệm'
       no_site: Bạn không thể chạy xét nghiệm mà không cần bất kỳ  sites nào.
     show:
       test_order: 'Yêu cầu xét nghiệm'

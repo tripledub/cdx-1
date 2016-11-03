@@ -17,7 +17,7 @@ vi:
     destroy:
       success: 'Vai trò đã được xóa thành công.'
     form:
-      sites: 'Trang'
+      sites: 'Cơ sở'
       institution: 'Tổ chức'
       role_details: 'Thông tin chi tiết vai trò'
       role_name: 'Tên vai trò'

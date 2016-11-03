@@ -1,11 +1,11 @@
 vi:
-  episode: 'Tập'
+  episode: 'Lần khám'
   episode_type:
-    tb: TB
+    tb: Lao
     ebola: Ebola
     hiv: HIV
   diagnosis:
-    presumptive_tb: Cơ sở lao phổi
+    presumptive_tb: Nghi ngờ lao phổi
     bacteriologically_confirmed: Có xác nhận về vi trùng
     clinically_diagnosed: Chẩn đoán lâm sàng
     pulmonary_tb: Bệnh lao phổi (PTB)

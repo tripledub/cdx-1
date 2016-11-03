@@ -8,7 +8,7 @@ vi:
       created_ok: 'Nhận xét đã được tạo thành công'
       comment_ok: 'Nhận xét đã được thêm vào'
     permissions:
-      deny: "Bạn không thể thêm Nhận xét cho bệnh nhân này"
+      deny: "Bạn không thể thêm nhận xét cho bệnh nhân này"
     new:
       new_comment: 'Nhận xét mới'
       comment_detail: 'Chi tiết Nhận xét'

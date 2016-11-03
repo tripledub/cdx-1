@@ -25,7 +25,7 @@ vi:
         cancel: 'Hủy bỏ'
         authorize: 'Cho phép'
       form:
-        error: 'Rất tiếc! Kiểm tra biểu mẫu của bạn về các lỗi xảy ra'
+        error: 'Rất tiếc! Kiểm tra các thông tin lỗi được thông báo'
       help:
         redirect_uri: 'Sử dụng một dòng cho một URI'
         native_redirect_uri: 'Sử dụng %{native_redirect_uri} cho những xét nghiệm nội bộ'

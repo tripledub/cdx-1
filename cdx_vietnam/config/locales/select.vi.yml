@@ -3,9 +3,9 @@ vi:
     default: Vui lòng chọn
     address:
       regions:
-        northern: 'Phía bắc'
-        southern: 'Phía nam'
-        central: 'Trung tâm'
+        northern: 'Miền Bắc'
+        southern: 'Miền Nam'
+        central: 'Miền Trung'
     patient:
       gender_options:
         male: 'Nam'
@@ -21,20 +21,20 @@ vi:
         ebola: 'Ebola'
       status_options:
         new: 'Tạo mới'
-        pending: 'Chưa tiến hành'
-        financed: 'Được tài trợ'
+        pending: 'Đang chờ xử lý'
+        financed: 'Đã đóng tiền'
         not_financed: 'Không được tài trợ'
         samples_collected: 'Mẫu đã được thu thập'
         samples_received: 'Mẫu đã được tiếp nhận'
         in_progress: 'Đang xử lý'
-        closed: 'Đã đóng'
+        closed: 'Kết thúc'
     test_batch:
       status_options:
         new: 'Tạo mới'
-        samples_collected: 'Mẫu thử đã được thu gom'
-        samples_received: 'Mẫu thử đã được nhận'
+        samples_collected: 'Mẫu thử đã được thu thập'
+        samples_received: 'Mẫu thử đã được tiếp nhận'
         in_progress: 'Đang xử lý'
-        closed: 'Đã đóng'
+        closed: 'Kết thúc'
     patient_result:
       status_options:
         new: 'Tạo mới'
@@ -52,9 +52,9 @@ vi:
       test_result_options:
         negative: 'Âm tính'
         1to9: 'Kết quả 1-9/100 HPF'
-        1plus: 'Kết quả +'
-        2plus: 'Kết quả ++'
-        3plus: 'Kết quả +++'
+        1plus: 'Kết quả 1+'
+        2plus: 'Kết quả 2+'
+        3plus: 'Kết quả 3+'
     culture:
       media_options:
         liquid: 'Lỏng'
@@ -70,7 +70,7 @@ vi:
         contaminated: 'Nhiễm xạ'
         not_done: 'Không hoàn tất'
         not_selected_long: 'Vui lòng chọn'
-        resistant_long: 'Đề kháng'
+        resistant_long: 'Kháng'
         susceptible_long: 'Nhạy cảm'
         contaminated_long: 'Nhiễm xạ'
         not_done_long: 'Không thực hiện'
@@ -109,41 +109,41 @@ vi:
       history:
         new: 'Bệnh nhân mới'
         previous: 'Lần điều trị trước'
-        unknown: 'Không rõ lần trước'
+        unknown: 'Không rõ lần điều trị trước'
         relapsed: 'Điều trị tái phát Aft.'
-        loss: 'Mất theo dõi'
+        loss: 'Không tiếp tục điều trị'
         other: 'Các lần điều trị trước'
-        etbval: 'Etb Values Action'
-        failcati: 'Điều trị Cat I thất bại'
-        failcatii: 'Điều trị Cat II thất bại'
-        noncon: 'Không chuyển đổi sau 2-3 tháng điều trị Cat I hoặc Cat II'
+        etbval: 'Kết quả điều trị'
+        failcati: 'Điều trị phác đồ I thất bại'
+        failcatii: 'Điều trị phác đồ II thất bại'
+        noncon: 'Không tiến triển sau 2-3 tháng điều trị phác đồ I hoặc II'
         relepsecat: 'Tái phát Cat I hoặc/và Cat II'
-        retreatcat: 'Điều trị sau khi mất dấu theo dõi Cat I hoặc/và Cat II'
-        tbmdr: 'Nhiễm lao hoặc nghi ngờ nhiễm lao mà có liên quan tới MDR-TB'
+        retreatcat: 'Điều trị lại sau khi bỏ điều trị phác đồ I hoặc/và II'
+        tbmdr: 'Nhiễm lao hoặc nghi ngờ nhiễm lao khi có tiếp xúc với bệnh nhân Lao đa kháng'
       treatment_outcome:
-        cured: 'Chữa khỏi'
-        completed: 'Hoàn thành điều trị'
+        cured: 'Đã chữa khỏi'
+        completed: 'Hoàn tất điều trị'
         failed: 'Điều trị thất bại'
         died: 'Chết'
-        lost_to_follow_up: 'Mất theo dõi'
+        lost_to_follow_up: 'Bỏ điều trị'
         not_evaluated: 'Không đánh giá'
         success: 'Điều trị thành công'
-        in_error: 'Tập đã được nêu trong lỗi'
+        in_error: 'Lần khám đã được báo lỗi'
         other: 'Khác'
       drug_resistance:
-        mono: 'Monoresistance without Rif Same so no action'
-        poly: 'Polydrug resistance without Rif Same so no action'
-        multi: 'Multidrug resistance Same so no action'
-        extensive: 'Extensive drug resistance add to CDP dropdown'
-        rif: 'Rifampicin resistance Same so no action'
-        prexdr: 'Pre XDR add to CDP dropdown'
+        mono: 'Kháng đơn thuốc không phải Rif'
+        poly: 'Kháng nhiều thuốc không phải Rif'
+        multi: 'Kháng đa thuốc'
+        extensive: 'Siêu kháng thuốc'
+        rif: 'Kháng Rif'
+        prexdr: 'Tiền siêu kháng thuốc'
         unknown: 'Không xác định'
     notification:
       anomaly_type:
-        missing_sample_id: Mã mẫu thiếu
+        missing_sample_id: Thiếu mã mẫu
         invalid_test_date: Ngày xét nghiệm không hợp lệ
       frequency:
-        instant: lập tức
+        instant: Nhanh
         aggregate: Tổng hợp
         targeted: Chỉ tiêu
       frequency_value:

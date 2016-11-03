@@ -1,4 +1,4 @@
 vi:
   models:
     test_result:
-      match: "phải phù hợp với mẫu thử của bệnh nhân"
+      match: "phải trùng khớp với bệnh nhân của mẫu xét nghiệm"

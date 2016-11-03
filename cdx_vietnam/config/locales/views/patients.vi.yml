@@ -1,8 +1,8 @@
 vi:
   patients:
     show:
-      episode_empty_header: 'Không có lịch sử y tế'
-      episode_empty_text1: 'Tạo một %{href} để bắt đầu lịch sử y tế.'
+      episode_empty_header: 'Không có lịch sử điều trị'
+      episode_empty_text1: 'Tạo một %{href} để bắt đầu lịch sử điều trị.'
       episode_empty_text2: 'Bạn không thể tạo yêu cầu xét nghiệm cho đến khi một %{href} được thêm.'
       new_episode: 'Tập mới'
       add_episode: 'Thêm tập'

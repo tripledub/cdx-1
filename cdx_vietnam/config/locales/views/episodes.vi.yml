@@ -1,28 +1,28 @@
 vi:
   episodes:
     form:
-      header: 'Tập cho %{patient_name}'
+      header: 'Lần khám của %{patient_name}'
       history: 'Lịch sử điều trị trước đây'
       history_tb: 'Lịch sử trước đây của TB *'
-      select_type_of_episode: 'Chọn loại tập'
+      select_type_of_episode: 'Chọn loại lần khám'
       episode_details: 'Thông tin tập'
-      episode_type_not_available: 'Loại tập này hiện không có có sẵn'
+      episode_type_not_available: 'Loại lần khám này hiện không có có sẵn'
       hiv_status: 'Trạng thái HIV hiện tại *'
       episode_previous_history_required: 'Bắt buộc có lịch sử tập trước đây'
     create:
-      new_episode: 'Tập mới đã được tạo'
-      episode_created: 'Tập đã được tạo thành công.'
+      new_episode: 'Lần khám mới đã được tạo'
+      episode_created: 'Lần khám đã được tạo thành công.'
     update:
-      update_episode: 'Tập đã được cập nhật'
-      episode_updated: 'Tập đã được cập nhật thành công.'
+      update_episode: 'Lần khám đã được cập nhật'
+      episode_updated: 'Lần khám đã được cập nhật thành công.'
     permission:
-      not_allowed: "Bạn không có quyền quản lý tập cho bệnh nhân này"
-      select_type_of_episode: 'Chọn loại tập'
-      episode_details: 'Thông tin tập'
-      episode_type_not_available: 'Loại tập này hiện không có có sẵn'
+      not_allowed: "Bạn không có quyền quản lý lần khám cho bệnh nhân này"
+      select_type_of_episode: 'Chọn loại lần khám'
+      episode_details: 'Chi tiết lần khám'
+      episode_type_not_available: 'Loại lần khám này hiện không có có sẵn'
     edit:
       back: 'Quay lại'
-      header: 'Chỉnh sửa tập'
+      header: 'Chỉnh sửa lần khám'
     new:
       back: 'Quay lại'
-      header: 'Thêm tập'
+      header: 'Thêm lần khám'

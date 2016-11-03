@@ -13,7 +13,7 @@ vi:
       show_all: 'Hiển thị tất cả'
       show_all_outstanding: 'Hiện tất cả đang giải quyết'
       show_filters: 'Hiển thị bộ lọc'
-      testing_for: 'xét nghiệm cho'
+      testing_for: 'Xét nghiệm cho'
       date: 'Ngày'
       test_order_id: 'Mã của yêu cầu xét nghiệm'
       status: 'Trạng thái'
