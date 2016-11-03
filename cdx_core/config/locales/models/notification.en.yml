@@ -1,14 +1,21 @@
 en:
   activerecord:
+    model:
+      notification:
+        one: 'Alert'
+        other: 'Alerts'
     errors:
       models:
         notification:
           base:
             sms_or_email: You must choose either SMS or E-mail as a delivery method.
+          attributes:
+            encounter:
+              blank: 'ID was not found'
     attributes:
       notification:
-        institution_id: Institution
-        test_order_id: Test order
+        institution: Institution
+        encounter: Test order
         name: Name
         description: Description
         enabled: Enabled
@@ -39,6 +46,11 @@ en:
         utilisation_efficiency_threshold: UE Threshold
         utilisation_efficiency_last_checked_at: UE Last Checked at
         utilisation_efficiency_sample_identifier: Sample ID
+
+      notification_condition:
+        condition_type: Type
+        field: Field
+        value: Value
 
       notification_recipient:
         first_name: First name

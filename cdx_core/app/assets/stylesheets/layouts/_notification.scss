@@ -10,85 +10,119 @@
 
 .notification, .notification.testflow {
   .container {
-    .bettertabs {
-      .content {
-        padding-top: 1em;
-        padding-bottom: 0;
+    .content {
+      padding-top: 1em;
+      padding-bottom: 0;
 
-        .row {
-          .col {
+      .row {
+        .col {
 
-            .notification-lookup-record {
-              background-color: #efefef;
-              border: 1px solid #aaa;
-              box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.2);
-              display: inline-block;
-              font-size: .8em;
-              padding: 3px;
-              padding-right: 10px;
+          .notification-lookup-record {
+            background-color: #efefef;
+            border: 1px solid #aaa;
+            box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            font-size: .8em;
+            margin:2px 0;
+            padding: 3px;
+            padding-right: 10px;
 
-              strong {
-                color: $blue;
-                font-weight: 200;
-                margin-right: 4px;
+            strong {
+              color: $blue;
+              font-weight: 200;
+              margin-right: 4px;
 
-                a {
-                  &:hover {
-                    text-decoration: underline;
-                  }
+              a {
+                &:hover {
+                  text-decoration: underline;
                 }
               }
             }
           }
         }
+      }
 
-        input[type=text] {
-          background-color: #fff;
-          width: 90%;
-          margin-right: 1em;
+      input[type=text] {
+        background-color: #fff;
+        margin-right: 1em;
+        width: 100%;
+      }
+
+      select.select2 {
+        min-width: inherit;
+      }
+
+      .select2-container {
+        font-size: 13px;
+      }
+
+      .select2-search__field {
+        font-style: italic;
+        line-height: 20px;
+      }
+
+      .select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
+        border-color: #dddddd;
+        border-radius: 0;
+      }
+
+      .select2-container--default.select2-container--focus .select2-selection--multiple {
+        border-color: #aaaaaa;
+      }
+
+      .generic-fieldset {
+        background: rgba(186, 185, 191, 1);
+        border: none;
+        color: #efefef;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        padding-top: .5em;
+
+        legend {
+          background: rgba(186, 185, 191, 1);
+          border-top-right-radius: 4px;
+          border-top-left-radius: 4px;
+          padding: 8px 12px 4px 12px;
+          font-size: 1em;
         }
 
-        .notification-recipient-fieldset {
-          background: #333;
-          border: none;
-          color: #efefef;
-          margin-top: 1em;
-          margin-bottom: 1em;
+        .generic-fieldset-fields {
+          border-bottom: 1px solid #ddd;
+          padding: 1em;
+          padding-top: 0;
+          position: relative;
+          margin-bottom: 1.25em;
 
-          legend {
-            background: #333;
-            border-top-right-radius: 4px;
-            border-top-left-radius: 4px;
-            padding: 4px 8px;
-            font-size: 1em;
+          label {
+            color: #efefef;
+            line-height: 3;
+            min-height: inherit;
           }
 
-          .notification-recipient-fields {
-            border-bottom: 1px solid #666;
-            padding-bottom: 1em;
-            position: relative;
-            margin-bottom: 1.25em;
-
-            label {
-              color: #efefef;
-              line-height: auto;
-              min-height: inherit;
-            }
+          select {
+            background-color: #fff;
+            margin-right: 2em;
+            width: 98%;
           }
         }
 
-        .notification-recipient-fields__close {
-          background: #333;
-          border-radius: 2px;
-          padding: 2px;
-          position: absolute;
-          right: 0;
-          top: -10px;
-          width: 11px;
+        .generic-fieldset-fields__new {
+            margin-bottom: 1em;
+            margin-right: 1.5em;
+        }
+      }
 
-          img {
-            display: block;
-          }
+      .generic-fieldset-fields__close {
+        background: #333;
+        border-radius: 2px;
+        padding: 2px;
+        position: absolute;
+        right: 2px;
+        top: -5px;
+        width: 11px;
+
+        img {
+          display: block;
         }
       }
     }

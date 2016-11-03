@@ -2,26 +2,32 @@ module Notifications
   class XpertResultLookup < Notifications::PatientResultLookup
     def check_notifications
       super
+      # Find notifications that don't have any conditions, or
+      # Find notifications that have a matching XpertResult#result_status, or
+      # Find notifications that have a matching XpertResult#tuberculosis, or
+      # Find notifications that have a matching XpertResult#rifampicin, or
+      # Find notifications that have a matching XpertResult#trace, or
 
-      # Currently Notification needs support added
-      # TODO: notify on detection quantity
-      # From job example:
-      # {"tuberculosis"=>[nil, "detected"], "rifampicin"=>[nil, "not_detected"]}
-      if alertable.tuberculosis == 'detected' && alertable.rifampicin == 'detected'
-        @notifications =
-          @notifications.where('notifications.detection is null OR notifications.detection = ? OR notifications.detection = ?', 'mtb', 'rif')
-                        .where('notifications.detection_condition is null OR notifications.detection_condition = ?', 'positive')
-      elsif alertable.rifampicin == 'detected'
-        @notifications =
-          @notifications.where('notifications.detection is null OR notifications.detection = ?', 'rif')
-                        .where('notifications.detection_condition is null OR notifications.detection_condition = ?', 'positive')
-      elsif alertable.tuberculosis == 'detected'
-        @notifications =
-          @notifications.where('notifications.detection is null OR notifications.detection = ?', 'mtb')
-                        .where('notifications.detection_condition is null OR notifications.detection_condition = ?', 'positive')
-      else
-        @notifications = @notifications.where('notifications.detection is null')
-      end
+      @notifications =
+        @notifications.where(%{notification_conditions.id is null OR
+                              (notification_conditions.condition_type = \'XpertResult\' AND
+                               notification_conditions.field = \'result_status\' AND
+                               notification_conditions.value = ?) OR
+                              (notification_conditions.condition_type = \'XpertResult\' AND
+                               notification_conditions.field = \'tuberculosis\' AND
+                               notification_conditions.value = ?) OR
+                              (notification_conditions.condition_type = \'XpertResult\' AND
+                               notification_conditions.field = \'rifampicin\' AND
+                               notification_conditions.value = ?) OR
+                              (notification_conditions.condition_type = \'XpertResult\' AND
+                               notification_conditions.field = \'trace\' AND
+                               notification_conditions.value = ?)
+                            }, alertable.result_status,
+                               alertable.tuberculosis,
+                               alertable.rifampicin,
+                               alertable.trace)
+
+      # {"result_status"=>[nil, "completed"],  {"tuberculosis"=>[nil, "detected"], "rifampicin"=>[nil, "not_detected"], "trace"=>[nil, "high"]}
     end
 
     def self.prepare_notifications(record_id, changed_attributes = {})

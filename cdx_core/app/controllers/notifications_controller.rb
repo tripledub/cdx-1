@@ -65,6 +65,7 @@ class NotificationsController < ApplicationController
     @devices = check_access(Device.within(@navigation_context.entity), READ_DEVICE)
 
     @notification_recipient = @notification.notification_recipients.build
+    @notification_condition = @notification.notification_conditions.build
 
     @conditions = Condition.all
     @condition_results = Cdx::Fields.test.core_fields.find { |field| field.name == 'result' }.options
@@ -119,6 +120,7 @@ class NotificationsController < ApplicationController
         :sms_message,
         :frequency,
         :frequency_value,
+        notification_conditions_attributes: [ :id, :condition_type, :field, :value, :_destroy, notification_statuses_names: [] ],
         notification_recipients_attributes: [ :id, :first_name, :last_name, :email, :telephone, :_destroy ],
         notification_statuses_names: [],
         site_ids:   [],

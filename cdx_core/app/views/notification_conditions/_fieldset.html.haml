@@ -1,0 +1,28 @@
+.generic-fieldset-fields
+  .row
+    .col
+      %div.tooltip
+        = fieldset.label :condition_type
+        %div.tooltiptext_r
+          = I18n.t('notification_conditions.form.tooltip.condition_type')
+    .col
+      = fieldset.select :condition_type, Notification::Condition.condition_type_select_options, { include_blank: I18n.t('notification_conditions.form.placeholder.condition_type') }, { class: 'select2 generic-fieldset__select--condition-type' }
+    .col
+      %div.tooltip
+        = fieldset.label :field
+        %div.tooltiptext_r
+          = I18n.t('notification_conditions.form.tooltip.field')
+    .col
+      - if fieldset.object.condition_type
+        = fieldset.select :field, Notification::Condition.field_select_options[fieldset.object.condition_type].map {|cf| [cf[:text], cf[:id]] }, { include_blank: I18n.t('notification_conditions.form.placeholder.field') }, { class: 'select2 generic-fieldset__select--field' }
+      - else
+        = fieldset.select :field, [], { include_blank: I18n.t('notification_conditions.form.placeholder.field') }, { class: 'select2 generic-fieldset__select--field' }
+    .col
+      %div.tooltip
+        = fieldset.label :value
+        %div.tooltiptext_r
+          = I18n.t('notification_conditions.form.tooltip.value')
+    .col
+      = fieldset.text_field :value, placeholder: I18n.t('notification_conditions.form.placeholder.value'), class: 'generic-fieldset__text--value'
+
+  = link_to(image_tag('ic-cross.png'), '', :class => 'generic-fieldset-fields__close')
