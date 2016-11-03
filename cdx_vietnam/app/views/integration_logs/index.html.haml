@@ -15,6 +15,6 @@
             %h3
               = I18n.t('integration_logs.index.log', count: @total)
           = react_component "IntegrationLogsIndexTable", logs: Presenters::IntegrationLogs.index_table(@integration_logs),
-              orderBy: params["order_by"]
+              orderBy: params["order_by"] || "-integration_logs.updated_at"
           .pagination
             = render 'shared/pagination'
