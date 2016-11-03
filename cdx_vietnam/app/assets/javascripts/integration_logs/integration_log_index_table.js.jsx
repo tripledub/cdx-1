@@ -57,7 +57,7 @@ var IntegrationLogsIndexTable = React.createClass({
     return {
       title: I18n.t("components.integration_logs.col_title"),
       allowSorting: true,
-      orderBy: "integration_logs.updated_at"
+      orderBy: "integration_logs.updated_at desc"
     }
   },
 

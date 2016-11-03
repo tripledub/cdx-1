@@ -34,7 +34,7 @@ module CdxVietnam
             age: patient.age,
             gender: gender,
             health_insurance_number: 'Any',
-            healthcare_unit: '981',
+            healthcare_unit: map_vtm_site_id(patient.site.name),
             cellphone_number: '23711',
             registration_address1: cdp_address(patient.addresses[1].address), # line đầu tiên của Contact Address
             registration_province: 'Hà Nội',
