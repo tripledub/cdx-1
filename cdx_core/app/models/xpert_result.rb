@@ -9,7 +9,7 @@ class XpertResult < PatientResult
   validates_inclusion_of :result_status, in: %w(new sample_collected allocated pending_approval rejected completed), allow_nil: true
   validate :rifampicin_detected
 
-  notification_observe_fields :result_status, :tuberculosis, :rifampicin
+  notification_observe_fields :result_status, :tuberculosis, :rifampicin, :trace
 
   delegate :patient, to: 'encounter'
 

@@ -8,7 +8,7 @@ module Notifications
 
       @notifications =
         Notification.enabled
-                    .includes(:institution, :sites, :notification_statuses, :patient)
+                    .includes(:institution, :sites, :notification_conditions, :patient)
                     .where(institutions: { id: alertable.assayable.institution_id })
                     .where('sites.id is null OR sites.id = ?', alertable.assayable.site_id)
 
@@ -16,32 +16,32 @@ module Notifications
         @notifications = @notifications.where('patients.id is null OR patients.id = ?', alertable.assayable.patient.id)
       end
 
-      if alertable.assayable.encounter
-        @notifications = @notifications.where('notification_statuses.id is null OR notification_statuses.test_status = ?', alertable.assayable.encounter.status)
-      else
-        @notifications = @notifications.where('notification_statuses.id is null')
-      end
+      # Find notifications that don't have any conditions, or
+      # Find notifications that have a matching AssayResult#condition, and
+      # Find notifications that have a matching AssayResult#result, and
+      # Find notifications that have a matching AssayResult#quantitative_result, and
 
-      if alertable.condition
-        @notifications =
-          @notifications.where('notifications.detection is null OR notifications.detection = ?', alertable.condition)
-      else
-        @notifications = @notifications.where('notifications.detection is null')
-      end
+      conditions = if alertable.condition.present?
+        @notifications.where(%{notification_conditions.condition_type = \'AssayResult\' AND
+                               notification_conditions.field = \'condition\' AND
+                               notification_conditions.value = ?}, alertable.condition)
+      end || []
 
-      if alertable.result
-        @notifications =
-          @notifications.where('notifications.detection_condition is null OR notifications.detection_condition = ?', alertable.result)
-      else
-        @notifications = @notifications.where('notifications.detection_condition is null')
-      end
+      results = if alertable.result.present?
+        @notifications.where(%{notifications.id in (?) AND
+                               notification_conditions.condition_type = \'AssayResult\' AND
+                               notification_conditions.field = \'result\' AND
+                               notification_conditions.value = ?}, conditions.map(&:id), alertable.result)
+      end || []
 
-      if alertable.quantitative_result
-        @notifications =
-          @notifications.where('notifications.detection_quantitative_result is null OR notifications.detection_quantitative_result = ?', alertable.quantitative_result)
-      else
-        @notifications = @notifications.where('notifications.detection_quantitative_result is null')
-      end
+      quantitative_results = if alertable.quantitative_result.present?
+        @notifications.where(%{notifications.id in (?) AND
+                               notification_conditions.condition_type = \'AssayResult\' AND
+                               notification_conditions.field = \'quantitative_result\' AND
+                               notification_conditions.value = ?}, results.map(&:id), alertable.quantitative_result)
+      end || []
+
+      @notifications = @notifications.where('notifications.id in (?) OR notification_conditions.id is null', quantitative_results.map(&:id))
     end
 
     def self.prepare_notifications(record_id, changed_attributes = {})

@@ -67,9 +67,7 @@
             = Patient.human_attribute_name(:created_at)
           = Extras::Dates::Format.datetime_with_time_zone(patient.created_at, :full_time)
 
-
-
-        - if has_access?(@patient, Policy::Actions::UPDATE_PATIENT)
-          %ul.button-container
-            %li
-              = link_to(I18n.t('patients.show.edit_patient'), edit_patient_path(patient), class: 'button edit')
+      - if has_access?(@patient, Policy::Actions::UPDATE_PATIENT)
+        %ul.button-container
+          %li
+            = link_to(I18n.t('patients.show.edit_patient'), edit_patient_path(patient), class: 'button edit')

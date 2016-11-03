@@ -190,8 +190,21 @@ footer {
     }
   }
 
+  .col {
+    padding: 3px;
+
+    &.remember-me {
+      padding-top: 5px;
+    }
+  }
+
   a {
     color: $blue;
+
+    &.btn-secondary {
+      color: #fff;
+      margin-top: 10px;
+    }
   }
 }
 
@@ -324,34 +337,14 @@ border-bottom:0;
   margin:1em 0;
 }
 
-.select2-container {
-font-size: 13px;
-}
-
-.select2-search__field {
-  font-style: italic;
-  line-height: 20px;
-}
-
-.select2-container--default .select2-selection--multiple, .select2-container--default .select2-selection--single {
-  border-color: #dddddd;
-  border-radius: 0;
-  width: 90%;
-}
-
-.select2-container--default.select2-container--focus .select2-selection--multiple {
-  border-color: #aaaaaa;
-  width: 90%;
-}
-
 .button_to .btn-danger{
   line-height:20px;
 }
 
 .addalertbut{
-  margin-left:15px;
-  margin-top:-50px;
-  line-height:27px;
+  margin-left: 15px;
+  margin-top: -50px;
+  line-height: 27px;
 }
 
 
@@ -379,7 +372,7 @@ font-size: 13px;
   font-size:12px;
 }
 
-.alert-container .alert-error::before { 
+.alert-container .alert-error::before {
   content: "Error!";
   font-weight:bold;
   border-bottom:1px solid red;
@@ -390,7 +383,7 @@ font-size: 13px;
   font-size:14px;
 }
 
-.alert-container .alert-error ul li{ 
+.alert-container .alert-error ul li{
   list-style-type: square;
   margin-left:13px;
 }
@@ -503,7 +496,7 @@ color:white;
   .patientcardholder{
     min-width: 371px;
   }
-  
+
   .patientdetailsleft {
     margin-top: -368px;
   }
@@ -513,7 +506,7 @@ color:white;
   .patientcardholder{
     min-width: 412px;
   }
-  
+
   .patientdetailsleft {
     margin-top: -375px;
   }

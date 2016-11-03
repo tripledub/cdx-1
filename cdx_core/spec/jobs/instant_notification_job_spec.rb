@@ -3,7 +3,7 @@ require 'sidekiq/testing'
 
 Sidekiq::Testing.fake!
 
-describe InstantNotificationJob do
+xdescribe InstantNotificationJob do
   before(:all) { TestAfterCommit.enabled = true  }
   after(:all)  { TestAfterCommit.enabled = false }
   before(:all) { InstantNotificationJob.jobs.clear }
