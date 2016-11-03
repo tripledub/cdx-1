@@ -2,9 +2,9 @@ vi:
   activerecord:
     attributes:
       site:
-        parent: 'Trang web cha'
+        parent: 'Cơ sở tuyến trên'
   models:
     site:
-      reset_start_date: 'thiết lập ngày bắt đầu chính sách không được thực hiện'
-      reset_end_date: 'thiết lập ngày kết thúc chính sách không được thực hiện'
-      must_match: 'phải phù hợp với tổ chức trang web cha'
+      reset_start_date: 'thiết lập lại ngày bắt đầu chính sách mà không được thực hiện'
+      reset_end_date: 'thiết lập lại ngày kết thúc chính sách mà không được thực hiện'
+      must_match: 'phải phù hợp với tổ chức cấp trên'

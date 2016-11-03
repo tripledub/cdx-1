@@ -25,11 +25,11 @@ vi:
       messages:
         record_invalid: "Xác thực thất bại: %{errors}"
         restrict_dependent_destroy:
-          has_one: "Không thể xóa bản ghi vì tồn tại lệ thuộc %{record}"
-          has_many: "Không thể xóa bản ghi vì tồn tại lệ thuộc %{record}"
+          has_one: "Không thể xóa bản ghi vì tồn tại mối quan hệ với %{record}"
+          has_many: "Không thể xóa bản ghi vì tồn tại mối quan hệ với %{record}"
     attributes:
       manifest:
-        definition: 'Biểu lộ'
+        definition: 'Hiển thị'
   date:
     input_format:
       pattern: "%d/%m/%Y"

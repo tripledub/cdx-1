@@ -2,7 +2,7 @@ vi:
   api:
     playground:
       index:
-        playground: 'CDP - Sân chơi'
+        playground: 'CDP - Thực thi'
         submit_message: 'Gửi tin nhắn'
         lbl_device: 'Thiết bị'
         lbl_data: 'Dữ liệu'
@@ -14,7 +14,7 @@ vi:
         lbl_query_string: 'Chuỗi truy vấn'
         lbl_query_body: 'Nội dung truy vấn'
         btn_query: 'Truy vấn'
-        response: 'Phản ứng:'
+        response: 'Phản hồi:'
 
       simulator:
         simulator: 'CDP - Giả lập'

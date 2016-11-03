@@ -1,24 +1,24 @@
 vi:
   dst_lpa_results:
-    dst_lpa: 'Dst/Lpa'
+    dst_lpa: 'Kháng sinh đồ/Kỹ thuật LPA'
     dst:
-      localised_name: 'Kiểm tra nhạy cảm thuốc'
+      localised_name: 'Kháng sinh đồ'
     lpa:
-      localised_name: 'Dòng dò khảo nghiệm'
+      localised_name: 'Kỹ thuật LPA'
     new:
-      header: 'Kết quả tính nhạy cảm với thuốc'
-      add_new: 'Thêm kết quả xét nghiệm Dst & LPA cho: %{patient_name}'
+      header: 'Kết quả kháng sinh đồ'
+      add_new: 'Thêm kết quả xét nghiệm kháng sinh đồ & LPA cho: %{patient_name}'
       back: 'Quay lại'
     create:
-      audit: 'Kết quả xét nghiệm DST and LPA đã được thêm'
-      notice: 'Kết quả xét nghiệm DST and LPA đã được tạo thành công.'
-      dst_warning: 'Bạn phải nhập kết quả xét nghiệm môi trường môi trường nuôi cấy trước khi thêm kết quả DST'
+      audit: 'Kết quả xét nghiệm kháng sinh đồ and LPA đã được thêm'
+      notice: 'Kết quả xét nghiệm kháng sinh đồ and LPA đã được tạo thành công.'
+      dst_warning: 'Bạn phải nhập kết quả xét nghiệm nuôi cấy trước khi nhập kết quả kháng sinh đồ'
     show:
-      header: 'Kết quả xét nghiệm DST and LPA cho: %{patient_name}'
+      header: 'Kết quả xét nghiệm kháng sinh đồ và LPA cho: %{patient_name}'
     edit:
-      header: 'Chỉnh sửa kết quả xét nghiệm DST and LPA cho: %{patient_name}'
+      header: 'Chỉnh sửa kết quả xét nghiệm kháng sinh đồ và LPA cho: %{patient_name}'
     update:
-      audit: 'Kết quả xét nghiệm DST and LPA đã được cập nhật'
-      notice: 'Kết quả xét nghiệm DST and LPA đã được cập nhật thành công.'
+      audit: 'Kết quả xét nghiệm kháng sinh đồ và LPA đã được cập nhật'
+      notice: 'Kết quả xét nghiệm kháng sinh đồ và LPA đã được cập nhật thành công.'
     form:
       lbl_method_used: 'Phương thức sử dụng'

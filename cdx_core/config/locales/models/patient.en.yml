@@ -2,7 +2,7 @@ en:
   activerecord:
     attributes:
       patient:
-        birth_date_on: 'Date of birth / Age'
+        birth_date_on: 'Date of birth'
         entity_id: 'Patient id'
         name: 'Name'
         gender: 'Gender'

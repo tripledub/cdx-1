@@ -13,7 +13,7 @@ vi:
       total_tests_by_device: 'Tổng số xét nghiệm bởi thiết bị'
       average_tests_by_technician: 'Bình quân các xét nghiệm bởi kỹ thuật viên'
       outstanding_tests: 'Các xét nghiệm nổi bật'
-      no_chart_information: 'Không có sẵn biểu đồ thông tin'
+      no_chart_information: 'Thông tin biểu đồ không có sẵn'
       devices_not_responding: 'Các thiết bị không đáp ứng'
       device_error_codes: 'Mã lỗi thiết bị'
       drtb_percentage: 'Tỉ lệ phần trăm DR-TB'

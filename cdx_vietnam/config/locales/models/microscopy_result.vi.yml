@@ -5,11 +5,11 @@ vi:
         result_status: 'Trạng thái'
         sample_collected_at: 'Ngày lấy mẫu'
         examined_by: 'Kiểm tra bởi'
-        result_at: 'Kết quả ngày'
+        result_at: 'Ngày trả kết quả'
         specimen_type: 'Mẫu văn bản'
         serial_number: 'Số seri phòng thí nghiệm'
         appearance: 'Hình ảnh xuất hiện'
         test_result: 'Kết quả'
         sample_identifier_id: 'Mã số mẫu'
-        feedback_message_id: 'Phản hồi'
+        feedback_message_id: 'Mã phản hồi'
         comment: "Ghi chú"

@@ -1,6 +1,6 @@
 vi:
   api_tokens_controller:
-    api_token_deleted: 'Mã API đã xóa'
+    api_token_deleted: 'Mã API đã bị xóa'
 
   application_controller:
     authorization_failed: 'Ủy quyền thất bại.'
@@ -87,7 +87,7 @@ vi:
     col_address: 'Địa chỉ'
     col_city: 'Thành phố'
     col_state: 'Bang'
-    col_zipcode: 'Zipcode'
+    col_zipcode: 'Mã bưu điện'
 
   subscribers_controller:
     subscriber_created: 'Người đăng ký đã được tạo thành công'

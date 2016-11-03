@@ -11,4 +11,4 @@ vi:
       value: "giá trị:"
       has_an_unknown_resource: "có một tài nguyên không rõ:"
       has_an_invalid_condition: "có một điều kiện không hợp lệ trong tài nguyên:"
-      has_unsupported: "có định danh được hỗ trợ trong tài nguyên:"
+      has_unsupported: "có định danh không được hỗ trợ trong tài nguyên:"

@@ -3,8 +3,8 @@ vi:
     notifications:
       gateway:
         sms:
-          subject:  Cảnh báo CDP
-          aggregated_body: Bạn nhận được %{count} cảnh báo qua CDP từ khi có bản tóm tắt cuối cùng vào ngày %{date}.
+          subject: Cảnh báo CDP
+          aggregated_body: Bạn đã nhận được %{count} cảnh báo qua CDP từ khi có bản tóm tắt cuối cùng vào ngày %{date}.
         email:
           subject: CDP Alert
-          aggregated_body: Bạn nhận được %{count} cảnh báo qua CDP từ khi có bản tóm tắt cuối cùng vào ngày %{date}.
+          aggregated_body: Bạn đã nhận được %{count} cảnh báo qua CDP từ khi có bản tóm tắt cuối cùng vào ngày %{date}.

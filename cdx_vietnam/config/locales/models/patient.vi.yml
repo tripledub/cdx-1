@@ -2,7 +2,7 @@ vi:
   activerecord:
     attributes:
       patient:
-        birth_date_on: 'Ngày sinh / Tuổi'
+        birth_date_on: 'Ngày sinh'
         entity_id: 'Mã bệnh nhân'
         name: 'Tên'
         gender: 'Giới tính'

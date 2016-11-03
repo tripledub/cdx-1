@@ -1,4 +1,4 @@
 vi:
   models:
     manifest_field_mapping:
-      cant_concat: "Không thể concat giá trị mảng - sử dụng collect thay thế"
+      cant_concat: "Không thể cắt giá trị mảng - sử dụng tập hợp thay thế"

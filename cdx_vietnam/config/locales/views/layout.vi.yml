@@ -3,7 +3,7 @@ vi:
     header:
       meta_title: 'Kết nối hệ thống chẩn đoán'
     header_nav:
-      menu_at: 'ở'
+      menu_at: ''
       home: 'Trang chủ'
       patients: 'Bệnh nhân'
       test_orders: 'Yêu cầu xét nghiệm'

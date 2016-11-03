@@ -4,18 +4,18 @@ vi:
       zero: '0 dòng'
       one: '1 dòng'
       other: '%{count} dòng'
-    per_page: 'trên trang'
+    per_page: 'trên 1 trang'
   confirmation_helper:
     btn_delete: 'Xóa'
-    confirm_msg: "Bạn đang xóa vĩnh viễn"
-    confirm_question: 'Hành động này KHÔNG ĐƯỢC khôi phục lại. Bạn có chắc bạn muốn tiếp tục không?'
+    confirm_msg: "Bạn sắp xóa vĩnh viễn thông tin này"
+    confirm_question: 'Thông tin bị xóa KHÔNG THỂ khôi phục lại. Bạn có chắc bạn muốn tiếp tục không?'
     cannot_delete: 'Không thể xóa'
-    has_associated: 'này đã được liên kết với'
+    has_associated: 'đang được được liên kết với'
   application_helper:
     new: 'Tạo Mới'
     edit: 'Chỉnh Sửa'
     edit_institution: 'Chỉnh sửa tổ chức'
-    show_institution: 'Hiện tổ chức'
+    show_institution: 'Hiển thị tổ chức'
 
   helpers:
     submit:

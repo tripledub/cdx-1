@@ -2,7 +2,7 @@ vi:
   filters:
     form:
       error_explan: ' không cho lưu bộ lọc này:'
-      lbl_site: 'Trang'
+      lbl_site: 'Cơ sở'
       lbl_condition: 'Điều kiện'
 
     index:
