@@ -4,7 +4,7 @@ module PatientResults
     class << self
       def build_requested_tests(encounter, tests_requested = '|')
         tests_requested.split('|').each do |name|
-          new_result = PatientResults::Finder.instance_from_string(name)
+          new_result = PatientResults::Selector.instance_from_string(name)
           new_result.result_name = name
           encounter.patient_results << new_result
         end

@@ -1,27 +1,22 @@
 module Reports
   # Generates a bar graphic with all test results grouped for a period of time.
-  class AllTests < Base
-    def self.by_name(*args)
-      new(*args).by_name
-    end
-
+  class AllTests
     attr_reader :statuses
 
-    def statuses
-      results['tests'].group_by { |t| t['test.status'] }.keys
-    end
-
-    def process
-      filter['group_by'] = 'day(test.start_time),test.status'
-      super
+    def initialize(current_user, context, options = {})
+      @filter = {}
+      @current_user = current_user
+      @context = context
+      @data = []
+      @options = options
     end
 
     def generate_chart
-      automatic_results = process
-      manual_results    = get_manual_results_query(automatic_results.filter).group('date(patient_results.created_at)').count
-      results           = merge_results(automatic_results, manual_results)
+      #automatic_results = process
 
-      sorted_data = results.number_of_months > 1 ? results.sort_by_month.data : results.sort_by_day.data
+      #results           = merge_results(automatic_results, manual_results)
+
+      # sorted_data = results.number_of_months > 1 ? results.sort_by_month.data : results.sort_by_day.data
 
       {
         title:   '',
@@ -33,45 +28,13 @@ module Reports
           labelFontFamily: 'Verdana',
           labelFontSize: 12
         },
-        columns: generate_columns(sorted_data)
+        columns: columns_data
       }
     end
 
     private
 
-    def data_hash_day(dayname, test_results)
-      {
-        label: dayname,
-        values: statuses.map do |u|
-          result = test_results && test_results[u]
-          result ? count_total(result) : 0
-        end
-      }
-    end
-
-    def data_hash_month(date, test_results)
-      {
-        label: label_monthly(date),
-        values: statuses.map do |s|
-          result = test_results && test_results[s]
-          result ? count_total(result) : 0
-        end
-      }
-    end
-
-    def day_results(format='%Y-%m-%d', key)
-      results_by_period(format)[key].try do |r|
-        r.group_by { |t| t['test.status'] }
-      end
-    end
-
-    def month_results(format='%Y-%m', key)
-      results_by_period(format)[key].try do |r|
-        r.group_by { |t| t['test.status'] }
-      end
-    end
-
-    def generate_columns(sorted_data)
+    def columns_data
       [
         {
           bevelEnabled: false,
@@ -80,7 +43,7 @@ module Reports
           name: "Tests",
           legendText: I18n.t('all_tests.tests'),
           showInLegend: true,
-          dataPoints: sorted_data.map { |data_point| { label: data_point[:label], y: data_point[:values][0] } }
+          dataPoints: find_results
         },
         {
           bevelEnabled: false,
@@ -90,25 +53,44 @@ module Reports
           legendText: I18n.t('all_tests.errors'),
           axisYType: "secondary",
           showInLegend: true,
-          dataPoints: sorted_data.map { |data_point| { label: data_point[:label], y: data_point[:values][1] } }
+          dataPoints: find_error_results
         }
       ]
     end
 
+    def find_results
+      merged_results = {}
+      merged_results.default_proc = proc { 0 }
+      patient_results = patient_results_finder
+      orphan_results  = orphan_results_finder
+      patient_results_finder.each { |result| merged_results[result.date.strftime('%Y-%m-%d')] += result.total }
+      orphan_results_finder.each { |result| merged_results[result.date.strftime('%Y-%m-%d')] += result.total }
+      merged_results.map { |key, value| { label: key, y: value } }
+    end
+
+    def find_error_results
+      @options['status'] = 'error'
+      find_results
+    end
+
+    def patient_results_finder
+      PatientResults::Finder.new(@context, @options)
+        .filter_query
+        .group('date(patient_results.created_at)')
+        .order('patient_results.created_at')
+        .select('patient_results.created_at as date, COUNT(*) as total, 1 as uuid')
+    end
+
+    def orphan_results_finder
+      TestResults::Finder.new(@context, @options)
+        .filter_query
+        .group('date(patient_results.result_at)')
+        .order('patient_results.result_at')
+        .select('patient_results.result_at as date, COUNT(*) as total, 1 as uuid, "" as custom_fields, "" as core_fields ')
+    end
+
     def merge_results(test_results, manual_results)
-      manual_results.each do |key, value|
-        result_added = false
-        test_results.results['tests'].each do |auto_test|
-          if auto_test['test.status'] == 'success' && auto_test['test.start_time'] == key.strftime("%Y-%m-%d")
-            auto_test['count'] += value
-            result_added = true
-          end
-        end
-
-        test_results.results['tests'] << { 'test.status' => 'success', 'test.start_time' => key.strftime("%Y-%m-%d"), 'count' => value } unless result_added
-      end
-
-      test_results
+      test_results.merge(manual_results){ |k, t_value, m_value| t_value + m_value }
     end
   end
 end

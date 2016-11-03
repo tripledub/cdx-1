@@ -81,7 +81,7 @@ class PatientResult < ActiveRecord::Base
   end
 
   def set_status_to_new
-    self.result_status = 'new'
+    self.result_status = 'new' unless type == 'TestResult'
   end
 
   def format_name

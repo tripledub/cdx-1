@@ -85,7 +85,7 @@ vi:
         not_detected: 'Không tìm thấy'
         indeterminate: 'Không hợp lệ / Không có kết quả / Lỗi'
         no_result: 'Không kết quả'
-        err: 'Lỗi'
+        error: 'Lỗi'
       rifampicin:
         detected: 'Tìm thấy'
         not_detected: 'Không tìm thấy'
