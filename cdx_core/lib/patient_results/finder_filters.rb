@@ -42,6 +42,7 @@ module PatientResults
 
     def filter_by_device
       @filter_query = filter_query.where('devices.uuid = ?', params['device_uuid']) if params['device_uuid'].present?
+      @filter_query = filter_query.where('devices.id = ?', params['device']) if params['device'].present?
     end
 
     def filter_by_sample_identifier
@@ -65,7 +66,7 @@ module PatientResults
     def filter_by_date
       since_day = start_date + ' 00:00'
       until_day = end_date + ' 23:59'
-      @number_of_days = (Time.parse(until_day) - Time.parse(since_day)).to_i
+      @number_of_days = (Time.parse(until_day) - Time.parse(since_day)).to_i  / 86400
       @filter_query = filter_query.where('patient_results.created_at' => since_day..until_day)
     end
 
