@@ -1,6 +1,8 @@
 module TestResults
   # Test results finder
   class Finder < PatientResults::Finder
+    include PatientResults::FinderFilters
+
     protected
 
     def init_query

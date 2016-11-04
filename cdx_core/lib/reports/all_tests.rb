@@ -12,12 +12,6 @@ module Reports
     end
 
     def generate_chart
-      #automatic_results = process
-
-      #results           = merge_results(automatic_results, manual_results)
-
-      # sorted_data = results.number_of_months > 1 ? results.sort_by_month.data : results.sort_by_day.data
-
       {
         title:   '',
         titleY:  I18n.t('all_tests.number_tests'),

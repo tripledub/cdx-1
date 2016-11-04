@@ -43,7 +43,6 @@ module TestResults
         Time.parse(result_date)
       rescue
         Time.now
-      end
     end
   end
 end
