@@ -1,14 +1,10 @@
 module Reports
   # Generates a bar graphic with all test results grouped for a period of time.
   class AllTests
-    attr_reader :statuses
-
-    def initialize(current_user, context, options = {})
-      @filter = {}
-      @current_user = current_user
+    def initialize(context, options = {})
       @context = context
-      @data = []
       @options = options
+      @days_span = 0
     end
 
     def generate_chart
@@ -29,36 +25,42 @@ module Reports
     private
 
     def columns_data
-      [
-        {
-          bevelEnabled: false,
-          type: "column",
-          color: "#E06023",
-          name: "Tests",
-          legendText: I18n.t('all_tests.tests'),
-          showInLegend: true,
-          dataPoints: find_results
-        },
-        {
-          bevelEnabled: false,
-          type: "column",
-          color: "#5C5B82",
-          name: "Errors",
-          legendText: I18n.t('all_tests.errors'),
-          axisYType: "secondary",
-          showInLegend: true,
-          dataPoints: find_error_results
-        }
-      ]
+      [total_results_column, error_results_column]
+    # If there is some problem with data we don't want to send a 500 error to the dashboard page
+    rescue
+      []
+    end
+
+    def total_results_column
+      {
+        bevelEnabled: false,
+        type: 'column',
+        color: '#E06023',
+        name: 'Tests',
+        legendText: I18n.t('all_tests.tests'),
+        showInLegend: true,
+        dataPoints: find_results
+      }
+    end
+
+    def error_results_column
+      {
+        bevelEnabled: false,
+        type: 'column',
+        color: '#5C5B82',
+        name: 'Errors',
+        legendText: I18n.t('all_tests.errors'),
+        axisYType: 'secondary',
+        showInLegend: true,
+        dataPoints: find_error_results
+      }
     end
 
     def find_results
       merged_results = {}
       merged_results.default_proc = proc { 0 }
-      patient_results = patient_results_finder
-      orphan_results  = orphan_results_finder
-      patient_results_finder.each { |result| merged_results[result.date.strftime('%Y-%m-%d')] += result.total }
-      orphan_results_finder.each { |result| merged_results[result.date.strftime('%Y-%m-%d')] += result.total }
+      patient_results_finder.each { |result| merged_results[result.date.strftime(dates_format)] += result.total }
+      orphan_results_finder.each { |result| merged_results[result.date.strftime(dates_format)] += result.total }
       merged_results.map { |key, value| { label: key, y: value } }
     end
 
@@ -68,23 +70,32 @@ module Reports
     end
 
     def patient_results_finder
-      PatientResults::Finder.new(@context, @options)
-        .filter_query
-        .group('date(patient_results.created_at)')
-        .order('patient_results.created_at')
-        .select('patient_results.created_at as date, COUNT(*) as total, 1 as uuid')
+      patient_results = PatientResults::Finder.new(@context, @options)
+      @days_span = patient_results.number_of_days
+      patient_results.filter_query
+                     .group(dates_filter)
+                     .order('patient_results.created_at DESC')
+                     .select('patient_results.created_at as date, COUNT(*) as total, 1 as uuid')
     end
 
     def orphan_results_finder
-      TestResults::Finder.new(@context, @options)
-        .filter_query
-        .group('date(patient_results.result_at)')
-        .order('patient_results.result_at')
-        .select('patient_results.result_at as date, COUNT(*) as total, 1 as uuid, "" as custom_fields, "" as core_fields ')
+      orphan_results = TestResults::Finder.new(@context, @options)
+      orphan_results.filter_query
+                    .group(dates_filter)
+                    .order('patient_results.result_at DESC')
+                    .select('patient_results.result_at as date, COUNT(*) as total, 1 as uuid, "" as custom_fields, "" as core_fields ')
     end
 
     def merge_results(test_results, manual_results)
-      test_results.merge(manual_results){ |k, t_value, m_value| t_value + m_value }
+      test_results.merge(manual_results) { |_k, test_value, manual_value| test_value + manual_value }
+    end
+
+    def dates_filter
+      @days_span > 30 ? 'month(patient_results.result_at)' : 'date(patient_results.result_at)'
+    end
+
+    def dates_format
+      @days_span > 30 ? '%Y-%b' : '%Y-%m-%d'
     end
   end
 end

@@ -1,6 +1,16 @@
 module PatientResults
   # Filter options for test and patient results
   module FinderFilters
+    attr_reader :params, :filter_query, :number_of_days
+
+    def initialize(navigation_context, params)
+      @navigation_context = navigation_context
+      @params             = params
+      apply_filters
+    end
+
+    protected
+
     def apply_filters
       init_query
       filter_by_navigation_context
@@ -55,6 +65,7 @@ module PatientResults
     def filter_by_date
       since_day = start_date + ' 00:00'
       until_day = end_date + ' 23:59'
+      @number_of_days = (Time.parse(until_day) - Time.parse(since_day)).to_i
       @filter_query = filter_query.where('patient_results.created_at' => since_day..until_day)
     end
 

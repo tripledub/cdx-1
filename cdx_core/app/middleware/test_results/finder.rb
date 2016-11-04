@@ -1,6 +1,6 @@
 module TestResults
   # Test results finder
-  class Finder < PatientResults::Finder
+  class Finder
     include PatientResults::FinderFilters
 
     protected

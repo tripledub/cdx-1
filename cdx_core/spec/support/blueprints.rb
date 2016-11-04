@@ -205,6 +205,8 @@ TestResult.blueprint do
 
   encounter { object.sample.try(:encounter) }
   patient { object.sample.try(:patient) || object.encounter.try(:patient) }
+  sample_collected_at { Time.now }
+  result_at { Time.now }
 end
 
 CultureResult.blueprint do
