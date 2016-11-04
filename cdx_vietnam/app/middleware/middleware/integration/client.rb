@@ -64,12 +64,12 @@ module Integration
               patient["patient_#{system}_id"] = patient_temp.vtm_patient_id
             end
           end
-          break unless (patient["patient_#{system}_id"].blank? || patient["patient_#{system}_id"] == '0') || try_count < @max_retry
+          break if !(patient["patient_#{system}_id"].blank? || patient["patient_#{system}_id"] == '0') || try_count > @max_retry
           try_count += 1
           sleep 35
           log.update_attributes({
             try_n_times: try_count, 
-            error_message: "microscopy not have #{system}_patient_id",
+            error_message: "test order not have #{system}_patient_id",
             status: "wait_patient_id"
           })
         end
@@ -78,7 +78,7 @@ module Integration
       if (patient["patient_#{system}_id"].blank? || patient["patient_#{system}_id"] == '0') && is_wait
         log.update_attributes({
           try_n_times: try_count, 
-          error_message: "microscopy not have #{system}_patient_id",
+          error_message: "test order not have #{system}_patient_id",
           status: "timeout_for_patient_id"
         })
         return

@@ -33,7 +33,7 @@ module CdxVietnam
             name: patient.name,
             age: patient.age,
             gender: gender,
-            health_insurance_number: 'Any',
+            health_insurance_number: patient.medical_insurance_num,
             healthcare_unit: map_vtm_site_id(patient.site.name),
             cellphone_number: '23711',
             registration_address1: cdp_address(patient.addresses[1].address), # line đầu tiên của Contact Address
@@ -82,21 +82,22 @@ module CdxVietnam
       end
 
       def map_vtm_site_id(name)
-        mapping_list = {'Hanoi Lung Hospital' => 981, 'Hai Ba Trung District' => 4, 'Hoang Mai District' => 15}
-        return mapping_list[name] if name.present? && mapping_list[name].present?
+        temp_name = name.upcase
+        return 15 if temp_name.include?('HOANG MAI')
+        return 4 if temp_name.include?('HAI BA TRUNG')
         return 981
       end
 
       def hiv_status_patient
         mapping_list = {'positive_tb' => 3, 'negative_tb' => 2, 'unknown' => 1}
         return mapping_list[@episode.hiv_status] if @episode.present? && mapping_list[@episode.hiv_status].present?
-        return 0
+        return 1
       end
 
       def hiv_status_test_order
-        mapping_list = {'positive_tb' => 3, 'negative_tb' => 2, 'unknown' => 0}
+        mapping_list = {'positive_tb' => 3, 'negative_tb' => 2, 'unknown' => 1}
         return mapping_list[@episode.hiv_status] if @episode.present? && mapping_list[@episode.hiv_status].present?
-        return 1
+        return 0
       end
 
       def vtm_result(order_type)
