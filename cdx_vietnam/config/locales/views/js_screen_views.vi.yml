@@ -58,8 +58,8 @@ vi:
       error_tooltip: "Phạm vi của mã lỗi"
       error_placeholder: "Mã lỗi (phạm vi)"
       site_option_label: "Tất cả"
-      site_label: "Trang"
-      site_tooltip: "Những trang đang sử dụng thông báo này."
+      site_label: "Cơ sở"
+      site_tooltip: "Những cơ sở đang sử dụng thông báo này."
       site_placeholder: "Tất cả"
       device_option_label: "Tất cả"
       device_label: "Thiết bị"
@@ -165,7 +165,7 @@ vi:
       diagnosis_text: "Mỗi lần có 1 xét nghiệm mới, danh sách các tình trạng sẽ được cập nhật cho bạn chuẩn đoán"
       quantitative_placeholder: "Định lượng"
       observations_placeholder: "Quan sát"
-      site_label: "Trang"
+      site_label: "Cơ sở"
       sample_label: "Mẫu"
       append_new_sample_btn: "Gắn thêm mẫu mới"
       append_sample_btn: "Gắn thêm mẫu"
@@ -178,13 +178,13 @@ vi:
     encounter_new:
       requesting_label: "Yêu cầu"
       performing_label: "Thực hiện"
-      site_detail_heading: "Trang chi tiết"
-      message_label: "Trang chi tiết"
+      site_detail_heading: "Thông tin cơ sở"
+      message_label: "Thông tin cơ sở"
 
     encounter_show:
-      site_detail_heading: "Chi tiết trang"
-      requesting_site_label: "Trang yêu cầu:"
-      performing_site_label: "Trang thực hiện:"
+      site_detail_heading: "Thông tin cơ sở"
+      requesting_site_label: "Cơ sở yêu cầu:"
+      performing_site_label: "Cơ sở thực hiện:"
       test_detail_heading: "Chi tiết xét nghiệm"
       order_id_label: "Mã của yêu cầu:"
       testing_for_label: "xét nghiệm cho:"
@@ -279,8 +279,8 @@ vi:
       match: " không phù hợp với loại tài nguyên trước "
       the_control: " - bộ điều khiển có thể không làm việc OK"
       add_policy_btn: "Thêm chính sách"
-      and_subsites: " và những trang con"
-      at_site_and_subsites: " tại trang và những trang con"
+      and_subsites: " và những cơ sở tuyến dưới"
+      at_site_and_subsites: " tại cơ sở và những cơ sở tuyến dưới"
       no_actions_granted: "Không có hoạt động nào được phép"
       new_policy: "Chính sách mới"
       encounter: 'Yêu cầu xét nghiệm'
@@ -293,7 +293,7 @@ vi:
       actions_label: "Hoạt động"
       delegable_label: "Ủy quyền"
       type_label: "Loại"
-      include_subsites_label: "Bao gồm trang con"
+      include_subsites_label: "Bao gồm các cơ sở tuyến dưới"
       users_can: "Người dùng CÓ THỂ"
       not: "KHÔNG"
       delegate_permissions_on_this_policy: " có quyền ủy quyền chính sách này"
@@ -326,11 +326,11 @@ vi:
       add_element_btn2: "Thêm phần tử vào danh sách"
 
     site_select:
-      site: 'Trang'
+      site: 'Cơ sở'
 
     sites:
-      search_sites_placeholder: "Tìm kiếm trang"
-      selection_label: "Lựa chọn bao gồm tất cả trang con"
+      search_sites_placeholder: "Tìm kiếm cơ sở"
+      selection_label: "Lựa chọn bao gồm tất cả các cơ sở tuyến dưới"
       at: "ở "
 
     text_input_modal:

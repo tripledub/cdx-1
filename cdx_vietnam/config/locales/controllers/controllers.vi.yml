@@ -79,14 +79,14 @@ vi:
     role_deleted: 'Vai trò đã được xóa thành công.'
 
   sites_controller:
-    file_name: 'Trang-'
-    site_created: 'Trang đã được tạo thành công.'
-    site_updated: 'Trang đã được chỉnh sửa thành công.'
-    site_deleted: 'Trang đã được xóa thành công.'
+    file_name: 'Cơ sở -'
+    site_created: 'Cơ sở đã được tạo thành công.'
+    site_updated: 'Cơ sở đã được chỉnh sửa thành công.'
+    site_deleted: 'Cơ sở đã được xóa thành công.'
     col_name: 'Tên'
     col_address: 'Địa chỉ'
     col_city: 'Thành phố'
-    col_state: 'Bang'
+    col_state: 'Vùng'
     col_zipcode: 'Mã bưu điện'
 
   subscribers_controller:
