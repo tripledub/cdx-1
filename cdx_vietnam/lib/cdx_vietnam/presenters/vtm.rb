@@ -69,9 +69,16 @@ module CdxVietnam
           requesting_site: map_vtm_site_id(encounter.site.name),
           performing_site: map_vtm_site_id(encounter.performing_site.name),
           specimen_type: specimen_type(patient_result),
+          specimen_type_other: specimen_type_other,
           requester: 'NGHI',
           result: vtm_result(order_type) 
         }
+      end
+
+      def specimen_type_other
+        temp = patient_result.encounter.coll_sample_other
+        return temp if temp
+        return ''
       end
 
       def map_vtm_site_id(name)
