@@ -7,14 +7,21 @@ var MedicalInsuranceNum = React.createClass({
     };
   },
 
-  invalidValue: function(fieldValue) {
-    var matches = fieldValue.match(/^[a-zA-Z]{2}[0-9]{13}$/iug);
-    return !(matches && !matches.length);
+  sanitizeValue : function() {
+    var inputValue = this.linkState('inputValue').value.trim();
+    this.setState({ inputValue: inputValue.replace(/[ -\/\[-`{-■:-@]/g, '') });
+    return true;
+  },
+
+  invalidValue: function() {
+    var inputValue = this.linkState('inputValue').value.trim();
+    if(!inputValue.length) return true;
+    var matches = inputValue.match(/^[a-zA-Z]{2}[0-9]{13}$/iug);
+    return matches && !matches.length;
   },
 
   validateMedicalInsuranceNum: function() {
-    var inputValue = this.linkState('inputValue').value.trim();
-    if (inputValue.length && this.invalidValue(inputValue)) {
+    if (this.sanitizeValue() && this.invalidValue()) {
       if (!confirm(I18n.t("patients.form.wrong_medical_insurance_num"))) {
         this.setState({ inputValue: '' });
       }
