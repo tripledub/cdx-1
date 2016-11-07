@@ -191,6 +191,7 @@ vi:
       culture_format_label: "Định dạng môi trường nuôi cấy:"
       comment_label: "Bình luận:"
       weeks_in_treatment_label: "Số tuần điều trị:"
+      testing_for_comment_label: 'Bình luận cho xét nghiệm:'
       samples_id_label: "Mã mẫu:"
       sample_type_label: "Loại mẫu:"
       test_due_date_label: "Ngày hết hạn xét nghiệm:"

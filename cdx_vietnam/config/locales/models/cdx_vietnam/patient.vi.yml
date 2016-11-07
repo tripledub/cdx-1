@@ -4,4 +4,4 @@ vi:
       patient:
         name: 'Tên *'
         social_security_code: 'CMND *'
-        vitimes_id: 'Mã BN Vitimes/eTB Manager'
+        vitimes_id: 'Mã bệnh nhân vitimes'

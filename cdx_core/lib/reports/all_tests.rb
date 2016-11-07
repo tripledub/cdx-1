@@ -24,8 +24,8 @@ module Reports
 
       {
         title:   '',
-        titleY:  'Number of tests',
-        titleY2: 'Number of errors',
+        titleY:  I18n.t('all_tests.number_tests'),
+        titleY2: I18n.t('all_tests.number_errors'),
         columns: generate_columns(sorted_data)
       }
     end
@@ -71,7 +71,7 @@ module Reports
           type: "column",
           color: "#E06023",
           name: "Tests",
-          legendText: "Tests",
+          legendText: I18n.t('all_tests.tests'),
           showInLegend: true,
           dataPoints: sorted_data.map { |data_point| { label: data_point[:label], y: data_point[:values][0] } }
         },
@@ -80,7 +80,7 @@ module Reports
           type: "column",
           color: "#5C5B82",
           name: "Errors",
-          legendText: "Errors",
+          legendText: I18n.t('all_tests.errors'),
           axisYType: "secondary",
           showInLegend: true,
           dataPoints: sorted_data.map { |data_point| { label: data_point[:label], y: data_point[:values][1] } }

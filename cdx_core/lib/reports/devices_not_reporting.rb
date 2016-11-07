@@ -4,7 +4,7 @@ module Reports
       process
       {
         title:   '',
-        titleY:  'Days',
+        titleY:  I18n.t('device_not_report.day'),
         axisX: {
           interval: 1
         },
@@ -54,7 +54,7 @@ module Reports
           type: "column",
           color: "#E06023",
           name: "Days",
-          legendText: "Device",
+          legendText: I18n.t('device_not_report.device'),
           showInLegend: true,
           dataPoints: data.map { |result| { label: result[:label].to_s, y: result[:value].to_i } }
         }

@@ -3,6 +3,7 @@ en:
     attributes:
       patient:
         social_security_code: 'CMND'
+        nationality: 'Nationality'
   patient:
     validations:
       cmnd: 'should be between 9 and 15 characters long.'
