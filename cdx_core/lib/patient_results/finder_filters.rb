@@ -19,6 +19,7 @@ module PatientResults
       filter_by_type
       filter_by_status
       filter_by_sample_identifier
+      filter_by_failed
     end
 
     def init_query
@@ -66,12 +67,14 @@ module PatientResults
     def filter_by_date
       since_day = start_date + ' 00:00'
       until_day = end_date + ' 23:59'
-      @number_of_days = (Time.parse(until_day) - Time.parse(since_day)).to_i  / 86400
+      @number_of_days = (Time.parse(until_day) - Time.parse(since_day)).to_i / 86_400
       @filter_query = filter_query.where('patient_results.created_at' => since_day..until_day)
     end
 
     def start_date
-      if params['since'].present?
+      if start_range
+        params['range']['start_time']['gte']
+      elsif params['since'].present?
         params['since']
       elsif params['from_date'].present?
         params['from_date']
@@ -81,7 +84,21 @@ module PatientResults
     end
 
     def end_date
-      params['to_date'].present? ? params['to_date'] : Date.today.strftime('%Y-%m-%d')
+      if end_range
+        params['range']['start_time']['lte']
+      elsif params['to_date'].present?
+        params['to_date']
+      else
+        Date.today.strftime('%Y-%m-%d')
+      end
+    end
+
+    def start_range
+      params['range'].present? && params['range']['start_time'].present? && params['range']['start_time']['gte'].present?
+    end
+
+    def end_range
+      params['range'].present? && params['range']['start_time'].present? && params['range']['start_time']['lte'].present?
     end
   end
 end

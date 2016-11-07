@@ -1,9 +1,9 @@
 module Reports
   # Generates a bar graphic with all test results grouped for a period of time.
   class AllTests
-    def initialize(context, options = {})
+    def initialize(context, filter_options = {})
       @context = context
-      @options = options
+      @filter_options = filter_options
       @days_span = 0
     end
 
@@ -65,12 +65,12 @@ module Reports
     end
 
     def find_error_results
-      @options['status'] = 'error'
+      @filter_options['status'] = 'error'
       find_results
     end
 
     def patient_results_finder
-      patient_results = PatientResults::Finder.new(@context, @options)
+      patient_results = PatientResults::Finder.new(@context, @filter_options)
       @days_span = patient_results.number_of_days
       patient_results.filter_query
                      .group(dates_filter)
@@ -79,7 +79,7 @@ module Reports
     end
 
     def orphan_results_finder
-      orphan_results = TestResults::Finder.new(@context, @options)
+      orphan_results = TestResults::Finder.new(@context, @filter_options)
       orphan_results.filter_query
                     .group(dates_filter)
                     .order('patient_results.result_at DESC')

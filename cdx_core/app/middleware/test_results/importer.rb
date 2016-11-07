@@ -40,9 +40,9 @@ module TestResults
     end
 
     def parse_date(result_date)
-        Time.parse(result_date)
-      rescue
-        Time.now
+      Time.parse(result_date)
+    rescue
+      Time.now
     end
   end
 end

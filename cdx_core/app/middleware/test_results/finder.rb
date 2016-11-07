@@ -12,5 +12,9 @@ module TestResults
                 .joins('LEFT OUTER JOIN devices ON devices.id = patient_results.device_id')
                 .joins('LEFT OUTER JOIN sample_identifiers ON sample_identifiers.id = patient_results.sample_identifier_id')
     end
+
+    def filter_by_failed
+      @filter_query = filter_query.where('patient_results.result_status IN (?)', %w(invalid error no_result)) if params['failed']
+    end
   end
 end
