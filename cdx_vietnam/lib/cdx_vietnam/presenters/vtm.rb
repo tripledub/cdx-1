@@ -68,11 +68,18 @@ module CdxVietnam
           sample_collected_date2: Extras::Dates::Format.datetime_with_time_zone(patient_result.sample_collected_at, I18n.t('date.formats.vtm_long2')),
           requesting_site: map_vtm_site_id(encounter.site.name),
           performing_site: map_vtm_site_id(encounter.performing_site.name),
+          visual_appearance: visual_appearance,
           specimen_type: specimen_type(patient_result),
           specimen_type_other: specimen_type_other,
           requester: 'NGHI',
           result: vtm_result(order_type) 
         }
+      end
+
+      def visual_appearance
+        mapping_list = {'blood' => 1, 'mucopurulent' => 2,'saliva' => 3}
+        return mapping_list[patient_result.appearance] if patient_result.appearance.present? && mapping_list[patient_result.appearance].present?
+        return 1
       end
 
       def specimen_type_other

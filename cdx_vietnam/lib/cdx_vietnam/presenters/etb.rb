@@ -112,6 +112,7 @@ module CdxVietnam
             sample_collected_date: Extras::Dates::Format.datetime_with_time_zone(patient_result.sample_collected_at, I18n.t('date.formats.etb_short')), # @TODO
             month: 2, # @TODO, sample on cdp not have month field
             specimen_type: specimen_type(patient_result), 
+            specimen_type_other: specimen_type_other,
             laboratory_serial_number: 'N3432',# @TODO, cdp not have this field
             visual_appearance: visual_appearance, 
             laboratory_region: 'MIỀN BẮC', # OK - HARD CODE
@@ -123,6 +124,12 @@ module CdxVietnam
           }
         end
         return rs
+      end
+
+      def specimen_type_other
+        temp = patient_result.encounter.coll_sample_other
+        return temp if temp
+        return ''
       end
 
       def visual_appearance
