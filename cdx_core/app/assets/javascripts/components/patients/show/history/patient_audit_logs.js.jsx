@@ -30,7 +30,7 @@ var PatientAuditLogs = React.createClass({
   },
 
   pageData: function(pageNumber) {
-    this.getData(this.state.activeField, pageNumber);
+    this.getData(this.state.orderBy, pageNumber);
   },
 
   getParams: function(field, pageNumber) {
@@ -71,6 +71,7 @@ var PatientAuditLogs = React.createClass({
         );
       }
     );
+
     return (
       <div className="row">
         {
