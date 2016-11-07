@@ -49,6 +49,7 @@ module Integration
         params = test_order['test_order'].clone
 
         check_key 'type', params
+        check_key 'visual_appearance', params
         check_key 'hiv_status', params
         check_key 'sample_collected_date1', params
         check_key 'sample_collected_date2', params
@@ -80,9 +81,9 @@ module Integration
             "testReason":1,
             "testMonth":0,
             "tbTreatmentHistory":1,
-            "hivStatus":1,
+            "hivStatus": params['hiv_status'].to_i,
             "loaiBenhPham": params['specimen_type'].to_s,
-            "loaiBenhPhamKhacGhiRo": (params['specimen_type'].to_s == '2') ? "khac" : "",
+            "loaiBenhPhamKhacGhiRo": (params['specimen_type'].to_s == '2') ? params['specimen_type_other'] : "",
             "ngayLayMau": params['sample_collected_date1'],
             "strngayLayMau": params['sample_collected_date2'],
             "gioLayMau":10,
@@ -136,7 +137,7 @@ module Integration
             "strngayXN":params['sample_collected_date2'],
             "gioXN":10,
             "phutXN":10,
-            "trangThaiBenhPhamAFB1_1":1,
+            "trangThaiBenhPhamAFB1_1": params['visual_appearance'].to_i,
             "ketQuaAFB1_1":(params['type'] == 1) ? params['result'].to_i : 0,
             "ketQuaAFBItGhiRo1_1":0,
             "trangThaiBenhPhamAFB1_2":0,
@@ -228,8 +229,8 @@ module Integration
             "gender": params['gender'].to_i,
             "idNumber":"",
             "mobile": params['cellphone_number'],
-            "hasHealthInsurance":false,
-            "healthInsuranceNumber":"",
+            "hasHealthInsurance":(params['health_insurance_number'].nil? or params['health_insurance_number'].empty?) ? false : true,
+            "healthInsuranceNumber":(params['health_insurance_number'].nil? or params['health_insurance_number'].empty?) ? "" : params['health_insurance_number'],
             "provinceId":1,
             "districtId":0,
             "communeId":0,
