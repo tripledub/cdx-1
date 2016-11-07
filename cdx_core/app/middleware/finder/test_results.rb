@@ -56,7 +56,7 @@ module Finder
       @page_size           = 50 if @page_size > 100
       @page                = (params["page"] || 1).to_i
       @page                = 1 if @page < 1
-      @query["order_by"]   = params["order_by"] || "test.end_time"
+      @query["order_by"]   = params["order_by"] || "-test.start_time"
       @query["page_size"]  = @page_size
       @query["offset"]     = (@page - 1) * @page_size
       @result = TestResult.query(@query, @current_user).execute

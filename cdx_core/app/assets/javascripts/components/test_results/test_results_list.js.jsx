@@ -34,7 +34,7 @@ var TestResultsList = React.createClass({
       titleClassName: "",
       downloadCsvPath: null,
       allowSorting: true,
-      orderBy: "site.name",
+      orderBy: "test.start_time",
       showSites: true,
       showDevices: true
     }
