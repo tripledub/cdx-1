@@ -34,7 +34,7 @@ module CdxVietnam
             age: patient.age,
             gender: gender,
             health_insurance_number: patient.medical_insurance_num,
-            healthcare_unit: map_vtm_site_id(patient.site.name),
+            healthcare_unit: map_vtm_site_id(patient.site),
             cellphone_number: '23711',
             registration_address1: cdp_address(patient.addresses[1].address), # line đầu tiên của Contact Address
             registration_province: 'Hà Nội',
@@ -66,8 +66,8 @@ module CdxVietnam
           hiv_status: hiv_status_test_order,
           sample_collected_date1: Extras::Dates::Format.datetime_with_time_zone(patient_result.sample_collected_at, I18n.t('date.formats.vtm_long')),
           sample_collected_date2: Extras::Dates::Format.datetime_with_time_zone(patient_result.sample_collected_at, I18n.t('date.formats.vtm_long2')),
-          requesting_site: map_vtm_site_id(encounter.site.name),
-          performing_site: map_vtm_site_id(encounter.performing_site.name),
+          requesting_site: map_vtm_site_id(encounter.site),
+          performing_site: map_vtm_site_id(encounter.performing_site),
           visual_appearance: visual_appearance,
           specimen_type: specimen_type(patient_result),
           specimen_type_other: specimen_type_other,
@@ -88,7 +88,9 @@ module CdxVietnam
         return ''
       end
 
-      def map_vtm_site_id(name)
+      def map_vtm_site_id(site)
+        return 981 unless site.present?
+        name = site.name
         temp_name = name.upcase
         return 15 if temp_name.include?('HOANG MAI')
         return 4 if temp_name.include?('HAI BA TRUNG')
