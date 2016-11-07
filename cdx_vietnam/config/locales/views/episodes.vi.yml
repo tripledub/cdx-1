@@ -5,10 +5,10 @@ vi:
       history: 'Lịch sử điều trị trước đây'
       history_tb: 'Lịch sử trước đây của TB *'
       select_type_of_episode: 'Chọn loại lần khám'
-      episode_details: 'Thông tin tập'
+      episode_details: 'Thông tin lần khám'
       episode_type_not_available: 'Loại lần khám này hiện không có có sẵn'
       hiv_status: 'Trạng thái HIV hiện tại *'
-      episode_previous_history_required: 'Bắt buộc có lịch sử tập trước đây'
+      episode_previous_history_required: 'Bắt buộc có lịch sử lần khám trước đây'
     create:
       new_episode: 'Lần khám mới đã được tạo'
       episode_created: 'Lần khám đã được tạo thành công.'

@@ -3,11 +3,11 @@ vi:
     address:
       street: 'Địa chỉ'
       city: 'Thành phố/Tỉnh'
-      state: 'Quận/Huyện'
+      state: 'Vùng'
       postal: 'Mã bưu chính'
       address_label: 'Địa chỉ'
       city_label: 'Thành phố/Tỉnh'
-      state_label: 'Quận/Huyện'
+      state_label: 'Vùng'
       post_code_label: 'Mã bưu chính'
     pagination:
       of: 'trong tổng số'

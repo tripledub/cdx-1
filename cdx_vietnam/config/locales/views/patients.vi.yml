@@ -12,7 +12,7 @@ vi:
       edit_patient: 'Chỉnh sửa bệnh nhân'
       patient_summary: 'Hồ sơ bệnh nhân'
       patient_history: 'Lịch sử bệnh nhân'
-      episode_summary: 'Tóm tắt tập'
+      episode_summary: 'Tóm tắt lần khám'
       address: 'Địa chỉ'
       alt_address: 'Địa chỉ thay thế'
       male: "Nam"

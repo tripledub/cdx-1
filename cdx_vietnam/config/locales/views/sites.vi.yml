@@ -39,13 +39,13 @@ vi:
         email_address: 'Địa chỉ email'
         comment:  'Bình luận'
       tooltip:
-        institution: 'Tổ chức trang này là một phần của'
+        institution: 'Tổ chức này là một phần của'
         name: 'Tên cơ sở'
         parent: 'cơ sở này là tuyến dưới của'
         sample_id_reset_policy: 'Chính sách thiết lập mã mẫu thử'
         allows_manual_entry: 'Cơ sở này cho phép nhập dữ liệu bằng tay không?'
-        main_phone_number: 'Số điện thoại chính của trang'
-        email_address: 'Địa chỉ email liên hệ của trang'
+        main_phone_number: 'Số điện thoại chính của cơ sở'
+        email_address: 'Địa chỉ email liên hệ của cơ sở'
         comment: 'Bình luận'
     filters:
       sites_title: 'Cơ sở'

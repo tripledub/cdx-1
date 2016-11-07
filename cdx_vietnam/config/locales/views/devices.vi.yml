@@ -12,7 +12,7 @@
     form:
       title_institution: 'Tổ chức'
       lbl_device_model: 'Kiểu thiết bị'
-      lbl_site: 'Trang'
+      lbl_site: 'Cơ sở'
       lbl_name: 'Tên'
       lbl_serial_number: 'Số seri'
       lbl_time_zone: 'Múi giờ'
@@ -31,7 +31,7 @@
       name: 'Tên'
       manufacturer: 'Nhà sản xuất'
       model: 'Kiểu'
-      site: 'Trang'
+      site: 'Cơ sở'
       devices: 'Thiết bị'
     setup:
       setup_header: 'Cài đặt'
