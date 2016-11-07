@@ -9,7 +9,3 @@ vi:
       wrong_medical_insurance_num: This is not a valid Medical Insurance Number (2 characters followed by 13 digits). Do you still wish to continue?
       nationality: 'Quốc tịch'
       nationality_tooltip: 'Chọn quốc tịch của bạn'
-  activerecord:
-    attributes:
-      patient:
-        nationality: 'Quốc tịch'

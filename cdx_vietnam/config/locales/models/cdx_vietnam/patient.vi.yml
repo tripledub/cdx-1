@@ -4,4 +4,4 @@ vi:
       patient:
         name: 'Tên *'
         social_security_code: 'CMND *'
-        vitimes_id: 'Vitimes Log ID'
+        vitimes_id: 'Mã bệnh nhân vitimes'

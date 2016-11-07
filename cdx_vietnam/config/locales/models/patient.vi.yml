@@ -15,6 +15,7 @@ vi:
         medical_insurance_num: 'Số bảo hiểm'
         external_id: 'Mã bệnh nhân hệ thống ngoài'
         external_patient_system: 'Hệ thống bệnh nhân ngoài'
+        nationality: 'Quốc tịch'
   patient:
     model_form:
       wrong_date: 'nên là một ngày trong %{birth_date_on_placeholder}'
