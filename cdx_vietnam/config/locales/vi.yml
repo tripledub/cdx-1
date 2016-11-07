@@ -177,9 +177,9 @@ vi:
       prompt: Vui lòng chọn
     submit:
       episode:
-        create: Tạo Tập
-        submit: Lưu Tập
-        update: Chỉnh Tập
+        create: Tạo lần khám
+        submit: Lưu lần khám
+        update: Chỉnh lần khám
       create: Tạo %{model}
       submit: Lưu %{model}
       update: Chỉnh sửa %{model}
