@@ -11,10 +11,3 @@ schedule_hourly_aggregation_job:
   queue: default
   active_job: false
   retry: 0
-
-schedule_instant_aggregation_job:
-  cron: "0 * * * * *"
-  class: "InstantAggregationJob"
-  queue: default
-  active_job: false
-  retry: 0

@@ -68,17 +68,25 @@ module ApplicationHelper
   end
 
   def flash_message
-    String.new.tap do |s|
-      {
-        :notice => 'flash_notice',
-        :error => 'flash_error',
-        :alert => 'flash_error'
-      }.each do |key, value|
-        next if flash[key].blank?
-        s << content_tag(:div, content_tag(:div, h(flash[key])), :class => "flash #{value}")
+    res = nil
+
+    keys = { :notice => 'flash_notice', :error => 'flash_error', :alert => 'flash_error' }
+
+    keys.each do |key, value|
+      if flash[key].present?
+        html_option = { :class => "flash #{value}" }
+        res = content_tag :div, html_option do
+          content_tag :div do
+            flash[key]
+          end
+        end
       end
-    end.html_safe
+    end
+
+    res
   end
+
+
 
   def test_results_table(attributes)
     options = { filter: {} }

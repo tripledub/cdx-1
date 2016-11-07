@@ -22,8 +22,7 @@ class Notification::Notice < ActiveRecord::Base
   validates :status,    inclusion: { in: STATUSES }
 
   # Callbacks
-  # Let's leave this alone for now.
-  # after_commit :run_instant_job, on: :create, if: :instant_notification?
+  after_commit :run_instant_job, on: :create, if: :instant_notification?
 
   serialize :data, Hash
 

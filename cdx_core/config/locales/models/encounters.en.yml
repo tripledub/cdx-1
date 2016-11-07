@@ -1,6 +1,6 @@
 en:
   activerecord:
-    model:
+    models:
       encounter: 'Test order'
   encounters:
     status:

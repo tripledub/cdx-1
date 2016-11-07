@@ -31,7 +31,6 @@ en:
     form:
       legends:
         ad-hoc_recipients: Ad-hoc recipients
-        conditions: Conditions to trigger on?
       placeholder:
         name: Name
         description: Description
@@ -85,21 +84,8 @@ en:
         utilisation_efficiency_sample_identifier: ID of the Sample that produced this Alert
         utilisation_efficiency_threshold: How many checks to allow?
 
-  notification_conditions:
-    form:
-      new_condition: New condition
-      placeholder:
-        condition_type: Notify on
-        field: With
-        value: Value
-      tooltip:
-        condition_type: What object to notify on?
-        field: What field to observe?
-        value: What value are you expecting?
-
   notification_recipients:
     form:
-      new_recipient: New Recipient
       placeholder:
         first_name: First name
         last_name: Last name

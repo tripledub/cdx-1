@@ -38,7 +38,6 @@ class Notification < ActiveRecord::Base
   has_many :roles,   through: :notification_roles,   class_name: '::Role'
   has_many :users,   through: :notification_users,   class_name: '::User'
 
-  has_many :notification_conditions, class_name: 'Notification::Condition'
   has_many :notification_recipients, class_name: 'Notification::Recipient'
   has_many :notification_statuses,   class_name: 'Notification::Status'
   has_many :notification_notices,    class_name: 'Notification::Notice'
@@ -59,20 +58,18 @@ class Notification < ActiveRecord::Base
                                   inclusion: { in: Notification::FREQUENCY_VALUES.map(&:last) },
                                   allow_nil: true, allow_blank: true
   validates :detection_condition, presence:  { if: :detection? }
+  validate :validate_delivery_method
 
   alias_attribute :utilisation_efficiency_sample_identifier, :sample_identifier
 
-  accepts_nested_attributes_for :notification_conditions, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :notification_recipients, reject_if: :all_blank, allow_destroy: true
+  attr_accessor :notification_statuses_names
 
   # Callbacks
+  after_save :create_notification_statuses
   before_validation :enforce_nil_values
   before_validation :patient_lookup
   before_validation :test_lookup
-
-  def notification_statuses_names
-    @notification_statuses_names ||= notification_statuses.pluck(:test_status)
-  end
 
   # Scopes
   scope :enabled, -> { where(enabled: true) }
@@ -90,15 +87,15 @@ class Notification < ActiveRecord::Base
 
   # Instance methods
   def on_patient
-    patient_identifier.present?
+    !patient_identifier.blank?
   end
 
   def on_test_order
-    test_identifier.present?
+    !test_identifier.blank?
   end
 
   def detection?
-    detection.present?
+    !detection.blank?
   end
 
   def instant?
@@ -109,56 +106,79 @@ class Notification < ActiveRecord::Base
     frequency == 'aggregate'
   end
 
+  def notification_statuses_names
+    @notification_statuses_names ||= notification_statuses.pluck(:test_status)
+  end
+
   def role_users
     @role_users ||= ::User.includes(roles: { notification_roles: [:notification] }).where(notifications: { id: id} )
   end
 
   private
 
-  def patient_lookup_entity_id
-    # Strict lookup based on #patient_identifier and Patient#entity_id
-    Patient.where(is_phantom: false, institution_id: institution_id)
-           .find_by(entity_id: patient_identifier)
-  end
+    def validate_delivery_method
+      !sms && !email && errors.add(:base, I18n.t('activerecord.errors.models.notification.base.sms_or_email'))
+    end
 
-  def patient_lookup_id
-    # Regex off the last set of digits.
-    # i.e. 00001 off of CDP00001
-    return if (matches = patient_identifier.match(/(\d+\b)/)).blank?
+    def create_notification_statuses
+      return if notification_statuses_names.blank?
+      # Remove empty strings and nils
+      notification_statuses_names.reject!(&:blank?)
+      # Get current test statuses from relation
+      current_test_statuses  = notification_statuses.pluck(:test_status)
+      # New test statuses
+      adding_test_statuses   = notification_statuses_names - current_test_statuses
+      # Removed test statuses
+      removing_test_statuses = current_test_statuses - notification_statuses_names
+      # Create all new statuses
+      notification_statuses.create!(adding_test_statuses.map { |test_status| { test_status: test_status } })
+      # Destroy all removed statuses
+      notification_statuses.where(test_status: removing_test_statuses).destroy_all
+    end
 
-    Patient.where(is_phantom: false, institution_id: institution_id)
-           .find_by(id: matches[0].to_i)
-  end
+    def patient_lookup_entity_id
+      # Strict lookup based on #patient_identifier and Patient#entity_id
+      Patient.where(is_phantom: false, institution_id: institution_id)
+             .find_by(entity_id: patient_identifier)
+    end
 
-  # TODO: Change this drastically to use ui search lookup.
-  def patient_lookup
-    return unless patient_identifier_changed?
-    self.patient = patient_lookup_entity_id || patient_lookup_id
-  end
+    def patient_lookup_id
+      # Regex off the last set of digits.
+      # i.e. 00001 off of CDP00001
+      return if (matches = patient_identifier.match(/(\d+\b)/)).blank?
 
-  # TODO: Change this drastically to use ui search lookup.
-  def test_lookup
-    return if test_identifier.blank?
-    return if (matches = test_identifier.match(/(\d+\b)/)).blank?
+      Patient.where(is_phantom: false, institution_id: institution_id)
+             .find_by(id: matches[0].to_i)
+    end
 
-    encounters = patient ? patient.encounters : Encounter
-    self.encounter = encounters.where(is_phantom: false, institution_id: institution_id)
-                               .find_by(id: matches[0].to_i)
-  end
+    # TODO: Change this drastically to use ui search lookup.
+    def patient_lookup
+      return unless patient_identifier_changed?
+      self.patient = patient_lookup_entity_id || patient_lookup_id
+    end
 
-  # The Lookup for notifications queries on NULL, not on an empty string.
-  def enforce_nil_values
-    self.sample_identifier = nil             if self.sample_identifier.blank?
-    self.detection = nil                     if self.detection.blank?
-    self.detection_condition = nil           if self.detection_condition.blank?
-    self.detection_quantitative_result = nil if self.detection_quantitative_result.blank?
-  end
+    # TODO: Change this drastically to use ui search lookup.
+    def test_lookup
+      return if test_identifier.blank?
+      return if (matches = test_identifier.match(/(\d+\b)/)).blank?
+
+      encounters = patient ? patient.encounters : Encounter
+      self.encounter = encounters.where(is_phantom: false, institution_id: institution_id)
+                                 .find_by(id: matches[0].to_i)
+    end
+
+    # The Lookup for notifications queries on NULL, not on an empty string.
+    def enforce_nil_values
+      self.sample_identifier = nil             if self.sample_identifier.blank?
+      self.detection = nil                     if self.detection.blank?
+      self.detection_condition = nil           if self.detection_condition.blank?
+      self.detection_quantitative_result = nil if self.detection_quantitative_result.blank?
+    end
 end
 
 # I got a long way into this before I found out the engine stuff
 # is breaking the tests massively without the following requires.
 require_dependency 'notification/device'
-require_dependency 'notification/condition'
 require_dependency 'notification/notice'
 require_dependency 'notification/notice_group'
 require_dependency 'notification/notice_recipient'

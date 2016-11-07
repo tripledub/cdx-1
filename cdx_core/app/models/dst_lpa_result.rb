@@ -11,7 +11,7 @@ class DstLpaResult < PatientResult
 
   delegate :patient, to: 'encounter'
 
-  notification_observe_fields :media_used,
+  notification_observe_fields :serial_number, :media_used,
                               :method_used, :results_h,
                               :results_r, :results_e,
                               :results_s, :results_amk,
