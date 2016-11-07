@@ -2,8 +2,8 @@ vi:
   patients:
     form:
       social_security_code: 'CMND'
-      vitimes_id: 'Mã bệnh nhân Vitimes'
-      vitimes_id_tooltip: 'Nhập mã bệnh nhân ký Vitimes'
+      vitimes_id: 'Mã bệnh nhân Vitimes/eTB Manager'
+      vitimes_id_tooltip: 'Nhập mã bệnh nhân ký Vitimes/eTB Manager'
       wrong_social_security_number: "Dữ liệu nhập vào không hợp lệ (tối thiểu 9 ký tự, tối đa 15 ký tự). Bạn có muốn lưu lại không?"
       social_security_code_tooltip: 'CMND (tối thiểu 9 ký tự, tối đa 15 ký tự)'
       wrong_medical_insurance_num: This is not a valid Medical Insurance Number (2 characters followed by 13 digits). Do you still wish to continue?

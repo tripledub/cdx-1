@@ -3,5 +3,5 @@ en:
     attributes:
       patient:
         name: 'Name *'
-        social_security_code: 'CMND *'
-        vitimes_id: Vitimes Log ID
+        social_security_code: 'Social Security ID *'
+        vitimes_id: Vitimes/eTB Manager Log ID
