@@ -3,16 +3,13 @@ module Notifications
     def check_notifications
       @notifications =
         Notification.enabled
-                    .includes(:institution, :sites, :notification_statuses, :patient)
+                    .includes(:institution, :sites, :notification_conditions, :patient)
 
       if alertable.institution
         @notifications = @notifications.where(institutions: { id: alertable.institution.id })
       elsif alertable.encounter && alertable.encounter.institution
         @notifications = @notifications.where(institutions: { id: alertable.encounter.institution.id })
       end
-
-      @notifications =
-        @notifications.where('notification_statuses.id is null OR notification_statuses.test_status = ?', alertable.result_status)
 
       if alertable.site
         @notifications = @notifications.where('sites.id is null OR sites.id = ?', alertable.site.id)

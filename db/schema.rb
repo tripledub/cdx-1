@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161025184749) do
+ActiveRecord::Schema.define(version: 20161106181141) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -397,6 +397,16 @@ ActiveRecord::Schema.define(version: 20161025184749) do
     t.integer  "device_model_id", limit: 4
   end
 
+  create_table "notification_conditions", force: :cascade do |t|
+    t.integer  "notification_id", limit: 4
+    t.string   "condition_type",  limit: 255
+    t.string   "field",           limit: 255
+    t.string   "value",           limit: 255
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "notification_devices", force: :cascade do |t|
     t.integer  "notification_id", limit: 4
     t.integer  "device_id",       limit: 4
@@ -416,6 +426,8 @@ ActiveRecord::Schema.define(version: 20161025184749) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "institution_id",  limit: 4
+    t.text     "sms_messages",    limit: 65535
+    t.text     "email_messages",  limit: 65535
   end
 
   create_table "notification_notice_recipients", force: :cascade do |t|
@@ -675,6 +687,7 @@ ActiveRecord::Schema.define(version: 20161025184749) do
     t.boolean  "skip_ssc_validation",                   default: false
     t.string   "etb_patient_id",          limit: 255
     t.string   "vtm_patient_id",          limit: 255
+    t.string   "nationality",             limit: 255
   end
 
   add_index "patients", ["birth_date_on"], name: "index_patients_on_birth_date_on", using: :btree

@@ -20,7 +20,7 @@
     -moz-box-flex: 0 0 300px;
     -webkit-flex: 0 0 300px;
     -ms-flex: 0 0 300px;
-    flex: 0 0 24.667%;
+    flex: 0 0 300px;
   margin-bottom:15px;
 }
 
@@ -398,8 +398,9 @@ font-size:16px;
 }
 
 .section .col .stat{
-height:80px;
-margin-top:-10px;
+height: 80px;
+line-height: 1.2;
+margin-top: -10px;
 }
 
 .section .col .stat span{
@@ -454,10 +455,10 @@ font-size:10px;
 
 
 #filters-form .Select-placeholder{
-margin-top:7px;
+margin-top:5px;
 text-align:center;
 background:#fff;
-padding:3px 80px 3px 5px;
+padding:5px 80px 6px 5px;
 }
 
 #filters-form .Select {

@@ -49,23 +49,24 @@
     .col
       = cdx_select form: f, name: :time_zone, class: 'input-x-large' do |select|
         - select.items(ActiveSupport::TimeZone.all, :name, :to_s)
-  #custom_mappings
-    = render "custom_mappings" if @device.device_model
-     
+-#
+    #custom_mappings
+      = render "custom_mappings" if @device.device_model
 
-:coffeescript
-  $ ->
-    selected_device_model_id = #{@device.device_model_id.to_s.to_json}
-    cdx_select_on_change "device[device_model_id]", (device_model_id) ->
-      # Load custom mappings
-      if device_model_id != selected_device_model_id
-        $("#custom_mappings").load(
-          "/devices/custom_mappings",
-          {
-            "device_model_id": device_model_id,
-            "device_id": #{@device.id.to_json}
-          },
-          ->
-            cdx_init_components($("#custom_mappings"))
-        )
-        selected_device_model_id = device_model_id
+
+  :coffeescript
+    $ ->
+      selected_device_model_id = #{@device.device_model_id.to_s.to_json}
+      cdx_select_on_change "device[device_model_id]", (device_model_id) ->
+        # Load custom mappings
+        if device_model_id != selected_device_model_id
+          $("#custom_mappings").load(
+            "/devices/custom_mappings",
+            {
+              "device_model_id": device_model_id,
+              "device_id": #{@device.id.to_json}
+            },
+            ->
+              cdx_init_components($("#custom_mappings"))
+          )
+          selected_device_model_id = device_model_id
