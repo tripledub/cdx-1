@@ -30,13 +30,12 @@ $(document).on("ready", function(){
 
 
 $(document).ready(function(){
-
+  
   $('.datetimepicker').datetimepicker();
 
   $('.select2').each(function() {
     var $select = $(this);
     $select.select2({
-      width : '100%',
       placeholder: {
         id: "-1",
         text: $select.attr('placeholder'),
@@ -171,10 +170,15 @@ $(document).ready(function(){
   });
 
 
-  var $flashn = $(".flash.flash_notice, .flash.flash_error");
+  var flashn = $(".flash.flash_notice");
 
-  if($flashn.length)
-    $flashn.delay(3000).fadeOut(300);
+  flashn.append( "<a class='close-notification'>x</a>" );
+
+  flashn.delay(3000).fadeOut(300);
+
+  $(".close-notification").click(function(){
+    flashn.hide();
+  });
 
   $('body').on('keydown', 'textarea.resizeable', function(e){
     var textarea = $(e.target);
@@ -206,190 +210,61 @@ $(document).ready(function(){
   // Show/Hide elements based on boolean with the class in data-show-optional
   $('input[data-show-optional]').on('change', function() {
     var $input = $(this);
-    if($input.is(':checked'))
+    if($input.is(':checked')) {
       $('.row.' + $input.data('show-optional')).removeClass('nodisplay');
-    else
+    } else {
       $('.row.' + $input.data('show-optional')).addClass('nodisplay');
+    }
   });
 
-  $(function() {
-    $('.generic-fieldset-fields').fieldsetEvents();
+  $('.notification-recipient-fields__close').on('click', function(e) {
+    e.preventDefault(); e.stopPropagation();
+    var $parentFields = $(this).parent();
+    var $destroyInput = $parentFields.prev();
+    $destroyInput.val(true);
+    if($('.notification-recipient-fields').length > 1) {
+      $parentFields.remove();
+    } else {
+      $('.notification-recipient-fields input[type=text]').val(null)
+    }
+  });
 
-    $('.generic-fieldset-fields__new').on('click', function(e) {
-      e.preventDefault(); e.stopPropagation();
+  $('.notification-recipient-fields__new').on('click', function(e) {
+    e.preventDefault(); e.stopPropagation();
 
-      var $fieldset = $(this).parents('.generic-fieldset');
+    var notificationIndex = $('.notification-recipient-fields').length;
+    var $recipientFields = $('.notification-recipient-fields:last').clone();
 
-      var notificationIndex = $('.generic-fieldset-fields', $fieldset).length;
-      var $fieldsetFields  = $('.generic-fieldset-fields:last', $fieldset).clone();
+    $recipientFields.find('input').each(function() {
+      var $field = $(this);
+      var newId = $field.attr('id').replace(/_\d_/, '_' + notificationIndex + '_');
+      var newName = $field.attr('name').replace(/\[\d\]/, '[' + notificationIndex + ']');
+      $field.attr('id', newId);
+      $field.attr('name', newName);
+      $field.val(null);
+    })
 
-      $.each($fieldsetFields.find('input'), function() {
-        var $field  = $(this);
-        var newId   = $field.attr('id').replace(/_\d_/, '_' + notificationIndex + '_');
-        var newName = $field.attr('name').replace(/\[\d\]/, '[' + notificationIndex + ']');
-        $field.attr('id', newId);
-        $field.attr('name', newName);
-        $field.val(null);
-      });
+    $recipientFields.find('label').each(function() {
+      var $field = $(this);
+      var newFor = $field.attr('for').replace(/_\d_/, '_' + notificationIndex + '_');
+      $field.attr('for', newFor);
+    })
 
-      $.each($fieldsetFields.find('label'), function() {
-        var $field = $(this);
-        var newFor = $field.attr('for').replace(/_\d_/, '_' + notificationIndex + '_');
-        $field.attr('for', newFor);
-      });
-
-      convertFromSelect2($('.generic-fieldset__select--value', $fieldsetFields));
-
-      $.each($fieldsetFields.find('select'), function() {
-        var $field  = $(this);
-        $field.removeClass('select2-hidden-accessible');
-        $field.next('span.select2').remove();
-
-        var newId   = $field.attr('id').replace(/_\d_/, '_' + notificationIndex + '_');
-        var newName = $field.attr('name').replace(/\[\d\]/, '[' + notificationIndex + ']');
-
-        $field.attr('id', newId);
-        $field.attr('name', newName);
-        $field.val(null);
-
-        $field.select2({
-          width : '100%',
-          placeholder: {
-            id: "-1",
-            text: $field.attr('placeholder'),
-            selected:'selected'
-          }
-        });
-      });
-
-      $('.generic-fieldset-fields:last', $fieldset).after($fieldsetFields);
-
-      $fieldsetFields.fieldsetEvents();
-    });
-  })
-
+    $('.notification-recipient-fields:last').after($recipientFields);
+  });
+  
+  
   //Chrome Browser Notification
   if ( (/chrom(e|ium)/.test(navigator.userAgent.toLowerCase())) && !(/edge/.test(navigator.userAgent.toLowerCase())) ){
   } else {
     var x = document.cookie;
-
+    
     if( x.indexOf("shown=yes") >= 0) {
     } else {
       alert("CDX is currently only optimised for Chrome - Please change your browser.");
     }
     document.cookie = "shown=yes";
   }
-
+  
+    
 });
-
-function convertToSelect2($element, selectValue) {
-  var klass = $element.prop('class');
-  var name  = $element.prop('name');
-  var id    = $element.prop('id');
-  var placeholder = $element.prop('placeholder');
-  var value = $element.val();
-
-  var $select2 = $('<select></select>');
-  $select2.prop('klass', klass);
-  $select2.prop('name', name);
-  $select2.prop('id', id);
-  $select2.prop('placeholder', placeholder);
-
-  var data = conditionStatuses[selectValue];
-  data.unshift({ id: '', text: $element.prop('placeholder')});
-
-  $element.after($select2);
-
-  $select2.select2({
-    width : '100%',
-    data : data,
-    placeholder : {
-      id : "-1",
-      text : $select2.prop('placeholder'),
-      selected :'selected'
-    }
-  });
-
-  $select2
-    .removeClass('generic-fieldset__text--value')
-    .addClass('generic-fieldset__select--value');
-
-  $select2.val(value).trigger("change");
-
-  $element.remove();
-}
-
-function convertFromSelect2($select2) {
-  if(!$select2.length) return;
-
-  var klass = $select2.prop('class');
-  var name  = $select2.prop('name');
-  var id    = $select2.prop('id');
-  var placeholder = $select2.prop('placeholder');
-  var value = $select2.val();
-
-  $element = $('<input type=\'text\' />');
-  $element
-    .prop('class', 'generic-fieldset__text--value')
-    .prop('name', name)
-    .prop('id', id)
-    .prop('placeholder', placeholder);
-
-  $select2.before($element);
-  $select2.next().remove();
-  $select2.remove();
-}
-
-$.fn.fieldsetEvents = function() {
-  $.each($(this), function() {
-    var $fieldsetFields = $(this);
-
-    $('.generic-fieldset-fields__close', $fieldsetFields).on('click', function(e) {
-      e.preventDefault(); e.stopPropagation();
-
-      var $destroyInput = $fieldsetFields.prev('input[type=hidden][class="generic-fieldset-fields__input--destroy"]');
-      var $idInput = $fieldsetFields.next('input[type=hidden][class!="generic-fieldset-fields__input--destroy"]');
-
-      if ($destroyInput.length) $destroyInput.val(true);
-
-      if ($('.generic-fieldset-fields', $fieldsetFields.parents('.generic-fieldset:first')).length > 1) {
-        $fieldsetFields.remove();
-      } else {
-        $('input[type=text]', $fieldsetFields).val(null);
-        $('select', $fieldsetFields).val(null);
-        $('select.select2', $fieldsetFields).select2('val', null, true);
-      }
-    });
-
-    $('.generic-fieldset__select--condition-type', $fieldsetFields).on('change', function() {
-      var $select = $(this);
-      var data = conditionFields[$select.val()];
-      var $select2 = $('.generic-fieldset__select--field', $fieldsetFields);
-      $('option[value!=""]', $select2).remove();
-      $select2.select2('destroy').select2({
-        width : '100%',
-        data : data,
-        placeholder : {
-          id : "-1",
-          text : $select2.prop('placeholder'),
-          selected :'selected'
-        }
-      })
-
-      convertFromSelect2($('.generic-fieldset__select--value', $fieldsetFields));
-    })
-
-    $('.generic-fieldset__select--field', $fieldsetFields).on('change', function() {
-      if ($('.generic-fieldset__select--field', $fieldsetFields).val() == 'status' || $('.generic-fieldset__select--field', $fieldsetFields).val() == 'result_status')
-        convertToSelect2($('.generic-fieldset__text--value', $fieldsetFields), $('.generic-fieldset__select--condition-type', $fieldsetFields).val());
-      else
-        convertFromSelect2($('.generic-fieldset__select--value', $fieldsetFields));
-    })
-
-    // Initialise current select2 if #field is a status
-    if($('.generic-fieldset__select--field', $fieldsetFields).val() == 'status' || $('.generic-fieldset__select--field', $fieldsetFields).val() == 'result_status')
-      convertToSelect2($('.generic-fieldset__text--value', $fieldsetFields), $('.generic-fieldset__select--condition-type', $fieldsetFields).val());
-  })
-
-  return this;
-}

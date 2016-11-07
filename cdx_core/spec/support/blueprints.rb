@@ -358,15 +358,6 @@ Notification::Status.blueprint do
   test_status Encounter.status_options.map(&:reverse).sample.last
 end
 
-Notification::Condition.blueprint do
-  notification
-  condition_type { nil }
-  field { nil }
-  value { nil }
-end
-
-
-
 Notification::Device.blueprint do
   device
   notification

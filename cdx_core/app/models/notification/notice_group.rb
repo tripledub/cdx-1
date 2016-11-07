@@ -23,11 +23,7 @@ class Notification::NoticeGroup < ActiveRecord::Base
   serialize :email_data, Hash
   serialize :telephone_data, Hash
 
-  serialize :email_messages, Array
-  serialize :sms_messages, Array
-
-  before_create :collate_notification_messages
-  after_create  :send_messages
+  after_create :send_messages
 
   def last_digest_at
     @last_digest_at ||=
@@ -47,20 +43,12 @@ class Notification::NoticeGroup < ActiveRecord::Base
 
   private
 
-  def collate_notification_messages
-    self.email_messages =
-      notification_notices.map {|notice| notice.notification.present? ? notice.notification.email_message : nil }.compact.uniq
-
-    self.sms_messages    =
-      notification_notices.map {|notice| notice.notification.present? ? notice.notification.sms_message : nil }.compact.uniq
-  end
-
   def send_messages
     email_data.each do |email, count|
       next if email.blank?
       Notifications::Gateway::Email.aggregated(email, count, triggered_at)
     end
-
+    
     telephone_data.each do |telephone, count|
       next if telephone.blank?
       Notifications::Gateway::Sms.aggregated(telephone, count, triggered_at)

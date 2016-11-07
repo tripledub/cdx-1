@@ -1,4 +1,5 @@
 class Notification::Device < ActiveRecord::Base
+
   acts_as_paranoid
 
   # Relationships

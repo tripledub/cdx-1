@@ -32,7 +32,7 @@
           %label
             = Patient.human_attribute_name(:vitimes_id)
           = patient.vitimes_id
-
+          
         %li
           %label
             = Patient.human_attribute_name(:social_security_code)
@@ -79,7 +79,7 @@
             = Patient.human_attribute_name(:created_at)
           = I18n.l(patient.created_at, format: :long)
 
-      - if has_access?(@patient, Policy::Actions::UPDATE_PATIENT)
-        %ul.button-container
-          %li
-            = link_to(I18n.t('patients.show.edit_patient'), edit_patient_path(patient), class: 'button edit')
+        - if has_access?(@patient, Policy::Actions::UPDATE_PATIENT)
+          %ul.button-container
+            %li
+              = link_to(I18n.t('patients.show.edit_patient'), edit_patient_path(patient), class: 'button edit')

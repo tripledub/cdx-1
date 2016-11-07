@@ -27,34 +27,3 @@ task remove_alerts_from_policies: :environment do
   ComputedPolicy.where(resource_type: 'alert').update_all(resource_type: 'notification')
 
 end
-
-task migrate_alerts_conditions: :environment do
-  Notification.all.each do |notification|
-    if notification.detection == 'mtb'
-      if notification.detection_condition == 'positive'
-        notification.notification_conditions.create(condition_type: 'XpertResult', field: 'tuberculosis', value: 'detected')
-      elsif notification.detection_condition == 'negative'
-        notification.notification_conditions.create(condition_type: 'XpertResult', field: 'tuberculosis', value: 'not_detected')
-      end
-    elsif notification.detection == 'rif'
-      if notification.detection_condition == 'positive'
-        notification.notification_conditions.create(condition_type: 'XpertResult', field: 'rifampicin', value: 'detected')
-      elsif notification.detection_condition == 'negative'
-        notification.notification_conditions.create(condition_type: 'XpertResult', field: 'rifampicin', value: 'not_detected')
-      end
-    end
-
-    if(notification.respond_to?(:notification_statuses_names))
-      notification.notification_statuses_names.each do |status|
-        %w(
-          CultureResult
-          DstLpaResult
-          MicroscopyResult
-          XpertResult
-        ).each do |klass|
-          notification.notification_conditions.create(condition_type: klass, field: 'result_status', value: status)
-        end
-      end
-    end
-  end
-end
