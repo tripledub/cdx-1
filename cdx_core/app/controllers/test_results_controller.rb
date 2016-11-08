@@ -93,7 +93,7 @@ class TestResultsController < TestsController
   end
 
   def find_test_result
-    @test_result = @navigation_context.institution.test_results.where(uuid: params[:id]).first
+    @test_result = @navigation_context.institution.test_results.where(id: params[:id]).first
   end
 
   def check_permission
