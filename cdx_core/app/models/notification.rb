@@ -16,6 +16,7 @@ class Notification < ActiveRecord::Base
   ]
 
   FREQUENCY_VALUES = [
+    [I18n.t('select.notification.frequency.instant'),   'instant'],
     [I18n.t('select.notification.frequency_value.hourly'),  'hourly'],
     [I18n.t('select.notification.frequency_value.daily'),   'daily'],
     [I18n.t('select.notification.frequency_value.weekly'),  'weekly'],
