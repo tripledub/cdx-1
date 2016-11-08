@@ -19,22 +19,22 @@ RSpec.describe Reports::Failed do
   let(:options)             { {} }
 
   before do
-    TestResult.create_and_index(
+    TestResult.make(
     result_status: 'success',
     device_messages: [DeviceMessage.make(device: user_device)]
     )
 
-    TestResult.create_and_index(
+    TestResult.make(
       result_status: 'error',
       device_messages: [DeviceMessage.make(device: user_device)]
     )
 
-    TestResult.create_and_index(
+    TestResult.make(
       result_status: 'error',
       device_messages: [DeviceMessage.make(device: user_device)]
     )
 
-    TestResult.create_and_index(
+    TestResult.make(
       result_status: 'success',
       device_messages: [DeviceMessage.make(device: user_device)]
     )
