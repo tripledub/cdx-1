@@ -37,7 +37,7 @@ class TestResult < PatientResult
         ['positive', I18n.t('select.test_results.result_type.positive')],
         ['negative', I18n.t('select.test_results.result_type.negative')],
         ['indeterminate', I18n.t('select.test_results.result_type.indeterminate')],
-        ['not_applicable', I18n.t('select.test_results.result_type.not_applicable')]
+        ['n/a', I18n.t('select.test_results.result_type.not_applicable')]
       ]
     end
 

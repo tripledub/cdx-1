@@ -101,7 +101,7 @@ en:
         positive: 'Positive'
         negative: 'Negative'
         indeterminate: 'Indeterminate'
-        not_applicable: 'Not applicable'
+        n/a: 'Not applicable'
       result_status:
         success: 'Success'
         error: 'Error'
