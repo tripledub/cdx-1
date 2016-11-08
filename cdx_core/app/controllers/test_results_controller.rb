@@ -27,7 +27,7 @@ class TestResultsController < TestsController
         when 'dst_lpa'
           load_manual_test_results(Finder::DstLpaResults, DstLpaResults::Presenter)
         else
-          load_device_test_results
+          load_orphan_test_results
         end
 
         cookies[:test_result_tab] = { value: @selected_tab, expires: 1.year.from_now }
@@ -63,26 +63,11 @@ class TestResultsController < TestsController
     @test_results     = presenter.index_table(patient_results.filter_query.order(order_by).limit(@page_size).offset(offset))
   end
 
-  def load_device_test_results
-    @results = Cdx::Fields.test.core_fields.find { |field| field.name == 'result' }.options.map do |result|
-      if result == 'n/a'
-        { value: 'n/a', label: I18n.t('test_results_controller.not_applicable') }
-      else
-        { value: result, label: result.capitalize }
-      end
-    end
-
-    @test_types    = Cdx::Fields.test.core_fields.find { |field| field.name == 'type' }.options
-    @test_statuses = %w(success error)
-    @conditions    = Condition.all.map(&:name)
-    @show_sites    = @sites.size > 1
-    @show_devices  = @devices.size > 1
-
-    @device_results = Finder::TestResults.new(params, current_user, @navigation_context, @localization_helper)
-    @device_results.get_results
-    @page           = @device_results.page
-    @total          = @device_results.total
-    @page_size      = @device_results.page_size
+  def load_orphan_test_results
+    patient_results   = TestResults::Finder.new(@navigation_context, params)
+    @total            = patient_results.filter_query.count
+    order_by, offset  = perform_pagination(table: 'orphan_results_index', field_name: '-patient_results.sample_collected_at')
+    @test_results     = TestResults::Presenter.index_table(patient_results.filter_query.order(order_by).limit(@page_size).offset(offset))
   end
 
   def default_selected_tab

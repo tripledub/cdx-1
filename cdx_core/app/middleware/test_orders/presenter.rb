@@ -29,8 +29,8 @@ module TestOrders
         encounters.map do |encounter|
           {
             id:                 encounter.uuid,
-            requestedSiteName:  site_name(encounter.site),
-            performingSiteName: site_name(encounter.performing_site),
+            requestedSiteName:  Sites::Presenter.site_name(encounter.site),
+            performingSiteName: Sites::Presenter.site_name(encounter.performing_site),
             sampleId:           samples_for_encounter(encounter),
             testingFor:         encounter.testing_for,
             requestedBy:        encounter.user.full_name,
@@ -41,12 +41,6 @@ module TestOrders
             viewLink:           Rails.application.routes.url_helpers.encounter_path(encounter)
           }
         end
-      end
-
-      def site_name(site)
-        return '' unless site
-
-        site.name
       end
 
       def generate_status(encounter)

@@ -2,6 +2,10 @@ module SampleIdentifiers
   # Find methods for sample identifiers
   class Finder
     class << self
+      def available_samples(encounter)
+        SampleIdentifier.joins(:sample).where('samples.encounter_id = ?', encounter.id).pluck(:cpd_id_sample, :id)
+      end
+
       def find_all_samples_available(sample_id)
         SampleIdentifier.where('UPPER(sample_identifiers.cpd_id_sample) = ?', sample_id.upcase).all
       end

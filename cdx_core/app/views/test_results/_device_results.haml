@@ -19,6 +19,6 @@
             = link_to test_results_path(params.merge(format: :csv)), title: I18n.t('test_results.index.test', count: @total) do
               %span.icon-download.icon-gray
         .box-content
-          = react_component "TestResultsList", testResults: @device_results.json, orderBy: @device_results.order_by, showSites: @show_sites, showDevices: @show_devices
+          = react_component "TestResultsList", testResults: @test_results, orderBy: params['order_by']
           .pagination
             = render 'shared/pagination'
