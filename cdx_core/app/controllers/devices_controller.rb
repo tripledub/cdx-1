@@ -196,7 +196,6 @@ class DevicesController < ApplicationController
   def performance
     @device = Device.with_deleted.find(params[:id])
     return unless authorize_resource(@device, READ_DEVICE)
-
     @device_report = Reports::Device.new(current_user, @navigation_context, 'device' => @device.id)
 
     if request.xhr?

@@ -5,6 +5,7 @@ module Reports
       @context = context
       @filter_options = filter_options
       @days_span = 0
+      @merged_results = {}
     end
 
     def generate_chart
@@ -13,7 +14,6 @@ module Reports
         titleY:  I18n.t('all_tests.number_tests'),
         titleY2: I18n.t('all_tests.number_errors'),
         axisX: {
-          valueFormatString: 'DD-MM-YY',
           labelAngle: -50,
           labelFontFamily: 'Verdana',
           labelFontSize: 12
@@ -25,10 +25,11 @@ module Reports
     private
 
     def columns_data
+      find_results
       [total_results_column, error_results_column]
     # If there is some problem with data we don't want to send a 500 error to the dashboard page
-    rescue
-      []
+    # rescue
+    #   []
     end
 
     def total_results_column
@@ -39,7 +40,7 @@ module Reports
         name: 'Tests',
         legendText: I18n.t('all_tests.tests'),
         showInLegend: true,
-        dataPoints: find_results
+        dataPoints: @merged_results.map { |result| { label: result[0], y: result[1][:total] } }
       }
     end
 
@@ -52,21 +53,20 @@ module Reports
         legendText: I18n.t('all_tests.errors'),
         axisYType: 'secondary',
         showInLegend: true,
-        dataPoints: find_error_results
+        dataPoints: @merged_results.map { |result| { label: result[0], y: result[1][:errors] } }
       }
     end
 
     def find_results
-      merged_results = {}
-      merged_results.default_proc = proc { 0 }
-      patient_results_finder.each { |result| merged_results[result.date.strftime(dates_format)] += result.total }
-      orphan_results_finder.each { |result| merged_results[result.date.strftime(dates_format)] += result.total }
-      merged_results.map { |key, value| { label: key, y: value } }
+      patient_results_finder.each { |result| add_result(result.date.strftime(dates_format), result.total, 0) }
+      orphan_results_finder.each { |result| add_result(result.date.strftime(dates_format), result.total, 0) }
+      find_error_results
     end
 
     def find_error_results
       @filter_options['status'] = 'error'
-      find_results
+      patient_results_finder.each { |result| add_result(result.date.strftime(dates_format), 0, result.total) }
+      orphan_results_finder.each { |result| add_result(result.date.strftime(dates_format), 0, result.total) }
     end
 
     def patient_results_finder
@@ -96,6 +96,15 @@ module Reports
 
     def dates_format
       @days_span > 30 ? '%Y-%b' : '%Y-%m-%d'
+    end
+
+    def add_result(date, total, errors)
+      if @merged_results[date]
+        @merged_results[date][:total] += total
+        @merged_results[date][:errors] += errors
+      else
+        @merged_results[date] = { total: total, errors: errors }
+      end
     end
   end
 end
