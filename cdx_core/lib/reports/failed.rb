@@ -23,7 +23,6 @@ module Reports
     private
 
     def all_tests_finder
-
       patient_results = PatientResults::Finder.new(@context, @filter_options)
       @total_tests += patient_results.filter_query.count
       orphan_results = TestResults::Finder.new(@context, @filter_options)
