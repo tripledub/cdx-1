@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "api_version": "1.5.0",
     "conditions": [
       "mtb"
@@ -44,6 +44,7 @@
       else if ( message['event']['result'].match(/.*NO RESULT.*/i) ) { 'no_result' }
       else if ( message['event']['result'].match(/.*Rif Resistance.*/i) ) { 'success' }
       else if ( message['event']['result'].match(/.*MTB DETECTED.*/i) ) { 'success' }
+      else if ( message['event']['result'].match(/.*MTB NOT DETECTED.*/i) ) { 'success' }
       else { 'error' }
     "},
     "test.assays.condition" : { "script" : "['mtb', 'rif']" },
