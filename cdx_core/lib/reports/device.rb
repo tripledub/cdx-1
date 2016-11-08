@@ -6,7 +6,7 @@ class Reports::Device
   end
 
   def total_tests
-    Reports::AllTests.new(@current_user, @navigation_context, @options).generate_chart
+    Reports::AllTests.new(@navigation_context, @options).generate_chart
   end
 
   def failed_tests

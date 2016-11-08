@@ -62,7 +62,7 @@
           %h3
             = I18n.t('dashboard.index.outstanding_tests')
         .box-content
-          -if(@dashboard_report.outstanding_orders)
+          - if(@dashboard_report.outstanding_orders)
             = react_component('OutstandingTestsTable', title: "title", allowSorting: "true", orderBy: "-test_order", data: @dashboard_report.outstanding_orders)
-          -else
+          - else
             = I18n.t('dashboard.index.no_chart_information')

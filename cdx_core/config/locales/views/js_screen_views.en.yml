@@ -12,7 +12,7 @@ en:
       col_device: "Device"
       col_failures: "Failures"
       col_error_field: "Field"
-      col_date: "Date"
+      col_date: "CDP Creation date"
       col_raw: "Raw"
       click_to_process: "Click to reprocess this message again"
       download_raw_file: "Download raw file"

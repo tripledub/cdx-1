@@ -1,78 +1,56 @@
 require 'spec_helper'
 
-RSpec.describe Reports::Failed, elasticsearch: true do
-  let(:current_user) { User.make }
-  let(:site_user) { "#{current_user.first_name} #{current_user.last_name}" }
-  let(:institution) { Institution.make(user_id: current_user.id) }
-  let(:site) { Site.make(institution: institution) }
-  let(:current_user_two) { User.make }
-  let(:institution_two) { Institution.make(user_id: current_user_two.id) }
-  let(:site_two) { Site.make(institution: institution_two) }
-  let(:user_device) { Device.make institution_id: institution.id, site: site }
-  let(:user_device_two) { Device.make institution_id: institution_two.id, site: site_two }
-
-  let(:nav_context) { NavigationContext.new(current_user, institution.uuid) }
+RSpec.describe Reports::Failed do
+  let(:current_user)        { User.make }
+  let(:institution)         { Institution.make(user_id: current_user.id) }
+  let(:site)                { Site.make(institution: institution) }
+  let(:current_user_two)    { User.make }
+  let(:institution_two)     { Institution.make(user_id: current_user_two.id) }
+  let(:site_two)            { Site.make(institution: institution_two) }
+  let(:user_device)         { Device.make institution_id: institution.id, site: site }
+  let(:user_device_two)     { Device.make institution_id: institution_two.id, site: site_two }
+  let(:patient)             { Patient.make institution: institution }
+  let(:encounter)           { Encounter.make institution: institution, user: current_user, patient: patient }
+  let!(:microscopy_result)  { MicroscopyResult.make encounter: encounter }
+  let!(:xpert_result)       { XpertResult.make encounter: encounter, tuberculosis: 'indeterminate' }
+  let!(:xpert_result2)      { XpertResult.make encounter: encounter, tuberculosis: 'no_result' }
+  let!(:dst_result)         { DstLpaResult.make encounter: encounter, results_h: 'contaminated' }
+  let(:navigation_context)  { NavigationContext.new(current_user, institution.uuid) }
+  let(:options)             { {} }
 
   before do
-    TestResult.create_and_index(
-      core_fields: {
-        'assays' => ['condition' => 'mtb', 'result' => :positive],
-        'start_time' => Time.now,
-        'name' => 'mtb',
-        'status' => 'error',
-        'error_code' => 300,
-        'type' => 'specimen',
-        'site_user' => site_user
-      },
+    TestResult.make(
+    result_status: 'success',
+    device_messages: [DeviceMessage.make(device: user_device)]
+    )
+
+    TestResult.make(
+      result_status: 'error',
       device_messages: [DeviceMessage.make(device: user_device)]
     )
 
-    TestResult.create_and_index(
-      core_fields: {
-        'assays' => ['condition' => 'mtb', 'result' => :negative],
-        'start_time' => Time.now - 1.month,
-        'name' => 'mtb',
-        'status' => 'error',
-        'error_code' => 300,
-        'type' => 'specimen',
-        'site_user' => site_user
-      },
+    TestResult.make(
+      result_status: 'error',
       device_messages: [DeviceMessage.make(device: user_device)]
     )
 
-    TestResult.create_and_index(
-      core_fields: {
-        'assays' => ['condition' => 'man_flu', 'result' => :negative],
-        'start_time' => Time.now - 1.month,
-        'name' => 'man_flu',
-        'status' => 'error',
-        'error_code' => 200,
-        'type' => 'specimen'
-      },
+    TestResult.make(
+      result_status: 'success',
       device_messages: [DeviceMessage.make(device: user_device)]
     )
-
-    TestResult.create_and_index(
-      core_fields: {
-        'assays' => ['condition' => 'mtb', 'result' => :positive],
-        'start_time' => Time.now,
-        'type' => 'specimen',
-        'name' => 'mtb',
-        'status' => 'success'
-      },
-      device_messages:[DeviceMessage.make(device: user_device)]
-    )
-
-      refresh_index
   end
 
   describe '.sort' do
-    before do
-      @failed = Reports::Failed.new(current_user, nav_context).generate_chart
+    subject { Reports::Failed.new(navigation_context, options).generate_chart }
+
+    it 'returns the number of successful tests' do
+      expect(subject[:columns].first[:y]).to eq(3)
+      expect(subject[:columns].first[:legendText]).to eq('Success')
     end
 
-    it 'returns an array of hashes of failed and successful tests' do
-      expect(@failed[:columns].length).to eq(2)
+    it 'returns the number of failing tests' do
+      expect(subject[:columns].last[:y]).to eq(5)
+      expect(subject[:columns].last[:legendText]).to eq('Fail')
     end
   end
 end

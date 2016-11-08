@@ -31,10 +31,18 @@ module TestResults
       @test_result.result_name = @parsed_message['test']['core']['name'] if @parsed_message['test']['core']['name'].present?
       @test_result.result_status = @parsed_message['test']['core']['status'] if @parsed_message['test']['core']['status'].present?
       @test_result.result_type = @parsed_message['test']['core']['type'] if @parsed_message['test']['core']['type'].present?
+      @test_result.sample_collected_at = parse_date(@parsed_message['test']['core']['start_time'])
+      @test_result.result_at = parse_date(@parsed_message['test']['core']['end_time'])
     end
 
     def test_core_available?
       @parsed_message['test'].present? || @parsed_message['test']['core']['assays'].present?
+    end
+
+    def parse_date(result_date)
+      Time.parse(result_date)
+    rescue
+      Time.now
     end
   end
 end

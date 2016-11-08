@@ -85,7 +85,7 @@ en:
         not_detected: 'Not Detected'
         indeterminate: 'Invalid'
         no_result: 'No result'
-        err: 'Error'
+        error: 'Error'
       rifampicin:
         detected: 'Detected'
         not_detected: 'Not Detected'

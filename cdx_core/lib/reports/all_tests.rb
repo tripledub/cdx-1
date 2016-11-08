@@ -1,107 +1,101 @@
 module Reports
-  class AllTests < Base
-    def self.by_name(*args)
-      new(*args).by_name
-    end
-
-    attr_reader :statuses
-
-    def statuses
-      results['tests'].group_by { |t| t['test.status'] }.keys
-    end
-
-    def process
-      filter['group_by'] = 'day(test.start_time),test.status'
-      super
+  # Generates a bar graphic with all test results grouped for a period of time.
+  class AllTests
+    def initialize(context, filter_options = {})
+      @context = context
+      @filter_options = filter_options
+      @days_span = 0
     end
 
     def generate_chart
-      automatic_results = process
-      manual_results    = get_manual_results_query(automatic_results.filter).group('date(patient_results.created_at)').count
-      results           = merge_results(automatic_results, manual_results)
-
-      sorted_data = (results.number_of_months > 1) ? results.sort_by_month.data : results.sort_by_day.data
-
       {
         title:   '',
         titleY:  I18n.t('all_tests.number_tests'),
         titleY2: I18n.t('all_tests.number_errors'),
-        columns: generate_columns(sorted_data)
+        axisX: {
+          valueFormatString: 'DD-MM-YY',
+          labelAngle: -50,
+          labelFontFamily: 'Verdana',
+          labelFontSize: 12
+        },
+        columns: columns_data
       }
     end
 
     private
 
-    def data_hash_day(dayname, test_results)
+    def columns_data
+      [total_results_column, error_results_column]
+    # If there is some problem with data we don't want to send a 500 error to the dashboard page
+    rescue
+      []
+    end
+
+    def total_results_column
       {
-        label: dayname,
-        values: statuses.map do |u|
-          result = test_results && test_results[u]
-          result ? count_total(result) : 0
-        end
+        bevelEnabled: false,
+        type: 'column',
+        color: '#E06023',
+        name: 'Tests',
+        legendText: I18n.t('all_tests.tests'),
+        showInLegend: true,
+        dataPoints: find_results
       }
     end
 
-    def data_hash_month(date, test_results)
+    def error_results_column
       {
-        label: label_monthly(date),
-        values: statuses.map do |s|
-          result = test_results && test_results[s]
-          result ? count_total(result) : 0
-        end
+        bevelEnabled: false,
+        type: 'column',
+        color: '#5C5B82',
+        name: 'Errors',
+        legendText: I18n.t('all_tests.errors'),
+        axisYType: 'secondary',
+        showInLegend: true,
+        dataPoints: find_error_results
       }
     end
 
-    def day_results(format='%Y-%m-%d', key)
-      results_by_period(format)[key].try do |r|
-        r.group_by { |t| t['test.status'] }
-      end
+    def find_results
+      merged_results = {}
+      merged_results.default_proc = proc { 0 }
+      patient_results_finder.each { |result| merged_results[result.date.strftime(dates_format)] += result.total }
+      orphan_results_finder.each { |result| merged_results[result.date.strftime(dates_format)] += result.total }
+      merged_results.map { |key, value| { label: key, y: value } }
     end
 
-    def month_results(format='%Y-%m', key)
-      results_by_period(format)[key].try do |r|
-        r.group_by { |t| t['test.status'] }
-      end
+    def find_error_results
+      @filter_options['status'] = 'error'
+      find_results
     end
 
-    def generate_columns(sorted_data)
-      [
-        {
-          bevelEnabled: false,
-          type: "column",
-          color: "#E06023",
-          name: "Tests",
-          legendText: I18n.t('all_tests.tests'),
-          showInLegend: true,
-          dataPoints: sorted_data.map { |data_point| { label: data_point[:label], y: data_point[:values][0] } }
-        },
-        {
-          bevelEnabled: false,
-          type: "column",
-          color: "#5C5B82",
-          name: "Errors",
-          legendText: I18n.t('all_tests.errors'),
-          axisYType: "secondary",
-          showInLegend: true,
-          dataPoints: sorted_data.map { |data_point| { label: data_point[:label], y: data_point[:values][1] } }
-        }
-      ]
+    def patient_results_finder
+      patient_results = PatientResults::Finder.new(@context, @filter_options)
+      @days_span = patient_results.number_of_days
+      patient_results.filter_query
+                     .group(dates_filter)
+                     .order('patient_results.created_at DESC')
+                     .select('patient_results.created_at as date, COUNT(*) as total, 1 as uuid')
+    end
+
+    def orphan_results_finder
+      orphan_results = TestResults::Finder.new(@context, @filter_options)
+      orphan_results.filter_query
+                    .group(dates_filter)
+                    .order('patient_results.result_at DESC')
+                    .select('patient_results.result_at as date, COUNT(*) as total, 1 as uuid, "" as custom_fields, "" as core_fields ')
     end
 
     def merge_results(test_results, manual_results)
-      manual_results.each do |key, value|
-        result_added = false
-        test_results.results['tests'].each do |auto_test|
-          if auto_test['test.status'] == 'success' && auto_test['test.start_time'] == key.strftime("%Y-%m-%d")
-            auto_test['count'] += value
-            result_added = true
-          end
-        end
+      test_results.merge(manual_results) { |_k, test_value, manual_value| test_value + manual_value }
+    end
 
-        test_results.results['tests'] << { 'test.status' => 'success', 'test.start_time' => key.strftime("%Y-%m-%d"), 'count' => value } unless result_added
-      end
+    def dates_filter
+      @days_span > 30 ? 'month(patient_results.result_at)' : 'date(patient_results.result_at)'
+    end
 
-      test_results
+    def dates_format
+      @days_span > 30 ? '%Y-%b' : '%Y-%m-%d'
     end
   end
 end

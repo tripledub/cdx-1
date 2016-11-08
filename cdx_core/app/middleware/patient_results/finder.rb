@@ -1,18 +1,15 @@
 module PatientResults
   # Finder for patient results
   class Finder
-    class << self
-      def instance_from_string(test_type)
-        if test_type.include? 'microscopy'
-          MicroscopyResult.new
-        elsif test_type.include? 'culture'
-          CultureResult.new
-        elsif test_type.include? 'xpert'
-          XpertResult.new
-        elsif test_type.include? 'drugsusceptibility'
-          DstLpaResult.new
-        end
-      end
+    include PatientResults::FinderFilters
+
+    protected
+
+    def filter_by_failed
+      @filter_query = filter_query.where(
+        '(patient_results.tuberculosis IN (?) OR patient_results.test_result = ? OR patient_results.results_h IN (?))',
+        %w(indeterminate no_result error), 'contaminated', %w(contaminated not_done)
+      ) if params['failed']
     end
   end
 end

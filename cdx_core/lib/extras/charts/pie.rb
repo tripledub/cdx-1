@@ -9,7 +9,7 @@ class Extras::Charts::Pie
       animationEnabled: true,
       legend:{
         fontSize: 12,
-        fontFamily: "Arial",
+        fontFamily: "Verdana",
         fontColor: "#000"
       },
       data: [
