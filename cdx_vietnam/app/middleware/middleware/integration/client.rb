@@ -5,7 +5,8 @@ module Integration
     def initialize
       @max_retry = 5
     end
-    
+
+
     # Integration patient and order into external system
     def integration(json, log = nil)
       if !json.is_a? Hash
@@ -14,14 +15,11 @@ module Integration
 
       patient = json['patient']
       test_order = patient['test_order']
+      system = patient['target_system']
       
       order = PatientResult.where(id: test_order["cdp_order_id"]).first
       
-      return if !order || order.is_sync
-      
-      order.update_attributes({is_sync: true})
-      
-      system = patient['target_system']
+      return if !check_and_update_sync(order, system)
       
       if !log
         log = IntegrationLog.create({
@@ -64,7 +62,8 @@ module Integration
               patient["patient_#{system}_id"] = patient_temp.vtm_patient_id
             end
           end
-          break if !(patient["patient_#{system}_id"].blank? || patient["patient_#{system}_id"] == '0') || try_count > @max_retry
+          break if try_count > @max_retry
+          break if !(patient["patient_#{system}_id"].blank? || patient["patient_#{system}_id"] == '0')
           try_count += 1
           sleep 35
           log.update_attributes({
@@ -133,7 +132,7 @@ module Integration
           status: "Error"
         })
         order = PatientResult.where(id: log.json["patient"]["test_order"]["cdp_order_id"]).first
-        order.update_attributes({is_sync: false}) if order
+        update_sync_flash_to_false(order, log.system) if order
         if cdp_patient
           if system == 'etb'
             cdp_patient.update_attributes({
@@ -208,7 +207,7 @@ module Integration
           status: "Error"
         })
         order = PatientResult.where(id: log.json["patient"]["test_order"]["cdp_order_id"]).first
-        order.update_attributes({is_sync: false}) if order
+        update_sync_flash_to_false(order, log.system) if order
         return false
       end
       
@@ -229,13 +228,36 @@ module Integration
       order_id = log.json["patient"]["test_order"]["cdp_order_id"]
       system = log.system
       
-      order = PatientResult.where(id: order_id, is_sync: false).first
+      order = PatientResult.where(id: order_id).first
       
       return false if !order
+      return false if system == 'vtm' && order.is_sync_vtm
+      return false if system == 'etb' && order.is_sync
       
       json = "CdxVietnam::Presenters::#{system.camelize}".constantize.create_patient(order)
       
       integration(json, log)
+    end
+
+    private
+    def check_and_update_sync(order, system)
+      if system == 'vtm'
+        return false if !order || order.is_sync
+        order.update_attributes({is_sync: true})
+      elsif system == 'etb'
+        return false if !order || order.is_sync_vtm
+        order.update_attributes({is_sync_vtm: true})
+      end
+      return true
+    end
+
+    def update_sync_flash_to_false(order, system)
+      return if !log || !system
+      if system == 'vtm'
+        order.update_attributes({is_sync: false})
+      elsif system == 'etb'
+        order.update_attributes({is_sync_vtm: false})
+      end
     end
   end
 end
