@@ -27,9 +27,6 @@ module Reports
     def columns_data
       find_results
       [total_results_column, error_results_column]
-    # If there is some problem with data we don't want to send a 500 error to the dashboard page
-    # rescue
-    #   []
     end
 
     def total_results_column
@@ -58,15 +55,15 @@ module Reports
     end
 
     def find_results
-      patient_results_finder.each { |result| add_result(result.date.strftime(dates_format), result.total, 0) }
-      orphan_results_finder.each { |result| add_result(result.date.strftime(dates_format), result.total, 0) }
+      patient_results_finder.each { |result| add_result(result.date, result.total, 0) }
+      orphan_results_finder.each { |result| add_result(result.date, result.total, 0) }
       find_error_results
     end
 
     def find_error_results
       @filter_options['status'] = 'error'
-      patient_results_finder.each { |result| add_result(result.date.strftime(dates_format), 0, result.total) }
-      orphan_results_finder.each { |result| add_result(result.date.strftime(dates_format), 0, result.total) }
+      patient_results_finder.each { |result| add_result(result.date, 0, result.total) }
+      orphan_results_finder.each { |result| add_result(result.date, 0, result.total) }
     end
 
     def patient_results_finder
@@ -99,6 +96,9 @@ module Reports
     end
 
     def add_result(date, total, errors)
+      return unless date.present?
+
+      date = date.strftime(dates_format)
       if @merged_results[date]
         @merged_results[date][:total] += total
         @merged_results[date][:errors] += errors
