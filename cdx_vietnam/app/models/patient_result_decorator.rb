@@ -69,12 +69,20 @@ class PatientResult
   def send_all_microcopy_to_etb
     micros = PatientResult.joins(:encounter).where(encounters: { patient_id: self.patient.id}, result_status: 'completed', type: 'MicroscopyResult')
     micros.each do |micro|
+      sleep 1
       json = "CdxVietnam::Presenters::Etb".constantize.create_patient(micro)
+      IntegrationJob.perform_later(json)
+    end
+    xperts = PatientResult.joins(:encounter).where(encounters: { patient_id: self.patient.id}, result_status: 'completed', type: 'XpertResult')
+    xperts.each do |xpert|
+      sleep 1
+      json = "CdxVietnam::Presenters::Etb".constantize.create_patient(xpert)
       IntegrationJob.perform_later(json)
     end
   end
 
   def update_sync_status_microcopy
     PatientResult.joins(:encounter).where(encounters: { patient_id: self.patient.id}, result_status: 'completed', type: 'MicroscopyResult', is_sync: true).update_all(is_sync: false)
+    PatientResult.joins(:encounter).where(encounters: { patient_id: self.patient.id}, result_status: 'completed', type: 'XpertResult', is_sync: true).update_all(is_sync: false)
   end
 end
