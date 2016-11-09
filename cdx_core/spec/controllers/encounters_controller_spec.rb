@@ -1,25 +1,33 @@
 require 'spec_helper'
 require 'policy_spec_helper'
 
-RSpec.describe EncountersController, type: :controller, elasticsearch: true do
+RSpec.describe EncountersController, type: :controller do
   let(:institution)    { Institution.make }
   let(:site)           { Site.make institution: institution }
   let(:user)           { institution.user }
   let(:patient)        { Patient.make institution: institution }
   let!(:episode)       { Episode.make patient: patient }
   let(:default_params) { { context: institution.uuid } }
+  let(:encounter)      { Encounter.make institution: institution, site: site, patient: patient }
+  let(:test_results) do
+    XpertResult.make encounter: encounter
+    CultureResult.make encounter: encounter
+    MicroscopyResult.make encounter: encounter
+    DstLpaResult.make encounter: encounter
+    TestResult.make encounter: encounter
+  end
+  let(:clinician)      { User.make }
 
   before(:each) do
     grant nil, user, Encounter,  [DELETE_ENCOUNTER]
     sign_in user
   end
 
-  describe "destroy" do
+  describe 'destroy' do
     context 'an admin user' do
       let(:encounter) { Encounter.make institution: institution, site: site, patient: patient }
 
-      it "should destroy an encounter if status is new" do
-        EncounterIndexer.new(encounter).index(true)
+      it 'should delete an encounter only if status is new' do
         delete :destroy, id: encounter.id
 
         expect(Encounter.where(id: encounter.id).first).to_not be
@@ -28,9 +36,6 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     context 'a clinician' do
-      let(:encounter) { Encounter.make institution: institution, site: site, patient: patient }
-      let(:clinician) { User.make }
-
       before(:each) do
         sign_out user
         clinician.institutions << institution
@@ -75,6 +80,10 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       context 'if encounter status is new' do
         it 'should be able to destroy it' do
           expect(Encounter.count).to eq 0
+        end
+
+        it 'should delete all related patient results' do
+          expect(PatientResult.count).to eq(0)
         end
       end
     end

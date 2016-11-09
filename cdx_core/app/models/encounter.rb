@@ -1,3 +1,4 @@
+# Test order model
 class Encounter < ActiveRecord::Base
   include Entity
   include AutoUUID
@@ -11,7 +12,7 @@ class Encounter < ActiveRecord::Base
 
   has_many :samples, dependent: :restrict_with_error
   has_many :test_results, dependent: :restrict_with_error
-  has_many :patient_results
+  has_many :patient_results, dependent: :destroy
   has_many :xpert_results
   has_many :audit_logs
   has_many :notifications
