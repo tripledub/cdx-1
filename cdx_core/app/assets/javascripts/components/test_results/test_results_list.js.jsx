@@ -19,7 +19,7 @@ var TestResultsList = React.createClass({
   getDefaultProps: function() {
     return {
       allowSorting: true,
-      orderBy: "test.start_time",
+      orderBy: "patient_results.sample_collected_at",
     }
   },
 
@@ -29,25 +29,21 @@ var TestResultsList = React.createClass({
 
   render: function() {
     var sortableHeader = function (title, field) {
-      if (this.props.allowSorting) {
-        return <SortableColumnHeader title={title} field={field} orderBy={this.props.orderBy} />
-      } else {
-        return <th>{title}</th>;
-      }
+      return <SortableColumnHeader title={ title } field={ field } orderBy={ this.props.orderBy } />
     }.bind(this);
 
     return (
       <table className="table" cellPadding="0" cellSpacing="0" data-resizable-columns-id="test-results-table">
         <thead>
           <tr>
-            { sortableHeader(I18n.t("components.test_results.col_test"), "test.name") }
+            { sortableHeader(I18n.t("components.test_results.col_test"), "patient_results.result_name ") }
             <th>{ I18n.t("components.test_results.col_result") }</th>
-            { sortableHeader(I18n.t("components.test_results.col_site"), "site.name") }
-            { sortableHeader(I18n.t("components.test_results.col_device_name"), "device.name") }
-            { sortableHeader(I18n.t("components.test_results.col_sample_id"), "sample.id") }
-            { sortableHeader(I18n.t("components.test_results.col_status"), "test.status") }
-            { sortableHeader(I18n.t("components.test_results.col_start_time"), "test.start_time") }
-            { sortableHeader(I18n.t("components.test_results.col_end_time"), "test.end_time") }
+            { sortableHeader(I18n.t("components.test_results.col_site"), "sites.name") }
+            { sortableHeader(I18n.t("components.test_results.col_device_name"), "devices.name") }
+            { sortableHeader(I18n.t("components.test_results.col_sample_id"), "sample_identifiers.entity_id") }
+            { sortableHeader(I18n.t("components.test_results.col_status"), "patient_results.result_status") }
+            { sortableHeader(I18n.t("components.test_results.col_start_time"), "patient_results.sample_collected_at") }
+            { sortableHeader(I18n.t("components.test_results.col_end_time"), "patient_results.result_at") }
           </tr>
         </thead>
         <tbody>
