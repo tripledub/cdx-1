@@ -31,7 +31,7 @@ vi:
     form:
       legends:
         ad-hoc_recipients: Những người tiếp nhận đặc biệt
-        conditions: Conditions to trigger on?
+        conditions: Điều kiện kích hoạt thông báo?
       placeholder:
         name: Tên
         description: Mô tả
@@ -84,16 +84,30 @@ vi:
         anomaly_type: Loại bất thường nào bạn muốn để cảnh báo?
         utilisation_efficiency_sample_identifier: Mã mẫu thử sản sinh cảnh báo này
         utilisation_efficiency_threshold: Bao nhiêu kiểm tra được cho phép?
+        frequency_value: 'Frequency value tooltip'
+
+  notification_conditions:
+    form:
+      new_condition: Điều kiện mới
+      placeholder:
+        condition_type: Thông báo trên
+        field: Với
+        value: Giá trị
+      tooltip:
+        condition_type: Hiển thị thông báo trên cái nào?
+        field: Trường dữ liệu nào để xét điều kiện?
+        value: Giá trị mong muốn cho điều kiện là gì?
 
   notification_recipients:
     form:
+      new_recipient: Người tiếp nhận mới
       placeholder:
-        first_name: Tên
-        last_name: Họ
-        email: Địa chỉ E-mail
+        first_name: Họ
+        last_name: Tên
+        email: Địa chỉ thư điện tử
         telephone: Số điện thoại
       tooltip:
-        first_name: Tên người nhận
-        last_name: Họ người nhận
-        email: Địa chỉ Email người nhận
-        telephone: Số điện thoại người nhận
+        first_name: Họ người tiếp nhận
+        last_name: Tên người tiếp nhận
+        email: Địa chỉ thư điện tử người tiếp nhận
+        telephone: Số điện thoại người tiếp nhận

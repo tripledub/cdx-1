@@ -26,6 +26,7 @@ en:
         detection_condition: Detection condition
         device_error_code: Device error code
         frequency: Frequency
+        frequency_value: Frequency value
         email: Email?
         email_message: Email message
         email_limit: Email limit

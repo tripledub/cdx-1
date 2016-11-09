@@ -84,6 +84,7 @@ en:
         anomaly_type: What type of anomalous reading do you want to alert on?
         utilisation_efficiency_sample_identifier: ID of the Sample that produced this Alert
         utilisation_efficiency_threshold: How many checks to allow?
+        frequency_value: 'Frequency value tooltip'
 
   notification_conditions:
     form:
