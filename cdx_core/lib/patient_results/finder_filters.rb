@@ -19,6 +19,7 @@ module PatientResults
       filter_by_type
       filter_by_status
       filter_by_sample_identifier
+      filter_by_assay_result
       filter_by_failed
     end
 
@@ -47,7 +48,15 @@ module PatientResults
     end
 
     def filter_by_sample_identifier
+      @filter_query = filter_query.where('sample_identifiers.entity_id = ?', params['sample_entity']) if params['sample_entity'].present?
       @filter_query = filter_query.where('sample_identifiers.id = ?', params['sample_id']) if params['sample_id'].present?
+    end
+
+    def filter_by_assay_result
+      @filter_query = filter_query.where(
+        'patient_results.id IN (SELECT assayable_id FROM assay_results where assayable_type="PatientResult" AND result=?)',
+        params['result_type']
+      ) if params['result_type'].present?
     end
 
     def filter_by_status

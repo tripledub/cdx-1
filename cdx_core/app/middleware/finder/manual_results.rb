@@ -1,7 +1,7 @@
 class Finder::ManualResults
   attr_reader :params, :filter_query
 
-  def initialize(params, navigation_context)
+  def initialize(navigation_context, params)
     @params             = params
     @navigation_context = navigation_context
     @filter_query       = set_filter
@@ -16,8 +16,8 @@ class Finder::ManualResults
 
   def set_filter
     results_class.joins('LEFT OUTER JOIN encounters ON encounters.id = patient_results.encounter_id')
-      .joins('LEFT OUTER JOIN institutions ON institutions.id = encounters.institution_id')
-      .joins('LEFT OUTER JOIN sites ON sites.id = encounters.site_id')
+                 .joins('LEFT OUTER JOIN institutions ON institutions.id = encounters.institution_id')
+                 .joins('LEFT OUTER JOIN sites ON sites.id = encounters.site_id')
   end
 
   def apply_filters
@@ -29,7 +29,7 @@ class Finder::ManualResults
   end
 
   def filter_by_sample
-    @filter_query = filter_query.where("patient_results.serial_number like ?", "%#{params['sample.id']}%") if params["sample.id"].present?
+    @filter_query = filter_query.where('patient_results.serial_number like ?', "%#{params['sample.id']}%") if params['sample.id'].present?
   end
 
   def filter_by_media
@@ -39,7 +39,7 @@ class Finder::ManualResults
   def filter_by_date
     since_day = start_date + ' 00:00'
     until_day = end_date + ' 23:59'
-    @filter_query = filter_query.where({ 'patient_results.created_at' => since_day..until_day })
+    @filter_query = filter_query.where('patient_results.created_at' => since_day..until_day)
   end
 
   def filter_by_test_result

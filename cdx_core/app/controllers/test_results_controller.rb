@@ -19,15 +19,15 @@ class TestResultsController < TestsController
         @can_create_encounter = !check_access(@navigation_context.institution.sites, CREATE_SITE_ENCOUNTER).empty?
         case @selected_tab
         when 'microscopy'
-          load_manual_test_results(Finder::MicroscopyResults, MicroscopyResults::Presenter)
+          load_test_results(Finder::MicroscopyResults, MicroscopyResults::Presenter, 'microscopy_results_index')
         when 'xpert'
-          load_manual_test_results(Finder::XpertResults, XpertResults::Presenter)
+          load_test_results(Finder::XpertResults, XpertResults::Presenter, 'xpert_results_index')
         when 'culture'
-          load_manual_test_results(Finder::CultureResults, CultureResults::Presenter)
+          load_test_results(Finder::CultureResults, CultureResults::Presenter, 'culture_results_index')
         when 'dst_lpa'
-          load_manual_test_results(Finder::DstLpaResults, DstLpaResults::Presenter)
+          load_test_results(Finder::DstLpaResults, DstLpaResults::Presenter, 'dstlpa_results_index')
         else
-          load_orphan_test_results
+          load_test_results(TestResults::Finder, TestResults::Presenter, 'orphan_results_index')
         end
 
         cookies[:test_result_tab] = { value: @selected_tab, expires: 1.year.from_now }
@@ -44,8 +44,8 @@ class TestResultsController < TestsController
 
   def show
     @other_tests       = @test_result.sample ? @test_result.sample.test_results.where.not(id: @test_result.id) : TestResult.none
-    @core_fields_scope = Cdx::Fields.test.core_field_scopes.detect{|x| x.name == 'test'}
-    @samples           = @test_result.sample_identifiers.reject{|identifier| identifier.entity_id.blank?}.map {|identifier| [identifier.entity_id, Barby::Code93.new(identifier.entity_id)]}
+    @core_fields_scope = Cdx::Fields.test.core_field_scopes.detect{ |x| x.name == 'test' }
+    @samples           = @test_result.sample_identifiers.reject{ |identifier| identifier.entity_id.blank? }.map { |identifier| [identifier.entity_id, Barby::Code93.new(identifier.entity_id)] }
     @show_institution  = show_institution?(Policy::Actions::QUERY_TEST, TestResult)
 
     device_messages  = @test_result.device_messages.joins(device: :device_model)
@@ -56,18 +56,11 @@ class TestResultsController < TestsController
 
   protected
 
-  def load_manual_test_results(results_finder, presenter)
-    patient_results   = results_finder.new(params, @navigation_context)
+  def load_test_results(results_finder, presenter, table_name)
+    patient_results   = results_finder.new(@navigation_context, params)
     @total            = patient_results.filter_query.count
-    order_by, offset  = perform_pagination(table: 'patient_results_index', field_name: '-patient_results.sample_collected_at')
+    order_by, offset  = perform_pagination(table: table_name, field_name: '-patient_results.sample_collected_at')
     @test_results     = presenter.index_table(patient_results.filter_query.order(order_by).limit(@page_size).offset(offset))
-  end
-
-  def load_orphan_test_results
-    patient_results   = TestResults::Finder.new(@navigation_context, params)
-    @total            = patient_results.filter_query.count
-    order_by, offset  = perform_pagination(table: 'orphan_results_index', field_name: '-patient_results.sample_collected_at')
-    @test_results     = TestResults::Presenter.index_table(patient_results.filter_query.order(order_by).limit(@page_size).offset(offset))
   end
 
   def default_selected_tab
