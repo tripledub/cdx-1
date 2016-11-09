@@ -43,18 +43,18 @@
           .filter
             %label.block
               =I18n.t('test_results.filters.status')
-            = cdx_select name: "test.status", value: params['status'] do |select|
+            = cdx_select name: "status", value: params['status'] do |select|
               - select.item "", I18n.t('test_results.filters.show_all')
               - select.items TestResult.result_status.map {|e| e.reverse }
 
           .filter
             %label.block
               =I18n.t('test_results.filters.sample_id')
-            %input{ type: "text", name: "sample.id", value: params['sample_entity'] }
+            %input{ type: "text", name: "sample_entity", value: params['sample_entity'] }
 
           .filter
             %label.block
               =I18n.t('test_results.filters.device')
-            = cdx_select name: "device.uuid", value: params['device_uuid'] do |select|
+            = cdx_select name: "device_uuid", value: params['device_uuid'] do |select|
               - select.item "", I18n.t('test_results.filters.show_all')
               - select.items @devices, :uuid, :name
