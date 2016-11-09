@@ -38,6 +38,7 @@ en:
       test_performed_on: 'Test performed on'
       by: 'by'
       at: 'at'
+      id: 'Test ID'
       assays: 'Assays'
       additional_data: 'Additional data'
       sample: 'Sample'

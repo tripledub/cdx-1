@@ -19,22 +19,22 @@ class TestResultsController < TestsController
         @can_create_encounter = !check_access(@navigation_context.institution.sites, CREATE_SITE_ENCOUNTER).empty?
         case @selected_tab
         when 'microscopy'
-          load_manual_test_results(Finder::MicroscopyResults, MicroscopyResults::Presenter)
+          load_test_results(Finder::MicroscopyResults, MicroscopyResults::Presenter, 'microscopy_results_index')
         when 'xpert'
-          load_manual_test_results(Finder::XpertResults, XpertResults::Presenter)
+          load_test_results(Finder::XpertResults, XpertResults::Presenter, 'xpert_results_index')
         when 'culture'
-          load_manual_test_results(Finder::CultureResults, CultureResults::Presenter)
+          load_test_results(Finder::CultureResults, CultureResults::Presenter, 'culture_results_index')
         when 'dst_lpa'
-          load_manual_test_results(Finder::DstLpaResults, DstLpaResults::Presenter)
+          load_test_results(Finder::DstLpaResults, DstLpaResults::Presenter, 'dstlpa_results_index')
         else
-          load_device_test_results
+          load_test_results(TestResults::Finder, TestResults::Presenter, 'orphan_results_index')
         end
 
         cookies[:test_result_tab] = { value: @selected_tab, expires: 1.year.from_now }
       end
 
       format.csv do
-        csv_content = TestResults::CsvGenerator.new(@selected_tab, params, current_user, @navigation_context, @localization_helper)
+        csv_content = TestResults::CsvGenerator.new(@selected_tab, params, @navigation_context)
         headers['Content-Type']        = 'text/csv'
         headers['Content-disposition'] = "attachment; filename=#{csv_content.filename}"
         self.response_body             = csv_content.create
@@ -44,8 +44,8 @@ class TestResultsController < TestsController
 
   def show
     @other_tests       = @test_result.sample ? @test_result.sample.test_results.where.not(id: @test_result.id) : TestResult.none
-    @core_fields_scope = Cdx::Fields.test.core_field_scopes.detect{|x| x.name == 'test'}
-    @samples           = @test_result.sample_identifiers.reject{|identifier| identifier.entity_id.blank?}.map {|identifier| [identifier.entity_id, Barby::Code93.new(identifier.entity_id)]}
+    @core_fields_scope = Cdx::Fields.test.core_field_scopes.detect{ |x| x.name == 'test' }
+    @samples           = @test_result.sample_identifiers.reject{ |identifier| identifier.entity_id.blank? }.map { |identifier| [identifier.entity_id, Barby::Code93.new(identifier.entity_id)] }
     @show_institution  = show_institution?(Policy::Actions::QUERY_TEST, TestResult)
 
     device_messages  = @test_result.device_messages.joins(device: :device_model)
@@ -56,33 +56,11 @@ class TestResultsController < TestsController
 
   protected
 
-  def load_manual_test_results(results_finder, presenter)
-    patient_results   = results_finder.new(params, @navigation_context)
+  def load_test_results(results_finder, presenter, table_name)
+    patient_results   = results_finder.new(@navigation_context, params)
     @total            = patient_results.filter_query.count
-    order_by, offset  = perform_pagination(table: 'patient_results_index', field_name: '-patient_results.sample_collected_at')
+    order_by, offset  = perform_pagination(table: table_name, field_name: '-patient_results.sample_collected_at')
     @test_results     = presenter.index_table(patient_results.filter_query.order(order_by).limit(@page_size).offset(offset))
-  end
-
-  def load_device_test_results
-    @results = Cdx::Fields.test.core_fields.find { |field| field.name == 'result' }.options.map do |result|
-      if result == 'n/a'
-        { value: 'n/a', label: I18n.t('test_results_controller.not_applicable') }
-      else
-        { value: result, label: result.capitalize }
-      end
-    end
-
-    @test_types    = Cdx::Fields.test.core_fields.find { |field| field.name == 'type' }.options
-    @test_statuses = %w(success error)
-    @conditions    = Condition.all.map(&:name)
-    @show_sites    = @sites.size > 1
-    @show_devices  = @devices.size > 1
-
-    @device_results = Finder::TestResults.new(params, current_user, @navigation_context, @localization_helper)
-    @device_results.get_results
-    @page           = @device_results.page
-    @total          = @device_results.total
-    @page_size      = @device_results.page_size
   end
 
   def default_selected_tab
@@ -108,7 +86,7 @@ class TestResultsController < TestsController
   end
 
   def find_test_result
-    @test_result = @navigation_context.institution.test_results.where(uuid: params[:id]).first
+    @test_result = @navigation_context.institution.test_results.where(id: params[:id]).first
   end
 
   def check_permission

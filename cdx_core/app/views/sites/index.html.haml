@@ -17,7 +17,7 @@
               = I18n.t('sites.index.site', count: @total)
             %span.table-actions
               = link_to sites_path(filters_params.merge(format: :csv)), title: I18n.t('devices.index.download_csv') do
-                %span.icon-download.icon-gray
+                %span.fa.fa-download
           .box-content
             = react_component "SitesIndexTable", sites: Sites::Presenter.index_table(@sites), orderBy: @order_by
             .pagination

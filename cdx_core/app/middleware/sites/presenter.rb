@@ -13,6 +13,12 @@ module Sites
           }
         end
       end
+
+      def site_name(site)
+        return '' unless site
+
+        site.name
+      end
     end
   end
 end

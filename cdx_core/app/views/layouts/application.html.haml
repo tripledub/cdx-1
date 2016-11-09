@@ -6,6 +6,7 @@
       = I18n.t('layout.header.meta_title')
     = Gon::Base.render_data({})
     = stylesheet_link_tag "application", :media => "all"
+    = stylesheet_link_tag 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', :media => "all"
     = stylesheet_link_tag print_theme, :media => "print"
     = javascript_include_tag "es5-shim" if Rails.env.test?
     = javascript_include_tag "application"

@@ -96,6 +96,16 @@ en:
         low: 'Low'
         medium: 'Medium'
         high: 'High'
+    test_results:
+      result_type:
+        positive: 'Positive'
+        negative: 'Negative'
+        indeterminate: 'Indeterminate'
+        n/a: 'Not applicable'
+        not_applicable: 'Not applicable'
+      result_status:
+        success: 'Success'
+        error: 'Error'
     user:
       status_options:
         show_all: 'Show all'

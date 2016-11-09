@@ -20,25 +20,25 @@ var XpertResultsIndex = React.createClass({
 
   render: function() {
     var sortableHeader = function (title, field) {
-      return <SortableColumnHeader title={title} field={field} orderBy='patient_results.sample_collected_at' />
+      return <SortableColumnHeader title={ title } field={ field } orderBy='patient_results.sample_collected_at' />
     }.bind(this);
 
     return (
       <table className="table" cellPadding="0" cellSpacing="0" data-resizable-columns-id="xpert-test-results-table">
         <thead>
           <tr>
-            {sortableHeader(I18n.t("components.test_results.col_sample"), 'patient_results.sample_collected_at')}
-            {sortableHeader(I18n.t("components.test_results.col_exam_by"),         'patient_results.examined_by')}
-            {sortableHeader(I18n.t("components.test_results.col_tuber"),        'patient_results.tuberculosis')}
-            {sortableHeader(I18n.t("components.test_results.col_trace"),               'patient_results.trace')}
-            {sortableHeader(I18n.t("components.test_results.col_rifampicin"),          'patient_results.rifampicin')}
-            {sortableHeader(I18n.t("components.test_results.col_result_at"),           'patient_results.result_at')}
+            { sortableHeader(I18n.t("components.test_results.col_sample"), 'patient_results.sample_collected_at') }
+            { sortableHeader(I18n.t("components.test_results.col_exam_by"),         'patient_results.examined_by') }
+            { sortableHeader(I18n.t("components.test_results.col_tuber"),        'patient_results.tuberculosis') }
+            { sortableHeader(I18n.t("components.test_results.col_trace"),               'patient_results.trace') }
+            { sortableHeader(I18n.t("components.test_results.col_rifampicin"),          'patient_results.rifampicin') }
+            { sortableHeader(I18n.t("components.test_results.col_result_at"),           'patient_results.result_at') }
           </tr>
         </thead>
         <tbody>
           {
             this.props.testResults.map(function(testResult) {
-             return <XpertResultRow key={testResult.id} testResult={testResult} />;
+              return <XpertResultRow key={ testResult.id } testResult={ testResult } />;
             })
           }
         </tbody>

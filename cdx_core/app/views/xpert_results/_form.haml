@@ -9,7 +9,7 @@
     .col.pe-2
       = f.label :sample_identifier_id
     .col
-      = f.select :sample_identifier_id, SampleIdentifiers::Presenter.available_samples(@encounter)
+      = f.select :sample_identifier_id, SampleIdentifiers::Finder.available_samples(@encounter)
   .row
     .col.pe-2
       = f.label :tuberculosis
