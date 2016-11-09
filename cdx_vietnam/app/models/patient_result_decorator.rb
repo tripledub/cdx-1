@@ -10,7 +10,7 @@ class PatientResult
       if (self.result_name == "xpertmtb") && ( self.rifampicin.present? && self.rifampicin == "detected") && !self.is_sync
         json = "CdxVietnam::Presenters::#{self.patient.external_patient_system.camelize}".constantize.create_patient(self)
         IntegrationJob.perform_later(json)
-        
+
         get_other_microscopy
       elsif (self.result_name == "microscopy") && !self.is_sync &&
               PatientResult.joins(:encounter).where(encounters: { patient_id: self.patient.id}, result_name: "xpertmtb", rifampicin: "detected", result_status: 'completed',).count > 0
@@ -21,7 +21,7 @@ class PatientResult
   end
 
   def get_other_microscopy
-    micros = PatientResult.joins(:encounter).where(encounters: { patient_id: self.patient.id}, result_status: 'completed', type: 'MicroscopyResult', is_sync: false)
+    micros = MicroscopyResult.joins(:encounter).where(encounters: { patient_id: self.patient.id}, result_status: 'completed', is_sync: false)
     micros.each do |micro|
       json = "CdxVietnam::Presenters::#{self.patient.external_patient_system.camelize}".constantize.create_patient(micro)
       IntegrationJob.perform_later(json)
@@ -67,14 +67,22 @@ class PatientResult
   end
 
   def send_all_microcopy_to_etb
-    micros = PatientResult.joins(:encounter).where(encounters: { patient_id: self.patient.id}, result_status: 'completed', type: 'MicroscopyResult')
+    micros = MicroscopyResult.joins(:encounter).where(encounters: { patient_id: self.patient.id}, result_status: 'completed')
     micros.each do |micro|
+      sleep 1
       json = "CdxVietnam::Presenters::Etb".constantize.create_patient(micro)
+      IntegrationJob.perform_later(json)
+    end
+    xperts = PatientResult.joins(:encounter).where(encounters: { patient_id: self.patient.id}, result_status: 'completed')
+    xperts.each do |xpert|
+      sleep 1
+      json = "CdxVietnam::Presenters::Etb".constantize.create_patient(xpert)
       IntegrationJob.perform_later(json)
     end
   end
 
   def update_sync_status_microcopy
-    PatientResult.joins(:encounter).where(encounters: { patient_id: self.patient.id}, result_status: 'completed', type: 'MicroscopyResult', is_sync: true).update_all(is_sync: false)
+    MicroscopyResult.joins(:encounter).where(encounters: { patient_id: self.patient.id}, result_status: 'completed', is_sync: true).update_all(is_sync: false)
+    XpertResult.joins(:encounter).where(encounters: { patient_id: self.patient.id}, result_status: 'completed', is_sync: true).update_all(is_sync: false)
   end
 end
