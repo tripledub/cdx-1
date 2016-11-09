@@ -8,7 +8,7 @@ module Devices
             id:              device.uuid,
             name:            device.name,
             modelName:       device.device_model.full_name,
-            siteName:        Sites::Presenters.site_name(device),
+            siteName:        Sites::Presenter.site_name(device.site),
             viewLink:        Rails.application.routes.url_helpers.device_path(device.id)
           }
         end

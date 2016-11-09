@@ -8,8 +8,8 @@ describe TestResults::Presenter do
   let(:device)         { Device.make  institution: institution, site: site }
   let!(:results) do
     4.times do
-      TestResult.make patient: patient, institution: institution,
-        device: device, core_fields: { 'assays' => ['condition' => 'mtb', 'result' => 'positive'] }
+      TestResult.make patient: patient, institution: institution, device: device,
+        core_fields: { 'assays' => ['condition' => 'mtb', 'result' => 'positive'] }
     end
   end
 
