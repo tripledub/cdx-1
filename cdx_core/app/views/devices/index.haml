@@ -18,7 +18,7 @@
               = I18n.t('devices.index.devices')
             %span.table-actions
               = link_to devices_path(filters_params.merge(format: :csv)), title: I18n.t('devices.index.download_csv') do
-                %span.icon-download.icon-gray
+                %span.fa.fa-download
           .box-content
             = react_component "DevicesIndexTable", devices: Devices::Presenter.index_table(@devices), title: I18n.t('devices.index.device', count: @total),
                 orderBy: params["order_by"] || "devices.name"

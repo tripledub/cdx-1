@@ -6,9 +6,9 @@ var DeviceMessageRow = React.createClass({
         {
           this.props.deviceMessage.indexStatus.hasOwnProperty('success') ?
           this.props.deviceMessage.indexStatus.success :
-                    <a href={this.props.deviceMessage.indexStatus.link} title={I18n.t("components.device_messages_table.click_to_process")} method="post">
-            {this.props.deviceMessage.indexStatus.failed}
-          </a>
+            <a href={this.props.deviceMessage.indexStatus.link} title={I18n.t("components.device_messages_table.click_to_process")} method="post">
+              {this.props.deviceMessage.indexStatus.failed}
+            </a>
         }</td>
       <td>{this.props.deviceMessage.failureReason}</td>
       <td>{this.props.deviceMessage.modelName}</td>
@@ -19,7 +19,7 @@ var DeviceMessageRow = React.createClass({
       <td>
 
         <a href={this.props.deviceMessage.rawLink} title={I18n.t("components.device_messages_table.download_raw_file")}>
-          <div className="icon-download icon-gray"></div>
+          <div className="fa fa-download"></div>
         </a>
       </td>
     </tr>);

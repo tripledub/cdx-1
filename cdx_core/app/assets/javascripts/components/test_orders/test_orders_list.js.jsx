@@ -69,7 +69,7 @@ var TestOrdersIndexTable = React.createClass({
           </h3>
           <span className="table-actions">
             <a title={this.props.csvTitle} onClick={this.requestCsvFile} href="#">
-              <span className="icon-download icon-gray"></span>
+              <span className="fa fa-download"></span>
             </a>
           </span>
         </header>
