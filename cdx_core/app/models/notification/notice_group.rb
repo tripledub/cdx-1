@@ -45,6 +45,22 @@ class Notification::NoticeGroup < ActiveRecord::Base
       end
   end
 
+  def plain_email_body
+    email_messages.join("\n\n")
+  end
+
+  def plain_sms_body
+    sms_messages.join("\n\n")
+  end
+
+  def complete!
+    update_column(:status, 'complete')
+  end
+
+  def failed!
+    update_column(:status, 'failed')
+  end
+
   private
 
   def collate_notification_messages
@@ -56,16 +72,27 @@ class Notification::NoticeGroup < ActiveRecord::Base
   end
 
   def send_messages
-    email_data.each do |email, count|
-      next if email.blank?
-      Notifications::Gateway::Email.aggregated(email, count, triggered_at)
-    end
+    begin
+      email_data.each do |email, count|
+        next if email.blank?
+        Notifications::Gateway::Email.aggregated(email, count, triggered_at, plain_email_body)
+      end
 
-    telephone_data.each do |telephone, count|
-      next if telephone.blank?
-      Notifications::Gateway::Sms.aggregated(telephone, count, triggered_at)
-    end
+      telephone_data.each do |telephone, count|
+        next if telephone.blank?
 
-    notification_notices.update_all(status: 'complete')
+        if plain_sms_body.present? && plain_sms_body.length <= 153
+          Notifications::Gateway::Sms.aggregated(telephone, count, triggered_at, plain_sms_body)
+        else
+          Notifications::Gateway::Sms.aggregated(telephone, count, triggered_at)
+        end
+      end
+
+      complete!
+      notification_notices.update_all(status: 'complete')
+    rescue => e
+      failed!
+      notification_notices.update_all(status: 'failed')
+    end
   end
 end

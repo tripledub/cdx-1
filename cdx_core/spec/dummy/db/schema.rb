@@ -687,7 +687,6 @@ ActiveRecord::Schema.define(version: 20161106181141) do
     t.boolean  "skip_ssc_validation",                   default: false
     t.string   "etb_patient_id",          limit: 255
     t.string   "vtm_patient_id",          limit: 255
-    t.string   "nationality",             limit: 255
   end
 
   add_index "patients", ["birth_date_on"], name: "index_patients_on_birth_date_on", using: :btree

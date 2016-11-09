@@ -10,17 +10,14 @@ module Notifications
                               .group_by { |notice| notice.notification.user }
       end
 
-      def notices_by_notification
-        @notices_by_notification ||= begin
-          notices_by_user.each do |user, grouped_notices|
-            # Trigger every day at 8am, 2pm, and 4pm in the creating users timezone
-            current_hour = triggered_at.in_time_zone(user.time_zone).hour
-            current_hour == 8 || current_hour == 14 || current_hour == 16 &&
-              @notices |= grouped_notices
-          end
-
-          @notices.group_by(&:notification)
-        end
+      def notices
+        # Trigger every day at 8am, 2pm, and 4pm in the creating users timezone
+        @notices ||=
+          notices_by_user
+            .select do |user, _grouped_notices|
+              current_hour = triggered_at.in_time_zone(user.time_zone).hour
+              current_hour == 8 || current_hour == 14 || current_hour == 16
+            end.map { |_user, grouped_notices| grouped_notices }.flatten.uniq
       end
     end
   end
