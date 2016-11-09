@@ -1,10 +1,17 @@
 vi:
   activerecord:
+    model:
+      notification:
+        one: 'Alert'
+        other: 'Alerts'
     errors:
       models:
         notification:
           base:
             sms_or_email: Bạn phải chọn một trong hai tin nhắn SMS hoặc Email làm phương pháp thông báo.
+          attributes:
+            encounter:
+              blank: 'Không tìm thấy mã định danh'
     attributes:
       notification:
         institution_id: Tổ chức
@@ -19,6 +26,7 @@ vi:
         detection_condition: Điều kiện nhận diện
         device_error_code: Mã lỗi thiết bị
         frequency: Tần suất
+        frequency_value: Giá trị tần suất
         email: Email?
         email_message: Thông báo Email
         email_limit: Giới hạn Email
@@ -39,10 +47,24 @@ vi:
         utilisation_efficiency_threshold: Ngưỡng UE
         utilisation_efficiency_last_checked_at: Lần kiểm tra UE cuối
         utilisation_efficiency_sample_identifier: Mã mẫu thử
+      notification/condition:
+        condition_type: Loại điều kiện
+        field: Trường dữ liệu
+        value: Giá trị
+      notification/recipient:
+        first_name: Họ
+        last_name: Tên
+        email: Địa chỉ Email
+        telephone: Số điện thoại
+
+      notification_condition:
+        condition_type: Loại
+        field: Trường dữ liệu
+        value: Giá trị
 
       notification_recipient:
-        first_name: Tên
-        last_name: Họ
+        first_name: Họ
+        last_name: Tên
         email: Địa chỉ Email
         telephone: Số điện thoại
         deleted_at: Thời điểm xóa
