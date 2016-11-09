@@ -3,9 +3,9 @@ module Notifications
     class Sms
       attr_accessor :phone_number, :body, :response
 
-      def self.aggregated(phone_number, aggregated_count, aggregated_at)
+      def self.aggregated(phone_number, aggregated_count, aggregated_at, body = nil)
         gateway = new(phone_number: phone_number)
-        gateway.body = I18n.t('middleware.notifications.gateway.sms.aggregated_body', count: aggregated_count, date: I18n.l(aggregated_at, format: :long))
+        gateway.body = (body || I18n.t('middleware.notifications.gateway.sms.aggregated_body', count: aggregated_count, date: I18n.l(aggregated_at, format: :long)))
         gateway.send_message
       end
 
@@ -35,7 +35,6 @@ module Notifications
       def send_message
         return unless credentials?
         #sanitize_phone_number!
-
         if Settings.twilio_enabled
           @response = twilio_client.messages.create(
             from: Settings.twilio_phone_number,

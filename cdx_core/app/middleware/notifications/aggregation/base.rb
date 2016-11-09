@@ -2,11 +2,10 @@ module Notifications
   module Aggregation
     class Base
       attr_reader   :triggered_at
-      attr_accessor :notices, :frequency, :frequency_value
+      attr_accessor :frequency, :frequency_value
 
       def initialize(triggered_at = Time.now)
         @triggered_at = triggered_at
-        @notices = []
         !self.class.is_a?(Notifications::Aggregation::Targeted) &&
           @frequency_value = self.class.to_s.downcase.split('::').last
         @frequency = @frequency_value ? 'aggregate' : 'targeted'
@@ -16,17 +15,8 @@ module Notifications
         raise Notifications::Error::NotImplemented
       end
 
-      def latest_notices
-        @latest_notices ||=
-          notices_by_notification.map { |_notification, grouped_notices| grouped_notices.first }
-      end
-
       def notice_ids
-        @notice_ids ||= @notices.map(&:id)
-      end
-
-      def latest_notice_ids
-        @latest_notice_ids ||= latest_notices.map(&:id)
+        @notice_ids ||= notices.map(&:id)
       end
 
       def distinct_emails_with_count
@@ -53,30 +43,29 @@ module Notifications
                                        .count(:notification_notice_id)
       end
 
-      def defer_redundant_notices!
-        Notification::Notice.where(id: notice_ids)
-                            .where.not(id: latest_notice_ids)
-                            .update_all(status: 'deferred')
-      end
-
       def process
-        return if latest_notices.empty?
+        return if notices.empty?
 
-        notices.map(&:create_recipients)
+        begin
 
-        notice_group = Notification::NoticeGroup.new(
-          notification_notice_ids: latest_notice_ids,
-          frequency: frequency,
-          frequency_value: frequency_value,
-          triggered_at: triggered_at
-        )
+          notices.map(&:create_recipients)
 
-        notice_group.email_data     = distinct_emails_with_count
-        notice_group.telephone_data = distinct_telephones_with_count
+          notice_group = Notification::NoticeGroup.new(
+            notification_notice_ids: notice_ids,
+            frequency: frequency,
+            frequency_value: frequency_value,
+            triggered_at: triggered_at
+          )
 
-        defer_redundant_notices!
+          notice_group.email_data     = distinct_emails_with_count
+          notice_group.telephone_data = distinct_telephones_with_count
 
-        notice_group.save!
+          notice_group.save!
+
+        rescue => e
+          notices.map(&:failed!)
+          raise e
+        end
 
         true
       end

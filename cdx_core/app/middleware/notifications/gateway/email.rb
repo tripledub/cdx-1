@@ -3,9 +3,15 @@ module Notifications
     class Email
       attr_accessor :email_address, :body, :response
 
-      def self.aggregated(email_address, aggregated_count, aggregated_at)
+      def self.aggregated(email_address, aggregated_count, aggregated_at, body = nil)
         gateway = new(email_address: email_address, aggregated_count: aggregated_count, aggregated_at: aggregated_at)
-        gateway.body = I18n.t('middleware.notifications.gateway.email.aggregated_body', count: aggregated_count, date: I18n.l(aggregated_at, format: :long))
+        gateway.body = String.new.tap do |s|
+          if body
+            s << body
+            s << "\n\n"
+          end
+          s << I18n.t('middleware.notifications.gateway.email.aggregated_body', count: aggregated_count, date: I18n.l(aggregated_at, format: :long))
+        end
         gateway.send_aggregated
       end
 
