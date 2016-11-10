@@ -14,6 +14,7 @@ en:
       col_error_field: "Field"
       col_date: "CDP Creation date"
       col_raw: "Raw"
+      is_linked: 'Test order'
       click_to_process: "Click to reprocess this message again"
       download_raw_file: "Download raw file"
 
