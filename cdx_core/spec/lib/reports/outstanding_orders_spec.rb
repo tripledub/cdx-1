@@ -22,23 +22,21 @@ RSpec.describe Reports::OutstandingOrders, elasticsearch: true do
 
   before do
     encounter.start_time=DateTime.new(Time.now.year,Time.now.month,Time.now.day,11,11,0).utc.iso8601
-    encounter_indexer = EncounterIndexer.new(encounter).index
 
     encounter2.start_time=DateTime.new(Time.now.year,Time.now.month,Time.now.day,11,11,0).utc.iso8601
-    encounter_indexer2 = EncounterIndexer.new(encounter2).index
 
 
     test_result  = TestResult.make_from_sample(sample, device: device,
     core_fields: {"name" => "test1", "error_description" => "No error","type" => "specimen",'start_time' => (Time.now - 1.week),'end_time' => Time.now,'reported_time' => Time.now,
       "assays" =>[{"condition" => "mtb", "result" => "positive", "name" => "mtb"},
         {"condition" => "flu", "result" => "negative", "name" => "flu"}]},
-        custom_fields: {"custom_a" => "test value 1"}).tap { |t| TestResultIndexer.new(t).index(true) }
+        custom_fields: {"custom_a" => "test value 1"})
 
         TestResult.make_from_sample(sample2, device: device,
         core_fields: {"name" => "test1", "error_description" => "No error","type" => "specimen",'start_time' => (Time.now - 1.month),'end_time' => Time.now,'reported_time' => Time.now,
           "assays" =>[{"condition" => "mtb", "result" => "positive", "name" => "mtb"},
             {"condition" => "flu", "result" => "negative", "name" => "flu"}]},
-            custom_fields: {"custom_a" => "test value 1"}).tap { |t| TestResultIndexer.new(t).index(true) }
+            custom_fields: {"custom_a" => "test value 1"})
 
             blender = Blender.new(institution)
             blender.load(test_result)

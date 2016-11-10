@@ -154,22 +154,13 @@ class Blender
   def save_without_index!
     ActiveRecord::Base.transaction do
       entities = @patients.map(&:save!) + @encounters.map(&:save!) + @samples.map(&:save!) + @test_results.map(&:save!)
-      [blenders.values + @garbage].flatten.each &:sweep
+      [blenders.values + @garbage].flatten.each(&:sweep)
       entities
     end
   end
 
   def save_and_index!
-    entities = save_without_index!
-    entities.each do |entity|
-      case entity
-      when TestResult then TestResultIndexer.new(entity).index
-      when Encounter then EncounterIndexer.new(entity).index
-      when Entity then EntityIndexUpdater.new(entity).update
-      when nil then next
-      else raise UnknownEntityError, "#{I18n.t('models.blender.unknown_entity_type')} #{entity.class.name}"
-      end
-    end
+    save_without_index!
   end
 
 

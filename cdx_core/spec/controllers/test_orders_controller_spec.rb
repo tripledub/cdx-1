@@ -7,6 +7,7 @@ describe TestOrdersController, elasticsearch: true do
   let(:site)           { Site.make institution: institution }
   let(:site2)          { Site.make institution: institution }
   let(:patient)        { Patient.make institution: institution }
+
   let!(:encounters) do
     7.times { Encounter.make institution: institution, site: site, patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"), testdue_date: 1.day.from_now.strftime("%Y-%m-%d") }
     Encounter.make institution: institution, site: site, performing_site_id: site2.id, patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"), testdue_date: 1.day.from_now.strftime("%Y-%m-%d")

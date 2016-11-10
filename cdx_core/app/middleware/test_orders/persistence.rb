@@ -36,7 +36,6 @@ module TestOrders
     def destroy(encounter)
       if encounter.status == 'new'
         begin
-          Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: encounter.uuid, ignore: 404
           encounter.destroy_and_audit("#{encounter.uuid} t{encounters.destroy.log_action}")
           I18n.t('encounters.destroy.success')
         rescue => ex
