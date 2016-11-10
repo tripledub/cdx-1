@@ -91,7 +91,7 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
           </div>
           <EncounterExaminationReason reasonClicked={ this.reasonClicked } encounter={ this.state.encounter } />
           { this.state.encounter.exam_reason === 'follow' ? <ReasonFollow treatmentDateChange={ this.updateEncounterField } defaultValue={ parseInt(this.state.encounter.treatment_weeks) } /> : null }
-          { this.state.encounter.exam_reason === 'diag' ? <PresumptiveRR checked={ false } updatePresumptiveRR={ this.updateEncounterField } /> : null }
+          { this.state.encounter.exam_reason === 'diag' ? <PresumptiveRR checked={ this.state.encounter.presumptive_rr } updatePresumptiveRR={ this.updateEncounterField } /> : null }
           <RequestedTests onChange={ this.updateEncounterField } />
           <EncounterSampleType onChange={ this.updateEncounterField } options={ this.props.sampleTestOptions } selectValue={ this.state.encounter.coll_sample_type } commentValue={ this.state.encounter.coll_sample_other } />
           <EncounterDueDate onChange={ this.updateEncounterField } defaultValue={ this.state.encounter.testdue_date } />
