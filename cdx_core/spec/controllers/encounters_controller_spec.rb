@@ -16,7 +16,7 @@ RSpec.describe EncountersController, type: :controller do
     DstLpaResult.make encounter: encounter
     TestResult.make encounter: encounter
   end
-  let(:clinician)      { User.make }
+  let(:clinician) { User.make }
 
   before(:each) do
     grant nil, user, Encounter,  [DELETE_ENCOUNTER]

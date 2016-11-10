@@ -116,10 +116,6 @@ class Encounter < ActiveRecord::Base
     def find_by_entity_id(entity_id, opts)
       find_by(entity_id: entity_id.to_s, institution_id: opts.fetch(:institution_id))
     end
-
-    def query params, user
-      EncounterQuery.for params, user
-    end
   end
 
   attribute_field :start_time, copy: true

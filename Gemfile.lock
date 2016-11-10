@@ -27,10 +27,6 @@ PATH
   specs:
     cdx (0.0.1)
       activesupport
-    cdx-api-elasticsearch (0.0.1)
-      activesupport
-      cdx
-      elasticsearch
 
 PATH
   remote: cdx_api_core
@@ -646,7 +642,6 @@ DEPENDENCIES
   capybara-mechanize
   capybara-screenshot
   cdx!
-  cdx-api-elasticsearch!
   cdx-sync-server!
   cdx_api_core!
   cdx_api_vietnam!

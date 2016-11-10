@@ -13,10 +13,6 @@ module Importer
       end
     end
 
-    def client
-      @client ||= Cdx::Api.client
-    end
-
     def device
       @device_message.device
     end

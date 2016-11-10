@@ -136,9 +136,10 @@ describe Device do
     it "should delete device elements in cascade" do
       device = Device.make
 
-      TestResult.create_and_index(
-        core_fields: {"assays" =>["name" => "mtb", "condition" => "mtb", "result" => :positive]},
-        device_messages: [ DeviceMessage.make(device: device) ])
+      TestResult.make(
+        core_fields: { "assays" => ["name" => "mtb", "condition" => "mtb", "result" => :positive] },
+        device_messages: [DeviceMessage.make(device: device)]
+      )
       DeviceLog.make(device: device)
       DeviceCommand.make(device: device)
 
@@ -149,11 +150,6 @@ describe Device do
       expect(DeviceMessage.count).to eq(0)
       expect(DeviceLog.count).to eq(0)
       expect(DeviceCommand.count).to eq(0)
-
-      refresh_index
-
-      result = Cdx::Api::Elasticsearch::Query.new({}, Cdx::Fields.test).execute
-      expect(result['total_count']).to eq(0)
     end
 
   end

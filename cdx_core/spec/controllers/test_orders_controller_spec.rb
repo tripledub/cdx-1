@@ -63,7 +63,7 @@ describe TestOrdersController, elasticsearch: true do
         end
 
         it 'should be a csv response' do
-          expect(response.header["Content-Type"]).to eq('text/csv')
+          expect(response.header['Content-Type']).to eq('text/csv')
         end
       end
     end

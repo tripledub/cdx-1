@@ -36,7 +36,6 @@ gem 'therubyracer'
 gem 'country_select'
 
 gem 'cdx', path: '.'
-gem 'cdx-api-elasticsearch', path: '.'
 gem 'cdx-sync-server', git: 'https://github.com/instedd/cdx-sync-server.git', branch: 'master'
 gem 'view_components', git: 'https://github.com/manastech/rails-view_components.git', branch: 'master'
 
