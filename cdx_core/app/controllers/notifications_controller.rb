@@ -89,6 +89,7 @@ class NotificationsController < ApplicationController
         @notification.encounter_id = @notification.test_identifier = @encounter.id
         @notification.site_ids << @notification.encounter.site.id
         @notification.user_ids << @notification.encounter.user.id
+        @notification.notification_conditions.build(condition_type: 'Encounter', field: 'status', value: @encounter.status)
       end
     end
 
