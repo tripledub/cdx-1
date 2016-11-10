@@ -81,6 +81,7 @@ en:
       false: 'Pending'
       true: 'Done'
     test_order:
+      header: 'Test order'
       new: 'New'
       pending: 'Pending'
       financed: 'Financed'

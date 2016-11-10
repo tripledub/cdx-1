@@ -13,6 +13,7 @@ module DeviceMessages
             numberOfFailures:  device_message.index_failure_data[:number_of_failures],
             errorField:        device_message.index_failure_data[:target_field],
             createdAt:         Extras::Dates::Format.datetime_with_time_zone(device_message.created_at, :full_time, device_message.device.time_zone),
+            testOrderLink:     message_is_linked(device_message),
             rawLink:           Rails.application.routes.url_helpers.raw_device_message_path(device_message)
           }
         end
@@ -29,6 +30,18 @@ module DeviceMessages
         else
           { success: I18n.t('device_messages.index.success') }
         end
+      end
+
+      def message_is_linked(message)
+        url = ''
+        message.test_results.each do |test_result|
+          if test_result.encounter
+            url =  Rails.application.routes.url_helpers.encounter_path(test_result.encounter)
+            break
+          end
+        end
+
+        url
       end
     end
   end
