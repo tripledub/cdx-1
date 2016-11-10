@@ -18,7 +18,7 @@
 
 .row
   .col-6
-    = link_to I18n.t('encounters.show.create_notification'), new_alert_path(encounter_id: @encounter.id), class: 'btn-primary addalertbut'
+    = link_to I18n.t('encounters.show.create_notification'), new_alert_group_path(encounter_id: @encounter.id), class: 'btn-primary addalertbut'
 
 
 - if @encounter.status == 'new'
