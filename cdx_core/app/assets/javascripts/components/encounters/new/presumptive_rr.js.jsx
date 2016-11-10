@@ -5,7 +5,7 @@ class PresumptiveRR extends React.Component {
 
   render() {
     return (
-      <RowContainer classNames="presumptiveclass">
+      <RowContainer>
         <EncounterFormColumn />
         <EncounterFormColumn>
           <FormCheckBox type="checkbox" checked={ this.props.checked } onChange={ this.onChange.bind(this) } className="presumptive_rr" id="presumptiveRR" name="presumptive_rr" />
