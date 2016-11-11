@@ -5,7 +5,7 @@ module Notifications
 
       def self.aggregated(phone_number, aggregated_count, aggregated_at, body = nil)
         gateway = new(phone_number: phone_number)
-        gateway.body = (body || I18n.t('middleware.notifications.gateway.sms.aggregated_body', count: aggregated_count, date: I18n.l(aggregated_at, format: :long)))
+        gateway.body = [body, I18n.t('middleware.notifications.gateway.sms.aggregated_body', count: aggregated_count, date: I18n.l(aggregated_at, format: :long))].join("\n")
         gateway.send_message
       end
 

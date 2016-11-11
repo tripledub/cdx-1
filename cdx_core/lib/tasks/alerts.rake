@@ -25,7 +25,6 @@ task remove_alerts_from_policies: :environment do
   end
 
   ComputedPolicy.where(resource_type: 'alert').update_all(resource_type: 'notification')
-
 end
 
 task migrate_alerts_conditions: :environment do
@@ -56,5 +55,14 @@ task migrate_alerts_conditions: :environment do
         end
       end
     end
+  end
+end
+
+task convert_notice_groups: :environment do
+  Notification::NoticeGroup.update_all(email_messages: nil, sms_messages: nil)
+
+  Notification::NoticeGroup.all.each do |group|
+    group.send(:collate_notification_messages)
+    group.save!
   end
 end

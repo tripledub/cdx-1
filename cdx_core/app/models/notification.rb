@@ -39,7 +39,7 @@ class Notification < ActiveRecord::Base
   has_many :roles,   through: :notification_roles,   class_name: '::Role'
   has_many :users,   through: :notification_users,   class_name: '::User'
 
-  has_many :notification_conditions, class_name: 'Notification::Condition'
+  has_many :notification_conditions, class_name: 'Notification::Condition', validate: true
   has_many :notification_recipients, class_name: 'Notification::Recipient'
   has_many :notification_statuses,   class_name: 'Notification::Status'
   has_many :notification_notices,    class_name: 'Notification::Notice'

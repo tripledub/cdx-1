@@ -107,7 +107,11 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-urijs'
 end
 
+# SMS library
 gem 'twilio-ruby', '~> 4.11.1'
+
+# Keep track of changes when multiple saves happen within a transaction
+gem 'ar_transaction_changes'
 
 group :development, :test do
   gem 'pry-byebug'
