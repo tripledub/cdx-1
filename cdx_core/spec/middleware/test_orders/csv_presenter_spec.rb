@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TestOrders::CsvPresenter do
+describe TestOrders::AuditCsv do
   let(:institution)       { Institution.make }
   let(:user)              { institution.user }
   let(:patient)           { Patient.make institution: institution }
