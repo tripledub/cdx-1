@@ -54,12 +54,12 @@ RSpec.describe Reports::AllTests do
         expect(subject[:columns].size).to eq(2)
       end
 
-      xit 'counts all results' do
-        expect(subject[:columns].first[:dataPoints].first[:y]).to eq(4)
+      it 'counts all results' do
+        expect(subject[:columns].first[:dataPoints].size).to eq(2)
       end
 
       it 'counts error results' do
-        expect(subject[:columns].last[:dataPoints].last[:y]).to eq(1)
+        expect(subject[:columns].last[:dataPoints].first[:y]).to eq(1)
       end
 
       context 'statuses' do
@@ -81,7 +81,7 @@ RSpec.describe Reports::AllTests do
       subject { Reports::AllTests.new(nav_context, options).generate_chart }
 
       it 'can sort results by month' do
-        expect(subject[:columns].first[:dataPoints].first[:y]).to eq(4)
+        expect(subject[:columns].first[:dataPoints].first[:y]).to eq(2)
       end
     end
   end

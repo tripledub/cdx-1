@@ -58,6 +58,7 @@ module Reports
       patient_results_finder.each { |result| add_result(result.date, result.total, 0) }
       orphan_results_finder.each { |result| add_result(result.date, result.total, 0) }
       find_error_results
+      @merged_results = Hash[@merged_results.sort]
     end
 
     def find_error_results
@@ -71,15 +72,15 @@ module Reports
       @days_span = patient_results.number_of_days
       patient_results.filter_query
                      .group(dates_filter)
-                     .order('patient_results.created_at DESC')
-                     .select('patient_results.created_at as date, COUNT(*) as total, 1 as uuid')
+                     .order('patient_results.result_at')
+                     .select('patient_results.result_at as date, COUNT(*) as total, 1 as uuid')
     end
 
     def orphan_results_finder
       orphan_results = TestResults::Finder.new(@context, @filter_options)
       orphan_results.filter_query
                     .group(dates_filter)
-                    .order('patient_results.result_at DESC')
+                    .order('patient_results.result_at')
                     .select('patient_results.result_at as date, COUNT(*) as total, 1 as uuid, "" as custom_fields, "" as core_fields ')
     end
 
@@ -92,7 +93,7 @@ module Reports
     end
 
     def dates_format
-      @days_span > 30 ? '%Y-%b' : '%Y-%m-%d'
+      @days_span > 30 ? '%Y-%m (%b)' : '%Y-%m-%d'
     end
 
     def add_result(date, total, errors)

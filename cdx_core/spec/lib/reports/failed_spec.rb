@@ -11,10 +11,10 @@ RSpec.describe Reports::Failed do
   let(:user_device_two)     { Device.make institution_id: institution_two.id, site: site_two }
   let(:patient)             { Patient.make institution: institution }
   let(:encounter)           { Encounter.make institution: institution, user: current_user, patient: patient }
-  let!(:microscopy_result)  { MicroscopyResult.make encounter: encounter }
-  let!(:xpert_result)       { XpertResult.make encounter: encounter, tuberculosis: 'indeterminate' }
-  let!(:xpert_result2)      { XpertResult.make encounter: encounter, tuberculosis: 'no_result' }
-  let!(:dst_result)         { DstLpaResult.make encounter: encounter, results_h: 'contaminated' }
+  let!(:microscopy_result)  { MicroscopyResult.make encounter: encounter, result_at: 1.day.ago }
+  let!(:xpert_result)       { XpertResult.make encounter: encounter, tuberculosis: 'indeterminate', result_at: 3.days.ago }
+  let!(:xpert_result2)      { XpertResult.make encounter: encounter, tuberculosis: 'no_result', result_at: 1.day.ago }
+  let!(:dst_result)         { DstLpaResult.make encounter: encounter, results_h: 'contaminated', result_at: 2.days.ago }
   let(:navigation_context)  { NavigationContext.new(current_user, institution.uuid) }
   let(:options)             { {} }
 

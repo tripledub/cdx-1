@@ -77,7 +77,7 @@ module PatientResults
       since_day = start_date + ' 00:00'
       until_day = end_date + ' 23:59'
       @number_of_days = (Time.parse(until_day) - Time.parse(since_day)).to_i / 86_400
-      @filter_query = filter_query.where('patient_results.created_at' => since_day..until_day)
+      @filter_query = filter_query.where('patient_results.result_at' => since_day..until_day)
     end
 
     def start_date
