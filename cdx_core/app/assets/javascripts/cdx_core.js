@@ -31,7 +31,10 @@ $(document).on("ready", function(){
 
 $(document).ready(function(){
 
-  $('.datetimepicker').datetimepicker();
+  $('.datetimepicker').datetimepicker({
+    dateFormat: 'dd.mm.yy',
+    firstDay: 1,
+  });
 
   $('.select2').each(function() {
     var $select = $(this);
