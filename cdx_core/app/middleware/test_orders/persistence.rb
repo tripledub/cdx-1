@@ -94,15 +94,6 @@ module TestOrders
       end
     end
 
-    def search_test(test_id)
-      institution = Institutions::Finder.find_by_uuid(params[:institution_uuid], current_user)
-      test_results = ::Finder::TestResults.find_by_institution(institution, current_user)
-        .joins("LEFT JOIN encounters ON encounters.id = patient_results.encounter_id")
-        .where("patient_results.encounter_id IS NULL OR encounters.is_phantom = TRUE")
-        .where("patient_results.test_id LIKE ?", "%#{test_id}%")
-      ::Finder::TestResults.as_json_list(test_results, @localization_helper).attributes!
-    end
-
     def prepare_blender_and_json(encounter)
       @encounter = encounter
       @blender = Blender.new(encounter.institution)
@@ -325,7 +316,7 @@ module TestOrders
     end
 
     def add_test_result_by_uuid(uuid)
-      test_result         = ::Finder::TestResults.find_by_institution(@institution, current_user).find_by!(uuid: uuid)
+      test_result         = ::TestResults::Finder.find_by_institution(@institution, current_user).find_by!(uuid: uuid)
       test_result_blender = @blender.load(test_result)
       @blender.merge_parent(test_result_blender, @encounter_blender)
       test_result_blender

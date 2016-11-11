@@ -475,48 +475,6 @@ RSpec.describe EncountersController, type: :controller do
 
   end
 
-  describe "GET #search_test" do
-    it "returns test_result by test_id" do
-      device = Device.make institution: institution
-
-      DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(test:{assays:[condition: "flu_a"], id: 'bab'})
-      DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(test:{assays:[condition: "flu_a"], id: 'bcb'})
-
-      test1 = TestResult.first
-
-      get :search_test, institution_uuid: institution.uuid, q: 'a'
-
-      expect(response).to have_http_status(:success)
-      expect(response.body).to eq([test_result_json(test1)].to_json)
-    end
-
-    it "filters test_result of selected institution within permission" do
-      device1 = Device.make institution: i1 = Institution.make, site: Site.make(institution: i1)
-      device2 = Device.make institution: i2 = Institution.make, site: Site.make(institution: i2)
-      device3 = Device.make institution: i1, site: Site.make(institution: i1)
-
-      DeviceMessage.create_and_process device: device1, plain_text_data: Oj.dump(test:{assays:[condition: "flu_a"], id: 'bab'})
-      DeviceMessage.create_and_process device: device2, plain_text_data: Oj.dump(test:{assays:[condition: "flu_a"], id: 'cac'})
-      DeviceMessage.create_and_process device: device3, plain_text_data: Oj.dump(test:{assays:[condition: "flu_a"], id: 'dad'})
-
-      grant device1.institution.user, user, device1.institution, READ_INSTITUTION
-      grant device2.institution.user, user, device2.institution, READ_INSTITUTION
-
-      grant device1.institution.user, user, {site: device1.institution}, CREATE_SITE_ENCOUNTER
-      grant device2.institution.user, user, {site: device2.institution}, CREATE_SITE_ENCOUNTER
-
-      grant device1.institution.user, user, {testResult: device1}, QUERY_TEST
-      grant device2.institution.user, user, {testResult: device2}, QUERY_TEST
-
-      get :search_test, institution_uuid: device1.institution.uuid, q: 'a'
-
-      expect(response).to have_http_status(:success)
-      json_response = JSON.parse(response.body)
-      expect(json_response.length).to eq(1)
-      expect(json_response.first.with_indifferent_access[:test_id]).to eq("bab")
-    end
-  end
-
   describe "PUT #add_sample" do
     let(:test1) { TestResult.make institution: institution, device: Device.make(site: Site.make(institution: institution)) }
 

@@ -249,12 +249,6 @@ describe FtpMonitor, elasticsearch: true do
 
         expect(file_messages).to have(1).item
         expect(file_messages[0].filename).to eq('01-02_NAT-04000443_2016-03-29-13-24-39.csv')
-
-        tests = all_elasticsearch_tests.sort_by { |test| test['_source']['test']['assays'].first['result'] }
-        test = tests.first['_source']['test']
-        expect(test['assays'].first['result']).to eq('negative')
-        test = tests.last['_source']['test']
-        expect(test['assays'].first['result']).to eq('positive')
       end
     end
   end

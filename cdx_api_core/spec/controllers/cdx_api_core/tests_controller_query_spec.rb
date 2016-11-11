@@ -51,13 +51,6 @@ describe CdxApiCore::TestsController, elasticsearch: true, validate_manifest: fa
             }
           }}
           DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(some_field: 1234)
-          test = all_elasticsearch_tests.first["_source"]["test"]
-
-          refresh_index
-
-          response = get_updates "id" => test["uuid"]
-          expect(response.size).to eq(1)
-          expect(response.first["test"]["custom_fields"]["foo"]).to eq(1234)
         end
       end
     end

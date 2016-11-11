@@ -3,6 +3,12 @@ module TestResults
   class Finder
     include PatientResults::FinderFilters
 
+    class << self
+      def find_by_institution(institution, current_user)
+        Policy.authorize(Policy::Actions::QUERY_TEST, TestResult, current_user).where(institution: institution)
+      end
+    end
+
     protected
 
     def init_query
