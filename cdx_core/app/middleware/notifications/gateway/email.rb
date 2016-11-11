@@ -2,17 +2,11 @@ module Notifications
   module Gateway
     class Email
       attr_accessor :email_address, :body, :response
+      attr_reader :aggregated_count, :aggregated_at
 
-      def self.aggregated(email_address, aggregated_count, aggregated_at, body = nil)
+      def self.aggregated(email_address, aggregated_count, notice_group, aggregated_at = Time.now)
         gateway = new(email_address: email_address, aggregated_count: aggregated_count, aggregated_at: aggregated_at)
-        gateway.body = String.new.tap do |s|
-          if body
-            s << body
-            s << "\n\n"
-          end
-          s << I18n.t('middleware.notifications.gateway.email.aggregated_body', count: aggregated_count, date: I18n.l(aggregated_at, format: :long))
-        end
-        gateway.send_aggregated
+        gateway.send_aggregated(notice_group)
       end
 
       def self.single(email_address, body)
@@ -37,9 +31,9 @@ module Notifications
         true
       end
 
-      def send_aggregated
-        return false unless credentials?
-        NotificationMailer.aggregated(email_address, body).deliver_now
+      def send_aggregated(notice_group)
+        return false if email_address.blank?
+        NotificationMailer.aggregated(email_address, notice_group, self).deliver_now
         true
       end
     end

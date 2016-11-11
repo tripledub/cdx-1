@@ -23,8 +23,8 @@ class Notification::NoticeGroup < ActiveRecord::Base
   serialize :email_data, Hash
   serialize :telephone_data, Hash
 
-  serialize :email_messages, Array
-  serialize :sms_messages, Array
+  serialize :email_messages, Hash
+  serialize :sms_messages, Hash
 
   before_create :collate_notification_messages
   after_create  :send_messages
@@ -45,12 +45,14 @@ class Notification::NoticeGroup < ActiveRecord::Base
       end
   end
 
-  def plain_email_body
-    email_messages.join("\n\n")
-  end
-
   def plain_sms_body
-    sms_messages.join("\n\n")
+    @plain_sms_body ||=
+      String.new.tap do |s|
+        sms_messages.each do |message, count|
+          s << "#{count} #{Notification.model_name.human}: #{message}"
+          s << "\n"
+        end
+      end
   end
 
   def complete!
@@ -63,19 +65,28 @@ class Notification::NoticeGroup < ActiveRecord::Base
 
   private
 
+  def message_counts(messages)
+    Hash.new.tap do |h|
+      messages.each do |v|
+        count = messages.select { |a| a == v }.size
+        h[v] = count
+      end
+    end
+  end
+
   def collate_notification_messages
     self.email_messages =
-      notification_notices.map {|notice| notice.notification.present? ? notice.notification.email_message : nil }.compact.uniq
+      message_counts(notification_notices.map { |notice| notice.notification.present? ? notice.notification.email_message : nil }.compact)
 
-    self.sms_messages    =
-      notification_notices.map {|notice| notice.notification.present? ? notice.notification.sms_message : nil }.compact.uniq
+    self.sms_messages =
+      message_counts(notification_notices.map { |notice| notice.notification.present? ? notice.notification.sms_message : nil }.compact)
   end
 
   def send_messages
     begin
       email_data.each do |email, count|
         next if email.blank?
-        Notifications::Gateway::Email.aggregated(email, count, triggered_at, plain_email_body)
+        Notifications::Gateway::Email.aggregated(email, count, self)
       end
 
       telephone_data.each do |telephone, count|
