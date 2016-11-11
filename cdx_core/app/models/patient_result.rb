@@ -16,7 +16,6 @@ class PatientResult < ActiveRecord::Base
   validates_presence_of :comment, if: Proc.new { |rt| rt.result_status == 'rejected' }, message: I18n.t('patient_results.validations.rejected_no_comment')
 
   after_save    :update_batch_status
-  before_save   :convert_string_to_dates
   before_save   :complete_test
   before_save   :update_status
   before_create :set_status_to_new
@@ -60,11 +59,6 @@ class PatientResult < ActiveRecord::Base
   end
 
   protected
-
-  def convert_string_to_dates
-    sample_collected_at = Extras::Dates::Format.string_to_pattern(sample_collected_at) if sample_collected_at.present? && sample_collected_at.is_a?(String)
-    result_at           = Extras::Dates::Format.string_to_pattern(result_at) if result_at.present? && result_at.is_a?(String)
-  end
 
   def complete_test
     self.completed_at = Time.now if result_status == 'completed'
