@@ -7,10 +7,10 @@ class ApprovalsController < TestsController
       end
 
       format.csv do
-        filename                       = "test-orders-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
-        headers["Content-Type"]        = "text/csv"
-        headers["Content-disposition"] = "attachment; filename=#{filename}"
-        self.response_body             = execute_csv_test_order_query(create_filter_for_test_order.dup, filename)
+        csv_orders = TestOrders::ListCsv.new(TestOrders::Finder.new(@navigation_context, params).filter_query)
+        headers['Content-Type'] = 'text/csv'
+        headers['Content-disposition'] = "attachment; filename=#{csv_orders.filename}"
+        self.response_body = csv_orders.generate
       end
     end
   end
@@ -27,11 +27,6 @@ class ApprovalsController < TestsController
     @approvals = @approvals.filter_query.order(order_by)
                            .offset(offset)
                            .limit(@page_size)
-  end
-
-  def execute_csv_test_order_query(query, filename, csv=false)
-    query = Encounter.query(query, current_user)
-    EntityCsvBuilder.new("encounter", query, filename)
   end
 
   def create_filter_for_test_order

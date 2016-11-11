@@ -1,6 +1,6 @@
 module TestOrders
   # Generates a csv for each test order with all the different changes in status
-  class CsvPresenter
+  class AuditCsv
     attr_reader :filename
 
     def initialize(test_orders)
