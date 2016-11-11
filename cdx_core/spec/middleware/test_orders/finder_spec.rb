@@ -16,6 +16,12 @@ RSpec.describe TestOrders::Finder do
   let(:navigation_context) { NavigationContext.new(user, institution.uuid) }
   let(:params) { { } }
 
+  before :each do
+    encounter = Encounter.make institution: institution, site: site3, patient: patient, start_time: 93.days.ago.strftime("%Y-%m-%d"), testdue_date: 6.days.from_now.strftime("%Y-%m-%d"), testing_for: 'EBOLA'
+    encounter.update_attribute(:status, 'not_financed')
+  end
+
+
   describe '#finder_query' do
     context 'when navigation context is the institution' do
       subject { described_class.new(navigation_context, params) }
