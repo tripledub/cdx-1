@@ -23,6 +23,17 @@ module TestOrders
         encounters_data
       end
 
+      def generate_status(encounter)
+        encounter_status = I18n.t("select.encounter.status_options.#{encounter.status}")
+        encounter_status += ': '
+
+        encounter_status += encounter.patient_results.map do |patient_result|
+          "#{patient_result.test_name} (#{I18n.t('select.patient_result.status_options.' + patient_result.result_status)})"
+        end.join(' - ')
+
+        encounter_status
+      end
+
       protected
 
       def fetch_rows(encounters)
@@ -31,7 +42,7 @@ module TestOrders
             id:                 encounter.uuid,
             requestedSiteName:  Sites::Presenter.site_name(encounter.site),
             performingSiteName: Sites::Presenter.site_name(encounter.performing_site),
-            sampleId:           samples_for_encounter(encounter),
+            sampleId:           SampleIdentifiers::Presenter.for_encounter(encounter),
             testingFor:         encounter.testing_for,
             requestedBy:        encounter.user.full_name,
             batchId:            encounter.batch_id,
@@ -41,21 +52,6 @@ module TestOrders
             viewLink:           Rails.application.routes.url_helpers.encounter_path(encounter)
           }
         end
-      end
-
-      def generate_status(encounter)
-        encounter_status = I18n.t("select.encounter.status_options.#{encounter.status}")
-        encounter_status += ': '
-
-        encounter_status += encounter.patient_results.map do |patient_result|
-          "#{patient_result.test_name} (#{I18n.t('select.patient_result.status_options.'+patient_result.result_status)})"
-        end.join(' - ')
-
-        encounter_status
-      end
-
-      def samples_for_encounter(encounter)
-        encounter.samples.map { |sample| sample.sample_identifiers.map(&:cpd_id_sample) }.compact.join(', ')
       end
     end
   end

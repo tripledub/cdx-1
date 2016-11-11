@@ -9,10 +9,10 @@ class TestOrdersController < TestsController
       end
 
       format.csv do
-        filename = "test-orders-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
+        csv_orders = TestOrders::ListCsv.new(TestOrders::Finder.new(@navigation_context, params).filter_query)
         headers['Content-Type'] = 'text/csv'
-        headers['Content-disposition'] = "attachment; filename=#{filename}"
-        self.response_body = execute_csv_test_order_query(create_filter_for_test_order.dup, filename)
+        headers['Content-disposition'] = "attachment; filename=#{csv_orders.filename}"
+        self.response_body = csv_orders.generate
       end
     end
   end
@@ -25,11 +25,6 @@ class TestOrdersController < TestsController
     order_by, offset = perform_pagination(table: 'test_orders_index', field_name: 'encounters.testdue_date')
     order_by += ', users.last_name' if order_by.include?('users.first_name')
     @tests = test_orders.filter_query.order(order_by).limit(@page_size).offset(offset)
-  end
-
-  def execute_csv_test_order_query(query, filename)
-    query = Encounter.query(query, current_user)
-    EntityCsvBuilder.new('encounter', query, filename)
   end
 
   def create_filter_for_test_order
