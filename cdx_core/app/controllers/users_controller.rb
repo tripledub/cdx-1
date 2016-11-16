@@ -107,9 +107,9 @@ class UsersController < ApplicationController
     #user = User.find_by(id: params[:id])
     if @user.present?
       @user.destroy
-      redirect_to users_path, notice: I18n.t('users.remove.user_removed')
+      redirect_to users_path, notice: I18n.t('users_controller.user_removed')
     else
-      redirect_to users_path, notice: I18n.t('users.remove.user_not_found')
+      redirect_to users_path, notice: I18n.t('users_controller.user_not_found')
     end
   end
 
