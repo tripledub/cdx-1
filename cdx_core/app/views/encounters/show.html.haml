@@ -17,11 +17,6 @@
   rejectReasons: FeedbackMessages::Presenter.reject_reasons(@encounter.institution),
   authenticityToken: form_authenticity_token)
 
-.row
-  .col-6
-    = link_to I18n.t('encounters.show.create_notification'), new_alert_group_path(encounter_id: @encounter.id), class: 'btn-primary addalertbut'
-
-
 - if @encounter.status == 'new'
   .row
     .col

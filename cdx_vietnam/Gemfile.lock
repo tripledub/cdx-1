@@ -82,6 +82,8 @@ GEM
     activesupport-decorators (2.1.1)
       railties (>= 3.2.8)
     addressable (2.4.0)
+    ar_transaction_changes (1.1.0)
+      activerecord (>= 3.0, < 6.0, != 4.2.3)
     arel (6.0.3)
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
@@ -487,6 +489,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport-decorators (~> 2.1)
+  ar_transaction_changes
   barby
   base58
   better_errors
