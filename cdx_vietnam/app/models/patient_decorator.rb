@@ -1,6 +1,6 @@
 # Vietnam specific logic for patients
 class Patient < ActiveRecord::Base
-  validates :social_security_code, length: { in: 9..15, message: I18n.t('patient.validations.cmnd') }, unless: Proc.new { |patient| patient.skip_ssc_validation }
+  validates :social_security_code, length: { in: 9..15, message: :cmnd_validation }, unless: Proc.new { |patient| patient.skip_ssc_validation }
 
   def display_patient_id
     'VPN' << id.to_s.rjust(6, '0')

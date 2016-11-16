@@ -16,6 +16,12 @@ vi:
         external_id: 'Mã bệnh nhân hệ thống ngoài'
         external_patient_system: 'Hệ thống bệnh nhân ngoài'
         nationality: 'Quốc tịch'
+    errors:
+      models:
+        patient:
+          attributes:
+            social_security_code:
+              cmnd_validation: 'phải dài từ 9 đến 15 ký tự.'
   patient:
     model_form:
       wrong_date: 'nên là một ngày trong %{birth_date_on_placeholder}'
