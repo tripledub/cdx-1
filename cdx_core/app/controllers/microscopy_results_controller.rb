@@ -3,6 +3,7 @@ class MicroscopyResultsController < PatientResultsController
   before_filter :find_microscopy_result, only: [:edit, :update, :show]
 
   def show
+    @microscopy_result.specimen_type       = I18n.t("test_results.index.specimen_type.#{@encounter.coll_sample_type}")
   end
 
   def edit
