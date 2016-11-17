@@ -56,6 +56,7 @@ gem 'sinatra'
 gem 'sidekiq-cron'
 gem 'cdx_core', path: '../'
 gem 'activesupport-decorators', '~> 2.1'
+gem 'ar_transaction_changes'
 
 group :development do
   gem 'letter_opener'

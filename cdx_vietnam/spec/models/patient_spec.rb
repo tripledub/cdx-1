@@ -19,6 +19,16 @@ RSpec.describe Patient, type: :model do
         patient.social_security_code = SecureRandom.hex(16)
         expect(patient).to be_invalid
       end
+
+      it 'is nil' do
+        patient.social_security_code = nil
+        expect(patient).to be_valid
+      end
+
+      it 'is blank' do
+        patient.social_security_code = ''
+        expect(patient).to be_valid
+      end
     end
 
     context 'should not be validated' do
