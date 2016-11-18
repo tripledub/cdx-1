@@ -2,6 +2,7 @@
 class PatientsController < ApplicationController
   before_filter :find_patient, only: %w(show edit update destroy)
   before_action :set_filter_params, only: [:index]
+  before_action :load_sites
 
   def search
     @patients = check_access(Patient.where(is_phantom: false)
@@ -33,7 +34,6 @@ class PatientsController < ApplicationController
 
   def new
     institution = @navigation_context.institution
-    @sites = institution.sites || []
     @patient = institution.patients.new
     @patient.site_id = @navigation_context.site.id if @navigation_context.site
 
@@ -90,6 +90,10 @@ class PatientsController < ApplicationController
 
   protected
 
+  def load_sites
+    @sites = @navigation_context.institution.sites || []
+  end
+
   def find_patient
     @patient = Patient.find(params[:id])
   end
@@ -111,6 +115,7 @@ class PatientsController < ApplicationController
       :city,
       :state,
       :zip_code,
+      :site_id,
       :created_from_controller,
       addresses_attributes: [:id, :address, :city, :state, :country, :zip_code]
     )

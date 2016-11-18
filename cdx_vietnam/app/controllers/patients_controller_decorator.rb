@@ -14,6 +14,7 @@ class PatientsController
       :nickname,
       :medical_insurance_num,
       :social_security_code,
+      :site_id,
       :external_id,
       :external_system_id,
       :vitimes_id,
