@@ -375,19 +375,6 @@ ActiveRecord::Schema.define(version: 20161106181141) do
 
   add_index "institutions", ["user_id"], name: "index_institutions_on_user_id", using: :btree
 
-  create_table "integration_logs", force: :cascade do |t|
-    t.string   "patient_name",  limit: 255
-    t.string   "order_id",      limit: 255
-    t.text     "json",          limit: 65535
-    t.string   "fail_step",     limit: 255
-    t.string   "system",        limit: 255
-    t.string   "error_message", limit: 255
-    t.integer  "try_n_times",   limit: 4
-    t.string   "status",        limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "manifests", force: :cascade do |t|
     t.string   "version",         limit: 255
     t.text     "definition",      limit: 65535
@@ -631,6 +618,7 @@ ActiveRecord::Schema.define(version: 20161106181141) do
     t.string   "results_other2",       limit: 255
     t.string   "results_other3",       limit: 255
     t.string   "results_other4",       limit: 255
+    t.string   "culture_format",       limit: 255
     t.string   "trace",                limit: 255
     t.string   "test_result",          limit: 255
     t.string   "method_used",          limit: 255
@@ -640,7 +628,6 @@ ActiveRecord::Schema.define(version: 20161106181141) do
     t.text     "comment",              limit: 65535
     t.datetime "completed_at"
     t.integer  "feedback_message_id",  limit: 4
-    t.boolean  "is_sync",                            default: false
   end
 
   add_index "patient_results", ["completed_at"], name: "index_patient_results_on_completed_at", using: :btree
@@ -684,10 +671,6 @@ ActiveRecord::Schema.define(version: 20161106181141) do
     t.string   "external_id",             limit: 255
     t.string   "external_patient_system", limit: 255
     t.integer  "external_system_id",      limit: 4
-    t.boolean  "skip_ssc_validation",                   default: false
-    t.string   "etb_patient_id",          limit: 255
-    t.string   "vtm_patient_id",          limit: 255
-    t.string   "nationality",             limit: 255
   end
 
   add_index "patients", ["birth_date_on"], name: "index_patients_on_birth_date_on", using: :btree
@@ -739,16 +722,14 @@ ActiveRecord::Schema.define(version: 20161106181141) do
   end
 
   create_table "sample_identifiers", force: :cascade do |t|
-    t.integer  "sample_id",      limit: 4
-    t.string   "entity_id",      limit: 255
-    t.string   "uuid",           limit: 255
-    t.integer  "site_id",        limit: 4
+    t.integer  "sample_id",     limit: 4
+    t.string   "entity_id",     limit: 255
+    t.string   "uuid",          limit: 255
+    t.integer  "site_id",       limit: 4
     t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "cpd_id_sample",  limit: 255
-    t.string   "lab_id_sample",  limit: 255
-    t.string   "lab_id_patient", limit: 255
+    t.string   "cpd_id_sample", limit: 255
   end
 
   add_index "sample_identifiers", ["cpd_id_sample"], name: "index_sample_identifiers_on_cpd_id_sample", using: :btree
@@ -896,10 +877,6 @@ ActiveRecord::Schema.define(version: 20161106181141) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
-  add_foreign_key "audit_logs", "encounters"
-  add_foreign_key "audit_logs", "patient_results"
-  add_foreign_key "audit_logs", "requested_tests"
-  add_foreign_key "device_messages", "sites"
   add_foreign_key "encounters", "sites"
   add_foreign_key "encounters", "users"
   add_foreign_key "episodes", "patients"

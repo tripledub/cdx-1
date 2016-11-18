@@ -1,5 +1,5 @@
 module TestOrders
-  # CdxVietnam extention that handles the presentation of a test order
+  # CdxVietnam extension that handles the presentation of a test order
   class Presenter
     class << self
       alias_method :core_fetch_rows, :fetch_rows

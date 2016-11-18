@@ -258,7 +258,8 @@ describe DevicesController do
           institution_id: institution.id,
           device_model_id: device_model.id,
           name: "foo",
-          serial_number: "123"
+          serial_number: "123",
+          time_zone: 'UTC'
         }
       }.to change(Device, :count).by(1)
 
@@ -278,7 +279,8 @@ describe DevicesController do
           institution_id: institution.id,
           device_model_id: device_model.id,
           name: "foo",
-          serial_number: "123"
+          serial_number: "123",
+          time_zone: 'UTC'
         }
       }.to change(Device, :count).by(1)
 
@@ -293,10 +295,22 @@ describe DevicesController do
     it "doesn't crash when there's no device model (#578)" do
       post :create, device: {
         name: "foo",
-        serial_number: "123"
+        serial_number: "123",
+        time_zone: 'UTC'
       }
 
       expect(response).to be_ok
+    end
+
+    it "has no timezone" do
+      expect {
+        post :create, device: {
+          institution_id: institution.id,
+          device_model_id: device_model.id,
+          name: "foo",
+          serial_number: "123"
+        }
+      }.to change(Device, :count).by(0)
     end
   end
 
