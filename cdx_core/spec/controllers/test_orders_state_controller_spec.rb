@@ -56,42 +56,4 @@ describe TestOrdersStateController do
       )
     end
   end
-
-  describe 'patients' do
-    it 'should return a CSV file with patients information' do
-      get :patients, format: :csv
-      csv = CSV.parse(response.body)
-
-      expect(csv[0]).to eq(
-        [
-          'Patient ID',
-          'Date of creation',
-          'Site ID',
-          'ETB Patient ID',
-          'VITIMES Patient ID',
-          'CMND',
-          'VITIMES/ETB Manager log ID',
-          'External ID',
-          'Gender',
-          'Address',
-          'Nationality'
-        ]
-      )
-      expect(csv[1]).to eq(
-        [
-          patient.id.to_s,
-          Extras::Dates::Format.datetime_with_time_zone(patient.created_at, :full_time),
-          site.id.to_s,
-          patient.etb_patient_id.to_s,
-          patient.vtm_patient_id.to_s,
-          patient.social_security_code,
-          patient.entity_id.to_s,
-          patient.external_id.to_s,
-          patient.gender,
-          Patients::Presenter.show_full_address(patient.addresses[0]),
-          patient.nationality
-        ]
-      )
-    end
-  end
 end
