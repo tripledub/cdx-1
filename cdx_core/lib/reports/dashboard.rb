@@ -16,6 +16,10 @@ module Reports
       Reports::Failed.new(@navigation_context, @params.dup).generate_chart
     end
 
+    def daily_order_status
+      Reports::DailyOrderStatus.new(@navigation_context, @params.dup).generate_chart
+    end
+
     def query_site_tests
       Reports::Site.new(@current_user, @navigation_context, @params.dup).generate_chart
     end
