@@ -34,7 +34,7 @@ class Patients::Finder
   end
 
   def filter_by_name
-    @filter_query = filter_query.where("name LIKE concat('%', ?, '%')", @params[:name]) unless @params[:name].blank?
+    @filter_query = filter_query.where("patients.name LIKE concat('%', ?, '%')", @params[:name]) unless @params[:name].blank?
   end
 
   def filter_by_entity
@@ -61,6 +61,6 @@ class Patients::Finder
   end
 
   def end_date
-    @params[:until_dob].present? ? @params[:until_dob] : Date.today.strftime("%Y-%m-%d")
+    @params[:until_dob].present? ? @params[:until_dob] : Date.today.strftime('%Y-%m-%d')
   end
 end
