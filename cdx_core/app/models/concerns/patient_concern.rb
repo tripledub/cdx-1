@@ -36,9 +36,9 @@ module PatientConcern
           where(institution: institution_or_site)
         end
       elsif exclude_subsites
-        where("site_id = ? OR id in (#{Encounter.within(institution_or_site, true).select(:patient_id).to_sql})", institution_or_site)
+        where("site_id = ? OR patients.id in (#{Encounter.within(institution_or_site, true).select(:patient_id).to_sql})", institution_or_site)
       else
-        where("site_prefix LIKE concat(?, '%') OR id in (#{Encounter.within(institution_or_site).select(:patient_id).to_sql})", institution_or_site.prefix)
+        where("site_prefix LIKE concat(?, '%') OR patients.id in (#{Encounter.within(institution_or_site).select(:patient_id).to_sql})", institution_or_site.prefix)
       end
     }
 
