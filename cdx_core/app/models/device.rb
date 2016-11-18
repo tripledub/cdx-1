@@ -28,6 +28,8 @@ class Device < ActiveRecord::Base
 
   validate :unpublished_device_model_from_institution
 
+  validates :time_zone, inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) }
+
   before_create :set_uuid
 
   delegate :current_manifest, to: :device_model
