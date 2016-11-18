@@ -51,7 +51,11 @@ Rails.application.routes.draw do
 
   get 'settings' => 'home#settings'
 
-  resources :test_orders_state, only: [:index, :show]
+  resources :test_orders_state, only: [:index, :show] do
+    collection do
+      get :patients
+    end
+  end
 
   resources :encounters do
     resource :patient_results, only: [:update] do
