@@ -5,8 +5,8 @@ describe SampleIdentifiersController do
   render_views
   let(:user)              { User.make }
   let!(:institution)      { user.institutions.make }
-  let(:site)              { Site.make institution: institution }
-  let(:patient)           { Patient.make institution: institution }
+  let!(:site) { Site.make institution: institution }
+  let(:patient)        { Patient.make institution: institution, site: site }
   let(:encounter)         { Encounter.make institution: institution , user: user, patient: patient }
   let(:sample_identifier) { SampleIdentifier.make(site: site, entity_id: "entity random", cpd_id_sample: 'Random lab sample', sample: Sample.make(institution: institution, encounter: encounter, patient: patient)) }
   let(:valid_params)      { { cpd_id_sample: 'Some text' } }

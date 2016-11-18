@@ -21,20 +21,20 @@ RSpec.describe PatientsController, type: :controller do
     end
 
     it "should list patients if can read" do
-      institution.patients.make
+      institution.patients.make site: site_one
       get :index
       expect(assigns(:patients).count).to eq(1)
     end
 
     it "should ignore phantom patients" do
-      institution.patients.make :phantom
+      institution.patients.make :phantom, site: site_one
       get :index
 
       expect(assigns(:patients).count).to eq(0)
     end
 
     it "should not list patients if can not read" do
-      institution.patients.make
+      institution.patients.make site: site_one
       sign_in other_user
       get :index
       expect(assigns(:patients).count).to eq(0)
@@ -62,9 +62,9 @@ RSpec.describe PatientsController, type: :controller do
     end
 
     it "should filter by name" do
-      institution.patients.make name: 'John'
-      institution.patients.make name: 'Clark'
-      institution.patients.make name: 'Mery johana'
+      institution.patients.make name: 'John', site: site_one
+      institution.patients.make name: 'Clark', site: site_one
+      institution.patients.make name: 'Mery johana', site: site_one
 
       get :index, name: 'jo'
       expect(response).to be_success
@@ -72,9 +72,9 @@ RSpec.describe PatientsController, type: :controller do
     end
 
     it "should filter by entity_id" do
-      institution.patients.make entity_id: '10110'
-      institution.patients.make entity_id: '21100'
-      institution.patients.make entity_id: '40440'
+      institution.patients.make entity_id: '10110', site: site_one
+      institution.patients.make entity_id: '21100', site: site_one
+      institution.patients.make entity_id: '40440', site: site_one
 
       get :index, entity_id: '11'
       expect(response).to be_success
@@ -86,8 +86,8 @@ RSpec.describe PatientsController, type: :controller do
       site11 = Site.make :child, parent: site1
       site2 = institution.sites.make
 
-      patient1 = institution.patients.make
-      patient2 = institution.patients.make
+      patient1 = institution.patients.make site: site1
+      patient2 = institution.patients.make site: site2
 
       patient1.encounters.make site: site11
       patient2.encounters.make site: site2
@@ -114,7 +114,7 @@ RSpec.describe PatientsController, type: :controller do
   end
 
   context "show" do
-    let!(:patient) { institution.patients.make }
+    let!(:patient) { institution.patients.make site: site_one }
 
     it "should be accessible be institution owner" do
       get :show, id: patient.id
@@ -180,6 +180,7 @@ RSpec.describe PatientsController, type: :controller do
         name: 'Peter Parker',
         entity_id: '100000',
         nickname: 'Spiderman',
+        site_id: site_two.id,
         medical_insurance_num: 123_456_789,
         social_security_code: 987_654_321,
         external_id: '1234567890',
@@ -267,7 +268,7 @@ RSpec.describe PatientsController, type: :controller do
     end
 
     it "should validate entity_id uniqness" do
-      institution.patients.make entity_id: '1001', name: 'Bruce McLaren'
+      institution.patients.make entity_id: '1001', name: 'Bruce McLaren', site: site_two
 
       expect {
         post :create, patient: build_patient_form_plan(entity_id: '1001')
@@ -279,7 +280,7 @@ RSpec.describe PatientsController, type: :controller do
 
     it "should not require birth_date_on" do
       expect {
-        post :create, patient: { name: 'Lorem', entity_id: '1001', gender: 'female' }
+        post :create, patient: { name: 'Lorem', entity_id: '1001', gender: 'female', site_id: site_one.id }
       }.to change(institution.patients, :count).by(1)
 
       patient = institution.patients.first
@@ -307,12 +308,11 @@ RSpec.describe PatientsController, type: :controller do
     end
 
     it "should use navigation_context as patient site" do
-      site = institution.sites.make
       expect {
-        post :create, context: site.uuid, patient: patient_form_plan
+        post :create, context: site_two.uuid, patient: patient_form_plan
       }.to change(institution.patients, :count).by(1)
 
-      expect(Patient.last.site).to eq(site)
+      expect(Patient.last.site).to eq(site_two)
 
       expect(response).to be_redirect
     end
@@ -336,7 +336,7 @@ RSpec.describe PatientsController, type: :controller do
   end
 
   context "edit" do
-    let!(:patient) { institution.patients.make }
+    let!(:patient) { institution.patients.make site: site_one   }
 
     it "should be accessible by institution owner" do
       get :edit, id: patient.id
@@ -372,7 +372,7 @@ RSpec.describe PatientsController, type: :controller do
   end
 
   context "update" do
-    let(:patient) { institution.patients.make }
+    let(:patient) { institution.patients.make site: site_one }
 
     it "should update existing patient" do
       post :update, id: patient.id, patient: { name: 'Lorem', gender: 'female', 'birth_date_on(1i)': '2000', 'birth_date_on(2i)': '1', 'birth_date_on(3i)': '18', address: "1 street", city: 'london', state: "aa", zip_code: 'sw11' }
@@ -394,7 +394,7 @@ RSpec.describe PatientsController, type: :controller do
     end
 
     it "should assign entity_id if previous is blank" do
-      patient                = institution.patients.make :phantom
+      patient                = institution.patients.make :phantom, site: site_one
       patient.entity_id      = nil
       patient.entity_id_hash = nil
       patient.save(validate: false)
@@ -443,7 +443,7 @@ RSpec.describe PatientsController, type: :controller do
     end
 
     it "should require entity_id" do
-      patient = institution.patients.make :phantom
+      patient = institution.patients.make :phantom, site: site_one
       post :update, id: patient.id, patient: { entity_id: '' }
 
       expect(assigns(:patient).errors).to_not have_key(:entity_id)
@@ -464,7 +464,7 @@ RSpec.describe PatientsController, type: :controller do
 
     it "should not update existing patient if allowed" do
       sign_in other_user
-      post :update, id: patient.id, patient: { name: 'Lorem', 'birth_date_on(1i)': '2000', 'birth_date_on(2i)': '1', 'birth_date_on(3i)': '18' }
+      post :update, id: patient.id, patient: { name: 'Lorem', 'birth_date_on(1i)': '2000', 'birth_date_on(2i)': '1', 'birth_date_on(3i)': '18', site_id: site_one.id }
       expect(response).to be_forbidden
 
       patient.reload
@@ -473,7 +473,7 @@ RSpec.describe PatientsController, type: :controller do
   end
 
   context "destroy" do
-    let!(:patient) { institution.patients.make }
+    let!(:patient) { institution.patients.make site: site_one }
 
     it "should be able to soft delete a patient" do
       expect {
@@ -514,10 +514,11 @@ RSpec.describe PatientsController, type: :controller do
       site1 = institution.sites.make
       site2 = institution.sites.make
       other_institution = Institution.make user: user
+      other_site = Site.make institution: other_institution
 
       patient1 = institution.patients.make name: 'john doe', site: site1
       patient2 = institution.patients.make name: 'john foo', site: site2
-      other_institution.patients.make name: 'john alone'
+      other_institution.patients.make name: 'john alone', site: other_site
 
       get :search, q: 'john', context: site1.uuid
 

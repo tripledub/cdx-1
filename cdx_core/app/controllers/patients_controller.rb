@@ -47,7 +47,6 @@ class PatientsController < ApplicationController
     return unless authorize_resource(@institution, CREATE_INSTITUTION_PATIENT)
     parse_date_of_birth
     @patient      = @institution.patients.new(patient_params)
-    @patient.site = @navigation_context.site
     @patient.created_from_controller = true
     if validate_name_and_entity_id && @patient.save_and_audit("t{patients.create.audit_log}: #{@patient.name}")
       next_url = if params[:next_url].blank?

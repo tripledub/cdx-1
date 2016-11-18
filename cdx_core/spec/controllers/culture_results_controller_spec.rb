@@ -5,8 +5,8 @@ describe CultureResultsController do
   render_views
   let(:user)                { User.make }
   let!(:institution)        { user.institutions.make }
-  let(:site)                { Site.make institution: institution }
-  let(:patient)             { Patient.make institution: institution }
+  let!(:site) { Site.make institution: institution }
+  let(:patient)        { Patient.make institution: institution, site: site }
   let(:encounter)           { Encounter.make institution: institution , user: user, patient: patient }
   let(:sample)              { Sample.make(institution: institution, patient: patient, encounter: encounter) }
   let!(:sample_identifier1) { SampleIdentifier.make(site: site, entity_id: 'sample-id', sample: sample) }

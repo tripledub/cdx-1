@@ -4,7 +4,8 @@ RSpec.describe EpisodesController, type: :controller do
   render_views
   let(:institution)    { Institution.make }
   let(:user)           { institution.user }
-  let(:patient)        { Patient.make institution: institution }
+  let!(:site) { Site.make institution: institution }
+  let(:patient)        { Patient.make institution: institution, site: site }
   let(:default_params) { { context: institution.uuid } }
   let(:valid_params) do
     {

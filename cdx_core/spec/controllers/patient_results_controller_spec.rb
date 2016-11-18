@@ -3,7 +3,8 @@ require 'spec_helper'
 describe PatientResultsController do
   let(:user)              { User.make }
   let(:institution)       { user.institutions.make }
-  let(:patient)           { Patient.make institution: institution }
+  let(:site) { Site.make institution: institution }
+  let(:patient)        { Patient.make institution: institution, site: site }
   let(:encounter)         { Encounter.make institution: institution, patient: patient }
   let(:microscopy_result) { MicroscopyResult.make encounter: encounter }
   let(:feedback_message)  { FeedbackMessage.make(institution: institution) }

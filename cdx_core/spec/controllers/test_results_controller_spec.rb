@@ -6,7 +6,7 @@ describe TestResultsController do
   let!(:institution)      { user.create Institution.make_unsaved }
   let(:site)              { Site.make institution: institution }
   let(:subsite)           { Site.make institution: institution, parent: site }
-  let(:patient)           { Patient.make institution: institution }
+  let(:patient)           { Patient.make institution: institution, site: site }
   let(:device)            { Device.make institution_id: institution.id, site: site }
   let(:site2)             { Site.make institution: institution }
   let(:device2)           { Device.make institution_id: institution.id, site: site2 }
@@ -134,6 +134,7 @@ describe TestResultsController do
   describe "CSV" do
     let!(:patient) do
       Patient.make(
+        site: site,
         institution: institution,
         core_fields: { "gender" => "male" },
         custom_fields: { "custom" => "patient value" },
