@@ -51,12 +51,12 @@ RSpec.describe Reports::DailyOrderStatus do
 
     it 'returns the number of successful tests' do
       expect(subject[:columns].first[:y]).to eq(2)
-      expect(subject[:columns].first[:legendText]).to eq('Success')
+      expect(subject[:columns].first[:legendText]).to eq('Allocated')
     end
 
     it 'returns the number of failing tests' do
       expect(subject[:columns].last[:y]).to eq(2)
-      expect(subject[:columns].last[:legendText]).to eq('Fail')
+      expect(subject[:columns].last[:legendText]).to eq('Success')
     end
   end
 end
