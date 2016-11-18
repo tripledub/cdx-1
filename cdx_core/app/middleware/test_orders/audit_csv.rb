@@ -17,7 +17,8 @@ module TestOrders
           I18n.t('test_orders.state.order_id'),
           I18n.t('test_orders.state.old_state'),
           I18n.t('test_orders.state.new_state'),
-          I18n.t('test_orders.state.created_at')
+          I18n.t('test_orders.state.created_at'),
+          I18n.t('test_orders.state.patient_id')
         ]
         @test_orders.map { |test_order| add_order_log(csv, test_order) }
       end
@@ -30,7 +31,8 @@ module TestOrders
           I18n.t('test_orders.state.sample_id'),
           I18n.t('test_orders.state.old_state'),
           I18n.t('test_orders.state.new_state'),
-          I18n.t('test_orders.state.created_at')
+          I18n.t('test_orders.state.created_at'),
+          I18n.t('test_orders.state.patient_id')
         ]
         @test_orders.patient_results.map { |patient_result| add_results_log(csv, patient_result) }
       end
@@ -44,7 +46,8 @@ module TestOrders
           test_order.batch_id,
           audit_update.old_value,
           audit_update.new_value,
-          Extras::Dates::Format.datetime_with_time_zone(audit_update.created_at)
+          Extras::Dates::Format.datetime_with_time_zone(audit_update.created_at, :full_time),
+          test_order.patient.id.to_s
         ] if audit_update.old_value != audit_update.new_value
       end
     end
@@ -56,7 +59,8 @@ module TestOrders
           patient_result.serial_number,
           audit_update.old_value,
           audit_update.new_value,
-          Extras::Dates::Format.datetime_with_time_zone(audit_update.created_at)
+          Extras::Dates::Format.datetime_with_time_zone(audit_update.created_at, :full_time),
+          patient_result.encounter.patient.id.to_s
         ] if audit_update.old_value != audit_update.new_value
       end
     end

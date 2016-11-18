@@ -23,5 +23,6 @@ en:
       old_state: 'Previous state'
       new_state: 'Current state'
       created_at: 'Date'
+      patient_id: 'Patient ID'
     update:
       not_allowed: "You don't have permission to update this test order."

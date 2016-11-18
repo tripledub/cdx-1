@@ -19,13 +19,14 @@ describe TestOrders::AuditCsv do
 
     it 'should return an array of test order status updates' do
       csv = CSV.parse(subject)
-      expect(csv[0]).to eq(['Order ID', 'Previous state', 'Current state', 'Date'])
+      expect(csv[0]).to eq(['Order ID', 'Previous state', 'Current state', 'Date', 'Patient ID'])
       expect(csv[1]).to eq(
         [
           test_order.batch_id,
           'new',
           'samples_collected',
-          Extras::Dates::Format.datetime_with_time_zone(test_order.created_at)
+          Extras::Dates::Format.datetime_with_time_zone(test_order.created_at, :full_time),
+          test_order.patient.id.to_s
         ]
       )
     end
@@ -43,14 +44,15 @@ describe TestOrders::AuditCsv do
 
     it 'should return an array of patient results status update' do
       csv = CSV.parse(subject)
-      expect(csv[0]).to eq(['Order ID', 'Sample ID', 'Previous state', 'Current state', 'Date'])
+      expect(csv[0]).to eq(['Order ID', 'Sample ID', 'Previous state', 'Current state', 'Date', 'Patient ID'])
       expect(csv[1]).to eq(
         [
           test_order.batch_id,
           microscopy_result.serial_number,
           'new',
           'pending_approval',
-          Extras::Dates::Format.datetime_with_time_zone(test_order.created_at)
+          Extras::Dates::Format.datetime_with_time_zone(test_order.created_at, :full_time),
+          test_order.patient.id.to_s
         ]
       )
     end
