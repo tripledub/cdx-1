@@ -2,10 +2,12 @@ require 'spec_helper'
 require 'policy_spec_helper'
 
 RSpec.describe PatientsController, type: :controller do
-  let!(:institution) {Institution.make}
-  let!(:user)        {institution.user}
+  let!(:institution) { Institution.make }
+  let!(:site_one) { Site.make institution: institution, name: 'Site One' }
+  let!(:site_two) { Site.make institution: institution, name: 'Site Two' }
+  let!(:user) { institution.user }
   before(:each) {sign_in user}
-  let(:default_params) { {context: institution.uuid} }
+  let(:default_params) { { context: institution.uuid } }
 
   let!(:other_user) { Institution.make.user }
   before(:each) {
@@ -141,29 +143,34 @@ RSpec.describe PatientsController, type: :controller do
     end
   end
 
-  context "new" do
-    it "should be accessible be institution owner" do
+  describe 'new' do
+    it 'should be accessible be institution owner' do
       get :new
       expect(response).to be_success
     end
 
-    it "should be allowed if can create" do
+    it 'should be allowed if can create' do
       grant user, other_user, institution, CREATE_INSTITUTION_PATIENT
       sign_in other_user
       get :new
       expect(response).to be_success
     end
 
-    it "should not be allowed it can not create" do
+    it 'shold not be allowed it can not create' do
       sign_in other_user
       get :new
       expect(response).to be_forbidden
     end
 
-    it "should preserve next_url" do
+    it 'should preserve next_url' do
       next_url = 'http://example.org/some_next_url'
       get :new, next_url: next_url
       expect(response.body).to include(next_url)
+    end
+
+    it 'assigns an array of child sites' do
+      get :new
+      expect(assigns(:sites).size).to eq(2)
     end
   end
 

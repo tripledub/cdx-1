@@ -32,7 +32,10 @@ class PatientsController < ApplicationController
   end
 
   def new
-    @patient = @navigation_context.institution.patients.new
+    institution = @navigation_context.institution
+    @sites = institution.sites || []
+    @patient = institution.patients.new
+    @patient.site_id = @navigation_context.site.id if @navigation_context.site
 
     add_two_addresses
 
