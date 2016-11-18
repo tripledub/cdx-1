@@ -19,6 +19,12 @@ module Sites
 
         site.name
       end
+
+      def site_id(site)
+        return '(no site)' unless site
+
+        site.id.to_s
+      end
     end
   end
 end
