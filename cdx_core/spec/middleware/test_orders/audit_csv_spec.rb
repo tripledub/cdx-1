@@ -8,8 +8,16 @@ describe TestOrders::AuditCsv do
   let(:microscopy_result) { MicroscopyResult.make encounter: test_order }
   let(:default_params)    { { context: institution.uuid } }
 
+  describe 'filename' do
+    subject { described_class.new(Encounter.all.order(:created_at), 'test.thecdx.org').filename }
+
+    it 'should include the hostname in file' do
+      expect(subject).to include 'test.thecdx.org_test_orders_status'
+    end
+  end
+
   describe 'export_all' do
-    subject { described_class.new(Encounter.all.order(:created_at)).export_all }
+    subject { described_class.new(Encounter.all.order(:created_at), 'test.thecdx.org').export_all }
 
     before :each do
       User.current = user
@@ -33,7 +41,7 @@ describe TestOrders::AuditCsv do
   end
 
   describe 'export_one' do
-    subject { described_class.new(test_order).export_one }
+    subject { described_class.new(test_order, 'test.thecdx.org').export_one }
 
     before :each do
       User.current = user
