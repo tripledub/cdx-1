@@ -13,7 +13,6 @@ class Extras::Charts::VerticalColumns
       animationEnabled: true,
       title:   { text: @title, fontSize: 30 },
       toolTip: { shared: true },
-      axisX: @axisX,
       axisY:   {
         title: @titleY,
         titleFontSize: 12,
