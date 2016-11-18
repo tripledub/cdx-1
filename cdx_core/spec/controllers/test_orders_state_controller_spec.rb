@@ -81,7 +81,7 @@ describe TestOrdersStateController do
         [
           patient.id.to_s,
           Extras::Dates::Format.datetime_with_time_zone(patient.created_at, :full_time),
-          patient.site.id.to_s,
+          site.id.to_s,
           patient.etb_patient_id.to_s,
           patient.vtm_patient_id.to_s,
           patient.social_security_code,
