@@ -4,6 +4,7 @@ class Site < ActiveRecord::Base
   include Resource
   extend ActsAsTree::TreeWalker
 
+  acts_as_paranoid
   acts_as_tree order: 'name'
 
   belongs_to :institution
@@ -12,15 +13,9 @@ class Site < ActiveRecord::Base
   has_many :test_results
   has_many :sample_identifiers
   has_many :samples, through: :sample_identifiers
-
-  # belongs_to :parent, class_name: "Site"
-  # has_many :children, class_name: "Site", foreign_key: "parent_id"
   has_many :roles, dependent: :destroy
-
   has_many :notification_sites, class_name: 'Notification::Site'
   has_many :notifications,      through: :notification_sites
-
-  acts_as_paranoid
 
   validates_presence_of :institution
   validate :same_institution_as_parent
@@ -44,18 +39,18 @@ class Site < ActiveRecord::Base
 
   def self.filter_by_owner(user, check_conditions)
     if check_conditions
-      joins(:institution).where(institutions: {user_id: user.id})
+      joins(:institution).where(institutions: { user_id: user.id })
     else
       self
     end
   end
 
-  def filter_by_owner(user, check_conditions)
+  def filter_by_owner(user, _check_conditions)
     institution.user_id == user.id ? self : nil
   end
 
   def self.filter_by_query(query)
-    if institution = query["institution"]
+    if institution = query['institution']
       where(institution_id: institution)
     else
       self
@@ -63,7 +58,7 @@ class Site < ActiveRecord::Base
   end
 
   def filter_by_query(query)
-    if institution = query["institution"]
+    if institution = query['institution']
       if institution_id == institution.to_i
         self
       else
@@ -75,7 +70,7 @@ class Site < ActiveRecord::Base
   end
 
   def path
-    prefix.split(".")
+    prefix.split('.')
   end
 
   def to_s
@@ -87,20 +82,15 @@ class Site < ActiveRecord::Base
   end
 
   def generate_next_sample_entity_id!
-    self.with_lock do # if with_lock is removed, serialization will be lost (ref 46ccfd) fix #712
+    with_lock do # if with_lock is removed, serialization will be lost (ref 46ccfd) fix #712
       current_time = Time.now.utc
       last_in_time_window = last_sample_identifier_entity_id
       date = last_sample_identifier_date || current_time
+      next_window_start = time_window(date).end + 1.day
+      last_in_time_window = nil if current_time >= next_window_start
+      next_entity_id = (last_in_time_window || '99999').succ
 
-      next_window_start = self.time_window(date).end + 1.day
-
-      if current_time >= next_window_start
-        last_in_time_window = nil
-      end
-
-      next_entity_id = (last_in_time_window || "99999").succ
-
-      while self.sample_identifiers_on_time(current_time).exists?(entity_id: next_entity_id)
+      while sample_identifiers_on_time(current_time).exists?(entity_id: next_entity_id)
         next_entity_id = next_entity_id.succ
       end
 
@@ -113,41 +103,35 @@ class Site < ActiveRecord::Base
 
   def time_window(date)
     start_date = case sample_id_reset_policy
-      when "weekly"; date.beginning_of_week
-      when "monthly"; date.beginning_of_month
-      when "yearly"; date.beginning_of_year
-      else raise "#{sample_id_reset_policy} #{I18n.t('models.site.reset_start_date')}"
-    end
+                 when 'weekly' then date.beginning_of_week
+                 when 'monthly' then date.beginning_of_month
+                 when 'yearly' then date.beginning_of_year
+                 else raise "#{sample_id_reset_policy} #{I18n.t('models.site.reset_start_date')}"
+                 end
 
     end_date = case sample_id_reset_policy
-      when "weekly"; date.end_of_week
-      when "monthly"; date.end_of_month
-      when "yearly"; date.end_of_year
-      else raise "#{sample_id_reset_policy} #{I18n.t('models.site.reset_end_date')}"
-    end
+               when 'weekly' then date.end_of_week
+               when 'monthly' then date.end_of_month
+               when 'yearly' then date.end_of_year
+               else raise "#{sample_id_reset_policy} #{I18n.t('models.site.reset_end_date')}"
+               end
 
-    return start_date..end_date
+    start_date..end_date
   end
 
   def sample_identifiers_on_time(date)
-    self.sample_identifiers.where(created_at: self.time_window(date))
+    sample_identifiers.where(created_at: time_window(date))
   end
 
   private
 
   def compute_prefix
-    if parent
-      self.prefix = "#{parent.prefix}.#{uuid}"
-    else
-      self.prefix = uuid
-    end
-    self.save!
+    self.prefix = parent ? "#{parent.prefix}.#{uuid}" : uuid
+    save!
   end
 
   def same_institution_as_parent
-    if parent && parent.institution != self.institution
-      self.errors.add(:institution, I18n.t('models.site.must_match'))
-    end
+    errors.add(:institution, I18n.t('models.site.must_match')) if parent && parent.institution != institution
   end
 
   def create_predefined_roles
