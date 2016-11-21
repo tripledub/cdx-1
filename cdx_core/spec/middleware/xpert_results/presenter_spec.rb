@@ -42,12 +42,13 @@ describe XpertResults::Presenter do
       expect(CSV.parse(described_class.csv_query(XpertResult.all))[1]).to eq(
         [
           XpertResult.first.encounter.batch_id,
+          XpertResult.first.uuid,
           Extras::Select.find(Encounter.status_options, XpertResult.first.encounter.status),
           Extras::Select.find(Encounter.testing_for_options, XpertResult.first.encounter.testing_for),
-          XpertResult.first.uuid,
-          Extras::Dates::Format.datetime_with_time_zone(XpertResult.first.sample_collected_at, :full_time),
           XpertResult.first.examined_by,
+          Extras::Dates::Format.datetime_with_time_zone(XpertResult.first.sample_collected_at, :full_time),
           Extras::Dates::Format.datetime_with_time_zone(XpertResult.first.result_at, :full_time),
+          Extras::Select.find(XpertResult.tuberculosis_options, XpertResult.first.tuberculosis).to_s,
           Extras::Select.find(XpertResult.rifampicin_options, XpertResult.first.rifampicin),
           Extras::Select.find(XpertResult.trace_options, XpertResult.first.trace),
           Extras::Select.find(XpertResult.status_options, XpertResult.first.result_status),

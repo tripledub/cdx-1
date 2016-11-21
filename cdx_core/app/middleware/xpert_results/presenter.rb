@@ -43,9 +43,9 @@ module XpertResults
       def add_csv_row(csv, xpert_result)
         csv << [
           xpert_result.encounter.batch_id,
+          xpert_result.uuid,
           Extras::Select.find(Encounter.status_options, xpert_result.encounter.status),
           Extras::Select.find(Encounter.testing_for_options, xpert_result.encounter.testing_for),
-          xpert_result.uuid,
           xpert_result.examined_by,
           Extras::Dates::Format.datetime_with_time_zone(xpert_result.sample_collected_at, :full_time),
           Extras::Dates::Format.datetime_with_time_zone(xpert_result.result_at, :full_time),
