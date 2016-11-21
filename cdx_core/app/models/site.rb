@@ -1,6 +1,10 @@
+# Sites model.  Sites can be nested in a tree structure.
 class Site < ActiveRecord::Base
   include AutoUUID
   include Resource
+  extend ActsAsTree::TreeWalker
+
+  acts_as_tree order: 'name'
 
   belongs_to :institution
   has_one :user, through: :institution
@@ -9,8 +13,8 @@ class Site < ActiveRecord::Base
   has_many :sample_identifiers
   has_many :samples, through: :sample_identifiers
 
-  belongs_to :parent, class_name: "Site"
-  has_many :children, class_name: "Site", foreign_key: "parent_id"
+  # belongs_to :parent, class_name: "Site"
+  # has_many :children, class_name: "Site", foreign_key: "parent_id"
   has_many :roles, dependent: :destroy
 
   has_many :notification_sites, class_name: 'Notification::Site'
