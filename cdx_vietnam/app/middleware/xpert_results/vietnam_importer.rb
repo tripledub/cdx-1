@@ -19,7 +19,7 @@ module XpertResults
         return '' unless sample_data['custom'].present? && sample_data['custom']['xpert_notes'].present?
 
         notes = sample_data['custom']['xpert_notes']
-        any_match = notes.match(/CDPSAMPLE(.*)CDPSAMPLE/)
+        any_match = notes.match(/CDPSAMPLE(.*)CDPSAMPLE/i)
         any_match ? any_match[1] : nil
       end
 
