@@ -43,14 +43,13 @@ describe MicroscopyResults::Presenter do
       expect(CSV.parse(described_class.csv_query(PatientResult.all))[1]).to eq(
         [
           MicroscopyResult.first.encounter.batch_id,
+          MicroscopyResult.first.uuid,
           Extras::Select.find(Encounter.status_options, MicroscopyResult.first.encounter.status),
           Extras::Select.find(Encounter.testing_for_options, MicroscopyResult.first.encounter.testing_for),
-          MicroscopyResult.first.uuid,
-          Extras::Dates::Format.datetime_with_time_zone(MicroscopyResult.first.sample_collected_at, :full_time),
           MicroscopyResult.first.examined_by,
+          Extras::Dates::Format.datetime_with_time_zone(MicroscopyResult.first.sample_collected_at, :full_time),
           Extras::Dates::Format.datetime_with_time_zone(MicroscopyResult.first.result_at, :full_time),
           MicroscopyResult.first.specimen_type.blank? ? '' : I18n.t("test_results.index.specimen_type.#{MicroscopyResult.first.specimen_type}"),
-          MicroscopyResult.first.serial_number,
           Extras::Select.find(MicroscopyResult.test_result_options, MicroscopyResult.first.test_result),
           Extras::Select.find(MicroscopyResult.visual_appearance_options, MicroscopyResult.first.appearance),
           Extras::Select.find(MicroscopyResult.status_options, MicroscopyResult.first.result_status),
