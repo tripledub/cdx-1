@@ -34,7 +34,7 @@ class TestResultsController < TestsController
       end
 
       format.csv do
-        csv_content = TestResults::CsvGenerator.new(@selected_tab, params, @navigation_context)
+        csv_content = TestResults::CsvGenerator.new(@selected_tab, params, @navigation_context, get_hostname)
         headers['Content-Type']        = 'text/csv'
         headers['Content-disposition'] = "attachment; filename=#{csv_content.filename}"
         self.response_body             = csv_content.create
@@ -91,5 +91,9 @@ class TestResultsController < TestsController
 
   def check_permission
     redirect_to(test_results_path) unless @test_result && has_access?(@test_result, QUERY_TEST)
+  end
+
+  def get_hostname
+    request.host || 'www.thecdx.org'
   end
 end

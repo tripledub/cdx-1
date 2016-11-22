@@ -170,6 +170,7 @@ GEM
       actionmailer (>= 3.2.6)
       devise (>= 3.2.0)
     diff-lcs (1.2.5)
+    docile (1.1.5)
     domain_name (0.5.20160615)
       unf (>= 0.0.5, < 1.0.0)
     dotiw (3.1.1)
@@ -424,6 +425,11 @@ GEM
       redis-namespace (>= 1.5.2)
       rufus-scheduler (>= 2.0.24)
       sidekiq (>= 4.2.1)
+    simplecov (0.12.0)
+      docile (~> 1.1.0)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.0)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -553,6 +559,7 @@ DEPENDENCIES
   shoulda
   sidekiq
   sidekiq-cron
+  simplecov
   sinatra
   site_prism
   spring
@@ -566,4 +573,4 @@ DEPENDENCIES
   webmock (= 1.21.0)
 
 BUNDLED WITH
-   1.13.1
+   1.13.6

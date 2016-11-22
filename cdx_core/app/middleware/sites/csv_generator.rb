@@ -3,13 +3,13 @@ module Sites
   class CsvGenerator
     attr_reader :filename
 
-    def initialize(sites, name = 'Sites')
-      @file_prefix = name
+    def initialize(sites, hostname)
       @sites = sites
+      @hostname = hostname
     end
 
     def filename
-      @filename || "#{@file_prefix}_#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
+      @filename || "#{@hostname}_sites_#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
     end
 
     def build_csv

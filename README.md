@@ -1,6 +1,5 @@
-[![Stories in Ready](https://badge.waffle.io/instedd/cdx.png?label=ready&title=Ready)](https://waffle.io/instedd/cdx)
-[![Build Status](https://travis-ci.org/finddx/cdx.svg?branch=master)](https://travis-ci.org/finddx/cdx)
 [![Dependency Status](https://gemnasium.com/finddx/cdx.svg)](https://gemnasium.com/finddx/cdx)
+[![Code Climate](https://codeclimate.com/github/finddx/cdx/badges/gpa.svg)](https://codeclimate.com/github/finddx/cdx)
 
 # CDX
 

@@ -3,12 +3,13 @@ module TestOrders
   class ListCsv
     attr_reader :filename
 
-    def initialize(test_orders)
+    def initialize(test_orders, hostname)
       @test_orders = test_orders
+      @hostname = hostname
     end
 
     def filename
-      @filename || "test_orders_list-#{DateTime.now.strftime('%Y-%m-%d-%H-%M')}.csv"
+      @filename || "#{@hostname}_test_orders_list-#{DateTime.now.strftime('%Y-%m-%d-%H-%M')}.csv"
     end
 
     def generate

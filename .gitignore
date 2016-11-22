@@ -31,6 +31,8 @@ cdxapi/ebin
 cdxapi/log
 VERSION
 
+coverage
+
 /etc/shapes/*
 /public/polygons/*
 /public/nndd

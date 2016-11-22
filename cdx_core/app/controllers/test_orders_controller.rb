@@ -9,7 +9,7 @@ class TestOrdersController < TestsController
       end
 
       format.csv do
-        csv_orders = TestOrders::ListCsv.new(TestOrders::Finder.new(@navigation_context, params).filter_query)
+        csv_orders = TestOrders::ListCsv.new(TestOrders::Finder.new(@navigation_context, params).filter_query, get_hostname)
         headers['Content-Type'] = 'text/csv'
         headers['Content-disposition'] = "attachment; filename=#{csv_orders.filename}"
         self.response_body = csv_orders.generate
