@@ -24,6 +24,7 @@ gem 'mechanize'
 gem 'base58'
 gem 'rubyzip', '>= 1.0.0'
 gem 'activesupport-decorators', '~> 2.1'
+gem 'acts_as_tree', '~> 2.6'
 
 gem 'config'
 gem 'rest-client'

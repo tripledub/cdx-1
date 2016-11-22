@@ -54,6 +54,7 @@ gem 'rchardet'
 gem 'sidekiq'
 gem 'sinatra'
 gem 'sidekiq-cron'
+gem 'acts_as_tree', '~> 2.6'
 
 # SMS library
 gem 'twilio-ruby', '~> 4.11.1'
