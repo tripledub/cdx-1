@@ -2,6 +2,7 @@ en:
   activerecord:
     attributes:
       dst_lpa_result:
+        id: 'Test ID'
         result_status: 'Status'
         sample_collected_at: 'Date sample collected'
         media_used: 'Method'

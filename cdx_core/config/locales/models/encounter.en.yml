@@ -2,6 +2,9 @@ en:
   activerecord:
     model:
       encounter: 'Test order'
+    attributes:
+      encounter:
+        id: 'Test order ID'
   encounters:
     status:
       new: 'New'
