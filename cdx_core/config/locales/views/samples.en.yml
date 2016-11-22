@@ -2,3 +2,4 @@ en:
   samples:
     collect_samples:
       sample_exists: 'Sample: %{sample_id} has already been added to the test order.'
+      no_samples: 'Sample list is empty. Please add a sample id to this test order.'

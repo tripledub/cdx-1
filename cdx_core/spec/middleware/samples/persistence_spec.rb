@@ -49,13 +49,9 @@ describe Samples::Persistence do
   end
 
   context 'when data is invalid' do
-    before :each do
-      described_class.collect_sample_ids(encounter, sample_ids)
-      encounter.reload
-    end
-
     it 'should return an error message' do
-      expect(described_class.collect_sample_ids(encounter, ['8778']).first).to eq('Sample: 8778 has already been added to the test order.')
+      expect(described_class.collect_sample_ids(encounter, nil).first)
+        .to eq('Sample list is empty. Please add a sample id to this test order.')
     end
   end
 end

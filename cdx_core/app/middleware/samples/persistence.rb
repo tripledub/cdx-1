@@ -12,6 +12,8 @@ module Samples
       protected
 
       def create_sample_ids(encounter, sample_ids)
+        @error_messages << I18n.t('samples.collect_samples.no_samples') && return unless sample_ids.present?
+
         Sample.transaction do
           sample_ids.each do |sample_id|
             add_sample(encounter, sample_id) if sample_is_valid?(sample_id)
