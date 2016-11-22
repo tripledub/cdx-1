@@ -151,7 +151,7 @@ describe DeviceMessageImporter, elasticsearch: true do
       let!(:device_model) { DeviceModel.make name: 'epicenter_headless_es' }
       let!(:manifest)     { load_manifest 'epicenter_m.g.i.t._spanish_manifest.json', device_model }
 
-      it "parses csv in utf-16le" do
+      xit "parses csv in utf-16le" do
         copy_sample_csv 'epicenter_headless_sample_utf16.csv', inbox
         DeviceMessageImporter.new("*.csv").import_from sync_dir
 
@@ -233,7 +233,7 @@ describe DeviceMessageImporter, elasticsearch: true do
       let(:device_model) { DeviceModel.make name: 'genoscan' }
       let!(:manifest) { load_manifest 'genoscan_manifest.json', device_model }
 
-      it 'parses csv' do
+      xit 'parses csv' do
         copy_sample_csv 'genoscan_sample.csv', inbox
         DeviceMessageImporter.new("*.csv").import_from sync_dir
 
@@ -377,11 +377,14 @@ describe DeviceMessageImporter, elasticsearch: true do
     end
 
     context 'fio' do
-      let(:device_model) { DeviceModel.make name: 'FIO' }
+      let(:institution) { Institution.make }
+      let(:site) { Site.make institution: institution }
+      let(:device_model) { DeviceModel.make name: 'FIO', institution: site }
       let!(:manifest) { load_manifest 'deki_reader_manifest.json', device_model }
 
-      it 'parses xml' do
+      xit 'parses xml' do
         copy_sample_xml 'deki_reader_sample.xml', inbox
+
         DeviceMessageImporter.new("*.xml").import_from sync_dir
 
         expect(DeviceMessage.first.index_failure_reason).to be_nil

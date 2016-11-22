@@ -167,7 +167,7 @@ end
 Patient.blueprint do
   name Faker::Name.name
   institution
-  site
+  site  { Site.make institution: object.institution }
   is_phantom { false }
   plain_sensitive_data {
     {}.tap do |h|

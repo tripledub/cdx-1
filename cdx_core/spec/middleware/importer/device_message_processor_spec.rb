@@ -80,7 +80,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
   let(:institution) { Institution.make(kind: 'institution') }
   let(:site)        { Site.make(institution: institution) }
   let(:device)      { Device.make(institution: institution, site: site) }
-  let(:patient)     { Patient.make institution: institution, name: nil }
+  let(:patient)     { Patient.make institution: institution, name: nil, site: site }
 
   let(:device_message) do
     device_message = DeviceMessage.new(device: device, plain_text_data: '{}')
@@ -175,13 +175,14 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
   context "sample identification" do
 
     let(:sample_created_at) { DateTime.now }
-
+    let(:site1) { Site.make institution: device_message.institution }
     let(:patient) do
       Patient.make(
         uuid: 'def', institution: device_message.institution,
         core_fields: PATIENT_CORE_FIELDS,
         plain_sensitive_data: {"id" => PATIENT_ID},
-        name: nil
+        name: nil,
+        site: site1
       )
     end
 
@@ -550,6 +551,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
     end
 
     context 'with sample id' do
+      let(:thesite) { Site.make institution: device_message.institution }
       before :each do
         message = parsed_message(TEST_ID)
         clear message, "patient", "encounter"
@@ -565,7 +567,8 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
         patient = Patient.make(
           institution: device_message.institution,
           plain_sensitive_data: {"id" => PATIENT_ID},
-          name: nil
+          name: nil,
+          site: thesite
         )
 
         sample = Sample.make(
@@ -608,7 +611,8 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           core_fields: {"existing_indexed_field" => "existing_indexed_field_value"},
           custom_fields: {"existing_custom_field" => "existing_custom_field_value"},
           plain_sensitive_data: {"existing_pii_field" => "existing_pii_field_value"},
-          name: nil
+          name: nil,
+          site: thesite
         )
 
         sample = Sample.make patient: patient, institution: device_message.institution
@@ -636,7 +640,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           existing_field: {}
         } }
 
-        patient = Patient.make institution: device_message.institution, name: nil
+        patient = Patient.make institution: device_message.institution, name: nil, site: thesite
 
         sample = Sample.make(
           institution: device_message.institution, patient: patient,
@@ -710,7 +714,8 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
         patient = Patient.make(
           institution: device_message.institution,
           plain_sensitive_data: {"id" => PATIENT_ID},
-          name: nil
+          name: nil,
+          site: thesite
         )
 
         sample = Sample.make(
@@ -860,12 +865,14 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
       end
 
       it 'should extract existing data in test and create the patient entity' do
+        site = Site.make institution: device_message.institution
         patient = Patient.make(
           core_fields: {"existing_indexed_field" => "existing_indexed_field_value"},
           custom_fields: {"existing_custom_field" => "existing_custom_field_value"},
           plain_sensitive_data: {"existing_pii_field" => "existing_pii_field_value"},
           institution: device_message.institution,
-          name: nil
+          name: nil,
+          site: site
         )
 
         TestResult.create_and_index(
@@ -891,7 +898,8 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           plain_sensitive_data: {"existing_pii_field" => "existing_pii_field_value"},
           core_fields: {"existing_indexed_field" => "existing_indexed_field_value"},
           custom_fields: {"existing_custom_field" => "existing_custom_field_value"},
-          name: nil
+          name: nil,
+          site: site
         )
 
         sample = Sample.make(
@@ -1015,7 +1023,8 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
         patient = Patient.make(
           institution: device_message.institution,
           plain_sensitive_data: {"id" => "9000"},
-          name: nil
+          name: nil,
+          site: site
         )
 
         test_1 = TestResult.create_and_index test_id: TEST_ID_2, sample_identifier: nil, device: device, patient: patient
