@@ -5,7 +5,7 @@ describe Importer::SingleMessageProcessor do
   let(:device_message)           { DeviceMessage.make }
   let(:device_message_processor) { Importer::DeviceMessageProcessor.new(device_message) }
   let(:sample)                   { Sample.make encounter: encounter }
-  let!(:sample_identifier)       { SampleIdentifier.make cpd_id_sample: '99999', sample: sample }
+  let!(:sample_identifier)       { SampleIdentifier.make cpd_id_sample: 'A99999', sample: sample }
   let(:xpert_result)             { XpertResult.make encounter: encounter }
   let(:parsed_message) do
     {
@@ -45,7 +45,7 @@ describe Importer::SingleMessageProcessor do
           "custom"=>{}
         },
         "custom"=> {
-          "xpert_notes"=>"CDPSAMPLE99999CDPSAMPLE"
+          "xpert_notes"=>"CDPSAMPLEA99999CDPSAMPLE"
         }
       },
       "patient"=>{
@@ -91,28 +91,35 @@ describe Importer::SingleMessageProcessor do
       it 'when parsed message has all required info' do
         described_class.new(device_message_processor, parsed_message).process
 
-        expect(XpertResult.first.sample_identifier.cpd_id_sample).to eq('99999')
+        expect(XpertResult.first.sample_identifier.cpd_id_sample).to eq('A99999')
       end
 
       it 'when test custom xpert_patient_number is not available' do
         parsed_message['test']['custom'].delete('xpert_patient_number')
         described_class.new(device_message_processor, parsed_message).process
 
-        expect(XpertResult.first.sample_identifier.cpd_id_sample).to eq('99999')
+        expect(XpertResult.first.sample_identifier.cpd_id_sample).to eq('A99999')
       end
 
-      it 'when notes field has lower case characters' do
-        parsed_message['sample']['custom']['xpert_notes'] = 'cdpsample99999CDPsample'
+      it 'when notes field has lower case matching characters' do
+        parsed_message['sample']['custom']['xpert_notes'] = 'cdpsampleA99999CDPsample'
         described_class.new(device_message_processor, parsed_message).process
 
-        expect(XpertResult.first.sample_identifier.cpd_id_sample).to eq('99999')
+        expect(XpertResult.first.sample_identifier.cpd_id_sample).to eq('A99999')
+      end
+
+      it 'when notes field has lower case sample_id and matching characters' do
+        parsed_message['sample']['custom']['xpert_notes'] = 'cdpsamplea99999CDPsample'
+        described_class.new(device_message_processor, parsed_message).process
+
+        expect(XpertResult.first.sample_identifier.cpd_id_sample).to eq('A99999')
       end
 
       it 'when sample core id is not available' do
         parsed_message['sample'].delete('core')
         described_class.new(device_message_processor, parsed_message).process
 
-        expect(XpertResult.first.sample_identifier.cpd_id_sample).to eq('99999')
+        expect(XpertResult.first.sample_identifier.cpd_id_sample).to eq('A99999')
       end
     end
 
