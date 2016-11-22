@@ -144,6 +144,7 @@ group :test do
   gem 'site_prism'
   gem 'poltergeist'
   gem 'capybara-screenshot'
+  gem 'simplecov', :require => false
 
   source 'https://rails-assets.org' do
     gem 'rails-assets-es5-shim'

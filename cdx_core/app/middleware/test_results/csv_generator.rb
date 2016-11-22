@@ -3,11 +3,11 @@ module TestResults
   class CsvGenerator
     attr_reader :filename
 
-    def initialize(selected_tab, params, navigation_context)
+    def initialize(selected_tab, params, navigation_context, hostname)
       @selected_tab = selected_tab
       @params = params
       @navigation_context = navigation_context
-      @filename = "#{selected_tab}_results-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
+      @filename = "#{hostname}_#{selected_tab}_results-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
     end
 
     def create

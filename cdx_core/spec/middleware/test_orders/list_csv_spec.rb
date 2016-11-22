@@ -9,7 +9,7 @@ describe TestOrders::ListCsv do
   let(:default_params)    { { context: institution.uuid } }
 
   describe 'generate' do
-    subject { described_class.new(Encounter.all.order(:created_at)).generate }
+    subject { described_class.new(Encounter.all.order(:created_at), 'hostname').generate }
 
     it 'should return an array of test order status updates' do
       csv = CSV.parse(subject)
@@ -28,6 +28,14 @@ describe TestOrders::ListCsv do
           TestOrders::Presenter.generate_status(test_order)
         ]
       )
+    end
+  end
+
+  describe 'filename' do
+    subject { described_class.new(Encounter.all.order(:created_at), 'test.example.com') }
+
+    it 'should include the hostname' do
+      expect(subject.filename).to include('test.example.com')
     end
   end
 end
