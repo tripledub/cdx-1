@@ -63,7 +63,6 @@ class AddIndexes < ActiveRecord::Migration
     add_index :episodes, :closed_at
     add_index :episodes, :uuid
     add_index :institutions, :uuid
-    add_index :integration_logs, :order_id
     add_index :manifests, :device_model_id
     add_index :patient_results, :type
     add_index :patient_results, :result_at
