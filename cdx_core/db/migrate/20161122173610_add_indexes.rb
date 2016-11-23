@@ -2,8 +2,7 @@
 class AddIndexes < ActiveRecord::Migration
   def change
     add_index :audit_updates, :field_name
-    add_index :patient_results, :type
-    add_index :notification_conditions, [:condition_type, :field, :value]
+    add_index :notification_conditions, [:condition_type, :field, :value], name: 'notification_conditions_type_field_value'
     add_index :notification_conditions, :notification_id
     add_index :notification_conditions, :deleted_at
     add_index :notifications, :institution_id
@@ -43,7 +42,7 @@ class AddIndexes < ActiveRecord::Migration
     add_index :computed_policies, :condition_device_id
     add_index :computed_policies, :include_subsites
     add_index :computed_policy_exceptions, :computed_policy_id
-    add_index :computed_policy_exceptions, [:resource_type, :resource_id]
+    add_index :computed_policy_exceptions, [:resource_type, :resource_id], name: 'computed_policy_exceptions_type_id'
     add_index :computed_policy_exceptions, :condition_institution_id
     add_index :computed_policy_exceptions, :condition_site_id
     add_index :computed_policy_exceptions, :condition_device_id
@@ -60,6 +59,32 @@ class AddIndexes < ActiveRecord::Migration
     add_index :encounters, :institution_id
     add_index :encounters, :patient_id
     add_index :encounters, :entity_id
+    add_index :episodes, :closed
     add_index :episodes, :closed_at
+    add_index :episodes, :uuid
+    add_index :institutions, :uuid
+    add_index :integration_logs, :order_id
+    add_index :manifests, :device_model_id
+    add_index :patient_results, :type
+    add_index :patient_results, :result_at
+    add_index :patient_results, :result_status
+    add_index :patients, :is_phantom
+    add_index :patients, :name
+    add_index :patients, :external_id
+    add_index :patients, [:external_patient_system, :external_system_id]
+    add_index :policies, :user_id
+    add_index :policies, :granter_id
+    add_index :roles, :institution_id
+    add_index :roles, :site_id
+    add_index :roles, :policy_id
+    add_index :roles_users, [:role_id, :user_id]
+    add_index :sample_identifiers, :site_id
+    add_index :sample_identifiers, :lab_id_sample
+    add_index :sample_identifiers, :lab_id_patient
+    add_index :sites, :institution_id
+    add_index :sites, :uuid
+    add_index :sites, :parent_id
+    add_index :subscribers, :user_id
+    add_index :test_result_parsed_data, :test_result_id
   end
 end
