@@ -66,8 +66,9 @@ class Finder::ManualResults
     if @navigation_context.exclude_subsites && @navigation_context.site
       @filter_query = filter_query.where('sites.uuid = ?', @navigation_context.site.uuid)
     elsif !@navigation_context.exclude_subsites && @navigation_context.site
-      # site.path is used in order to select entitites of descending sites also
-      # @filter["site.path"] = @navigation_context.site.uuid
+      subsites = []
+      @navigation_context.site.walk_tree { |site, _level| subsites << site.id }
+      @filter_query = filter_query.where('sites.id = ? OR sites.id IN (?)', @navigation_context.site.id, subsites)
     end
   end
 end

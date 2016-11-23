@@ -42,6 +42,11 @@ describe PatientResults::Persistence do
       expect(culture_result.result_status).to eq('rejected')
     end
 
+    it 'should update result_at' do
+      expect(microscopy_result.result_at).to be
+      expect(culture_result.result_at).to be
+    end
+
     it 'should change feedback message to Not financed' do
       feedback_message = FeedbackMessages::Finder.patient_result_not_financed(institution)
       expect(microscopy_result.feedback_message).to eq(feedback_message)
@@ -59,6 +64,10 @@ describe PatientResults::Persistence do
 
       it 'should update result status to rejected' do
         expect(microscopy_result.result_status).to eq('rejected')
+      end
+
+      it 'should update result_at' do
+        expect(microscopy_result.result_at).to be
       end
     end
 
@@ -85,6 +94,17 @@ describe PatientResults::Persistence do
 
         it 'should not update the comment' do
           expect(microscopy_result.comment).to eq('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor')
+        end
+      end
+
+      context 'wrong update' do
+        let(:patient_result) { { result_status: 'rejected' } }
+
+        it 'should return an error message' do
+          PatientResults::Persistence.stub(:update_patient_result).and_return(false)
+          _message, status = described_class.update_status(microscopy_result, patient_result)
+
+          expect(status).to eq(:unprocessable_entity)
         end
       end
     end
