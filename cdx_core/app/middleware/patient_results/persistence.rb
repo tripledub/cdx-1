@@ -41,8 +41,8 @@ module PatientResults
         return false unless new_status.present? && can_update_results?(new_status)
 
         PatientResults::StatusAuditor.create_status_log(patient_result, [patient_result.result_status, new_status])
-        patient_result.update_attribute(:result_status, new_status)
         patient_result.update_attribute(:result_at, Time.now) unless patient_result.result_at.present?
+        patient_result.update_attribute(:result_status, new_status)
       end
 
       protected
