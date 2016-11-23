@@ -13,7 +13,20 @@ describe TestOrders::ListCsv do
 
     it 'should return an array of test order status updates' do
       csv = CSV.parse(subject)
-      expect(csv[0]).to eq(['Batch', 'Site', 'Performing site', 'Sample', 'Testing for', 'User', 'Start time', 'Testdue date', 'Status'])
+      expect(csv[0]).to eq(
+        [
+          'Test order ID',
+          'Site',
+          'Performing site',
+          'Sample',
+          'Testing for',
+          'User',
+          'Start time',
+          'Test due date',
+          'Status'
+        ]
+      )
+
       expect(csv[1]).to eq(
         [
           test_order.batch_id,
@@ -22,7 +35,6 @@ describe TestOrders::ListCsv do
           SampleIdentifiers::Presenter.for_encounter(test_order),
           test_order.testing_for,
           test_order.user.full_name,
-          test_order.batch_id,
           Extras::Dates::Format.datetime_with_time_zone(test_order.start_time, :full_time),
           Extras::Dates::Format.datetime_with_time_zone(test_order.testdue_date, :full_date),
           TestOrders::Presenter.generate_status(test_order)

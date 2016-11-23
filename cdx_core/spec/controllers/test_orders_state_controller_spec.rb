@@ -36,7 +36,6 @@ describe TestOrdersStateController do
   describe 'show' do
     before :each do
       PatientResults::StatusAuditor.create_status_log(microscopy_result, %w(new pending_approval))
-      PatientResults::StatusAuditor.create_status_log(microscopy_result, %w(pending_approval rejected))
     end
 
     it 'should return a CSV file' do
