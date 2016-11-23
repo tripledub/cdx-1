@@ -42,6 +42,7 @@ module PatientResults
 
         PatientResults::StatusAuditor.create_status_log(patient_result, [patient_result.result_status, new_status])
         patient_result.update_attribute(:result_status, new_status)
+        patient_result.update_attribute(:result_at, Time.now) unless patient_result.result_at.present?
       end
 
       protected
@@ -51,6 +52,7 @@ module PatientResults
         patient_result.feedback_message =
           patient_result.encounter.institution.feedback_messages.find(params[:feedback_message_id]) if params[:feedback_message_id].to_i > 0
         update_status_and_log(patient_result, params[:result_status])
+        patient_result.result_at = Time.now unless patient_result.result_at.present?
         patient_result.save(validate: false)
       end
 
