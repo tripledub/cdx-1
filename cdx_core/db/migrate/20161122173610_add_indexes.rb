@@ -78,8 +78,6 @@ class AddIndexes < ActiveRecord::Migration
     add_index :roles, :policy_id
     add_index :roles_users, [:role_id, :user_id]
     add_index :sample_identifiers, :site_id
-    add_index :sample_identifiers, :lab_id_sample
-    add_index :sample_identifiers, :lab_id_patient
     add_index :sites, :institution_id
     add_index :sites, :uuid
     add_index :sites, :parent_id
