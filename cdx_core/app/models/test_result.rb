@@ -71,10 +71,6 @@ class TestResult < PatientResult
     key.blank?
   end
 
-  def self.query(params, user)
-    TestResultQuery.for params, user
-  end
-
   def self.entity_scope
     'test'
   end

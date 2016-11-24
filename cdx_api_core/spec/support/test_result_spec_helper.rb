@@ -1,6 +1,6 @@
 # Ensure TestResult class is loaded first from app/models before reopening it to ensure its super class is properly set
 TestResult; class TestResult
-  def self.create_and_index params={}
+  def self.make params={}
     test = self.make params
     test
   end
