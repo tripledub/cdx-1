@@ -180,8 +180,7 @@ class Encounter < ActiveRecord::Base
   attribute_field OBSERVATIONS_FIELD
 
   def updated_diagnostic
-    assays_to_merge = test_results_not_in_diagnostic\
-      .map{|tr| tr.core_fields[TestResult::ASSAYS_FIELD]}
+    assays_to_merge = test_results_not_in_diagnostic.map { |tr| tr.core_fields[TestResult::ASSAYS_FIELD] }
 
     assays_to_merge.inject(diagnostic) do |merged, to_merge|
       Encounter.merge_assays_without_values(merged, to_merge)

@@ -46,6 +46,9 @@ gem 'sidekiq'
 gem 'sinatra'
 gem 'sidekiq-cron'
 gem 'doorkeeper'
+# Keep track of changes when multiple saves happen within a transaction
+gem 'ar_transaction_changes'
+gem 'acts_as_tree', '~> 2.6'
 
 group :development do
   gem 'spring'

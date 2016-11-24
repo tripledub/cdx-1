@@ -79,7 +79,11 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    acts_as_tree (2.6.0)
+      activerecord (>= 3.0.0)
     addressable (2.4.0)
+    ar_transaction_changes (1.1.0)
+      activerecord (>= 3.0, < 6.0, != 4.2.3)
     arel (6.0.3)
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
@@ -420,6 +424,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_tree (~> 2.6)
+  ar_transaction_changes
   barby
   base58
   better_errors
@@ -481,4 +487,4 @@ DEPENDENCIES
   webmock (= 1.21.0)
 
 BUNDLED WITH
-   1.13.1
+   1.13.6
