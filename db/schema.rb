@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161123095637) do
+ActiveRecord::Schema.define(version: 20161125092211) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -373,16 +373,6 @@ ActiveRecord::Schema.define(version: 20161123095637) do
 
   add_index "file_messages", ["device_id"], name: "index_file_messages_on_device_id", using: :btree
   add_index "file_messages", ["ftp_hostname", "ftp_port", "ftp_directory", "status"], name: "index_file_messages_on_ftp_and_status", using: :btree
-
-  create_table "filters", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.string   "name",       limit: 255
-    t.text     "query",      limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "filters", ["user_id"], name: "index_filters_on_user_id", using: :btree
 
   create_table "identities", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
@@ -929,23 +919,6 @@ ActiveRecord::Schema.define(version: 20161123095637) do
   end
 
   add_index "ssh_keys", ["device_id"], name: "index_ssh_keys_on_device_id", using: :btree
-
-  create_table "subscribers", force: :cascade do |t|
-    t.integer  "user_id",      limit: 4
-    t.string   "name",         limit: 255
-    t.string   "url",          limit: 255
-    t.text     "fields",       limit: 65535
-    t.datetime "last_run_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "url_user",     limit: 255
-    t.string   "url_password", limit: 255
-    t.integer  "filter_id",    limit: 4
-    t.string   "verb",         limit: 255,   default: "GET"
-  end
-
-  add_index "subscribers", ["filter_id"], name: "index_subscribers_on_filter_id", using: :btree
-  add_index "subscribers", ["user_id"], name: "index_subscribers_on_user_id", using: :btree
 
   create_table "test_result_parsed_data", force: :cascade do |t|
     t.integer  "test_result_id", limit: 4
