@@ -515,7 +515,7 @@ DEPENDENCIES
   devise_security_extension!
   dotiw
   encryptor
-  faker
+  faker (~> 1.6.6)
   gon
   guid
   haml-rails
