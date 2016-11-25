@@ -33,9 +33,5 @@ Rails.application.routes.draw do
     end
     resources :sites, only: :index
     resources :institutions, only: :index
-    resources :filters, only: [:index, :show] do
-      resources :subscribers
-    end
-    resources :subscribers
   end
 end

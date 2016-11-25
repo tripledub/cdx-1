@@ -13,8 +13,17 @@ RSpec.describe TestOrders::Finder do
   let!(:test_order4)       { Encounter.make institution: institution, site: site,  patient: patient, start_time: 14.days.ago.strftime("%Y-%m-%d"), testdue_date: 4.days.from_now.strftime("%Y-%m-%d"), testing_for: 'TB' }
   let!(:test_order5)       { Encounter.make institution: institution, site: site2, patient: patient, start_time: 23.days.ago.strftime("%Y-%m-%d"), testdue_date: 5.days.from_now.strftime("%Y-%m-%d") }
   let!(:test_order6)       { Encounter.make institution: institution, site: site3, patient: patient, start_time: 93.days.ago.strftime("%Y-%m-%d"), testdue_date: 6.days.from_now.strftime("%Y-%m-%d"), testing_for: 'EBOLA' }
+  let!(:test_order7)       { Encounter.make institution: institution, site: site3, patient: patient, start_time: 93.days.ago.strftime("%Y-%m-%d"), testdue_date: 2.days.from_now.strftime("%Y-%m-%d"), testing_for: 'EBOLA' }
+  let!(:test_order8)       { Encounter.make institution: institution, site: site3, patient: patient, start_time: 93.days.ago.strftime("%Y-%m-%d"), testdue_date: 3.days.from_now.strftime("%Y-%m-%d"), testing_for: 'EBOLA' }
   let(:navigation_context) { NavigationContext.new(user, institution.uuid) }
-  let(:params) { { } }
+  let(:params) { {} }
+
+  before :each do
+    encounter = Encounter.make institution: institution, site: site3, patient: patient, start_time: 93.days.ago.strftime("%Y-%m-%d"), testdue_date: 6.days.from_now.strftime("%Y-%m-%d"), testing_for: 'EBOLA'
+    encounter.update_attribute(:status, 'not_financed')
+    test_order7.update_attribute(:status, 'not_financed')
+    test_order8.update_attribute(:status, 'closed')
+  end
 
   before :each do
     encounter = Encounter.make institution: institution, site: site3, patient: patient, start_time: 93.days.ago.strftime("%Y-%m-%d"), testdue_date: 6.days.from_now.strftime("%Y-%m-%d"), testing_for: 'EBOLA'
@@ -75,16 +84,34 @@ RSpec.describe TestOrders::Finder do
       end
 
       context 'Status' do
-        subject { described_class.new(navigation_context, { 'status' => 'new' }) }
+        context 'single status' do
+          subject { described_class.new(navigation_context, 'status' => 'new') }
 
-        it 'should return a single encounter when filter by id' do
-          expect(subject.filter_query.count).to eq(6)
+          it 'should return a single encounter when filter by id' do
+            expect(subject.filter_query.count).to eq(6)
+          end
+
+          it 'should return the requested encounter when filter by id' do
+            expect(subject.filter_query).to include(test_order2)
+            expect(subject.filter_query).to include(test_order5)
+            expect(subject.filter_query).to include(test_order6)
+          end
         end
 
-        it 'should return the requested encounter when filter by id' do
-          expect(subject.filter_query).to include(test_order2)
-          expect(subject.filter_query).to include(test_order5)
-          expect(subject.filter_query).to include(test_order6)
+        context 'ongoing test orders' do
+          subject { described_class.new(navigation_context, {}) }
+
+          it 'should show all ongoing test orders' do
+            expect(subject.filter_query).to include(test_order2)
+          end
+
+          it 'should not include closed test orders' do
+            expect(subject.filter_query).to_not include(test_order7)
+          end
+
+          it 'should not include not financed test orders' do
+            expect(subject.filter_query).to_not include(test_order8)
+          end
         end
       end
 

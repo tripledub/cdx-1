@@ -7,6 +7,6 @@
 
 %main
   = render partial: 'dashboards/total_tests', locals: { total_tests: Extras::Charts::VerticalColumns.new(@device_report.total_tests).render, failed_tests: Extras::Charts::Pie.new(@device_report.failed_tests).render }
-  %section.row
-    .small-12.columns.box
-      = render partial: 'dashboards/error_codes', locals: { error_codes_by_device: @device_report.error_codes_by_device }
+  -# %section.row
+  -#   .small-12.columns.box
+  -#     = render partial: 'dashboards/error_codes', locals: { error_codes_by_device: @device_report.error_codes_by_device }

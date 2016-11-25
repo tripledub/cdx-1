@@ -178,7 +178,7 @@ describe TestResultsController do
           ]
         },
         custom_fields: { "custom_a" => "test value 1" }
-      ).tap { |t| TestResultIndexer.new(t).index(true) }
+      )
     end
 
     let(:csv) { CSV.parse(response.body, headers: true) }

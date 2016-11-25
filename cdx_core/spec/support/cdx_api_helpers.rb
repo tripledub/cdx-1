@@ -53,8 +53,6 @@ RSpec.shared_context "cdx api helpers" do
     if (reported_time = test_result.core_fields["reported_time"])
       test_result.created_at = Time.parse(reported_time)
     end
-
-    TestResultIndexer.new(test_result).index(refresh = true)
   end
 
 end

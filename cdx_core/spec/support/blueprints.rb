@@ -283,18 +283,6 @@ Role.blueprint do
   site { Site.make institution: object.institution }
 end
 
-Subscriber.blueprint do
-  user
-  name
-  url
-  last_run_at { Time.now }
-end
-
-Filter.blueprint do
-  user
-  name
-end
-
 Site.blueprint do
   institution
   name

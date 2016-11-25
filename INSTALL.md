@@ -69,7 +69,6 @@ RAILS_ENV=production
 MYSQL_HOST=db
 MYSQL_PASSWORD=root
 REDIS_URL=redis://redis:6379
-ELASTICSEARCH_URL=elasticsearch:9200
 
 MAILER_SENDER=info@cdx.example.com
 
@@ -87,7 +86,7 @@ SSH_SERVER_HOST=cdx.example.com
 
 Last but not least, set up the `docker-compose.yml` file for the application stack. The easiest way is to copy both `docker-compose.base.yml` and `docker-compose.prod.yml` from the project root, which contain the base configuration and the overrides for running in a production environment, respectively.
 
-The `docker-compose.prod.yml` assumes there is `data` dir in the same folder as the compose config file, where mysql, elasticsearch and ssh clients will store their persistent data.
+The `docker-compose.prod.yml` assumes there is `data` dir in the same folder as the compose config file, where mysql and ssh clients will store their persistent data.
 
 Make sure to change the image from `instedd/cdx:latest` to the image you actually want to use for this deployment. You should never work on latest, but [choose a specific tag](https://hub.docker.com/r/instedd/cdx/tags/).
 

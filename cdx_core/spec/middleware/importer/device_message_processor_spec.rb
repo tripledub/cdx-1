@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Importer::DeviceMessageProcessor, elasticsearch: true do
+describe Importer::DeviceMessageProcessor do
   TEST_ID   = "4"
   TEST_ID_2 = "5"
   TEST_ID_3 = "6"
@@ -147,11 +147,6 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
     assert_patient_data(patient)
   end
 
-  it "should not update existing tests on new sample" do
-    expect(device_message_processor.client).to receive(:bulk).never
-    device_message_processor.process
-  end
-
   it "should create multiple test results with single sample" do
     allow(device_message).to receive(:parsed_messages).and_return([parsed_message(TEST_ID), parsed_message(TEST_ID_2), parsed_message(TEST_ID_3)])
     device_message_processor.process
@@ -161,15 +156,6 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
     expect(TestResult.count).to eq(3)
     expect(TestResult.pluck(:test_id)).to match_array([TEST_ID, TEST_ID_2, TEST_ID_3])
     expect(TestResult.all.map(&:sample).map(&:id)).to eq([Sample.first.id] * 3)
-
-    expect(all_elasticsearch_tests.map {|e| e['_source']['sample']['uuid']}).to eq([Sample.first.uuids] * 3)
-  end
-
-  it "should index an encounter" do
-    device_message_processor.process
-
-    results = all_elasticsearch_encounters
-    expect(results).to eq([])
   end
 
   context "sample identification" do
@@ -204,12 +190,9 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
     end
 
     it "should update sample data and existing test results on new test result" do
-      TestResult.create_and_index test_id: TEST_ID_2, sample_identifier: sample_identifier, patient: patient, device: device
-      TestResult.create_and_index test_id: TEST_ID_3, sample_identifier: sample_identifier, patient: patient, device: device
+      TestResult.make test_id: TEST_ID_2, sample_identifier: sample_identifier, patient: patient, device: device
+      TestResult.make test_id: TEST_ID_3, sample_identifier: sample_identifier, patient: patient, device: device
       expect(TestResult.count).to eq(2)
-
-      refresh_index
-
       device_message_processor.process
 
       expect(Sample.count).to eq(1)
@@ -218,18 +201,11 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
       sample = Sample.first
       assert_sample_data(sample)
       assert_patient_data(sample.patient)
-
-      tests = all_elasticsearch_tests
-      expect(tests.size).to eq(3)
-      expect(tests.map { |test| test["_source"]["sample"]["type"] }).to eq([SAMPLE_TYPE] * 3)
     end
 
     it "should update sample data and existing test results on test result update" do
-      TestResult.create_and_index test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
-      TestResult.create_and_index test_id: TEST_ID_2, sample_identifier: sample_identifier, patient: patient, device: device
-
-      refresh_index
-
+      TestResult.make test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
+      TestResult.make test_id: TEST_ID_2, sample_identifier: sample_identifier, patient: patient, device: device
       device_message_processor.process
 
       expect(Sample.count).to eq(1)
@@ -237,18 +213,11 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
       sample = Sample.first
       assert_sample_data(sample)
       assert_patient_data(sample.patient)
-
-      tests = all_elasticsearch_tests
-      expect(tests.map { |test| test["_source"]["sample"]["type"] }).to eq([SAMPLE_TYPE] * 2)
     end
 
     it "should not update existing tests if sample data indexed fields did not change" do
-      TestResult.create_and_index test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
-      TestResult.create_and_index test_id: TEST_ID_2, sample_identifier: sample_identifier, patient: patient, device: device
-
-      refresh_index
-
-      expect(device_message_processor.client).to receive(:bulk).never
+      TestResult.make test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
+      TestResult.make test_id: TEST_ID_2, sample_identifier: sample_identifier, patient: patient, device: device
       device_message_processor.process
 
       expect(Sample.count).to eq(1)
@@ -269,10 +238,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
         site.sample_id_reset_policy = "monthly"
         site.save!
 
-        TestResult.create_and_index test_id: TEST_ID_2, sample_identifier: sample_identifier, patient: patient, device: device
-
-        refresh_index
-
+        TestResult.make test_id: TEST_ID_2, sample_identifier: sample_identifier, patient: patient, device: device
         device_message_processor.process
 
         expect(Sample.count).to eq(2)
@@ -285,10 +251,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
         site.sample_id_reset_policy = "monthly"
         site.save!
 
-        TestResult.create_and_index test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
-
-        refresh_index
-
+        TestResult.make test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
         device_message_processor.process
 
         expect(Sample.count).to eq(1)
@@ -307,10 +270,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
         site.sample_id_reset_policy = "weekly"
         site.save!
 
-        TestResult.create_and_index test_id: TEST_ID_2, sample_identifier: sample_identifier, patient: patient, device: device
-
-        refresh_index
-
+        TestResult.make test_id: TEST_ID_2, sample_identifier: sample_identifier, patient: patient, device: device
         device_message_processor.process
 
         expect(Sample.count).to eq(2)
@@ -325,31 +285,24 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
       it "should create new sample if it has same sample id" do
         sample_identifier
 
-        refresh_index
-
         device_message_processor.process
 
         expect(Sample.count).to eq(2)
       end
 
       it "should not create new sample if it already belongs to the test" do
-        TestResult.create_and_index test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
-
-        refresh_index
-
+        TestResult.make test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
         device_message_processor.process
 
         expect(Sample.count).to eq(1)
       end
-
     end
-
   end
 
   context "sample identification scope" do
 
-    let(:core_fields) { {"type" => SAMPLE_TYPE} }
-    let(:custom_fields) { {"hiv" => PATIENT_HIV} }
+    let(:core_fields) { { "type" => SAMPLE_TYPE } }
+    let(:custom_fields) { { "hiv" => PATIENT_HIV } }
 
     it "shouldn't update sample from another institution" do
       sample = Sample.make(
@@ -399,7 +352,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
   end
 
   it "should update tests with the same test_id" do
-    test = TestResult.create_and_index(
+    test = TestResult.make(
       test_id: TEST_ID, device: device,
       custom_fields: {"concentration" => "10%", "foo" => "bar"},
       core_fields: {"assays" => [result("flu", "flu", "negative"), result("mtb1", "mtb1", "positive")]},
@@ -408,15 +361,6 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
     expect { device_message_processor.process }.to change(TestResult, :count).by(0)
 
     expect(Sample.count).to eq(1)
-
-    tests = all_elasticsearch_tests
-    expect(tests.size).to eq(1)
-
-    expect(tests.first["_source"]["test"]["assays"]).to eq([{"name"=>"mtb", "condition"=>"mtb", "result"=>"positive"}])
-    expect(tests.first["_source"]["sample"]["type"]).to eq(SAMPLE_TYPE)
-    expect(tests.first["_source"]["test"]["custom_fields"]["concentration"]).to eq(TEST_CONCENTRATION)
-    # tests.first["_source"]["test"]["custom_fields"]["foo"].should eq("bar")
-
     expect(TestResult.count).to eq(1)
     expect(TestResult.first.sample).to eq(Sample.last)
     # TestResult.first.custom_fields.should eq("raw_result" => TEST_RAW_RESULT)
@@ -425,7 +369,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
   end
 
   it "should not update test with same test_id if device has moved from original test site" do
-    test = TestResult.create_and_index(
+    test = TestResult.make(
       test_id: TEST_ID, device: device, site: site,
       custom_fields: {"concentration" => "10%", "foo" => "bar"},
       core_fields: {"assays" => [result("flu", "flu", "negative"), result("mtb1", "mtb1", "positive")]},
@@ -441,7 +385,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
   end
 
   it "should not update test with same test_id if the original site has moved (ie soft deleted)" do
-    test = TestResult.create_and_index(
+    test = TestResult.make(
       test_id: TEST_ID, device: device, site: site,
       custom_fields: {"concentration" => "10%", "foo" => "bar"},
       core_fields: {"assays" => [result("flu", "flu", "negative"), result("mtb1", "mtb1", "positive")]},
@@ -459,7 +403,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
   end
 
   it "should take tests with the same test_id but different year as differents" do
-    test = TestResult.create_and_index(
+    test = TestResult.make(
       created_at: 2.years.ago,
       test_id: TEST_ID, device: device,
       custom_fields: {"concentration" => "10%", "foo" => "bar"},
@@ -523,7 +467,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
 
         sample = Sample.make(
           institution: device_message.institution,
-          core_fields: {"existing_field" => "a value"},
+          core_fields: { "existing_field" => "a value" },
         )
 
         sample_identifier = SampleIdentifier.make(
@@ -532,7 +476,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           entity_id: SAMPLE_ID
         )
 
-        TestResult.create_and_index test_id: TEST_ID, sample_identifier: sample_identifier, device: device
+        TestResult.make test_id: TEST_ID, sample_identifier: sample_identifier, device: device
 
         device_message_processor.process
 
@@ -543,8 +487,6 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
 
         expect(sample.plain_sensitive_data).to eq(SAMPLE_PII_FIELDS)
         expect(sample.custom_fields).to eq(SAMPLE_CUSTOM_FIELDS)
-
-        # TODO: Should sample core fields include entity_ids?
         expect(sample.core_fields).to eq(SAMPLE_CORE_FIELDS.merge("existing_field" => "a value").except("id"))
       end
     end
@@ -580,7 +522,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           sample: sample
         )
 
-        TestResult.create_and_index test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
+        TestResult.make test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
 
         device_message_processor.process
 
@@ -617,7 +559,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           sample: sample
         )
 
-        TestResult.create_and_index test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
+        TestResult.make test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
 
         device_message_processor.process
 
@@ -649,7 +591,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           entity_id: SAMPLE_ID
         )
 
-        TestResult.create_and_index test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
+        TestResult.make test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
 
         device_message_processor.process
 
@@ -674,7 +616,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           entity_id: "def9772"
         )
 
-        TestResult.create_and_index test_id: TEST_ID, sample_identifier: sample_identifier, device: device
+        TestResult.make test_id: TEST_ID, sample_identifier: sample_identifier, device: device
 
         device_message_processor.process
 
@@ -696,7 +638,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           entity_id: "def9772"
         )
 
-        test_1 = TestResult.create_and_index test_id: TEST_ID_2, sample_identifier: sample_identifier, device: device
+        test_1 = TestResult.make test_id: TEST_ID_2, sample_identifier: sample_identifier, device: device
 
         device_message_processor.process
 
@@ -755,7 +697,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           name: nil
         )
 
-        TestResult.create_and_index test_id: TEST_ID, sample_identifier: nil, device: device, patient: patient
+        TestResult.make test_id: TEST_ID, sample_identifier: nil, device: device, patient: patient
 
         device_message_processor.process
 
@@ -791,7 +733,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           entity_id: SAMPLE_ID
         )
 
-        TestResult.create_and_index test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
+        TestResult.make test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
 
         device_message_processor.process
 
@@ -831,7 +773,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           entity_id: SAMPLE_ID
         )
 
-        TestResult.create_and_index test_id: TEST_ID, sample_identifier: sample_identifier, device: device
+        TestResult.make test_id: TEST_ID, sample_identifier: sample_identifier, device: device
 
         device_message_processor.process
 
@@ -868,7 +810,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           name: nil
         )
 
-        TestResult.create_and_index(
+        TestResult.make(
           test_id: TEST_ID, sample_identifier: nil, patient: patient, device: device,
         )
 
@@ -903,7 +845,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           sample: sample
         )
 
-        TestResult.create_and_index test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
+        TestResult.make test_id: TEST_ID, sample_identifier: sample_identifier, patient: patient, device: device
 
         device_message_processor.process
 
@@ -927,7 +869,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           name: nil
         )
 
-        TestResult.create_and_index test_id: TEST_ID, sample_identifier: nil, device: device, patient: patient
+        TestResult.make test_id: TEST_ID, sample_identifier: nil, device: device, patient: patient
 
         device_message_processor.process
 
@@ -952,7 +894,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           name: nil
         )
 
-        TestResult.create_and_index test_id: TEST_ID, sample_identifier: nil, device: device, patient: patient
+        TestResult.make test_id: TEST_ID, sample_identifier: nil, device: device, patient: patient
 
         device_message_processor.process
 
@@ -977,7 +919,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           name: nil
         )
         other_device = Device.make(institution: institution, site: Site.make(institution: institution))
-        TestResult.create_and_index test_id: TEST_ID_2, sample_identifier: nil, device: other_device, patient: patient
+        TestResult.make test_id: TEST_ID_2, sample_identifier: nil, device: other_device, patient: patient
 
         device_message_processor.process
 
@@ -999,7 +941,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           name: nil
         )
 
-        TestResult.create_and_index test_id: TEST_ID, sample_identifier: nil, device: device, patient: patient
+        TestResult.make test_id: TEST_ID, sample_identifier: nil, device: device, patient: patient
 
         device_message_processor.process
 
@@ -1018,7 +960,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           name: nil
         )
 
-        test_1 = TestResult.create_and_index test_id: TEST_ID_2, sample_identifier: nil, device: device, patient: patient
+        test_1 = TestResult.make test_id: TEST_ID_2, sample_identifier: nil, device: device, patient: patient
 
         device_message_processor.process
 
@@ -1029,7 +971,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
       end
 
       it 'should create patient and store reference in test and sample' do
-        TestResult.create_and_index test_id: TEST_ID, device: device,\
+        TestResult.make test_id: TEST_ID, device: device,\
           sample_identifier: SampleIdentifier.make(entity_id: SAMPLE_ID, sample: Sample.make(institution: device_message_processor.institution))
 
         device_message_processor.process
@@ -1069,7 +1011,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           patient: patient
         )
 
-        TestResult.create_and_index test_id: TEST_ID, encounter: encounter, device: device, patient: patient
+        TestResult.make test_id: TEST_ID, encounter: encounter, device: device, patient: patient
 
         device_message_processor.process
 
@@ -1104,7 +1046,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           patient: patient
         )
 
-        TestResult.create_and_index test_id: TEST_ID, sample_identifier: nil, device: device, encounter: encounter
+        TestResult.make test_id: TEST_ID, sample_identifier: nil, device: device, encounter: encounter
 
         device_message_processor.process
 
@@ -1135,7 +1077,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
         )
 
         other_device = Device.make(institution: institution, site: Site.make(institution: institution))
-        TestResult.create_and_index test_id: TEST_ID_2, sample_identifier: nil, device: other_device, encounter: encounter
+        TestResult.make test_id: TEST_ID_2, sample_identifier: nil, device: other_device, encounter: encounter
 
         device_message_processor.process
 
@@ -1156,7 +1098,7 @@ describe Importer::DeviceMessageProcessor, elasticsearch: true do
           patient: patient
         )
 
-        test = TestResult.create_and_index test_id: TEST_ID, device: device, encounter: old_encounter, patient: patient
+        test = TestResult.make test_id: TEST_ID, device: device, encounter: old_encounter, patient: patient
 
         device_message_processor.process
 

@@ -3,7 +3,6 @@ module FeatureSpecHelpers
 
   included do
     metadata[:js] = true
-    metadata[:elasticsearch] = true
   end
 
   def process(args = {})
@@ -11,8 +10,7 @@ module FeatureSpecHelpers
   end
 
   def process_plain(args)
-    dm = DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(args)
-    refresh_index
+    dm = DeviceMessage.make device: device, plain_text_data: Oj.dump(args)
     dm.test_results.first
   end
 

@@ -27,10 +27,6 @@ PATH
   specs:
     cdx (0.0.1)
       activesupport
-    cdx-api-elasticsearch (0.0.1)
-      activesupport
-      cdx
-      elasticsearch
     cdx_core (1.1.0)
       rails (~> 4.2.7.1)
 
@@ -81,6 +77,8 @@ GEM
       tzinfo (~> 1.1)
     activesupport-decorators (2.1.1)
       railties (>= 3.2.8)
+    acts_as_tree (2.6.0)
+      activerecord (>= 3.0.0)
     addressable (2.4.0)
     ar_transaction_changes (1.1.0)
       activerecord (>= 3.0, < 6.0, != 4.2.3)
@@ -180,14 +178,6 @@ GEM
     dotiw (3.1.1)
       actionpack (>= 3)
       i18n
-    elasticsearch (2.0.0)
-      elasticsearch-api (= 2.0.0)
-      elasticsearch-transport (= 2.0.0)
-    elasticsearch-api (2.0.0)
-      multi_json
-    elasticsearch-transport (2.0.0)
-      faraday
-      multi_json
     encryptor (3.0.0)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -489,6 +479,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport-decorators (~> 2.1)
+  acts_as_tree (~> 2.6)
   ar_transaction_changes
   barby
   base58
@@ -503,7 +494,6 @@ DEPENDENCIES
   capybara-mechanize
   capybara-screenshot
   cdx!
-  cdx-api-elasticsearch!
   cdx-sync-server!
   cdx_core!
   cdx_vietnam!
@@ -564,4 +554,4 @@ DEPENDENCIES
   webmock (= 1.21.0)
 
 BUNDLED WITH
-   1.13.1
+   1.13.6

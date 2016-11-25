@@ -71,7 +71,6 @@ Rails.application.routes.draw do
 
       get :sites
       get :search_sample
-      get :search_test
       put 'add/sample/:sample_uuid' => 'encounters#add_sample'
       put 'add/new_sample' => 'encounters#new_sample'
       put 'add/manual_sample_entry' => 'encounters#add_sample_manually'
@@ -121,8 +120,6 @@ Rails.application.routes.draw do
   resources :test_results, only: [:index, :show]
   resources :test_orders, only: [:index]
   resources :approvals, only: [:index]
-  resources :filters, format: 'html'
-  resources :subscribers
   resources :policies
   resources :api_tokens
   resources :patients do
@@ -164,9 +161,9 @@ Rails.application.routes.draw do
     end
   end
 
-  get "users/:id/remove" => "users#remove"
-  get "users/find/:email" => "users#find"
-  get "users/:id/resend_invite" => "users#resend_invite"
+  get 'users/:id/remove' => 'users#remove'
+  get 'users/find/:email' => 'users#find'
+  get 'users/:id/resend_invite' => 'users#resend_invite'
 
   resources :roles do
     collection do

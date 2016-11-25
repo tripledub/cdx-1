@@ -26,7 +26,6 @@ class TestResult < PatientResult
 
   before_create :set_foreign_keys, prepend: true
   before_save   :set_entity_id
-  after_destroy :destroy_from_index
 
   delegate :device_model, :device_model_id, to: :device
   delegate :sample, to: :sample_identifier, allow_nil: true
@@ -70,10 +69,6 @@ class TestResult < PatientResult
 
   def self.supports_identifier?(key)
     key.blank?
-  end
-
-  def self.query(params, user)
-    TestResultQuery.for params, user
   end
 
   def self.entity_scope
@@ -157,10 +152,6 @@ class TestResult < PatientResult
   end
 
   private
-
-  def destroy_from_index
-    TestResultIndexer.new(self).destroy
-  end
 
   def same_patient_in_sample
     if self.sample && self.sample.patient != self.patient
