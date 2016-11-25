@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161125092211) do
+ActiveRecord::Schema.define(version: 20161125154347) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -715,6 +715,7 @@ ActiveRecord::Schema.define(version: 20161125092211) do
   end
 
   add_index "patient_results", ["completed_at"], name: "index_patient_results_on_completed_at", using: :btree
+  add_index "patient_results", ["deleted_at", "encounter_id"], name: "index_patient_results_on_deleted_at_and_encounter_id", using: :btree
   add_index "patient_results", ["deleted_at"], name: "index_patient_results_on_deleted_at", using: :btree
   add_index "patient_results", ["device_id"], name: "index_patient_results_on_device_id", using: :btree
   add_index "patient_results", ["feedback_message_id"], name: "index_patient_results_on_feedback_message_id", using: :btree
@@ -862,6 +863,7 @@ ActiveRecord::Schema.define(version: 20161125092211) do
     t.datetime "deleted_at"
   end
 
+  add_index "samples", ["deleted_at", "encounter_id"], name: "index_samples_on_deleted_at_and_encounter_id", using: :btree
   add_index "samples", ["deleted_at"], name: "index_samples_on_deleted_at", using: :btree
   add_index "samples", ["institution_id"], name: "index_samples_on_institution_id_and_entity_id", using: :btree
   add_index "samples", ["patient_id"], name: "index_samples_on_patient_id", using: :btree
