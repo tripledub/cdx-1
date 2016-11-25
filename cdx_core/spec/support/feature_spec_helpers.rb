@@ -3,7 +3,6 @@ module FeatureSpecHelpers
 
   included do
     metadata[:js] = true
-    metadata[:elasticsearch] = true
   end
 
   def process(args = {})

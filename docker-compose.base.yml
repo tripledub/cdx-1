@@ -3,9 +3,6 @@ db:
   environment:
     MYSQL_ROOT_PASSWORD: root
 
-elasticsearch:
-  image: elasticsearch:1.7.5
-
 redis:
   image: redis:3.0.5
 
