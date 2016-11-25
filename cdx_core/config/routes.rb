@@ -120,7 +120,6 @@ Rails.application.routes.draw do
   resources :test_results, only: [:index, :show]
   resources :test_orders, only: [:index]
   resources :approvals, only: [:index]
-  resources :subscribers
   resources :policies
   resources :api_tokens
   resources :patients do

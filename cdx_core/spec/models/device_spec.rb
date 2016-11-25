@@ -131,7 +131,7 @@ describe Device do
     end
   end
 
-  context 'cascade destroy', elasticsearch: true do
+  context 'cascade destroy'  do
 
     it "should delete device elements in cascade" do
       device = Device.make

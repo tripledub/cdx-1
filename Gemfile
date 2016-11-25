@@ -63,7 +63,7 @@ gem "select2-rails"
 gem 'sidekiq'
 gem 'sinatra'
 gem 'sidekiq-cron'
-gem 'i18n-js',">= 3.0.0.rc13"
+gem 'i18n-js', '>= 3.0.0.rc13'
 group :development do
   gem 'letter_opener'
   gem 'letter_opener_web'
@@ -81,7 +81,6 @@ gem 'devise_security_extension', git: 'https://github.com/phatworx/devise_securi
 gem 'devise_invitable'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
-gem 'elasticsearch'
 
 gem 'oj'
 gem 'guid'

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-xdescribe CdxApiCore::MessagesController, elasticsearch: true, validate_manifest: false do
+xdescribe CdxApiCore::MessagesController, validate_manifest: false do
   let(:user) {User.make}
   let(:institution) {Institution.make user_id: user.id}
   let(:device) {Device.make institution_id: institution.id}

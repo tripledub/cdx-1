@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe FtpMonitor, elasticsearch: true do
+describe FtpMonitor  do
   context 'orchestration' do
     it 'should group devices by ftp info' do
       dm = DeviceModel.make(supports_ftp: true, filename_pattern: '(?<sn>.+)')
