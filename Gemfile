@@ -90,8 +90,6 @@ gem 'dotiw'
 gem 'rails-i18n', '~> 4.0.0'
 gem 'doorkeeper', '~> 4.2.0'
 gem 'bettertabs'
-
-gem 'faker'
 gem 'leaflet-rails'
 gem 'rake-progressbar'
 gem 'nuntium_api', '~> 0.21'
@@ -113,6 +111,7 @@ gem 'twilio-ruby', '~> 4.11.1'
 gem 'ar_transaction_changes'
 
 group :development, :test do
+  gem 'faker', '~> 1.6.6'
   gem 'pry-byebug'
   gem 'pry-rescue'
   gem 'pry-stack_explorer'

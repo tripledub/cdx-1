@@ -413,8 +413,6 @@ ActiveRecord::Schema.define(version: 20161125092211) do
     t.datetime "updated_at"
   end
 
-  add_index "integration_logs", ["order_id"], name: "index_integration_logs_on_order_id", using: :btree
-
   create_table "manifests", force: :cascade do |t|
     t.string   "version",         limit: 255
     t.text     "definition",      limit: 65535
