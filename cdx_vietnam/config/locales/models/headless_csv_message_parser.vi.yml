@@ -1,4 +1,4 @@
 vi:
   models: 
     headless_csv_message_parser:
-      header_lookup: '"Header lookup is unsupported for headless CSV Messages"'
+      header_lookup: '"Tiêu đề tra cứu không hỗ trợ cho các thông báo CSV không có tiêu đề"'

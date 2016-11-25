@@ -1,0 +1,216 @@
+= validation_errors @notification
+
+.content
+  .row
+    .col
+      %div.tooltip
+        = form.label :name
+        %div.tooltiptext_r
+          = I18n.t('notifications.form.tooltip.name')
+    .col
+      = form.text_field :name, placeholder: I18n.t('notifications.form.placeholder.name')
+  .row
+    .col
+      %div.tooltip
+        = form.label :description
+        %div.tooltiptext_r
+          = I18n.t('notifications.form.tooltip.description')
+    .col
+      = form.text_field :description, placeholder: I18n.t('notifications.form.placeholder.description')
+  .row
+    .col
+      %div.tooltip
+        = form.label :site_ids
+        %div.tooltiptext_r
+          = I18n.t('notifications.form.tooltip.site_ids')
+    .col
+      = form.collection_select :site_ids, @sites, :id, :name, {}, { class: 'select2', multiple: true, placeholder: I18n.t('notifications.form.placeholder.site_ids') }
+
+  .row
+    .col
+      %div.tooltip
+        = form.label :patient_identifier
+        %div.tooltiptext_r
+          = I18n.t('notifications.form.tooltip.patient_identifier')
+    .col
+      = form.text_field :patient_identifier, placeholder: I18n.t('notifications.form.placeholder.patient_identifier')
+      - if @notification.patient
+        .notification-lookup-record
+          %strong [#{link_to(@notification.patient.entity_id, patient_path(@notification.patient), target: '_blank')}]
+          = @notification.patient.name
+  .row
+    .col
+      %div.tooltip
+        = form.label :test_identifier
+        %div.tooltiptext_r
+          = I18n.t('notifications.form.tooltip.test_identifier')
+    .col
+      = form.text_field :test_identifier, placeholder: I18n.t('notifications.form.placeholder.test_identifier')
+      - if @notification.encounter
+        .notification-lookup-record
+          %strong [#{link_to(@notification.encounter.batch_id, encounter_path(@notification.encounter), target: '_blank')}]
+          = I18n.t("select.patient_result.status_options.#{@notification.encounter.status}")
+  .row
+    .col
+      %div.tooltip
+        = form.label :sample_identifier
+        %div.tooltiptext_r
+          = I18n.t('notifications.form.tooltip.sample_identifier')
+    .col
+      = form.text_field :sample_identifier, placeholder: I18n.t('notifications.form.placeholder.sample_identifier')
+    -#
+      .col
+        %div.tooltip
+          = form.label :notification_statuses_names
+          %div.tooltiptext_r
+            = I18n.t('notifications.form.tooltip.notification_statuses_names')
+      .col
+        = form.select :notification_statuses_names, PatientResult.status_options.map(&:reverse), {}, { class: 'select2', multiple: true, placeholder: I18n.t('notifications.form.placeholder.notification_statuses_names') }
+  %fieldset.generic-fieldset
+    %legend= I18n.t('notifications.form.legends.conditions')
+    = form.fields_for :notification_conditions do |field|
+      = field.hidden_field :_destroy, :class => 'generic-fieldset-fields__input--destroy' unless field.object.new_record?
+      = render :partial => 'notification_conditions/fieldset', :object => field
+    = link_to(I18n.t('notification_conditions.form.new_condition'), '', :class => 'generic-fieldset-fields__new btn btn-primary pull-right')
+  -#
+    .row
+      .col
+        %div.tooltip
+          = form.label :device_ids
+          %div.tooltiptext_r
+            = I18n.t('notifications.form.tooltip.device_ids')
+      .col
+        = form.select :device_ids, @devices, {}, { class: 'select2', multiple: true, placeholder: I18n.t('notifications.form.placeholder.device_ids') }
+    .row
+      .col
+        %div.tooltip
+          = form.label :device_error_code
+          %div.tooltiptext_r
+            = I18n.t('notifications.form.tooltip.device_error_code')
+      .col
+        = form.text_field :device_error_code, placeholder: I18n.t('notifications.form.placeholder.device_error_code')
+
+      .row
+        .col
+          %div.tooltip
+            = form.label :anomaly_type
+            %div.tooltiptext_r
+              = I18n.t('notifications.form.tooltip.anomaly_type')
+        .col
+          = form.select :anomaly_type, Notification::ANOMALY_TYPES, {include_blank: I18n.t('notifications.form.placeholder.anomaly_type')}, { class: 'select2' }
+
+      .row
+        .col
+          %div.tooltip
+            = form.label :utilisation_efficiency_sample_identifier
+            %div.tooltiptext_r
+              = I18n.t('notifications.form.tooltip.utilisation_efficiency_sample_identifier')
+        .col
+          -# Alias of sample_identifier
+          = form.text_field :utilisation_efficiency_sample_identifier, placeholder: I18n.t('notifications.form.placeholder.utilisation_efficiency_sample_identifier')
+      .row
+        .col
+          %div.tooltip
+            = form.label :utilisation_efficiency_threshold
+            %div.tooltiptext_r
+              = I18n.t('notifications.form.tooltip.utilisation_efficiency_threshold')
+        .col
+          = form.text_field :utilisation_efficiency_threshold, placeholder: I18n.t('notifications.form.placeholder.utilisation_efficiency_threshold')
+
+  .row
+    .col
+      %div.tooltip
+        = form.label :role_ids
+        %div.tooltiptext_r
+          = I18n.t('notifications.form.tooltip.role_ids')
+    .col
+      = form.collection_select :role_ids, @roles, :id, :name, {}, { class: 'select2', multiple: true, placeholder: I18n.t('notifications.form.placeholder.role_ids') }
+  .row
+    .col
+      %div.tooltip
+        = form.label :user_ids
+        %div.tooltiptext_r
+          = I18n.t('notifications.form.tooltip.user_ids')
+    .col
+      = form.collection_select :user_ids, @users, :id, :full_name, {}, { class: 'select2', multiple: true, placeholder: I18n.t('notifications.form.placeholder.user_ids') }
+  %fieldset.generic-fieldset
+    %legend= I18n.t('notifications.form.legends.ad-hoc_recipients')
+    = form.fields_for :notification_recipients do |field|
+      = field.hidden_field :_destroy, :class => 'generic-fieldset-fields__input--destroy' unless field.object.new_record?
+      = render :partial => 'notification_recipients/fieldset', :object => field
+    = link_to(I18n.t('notification_recipients.form.new_recipient'), '', :class => 'generic-fieldset-fields__new btn btn-primary pull-right')
+  .row
+    .col
+    .col
+      %div.tooltip
+        = form.check_box :email, :data => {:'show-optional' => 'email-options'}
+        = form.label :email, I18n.t('notifications.form.tooltip.email')
+  -#
+    .row.email-options{:class => @notification.email ? '' : 'nodisplay'}
+      .col
+        %div.tooltip
+          = form.label :email_limit
+          %div.tooltiptext_r
+            = I18n.t('notifications.form.tooltip.email_limit')
+      .col
+        = form.number_field :email_limit, min: 0, max: 1000, placeholder: I18n.t('notifications.form.placeholder.email_limit')
+  .row.email-options{:class => @notification.email ? '' : 'nodisplay'}
+    .col
+      %div.tooltip
+        = form.label :email_message
+        %div.tooltiptext_r
+          = I18n.t('notifications.form.tooltip.email_message')
+    .col
+      = form.text_area :email_message, placeholder: I18n.t('notifications.form.placeholder.email_message'), rows: 4, cols: 35
+  .row
+    .col
+    .col
+      %div.tooltip
+        = form.check_box :sms, :data => {:'show-optional' => 'sms-options'}
+        = form.label :sms, I18n.t('notifications.form.tooltip.sms')
+  -#
+    .row.sms-options{:class => @notification.sms ? '' : 'nodisplay'}
+      .col
+        %div.tooltip
+          = form.label :sms_limit
+          %div.tooltiptext_r
+            = I18n.t('notifications.form.tooltip.sms_limit')
+      .col
+        = form.number_field :sms_limit, min: 0, max: 1000, placeholder: I18n.t('notifications.form.placeholder.sms_limit')
+  .row.sms-options{:class => @notification.sms ? '' : 'nodisplay'}
+    .col
+      %div.tooltip
+        = form.label :sms_message
+        %div.tooltiptext_r
+          = I18n.t('notifications.form.tooltip.sms_message')
+    .col
+      = form.text_area :sms_message, placeholder: I18n.t('notifications.form.placeholder.sms_message'), rows: 4, cols: 35
+  .row
+    .col
+      %div.tooltip
+        = form.label :frequency
+        %div.tooltiptext_r
+          = I18n.t('notifications.form.tooltip.frequency')
+    .col
+      = form.select :frequency, Notification::FREQUENCY_TYPES, { prompt: true }, { class: 'select2' }
+  .row.frequency-options{:class => @notification.frequency == 'aggregate' ? '' : 'nodisplay'}
+    .col
+      %div.tooltip
+        = form.label :frequency_value
+        %div.tooltiptext_r
+          = I18n.t('notifications.form.tooltip.frequency_value')
+    .col
+      = form.select :frequency_value, Notification::FREQUENCY_VALUES, { prompt: true }, { class: 'select2' }
+
+.row
+  .col
+    %div.tooltip
+      = form.check_box :enabled
+      = form.label :enabled, I18n.t('notifications.form.tooltip.enabled')
+  .col
+
+:javascript
+  var conditionFields   = #{Notification::Condition.field_select_options.to_json};
+  var conditionStatuses = #{Notification::Condition.field_select_statuses.to_json};
+  var assayDetections   = #{@conditions.map {|c| { id: c.name } }.to_json};
+  var assayConditions   = #{@condition_results.map {|c| { id: c } }.to_json};

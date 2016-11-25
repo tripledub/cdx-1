@@ -1,18 +1,18 @@
 vi:
   models: 
     blender:
-      not_null: 'Thực thể không thể bỏ trống'
-      not_mathch: 'Thực thể tổ chức không phù hợp'
-      unknown_entity_type: 'Không biết loại thực thể'
+      not_null: 'Đối tượng không thể bỏ trống'
+      not_mathch: 'Đối tượng tổ chức không phù hợp'
+      unknown_entity_type: 'Không biết loại đối tượng'
       cannot_set: 'Không thể thiết lập'
       from_a_different_institution: 'từ một tổ chức khác nhau'
-      Cannot_merge_two_identified: 'Không thể hợp nhất hai identified'
+      Cannot_merge_two_identified: 'Không thể hợp nhất hai đối tượng'
       cannot_add_child: "Không thể thêm con từ một tổ chức khác"
-      entity_blender_add_child: "Entity blender add child must receive an entity blender"
-      cannot_merge_different_institution: "Cannot merge entity blender từ một tổ chức khác"
-      cannot_merge_different_type: "Cannot merge entity blender từ một loại khác"
-      Multiple_entities: "Nhiều thực thể tìm thấy trên các cuộc gọi đến thực thể duy nhất"
-      cannot_change: "Không thể thay đổi mã thực thể của"
+      entity_blender_add_child: "Đối tượng blender nhận thêm con phải nhận được một đối tượng cùng loại"
+      cannot_merge_different_institution: "Không thể gộp đối tượng blender từ một tổ chức khác"
+      cannot_merge_different_type: "Không thể gộp đối tượng blender từ một loại khác"
+      Multiple_entities: "Nhiều đối tượng được tìm thấy trên các cuộc gọi đến đối tượng đơn"
+      cannot_change: "Không thể thay đổi mã đối tượng của"
       from: "từ"
       to: "thành"
-      test_result: "kết quả xét nghiệm không có thực thể con"
+      test_result: "kết quả xét nghiệm không có đối tượng con"

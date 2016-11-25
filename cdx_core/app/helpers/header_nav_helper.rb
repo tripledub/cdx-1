@@ -7,12 +7,10 @@ module HeaderNavHelper
       params[:controller] == 'patients'
     when 'test_orders'
       params[:controller] == 'test_orders'
-    when 'test_results'
-      params[:controller] == 'test_results'
     when 'devices'
       params[:controller] == 'devices'
     when 'settings'
-      ['roles', 'policies', 'alerts', 'incidents', 'device_messages', 'alert_messages', 'device_models', 'users'].include?(params[:controller]) || params[:action] == "settings"
+      ['roles', 'policies', 'test_results', 'alerts', 'notifications', 'notification_notices', 'device_messages', 'device_models', 'users'].include?(params[:controller]) || params[:action] == "settings"
     else
       false
     end

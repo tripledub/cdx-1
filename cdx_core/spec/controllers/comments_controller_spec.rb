@@ -7,10 +7,12 @@ describe CommentsController do
   let!(:institution)   { user.institutions.make }
   let(:patient)        { Patient.make institution: institution }
   let(:default_params) { { context: institution.uuid } }
-  let(:valid_params)   { {
-    description:  'New valid comment',
-    comment:      'For whom the bell tolls'
-  } }
+  let(:valid_params) do
+    {
+      description:  'New valid comment',
+      comment:      'For whom the bell tolls'
+    }
+  end
 
   context 'user with edit patient permission' do
     before(:each) do
@@ -25,28 +27,28 @@ describe CommentsController do
       it 'should return a json with comments' do
         get 'index', patient_id: patient.id
 
-        expect(JSON.parse(response.body).size).to eq(7)
+        expect(JSON.parse(response.body)['rows'].size).to eq(7)
       end
 
       it 'should return a json with comments ordered by comment date ascending' do
-        first_comment = patient.comments.order(created_at: :desc).first
+        first_comment = patient.comments.order(:created_at).first
         get 'index', patient_id: patient.id
 
-        expect(JSON.parse(response.body).first['title']).to eq(first_comment.description)
+        expect(JSON.parse(response.body)['rows'].first['title']).to eq(first_comment.description)
       end
 
       it 'should return a json with comments ordered by user name ascending' do
         first_user = User.where.not(id: user.id).order(first_name: :desc).first
-        get 'index', patient_id: patient.id, field: 'name', order: 0
+        get 'index', patient_id: patient.id, order_by: '-users.first_name'
 
-        expect(JSON.parse(response.body).first['commenter']).to eq(first_user.full_name)
+        expect(JSON.parse(response.body)['rows'].first['commenter']).to eq(first_user.full_name)
       end
 
       it 'should return a json with comments ordered by user name ascending' do
         first_user = User.where.not(id: user.id).order(first_name: :asc).first
-        get 'index', patient_id: patient.id, field: 'name', order: 'true'
+        get 'index', patient_id: patient.id, order_by: 'users.first_name'
 
-        expect(JSON.parse(response.body).first['commenter']).to eq(first_user.full_name)
+        expect(JSON.parse(response.body)['rows'].first['commenter']).to eq(first_user.full_name)
       end
     end
 
@@ -54,7 +56,7 @@ describe CommentsController do
       it 'should render the new template' do
         get 'new', patient_id: patient.id
 
-        expect(response).to  render_template('new')
+        expect(response).to render_template('new')
       end
     end
 
@@ -78,7 +80,7 @@ describe CommentsController do
 
         context 'audited data do' do
           before :each do
-            @audit_log = AuditLog.where(patient: patient, title: 'New comment added').first
+            @audit_log = AuditLog.where(patient: patient).first
           end
 
           it 'should audit the comment' do
@@ -102,13 +104,13 @@ describe CommentsController do
       it 'should render the show template' do
         get 'show', patient_id: patient.id, id: comment.id
 
-        expect(response).to  render_template('show')
+        expect(response).to render_template('show')
       end
     end
   end
 
   context 'user with no edit patient permission' do
-    let(:invalid_user)           { Institution.make.user }
+    let(:invalid_user) { Institution.make.user }
 
     before(:each) do
       grant user, invalid_user, institution, READ_INSTITUTION

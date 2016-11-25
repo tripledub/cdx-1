@@ -1,5 +1,61 @@
 ﻿vi:
   components:
+    created: 'Đã tạo'
+    updated: 'Cập nhật mới nhất'
+    previous: 'Trước'
+    next: 'Kế tiếp'
+    cancel: 'Hủy bỏ'
+    test_result_actions:
+      update_failed: 'Không thể cập nhật trạng thái'
+    test_order_actions:
+      update_failed: 'Không thể cập nhật yêu cầu xét nghiệm.'
+    test_result_status:
+      approve_payment:
+        action_label: 'Tài trợ đã được phê duyệt'
+        reject_label: 'Tài trợ đã bị từ chối'
+        reject_header: 'Vui lòng giải thích tại sao hóa đơn này bị từ chối'
+      allocated:
+        action_label: 'Tiếp nhận mẫu'
+        reject_label: 'Từ chối mẫu'
+        reject_header: 'Vui lòng giải thích tại sao mẫu này bị từ chối'
+      sample_approved:
+        action_label: 'Nhập vào kết quả'
+        reject_label: 'Thêm bình luận'
+        reject_header: 'Bình luận'
+      in_progress:
+        action_label: 'Chấp thuận mẫu'
+        reject_label: 'Từ chối mẫu'
+        reject_header: 'Vui lòng giải thích tại sao mẫu này bị từ chối'
+      test_received:
+        action_label: 'Chấp thuận xét nghiệm'
+        reject_label: 'Từ chối xết nghiệm'
+        reject_header: 'Vui lòng giải thích tại sao xét nghiệm này bị từ chối'
+      test_completed: 'Xét nghiệm hoàn tất'
+      test_new:  'Xét nghiệm mới'
+      test_rejected: 'Xét nghiệm từ chối'
+      show_test_result: 'Hiện kết quả'
+    patient_results:
+      new: 'Mới'
+      sample_collected: 'Đang chờ'
+      allocated: 'Đã tiếp nhận'
+      pending_approval: 'Đang chờ phê duyệt'
+      rejected: 'Đã từ chối'
+      completed: 'Đã hoàn thành'
+    payment_action:
+      mark_as_paid: 'Đánh giá yêu cầu xét nghiệm được trả'
+      reject: 'Tài trợ đã bị từ chối'
+    add_samples_action:
+      enter_sample_id: 'Nhập mã mẫu'
+      add_result: 'Thêm kết quả'
+      submit_samples:  'Nhập mẫu'
+      sample_ids: 'Mẫu Ids cho hàng loạt xét nghiệm'
+      save_sample_ids: 'Lưu mã mẫu'
+    test_batch_table:
+      type: 'Loại'
+      sample_id: 'Mã mẫu'
+      examined_by: 'Kiểm tra bởi'
+      status: 'Trạng thái'
+      options: 'Tùy chọn'
     alert_groups:
       col_name: "Tên cảnh báo"
       tooltip_name: "Đây là tên của cảnh báo."
@@ -7,19 +63,46 @@
       tooltip_description: "Mô tả về những đòi hỏi của cảnh báo."
       col_enabled: "Tình trạng kích hoạt"
       tooltip_enabled: "Cảnh báo này đã được kích hoạt chưa?"
-      col_sites: "Trang"
-      tooltip_sites: "Cảnh báo này sẽ được kích hoạt cho những trang nào."
+      col_sites: "Cơ sở"
+      tooltip_sites: "Cảnh báo này sẽ được kích hoạt cho những cơ sở nào."
       col_roles: "Vai trò"
       tooltip_roles: "Đôi điều về các vai trò."
       col_last_incident: "Sự cố sau cùng"
       tooltip_last_incident: "Khi sự cố sau cùng được báo cáo."
-
+    test_batch:
+      test_order_header: 'Trạng thái yêu cầu xét nghiệm'
+      header: 'Hàng loạt xét nghiệm'
+      status: 'trạng thái'
+      new: 'Mới'
+      samples_collected: 'Các mẫu thu thập'
+      samples_received: 'Các mẫu đã nhận'
+      in_progress: 'Đang xử lý'
+      payment: 'Thanh toán'
+      false: 'Chưa giải quyết'
+      true: 'Hoàn tất'
+    test_order:
+      new: 'Mới'
+      pending: 'Chưa giải quyết'
+      financed: 'Được tài trợ'
+      not_financed: 'Không được tài trợ'
+      samples_collected: 'Các mẫu thu thập'
+      samples_received: 'Các mẫu đã nhận'
+      recieved: 'Đã nhận'
+      in_progress: 'Đang xử lý'
+      pending_approval: 'Chờ chấp thuận'
+      closed: 'Đã đóng'
+      print_label: 'In nhãn'
+      print_label_title: 'In mã vạch cho mẫu đầu tiên'
     alert_messages:
       col_name: "Tên"
       col_date: "Ngày"
       col_channels: "Kênh"
       col_message: "Tin nhắn"
-
+    notification_notices:
+      col_name: "Tên"
+      col_date: "Ngày"
+      col_status: "Trạng thái"
+      col_message: "Tin Nhắn"
     canvas-charts:
       err_chart_msg: "Có một lỗi xảy ra khi hiển thị biểu đồ."
 
@@ -31,25 +114,26 @@
       col_name: "Tên thiết bị"
       col_manufacturer: "Nhà sản xuất"
       col_model: "Kiểu"
-      col_site: "Trang"
+      col_site: "Cơ sở"
 
     encounters:
+      btn_comment: 'Nhận xét'
       btn_save: "Lưu mã phòng thí nghiệm"
-      lbl_tests_requested: "Những kiểm tra được yêu cầu"
-      lbl_microscopy: "Kính hiển vi"
+      lbl_tests_requested: "Những xét nghiệm được yêu cầu"
+      lbl_microscopy: "Soi kính trực tiếp"
       lbl_xpert_mtb: "Xpert MTB/RIF"
       lbl_culture: "Nuôi cấy"
-      lbl_liquid_culture: "Môi trường lỏng"
-      lbl_solid_culture: "Môi trường rắn"
-      lbl_drug_first_line: "Drug Susceptibility First Line"
-      lbl_drug_second_line: "Drug Susceptibility Second Line"
-      lbl_line_first_line: "Line probe assay First Line"
-      lbl_line_second_line: "Line probe assay Second Line"
-      lbl_cd4_count: "CD4 Count"
-      lbl_viral_count: "Viral Load Count"
-      lbl_hiv_detect: "HIV 1/2 Detect"
-      lbl_rdt: "RDT"
-      lbl_xpert_ebola: "Xpert Ebola"
+      lbl_liquid_culture: "Nuôi cấy lỏng"
+      lbl_solid_culture: "Nuôi cấy đặc"
+      lbl_drug_first_line: "Kháng sinh đồ hàng một"
+      lbl_drug_second_line: "Kháng sinh đồ hàng hai"
+      lbl_line_first_line: "Kỹ thuật LPA hàng 1"
+      lbl_line_second_line: "Kỹ thuật LPA hàng 2"
+      lbl_cd4_count: "Đếm tế bào CD4"
+      lbl_viral_count: "Tải lượng virus"
+      lbl_hiv_detect: " Phát hiện virus HIV type 1/2"
+      lbl_rdt: "Kit chẩn đoán nhanh"
+      lbl_xpert_ebola: "Kỹ thuật Xpert chẩn đoán virus Ebola"
 
     episodes:
       lbl_treatment_outcome: "Kết quả điều trị"
@@ -90,24 +174,25 @@
         col_request_by: "Yêu cầu bởi"
         col_request_to: "Yêu cầu cho"
         col_order_id: "Mã yêu cầu"
+        col_batch_id: "Mã bộ yêu cầu"
         col_order_by: "Yêu cầu bởi"
         col_request_date: "Ngày yêu cầu"
         col_due_date: "Ngày hết hạn"
-        col_time: "Thời gian quay vòng"
+        col_time: "Thời gian trả kết quả"
         col_status: "Trạng thái"
 
         episodes:
-          lst_open: "Tập mở"
-          lst_close: "Tập đóng"
+          lst_open: "Tạo lần khám"
+          lst_close: "Kết thúc lần khám"
           lbl_diagnosis: "Chẩn đoán"
           lbl_hiv_status: "Tình trạng nhiễm HIV"
           lbl_history: "Lịch sử"
           lbl_drug: "Kháng thuốc"
           lbl_outcome: "Kết quả"
-          lbl_diagnosis_by_site: "Chẩn đoán phân loại bởi trang giải phẫu"
-          btn_edit: "Chỉnh sửa tập"
-          msg_loading: "Đang tải tập..."
-          msg_no_episode: "Không có tập."
+          lbl_diagnosis_by_site: "Chẩn đoán phân loại bởi cơ sở tiếp nhận"
+          btn_edit: "Chỉnh sửa lần khám"
+          msg_loading: "Đang tải lần khám..."
+          msg_no_episode: "Không có lần khám."
 
         history:
           col_comment_date: "Ngày"
@@ -130,6 +215,7 @@
           col_test_order_status: "Trạng thái"
           col_title: "Tiêu đề"
           col_user: "Người dùng"
+          col_device: "Thiết bị"
           col_date: "Ngày thêm"
           msg_loading: "Đang tải nhật ký..."
           msg_no_log: "Không có nhật ký."
@@ -149,23 +235,24 @@
       tooltip_user: "Số lượng người dùng có vai trò này."
 
     test_orders:
-      col_sample_id: "Mã mẫu thử"
       col_status: "Trạng thái"
       col_request_by: "Yêu cầu bởi"
       col_request_to: "Yêu cầu cho"
       col_testing_for: "Kiểm tra cho"
       col_order_by: "Yêu cầu bởi"
       col_request_date: "Ngày yêu cầu"
+      col_tests_requiring_approval: "Xét nghiệm cần phê duyệt"
       col_due_date: "Ngày hết hạn"
       col_id: "Mã yêu cầu"
+      col_sample_id: "Mã mẫu thử"
 
     test_results:
       col_sample: "Mẫu được thu thập ngày"
       col_number: "Số seri"
       col_exam_by: "Kiểm tra bởi"
       col_media_used: "Phương tiện sử dụng"
-      col_test_result: "Kết quả kiểm tra"
-      col_result_on: "Kết quả ngày"
+      col_test_result: "Kết quả xét nghiệm"
+      col_result_at: "Ngày trả kết quả"
       col_h: "Kết quả H"
       col_r: "Kết quả R"
       col_e: "Kết quả E"
@@ -175,11 +262,11 @@
       col_cm: "Kết quả Cm"
       col_fq: "Kết quả Fq"
       col_on: "Kết quả ở"
-      col_specimen: "Mẫu văn bản"
+      col_specimen: "Loại mẫu"
       col_appearance: "Xuất hiện"
-      col_test: "xét nghiệm"
+      col_test: "Xét nghiệm"
       col_result: "Kết quả"
-      col_site: "Trang"
+      col_site: "Cơ sở"
       col_device_name: "Tên thiết bị"
       col_device_number: "Số seri thiết bị"
       col_sample_id: "Mã mẫu thử"
@@ -189,7 +276,7 @@
       col_start_time: "Thời gian bắt đầu"
       col_end_time: "Thời gian kết thúc"
       col_tuber: "Lao phổi"
-      col_trace: "Dấu vết"
+      col_trace: "Mức độ"
       col_rifampicin: "Rifampicin"
 
     users:
@@ -197,3 +284,15 @@
       col_role: "Chức vụ"
       col_status: "Trạng thái"
       col_last_activity: "Hoạt động cuối cùng"
+    integration_logs:
+      col_title: "Lịch sử tích hợp"
+      col_patient_name: "Tên bệnh nhân"
+      col_order_id: "Mã Yêu cầu"
+      col_json: "Dữ liệu Json"
+      col_fail_step: "Bước bị lỗi"
+      col_system: "Hệ thống"
+      col_error_message: "Lỗi"
+      col_try_n_times: "Số lần thử"
+      col_updated_at: "Ngày cập nhật"
+      col_status: "Trạng thái"
+      retry: "Thử lại"

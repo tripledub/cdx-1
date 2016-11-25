@@ -1,8 +1,11 @@
+# Patients controller
 class PatientsController < ApplicationController
-  before_filter :find_patient, only:['show','edit','update','destroy']
+  before_filter :find_patient, only: %w(show edit update destroy)
+  before_action :set_filter_params, only: [:index]
 
   def search
-    @patients = check_access(Patient.where(is_phantom: false).where(institution: @navigation_context.institution), READ_PATIENT).order(:name)
+    @patients = check_access(Patient.where(is_phantom: false)
+      .where(institution: @navigation_context.institution), READ_PATIENT).order(:name)
     @patients = @patients.where("name LIKE concat('%', ?, '%') OR entity_id LIKE concat('%', ?, '%')", params[:q], params[:q])
     @patients = @patients.page(1).per(10)
 
@@ -16,10 +19,9 @@ class PatientsController < ApplicationController
   end
 
   def index
-    set_session_from_params
     patients          = Patients::Finder.new(current_user, @navigation_context, params).filter_query
     @total            = patients.count
-    order_by, offset  = perform_pagination('patients.name')
+    order_by, offset  = perform_pagination(table: 'patients_index', field_name: 'patients.name')
     @patients         = patients.order(order_by).limit(@page_size).offset(offset)
   end
 
@@ -34,22 +36,22 @@ class PatientsController < ApplicationController
 
     add_two_addresses
 
-    prepare_for_institution_and_authorize(@patient, CREATE_INSTITUTION_PATIENT)
+    authorize_resource(@navigation_context.institution, CREATE_INSTITUTION_PATIENT)
   end
 
   def create
-    @institution  = @navigation_context.institution
+    @institution = @navigation_context.institution
     return unless authorize_resource(@institution, CREATE_INSTITUTION_PATIENT)
     parse_date_of_birth
     @patient      = @institution.patients.new(patient_params)
     @patient.site = @navigation_context.site
-
-    if validate_name_and_entity_id && @patient.save_and_audit(current_user, I18n.t('patients.create.audit_log', patient_name: @patient.name))
+    @patient.created_from_controller = true
+    if validate_name_and_entity_id && @patient.save_and_audit("t{patients.create.audit_log}: #{@patient.name}")
       next_url = if params[:next_url].blank?
-        patient_path(@patient)
-      else
-        "#{params[:next_url]}#{params[:next_url].include?('?') ? '&' : '?'}patient_id=#{@patient.id}"
-      end
+                   patient_path(@patient)
+                 else
+                   "#{params[:next_url]}#{params[:next_url].include?('?') ? '&' : '?'}patient_id=#{@patient.id}"
+                 end
 
       redirect_to next_url, notice: I18n.t('patients.create.success')
     else
@@ -68,7 +70,7 @@ class PatientsController < ApplicationController
     return unless authorize_resource(@patient, UPDATE_PATIENT)
     parse_date_of_birth
 
-    if name_is_present? && @patient.update_and_audit(patient_params, current_user, I18n.t('patients.update.audit_log', patient_name: @patient.name))
+    if name_is_present? && @patient.update_and_audit(patient_params, "#{@patient.name} t{patients.update.audit_log}")
       redirect_to patient_path(@patient), notice: I18n.t('patients.update.success')
     else
       render action: 'edit'
@@ -78,7 +80,7 @@ class PatientsController < ApplicationController
   def destroy
     return unless authorize_resource(@patient, DELETE_PATIENT)
 
-    @patient.destroy
+    @patient.destroy_and_audit("#{@patient.name} t{patients.destroy.audit_log}")
 
     redirect_to patients_path, notice: I18n.t('patients.destroy.success')
   end
@@ -86,13 +88,28 @@ class PatientsController < ApplicationController
   protected
 
   def find_patient
-    @patient  = Patient.find(params[:id])
+    @patient = Patient.find(params[:id])
   end
 
   def patient_params
     params.require(:patient).permit(
-      :name, :entity_id, :gender, :nickname, :medical_insurance_num, :social_security_code, :birth_date_on, :address, :email, :phone, :city, :state, :zip_code,
-      addresses_attributes: [ :id, :address, :city, :state, :zip_code ]
+      :name,
+      :entity_id,
+      :gender,
+      :nickname,
+      :medical_insurance_num,
+      :social_security_code,
+      :external_id,
+      :external_system_id,
+      :birth_date_on,
+      :address,
+      :email,
+      :phone,
+      :city,
+      :state,
+      :zip_code,
+      :created_from_controller,
+      addresses_attributes: [:id, :address, :city, :state, :country, :zip_code]
     )
   end
 
@@ -100,17 +117,16 @@ class PatientsController < ApplicationController
     (2 - @patient.addresses.size).times { @patient.addresses.build }
   end
 
+  # Only patients from form need this validation. Phantom patients don't have entity_id
   def validate_name_and_entity_id
-    #Only patients from form need this validation. Phantom patientes don't have name or entity_id
     @patient.valid?
-    @patient.errors.add(:entity_id, I18n.t('patients.create.no_entity')) if @patient.new_record? && !@patient.entity_id.present?
-    @patient.errors.add(:name, I18n.t('patients.create.no_entity'))      unless @patient.name.present?
+    #@patient.errors.add(:entity_id, I18n.t('patients.create.no_entity')) if @patient.new_record? && !@patient.entity_id.present?
+    @patient.errors.add(:name, I18n.t('patients.create.no_name'))      unless @patient.name.present?
     @patient.errors.empty?
   end
 
   def name_is_present?
-    @patient.valid?
-    @patient.errors.add(:name, I18n.t('patients.create.no_entity')) if params['patient'].key?('name') && params['patient']['name'].empty?
+    @patient.errors.add(:name, I18n.t('patients.create.no_name')) if params['patient'].key?('name') && params['patient']['name'].empty?
     @patient.errors.empty?
   end
 
@@ -120,17 +136,7 @@ class PatientsController < ApplicationController
     end
   end
 
-  def set_session_from_params
-    params[:name]                  = session[:patients_filter_name] if params[:name].nil?
-    session[:patients_filter_name] = params[:name]
-
-    params[:entity_id]                  = session[:patients_filter_entity_id] if params[:entity_id].nil?
-    session[:patients_filter_entity_id] = params[:entity_id]
-
-    params[:page]                  = session[:patients_filter_page] if params[:page].nil?
-    session[:patients_filter_page] = params[:page]
-
-    params[:page_size]                 = session[:patients_filter_pagesize] if params[:page_size].nil?
-    session[:patients_filter_pagesize] = params[:page_size]
+  def set_filter_params
+    set_filter_from_params(FilterData::Patients)
   end
 end

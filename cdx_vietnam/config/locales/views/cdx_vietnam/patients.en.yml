@@ -1,6 +1,11 @@
 en:
   patients:
     form:
-      social_security_code: 'CMND'
-      wrong_social_security_number: "Your input does not confirm to the validation criteria (Min 9 characters Max 15). Do you want to save anyway?"
-      social_security_code_tooltip: "CMND (Min 9 characters Max 15)"
+      social_security_code: Social Security ID
+      vitimes_id: Vitimes/eTB Manager Log ID
+      vitimes_id_tooltip: Enter the Vitimes Log ID
+      wrong_social_security_number: "Your input does not conform to the validation criteria (Min 9 characters Max 15). Do you want to save anyway?"
+      social_security_code_tooltip: "Social Security ID (Min 9 characters Max 15)"
+      wrong_medical_insurance_num: This is not a valid Medical Insurance Number (2 characters followed by 13 digits). Do you still wish to continue?
+      nationality: Nationality
+      nationality_tooltip: Choose your nationality

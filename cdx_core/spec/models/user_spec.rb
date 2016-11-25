@@ -2,6 +2,11 @@ require 'spec_helper'
 require 'policy_spec_helper'
 
 RSpec.describe User, type: :model do
+
+  describe '#locale' do
+    it { is_expected.to validate_presence_of(:locale) }
+  end
+
   describe '.full_name' do
     it 'concatenates the users first and last name' do
       user = User.make(first_name: 'Roger', last_name: 'Melly')

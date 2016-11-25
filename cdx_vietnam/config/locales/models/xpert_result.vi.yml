@@ -2,9 +2,12 @@ vi:
   activerecord:
     attributes:
       xpert_result:
-        sample_collected_on: 'Ngày lấy mẫu'
+        result_status: 'Trạng thái'
+        sample_collected_at: 'Ngày lấy mẫu'
         examined_by: 'Kiểm tra bởi'
-        result_on: 'Kết quả ngày'
-        rifampicin: 'Kháng sinh'
-        trace: 'Dấu vết'
-        tuberculosis: 'Vi khuẩn lao'
+        result_at: 'Ngày trả kết quả'
+        rifampicin: 'Kháng Rif'
+        trace: 'Mức độ'
+        tuberculosis: 'Phát hiện vi khuẩn lao'
+        sample_identifier_id: 'Mã số mẫu'
+        feedback_message_id: 'Thông báo phản hồi'

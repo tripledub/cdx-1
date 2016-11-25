@@ -2,8 +2,11 @@ vi:
   activerecord:
     attributes:
       culture_result:
-        sample_collected_on: 'Ngày lấy mẫu'
+        result_status: 'Trạng thái'
+        sample_collected_at: 'Ngày lấy mẫu'
         examined_by: 'Kiểm tra bởi'
-        result_on: 'Kết quả ngày'
-        media_used: 'Phương tiện truyền thông sử dụng'
+        result_at: 'Ngày xuất kết quả'
+        media_used: 'Phương tiện được sử dụng'
         serial_number: 'Số seri phòng thí nghiệm'
+        sample_identifier_id: 'Mã số mẫu'
+        feedback_message_id: 'Thông báo phản hồi'

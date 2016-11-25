@@ -5,16 +5,15 @@ describe Reports::DrugPercentage do
   let!(:institution)       { user.institutions.make }
   let(:patient)            { Patient.make institution: institution }
   let(:encounter)          { Encounter.make institution: institution , user: user, patient: patient }
-  let(:requested_test)     { RequestedTest.make encounter: encounter }
   let(:navigation_context) { NavigationContext.new(user, institution.uuid) }
   let!(:results)           {
-    XpertResult.make requested_test: requested_test, tuberculosis: 'detected', rifampicin: 'detected', created_at: 2.years.ago
-    XpertResult.make requested_test: requested_test, tuberculosis: 'not_detected', rifampicin: 'detected'
-    XpertResult.make requested_test: requested_test, tuberculosis: 'detected', rifampicin: 'not_detected'
-    XpertResult.make requested_test: requested_test, tuberculosis: 'detected', rifampicin: 'detected'
-    XpertResult.make requested_test: requested_test, tuberculosis: 'invalid', rifampicin: 'indeterminate', created_at: 3.years.ago
-    XpertResult.make requested_test: requested_test, tuberculosis: 'not_detected', rifampicin: 'detected', created_at: 14.months.ago
-    XpertResult.make requested_test: requested_test, tuberculosis: 'not_detected', rifampicin: 'indeterminate'
+    XpertResult.make encounter: encounter, tuberculosis: 'detected', rifampicin: 'detected', created_at: 2.years.ago
+    XpertResult.make encounter: encounter, tuberculosis: 'not_detected', rifampicin: 'detected'
+    XpertResult.make encounter: encounter, tuberculosis: 'detected', rifampicin: 'not_detected'
+    XpertResult.make encounter: encounter, tuberculosis: 'detected', rifampicin: 'detected'
+    XpertResult.make encounter: encounter, tuberculosis: 'invalid', rifampicin: 'indeterminate', created_at: 3.years.ago
+    XpertResult.make encounter: encounter, tuberculosis: 'not_detected', rifampicin: 'detected', created_at: 14.months.ago
+    XpertResult.make encounter: encounter, tuberculosis: 'not_detected', rifampicin: 'indeterminate'
   }
 
   xdescribe 'generate_chart' do

@@ -12,7 +12,7 @@ class Extras::Charts::HorizontalColumns
         interval: 1,
         gridThickness: 0,
         titleFontSize: 12,
-        titleFontFamily: "Arial",
+        titleFontFamily: "Verdana",
         titleFontColor: "#000",
         labelFontSize: 10,
         labelFontFamily: "Arial",
@@ -20,15 +20,15 @@ class Extras::Charts::HorizontalColumns
       },
       axisY: {
         titleFontSize: 12,
-        titleFontFamily: "Arial",
+        titleFontFamily: "Verdana",
         titleFontColor: "#000",
         labelFontSize: 10,
-        labelFontFamily: "Arial",
+        labelFontFamily: "Verdana",
         labelFontColor: "#000"
       },
       legend:{
         fontSize: 12,
-        fontFamily: "Arial",
+        fontFamily: "Verdana",
         fontColor: "#000"
       },
       axisY2: {

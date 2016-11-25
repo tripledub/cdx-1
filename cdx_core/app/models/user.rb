@@ -18,12 +18,14 @@ class User < ActiveRecord::Base
   has_many :granted_policies, class_name: "Policy", foreign_key: "granter_id"
   has_many :computed_policies
   has_and_belongs_to_many :roles
-  has_many :alerts
-  has_many :alert_histories
-  has_many :alert_recipients
-  has_many :recipient_notification_history
   has_many :comments
   has_many :audit_logs
+
+  has_many :notifications, through: :notification_users
+  has_many :notification_notices, through: :notifications
+  has_many :notification_users, class_name: 'Notification::User'
+
+  validates :locale, presence: true
 
   include Resource
 
@@ -41,6 +43,16 @@ class User < ActiveRecord::Base
       joins(:roles).where("roles.site_id IN (?)", ids)
     end.uniq
   }
+
+  class << self
+    def current=(user)
+      Thread.current[:current_user] = user
+    end
+
+    def current
+      Thread.current[:current_user]
+    end
+  end
 
   def timeout_in
     Settings.web_session_timeout.try{ |timeout| timeout.to_i.seconds }

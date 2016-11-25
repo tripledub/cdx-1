@@ -1,16 +1,49 @@
 vi:
   select:
     default: Vui lòng chọn
+    address:
+      regions:
+        northern: 'Miền Bắc'
+        southern: 'Miền Nam'
+        central: 'Miền Trung'
     patient:
       gender_options:
         male: 'Nam'
         female: 'Nữ'
         other: 'Khác'
+      nationality_option:
+        native: 'Việt Nam'
+        foreign: 'Ngoại quốc'
     encounter:
       testing_for_options:
         tb: 'Bệnh lao'
         hiv: 'H.I.V.'
         ebola: 'Ebola'
+      status_options:
+        new: 'Tạo mới'
+        pending: 'Đang chờ xử lý'
+        financed: 'Đã đóng tiền'
+        not_financed: 'Không được tài trợ'
+        samples_collected: 'Mẫu đã được thu thập'
+        samples_received: 'Mẫu đã được tiếp nhận'
+        in_progress: 'Đang xử lý'
+        closed: 'Kết thúc'
+    test_batch:
+      status_options:
+        new: 'Tạo mới'
+        samples_collected: 'Mẫu thử đã được thu thập'
+        samples_received: 'Mẫu thử đã được tiếp nhận'
+        in_progress: 'Đang xử lý'
+        closed: 'Kết thúc'
+    patient_result:
+      status_options:
+        new: 'Tạo mới'
+        sample_collected: 'Mẫu thử đã được thu gom'
+        allocated: "Mẫu đạt chuẩn"
+        in_progress: 'Đang xử lý'
+        pending_approval: 'Chờ phê duyệt'
+        rejected: 'Bị từ chối'
+        completed: 'Đã hoàn thành'
     microscopy:
       visual_appearance:
         blood: 'Nhuốm máu'
@@ -19,9 +52,9 @@ vi:
       test_result_options:
         negative: 'Âm tính'
         1to9: 'Kết quả 1-9/100 HPF'
-        1plus: 'Kết quả +'
-        2plus: 'Kết quả ++'
-        3plus: 'Kết quả +++'
+        1plus: 'Kết quả 1+'
+        2plus: 'Kết quả 2+'
+        3plus: 'Kết quả 3+'
     culture:
       media_options:
         liquid: 'Lỏng'
@@ -31,11 +64,13 @@ vi:
         contaminated: 'Nhiễm xạ'
     dst_lpa:
       dst_lpa_options:
+        not_selected: 'Vui lòng chọn'
         resistant: 'Đề kháng'
         susceptible: 'Nhạy cảm'
         contaminated: 'Nhiễm xạ'
         not_done: 'Không hoàn tất'
-        resistant_long: 'Đề kháng'
+        not_selected_long: 'Vui lòng chọn'
+        resistant_long: 'Kháng'
         susceptible_long: 'Nhạy cảm'
         contaminated_long: 'Nhiễm xạ'
         not_done_long: 'Không thực hiện'
@@ -48,16 +83,28 @@ vi:
       tuberculosis:
         detected: 'Tìm thấy'
         not_detected: 'Không tìm thấy'
-        invalid: 'Không hợp lệ / Không có kết quả / Lỗi'
+        indeterminate: 'Không hợp lệ / Không có kết quả / Lỗi'
+        no_result: 'Không kết quả'
+        error: 'Lỗi'
       rifampicin:
         detected: 'Tìm thấy'
         not_detected: 'Không tìm thấy'
         indeterminate:  'Không rõ kết quả'
       trace:
+        trace: 'Dấu vết'
         very_low: 'Rất ít'
         low: 'Ít'
         medium: 'Vừa'
         high: 'Cao'
+    test_results:
+      result_type:
+        positive: 'Positive'
+        negative: 'Negative'
+        indeterminate: 'Indeterminate'
+        n/a: 'Not applicable'
+      result_status:
+        success: 'Success'
+        error: 'Error'
     user:
       status_options:
         show_all: 'Hiện tất cả'
@@ -71,22 +118,45 @@ vi:
       history:
         new: 'Bệnh nhân mới'
         previous: 'Lần điều trị trước'
-        unknown: 'Không rõ lần trước'
+        unknown: 'Không rõ lần điều trị trước'
         relapsed: 'Điều trị tái phát Aft.'
-        loss: 'Mất theo dõi'
+        loss: 'Không tiếp tục điều trị'
         other: 'Các lần điều trị trước'
+        etbval: 'Kết quả điều trị'
+        failcati: 'Điều trị phác đồ I thất bại'
+        failcatii: 'Điều trị phác đồ II thất bại'
+        noncon: 'Không tiến triển sau 2-3 tháng điều trị phác đồ I hoặc II'
+        relepsecat: 'Tái phát Cat I hoặc/và Cat II'
+        retreatcat: 'Điều trị lại sau khi bỏ điều trị phác đồ I hoặc/và II'
+        tbmdr: 'Nhiễm lao hoặc nghi ngờ nhiễm lao khi có tiếp xúc với bệnh nhân Lao đa kháng'
       treatment_outcome:
-        cured: 'Chữa khỏi'
-        completed: 'Hoàn thành điều trị'
+        cured: 'Đã chữa khỏi'
+        completed: 'Hoàn tất điều trị'
         failed: 'Điều trị thất bại'
         died: 'Chết'
-        lost_to_follow_up: 'Mất theo dõi'
+        lost_to_follow_up: 'Bỏ điều trị'
         not_evaluated: 'Không đánh giá'
         success: 'Điều trị thành công'
+        in_error: 'Lần khám đã được báo lỗi'
+        other: 'Khác'
       drug_resistance:
-        mono: 'Đơn kháng thuốc'
-        poly: 'Kháng nhiều hơn 1 loại thuốc'
-        multi: 'Đa kháng thuốc'
+        mono: 'Kháng đơn thuốc không phải Rif'
+        poly: 'Kháng nhiều thuốc không phải Rif'
+        multi: 'Kháng đa thuốc'
         extensive: 'Siêu kháng thuốc'
-        rif: 'Kháng thuốc'
-        unknown: 'Không rõ'
+        rif: 'Kháng Rif'
+        prexdr: 'Tiền siêu kháng thuốc'
+        unknown: 'Không xác định'
+    notification:
+      anomaly_type:
+        missing_sample_id: Thiếu mã mẫu
+        invalid_test_date: Ngày xét nghiệm không hợp lệ
+      frequency:
+        instant: Nhanh
+        aggregate: Tổng hợp
+        targeted: Chỉ tiêu
+      frequency_value:
+        hourly: Hàng giờ
+        daily: Hàng ngày
+        weekly: Hàng tuần
+        monthly: Hàng tháng

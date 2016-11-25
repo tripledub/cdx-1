@@ -1,5 +1,6 @@
 vi:
   xpert_results:
+    localised_name: 'Kỹ thuật xét nghiệm Xpert'
     new:
       header: 'Thêm kết quả xét nghiệm Xpert MTB/RIF cho: %{patient_name}'
       details_header: 'Thông tin chi tiết'
@@ -13,3 +14,5 @@ vi:
     update:
       audit: 'Kết quả Xpert MTB/RIF đã được cập nhật'
       notice: 'Kết quả Xpert MTB/RIF đã được cập nhật thành công.'
+    form:
+      rifampicin_detected: "Không thể chọn phát hiện Rifampicin trừ khi lao được phát hiện"

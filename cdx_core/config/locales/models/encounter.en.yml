@@ -1,0 +1,26 @@
+en:
+  activerecord:
+    model:
+      encounter: 'Test order'
+    attributes:
+      encounter:
+        id: 'Test order ID'
+        batch_id: 'Test order ID'
+        site_id: 'Site'
+        performing_site_id: 'Performing site'
+        sample_id: 'Sample'
+        testing_for: 'Testing for'
+        user_id: 'User'
+        start_time: 'Start time'
+        testdue_date: 'Test due date'
+        status: 'Status'
+  encounters:
+    status:
+      new: 'New'
+      pending: 'Pending'
+      in_progress: 'In progress'
+      completed: 'Completed'
+      approved: 'Approved'
+      site_id: 'Requested by'
+      performing_site_id: 'Request to'
+      user_id: 'Order by user'

@@ -11,10 +11,10 @@
       = setting_card title: I18n.t('alert_groups.index.alert_group', count: @total), href: alert_groups_path, icon: 'fa-exclamation-triangle', colour: 'orange' do |c|
         - c.body do
           = I18n.t('alerts.index.your_team')
-
-      = setting_card title: I18n.t('alerts.index.messages_sent'), href: alert_messages_path, icon: 'fa-ra', colour: 'silver' do |c|
-        - c.body do
-          = I18n.t('alerts.index.your_team')
+      -#
+        = setting_card title: I18n.t('alerts.index.messages_sent'), href: alert_messages_path, icon: 'fa-ra', colour: 'silver' do |c|
+          - c.body do
+            = I18n.t('alerts.index.your_team')
 
       = setting_card title: I18n.t('alerts.index.incidents'), href: incidents_path, icon: 'fa-connectdevelop', colour: 'orange' do |c|
         - c.body do

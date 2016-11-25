@@ -1,5 +1,6 @@
+# Roles controller
 class RolesController < ApplicationController
-  before_filter :load_institutions_and_sites, only: [:new, :create, :edit, :update]
+  before_filter :load_institutions_and_sites, only: [:new, :create, :edit, :update, :destroy]
 
   def index
     @roles       = check_access(Role, READ_ROLE).within(@navigation_context.entity, @navigation_context.exclude_subsites).includes(:institution, :site)
@@ -8,7 +9,7 @@ class RolesController < ApplicationController
     @roles = @roles.where("name LIKE ?", "%#{params[:name]}%") if params[:name].present?
     @total = @roles.count
 
-    order_by, offset = perform_pagination('roles.name')
+    order_by, offset = perform_pagination(table: 'roles_index', field_name: 'roles.name')
     order_by = 'sites.name, institutions.name' if (@order_by == 'sites.name' )
     order_by = 'sites.name desc, institutions.name desc' if (@order_by == '-sites.name' )
     @roles   = @roles.order(order_by).limit(@page_size).offset(offset)
@@ -100,7 +101,7 @@ class RolesController < ApplicationController
     @role = Role.find params[:id]
     return unless authorize_resource(@role, DELETE_ROLE)
 
-    @role.destroy
+    @role.destroy unless @role.name == "Institution #{@institution.name} Reader"
     redirect_to roles_path, notice: I18n.t('roles.destroy.success')
   end
 

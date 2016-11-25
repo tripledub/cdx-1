@@ -7,7 +7,8 @@ class Role < ActiveRecord::Base
     after_add: :update_user_computed_policies,
     after_remove: :update_user_computed_policies
 
-  has_many :alert_recipients
+  has_many :notification_roles, class_name: 'Notification::Role'
+  has_many :notifications, through: :notification_roles
 
   attr_accessor :definition
 

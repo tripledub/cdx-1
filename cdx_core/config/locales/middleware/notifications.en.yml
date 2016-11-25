@@ -1,0 +1,10 @@
+en:
+  middleware:
+    notifications:
+      gateway:
+        sms:
+          subject: CDP Alert
+          aggregated_body: You have received %{count} alerts from CDP since your last digest on %{date}.
+        email:
+          subject: CDP Alert
+          aggregated_body: You have received %{count} alerts from CDP since your last digest on %{date}.

@@ -571,16 +571,6 @@ describe Policy do
     end
   end
 
-  context "Device Model" do
-    context "Update" do
-      it "should not allow to update by admin if has no institution" do
-        device_model = DeviceModel.make
-        user.institutions.make
-        assert_cannot user, device_model, UPDATE_DEVICE_MODEL
-      end
-    end
-  end
-
   context "Page Header" do
     let!(:site)  { Site.make institution: institution }
     it "should not allow page header with no roles" do

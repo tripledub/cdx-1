@@ -28,6 +28,14 @@
           %label
             = Patient.human_attribute_name(:email)
           = patient.email
+        %li
+          %label
+            = Patient.human_attribute_name(:entity_id)
+          = patient.display_patient_id
+        %li
+          %label
+            = Patient.human_attribute_name(:external_id)
+          = patient.external_id
       %ul
         %li
           %label
@@ -35,21 +43,16 @@
           = patient.nickname
         %li
           %label
-            = Patient.human_attribute_name(:entity_id)
-          = patient.entity_id
+            = Patient.human_attribute_name(:external_patient_system)
+          = patient.external_patient_system
+
         - patient_address_label = "patients.show.address"
         - patient.addresses.each do |address|
           %li
             %label
               = I18n.t(patient_address_label)
             - if patient_address_label == "patients.show.address" then patient_address_label = "patients.show.alt_address" end
-            = Presenters::Patients.show_full_address(address)
-        %li
-          %label
-            = Patient.human_attribute_name(:created_at)
-          = I18n.l(patient.created_at, format: :long)
-
-      %ul
+            = Patients::Presenter.show_full_address(address)
         %li
           %label
             = Patient.human_attribute_name(:social_security_code)
@@ -59,8 +62,12 @@
           %label
             = Patient.human_attribute_name(:medical_insurance_num)
           = patient.medical_insurance_num
+        %li
+          %label
+            = Patient.human_attribute_name(:created_at)
+          = Extras::Dates::Format.datetime_with_time_zone(patient.created_at, :full_time)
 
-        - if has_access?(@patient, Policy::Actions::UPDATE_PATIENT)
-          %ul.button-container
-            %li
-              = link_to(I18n.t('patients.show.edit_patient'), edit_patient_path(patient), class: 'button edit')
+      - if has_access?(@patient, Policy::Actions::UPDATE_PATIENT)
+        %ul.button-container
+          %li
+            = link_to(I18n.t('patients.show.edit_patient'), edit_patient_path(patient), class: 'button edit')

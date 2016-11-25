@@ -2,8 +2,12 @@ en:
   activerecord:
     attributes:
       culture_result:
-        sample_collected_on: 'Date sample collected'
+        id: 'Test ID'
+        result_status: 'Status'
+        sample_collected_at: 'Date sample collected'
         examined_by: 'Examined by'
-        result_on: 'Date of result'
+        result_at: 'Date of result'
         media_used: 'Media used'
         serial_number: 'Laboratory serial number(s)'
+        sample_identifier_id: 'Sample ID'
+        feedback_message_id: 'Feedback message'

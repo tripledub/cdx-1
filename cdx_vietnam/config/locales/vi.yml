@@ -25,11 +25,11 @@ vi:
       messages:
         record_invalid: "Xác thực thất bại: %{errors}"
         restrict_dependent_destroy:
-          has_one: "Không thể xóa bản ghi vì tồn tại lệ thuộc %{record}"
-          has_many: "Không thể xóa bản ghi vì tồn tại lệ thuộc %{record}"
+          has_one: "Không thể xóa bản ghi vì tồn tại mối quan hệ với %{record}"
+          has_many: "Không thể xóa bản ghi vì tồn tại mối quan hệ với %{record}"
     attributes:
       manifest:
-        definition: 'Biểu lộ'
+        definition: 'Hiển thị'
   date:
     input_format:
       pattern: "%d/%m/%Y"
@@ -69,6 +69,10 @@ vi:
       long: "%B %d, %Y"
       short: "%b %d"
       full_date: "%d/%m/%Y"
+      etb_short: "%m/%d/%Y"
+      etb_long: "%Y-%m-%dT00:00:00.000Z"
+      vtm_long: "%Y-%m-%dT10:10:10.000Z"
+      vtm_long2: "%d/%m/%Y %H:%M:%S"
     month_names:
     -
     - Tháng 1
@@ -173,9 +177,9 @@ vi:
       prompt: Vui lòng chọn
     submit:
       episode:
-        create: Tạo Tập
-        submit: Lưu Tập
-        update: Chỉnh Tập
+        create: Tạo lần khám
+        submit: Lưu lần khám
+        update: Chỉnh lần khám
       create: Tạo %{model}
       submit: Lưu %{model}
       update: Chỉnh sửa %{model}

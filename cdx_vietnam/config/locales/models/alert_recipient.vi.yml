@@ -3,4 +3,4 @@ vi:
     alert_recipient:
       firstname_msg: 'Tên quá ngắn'
       lastname_msg: 'Họ quá ngắn'
-      email_phone_msg: 'Email và số điền thoại không được để trống cả hai'
+      email_phone_msg: 'Email và số điện thoại không được để trống cả hai'

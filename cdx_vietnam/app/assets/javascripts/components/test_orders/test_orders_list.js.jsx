@@ -56,7 +56,7 @@ var TestOrdersIndexTable = React.createClass({
 
   render: function() {
     var sortableHeader = function (title, field) {
-      return <SortableColumnHeader title={title} field={field} orderBy={this.props.orderBy} />
+      return <SortableColumnHeader title={ title } field={ field } orderBy={ this.props.orderBy } />
     }.bind(this);
 
     return (
@@ -68,7 +68,7 @@ var TestOrdersIndexTable = React.createClass({
           </h3>
           <span className="table-actions">
             <a title={this.props.csvTitle} onClick={this.requestCsvFile} href="#">
-              <span className="icon-download icon-gray"></span>
+              <span className="fa fa-download"></span>
             </a>
           </span>
         </header>
@@ -84,7 +84,7 @@ var TestOrdersIndexTable = React.createClass({
                 {sortableHeader(I18n.t("components.test_orders.col_testing_for"),   "patients.name")}
                 {sortableHeader(I18n.t("components.test_orders.col_order_by"), "users.first_name")}
                 {sortableHeader(I18n.t("components.test_orders.col_request_date"),  "encounters.start_time")}
-                {sortableHeader(I18n.t("components.encounter_show.batch_id_label"),      "encounters.id")}
+                {sortableHeader(I18n.t("components.patients.show.col_order_id"),      "encounters.id")}
               </tr>
             </thead>
             <tbody>

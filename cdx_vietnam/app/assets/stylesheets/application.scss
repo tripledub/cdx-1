@@ -1,0 +1,48 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require leaflet
+ *= require select2
+ */
+
+//= depend_on_asset "layers.png"
+//= depend_on_asset "layers-2x.png"
+
+@import "variables";
+@import "mixins";
+@import "leaflet";
+@import "leaflet-control-geocoder";
+@import "react-select";
+@import "reset";
+@import "layout";
+@import "grid";
+@import "forms";
+@import "sprites";
+@import "buttons";
+@import "global";
+@import "tables";
+@import "card";
+@import "barby";
+@import "errors";
+@import "components";
+@import "tabs";
+@import "testflow";
+@import "charts";
+@import "custom";
+@import "newdash";
+@import "newlayout";
+@import "layouts/notification";
+@import "jquery.comiseo.daterangepicker";
+@import "jquery-ui.theme.min";
+@import "jquery-ui.structure.min";
+@import "jquery-ui.min";
+@import "jquery-resizable-table-columns";
+@import "jquery-ui-timepicker-addon";
+@import "special";

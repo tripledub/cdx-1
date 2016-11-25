@@ -1,0 +1,23 @@
+header,
+footer,
+print-content,
+.wrapper #context_side_bar {
+  display: none;
+}
+
+@page {
+  margin: 0.5cm;
+}
+
+@page :left {
+  margin: 0.5cm;
+}
+
+@page :right {
+  margin: 0.8cm;
+}
+
+body {
+  font: 12pt Georgia, "Times New Roman", Times, serif;
+  line-height: 1.3;
+}

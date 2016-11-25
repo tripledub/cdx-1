@@ -1,0 +1,113 @@
+vi:
+  notifications:
+    index:
+      notification: Những cảnh báo
+      your_team: Giữ nhóm của bạn thông báo về các sự kiện quan trọng.
+      messages_sent: Tin nhắn cảnh báo đã gửi
+      incidents: Những sự cố
+      empty: Không có cảnh báo nào
+      empty_message: Tạo những nhóm cảnh báo để giữ nhóm của bạn thông báo trên những sự kiện hiện tại
+    new:
+      new_notification: cảnh báo mới
+      title: cảnh báo mới
+    edit:
+      update_notification: Cập nhật cảnh báo
+      title: Cập nhật cảnh báo
+    flash:
+      create_success: cảnh báo được tạo thành công
+      create_failure: cảnh báo không được tạo
+      update_success: Cập nhật cảnh báo thành công
+      update_failure: cảnh báo không được cập nhật
+      destroy_success: cảnh báo được xóa
+    filters:
+      title: Những cảnh báo
+      btn_add_notification: Thêm cảnh báo
+      alert_group: Nhóm những cảnh báo
+    tabs:
+      test_results: Kết quả xét nghiệm
+      device_errors: Những lỗi thiết bị
+      anomalies: Những dị thường
+      utilisation_efficiency: Việc sử dụng hiệu quả
+    form:
+      legends:
+        ad-hoc_recipients: Những người tiếp nhận đặc biệt
+        conditions: Điều kiện kích hoạt thông báo?
+      placeholder:
+        name: Tên
+        description: Mô tả
+        patient_identifier: Mã bệnh nhân
+        test_identifier: Mã yêu cầu
+        sample_identifier: Mã mẫu thử
+        detection: Không theo dõi
+        detection_condition: Không theo dõi
+        detection_quantitative_result: Không theo dõi
+        device_error_code: Mã lỗi ( Phạm vi )
+        frequency: Tần số kết hợp
+        frequency_value: Tần số kết hợp
+        email: Email?
+        email_message: Tin nhắn Email
+        sms: SMS?
+        sms_message: Tin nhắn SMS
+        site_ids: Tất cả
+        device_ids: Tất cả
+        user_ids: Không
+        role_ids: Không
+        notification_statuses_names: bất kỳ
+        anomaly_type: Không kiểm tra
+        utilisation_efficiency_sample_identifier: Mã mẫu thử
+        utilisation_efficiency_threshold: Ngưỡng EU
+      tooltip:
+        institution_id: Mã tổ chức
+        test_order_id: Yêu cầu xét nghiệm
+        name: Tên mô tả cho cảnh báo này
+        description: Mô tả ngắn về mục đích của cảnh báo này
+        enabled: cảnh báo này được bật?
+        patient_identifier: Mã bệnh nhân
+        test_identifier: Mã yêu cầu xét nghiệm
+        sample_identifier: Mã mẫu thử sản sinh cảnh báo này
+        detection: Nhận diện
+        detection_condition: Điều kiện nhận diện
+        detection_quantitative_result: Kết quả định lượng
+        device_error_code: Phạm vi những mã code
+        frequency: Tần số kết hợp
+        email: Phân bổ qua Email?
+        email_message: Tin nhắn Email
+        email_limit: Số lượng tối đa của các tin nhắn email mỗi ngày mà cảnh báo này có thể gửi
+        sms: Phân bổ qua  SMS?
+        sms_message: Tin nhắn SMS
+        sms_limit: Số lượng tối đa của các tin nhắn email mỗi ngày mà cảnh báo này có thể gửi
+        site_ids: Những Site sử dung cảnh báo này
+        device_ids: Những thiết bị cung cấp cảnh báo này
+        user_ids:  Tooltip nhận nội bộ
+        role_ids: Những vai trò cảnh báo này cung cấp đến
+        notification_statuses_names: Những trạng thái xét nghiệm nào để kích hoạt?
+        anomaly_type: Loại bất thường nào bạn muốn để cảnh báo?
+        utilisation_efficiency_sample_identifier: Mã mẫu thử sản sinh cảnh báo này
+        utilisation_efficiency_threshold: Bao nhiêu kiểm tra được cho phép?
+        frequency_value: 'Frequency value tooltip'
+
+  notification_conditions:
+    form:
+      new_condition: Điều kiện mới
+      placeholder:
+        condition_type: Thông báo trên
+        field: Với
+        value: Giá trị
+      tooltip:
+        condition_type: Hiển thị thông báo trên cái nào?
+        field: Trường dữ liệu nào để xét điều kiện?
+        value: Giá trị mong muốn cho điều kiện là gì?
+
+  notification_recipients:
+    form:
+      new_recipient: Người tiếp nhận mới
+      placeholder:
+        first_name: Họ
+        last_name: Tên
+        email: Địa chỉ thư điện tử
+        telephone: Số điện thoại
+      tooltip:
+        first_name: Họ người tiếp nhận
+        last_name: Tên người tiếp nhận
+        email: Địa chỉ thư điện tử người tiếp nhận
+        telephone: Số điện thoại người tiếp nhận

@@ -1,13 +1,43 @@
 require 'spec_helper'
 
 describe Encounter do
-  it { is_expected.to validate_presence_of :institution }
-  let(:patient)   { Patient.make }
-  let(:encounter) { Encounter.make institution: patient.institution, patient: patient }
+  let(:status_options) { %w(new financed not_financed samples_received samples_collected pending in_progress closed) }
+  let(:patient)    { Patient.make }
+  let(:encounter)  { Encounter.make institution: patient.institution, patient: patient }
+
+  describe 'validations' do
+    it { belong_to :feedback_message }
+    it { have_many :patient_results }
+    it { have_many :audit_logs }
+    it { is_expected.to validate_presence_of :institution }
+    it { should validate_inclusion_of(:status).in_array(status_options) }
+  end
+
+  describe 'financed?' do
+    it 'should return true if test orders has been financed' do
+      encounter.update_attribute(:status, 'financed')
+      expect(encounter.financed?).to be true
+    end
+
+    it 'should return true if test orders has been financed' do
+      expect(encounter.financed?).to be false
+    end
+  end
 
   it "#human_diagnose" do
     encounter.core_fields[Encounter::ASSAYS_FIELD] = [{"condition" => "flu_a", "name" => "flu_a", "result" => "positive", "quantitative_result" => nil}]
     expect(encounter.human_diagnose).to eq("FLU_A detected.")
+  end
+
+  describe 'not_financed?' do
+    it 'should return true if test order has not_financed status' do
+      encounter.status = 'not_financed'
+      expect(encounter.not_financed?).to be true
+    end
+
+    it 'should return false it test order does not have not_financed status' do
+      expect(encounter.not_financed?).to be false
+    end
   end
 
   describe "merge assays" do
@@ -144,8 +174,8 @@ describe Encounter do
 
   context "field validations" do
 
-    it "should default status to pending" do
-      expect(encounter.status).to eq('pending')
+    it "should default status to new" do
+      expect(encounter.status).to eq('new')
     end
 
     it "should allow observations pii field" do
@@ -286,19 +316,6 @@ describe Encounter do
       it "if there is no existing encounter for a sample id then do not create one automatically" do
         expect(TestResult.last.encounter_id).to eq(nil)
       end
-    end
-  end
-
-  context "add request test" do
-    let(:requested_test1) { RequestedTest.make encounter: encounter}
-    let(:requested_test2) { RequestedTest.make encounter: encounter}
-
-    it "should save requested tests" do
-      requested_test1.encounter = encounter
-      requested_test2.encounter = encounter
-      requested_test1.save!
-      requested_test2.save!
-      expect(encounter.requested_tests.count).to eq(2)
     end
   end
 

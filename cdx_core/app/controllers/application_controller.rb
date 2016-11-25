@@ -1,3 +1,4 @@
+# Application controller. Where it all starts.
 class ApplicationController < ActionController::Base
   include ApplicationHelper
   include Concerns::Context
@@ -11,19 +12,23 @@ class ApplicationController < ActionController::Base
   before_action :check_no_institution!
   before_action :ensure_context
   before_action :set_locale
+  before_action :set_current_user
 
   def set_locale
     I18n.locale = current_user.try(:locale) || I18n.default_locale
     I18n.locale = params[:language] if params[:language].present?
-    @localization_helper = LocalizationHelper.new(current_user.try(:time_zone), I18n.locale,
-      current_user.try(:timestamps_in_device_time_zone))
+    @localization_helper = LocalizationHelper.new(
+      current_user.try(:time_zone),
+      I18n.locale,
+      current_user.try(:timestamps_in_device_time_zone)
+    )
   end
 
   decent_configuration do
     strategy DecentExposure::StrongParametersStrategy
   end
 
-  def render_json(object, params={})
+  def render_json(object, params = {})
     render params.merge(text: object.to_json_oj, content_type: 'text/json')
   end
 
@@ -64,25 +69,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # filters/authorize navigation_context institutions by action. Assign calls resource.institution= if action is allowed
-  def prepare_for_institution_and_authorize(resource, action)
-    if authorize_resource(@navigation_context.institution, action).blank?
-      log_authorization_warn resource, action
-      head :forbidden
-      nil
-    else
-      resource.institution = @navigation_context.institution
-    end
-  end
-
-  def default_url_options(options={})
-    if params[:context].present?
-      return {:context => params[:context]}
-    end
+  def default_url_options(_options = {})
+    return { context: params[:context] } if params[:context].present?
 
     {}
   end
-
 
   def after_sign_in_path_for(resource_or_scope)
 
@@ -114,12 +105,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def after_sign_out_path_for(resource_or_scope)
+  def after_sign_out_path_for(_resource_or_scope)
     new_user_session_path
   end
 
   def nndd
-    render text: "NNDD"
+    render text: 'NNDD'
   end if Rails.env.test?
 
   protected
@@ -133,7 +124,7 @@ class ApplicationController < ActionController::Base
     @page_size = 50 if @page_size > 100
     @page      = (params['page'] || 1).to_i
     @page      = 1 if @page < 1
-    @order_by  = params['order_by'] || default_order
+    @order_by  = default_order(params['order_by'], default_order)
     order_by   =  @order_by[0] == '-' ? @order_by[1..90] + ' desc' : @order_by
     offset     = (@page - 1) * @page_size
     [order_by, offset]
@@ -149,4 +140,8 @@ class ApplicationController < ActionController::Base
     logger.warn "#{I18n.t('application_controller.authorization_failed')} #{action} #{I18n.t('application_controller.requested_by')} #{current_user.email} #{I18n.t('application_controller.in')} #{resource_name}"
   end
 
+  # Save current user to be able to use it in audit logs callbacks.
+  def set_current_user
+    User.current = current_user
+  end
 end

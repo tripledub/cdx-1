@@ -8,6 +8,7 @@ en:
       episode_details: 'Episode Details'
       episode_type_not_available: 'This Episode Type is not currently available'
       hiv_status: 'Current HIV Status'
+      episode_previous_history_required: 'The Episodes Previous History option is required'
     create:
       new_episode: 'New episode created'
       episode_created: 'Episode successfully created.'
@@ -21,7 +22,7 @@ en:
       episode_type_not_available: 'This Episode Type is not currently available'
     edit:
       back: 'Back'
-      header: 'New episode'
+      header: 'Edit episode'
     new:
       back: 'Back'
-      header: 'Edit episode'
+      header: 'New episode'

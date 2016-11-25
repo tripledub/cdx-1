@@ -1,10 +1,10 @@
-= form_for([@requested_test, @culture_result], url: requested_test_culture_result_path(@requested_test, @culture_result), html: { autocomplete: 'off' }) do |f|
+= form_for([@encounter, @culture_result], url: encounter_culture_result_path(@encounter, @culture_result), html: { autocomplete: 'off' }) do |f|
   = validation_errors @culture_result
   .row
     .col.pe-2
-      = f.label :sample_collected_on, I18n.t('culture_results.form.sample_collected_on')
+      = f.label :sample_collected_at, I18n.t('culture_results.form.sample_collected_at')
     .col
-      = f.date_field :sample_collected_on
+      = f.date_field :sample_collected_at
   .row
     .col.pe-2
       = f.label :media_used, I18n.t('culture_results.form.media_used')
@@ -12,9 +12,9 @@
       = f.collection_select :media_used, CultureResult.media_options, :first, :last
   .row
     .col.pe-2
-      = f.label :serial_number, I18n.t('culture_results.form.serial_number')
+      = f.label :sample_identifier_id
     .col
-      = f.text_field :serial_number
+      = f.select :sample_identifier_id, SampleIdentifiers::Finder.available_samples(@encounter)
   .row
     .col.pe-2
       = f.label :test_result, I18n.t('culture_results.form.test_result')
@@ -35,7 +35,7 @@
       %label{for: 'culture_result_test_result_3plus'}
         = I18n.t('select.microscopy.test_result_options.3plus')
       = f.radio_button :test_result, 'ntp'
-      %label{for: 'culture_result_test_result_ntp'}
+      %label{for: 'culture_result_test_result_ntm'}
         = I18n.t('select.culture.test_result_options.ntm')
       = f.radio_button :test_result, 'contaminated'
       %label{for: 'culture_result_test_result_contaminated'}
@@ -45,14 +45,18 @@
       = f.label :examined_by, I18n.t('culture_results.form.examined_by')
     .col
       = f.text_field :examined_by
-
   .row
     .col.pe-2
-      = f.label :result_on, I18n.t('culture_results.form.result_on')
+      = f.label :result_at, I18n.t('culture_results.form.result_at')
     .col
-      = f.date_field :result_on
+      = f.date_field :result_at
+  .row
+    .col.pe-2
+      = f.label :comment
+    .col
+      = f.text_area :comment, rows: 4, cols: 70
 
   .row.button-actions
     .col
       = f.submit I18n.t('views.save'), class: 'btn-primary'
-      = link_to I18n.t('views.cancel'), encounter_path(@requested_test.encounter), class: 'btn-link'
+      = link_to I18n.t('views.cancel'), encounter_path(@encounter), class: 'btn-link'

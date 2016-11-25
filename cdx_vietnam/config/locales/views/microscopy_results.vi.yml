@@ -1,16 +1,17 @@
 vi:
   microscopy_results:
+    localised_name: 'Soi kính trực tiếp'
     new:
-      header: 'Thêm kết quả xét nghiệm kính hiển vi cho: %{patient_name}'
+      header: 'Thêm kết quả xét nghiệm soi kính cho: %{patient_name}'
       back: 'Quay lại'
-      title: 'Kết Quả Xét Nghiệm Kính Hiển Vi'
+      title: 'Kết Quả Xét Nghiệm Soi Kính'
     create:
-      audit: 'Kết quả xét nghiệm kính hiển vi đã được thêm.'
-      notice: 'Kết quả xét nghiệm kính hiển vi đã được tạo thành công.'
+      audit: 'Kết quả xét nghiệm soi kính đã được thêm.'
+      notice: 'Kết quả xét nghiệm soi kính đã được tạo thành công.'
     edit:
-      header: 'Chỉnh sửa kết quả xét nghiệm kính hiển vi cho: %{patient_name}'
+      header: 'Chỉnh sửa kết quả xét nghiệm soi kính cho: %{patient_name}'
     show:
-      header: 'Kết quả xét nghiệm kính hiển vi cho: %{patient_name}'
+      header: 'Kết quả xét nghiệm soi kính cho: %{patient_name}'
     update:
-      audit: 'Kết quả xét nghiệm kính hiển vi đã được cập nhật.'
-      notice: 'Kết quả xét nghiệm kính hiển vi đã được cập nhật thành công.'
+      audit: 'Kết quả xét nghiệm soi kính đã được cập nhật.'
+      notice: 'Kết quả xét nghiệm soi kính đã được cập nhật thành công.'

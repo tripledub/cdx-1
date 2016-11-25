@@ -1,0 +1,24 @@
+en:
+  all_tests:
+    number_tests: "Number of tests"
+    number_errors: "Number of errors"
+    tests: "Tests"
+    errors: "Errors"
+  failed:
+    success: "Success"
+    fail: "Fail"
+  drtb_per:
+    drtb_not_detected: "DR-TB not detected"
+    drtb_detected: "DR-TB detected"
+  drug_per:
+    inh_detected: "INH detected"
+    rif_detected: "RIF detected"
+    rif_inh_detected: "RIF & INH detected"
+  ave_tec_tests:
+    peak: "Peak"
+    peak_tests: "Peak Tests"
+    average: "Average"
+    average_tests: "Average Tests"
+  device_not_report:
+    day: "Days"
+    device: "Device"

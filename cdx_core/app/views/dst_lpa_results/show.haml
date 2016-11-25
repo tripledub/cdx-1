@@ -3,7 +3,7 @@
     .row.labelHeader
       .col-6
         %h3
-          = I18n.t('dst_lpa_results.show.header', patient_name: patient_display_name(@requested_test.encounter.patient.name))
+          = I18n.t('dst_lpa_results.show.header', patient_name: patient_display_name(@encounter.patient.name))
       .col-6
         %ul
           %li
@@ -16,8 +16,25 @@
             .row
               .col-12
                 %label
-                  = DstLpaResult.human_attribute_name(:sample_collected_on)
-                = I18n.l(@dst_lpa_result.sample_collected_on, format: :full_date)
+                  = DstLpaResult.human_attribute_name(:result_status)
+                = I18n.t("select.patient_result.status_options.#{@dst_lpa_result.result_status}")
+            - if @dst_lpa_result.any_feedback?
+              .row
+                .col-6
+                  %label
+                    = DstLpaResult.human_attribute_name(:feedback_message_id)
+                .col-6
+                  = FeedbackMessages::Finder.find_text_from_patient_result(@dst_lpa_result)
+            .row
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:sample_collected_at)
+                = Extras::Dates::Format.datetime_with_time_zone(@dst_lpa_result.sample_collected_at, :full_time)
+            .row
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:result_at)
+                = Extras::Dates::Format.datetime_with_time_zone(@dst_lpa_result.result_at, :full_time)
             .row
               .col-12
                 %label
@@ -31,19 +48,13 @@
             .row
               .col-12
                 %label
-                  = DstLpaResult.human_attribute_name(:serial_number)
-                = @dst_lpa_result.serial_number
+                  = DstLpaResult.human_attribute_name(:sample_identifier_id)
+                = SampleIdentifiers::Finder.result_sample_id_with_deleted(@dst_lpa_result)
             .row
               .col-12
                 %label
                   = DstLpaResult.human_attribute_name(:examined_by)
                 = @dst_lpa_result.examined_by
-            .row
-              .col-12
-                %label
-                  = DstLpaResult.human_attribute_name(:result_on)
-                = I18n.l(@dst_lpa_result.result_on, format: :full_date)
-
           .col-4
             .row
               .col-12
@@ -81,6 +92,10 @@
                 %label
                   = DstLpaResult.human_attribute_name(:results_fq)
                 = Extras::Select.find(DstLpaResult.dst_lpa_options, @dst_lpa_result.results_fq)
+              .col-12
+                %label
+                  = DstLpaResult.human_attribute_name(:comment)
+                = I18n.t("select.patient_result.status_options.#{@dst_lpa_result.comment}")
 
 
           .col-4
@@ -101,3 +116,5 @@
                 %label
                   = DstLpaResult.human_attribute_name(:results_other4)
                 = @dst_lpa_result.results_other4
+
+= render partial: 'shared/approve_test_result', locals: { result: @dst_lpa_result, encounter: @encounter }

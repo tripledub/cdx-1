@@ -2,7 +2,7 @@ en:
   activerecord:
     attributes:
       patient:
-        birth_date_on: 'Date of birth / Age'
+        birth_date_on: 'Date of birth'
         entity_id: 'Patient id'
         name: 'Name'
         gender: 'Gender'
@@ -12,8 +12,11 @@ en:
         created_at: 'Created at'
         nickname: 'Nickname'
         social_security_code: 'Social security ID'
+        medical_insurance_num: 'Medical Insurance Number'
+        external_id: 'External Patient ID'
+        external_patient_system: 'External Patient System'
   patient:
     model_form:
       wrong_date: 'should be a date in %{birth_date_on_placeholder}'
       wrong_gender: 'is not within valid options (should be one of %{gender_values})'
-      cant_change: "không thể thay đổi sau khi đã được phân công"
+      cant_change: "can't be changed after assigned"

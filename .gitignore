@@ -17,6 +17,7 @@
 /tmp
 */tmp
 */spec/dummy/tmp
+*/spec/dummy/public
 
 backend/_build
 backend/deps
@@ -30,9 +31,12 @@ cdxapi/ebin
 cdxapi/log
 VERSION
 
+coverage
+
 /etc/shapes/*
 /public/polygons/*
 /public/nndd
+/public/barcode_sample_id.png
 
 bin/rspec
 bin/rake
@@ -40,6 +44,7 @@ config/settings.local.yml
 config/settings/*.local.yml
 */config/settings.local.yml
 */config/settings/*.local.yml
+*/spec/dummy/config/*.local.yml
 public/system
 examples.txt
 Procfile.local
@@ -52,3 +57,6 @@ Cheffile.lock
 .byebug_history
 public/javascripts/translations.js
 public/javascripts/i18n.js
+
+# Redis dump files
+*.rdb

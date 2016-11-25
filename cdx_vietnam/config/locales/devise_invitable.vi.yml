@@ -1,7 +1,7 @@
 vi:
   devise:
     failure:
-      invited: "Bạn có một lời mời chờ xử lý, chấp nhận nó để kết thúc việc tạo tài khoản của bạn."
+      invited: "Bạn có một lời mời đang chờ xử lý, chấp nhận nó để kết thúc việc tạo tài khoản của bạn."
     invitations:
       send_instructions: "Một lời mời đã được gửi tới %{email}."
       invitation_token_invalid: "Mã lời mời đã cung cấp không hợp lệ!"

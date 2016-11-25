@@ -32,39 +32,6 @@ User.blueprint do
   confirmed_at { Time.now - 1.day }
 end
 
-Alert.blueprint do
-  name { Faker::Name.first_name }
-  description { Faker::Name.last_name }
-  message { 'test message' }
-  category_type {"anomalies"}
-  sms_limit {10000}
-  institution { object.site.try(:institution) || Institution.make }
-  site { Site.make(institution: (object.institution || Institution.make)) }
-  user { institution.user }
-end
-
-AlertRecipient.blueprint do
-  user
-  alert
-  recipient_type {AlertRecipient.recipient_types["external_user"]}
-  email {"aaa@aaa.com"}
-  telephone {123}
-  first_name {"bob"}
-  last_name {'smith'}
-end
-
-AlertHistory.blueprint do
-  user
-  alert
-  test_result
-end
-
-RecipientNotificationHistory.blueprint do
-  user
-  alert
-  message_sent Faker::Lorem.sentence
-end
-
 Comment.blueprint do
   patient       { Patient.make }
   commented_on  { Faker::Date.between(60.days.ago, Date.today) }
@@ -162,13 +129,6 @@ Episode.blueprint do
   outcome :cured
 end
 
-RequestedTest.blueprint do
-  encounter
-  name { "CD4" }
-  status { RequestedTest.statuses["pending"] }
-  comment {"this is a  comment for the requested test ......"}
-end
-
 SampleIdentifier.blueprint do
   sample { Sample.make_unsaved({}.tap do |h|
     h[:institution] = object.site.institution if object.site
@@ -224,18 +184,16 @@ TestResult.blueprint do
 end
 
 CultureResult.blueprint do
-  requested_test { RequestedTest.make }
-  sample_collected_on { 23.days.ago}
+  sample_collected_at { 23.days.ago}
   serial_number { 'some random serial numbers' }
   media_used { 'solid' }
   test_result { 'contaminated' }
   examined_by { Faker::Name.name }
-  result_on { 7.days.from_now }
+  result_at { 7.days.from_now }
 end
 
 DstLpaResult.blueprint do
-  requested_test { RequestedTest.make }
-  sample_collected_on { 23.days.ago}
+  sample_collected_at { 23.days.ago}
   serial_number { 'some random serial numbers' }
   media_used { 'solid' }
   method_used { 'direct' }
@@ -249,27 +207,25 @@ DstLpaResult.blueprint do
   results_fq { 'susceptible' }
   results_other1 'Some other things'
   examined_by { Faker::Name.name }
-  result_on { 7.days.from_now }
+  result_at { 7.days.from_now }
 end
 
 MicroscopyResult.blueprint do
-  requested_test { RequestedTest.make }
-  sample_collected_on { 23.days.ago}
+  sample_collected_at { 23.days.ago}
   serial_number { 'some random serial numbers' }
   appearance { 'blood' }
   specimen_type { 'some type' }
   test_result { '1to9' }
   examined_by { Faker::Name.name }
-  result_on { 7.days.from_now }
+  result_at { 7.days.from_now }
 end
 
 XpertResult.blueprint do
-  requested_test { RequestedTest.make }
-  sample_collected_on { 23.days.ago}
+  sample_collected_at { 23.days.ago}
   tuberculosis { 'invalid' }
   rifampicin { 'detected' }
   examined_by { Faker::Name.name }
-  result_on { 7.days.from_now }
+  result_at { 7.days.from_now }
 end
 
 DeviceMessage.blueprint do

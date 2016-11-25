@@ -13,8 +13,21 @@ var EncounterShow = React.createClass({
       user_email: user_email,
       error_messages:[],
       requestedTests: this.props.requestedTests,
-      disable_all_selects: disable_all_selects
+      disable_all_selects: disable_all_selects,
+      testOrderStatus: this.props.encounter.status,
     };
+  },
+
+  onUpdateStatus: function(updatedStatus) {
+    this.setState({ testOrderStatus: updatedStatus['testOrderStatus'] });
+  },
+
+  componentDidMount: function() {
+    this.unsubscribe = TestBatchStore.listen(this.onUpdateStatus);
+  },
+
+  componentWillUnmount: function() {
+    this.unsubscribe();
   },
 
   submitError: function(errorArray) {
@@ -33,36 +46,6 @@ var EncounterShow = React.createClass({
 
     var  urlParam = this.props.encounter.id
     EncounterActions.deleteEncounter(urlParam, successUrl, this.submitError);
-  },
-
-  EncounterUpdateHandler: function() {
-    if (this.props.referer != null) {
-     successUrl = this.props.referer;
-    } else {
-     successUrl = '/test_orders';
-    }
-
-    if (this.props.requestedTests.length > 0) {
-      var urlParam   = '/requested_tests';
-      urlParam       = urlParam + '/' + this.props.encounter.id;
-      requestedTests = this.props.requestedTests;
-      EncounterRequestTestActions.update(urlParam, requestedTests, successUrl, this.submitError);
-    } else {
-      window.location.href = successUrl;
-    }
-  },
-
-  onTestChanged: function(newTest) {
-    var len = this.state.requestedTests.length;
-    for (var i = 0; i<len; i++) {
-      if (this.state.requestedTests[i].id == newTest.id) {
-        tempRequestedTests    = this.state.requestedTests;
-        tempRequestedTests[i] = newTest;
-        this.setState({
-          requestedTests: tempRequestedTests
-        });
-      }
-    }
   },
 
   render: function() {
@@ -123,7 +106,7 @@ var EncounterShow = React.createClass({
           <div className="panel">
             <div className="row collapse">
               <div className="col-6">
-                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.batch_id_label")}    fieldValue={ this.props.encounter.batch_id } />
+                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.order_id_label")}    fieldValue={ this.props.encounter.batch_id } />
                 <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.reason_exam_label")}    fieldValue={ examreason } />
                 <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.testing_for_label")} fieldValue={ this.props.encounter.testing_for } />
                 {
@@ -133,25 +116,26 @@ var EncounterShow = React.createClass({
                   : null
                   : null
                 }
-                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.comment_label")} fieldValue={ this.props.encounter.diag_comment } />
+                <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.testing_for_comment_label") } fieldValue={ this.props.encounter.diag_comment } />
                 {
                   this.props.encounter.exam_reason === 'follow' ?
-                  <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.weeks_in_treatment_label")} fieldValue={ this.props.encounter.treatment_weeks } />
+                  <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.weeks_in_treatment_label") } fieldValue={ this.props.encounter.treatment_weeks } />
                   : null
                 }
                 {
                   this.props.encounter.presumptive_rr ?
-                  <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.presumptive")} fieldValue={ this.props.encounter.presumptive_rr } />
+                  <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.presumptive") } fieldValue={ this.props.encounter.presumptive_rr ? I18n.t('views.say_yes') : I18n.t('views.say_no') } />
                   : null
                 }
-                {
-                  this.props.showEdit ?
-                  <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.samples_id_label")}   fieldValue={ <LabSamplesList context={this.props.context} samples={this.props.encounter.samples}  /> } /> : null
-                }
-
-                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.sample_type_label")}   fieldValue={ sample_type } />
-
-                <DisplayFieldWithLabel fieldLabel={I18n.t("components.encounter_show.status_label")}        fieldValue={ this.props.encounter.status } />
+                <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.sample_type_label") } fieldValue={ sample_type } />
+                <div className="row">
+                  <div className="col pe-5">
+                    <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.samples_id_label")  }   fieldValue={ this.props.encounter.sampleIds }  />
+                  </div>
+                  { this.props.encounter.sampleIds ? <PrintSampleIdButton /> : null }
+                </div>
+                <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.status_label") } fieldValue={ I18n.t('components.test_order.' + this.state.testOrderStatus) } />
+                <DisplayFieldWithLabel fieldLabel={ I18n.t("components.encounter_show.comment_label") } fieldValue={ this.props.encounter.comment } />
               </div>
 
               <div className="col-6 patientCard">
@@ -164,17 +148,7 @@ var EncounterShow = React.createClass({
           </div>
         </div>
 
-        <div className="row">
-          <RequestedTestsIndexTable encounter={this.props.encounter} requestedTests={this.state.requestedTests} requestedBy={this.props.requested_by}
-            statusTypes={this.props.statusTypes} edit={this.props.showEdit} onTestChanged={this.onTestChanged} associatedTestsToResults={this.props.associatedTestsToResults}
-            showDstWarning={this.props.showDstWarning} />
-        </div>
-        <br />
-        <div className="row buttonActions">
-          <div className="col">
-            {actionButton}
-          </div>
-        </div>
+        <TestBatchList encounter={ this.props.encounter } manualSampleId={ this.props.manualSampleId } testOrderStatus={ this.state.testOrderStatus } patientResults={ this.props.patientResults } encounterRoutes={ this.props.encounterRoutes } rejectReasons={ this.props.rejectReasons } authenticityToken={ this.props.authenticityToken } />
       </div>
       );
     },

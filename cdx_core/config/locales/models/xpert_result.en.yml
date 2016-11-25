@@ -2,9 +2,13 @@ en:
   activerecord:
     attributes:
       xpert_result:
-        sample_collected_on: 'Date sample collected'
+        id: 'Test ID'
+        result_status: 'Status'
+        sample_collected_at: 'Date sample collected'
         examined_by: 'Examined by'
-        result_on: 'Date of result'
+        result_at: 'Date of result'
         rifampicin: 'Rifampicin resistance'
-        trace: 'Trace'
-        tuberculosis: 'M. tuberculosis'
+        trace: 'Qualification'
+        tuberculosis: 'M. Tuberculosis Detection'
+        sample_identifier_id: 'Sample ID'
+        feedback_message_id: 'Feedback message'

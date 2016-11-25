@@ -1,13 +1,13 @@
 vi:
   shared:
-    address: 
-      street: 'Địa chỉ đường'
-      city: 'Tên thành phố'
-      state: 'Tên bang/nước'
+    address:
+      street: 'Địa chỉ'
+      city: 'Thành phố/Tỉnh'
+      state: 'Vùng'
       postal: 'Mã bưu chính'
       address_label: 'Địa chỉ'
-      city_label: 'Thành phố'
-      state_label: 'Bang'
+      city_label: 'Thành phố/Tỉnh'
+      state_label: 'Vùng'
       post_code_label: 'Mã bưu chính'
     pagination:
       of: 'trong tổng số'

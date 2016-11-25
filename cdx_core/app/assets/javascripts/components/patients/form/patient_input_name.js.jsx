@@ -14,10 +14,10 @@ var PatientInputName = React.createClass({
   render: function(){
     return (
       <div className="row">
-        <div className="col pe-2">
-          <LabelTooltip labelName="patient_name" labelValue={I18n.t("components.patients.form.lbl_name")} labelTooltip={I18n.t('components.patients.form.name_tooltip')} />
+        <div className="fieldlabel">
+          <LabelTooltip labelName="patient_name" labelValue={I18n.t("activerecord.attributes.patient.name")} labelTooltip={I18n.t('components.patients.form.name_tooltip')} />
         </div>
-        <div className="col">
+        <div className="fieldvalue">
           <input className="input-large" onBlur={this.checkPatientName()} valueLink={this.linkState('inputValue')} type="text" name="patient[name]" id="patient_name" />
         </div>
       </div>

@@ -1,0 +1,14 @@
+en:
+  components:
+    integration_logs:
+      col_title: "Integration Logs"
+      col_patient_name: "Patient Name"
+      col_order_id: "Order Id"
+      col_json: "Json data"
+      col_fail_step: "Fail Step"
+      col_system: "System"
+      col_error_message: "Error Message"
+      col_try_n_times: "Try"
+      col_updated_at: "Updated Date"
+      col_status: "Status"
+      retry: "Retry"

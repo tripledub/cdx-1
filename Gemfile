@@ -20,9 +20,11 @@ gem 'newrelic_rpm'
 gem 'paranoia'
 gem 'premailer-rails'
 gem 'kaminari'
+gem 'mechanize'
 gem 'base58'
 gem 'rubyzip', '>= 1.0.0'
 gem 'activesupport-decorators', '~> 2.1'
+gem 'acts_as_tree', '~> 2.6'
 
 gem 'config'
 gem 'rest-client'
@@ -31,6 +33,7 @@ gem 'chunky_png'
 gem 'gon'
 gem 'rchardet'
 gem 'therubyracer'
+gem 'country_select'
 
 gem 'cdx', path: '.'
 gem 'cdx-api-elasticsearch', path: '.'
@@ -54,15 +57,17 @@ end
 
 gem 'puma', '~>3.5'
 
+# View based gems
+gem "select2-rails"
+
 # Use Sidekiq for background jobs
 gem 'sidekiq'
 gem 'sinatra'
-gem 'sidekiq-cron', '~> 0.3.1'
+gem 'sidekiq-cron'
 gem 'i18n-js',">= 3.0.0.rc13"
 group :development do
   gem 'letter_opener'
   gem 'letter_opener_web'
-  gem 'web-console', '~> 2.0'
   gem 'capistrano', '~> 3.1.0', require: false
   gem 'capistrano-rails', '~> 1.1', require: false
   gem 'capistrano-bundler', '~> 1.1', require: false
@@ -85,7 +90,7 @@ gem 'encryptor'
 
 gem 'dotiw'
 gem 'rails-i18n', '~> 4.0.0'
-gem 'doorkeeper'
+gem 'doorkeeper', '~> 4.2.0'
 gem 'bettertabs'
 
 gem 'faker'
@@ -102,6 +107,12 @@ gem 'cdx_api_vietnam', path: 'cdx_api_vietnam'
 source 'https://rails-assets.org' do
   gem 'rails-assets-urijs'
 end
+
+# SMS library
+gem 'twilio-ruby', '~> 4.11.1'
+
+# Keep track of changes when multiple saves happen within a transaction
+gem 'ar_transaction_changes'
 
 group :development, :test do
   gem 'pry-byebug'
@@ -134,6 +145,7 @@ group :test do
   gem 'site_prism'
   gem 'poltergeist'
   gem 'capybara-screenshot'
+  gem 'simplecov', :require => false
 
   source 'https://rails-assets.org' do
     gem 'rails-assets-es5-shim'

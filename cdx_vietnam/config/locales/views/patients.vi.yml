@@ -1,26 +1,29 @@
 vi:
   patients:
     show:
-      episode_empty_header: 'Không có lịch sử y tế'
-      episode_empty_text1: 'Tạo một %{href} để bắt đầu lịch sử y tế.'
+      episode_empty_header: 'Không có lịch sử điều trị'
+      episode_empty_text1: 'Tạo một %{href} để bắt đầu lịch sử điều trị.'
       episode_empty_text2: 'Bạn không thể tạo yêu cầu xét nghiệm cho đến khi một %{href} được thêm.'
-      new_episode: 'Tập mới'
-      add_episode: 'Thêm tập'
-      edit_episode: 'Chỉnh sửa tập'
+      new_episode: 'Lần khám mới'
+      add_episode: 'Thêm lần khám'
+      edit_episode: 'Chỉnh sửa lần khám'
       add_test_order: 'Thêm yêu cầu xét nghiệm'
       add_comment: 'Thêm bình luận'
       edit_patient: 'Chỉnh sửa bệnh nhân'
       patient_summary: 'Hồ sơ bệnh nhân'
       patient_history: 'Lịch sử bệnh nhân'
-      episode_summary: 'Tóm tắt tập'
+      episode_summary: 'Tóm tắt lần khám'
       address: 'Địa chỉ'
       alt_address: 'Địa chỉ thay thế'
+      male: "Nam"
+      female: "Nữ"
+      other: "Khác"
     filters:
       add_patient: 'Thêm bệnh nhân'
       show_all: 'Hiển thị tất cả'
       name: 'Tên'
       patient_id: 'Mã bệnh nhân'
-      last_test_order: 'yêu cầu xét nghiệm cuối cùng'
+      last_test_order: 'yêu cầu xét nghiệm gần nhất trước đây'
       patients: 'Bệnh nhân'
       clear_button:  'Xóa'
       address: 'Địa chỉ'
@@ -32,6 +35,14 @@ vi:
     create:
       no_entity: "Mã thực thể không được để trống"
       no_name: "Tên không được để trống"
+      success: 'Bệnh nhân đã được tạo thành công.'
+      audit_log: 'Đã thêm bệnh nhân mới'
+    update:
+      success: 'Bệnh nhân đã được cập nhật thành công.'
+      audit_log: 'chi tiết về bệnh nhân đã được cập nhật'
+    destroy:
+      success: 'Bệnh nhân đã được xóa thành công.'
+      audit_log: 'bệnh nhân đã được xóa thành công.'
     form:
       institution_label: 'Tổ chức'
       select_day: 'Chọn ngày'
@@ -40,11 +51,16 @@ vi:
       estimate_age: 'Ước tính tuổi'
       history: 'Lịch sử'
       nickname_label: 'Biệt danh'
+      medical_insurance_num: 'Số sổ bảo hiểm y tế'
       entity_id_label: 'Mã thực thể'
+      external_id_label: 'Mã bệnh nhân bên ngoài'
+      external_id_tooltip: 'Mã bệnh nhân hệ thống bên ngoài'
+      external_patient_system_tooltip: 'Hệ thống bên ngoài mà Mã bệnh nhân có'
       gender_label: 'Giới tính'
       birth_date_on_label: 'Ngày sinh'
       email_label: 'Email'
       phone_label: 'Điện thoại'
+      patient_id_tooltip: 'Số ID bệnh nhân'
       institution_tooltip: 'Tổ chức tiếp nhận bệnh nhân'
       nickname_tooltip: 'Biệt danh của bệnh nhân (nếu có)'
       entity_id_tooltip: 'Mã số bệnh nhân'
@@ -54,6 +70,9 @@ vi:
       email_tooltip: 'Địa chỉ email của bệnh nhân'
       phone_tooltip: 'Một số điện thoại có thể liên hệ được của bệnh nhân'
       social_security_code_tooltip: 'Số CMND của bệnh nhân'
+      medical_insurance_num_tooltip: 'Số sổ bảo hiểm y tế của bệnh nhân.'
+      copy_addr_button: 'Sao chép địa chỉ thành'
+      address_details: "Địa chỉ chi tiết"
     index:
       no_patients: 'Không có bệnh nhân nào đăng ký'
       keep_organized: 'Giữ cho yêu cầu xét nghiệm của bạn được tổ chức theo lịch sử y tế của bệnh nhân'
@@ -61,7 +80,7 @@ vi:
       patient_id: 'Mã bệnh nhân'
       birth_date_on: 'Ngày sinh'
       city: 'Thành phố'
-      last_test_order: 'Yêu cầu xét nghiệm cuối cùng'
+      last_test_order: 'Yêu cầu xét nghiệm gần nhất trước đây'
       patient:
         zero: 'Không bệnh nhân'
         one:  'Một bệnh nhân'

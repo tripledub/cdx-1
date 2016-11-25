@@ -48,11 +48,19 @@ gem 'csv_builder'
 gem 'coffee-rails', '4.0.1'
 gem 'kaminari'
 gem 'therubyracer'
+gem 'country_select'
 gem 'dotiw'
 gem 'rchardet'
-gem 'sidekiq', '3.5.0'
+gem 'sidekiq'
 gem 'sinatra'
-gem 'sidekiq-cron', '~> 0.3.1'
+gem 'sidekiq-cron'
+gem 'acts_as_tree', '~> 2.6'
+
+# SMS library
+gem 'twilio-ruby', '~> 4.11.1'
+
+# Keep track of changes when multiple saves happen within a transaction
+gem 'ar_transaction_changes'
 
 group :development do
   gem 'letter_opener'
@@ -89,4 +97,6 @@ group :test do
   gem 'capybara-screenshot'
   gem 'webmock', '1.21.0', require: false
   gem 'site_prism'
+  gem 'test_after_commit'
+  gem 'simplecov', :require => false
 end

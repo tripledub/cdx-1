@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'sidekiq/testing'
 
 describe UsersController, type: :controller do
   let(:user)           { User.make }
@@ -7,6 +8,7 @@ describe UsersController, type: :controller do
 
   before do
     user.grant_superadmin_policy
+    Sidekiq::Worker.clear_all
     sign_in user
   end
 
@@ -52,14 +54,16 @@ describe UsersController, type: :controller do
   describe 'POST create' do
     let(:role) { institution.roles.first }
 
-    it "sends an invitation to a new user" do
+    it 'sends an invitation to a new user' do
       post :create, {users: ['new@example.com'], role: role.id}
-      expect(ActionMailer::Base.deliveries.count).to eq(1)
+      Sidekiq::Testing.fake!
+      expect(Sidekiq::Extensions::DelayedMailer.jobs.size).to eq(1)
     end
 
-    it "sends mutiple invitations to new users" do
+    it 'sends mutiple invitations to new users' do
       post :create, {users: ['new@example.com', 'second@example.com'], role: role.id}
-      expect(ActionMailer::Base.deliveries.count).to eq(2)
+      Sidekiq::Testing.fake!
+      expect(Sidekiq::Extensions::DelayedMailer.jobs.size).to eq(2)
     end
 
     it "does not add role to existing users" do

@@ -2,26 +2,108 @@ en:
   components:
     created: 'Created'
     updated: 'Last updated'
+    previous: 'Previous'
+    next: 'Next'
+    cancel: 'Cancel'
+    test_result_actions:
+      update_failed: 'Can not update status.'
+    test_order_actions:
+      update_failed: 'Can not update test order.'
+    test_result_status:
+      approve_payment:
+        action_label: 'Finance approved'
+        reject_label: 'Finance rejected'
+        reject_header: 'Please explain why this payment is rejected'
+      allocated:
+        action_label: 'Allocate sample'
+        reject_label: 'Reject sample'
+        reject_header: 'Please explain why this sample is rejected'
+      sample_approved:
+        action_label: 'Enter test result'
+        reject_label: 'Add comment'
+        reject_header: 'Comment'
+      in_progress:
+        action_label: 'Approve sample'
+        reject_label: 'Reject sample'
+        reject_header: 'Please explain why this sample is rejected'
+      test_received:
+        action_label: 'Approve test'
+        reject_label: 'Reject test'
+        reject_header: 'Please explain why this test is rejected'
+      test_completed: 'Test completed'
+      test_new:  'New test'
+      test_rejected: 'Test rejected'
+      show_test_result: 'View result'
+    patient_results:
+      new: 'New'
+      sample_collected: 'Pending'
+      allocated: 'Allocated'
+      pending_approval: 'Pending approval'
+      rejected: 'Rejected'
+      completed: 'Completed'
+    payment_action:
+      mark_as_paid: 'Finance approved'
+      reject: 'Finance rejected'
+    add_samples_action:
+      enter_sample_id: 'Enter Sample ID'
+      add_result: 'Add result'
+      submit_samples:  'Submit samples'
+      sample_ids: 'Sample Ids for test batch'
+      save_sample_ids: 'Save'
+    test_batch_table:
+      type: 'Type'
+      sample_id: 'Sample id'
+      examined_by: 'Examined by'
+      status: 'Status'
+      options: 'Options'
     alert_groups:
-      col_name: "Name"
-      tooltip_name: "This is the Name of the Alert."
-      col_description: "Description"
-      tooltip_description: "A meaningful description about what the alert entails."
-      col_enabled: "Enabled"
-      tooltip_enabled: "Is this alert enabled?"
-      col_sites: "Sites"
-      tooltip_sites: "Which site(s) this alert will trigger for."
+      col_name: 'Name'
+      tooltip_name: 'This is the name of the alert.'
+      col_description: 'Description'
+      tooltip_description: 'A meaningful description about what the alert entails.'
+      col_enabled: 'Enabled'
+      tooltip_enabled: 'Is this alert enabled?'
+      col_sites: 'Sites'
+      tooltip_sites: 'Which site(s) this alert will trigger for.'
       col_roles: "Roles"
       tooltip_roles: "Something about roles."
       col_last_incident: "Last incident"
       tooltip_last_incident: "When the last incident was reported."
-
+    test_batch:
+      test_order_header: 'Test order status'
+      header: 'Test batch'
+      status: 'status'
+      new: 'New'
+      samples_collected: 'Samples collected'
+      samples_received: 'Samples received'
+      in_progress: 'In progress'
+      payment: 'Payment'
+      false: 'Pending'
+      true: 'Done'
+    test_order:
+      header: 'Test order'
+      new: 'New'
+      pending: 'Pending'
+      financed: 'Financed'
+      not_financed: 'Finance rejected'
+      samples_collected: 'Samples collected'
+      samples_received: 'Samples received'
+      recieved: 'Received'
+      in_progress: 'In progress'
+      pending_approval: 'Pending approval'
+      closed: 'Closed'
+      print_label: 'Print label'
+      print_label_title: 'Print a barcode with the first sample id'
     alert_messages:
       col_name: "Name"
       col_date: "Date"
       col_channels: "Channels"
       col_message: "Message"
-
+    notification_notices:
+      col_name: Name
+      col_date: Date
+      col_status: Status
+      col_message: Message
     canvas-charts:
       err_chart_msg: "There was an error displaying the graph."
 
@@ -36,6 +118,7 @@ en:
       col_site: "Site"
 
     encounters:
+      btn_comment: 'Comment'
       btn_save: "Save lab. Id"
       lbl_tests_requested: "Tests Requested"
       lbl_microscopy: "Microscopy"
@@ -74,7 +157,7 @@ en:
       col_new_value: "New value"
       col_title: "Patients"
       col_name: "Name"
-      col_patient_id: "Patient Id"
+      col_patient_id: "Patient ID"
       col_date_of_birth: "Date of birth"
       col_address: "Address"
 
@@ -91,8 +174,8 @@ en:
         msg_no_order: "There are no test orders."
         col_request_by: "Request By"
         col_request_to: "Request To"
-        col_order_id: "Order Id"
-        col_batch_id: "Batch Id"
+        col_order_id: "Order ID"
+        col_batch_id: "Batch ID"
         col_order_by: "Order by User"
         col_request_date: "Request Date"
         col_due_date: "Due Date"
@@ -133,6 +216,7 @@ en:
           col_test_order_status: "status"
           col_title: "Title"
           col_user: "User"
+          col_device: "Device"
           col_date: "Date added"
           msg_loading: "Loading logs..."
           msg_no_log: "There are no logs available."
@@ -152,15 +236,16 @@ en:
       tooltip_user: "Number of users who have this role."
 
     test_orders:
-      col_sample_id: "Sample Id"
       col_status: "Status"
       col_request_by: "Request by"
       col_request_to: "Request to"
       col_testing_for: "Testing for"
       col_order_by: "Order by user"
       col_request_date: "Request date"
+      col_tests_requiring_approval: "Tests requiring approval"
       col_due_date: "Due date"
       col_id: "Order Id"
+      col_sample_id: 'Sample Ids'
 
     test_results:
       col_sample: "Sample collected on"
@@ -168,7 +253,7 @@ en:
       col_exam_by: "Examined by"
       col_media_used: "Media used"
       col_test_result: "Test result"
-      col_result_on: "Result on"
+      col_result_at: "Date of result"
       col_h: "Results H"
       col_r: "Results R"
       col_e: "Results E"
@@ -177,7 +262,7 @@ en:
       col_km: "Results Km"
       col_cm: "Results Cm"
       col_fq: "Results Fq"
-      col_on: "Result on"
+      col_on: "Date of result"
       col_specimen: "Specimen type"
       col_appearance: "Appearance"
       col_test: "Test"
@@ -189,8 +274,8 @@ en:
       col_type: "Type"
       col_status: "Status"
       col_err_code: "Error code"
-      col_start_time: "Start time"
-      col_end_time: "End time"
+      col_start_time: "Start date"
+      col_end_time: "End date"
       col_tuber: "Tuberculosis"
       col_trace: "Trace"
       col_rifampicin: "Rifampicin"

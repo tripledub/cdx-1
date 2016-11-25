@@ -1,5 +1,7 @@
+# Users controller
 class UsersController < ApplicationController
   before_filter :load_resource, only: [:edit, :update, :assign_role, :unassign_role, :remove, :resend_invite, :find]
+  before_action :set_filter_params, only: [:index]
 
   def index
     site_admin = !has_access?(@navigation_context.entity, READ_INSTITUTION_USERS) && @navigation_context.entity.kind_of?(Institution)
@@ -26,7 +28,7 @@ class UsersController < ApplicationController
       format.html do
         @total = @users.count
 
-        order_by, offset = perform_pagination('users.first_name')
+        order_by, offset = perform_pagination(table: 'users_index', field_name: 'users.first_name')
         order_by         = order_by + ', users.last_name' if order_by.include?('users.first_name')
         @users = @users.order(order_by).limit(@page_size).offset(offset)
       end
@@ -105,9 +107,9 @@ class UsersController < ApplicationController
     #user = User.find_by(id: params[:id])
     if @user.present?
       @user.destroy
-      redirect_to users_path, notice: I18n.t('users.remove.user_removed')
+      redirect_to users_path, notice: I18n.t('users_controller.user_removed')
     else
-      redirect_to users_path, notice: I18n.t('users.remove.user_not_found')
+      redirect_to users_path, notice: I18n.t('users_controller.user_not_found')
     end
   end
 
@@ -142,7 +144,7 @@ class UsersController < ApplicationController
       redirect_to users_path, notice: I18n.t('users.resend_invite.resending_failed')
     end
   end
-  
+
   def change_language
     current_user.update_attribute('locale', params[:language])
     render json: 'success'.to_json
@@ -165,7 +167,7 @@ class UsersController < ApplicationController
   def build_csv
     CSV.generate do |csv|
       csv << [I18n.t('users_controller.col_name'), I18n.t('users_controller.col_roles'), I18n.t('users_controller.col_last_activity')]
-      Presenters::Users.index_table(@users, @navigation_context).map do |u|
+      Users::Presenter.index_table(@users, @navigation_context).map do |u|
         csv << [u[:name], u[:roles], u[:lastActivity]]
       end
     end
@@ -177,5 +179,9 @@ class UsersController < ApplicationController
     @users = @users.where("roles_users.role_id = ?", params["role"].to_i) if params["role"].present?
     @users = @users.where("last_sign_in_at > ? OR (last_sign_in_at IS NULL AND invitation_accepted_at IS NULL AND invitation_created_at > ?)", params["last_activity"], params["last_activity"]) if params["last_activity"].present?
     @users = @users.where("is_active = ?", params["is_active"].to_i) if params["is_active"].present?
+  end
+
+  def set_filter_params
+    set_filter_from_params(FilterData::Users)
   end
 end

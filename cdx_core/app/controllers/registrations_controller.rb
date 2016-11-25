@@ -2,7 +2,7 @@ class RegistrationsController < Devise::RegistrationsController
   include Concerns::Context
 
   before_action :authenticate_user!
-  before_action :ensure_context
+  before_action :ensure_context, only: [:edit]
 
   protected
 
@@ -20,7 +20,7 @@ class RegistrationsController < Devise::RegistrationsController
     end
     # Update the resource as usual
     # update with password does a cleanup internally.  Returns boolean
-    if resource.update_with_password(params) 
+    if resource.update_with_password(params)
       ## automatically re-sign-in the user
       sign_in resource, bypass: true
       flash[:notice] = I18n.t('password_changed')

@@ -1,10 +1,10 @@
-= form_for([@requested_test, @dst_lpa_result], url: requested_test_dst_lpa_result_path(@requested_test, @dst_lpa_result), html: { autocomplete: 'off' }) do |f|
+= form_for([@encounter, @dst_lpa_result], url: encounter_dst_lpa_result_path(@encounter, @dst_lpa_result), html: { autocomplete: 'off' }) do |f|
   = validation_errors @dst_lpa_result
   .row
     .col.pe-2
-      = f.label :sample_collected_on
+      = f.label :sample_collected_at
     .col
-      = f.date_field :sample_collected_on
+      = f.date_field :sample_collected_at
   .row
     .col.pe-2
       = f.label :media_used
@@ -17,9 +17,9 @@
       = f.collection_select :method_used, DstLpaResult.method_options, :first, :last
   .row
     .col.pe-2
-      = f.label :serial_number
+      = f.label :sample_identifier_id
     .col
-      = f.text_field :serial_number
+      = f.select :sample_identifier_id, SampleIdentifiers::Finder.available_samples(@encounter)
   .row
     .col.pe-2
       = f.label :results_h
@@ -88,11 +88,16 @@
 
   .row
     .col.pe-2
-      = f.label :result_on
+      = f.label :result_at
     .col
-      = f.date_field :result_on
+      = f.date_field :result_at
+  .row
+    .col.pe-2
+      = f.label :comment
+    .col
+      = f.text_area :comment, rows: 4, cols: 70
 
   .row.button-actions
     .col
       = f.submit I18n.t('views.save'), class: 'btn-primary'
-      = link_to I18n.t('views.cancel'), encounter_path(@requested_test.encounter), class: 'btn-link'
+      = link_to I18n.t('views.cancel'), encounter_path(@encounter), class: 'btn-link'

@@ -1,3 +1,4 @@
+# Comments controller
 class CommentsController < ApplicationController
   respond_to :html
   respond_to :json, only: [:index]
@@ -7,7 +8,9 @@ class CommentsController < ApplicationController
   before_filter :find_comment, only: [:show]
 
   def index
-    render json: Presenters::Comments.patient_view(@patient.comments.joins(:user).order(set_order_from_params).limit(30).offset(params[:page] || 0))
+    page = params[:page] || 1
+    comments = @patient.comments.joins(:user).order(set_order_from_params).page(page).per(10)
+    render json: Comments::Presenter.patient_view(comments, params['order_by'])
   end
 
   def new
@@ -19,7 +22,7 @@ class CommentsController < ApplicationController
     @comment              = @patient.comments.new(comment_params)
     @comment.user         = current_user
 
-    if @comment.save_and_audit(current_user, I18n.t('comments.create.audit_comment'), @comment.comment)
+    if @comment.save_and_audit('t{comments.create.audit_comment}', @comment.comment)
       redirect_to patient_path(@patient), notice: I18n.t('comments.create.comment_ok')
     else
       render action: 'new'
@@ -48,14 +51,6 @@ class CommentsController < ApplicationController
   end
 
   def set_order_from_params
-    order = params[:order] == 'true' ? 'asc' : 'desc'
-    case params[:field].to_s
-    when 'name'
-      "users.first_name #{order}, users.last_name"
-    when 'description'
-      "comments.description #{order}"
-    else
-      "comments.created_at #{order}"
-    end
+    default_order(params['order_by'], table: 'patients_comments_index', field_name: 'comments.created_at')
   end
 end

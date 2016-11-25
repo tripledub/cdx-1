@@ -60,6 +60,9 @@ var BaseEncounterForm = {
             }
           });
         }
+      },
+      error: function(errors) {
+        alert(I18n.t('components.fresh_tests_encounter_form.alert_unknown'));
       }
     });
   },

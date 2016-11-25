@@ -1,5 +1,6 @@
 vi:
   culture_results:
+    localised_name: 'Nuôi cấy'
     new:
       header: 'Thêm kết quả xét nghiệm nuôi cấy cho: %{patient_name}'
       back: 'Quay lại'
@@ -15,9 +16,9 @@ vi:
       audit: 'Kết quả xét nghiệm nuôi cấy đã được cập nhật'
       notice: 'Kết quả xét nghiệm nuôi cấy đã được cập nhật thành công.'
     form:
-      sample_collected_on: 'Mẫu được thu thập ngày'
+      sample_collected_at: 'Mẫu được thu thập ngày'
       media_used: 'Phương tiện sử dụng'
       serial_number: 'Số seri'
-      test_result: 'Kết quả kiểm tra'
+      test_result: 'Kết quả xét nghiệm'
       examined_by: 'Kiểm tra bởi'
-      result_on: 'Kết quả ngày'
+      result_at: 'Ngày trả kết quả'

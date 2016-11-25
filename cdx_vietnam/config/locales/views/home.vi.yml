@@ -42,13 +42,15 @@ vi:
       header: 'Cài đặt'
       alert: 'Cảnh báo'
       alerts_notice: 'Thông báo cho nhóm của bạn về những chuyện quan trọng.'
+      test_results: Test Results
+      test_results_notice: Manage test results
       role:
         zero: 'Không có vai trò'
         one: "1 Vai trò"
         other: "%{count} Vai trò"
       roles_notice: 'Quản lý quyền hạn của người dùng với chính sách tái sử dụng'
-      sites: 'Trang'
-      sites_notice: 'Quản lý trang'
+      sites: 'Cơ sở'
+      sites_notice: 'Quản lý cơ sở'
       messages: 'Thông điệp'
       messages_notice: 'Quản lý nhật ký'
       models: 'Kiểu thiết bị'

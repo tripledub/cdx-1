@@ -1,0 +1,33 @@
+.generic-fieldset-fields
+  .row
+    .col
+      %div.tooltip
+        = fieldset.label :first_name
+        %div.tooltiptext_r
+          = I18n.t('notification_recipients.form.tooltip.first_name')
+    .col
+      = fieldset.text_field :first_name, placeholder: I18n.t('notification_recipients.form.placeholder.first_name')
+    .col
+      %div.tooltip
+        = fieldset.label :last_name
+        %div.tooltiptext_r
+          = I18n.t('notification_recipients.form.tooltip.last_name')
+    .col
+      = fieldset.text_field :last_name, placeholder: I18n.t('notification_recipients.form.placeholder.last_name')
+  .row
+    .col
+      %div.tooltip
+        = fieldset.label :email
+        %div.tooltiptext_r
+          = I18n.t('notification_recipients.form.tooltip.email')
+    .col
+      = fieldset.text_field :email, placeholder: I18n.t('notification_recipients.form.placeholder.email')
+    .col
+      %div.tooltip
+        = fieldset.label :telephone
+        %div.tooltiptext_r
+          = I18n.t('notification_recipients.form.tooltip.telephone')
+    .col
+      = fieldset.text_field :telephone, placeholder: I18n.t('notification_recipients.form.placeholder.telephone')
+
+  = link_to(image_tag('ic-cross.png'), '', :class => 'generic-fieldset-fields__close')

@@ -1,0 +1,15 @@
+vi:
+  notification_notices:
+    index:
+      no_messages: 'Không có cảnh báo nào ở %{entity_name}'
+      create_alerts: 'Tạo nhóm cảnh báo để giữ đội của bạn thông báo trên sự kiên hiện tại '
+      alert_message:
+        zero: 'Không có bất kỳ cảnh báo nào'
+        one: '1 tin nhắn cảnh báo'
+        other: '%{count} tin nhắn cảnh báo'
+      no_alerts: 'Không tin nhắn cảnh báo nào'
+      title: 'Tin nhắn cảnh báo'
+    friendly_data:
+      added: "%{field} của '%{to}' đã được thêm"
+      removed: "%{field} của '%{from}' được xóa"
+      changed: "%{field} được thay đổi từ '%{from}' đến '%{to}'"

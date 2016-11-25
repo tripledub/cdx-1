@@ -1,6 +1,8 @@
 ENV["RAILS_ENV"]   ||= 'test'
 ENV["SINGLE_TENANT"] = 'false'
 
+require 'simplecov'
+SimpleCov.start
 require File.expand_path("../dummy/config/environment.rb", __FILE__)
 require 'rspec/rails'
 require 'rspec/collection_matchers'
@@ -37,6 +39,7 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
+    TestAfterCommit.enabled = false
   end
 
   config.around(:each) do |example|
@@ -70,14 +73,16 @@ RSpec.configure do |config|
   config.include Paperclip::Shoulda::Matchers
 
   config.before(:each) do
-    stub_request(:get, "http://fonts.googleapis.com/css").
-         with(:query => hash_including(:family)).
-         to_return(:status => 200, :body => "", :headers => {})
+    stub_request(:get, 'http://fonts.googleapis.com/css')
+      .with(query: hash_including(:family))
+      .to_return(status: 200, body: '', headers: {})
   end
 
   config.before(:each) do
     Timecop.return
     ActionMailer::Base.deliveries.clear
+    stub_const('Twilio::REST::Client', FakeSMS)
+    Twilio::REST::Client.messages = []
   end
 
   config.after(:each) do
@@ -85,6 +90,6 @@ RSpec.configure do |config|
   end
 end
 
-require "bundler/setup"
-require "cdx"
-require "pry-byebug"
+require 'bundler/setup'
+require 'cdx'
+require 'pry-byebug'

@@ -1,0 +1,5 @@
+-# ------------ Integration logs
+- if has_access_to_integration_logs?
+  = setting_card title: I18n.t('layout.header_nav.integration_logs'), href: integration_logs_path, icon: 'fa-bars', colour:'orange' do | c |
+    - c.body do
+      = I18n.t('layout.header_nav.integration_logs')

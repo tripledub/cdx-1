@@ -20,7 +20,7 @@
     -moz-box-flex: 0 0 300px;
     -webkit-flex: 0 0 300px;
     -ms-flex: 0 0 300px;
-    flex: 0 0 24.667%;
+    flex: 0 0 300px;
   margin-bottom:15px;
 }
 
@@ -204,18 +204,9 @@ body {
 
 /* FORM */
 
-.container fieldset {
-  background-color: #dc602e;
-  color: white;
-  padding: 0.5em;
-  border: none;
-  display: inline-block;
-}
-
-
 @media only screen and (max-width: 480px) {
   .container fieldset {
-    margin-top: 0.5em; 
+    margin-top: 0.5em;
   }
 }
 
@@ -285,11 +276,19 @@ body {
 }
 
 #contentcontainer tr:nth-child(even) {
-  background-color: #dbdae2;
-} 
+  background-color: rgba(219, 218, 226, 1.0);
 
-#contentcontainer tr:nth-child(even):hover {
-  opacity:0.8;
+  &:hover {
+    background-color: rgba(219, 218, 226, 0.8);
+  }
+}
+
+#contentcontainer tr:nth-child(odd) {
+  background-color: rgba(219, 218, 226, 0.0);
+
+  &:hover {
+    background-color: rgba(219, 218, 226, 0.1);
+  }
 }
 
 #contentcontainer thead tr:nth-child(even) {
@@ -309,7 +308,7 @@ body {
 .container .col-4 {min-width: 31.26%;flex:1 1 31.26%;}
 .container .col-3 {min-width: 22.8%;flex:1 1 22.8%;}
 .container .col-2{min-width: 14.33%;flex:1 1 14.33%;}
-.container .col-1 {min-width: 5.866%;flex:1 1 5.866%;} 
+.container .col-1 {min-width: 5.866%;flex:1 1 5.866%;}
 
 
 
@@ -399,8 +398,9 @@ font-size:16px;
 }
 
 .section .col .stat{
-height:80px;
-margin-top:-10px;
+height: 80px;
+line-height: 1.2;
+margin-top: -10px;
 }
 
 .section .col .stat span{
@@ -455,10 +455,10 @@ font-size:10px;
 
 
 #filters-form .Select-placeholder{
-margin-top:7px;
+margin-top:5px;
 text-align:center;
 background:#fff;
-padding:3px 80px 3px 5px;
+padding:5px 80px 6px 5px;
 }
 
 #filters-form .Select {
@@ -487,7 +487,7 @@ padding:3px 80px 3px 5px;
 min-width:100% !important;
 }
 
-/* Dashboard Styles */ 
+/* Dashboard Styles */
 #contentcontainer .row .columns div.search {height:40px;background:#e06023;position:fixed;top:0px;width:100%;left:300px;top:60px;z-index:999;}
 #contentcontainer .dashboard main {margin-top:50px;}
 .dashboard {padding:10px;}
@@ -542,7 +542,7 @@ margin-bottom: 20px;
   .card {
     margin:10px 15px;
   }
-} 
+}
 form#new_device {
   margin:0px;
   padding:0px;
@@ -641,7 +641,7 @@ form#new_microscopy_result, form#new_site, form.edit_site, form#new_episode, for
   li button {top:0px;left:3px;}
   .selected::before {height:29px;}
   li {font-size:12px;line-height:30px;}
-} 
+}
 
 .show-navigation-context-picker #context_side_bar ::-webkit-input-placeholder, .show-navigation-context-picker #context_side_bar ::-webkit-input-placeholder {color:#fff;}
 .show-navigation-context-picker #context_side_bar .search-sites {background:#555 !important;color:#fff !important;}
@@ -962,7 +962,7 @@ form#new_microscopy_result, form#new_site, form.edit_site, form#new_episode, for
 
 section.newPatientContainer, section.editPatientContainer, .optionsarea {
   padding:10px 20px 10px 15px;
-} 
+}
 .optionsarea {
   padding:10px 20px 10px 15px;
 
@@ -998,7 +998,7 @@ form#new_patient, form.edit_patient, form#new_device, form#edit_device{
     select#patient_birth_date_on_3i, select#patient_birth_date_on_2i, select#patient_birth_date_on_1i {
       width:auto;
       margin-right:5px;
-    } 
+    }
   }
 
   .row.header {
@@ -1014,7 +1014,7 @@ form#new_patient, form.edit_patient, form#new_device, form#edit_device{
     line-height:30px;
     width:200px;
   }
-  
+
   input.input-large {
     border:1px solid #e2e2e2;
     background:#fff;
@@ -1083,7 +1083,7 @@ form.edit_patient div.row:nth-child(even), form.edit_patient div .row {
   background:#fff;
 }
 
-/* Test Results Styles */ 
+/* Test Results Styles */
 #contentcontainer #contentsection .filterbar {
   height:40px;
   float:none;
@@ -1094,7 +1094,7 @@ form.edit_patient div.row:nth-child(even), form.edit_patient div .row {
   background:#e06023;
   position:fixed;
   width:100%;
-  z-index:1000000;
+  z-index:10000;
 
   .heading {
     display:flex;
@@ -1205,7 +1205,7 @@ form#filters-form.filteroptions {
       padding:0px 120px 0px 0px;
     }
   }
-} 
+}
 
 #contentsection table {
   margin:0px;
@@ -1610,7 +1610,7 @@ html {
         -ms-flex: 0 0 100%;
             flex: 0 0 100%;
     max-width: 100%; }}
-  
+
 #contentcontainer header img{
 height:20px;
 width:auto !important;
@@ -1651,7 +1651,7 @@ display:none;
 font-size:12px;
 }
 
-.add-new, #contentsection .devicearea .add-new{ 
+.add-new, #contentsection .devicearea .add-new{
 background:#e06023;
 }
 
@@ -1749,7 +1749,7 @@ div#new-xpert-results section.row {
     align-items:center;
   }
   .Select.is-searchable {
-    
+
 
     .Select-control {
       padding:4px 120px 4px 0px;

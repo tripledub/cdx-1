@@ -12,9 +12,9 @@ vi:
       type: 'Loại'
       status: 'Tình trạng'
       sample_id: 'Số seri'
-      test_order_id: 'Mã của yêu cầu xét nghiệm'
+      test_order_id: 'Mã yêu cầu xét nghiệm'
       device: 'Thiết bị'
-      tests: 'xét nghiệm'
+      tests: 'Xét nghiệm'
       test_orders: 'Yêu cầu xét nghiệm'
       show_all: 'Hiển thị tất cả'
       test_result: 'Kết quả xét nghiệm'
@@ -29,7 +29,7 @@ vi:
       results_cm: 'Kết quả Cm'
       results_fq: 'Kết quả Fq'
     show:
-      test_belongs_to: 'xét nghiệm này thuộc về một cuộc gặp gỡ.'
+      test_belongs_to: 'Xét nghiệm này thuộc về một yêu cầu xét nghiệm.'
       click_here: 'Nhấn ở đây'
       to_view_it: 'để xem nó.'
       test_details: 'Thông tin chi tiết xét nghiệm'
@@ -42,6 +42,7 @@ vi:
       additional_data: 'Dữ liệu bổ sung'
       sample: 'Mẫu'
       other_tests: 'Những xét nghiệm khác'
+      test_details: 'Chi tiết xét nghiệm'
       no_other_test: 'Không có xét nghiệm khác được thực hiện với mẫu này'
       was_also_made: 'cũng đã được thực hiện với mẫu này'
       were_also_made: 'cũng đã được thực hiện với mẫu này'
@@ -66,4 +67,8 @@ vi:
       tab_microscopy: 'Kính hiển vi'
       tab_xpert: 'Xpert'
       tab_culture: 'Nuôi cấy'
-      tab_dst_lpa: 'Dst_Lpa'
+      tab_dst_lpa: 'Kháng sinh đồ_Kỹ thuật LPA'
+      specimen_type:
+        sputum: "Đờm"
+        blood: "Máu"
+        other: "Khác"

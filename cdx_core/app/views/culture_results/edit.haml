@@ -7,6 +7,6 @@
       .col-6
         %ul
           %li
-            = link_to I18n.t('views.back'), encounter_path(@requested_test.encounter, :test_order_page_mode => @return_page_mode), class: 'button new'
+            = link_to I18n.t('views.back'), encounter_path(@encounter, :test_order_page_mode => @return_page_mode), class: 'button new'
     .box-content
       = render 'form'

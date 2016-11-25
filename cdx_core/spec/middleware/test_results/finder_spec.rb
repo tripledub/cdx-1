@@ -10,10 +10,10 @@ RSpec.describe TestResults::Finder do
   let(:device)             { Device.make  institution: institution, site: site }
   let(:device2)            { Device.make  institution: institution, site: site2 }
   let(:device3)            { Device.make  institution: institution, site: site3 }
-  let!(:test_result)       { TestResult.make patient: patient, institution: institution, device: device,  created_at:  3.days.ago.strftime("%Y-%m-%d") }
-  let!(:test_result2)      { TestResult.make patient: patient, institution: institution, device: device2, created_at: 16.days.ago.strftime("%Y-%m-%d") }
-  let!(:test_result3)      { TestResult.make patient: patient, institution: institution, device: device3, created_at: 28.days.ago.strftime("%Y-%m-%d") }
-  let!(:test_result4)      { TestResult.make patient: patient, institution: institution, device: device,  created_at: 53.days.ago.strftime("%Y-%m-%d") }
+  let!(:test_result)       { TestResult.make patient: patient, institution: institution, device: device,  result_at:  3.days.ago.strftime("%Y-%m-%d") }
+  let!(:test_result2)      { TestResult.make patient: patient, institution: institution, device: device2, result_at: 16.days.ago.strftime("%Y-%m-%d") }
+  let!(:test_result3)      { TestResult.make patient: patient, institution: institution, device: device3, result_at: 28.days.ago.strftime("%Y-%m-%d") }
+  let!(:test_result4)      { TestResult.make patient: patient, institution: institution, device: device,  result_at: 53.days.ago.strftime("%Y-%m-%d") }
   let(:navigation_context) { NavigationContext.new(user, institution.uuid) }
   let(:params) { { } }
 

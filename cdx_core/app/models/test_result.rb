@@ -1,3 +1,4 @@
+# Orphan tests
 class TestResult < PatientResult
   include Entity
   include Resource
@@ -17,7 +18,6 @@ class TestResult < PatientResult
 
   has_and_belongs_to_many :device_messages, through: :device_messages_test_results
   has_many :test_result_parsed_data
-  has_many :alert_histories
 
   validates_presence_of :device
   # validates_uniqueness_of :test_id, scope: :device_id, allow_nil: true
@@ -30,6 +30,24 @@ class TestResult < PatientResult
 
   delegate :device_model, :device_model_id, to: :device
   delegate :sample, to: :sample_identifier, allow_nil: true
+
+  class << self
+    def result_type
+      [
+        ['positive', I18n.t('select.test_results.result_type.positive')],
+        ['negative', I18n.t('select.test_results.result_type.negative')],
+        ['indeterminate', I18n.t('select.test_results.result_type.indeterminate')],
+        ['n/a', I18n.t('select.test_results.result_type.not_applicable')]
+      ]
+    end
+
+    def result_status
+      [
+        ['success', I18n.t('select.test_results.result_status.success')],
+        ['error', I18n.t('select.test_results.result_status.error')]
+      ]
+    end
+  end
 
   def merge(test)
     super
@@ -54,12 +72,12 @@ class TestResult < PatientResult
     key.blank?
   end
 
-  def self.query params, user
+  def self.query(params, user)
     TestResultQuery.for params, user
   end
 
   def self.entity_scope
-    "test"
+    'test'
   end
 
   def sample_identifiers

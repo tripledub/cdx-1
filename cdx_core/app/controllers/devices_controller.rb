@@ -5,6 +5,7 @@ class DevicesController < ApplicationController
   before_filter :load_device_models_for_create, only: [:index, :new, :create]
   before_filter :load_device_models_for_update, only: [:edit, :update]
   before_filter :load_filter_resources, only: :index
+  before_action :set_filter_params, only: [:index]
 
   before_filter do
     head :forbidden unless has_access_to_devices_index?
@@ -16,7 +17,7 @@ class DevicesController < ApplicationController
     @devices = @devices.where(device_model: params[:device_model].to_i) if params[:device_model].present?
 
     @total           = @devices.count
-    order_by, offset = perform_pagination('devices.name')
+    order_by, offset = perform_pagination(table: 'devices_index', field_name: 'devices.name')
     @devices         = @devices.order(order_by).limit(@page_size).offset(offset)
 
     @can_create      = has_access?(Institution, REGISTER_INSTITUTION_DEVICE)
@@ -33,10 +34,10 @@ class DevicesController < ApplicationController
 
   def new
     @device = Device.new
-    @device.time_zone = "UTC"
+    @device.time_zone = 'UTC'
     @device.site = check_access(@navigation_context.site, ASSIGN_DEVICE_SITE) if @navigation_context.site
     @device.site = @sites[0] if !@allow_to_pick_site && @sites.count == 1
-    return unless prepare_for_institution_and_authorize(@device, REGISTER_INSTITUTION_DEVICE)
+    return unless authorize_resource(@device, REGISTER_INSTITUTION_DEVICE)
   end
 
   def create
@@ -46,9 +47,7 @@ class DevicesController < ApplicationController
       return unless authorize_resource(@institution, READ_INSTITUTION)
     end
     @device.institution = @institution
-    if @device.device_model.try(&:supports_activation?)
-      @device.new_activation_token
-    end
+    @device.new_activation_token if @device.device_model.try(&:supports_activation?)
 
     # TODO: check valid sites
 
@@ -106,7 +105,7 @@ class DevicesController < ApplicationController
   end
 
   def update
-    # TODO should validate that selected site, if changed is among @sites (due to ASSIGN_DEVICE_SITE)
+    # TODO: should validate that selected site, if changed is among @sites (due to ASSIGN_DEVICE_SITE)
     return unless authorize_resource(@device, UPDATE_DEVICE)
 
     respond_to do |format|
@@ -139,7 +138,7 @@ class DevicesController < ApplicationController
     respond_to do |format|
       if @device.save
         format.js
-        format.json { render json: {secret_key: @device.plain_secret_key }.to_json}
+        format.json { render json: { secret_key: @device.plain_secret_key }.to_json }
       else
         format.js
         format.json { render json: @device.errors, status: :unprocessable_entity }
@@ -168,7 +167,7 @@ class DevicesController < ApplicationController
     DeviceMailer.setup_instructions(current_user, recipient, @device).deliver_now
     flash[:notice] = "#{I18n.t('devices_controller.setup_sent_to')} #{recipient}"
 
-    render json: {status: :ok}
+    render json: { status: :ok }
   end
 
   def request_client_logs
@@ -180,9 +179,7 @@ class DevicesController < ApplicationController
   end
 
   def custom_mappings
-    if params[:device_model_id].blank?
-      return render html: ""
-    end
+    return render html: '' if params[:device_model_id].blank?
 
     if params[:device_id].present?
       @device = Device.find(params[:device_id])
@@ -199,8 +196,7 @@ class DevicesController < ApplicationController
   def performance
     @device = Device.with_deleted.find(params[:id])
     return unless authorize_resource(@device, READ_DEVICE)
-
-    @device_report = Reports::Device.new(current_user, @navigation_context, { device: @device.uuid })
+    @device_report = Reports::Device.new(current_user, @navigation_context, 'device' => @device.id)
 
     if request.xhr?
       render layout: false
@@ -220,7 +216,7 @@ class DevicesController < ApplicationController
   private
 
   def load_institutions
-    # TODO FIX at :index @institutions should be institutions of devices that can be read
+    # TODO: FIX at :index @institutions should be institutions of devices that can be read
     @institutions = check_access(Institution, REGISTER_INSTITUTION_DEVICE)
   end
 
@@ -239,9 +235,8 @@ class DevicesController < ApplicationController
   end
 
   def load_device_models_for_create
-    gon.device_models = @device_models =
-      (DeviceModel.includes(:institution).published.to_a +
-       DeviceModel.includes(:institution).unpublished.where(institution_id: @navigation_context.institution.id).to_a)
+    gon.device_models = @device_models = (DeviceModel.includes(:institution).published.to_a +
+      DeviceModel.includes(:institution).unpublished.where(institution_id: @navigation_context.institution.id).to_a)
   end
 
   def load_device_models_for_update
@@ -253,7 +248,7 @@ class DevicesController < ApplicationController
   def device_params
     params.require(:device).permit(:name, :serial_number, :device_model_id, :time_zone, :site_id).tap do |whitelisted|
       if custom_mappings = params[:device][:custom_mappings]
-        whitelisted[:custom_mappings] = custom_mappings.select { |k, v| v.present? }
+        whitelisted[:custom_mappings] = custom_mappings.select { |_k, v| v.present? }
       end
     end
   end
@@ -266,5 +261,9 @@ class DevicesController < ApplicationController
     return { 'date_range' => params['range'] } if params['range']
     return { 'since' => params['since'] } if params['since']
     {}
+  end
+
+  def set_filter_params
+    set_filter_from_params(FilterData::Devices)
   end
 end

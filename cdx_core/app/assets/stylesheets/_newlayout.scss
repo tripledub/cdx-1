@@ -1,7 +1,7 @@
 // New Navigation Bar ---------------------------------------------------------//
 
 body {
-    margin: 0px;
+  margin: 0px;
 }
 
 .wrapper #context_side_bar{
@@ -29,11 +29,9 @@ body {
   background: transparent url("/assets/arr-select-down-inv-901cf5db9d4969e8e0b2192aed57309c.png") no-repeat scroll center 50%;
 }
 
-
 .sites-tree-view li ul{
   border:0px;
 }
-
 
 #context_side_bar {
   overflow-y:auto;
@@ -42,7 +40,6 @@ body {
 #contentcontainer {
   overflow:auto;
 }
-
 
 .wrapper{
   padding-top:60px;
@@ -77,7 +74,7 @@ body {
 .tooltip .tooltiptext_b
 {
   border-radius:5px;
-  box-shadow: 5px 5px 8px #CCC;
+  box-shadow: 1px 1px 6px rgba(204,204,204, 0.8);
   opacity: 0.9;
 
   z-index:999;
@@ -165,35 +162,35 @@ body {
 }
 
 .show-navigation-context-picker #context_side_bar > div {
-    flex: 1;
-    position: fixed;
-    top: 0;
-    bottom: 0;
+  flex: 1;
+  position: fixed;
+  top: 0;
+  bottom: 0;
   padding-top:60px;
-    left: 0;
-    right: 0;
-    overflow: auto;
-    overflow-x: hidden;
-    width: 300px;
-    height: 100;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  overflow-x: hidden;
+  width: 300px;
+  height: 100%;
 }
 
 
 
 .search-sites::-webkit-input-placeholder {
-   color: #fff;
+  color: #fff;
 }
 
 .search-sites:-moz-placeholder { /* Firefox 18- */
-   color: #fff;
+  color: #fff;
 }
 
 .search-sites::-moz-placeholder {  /* Firefox 19+ */
-   color: #fff;
+  color: #fff;
 }
 
 .search-sites:-ms-input-placeholder {
-   color: #fff;
+  color: #fff;
 }
 
 
@@ -201,41 +198,41 @@ body {
 /* Test Area */
 
 .maincol {
-    margin: 0px;
+  margin: 0px;
 }
 
 .custom_filters{
-background:#dc602e;
-height: 85px;
-margin-left: 15px;
-margin-right: 15px;
-padding-left: 0;
+  background:#dc602e;
+  height: 85px;
+  margin-left: 15px;
+  margin-right: 15px;
+  padding-left: 0;
 }
 
 .custom_filters .Select-placeholder, .custom_filters input{
-color:#fff;
+  color:#fff;
 }
 
 .filterbartest #query_button {
-background:#555;
+  background:#555;
 }
 
 .filterbartest #query_button:hover{
-opacity:0.7;
+  opacity:0.7;
 }
 
 .filterbartest .btn-add{
-margin-top: -5px;
+  margin-top: -5px;
 }
 
 .filterbartest .title{
-margin-top:5px;
+  margin-top:5px;
 }
 
 .filterbartest{
-height:90px;
-margin-top:0px;
-background:transparent;
+  height:90px;
+  margin-top:0px;
+  background:transparent;
 }
 
 
@@ -244,56 +241,52 @@ background:transparent;
 
 
 .devicearea .add-new{
-margin-top:10px;
-background:transparent;
+  margin-top:10px;
+  background:transparent;
 }
 
 .devicearea .add-new h2{
-color:black;
+  color:black;
 }
 
 .devicearea .side-link {
-    background: #2196f3 none repeat scroll 0 0;
-    border-radius: 50%;
-    color: white;
-    display: inline-block;
-    font-family: "Open Sans",sans-serif;
-    font-size: 27px;
-    font-weight: 300 !important;
-    height: 48px;
-    line-height: 48px;
-    text-align: center;
-    vertical-align: middle;
-    width: 48px;
-    margin-top:-3px;
+  background: #2196f3 none repeat scroll 0 0;
+  border-radius: 50%;
+  color: white;
+  display: inline-block;
+  font-family: "Open Sans",sans-serif;
+  font-size: 27px;
+  font-weight: 300 !important;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+  vertical-align: middle;
+  width: 48px;
+  margin-top:-3px;
 }
 
 .new_device{
-margin:15px;
-padding:20px;
-background:#b8d5b8;
+  margin:15px;
+  padding:20px;
+  background:#b8d5b8;
 }
 
 .new_device label{
-color:#fff;
+  color:#fff;
 }
 
 .new_device .value{
-color:#fff;
+  color:#fff;
 }
 
 .new_device .Select-placeholder{
-color:#fff !important;
+  color:#fff !important;
 }
 
-
-
-
-
 .testflow .section {
-    clear: both;
-    padding: 0px;
-    margin: 0px;
+  clear: both;
+  padding: 0px;
+  margin: 0px;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -306,11 +299,11 @@ color:#fff !important;
 .testflow .settings {justify-content:center;}
 .testflow .centered {text-align:center;}
 .testflow .col.px-4 {
-    -webkit-box-flex: 0 0 300px;
-    -moz-box-flex: 0 0 300px;
-    -webkit-flex: 0 0 300px;
-    -ms-flex: 0 0 300px;
-    flex: 0 0 24.667%;
+  -webkit-box-flex: 0 0 300px;
+  -moz-box-flex: 0 0 300px;
+  -webkit-flex: 0 0 300px;
+  -ms-flex: 0 0 300px;
+  flex: 0 0 24.667%;
 }
 
 /*  COLUMN SETUP  */
@@ -407,10 +400,10 @@ color:#fff !important;
   font-weight: 300;
   font-size: 1.5em;
 }
-  @media only screen and (max-width: 1390px) {
-    .testflow .summary h2 {font-size: 1.3em;}
-    .testflow .summary img {width: 30px;}
-  }
+@media only screen and (max-width: 1390px) {
+  .testflow .summary h2 {font-size: 1.3em;}
+  .testflow .summary img {width: 30px;}
+}
 
 .testflow .summary .stat {
   text-align: center;
@@ -452,15 +445,6 @@ color:#fff !important;
 
 /* FORM */
 
-.testflow fieldset {
-  background-color: #dc602e;
-  color: white;
-  padding: 0.5em;
-  border: none;
-  display: inline-block;
-}
-
-
 @media only screen and (max-width: 480px) {
   .testflow fieldset {
     margin-top: 0.5em;
@@ -472,13 +456,13 @@ color:#fff !important;
 }
 
 .testflow input[type=text] {
-    background-color: rgba(245, 245, 245, 0);
-    border: 1px solid #e2e2e2;
-    border-bottom: 1px solid #e2e2e2;
-    color: rgb(0, 0, 0);
-    padding:0.25rem;
-    width:200px;
-    font-size:12px;
+  background-color: rgba(245, 245, 245, 0);
+  border: 1px solid #e2e2e2;
+  border-bottom: 1px solid #e2e2e2;
+  color: rgb(0, 0, 0);
+  padding:0.25rem;
+  width:200px;
+  font-size:12px;
 }
 
 .testflow input[type=submit] {
@@ -550,20 +534,20 @@ color:#fff !important;
 
 /* Header Styles! */
 .testflow .row.labelHeader {
-    align-items: center;
-    background: #6d6c8b;
-    padding: 0 15px;
-    height: auto;
-    color: #fff;
-    padding:0.6em 0em;
-    margin-bottom:0px;
-    max-width:90rem;
+  align-items: center;
+  background: #6d6c8b;
+  padding: 0 15px;
+  height: auto;
+  color: #fff;
+  padding:0.6em 0em;
+  margin-bottom:0px;
+  max-width:90rem;
 }
 
 .testflow p.text-small.muted {
-    margin:0px;
-    padding:10px 0px;
-  }
+  margin:0px;
+  padding:10px 0px;
+}
 
 .testflow .row.labelHeader h3 {margin:0;}
 
@@ -601,20 +585,20 @@ color:#fff !important;
 .testflow form#new_episode {
   div.row.button-actions {
 
-      input.btn-primary, a.btn-link, a.btn-secondary{
-        margin:0px 0px 0px 10px;padding:0.5em 2em;line-height:15px;height:30px;color:#fff;
-      }
-      input.btn-primary:hover, a.btn-link:hover {opacity:0.8;}
-      input.btn-primary {
-        background:#9DCE65;
-      }
+    input.btn-primary, a.btn-link, a.btn-secondary{
+      margin:0px 0px 0px 10px;padding:0.5em 2em;line-height:15px;height:30px;color:#fff;
+    }
+    input.btn-primary:hover, a.btn-link:hover {opacity:0.8;}
+    input.btn-primary {
+      background:#9DCE65;
+    }
 
-      a.btn-link{
-        background:#e06023;
-      }
-      a.btn-secondary {
-        background:#cc443f
-      }
+    a.btn-link{
+      background:#e06023;
+    }
+    a.btn-secondary {
+      background:#cc443f
+    }
   }
 }
 
@@ -633,17 +617,17 @@ form#new_comment {
     background:none!important;
     padding:0px;
 
-      input.btn-primary, a.btn-link, a.btn-secondary{
-        margin:0px 0px 0px 10px;padding:0.5em 2em;line-height:15px;height:30px;color:#fff;
-      }
-      input.btn-primary:hover, a.btn-link:hover {opacity:0.8;}
+    input.btn-primary, a.btn-link, a.btn-secondary{
+      margin:0px 0px 0px 10px;padding:0.5em 2em;line-height:15px;height:30px;color:#fff;
+    }
+    input.btn-primary:hover, a.btn-link:hover {opacity:0.8;}
 
-      a.btn-link{
-        background:#e06023;
-      }
-      a.btn-secondary {
-        background:#cc443f
-      }
+    a.btn-link{
+      background:#e06023;
+    }
+    a.btn-secondary {
+      background:#cc443f
+    }
   }
 }
 
@@ -693,11 +677,11 @@ form#new_comment {
 }
 
 .testflow .patient-details .button.edit {
-    position: absolute;
-    top: 5px;
-    right: 14px;
-    padding:1px 2em;
-    height:30px;
+  position: absolute;
+  top: 5px;
+  right: 14px;
+  padding:1px 2em;
+  height:30px;
 }
 .testflow .patient-details .row {
   margin:0px;
@@ -716,9 +700,9 @@ form#new_comment {
 }
 
 .testflow .patient-details .row .col-9 {
-max-width:100%;
-flex:3 0 auto;
-padding:15px;
+  max-width:100%;
+  flex:3 0 auto;
+  padding:15px;
 }
 
 .testflow .patient-details .col-12 {
@@ -740,11 +724,11 @@ padding:15px;
 }
 
 .testflow .patient-details .stat {
-    width: 100%;
-    min-height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .testflow .order-details .patient-details ul {
@@ -790,13 +774,13 @@ padding:15px;
   }
 }
 .testflow ul.tabs {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-    width:100%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  width:100%;
 }
 
 /* Float the list items side by side */
@@ -804,25 +788,25 @@ padding:15px;
 
 /* Style the links inside the list items */
 .testflow ul.tabs li a {
-    display: inline-block;
-    color: black;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    transition: 0.3s;
-    font-size: 12px;
+  display: inline-block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  transition: 0.3s;
+  font-size: 12px;
 }
 
 /* Change background color of links on hover */
 .testflow ul.tabs li a:hover {background-color: #ddd;}
 
 /* Create an active/current tablink class */
-.testflow ul.tabs li a:focus, .testflow .active {background-color: #dbdae2;}
+.testflow ul.tabs li a:focus, .testflow .active, .testflow .content-only-block {background-color: #dbdae2;}
 
 /* Style the tab content */
 .testflow .tabcontent {
-    display: none;
-    border-top: none;
+  display: none;
+  border-top: none;
 }
 
 /* Test Order Styles */
@@ -838,22 +822,22 @@ ul.samples button.btn-primary {
 
 .testflow .newTestOrder .panel > div.row {justify-content:flex-start;}
 .testflow .newTestOrder .panel .row {
-    justify-content: flex-start;
-    padding: 0 15px;
+  justify-content: flex-start;
+  padding: 0 15px;
 
-    .row {
-      padding:0px;
-    }
-    .patientCard {
-      align-self:flex-start;
-      margin-top:15px;
-    }
+  .row {
+    padding:0px;
+  }
+  .patientCard {
+    align-self:flex-start;
+    margin-top:15px;
+  }
 
-    p {
-      font-size:12px;
-      line-height:12px;
-      text-transform:capitalize;
-    }
+  p {
+    font-size:12px;
+    line-height:12px;
+    text-transform:capitalize;
+  }
 }
 .buttonActions {
   justify-content:flex-start;
@@ -881,10 +865,10 @@ ul.samples button.btn-primary {
     margin-right:0px;
   }
   &.selected {
-        .resource-type {
-          margin-right: 0px;
-        }
-      }
+    .resource-type {
+      margin-right: 0px;
+    }
+  }
 }
 
 .testflow .items-editor .items-content.selected .row {
@@ -902,127 +886,403 @@ ul.samples button.btn-primary {
 
 
 .commentbox .col-6 {
-align-self: flex-start;
+  align-self: flex-start;
 }
 
 .commentbox label {
-width:100%;
-font-weight:bold;
-margin-top:30px;
-line-height:25px !important;
-min-height:25px !important;
+  width:100%;
+  font-weight:bold;
+  margin-top:30px;
+  line-height:25px !important;
+  min-height:25px !important;
 }
 
 .commentbox .col-12 {
-flex: 1 1 0;
-padding-right:10px;
+  flex: 1 1 0;
+  padding-right:10px;
 }
 
 
 
 
 .resultsforms label{
-line-height:35px;
-margin-top:0px;
-margin-bottom:0px;
+  line-height:35px;
+  margin-top:0px;
+  margin-bottom:0px;
 }
 
 
 .resultsforms .pe-2 label{
-font-weight:bold;
+  font-weight:bold;
 }
 
 
 .resultsforms .pe-2{
-align-self: flex-start;
+  align-self: flex-start;
 }
 
 .resultsforms .row{
-margin-bottom:30px;
+  margin-bottom:30px;
 }
 
 .btn-add-link:empty {
-   display: none;
+  display: none;
 }
 
 .newTestOrder .pe-2{
-flex: 0 0 25%;
+  flex: 0 0 25%;
 }
 
 .commentbox .col-6 .row {
-margin-bottom:10px;
+  margin-bottom:10px;
 }
 
 .commentbox .col-6{
-padding:10px 5px 15px 5px;
+  padding:10px 5px 15px 5px;
 }
 
 .commentbox .patient-details ul{
-width:50%;
+  width:50%;
 }
 
 
 .commentbox .patient-details ul label{
-min-width:35%;
-width:35%;
+  min-width:35%;
+  width:35%;
 }
 
 .commentbox .patient-details ul{
-margin-top:10px;
-margin-bottom:10px;
+  margin-top:10px;
+  margin-bottom:10px;
 }
 
 .commentbox label {
-    line-height: 35px !important;
-    margin-top: 0px !important;
-    min-height: 35px !important;
+  line-height: 35px !important;
+  margin-top: 0px !important;
+  min-height: 35px !important;
 }
 
 form#filters-form.filteroptions #clear_button{
-line-height:15px;
-height:19px;
-padding:0;
-margin-top:15px;
-background:#2196f3;
-color:#fff;
-border:0px;
-border-radius:0px;
+  line-height:15px;
+  height:19px;
+  padding:0;
+  margin-top:15px;
+  background:#2196f3;
+  color:#fff;
+  border:0px;
+  border-radius:0px;
 }
 
 form#filters-form.filteroptions #clear_button:hover{
-background:#478BC9;
+  background:#478BC9;
 }
 
 
 .audit_presenter{
-padding:10px;
-padding-left:15px;
-text-transform: capitalize;
+  padding:10px;
+  padding-left:15px;
+  text-transform: capitalize;
 }
 
 .nickname .pe-2{
-    max-width:144px !important;
-    width:144px !important;
+  max-width:144px !important;
+  width:144px !important;
 }
 
 .add2 .pe-2 .tooltip{
-    max-width:145px !important;
-    width:145px !important;
+  max-width:145px !important;
+  width:145px !important;
 }
 
 .input-large, #patient_gender {
-    width: 283px;
+  width: 283px;
 }
 
 .add2 {
-    left: 580px;
-    position: absolute;
-    top: 135px;
+  left: 580px;
+  position: absolute;
+  top: 135px;
 }
 
 #contentcontainer .nickname {
-    left: 580px;
-    position: absolute;
-    top: 92px;
-    width: 100%;
+  left: 580px;
+  position: absolute;
+  top: 92px;
+  width: 100%;
+}
+
+#diagnosis_label {
+  margin-right: 16px;
+}
+
+
+
+
+
+
+
+/* PATIENT LAYOUT ALTERATIONS. */
+
+
+
+
+.new_patient, .edit_patient{
+  background : transparent !important;
+  border: 0px !important;
+}
+
+
+.whitebox {
+  background:white;
+  border: 1px solid #e2e2e2;
+  margin-bottom:20px;
+}
+
+.whitebox .purpleheader{
+  background-color: #5c5b82;
+  border: 1px solid #c7c7c7;
+  color: white;
+  font-family: "Raleway",sans-serif;
+  font-weight: 400;
+  height: 40px;
+  padding: 10px 15px;
+  clear:both;
+}
+
+.whitebox .fieldrow{
+  width:50%;
+  float:left;
+  height:50px;
+}
+
+.whitebox .fieldlabel{
+  float:left;
+  width:40%;
+  padding:5px 15px 5px 15px;
+}
+
+.whitebox .fieldvalue{
+  float:left;
+  width:60%;
+  padding:5px 15px 5px 15px;
+}
+
+
+.add2 {
+  position:static !important;
+}
+
+#copy_addr{
+  background: #2196f3 none repeat scroll 0 0;
+  font-size: 12px;
+  color: #fff;
+  height: 30px;
+  line-height: 15px;
+  margin: 0 0 0 0px;
+  padding: 0.5em 2em;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Titillium Web",sans-serif;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+#copy_addr:hover{
+  background: #2C8ADC;
+}
+
+
+.hideme{
+  display:none !important;
+}
+
+
+
+.add1 {
+  float:left;
+  width:50%;
+}
+
+.add2 {
+  float:left;
+  width:50%;
+}
+
+.whitebox .addresslabels{
+  float:left;
+  width:40%;
+  padding:5px 15px 5px 15px;
+}
+
+.whitebox .addressfields{
+  float:left;
+  width:60%;
+  padding:5px 15px 5px 15px;
+}
+
+.add2 .addresslabels{
+  float:left;
+  width:40%;
+  padding:5px 15px 5px 15px;
+}
+
+.whitebox .addressfields input, .whitebox .addressfields select{
+  margin-top:5px;
+  margin-bottom:5px;
+}
+
+
+#pname .fieldlabel {
+  margin-left:-15px;
+  margin-right:15px;
+  float: left;
+  padding: 5px 15px;
+  width: 40%;
+}
+
+
+
+.fieldlabel label {
+  width:100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fieldvalue input, .fieldvalue select, .addressfields input, .addressfields select {
+  width:100% !important;
+  max-width:236px;
+}
+
+
+
+#pdob .fieldvalue select#patient_birth_date_on_3i {
+  width:32% !important;
+  max-width:50px;
+}
+
+#pdob .fieldvalue select#patient_birth_date_on_2i {
+  width:32% !important;
+  max-width:95px;
+}
+
+#pdob .fieldvalue select#patient_birth_date_on_1i {
+  width:32% !important;
+  max-width:85px;
+}
+
+
+#patient_name{
+  margin-left:-3px;
+}
+
+.textblock {
+  padding: 10px 5px 5px 0px;
+}
+
+
+.insitutionlist{
+  padding:15px;
+  margin-top:44px;
+}
+
+
+.instituteform form{
+  width:100%;
+}
+
+.instituteform .patient-details{
+  padding:15px;
+}
+
+.instituteform .institution-name{
+  margin-top:0px;
+}
+
+.instituteform .row{
+  border:0px !important;
+}
+
+.instituteform .ftprow, .instituteform .loginrow{
+  display:block !important;
+  clear:both;
+}
+
+
+.instituteform .col.pe-2 {
+  flex: none;
+}
+
+.ftp1, .ftp2, .ftp3, .ftp4, .ftp5, .ftp6, .ftp7, .ftp8, .ftp9, .ftp10, .ftp11, .ftp12{
+  float:left !important;
+}
+
+.ftp1, .ftp7, .ftp10{ width:140px; }
+.ftp2, .ftp8, .ftp9, .ftp11, .ftp12{ width:210px; }
+.ftp3{ width:200px;}
+.ftp4{ width:55px; }
+.ftp5{ width:40px; }
+.ftp6{ width:200px; }
+
+.instituteform a.btn-link {
+  background: #ddd;
+}
+
+#print-content {
+  display: none;
+}
+
+
+.field_with_errors input[type="radio"]{
+  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+  border: 2px solid black;
+  border-radius: 50%;
+  color: white;
+  content: "";
+  font-family: "Open Sans",sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  height: 18px;
+  left: -32px;
+  line-height: 14px;
+  float:left;
+  margin-top:10px;
+  margin-left:-2px;
+  margin-right:6px;
+  text-align: center;
+  top: 10px;
+  transition: all 0.4s ease 0s;
+  width: 18px;
+  display:block !important;
+}
+
+.testflow .panel.patient-summary {
+  height: 186px;
+  overflow-y: scroll;
+}
+
+.testflow .panel.patient-details label, .testflow .panel.patient-details .custom-fields-title > .col {
+  min-width: 202px;
+}
+
+
+.historylogs {
+  min-width:550px !important;
+  float:right;
+}
+
+.historylogs label {
+  min-width:135px !important;
+}
+
+.historylogs li {
+  width:50%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

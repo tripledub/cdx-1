@@ -1,11 +1,11 @@
-= form_for([@requested_test, @microscopy_result], url: requested_test_microscopy_result_path(@requested_test, @microscopy_result), html: { autocomplete: 'off' }) do |f|
+= form_for([@encounter, @microscopy_result], url: encounter_microscopy_result_path(@encounter, @microscopy_result), html: { autocomplete: 'off' }) do |f|
   = validation_errors @microscopy_result
   .box-content
     .row
       .col.pe-2
-        = f.label :sample_collected_on
+        = f.label :sample_collected_at
       .col
-        = f.date_field :sample_collected_on
+        = f.text_field :sample_collected_at, readonly: true
     .row
       .col.pe-2
         = f.label :specimen_type
@@ -13,9 +13,9 @@
         = f.text_field :specimen_type
     .row
       .col.pe-2
-        = f.label :serial_number
+        = f.label :sample_identifier_id
       .col
-        = f.text_field :serial_number
+        = f.select :sample_identifier_id, SampleIdentifiers::Finder.available_samples(@encounter)
     .row
       .col.pe-2
         = f.label :appearance
@@ -45,14 +45,18 @@
         = f.label :examined_by
       .col
         = f.text_field :examined_by
-
     .row
       .col.pe-2
-        = f.label :result_on
+        = f.label :result_at
       .col
-        = f.date_field :result_on
+        = f.text_field :result_at, :class => 'datetimepicker'
+    .row
+      .col.pe-2
+        = f.label :comment
+      .col
+        = f.text_area :comment, rows: 4, cols: 70
 
     .row.button-actions
       .col
         = f.submit I18n.t('views.save'), class: 'btn-primary'
-        = link_to I18n.t('views.cancel'), encounter_path(@requested_test.encounter), class: 'btn-link'
+        = link_to I18n.t('views.cancel'), encounter_path(@encounter), class: 'btn-link'

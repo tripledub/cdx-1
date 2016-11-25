@@ -1,0 +1,15 @@
+en:
+  activerecord:
+    attributes:
+      patient:
+        social_security_code: 'CMND'
+        nationality: 'Nationality'
+    errors:
+      models:
+        patient:
+          attributes:
+            social_security_code:
+              cmnd_validation: 'should be between 9 and 15 characters long.'
+  patient:
+    validations:
+      cmnd: 'should be between 9 and 15 characters long.'

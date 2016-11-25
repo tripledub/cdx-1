@@ -1,20 +1,34 @@
 vi:
   encounters:
+    create:
+      test_order_created: 'Yêu cầu xét nghiệm mới được tạo'
     new:
       existing_test: 'Tồn tại xét nghiệm cho %{patient_name}'
       new_test: 'xét nghiệm mới cho %{patient_name}'
-      no_patient: 'Mỗi cuộc gặp phải thuộc về một bệnh nhân. Xin vui lòng đến trang Bệnh nhân và nhấn vào Thêm yêu cầu xét nghiệm'
+      no_patient: 'Mỗi yêu cầu xét nghiệm phải thuộc về một bệnh nhân. Xin vui lòng đến trang Bệnh nhân và nhấn vào Thêm yêu cầu xét nghiệm'
+      no_site: Bạn không thể chạy xét nghiệm mà không cần bất kỳ  sites nào.
     show:
       test_order: 'Yêu cầu xét nghiệm'
+      no_encounter: 'Yêu cầu xét nghiệm không tìm thấy.'
+      delete_test_order: 'xóa yêu cầu xét nghiệm'
+      create_notification: 'Tạo một thông báo cho yêu cầu xét nghiệm này'
     perform_encounter_action:
       merge: 'Không thể thêm một xét nghiệm hoặc mẫu thử thuộc về một %{entity_type} khác'
       error: 'Lỗi %{action_name} %{class_name}'
     edit:
       test_order: 'Yêu cầu xét nghiệm'
+    update:
+      status_tracking: 'Trạng thái của yêu cầu xét nghiệm đã cập nhật'
     new_index:
-      new_tests: 'xét nghiệm mới'
+      new_tests: 'Xét nghiệm mới'
       select_option: 'Hãy chọn một trong những tùy chọn bên dưới.'
       new_test_order: 'xét nghiệm mới'
       order_diagnostic_test: 'Yêu cầu xét nghiệm đối với bệnh nhân và mẫu. Chỉ định loại mẫu, loại xét nghiệm, lý do kiểm tra và ngày hết hạn. Thêm mã mẫu hoặc dùng bộ tạo mã mẫu.'
       reported_test: 'Đã báo cáo xét nghiệm'
       organise_test_result: 'Tổ chức và giao kết quả xét nghiệm cho bệnh nhân. Đánh giá kết quả và cung cấp chẩn đoán.'
+    destroy:
+      success: 'Yêu cầu xét nghiệm được xóa thành công.'
+      log_action: 'Đã xóa'
+      cancelled: 'Yêu cầu xét nghiêm đã xóa'
+      not_allowed: 'Bạn không thể xóa yêu cầu xét nghiệm này.'
+

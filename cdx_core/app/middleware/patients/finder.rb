@@ -8,6 +8,12 @@ class Patients::Finder
     set_filter
   end
 
+  class << self
+    def find_by_institution(institution, current_user)
+      Policy.authorize(Policy::Actions::READ_PATIENT, institution.patients, current_user)
+    end
+  end
+
   protected
 
   def set_filter
@@ -28,7 +34,7 @@ class Patients::Finder
   end
 
   def filter_by_name
-    @filter_query = filter_query.where("name LIKE concat('%', ?, '%')", @params[:name]) unless @params[:name].blank?
+    @filter_query = filter_query.where("patients.name LIKE concat('%', ?, '%')", @params[:name]) unless @params[:name].blank?
   end
 
   def filter_by_entity
@@ -55,6 +61,6 @@ class Patients::Finder
   end
 
   def end_date
-    @params[:until_dob].present? ? @params[:until_dob] : Date.today.strftime("%Y-%m-%d")
+    @params[:until_dob].present? ? @params[:until_dob] : Date.today.strftime('%Y-%m-%d')
   end
 end

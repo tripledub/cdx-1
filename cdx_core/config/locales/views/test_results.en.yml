@@ -38,6 +38,7 @@ en:
       test_performed_on: 'Test performed on'
       by: 'by'
       at: 'at'
+      id: 'Test ID'
       assays: 'Assays'
       additional_data: 'Additional data'
       sample: 'Sample'
@@ -63,8 +64,12 @@ en:
       test_results: 'test results'
       setup_devices: 'Setup your devices first in order to start reporting.'
       manual_results: 'You can add requested tests in your test orders.'
-      tab_device: 'Devices'
+      tab_device: 'Orphan tests'
       tab_microscopy: 'Microscopy'
       tab_xpert: 'Xpert'
       tab_culture: 'Culture'
       tab_dst_lpa: 'Dst_Lpa'
+      specimen_type:
+        sputum: "Sputum"
+        blood: "Blood"
+        other: "Other"

@@ -2,7 +2,9 @@ en:
   activerecord:
     attributes:
       dst_lpa_result:
-        sample_collected_on: 'Date sample collected'
+        id: 'Test ID'
+        result_status: 'Status'
+        sample_collected_at: 'Date sample collected'
         media_used: 'Method'
         serial_number: 'Lab serial number'
         results_h: 'Result H'
@@ -18,4 +20,6 @@ en:
         results_other3: 'Result Other'
         results_other4: 'Result Other'
         examined_by: 'Examined by'
-        result_on: 'Date of result'
+        result_at: 'Date of result'
+        sample_identifier_id: 'Sample ID'
+        feedback_message_id: 'Feedback message'

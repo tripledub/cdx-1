@@ -1,0 +1,7 @@
+vi:
+  activerecord:
+    attributes:
+      patient:
+        name: 'Tên *'
+        social_security_code: 'CMND *'
+        vitimes_id: 'Mã bệnh nhân Vitimes/E-TB'

@@ -15,6 +15,9 @@ en:
       episode_summary: 'Episode Summary'
       address: 'Permanent Address'
       alt_address: 'Contact Address'
+      male: "Male"
+      female: "Female"
+      other: "Other"
     filters:
       add_patient: 'Add patient'
       show_all: 'Show all'
@@ -33,12 +36,13 @@ en:
       no_entity: "Entity Id can't be blank"
       no_name: "Name can't be blank"
       success: 'Patient was successfully created.'
-      audit_log: 'New patient %{patient_name} added'
+      audit_log: 'New patient added'
     update:
       success: 'Patient was successfully updated.'
-      audit_log: '%{patient_name} patient details have been updated'
+      audit_log: 'patient details have been updated'
     destroy:
       success: 'Patient was successfully deleted.'
+      audit_log: 'patient was successfully deleted.'
     form:
       institution_label: 'Institution'
       select_day: 'Select day'
@@ -49,6 +53,9 @@ en:
       nickname_label: 'Nickname'
       medical_insurance_num: 'Medical Insurance Number'
       entity_id_label: 'Entity id'
+      external_id_label: 'External Patient ID'
+      external_id_tooltip: 'External Patient ID'
+      external_patient_system_tooltip: 'The System that the External Patient ID is from'
       gender_label: 'Gender'
       birth_date_on_label: 'Birth date on'
       email_label: 'Email'
@@ -65,6 +72,7 @@ en:
       social_security_code_tooltip: 'Social security Id. of the patient.'
       medical_insurance_num_tooltip: 'Medical Insurance Number of the patient.'
       copy_addr_button: 'Copy Address to other'
+      address_details: "Address Details"
     index:
       no_patients: 'No patients registered'
       keep_organized: 'Keep your test orders organized under patients medical history'
@@ -77,3 +85,15 @@ en:
         zero: 'No patients'
         one:  'One patient'
         other: '%{count} patients'
+    csv_export:
+      patient_id: 'Patient ID'
+      created_at: 'Date of creation'
+      site_id: 'Site ID'
+      etb_patient_id: 'ETB Patient ID'
+      vtm_patient_id: 'VITIMES Patient ID'
+      social_security_code: 'CMND'
+      entity_id: 'VITIMES/ETB Manager log ID'
+      external_id: 'External ID'
+      gender: 'Gender'
+      address: 'Address'
+      nationality: 'Nationality'

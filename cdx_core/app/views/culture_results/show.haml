@@ -16,9 +16,28 @@
             .row
               .col-6
                 %label
-                  = CultureResult.human_attribute_name(:sample_collected_on)
+                  = CultureResult.human_attribute_name(:result_status)
               .col-6
-                = I18n.l(@culture_result.sample_collected_on, format: :full_date)
+                = I18n.t("select.patient_result.status_options.#{@culture_result.result_status}")
+            - if @culture_result.any_feedback?
+              .row
+                .col-6
+                  %label
+                    = CultureResult.human_attribute_name(:feedback_message_id)
+                .col-6
+                  = FeedbackMessages::Finder.find_text_from_patient_result(@culture_result)
+            .row
+              .col-6
+                %label
+                  = CultureResult.human_attribute_name(:sample_collected_at)
+              .col-6
+                = Extras::Dates::Format.datetime_with_time_zone(@culture_result.sample_collected_at, :full_time)
+            .row
+              .col-6
+                %label
+                  = CultureResult.human_attribute_name(:result_at)
+              .col-6
+                = Extras::Dates::Format.datetime_with_time_zone(@culture_result.result_at, :full_time)
             .row
               .col-6
                 %label
@@ -28,9 +47,9 @@
             .row
               .col-6
                 %label
-                  = CultureResult.human_attribute_name(:serial_number)
+                  = CultureResult.human_attribute_name(:sample_identifier_id)
               .col-6
-                = @culture_result.serial_number
+                = SampleIdentifiers::Finder.result_sample_id_with_deleted(@culture_result)
             .row
               .col-6
                 %label
@@ -46,6 +65,14 @@
             .row
               .col-6
                 %label
-                  = CultureResult.human_attribute_name(:result_on)
+                  = CultureResult.human_attribute_name(:comment)
               .col-6
-                = I18n.l(@culture_result.result_on, format: :full_date)
+                = simple_format(@culture_result.comment)
+            .row
+              .col-6
+                %label
+                  = CultureResult.human_attribute_name(:comment)
+              .col-6
+                = simple_format(@culture_result.comment)
+
+= render partial: 'shared/approve_test_result', locals: { result: @culture_result, encounter: @encounter }

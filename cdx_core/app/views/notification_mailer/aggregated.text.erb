@@ -1,0 +1,7 @@
+<% for message, count in @notice_group.email_messages %>
+<%= message %>
+- <%= pluralize(count, Notification.model_name.human) %>
+
+<% end %>
+
+<%= I18n.t('middleware.notifications.gateway.email.aggregated_body', count: @gateway.aggregated_count, date: I18n.l(@gateway.aggregated_at, format: :long)) %>

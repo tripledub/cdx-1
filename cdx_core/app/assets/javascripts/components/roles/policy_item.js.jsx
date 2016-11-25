@@ -11,7 +11,7 @@ var PolicyItem = React.createClass({
         <div>
           <div className="resource-type">
             {I18n.t("components.policy_item.new_policy")}
-            <img src="<%= asset_url('ic-cross.png') %>" className="pull-right" onClick={this.remove} />
+            <img src="/img/ic-cross.png" className="pull-right" onClick={this.remove} />
           </div>
           <div className="description">{I18n.t("components.policy_item.description_msg")}</div>
         </div>
@@ -41,7 +41,7 @@ var PolicyItem = React.createClass({
         <div>
           <div className="resource-type">
             {statement.resourceType == 'encounter' ? I18n.t("components.policy_item.encounter") : statement.resourceType}{withSubsites}
-            <img src={Img.assetPath('ic-cross.png')} className="pull-right" onClick={this.remove} />
+            <img src="/img/ic-cross.png" className="pull-right" onClick={this.remove} />
           </div>
           <div className="description">{description}</div>
         </div>

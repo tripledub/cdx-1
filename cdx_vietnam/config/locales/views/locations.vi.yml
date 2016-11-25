@@ -4,5 +4,5 @@ vi:
       tbl_header: 'Vị trí'
       col_name: 'Tên'
     show:
-      parent: 'Cấp cha:'
+      parent: 'Tuyến trên:'
       admin: 'Cấp quản lý:'

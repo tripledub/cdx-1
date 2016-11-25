@@ -1,0 +1,72 @@
+vi:
+  activerecord:
+    model:
+      notification:
+        one: 'Alert'
+        other: 'Alerts'
+    errors:
+      models:
+        notification:
+          base:
+            sms_or_email: Bạn phải chọn một trong hai tin nhắn SMS hoặc Email làm phương pháp thông báo.
+          attributes:
+            encounter:
+              blank: 'Không tìm thấy mã định danh'
+    attributes:
+      notification:
+        institution_id: Tổ chức
+        test_order_id: Yêu cầu xét nghiệm
+        name: Tên
+        description: Mô tả
+        enabled: Bật
+        patient_identifier: Mã bệnh nhân
+        test_identifier: Mã xét nghiệm
+        sample_identifier: Mã mẫu thử
+        detection: Nhận diện
+        detection_condition: Điều kiện nhận diện
+        device_error_code: Mã lỗi thiết bị
+        frequency: Tần suất
+        frequency_value: Giá trị tần suất
+        email: Email?
+        email_message: Thông báo Email
+        email_limit: Giới hạn Email
+        sms: SMS?
+        sms_message: Tin nhắn SMS
+        sms_limit: Giới hạn SMS
+        last_notification_at: Lần thông báo cuối cùng 
+        deleted_at: Thời điểm xóa
+        created_at: Thời điểm tạo
+        updated_at: Thời điểm cập nhật
+        site_ids: Cơ sở
+        device_ids: Thiết bị
+        user_ids: Người dùng nội bộ
+        role_ids: Vai trò
+        recipient_ids: Người nhận đặc biệt
+        notification_statuses_names: Những trạng thái xét nghiệm
+        anomaly_type: Loại bất thường
+        utilisation_efficiency_threshold: Ngưỡng UE
+        utilisation_efficiency_last_checked_at: Lần kiểm tra UE cuối
+        utilisation_efficiency_sample_identifier: Mã mẫu thử
+      notification/condition:
+        condition_type: Loại điều kiện
+        field: Trường dữ liệu
+        value: Giá trị
+      notification/recipient:
+        first_name: Họ
+        last_name: Tên
+        email: Địa chỉ Email
+        telephone: Số điện thoại
+
+      notification_condition:
+        condition_type: Loại
+        field: Trường dữ liệu
+        value: Giá trị
+
+      notification_recipient:
+        first_name: Họ
+        last_name: Tên
+        email: Địa chỉ Email
+        telephone: Số điện thoại
+        deleted_at: Thời điểm xóa
+        created_at: Thời điểm tạo
+        updated_at: Thời điểm cập nhật

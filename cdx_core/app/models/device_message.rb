@@ -1,3 +1,4 @@
+# Saves a status message and raw data for each imported file.
 class DeviceMessage < ActiveRecord::Base
   belongs_to :device
   belongs_to :site
@@ -27,7 +28,7 @@ class DeviceMessage < ActiveRecord::Base
   }
 
   def plain_text_data
-    @plain_text_data ||= MessageEncryption.decrypt self.raw_data
+    @plain_text_data ||= MessageEncryption.decrypt(raw_data)
   end
 
   def parsed_messages
@@ -40,20 +41,21 @@ class DeviceMessage < ActiveRecord::Base
     self.record_failure err
   end
 
-  def record_failure err
+  def record_failure(err)
     self.index_failed = true
     self.index_failure_reason = err.message
   end
 
   def process
-    DeviceMessageProcessor.new(self).process
+    Device.current = device
+    Importer::DeviceMessageProcessor.new(self).process
   rescue => e
     self.record_failure e
     self.save
   end
 
   def encrypt
-    self.raw_data = MessageEncryption.encrypt self.plain_text_data
+    self.raw_data = MessageEncryption.encrypt(plain_text_data)
     self
   end
 

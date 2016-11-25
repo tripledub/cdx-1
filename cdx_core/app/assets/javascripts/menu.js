@@ -1,21 +1,32 @@
-$(document).on("ready", function(){
-  $(".icon-user").on('click', function(){
-    $(".user").toggleClass("show-nav-menu");
+// JS for shared/_header_dropdown.html.haml
+$(document).ready(function() {
+  $('body').append('<div class=\'menu-overlay\'></div>');
+
+  var $menuOverlay  = $('.menu-overlay');
+  var $userDropdown = $('.user .user-dropdown');
+
+  $menuOverlay.on('click', function() {
+    $userDropdown.removeClass('active');
+    $menuOverlay.removeClass('active');
   });
-  
-  $('body').click(function(e){
-    if (!e.target.matches('.icon-user')){
-      if($('.user').hasClass('show-nav-menu')){
-        $('.user').removeClass('show-nav-menu');
-      }
+
+  $('.user-dropdown-link').on('click', function(e) {
+    e.stopPropagation(); e.preventDefault();
+
+    if($userDropdown.hasClass('active')) {
+      $userDropdown.removeClass('active');
+      $menuOverlay.removeClass('active');
+    } else {
+      $userDropdown.addClass('active');
+      $menuOverlay.addClass('active');
     }
   });
-  
-  $('.select_lang').on('change', function(){
-    var lang = $('.select_lang').val();
+
+  $('.user .select_lang').on('change', function(){
+    var lang = $(this).val();
     $.ajax({
       url: '/users/change_language',
-      data: {language: lang},
+      data: { language: lang },
       success: function(){
         location.reload();
       }

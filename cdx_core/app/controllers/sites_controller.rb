@@ -1,3 +1,4 @@
+# Sites controller
 class SitesController < ApplicationController
   set_institution_tab :sites
 
@@ -17,13 +18,13 @@ class SitesController < ApplicationController
     respond_to do |format|
       format.html do
         @total           = @sites.count
-        order_by, offset = perform_pagination('sites.name')
+        order_by, offset = perform_pagination(table: 'sites_index', field_name: 'sites.name')
         @sites           = @sites.order(order_by).limit(@page_size).offset(offset)
         render layout: false if request.xhr?
       end
       format.csv do
-        csv_file = CsvGenerator::Sites.new(@sites)
-        headers["Content-disposition"] = "attachment; filename=#{csv_file.filename}"
+        csv_file = Sites::CsvGenerator.new(@sites, get_hostname)
+        headers['Content-disposition'] = "attachment; filename=#{csv_file.filename}"
         self.response_body = csv_file.build_csv
       end
     end
@@ -37,7 +38,7 @@ class SitesController < ApplicationController
     @site  = Site.new
     @sites = check_access(Site, READ_SITE).within(@navigation_context.institution)
     @site.parent = @navigation_context.site
-    prepare_for_institution_and_authorize(@site, CREATE_INSTITUTION_SITE)
+    authorize_resource(@site, CREATE_INSTITUTION_SITE)
   end
 
   # POST /sites
@@ -75,7 +76,10 @@ class SitesController < ApplicationController
   # PATCH/PUT /sites/1
   # PATCH/PUT /sites/1.json
   def update
-    redirect_to(sites_path, notice: I18n.t('sites.update.not_allowed', site_name: @site.name)) and return if !(authorize_resource(@site, UPDATE_SITE) && can_update_parent_site?)
+    redirect_to(
+      sites_path,
+      notice: I18n.t('sites.update.not_allowed', site_name: @site.name)
+    ) and return if !(authorize_resource(@site, UPDATE_SITE) && can_update_parent_site?)
 
     respond_to do |format|
       if @site.update(valid_params)
@@ -119,17 +123,35 @@ class SitesController < ApplicationController
   end
 
   def valid_params
-    allowed_params = [:name, :address, :parent_id, :city, :state, :zip_code, :country, :region, :sample_id_reset_policy, :main_phone_number, :email_address, :allows_manual_entry, :comment]
+    allowed_params = [
+      :name,
+      :address,
+      :parent_id,
+      :city,
+      :state,
+      :zip_code,
+      :country,
+      :region,
+      :sample_id_reset_policy,
+      :main_phone_number,
+      :email_address,
+      :allows_manual_entry,
+      :comment
+    ]
     params.require(:site).permit(*allowed_params)
   end
 
   def apply_filters
-    @sites = @sites.where("name LIKE ?", "%#{params[:name]}%") if params[:name].present?
+    @sites = @sites.where('name LIKE ?', "%#{params[:name]}%") if params[:name].present?
   end
 
   def can_update_parent_site?
     return true if valid_params[:parent_id] == @site.parent_id
 
     has_access?(@site.institution, CREATE_INSTITUTION_SITE)
+  end
+
+  def get_hostname
+    request.host || 'www.thecdx.org'
   end
 end

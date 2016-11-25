@@ -3,7 +3,7 @@
     .row.labelHeader
       .col-6
         %h3
-          = I18n.t('xpert_results.show.header', patient_name: patient_display_name(@requested_test.encounter.patient.name))
+          = I18n.t('xpert_results.show.header', patient_name: patient_display_name(@encounter.patient.name))
       .col-6
         %ul
           %li
@@ -14,9 +14,34 @@
         .row
           .col-6
             %label
-              = XpertResult.human_attribute_name(:sample_collected_on)
+              = XpertResult.human_attribute_name(:result_status)
           .col-6
-            = I18n.l(@xpert_result.sample_collected_on, format: :full_date)
+            = I18n.t("select.patient_result.status_options.#{@xpert_result.result_status}")
+        - if @xpert_result.any_feedback?
+          .row
+            .col-6
+              %label
+                = XpertResult.human_attribute_name(:feedback_message_id)
+            .col-6
+              = FeedbackMessages::Finder.find_text_from_patient_result(@xpert_result)
+        .row
+          .col-6
+            %label
+              = XpertResult.human_attribute_name(:sample_collected_at)
+          .col-6
+            = Extras::Dates::Format.datetime_with_time_zone(@xpert_result.sample_collected_at, :full_time)
+        .row
+          .col-6
+            %label
+              = XpertResult.human_attribute_name(:result_at)
+          .col-6
+            = Extras::Dates::Format.datetime_with_time_zone(@xpert_result.result_at, :full_time)
+        .row
+          .col-6
+            %label
+              = XpertResult.human_attribute_name(:sample_identifier_id)
+          .col-6
+            = SampleIdentifiers::Finder.result_sample_id_with_deleted(@xpert_result)
         .row
           .col-6
             %label
@@ -45,6 +70,8 @@
         .row
           .col-6
             %label
-              = XpertResult.human_attribute_name(:result_on)
+              = XpertResult.human_attribute_name(:comment)
           .col-6
-            = I18n.l(@xpert_result.result_on, format: :full_date)
+            = simple_format(@xpert_result.comment)
+
+= render partial: 'shared/approve_test_result', locals: { result: @xpert_result, encounter: @encounter }

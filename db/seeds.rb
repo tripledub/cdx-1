@@ -1,7 +1,12 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+if defined? CdxVietnam
+  [
+    { prefix: 'nlh', name: 'NLH Production HIS' },
+    { prefix: 'hlh', name: 'HLH Production HIS' },
+    { prefix: 'log', name: 'Log Book' },
+    { prefix: 'vit', name: 'Vitimes' },
+    { prefix: 'etb', name: 'E-TB Manager' }
+  ].each do |system|
+    extsys = ExternalSystem.where(prefix: system[:prefix]).first_or_create
+    extsys.update_attributes(system)
+  end
+end

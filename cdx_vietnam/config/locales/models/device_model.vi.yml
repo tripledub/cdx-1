@@ -4,4 +4,4 @@ vi:
     cannot_destroy_publish_device: 'Không thể hủy một kiểu thiết bị đã công bố'
     cannot_destroy_device: 'Không thể hủy một kiểu thiết bị với các thiết bị bên ngoài tổ chức'
     must_capture: "phải chụp lại số seri thiết bị, ví dụ:"
-    must_be_valid_pattern: 'phải là mô hình hợp lệ'
+    must_be_valid_pattern: 'phải là mẫu hợp lệ'

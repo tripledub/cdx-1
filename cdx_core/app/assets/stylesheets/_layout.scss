@@ -85,23 +85,24 @@ header {
   position: relative;
   outline: 0 !important;
 
-  span {
-    cursor: pointer;
-  }
-
-  ul {
+  .user-dropdown {
+    background: $white;
     border-radius: 3px;
     box-shadow: 0px 1px 3px rgba(0,0,0,0.4);
-    background: $white;
+    display: none;
+    right: 20px;
     margin-top: 20px;
-    width: 100%;
+    min-width: 150px;
     padding: 2px;
     position: absolute;
-    right: 0;
-    min-width: 150px;
-    visibility: hidden;
-    z-index: 1;
-    transition: visibility 0.2s;
+    top: 30px;
+    transition: display 0.2s;
+
+    width: 130px;
+
+    &.active {
+      display:block;
+    }
 
     a {
       border-radius: 3px;
@@ -116,38 +117,36 @@ header {
         color: $black;
       }
     }
-  }
-  
-  form {
-    padding: 10px;
-    color: $gray-xdark;
-    select {
-      option {
+
+    form {
+      padding: 10px;
+      color: $gray-xdark;
+      select {
+        option {
+          font-family: 'Open Sans', sans-serif;
+          font-size: 14.3999996185303px;
+          font-weight: normal;
+        }
         font-family: 'Open Sans', sans-serif;
         font-size: 14.3999996185303px;
         font-weight: normal;
       }
-      font-family: 'Open Sans', sans-serif;
-      font-size: 14.3999996185303px;
-      font-weight: normal;
     }
   }
-
-  // &:focus {
-    // pointer-events: none;
-    // ul {
-      // opacity: 1;
-      // visibility: visible;
-      // pointer-events: auto;
-    // }
-  // }
-  
 }
 
-.show-nav-menu {
-  ul {
-    opacity: 1;
-    visibility: visible;
+.menu-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 21000;
+
+  &.active {
+    display: block;
   }
 }
 
@@ -191,8 +190,21 @@ footer {
     }
   }
 
+  .col {
+    padding: 3px;
+
+    &.remember-me {
+      padding-top: 5px;
+    }
+  }
+
   a {
     color: $blue;
+
+    &.btn-secondary {
+      color: #fff;
+      margin-top: 10px;
+    }
   }
 }
 
@@ -266,4 +278,246 @@ overflow-y:auto;
 
 #contentcontainer {
 overflow:auto;
+}
+
+.mainactions{
+width:100%;
+padding:0px;
+}
+
+.financebuttons{
+width:100%;
+}
+.mainactions > .col-6{
+width:100%;
+max-width:100% !important;
+}
+
+.financebuttons .side-link{
+margin-left:0px;
+line-height: 27px;
+}
+
+
+form.button_to{
+float:right;
+margin-top:-106px;
+margin-right:20px;
+}
+
+
+.box-content .row {
+align-items:flex-start !important;
+}
+
+.box-content .row .pe-2 label{
+min-height:30px;
+line-height:25px;
+margin:0px !important;
+}
+
+.presumptiveclass .col-6{
+border-top:1px solid #ddd;
+padding-top:10px;
+border-bottom:1px solid #ddd;
+margin-bottom:10px;
+}
+
+.presumptiveclass .col-6 label{
+font-weight:normal !important;
+}
+
+.presumptiveclass > .row > .col-6:first-child{
+border-top:0;
+border-bottom:0;
+}
+
+
+.bettertabs {
+  margin:1em 0;
+}
+
+.button_to .btn-danger{
+  line-height:20px;
+}
+
+.addalertbut{
+  margin-left: 15px;
+  margin-top: -50px;
+  line-height: 27px;
+}
+
+
+.button_to .btn-danger{
+  line-height:20px;
+}
+
+.addalertbut{
+  margin-left:15px;
+  margin-top:-50px;
+  line-height:27px;
+}
+
+.alert-container{
+  border:1px solid #ddd;
+  padding:15px;
+  background: rgba(240,167,163,1);
+  background: -moz-linear-gradient(top, rgba(240,167,163,1) 0%, rgba(250,246,245,1) 99%, rgba(250,246,245,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(240,167,163,1)), color-stop(99%, rgba(250,246,245,1)), color-stop(100%, rgba(250,246,245,1)));
+  background: -webkit-linear-gradient(top, rgba(240,167,163,1) 0%, rgba(250,246,245,1) 99%, rgba(250,246,245,1) 100%);
+  background: -o-linear-gradient(top, rgba(240,167,163,1) 0%, rgba(250,246,245,1) 99%, rgba(250,246,245,1) 100%);
+  background: -ms-linear-gradient(top, rgba(240,167,163,1) 0%, rgba(250,246,245,1) 99%, rgba(250,246,245,1) 100%);
+  background: linear-gradient(to bottom, rgba(240,167,163,1) 0%, rgba(250,246,245,1) 99%, rgba(250,246,245,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0a7a3', endColorstr='#faf6f5', GradientType=0 );
+  font-size:12px;
+}
+
+.alert-container .alert-error::before {
+  content: "Error!";
+  font-weight:bold;
+  border-bottom:1px solid red;
+  width:100%;
+  display:block;
+  padding-bottom:5px;
+  margin-bottom:5px;
+  font-size:14px;
+}
+
+.alert-container .alert-error ul li{
+  list-style-type: square;
+  margin-left:13px;
+}
+
+
+
+.patientcardholder, .patientcardholder * {
+box-sizing:border-box;
+}
+
+.patientcardholder{
+border:1px solid #6D6C8B;
+min-height:340px;
+}
+
+.patientheader{
+background:#6D6C8B;
+height:35px;
+}
+
+.patientdetailsleft{
+float:left;
+width:130px;
+padding:15px;
+padding-top:0px;
+margin-top:-302px;
+}
+
+.patientimageholder{
+width:115px;
+height:115px;
+border:1px solid #CECED1;
+}
+
+.patientimagebutton{
+background:#2196F3;
+width:115px;
+border-radius:2px;
+margin-top:20px;
+padding:5px;
+text-align:center;
+color:white;
+}
+
+.patientimagebutton a{
+    color:white !important;
+    font-family: "Titillium Web", sans-serif;
+    font-weight:bold;
+    font-size:12px;
+}
+
+
+.patientdetailsright{
+  float:right;
+  width:100%;
+  padding-left:150px;
+}
+
+.patientcardholder label{
+  width:140px;
+}
+
+.patientcardholder{
+  min-width:490px;
+  margin-bottom:20px;
+}
+
+.newTestOrder .col-6 {
+  max-width: 40% !important;
+}
+
+.newTestOrder .pe-2 {
+  min-width:200px !important;
+}
+
+
+@media (max-width: 1300px) {
+  .patientcardholder{
+    min-height:340px;
+    position:relative !important;
+    min-width: 400px;
+  }
+
+.patientimageholder{
+    display:none;
+}
+
+.patientdetailsright{
+    float:none;
+    padding:0px;
+    padding-left:10px;
+    width:100%;
+}
+
+.patientdetailsleft{
+    margin-top:-330px;
+    margin-left:-4px;
+}
+
+.patientimagebutton{
+    width:100%;
+    height:25px;
+    line-height:15px;
+}
+
+
+}
+
+@media (max-width: 1150px) {
+  .patientcardholder{
+    min-width: 371px;
+  }
+
+  .patientdetailsleft {
+    margin-top: -368px;
+  }
+}
+
+@media (max-width: 905px) {
+  .patientcardholder{
+    min-width: 412px;
+  }
+
+  .patientdetailsleft {
+    margin-top: -375px;
+  }
+}
+
+.patientCard {
+    max-width: 100% !important;
+}
+
+.newTestOrder .col-6 {
+    flex:none !important;
+    max-width:50% !important;
+    width:50%;
 }

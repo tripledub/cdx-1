@@ -5,7 +5,7 @@ describe Patient do
     it { should have_many(:episodes) }
   end
 
-  context "validations" do
+  describe "validations" do
     it "should make a valid patient" do
       expect(Patient.make_unsaved).to be_valid
       expect(Patient.make_unsaved :phantom).to be_valid
@@ -66,12 +66,24 @@ describe Patient do
         patient.plain_sensitive_data['gender'] = 'male'
         expect(patient).to be_invalid
       end
-
     end
-
   end
 
-  context "within" do
+  describe 'active_episodes?' do
+    let(:patient) { Patient.make }
+    let!(:episode) { Episode.make patient: patient}
+
+    it 'should return true if patient has any open episodes' do
+      expect(patient.active_episodes?).to be true
+    end
+
+    it 'should return false if patient has no episodes or they are closed' do
+      episode.update_attribute(:closed_at, Time.now)
+      expect(patient.active_episodes?).to be false
+    end
+  end
+
+  describe "within" do
     let!(:site) { Site.make }
     let!(:subsite) { Site.make parent: site, institution: site.institution }
     let!(:other_site) { Site.make }

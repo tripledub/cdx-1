@@ -1,5 +1,5 @@
-.row
-  .col.pe-2
+.addressrow
+  .addresslabels
     %div.tooltip
       = address_form.label :address, prefix << I18n.t('addresses.form.address')
       %div.tooltiptext_r
@@ -13,13 +13,16 @@
       %div.tooltiptext_r
         = I18n.t('addresses.form.state_tooltip')
     %div.tooltip
+      = address_form.label :country, I18n.t('addresses.form.country')
+      %div.tooltiptext_r
+        = I18n.t('addresses.form.country_tooltip')
+    %div.tooltip.zipcode
       = address_form.label :zip_code, I18n.t('addresses.form.zip_code')
       %div.tooltiptext_r
         = I18n.t('addresses.form.zip_code_tooltip')
-  .col
+  .addressfields
     = address_form.text_field :address, :class => 'input-large'
     = address_form.text_field :city, :class => 'input-large'
-    = address_form.text_field :state, :class => 'input-large'
-    = address_form.text_field :zip_code, :class => 'input-large'
-  .col
-  .col
+    = render partial: 'addresses/region_form', locals: { address_form: address_form }
+    = render partial: 'addresses/country_select_form', locals: { address_form: address_form }
+    = address_form.text_field :zip_code, :class => 'input-large zipcode'

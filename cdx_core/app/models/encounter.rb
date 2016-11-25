@@ -1,48 +1,70 @@
+# Test order model
 class Encounter < ActiveRecord::Base
   include Entity
   include AutoUUID
   include Resource
   include SiteContained
+  include Auditable
+  include NotificationObserver
 
   ASSAYS_FIELD = 'diagnosis'
   OBSERVATIONS_FIELD = 'observations'
 
   has_many :samples, dependent: :restrict_with_error
   has_many :test_results, dependent: :restrict_with_error
-  has_many :requested_tests, autosave: true, dependent: :destroy
+  has_many :patient_results, dependent: :destroy
+  has_many :xpert_results
+  has_many :audit_logs
+  has_many :notifications
 
   belongs_to :performing_site, class_name: 'Site'
-
-  enum status: [:pending, :inprogress, :completed]
-
   belongs_to :patient
   belongs_to :user
+  belongs_to :institution
+  belongs_to :feedback_message
 
   validates_presence_of :patient
-
+  validates_presence_of :institution
   validates_presence_of :site, if: Proc.new { |encounter| encounter.institution }
-
-  validates_inclusion_of :culture_format, :allow_nil => true, in: ['solid', 'liquid'], if: Proc.new { |encounter| encounter.testing_for == 'TB' }
-
+  validates_inclusion_of :culture_format, allow_nil: true, in: %w(solid liquid), if: Proc.new { |encounter| encounter.testing_for == 'TB' }
+  validates_inclusion_of :status,  in: %w(new financed not_financed samples_received samples_collected pending in_progress closed)
   validate :validate_patient
 
   before_save :ensure_entity_id
+  before_create :set_default_status
+  notification_observe_field :status
 
   class << self
     def entity_scope
-      "encounter"
+      'encounter'
     end
 
     def testing_for_options
-      [['TB', I18n.t('select.encounter.testing_for_options.tb')], ['HIV', I18n.t('select.encounter.testing_for_options.hiv')], ['Ebola', I18n.t('select.encounter.testing_for_options.ebola')]]
+      [
+        ['TB', I18n.t('select.encounter.testing_for_options.tb')],
+        ['HIV', I18n.t('select.encounter.testing_for_options.hiv')],
+        ['Ebola', I18n.t('select.encounter.testing_for_options.ebola')]
+      ]
     end
 
     def culture_format_options
-      [['solid', I18n.t('select.culture.media_options.solid')], ['liquid', I18n.t('select.culture.media_options.liquid')]]
+      [
+        ['solid', I18n.t('select.culture.media_options.solid')],
+        ['liquid', I18n.t('select.culture.media_options.liquid')]
+      ]
     end
 
     def status_options
-      [['0', I18n.t('select.encounter.status_options.pending')], ['1', I18n.t('select.encounter.status_options.inprogress')], ['2', I18n.t('select.encounter.status_options.completed')]]
+      [
+        ['new', I18n.t('select.encounter.status_options.new')],
+        ['financed', I18n.t('select.encounter.status_options.financed')],
+        ['samples_collected', I18n.t('select.encounter.status_options.samples_collected')],
+        ['samples_received', I18n.t('select.encounter.status_options.samples_received')],
+        ['pending', I18n.t('select.encounter.status_options.pending')],
+        ['in_progress', I18n.t('select.encounter.status_options.in_progress')],
+        ['not_financed', I18n.t('select.encounter.status_options.not_financed')],
+        ['closed', I18n.t('select.encounter.status_options.closed')]
+      ]
     end
 
     def merge_assays(assays1, assays2)
@@ -108,8 +130,24 @@ class Encounter < ActiveRecord::Base
     core_fields["id"]
   end
 
+  def not_financed?
+    status == 'not_financed'
+  end
+
+  def financed?
+    status == 'financed'
+  end
+
+  def has_sample_ids?
+    samples.present? && samples.first.sample_identifiers
+  end
+
   def has_entity_id?
     entity_id.not_nil?
+  end
+
+  def has_dirty_diagnostic?
+    test_results_not_in_diagnostic.count > 0
   end
 
   def phantom?
@@ -145,10 +183,6 @@ class Encounter < ActiveRecord::Base
 
   attribute_field OBSERVATIONS_FIELD
 
-  def has_dirty_diagnostic?
-    test_results_not_in_diagnostic.count > 0
-  end
-
   def updated_diagnostic
     assays_to_merge = test_results_not_in_diagnostic\
       .map{|tr| tr.core_fields[TestResult::ASSAYS_FIELD]}
@@ -181,10 +215,17 @@ class Encounter < ActiveRecord::Base
     "CDP-#{self.id.to_s.rjust(7, '0')}"
   end
 
+  def tests_requiring_approval
+    "#{patient_results.pending_approval.count} / #{patient_results.count}"
+  end
+
   protected
 
   def ensure_entity_id
     self.entity_id = entity_id
   end
 
+  def set_default_status
+    self.status = 'new'
+  end
 end

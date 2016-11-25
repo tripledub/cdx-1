@@ -110,7 +110,7 @@ RSpec.describe Reports::Errors, elasticsearch: true do
       @tests = Reports::Errors.process(current_user, nav_context)
     end
 
-    it 'finds 2 tests when scoped to user/site one' do
+    it 'finds 3 tests when scoped to user/site one' do
       expect(@tests.results['total_count']).to eq(3)
     end
 

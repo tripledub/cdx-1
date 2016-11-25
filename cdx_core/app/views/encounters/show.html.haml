@@ -7,15 +7,24 @@
             = link_to "javascript:history.back();", class: 'side-link', title: I18n.t('views.back') do
               = image_tag "arrow-left-white.png"
             = I18n.t('encounters.show.test_order')
+- @encounter_as_json['coll_sample_type'] = I18n.t("test_results.index.specimen_type.#{@encounter_as_json['coll_sample_type']}")
 = react_component('EncounterShow',
   encounter: @encounter_as_json,
+  patientResults: PatientResults::Presenter.for_encounter(@encounter.patient_results),
   context: @navigation_context,
-  requestedTests: Presenters::RequestedTests.index_view(@encounter),
-  requested_by: @encounter.user !=nil ? @encounter.user.email : '',
-  canUpdate: has_access?(@encounter, Policy::Actions::UPDATE_ENCOUNTER),
-  showEdit: @show_edit_encounter,
-  showCancel: @show_cancel_encounter,
-  referer: @return_path_encounter,
-  statusTypes: RequestedTest.statuses,
-  associatedTestsToResults: PatientResult.find_associated_tests_to_results(@encounter),
-  showDstWarning: @encounter.requested_tests.show_dst_warning)
+  manualSampleId: @encounter.site.allows_manual_entry,
+  encounterRoutes: encounter_routes(@encounter),
+  rejectReasons: FeedbackMessages::Presenter.reject_reasons(@encounter.institution),
+  authenticityToken: form_authenticity_token)
+
+- if @encounter.status == 'new'
+  .row
+    .col
+      = button_to I18n.t('encounters.show.delete_test_order'), encounter_path(@encounter), method: :delete, class: 'btn-danger', data: { confirm: I18n.t('views.are_you_sure')}
+
+- content_for(:print_content) do
+  - if @encounter.has_sample_ids?
+    .row.center
+      = sample_id_barcode(@encounter.samples.first.sample_identifiers.first.cpd_id_sample)
+    .row.center
+      = "CDPSAMPLE#{@encounter.samples.first.sample_identifiers.first.cpd_id_sample}CDPSAMPLE"

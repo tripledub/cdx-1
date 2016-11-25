@@ -1,0 +1,20 @@
+= render "filters"
+
+.row.paginationHeader
+  .col
+    - if @integration_logs.empty?
+      = empty_data icon: 'icon-outline-report xx-large' do |c|
+        - c.body do
+          %h1
+            = I18n.t('integration_logs.index.no_log')
+    - else
+      %section.row
+        .small-12.columns.box
+          %header
+            = image_tag('img/fail.png')
+            %h3
+              = I18n.t('integration_logs.index.log', count: @total)
+          = react_component "IntegrationLogsIndexTable", logs: Presenters::IntegrationLogs.index_table(@integration_logs),
+              orderBy: params["order_by"] || "-integration_logs.updated_at"
+          .pagination
+            = render 'shared/pagination'

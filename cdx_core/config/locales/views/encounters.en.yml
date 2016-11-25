@@ -1,16 +1,24 @@
 en:
   encounters:
+    create:
+      test_order_created: 'New test order created'
     new:
       existing_test: 'Existing test for %{patient_name}'
       new_test: 'New test order for %{patient_name}'
       no_patient: 'Every new test order must belong to a patient. Please go to a patient page and click on Add test order'
+      no_site: You cannot run a test without any sites.
     show:
       test_order: 'Test order'
+      no_encounter: 'Test order not found.'
+      delete_test_order: 'Delete test order'
+      create_notification: 'Create an alert for this test order'
     perform_encounter_action:
       merge: 'Cannot add a test or sample that belongs to a different %{entity_type}'
       error: 'Error %{action_name} %{class_name}'
     edit:
       test_order: 'Test Order'
+    update:
+      status_tracking: 'Test order status updated'
     new_index:
       new_tests: 'New Tests'
       select_option: 'Please select one of the options below.'
@@ -20,6 +28,6 @@ en:
       organise_test_result: 'Organise and assign test results to patients. Review results and provide diagnosis.'
     destroy:
       success: 'Test order was successfully deleted.'
-      log_action: 'Test order %{uuid} Cancelled'
-      cancelled: 'Test order Cancelled'
+      log_action: 'deleted'
+      cancelled: 'Test order deleted'
       not_allowed: 'You can not delete this test order.'

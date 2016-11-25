@@ -1,3 +1,4 @@
+# Saves all different changes occurred to all activities related to patients.
 class AuditUpdate < ActiveRecord::Base
   include AutoUUID
 

@@ -1,9 +1,14 @@
 vi:
+  activerecord:
+    models:
+      encounter: 'Yêu cầu xét nghiệm'
   encounters:
     status:
-      pending: 'Chưa tiến hành'
-      in_progress: 'Đang tiến hành'
-      completed: 'Hoàn thành'
+      new: 'Mẫu mới'
+      pending: 'Đang đợi xử lý'
+      in_progress: 'Đang xử lý'
+      completed: 'Hoàn tất'
+      approved: 'Đã phê duyệt'
       site_id: 'Yêu cầu bởi'
-      performing_site_id: 'Yêu cầu cho'
-      user_id: 'Đặt hàng cho'
+      performing_site_id: 'Cơ sở thực hiện xét nghiệm'
+      user_id: 'Yêu cầu từ người dùng'

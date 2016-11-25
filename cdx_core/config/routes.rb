@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   end
 
   devise_scope :user do
-    root to: "sessions#new"
+    root to: 'sessions#new'
   end
 
   get 'verify' => 'home#verify'
@@ -51,7 +51,21 @@ Rails.application.routes.draw do
 
   get 'settings' => 'home#settings'
 
+  resources :test_orders_state, only: [:index, :show]
+
   resources :encounters do
+    resource :patient_results, only: [:update] do
+      collection do
+        post :update_samples
+      end
+    end
+
+    resource  :samples, only: [:create]
+    resources :xpert_results, only: [:show, :edit, :update]
+    resources :microscopy_results, only: [:show, :edit, :update]
+    resources :dst_lpa_results, only: [:show, :edit, :update]
+    resources :culture_results, only: [:show, :edit, :update]
+
     collection do
       get :new_index
 
@@ -104,16 +118,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :requested_tests , only: [:update] do
-    resource :xpert_result, only: [:new, :create, :show, :edit, :update]
-    resource :microscopy_result, only: [:new, :create, :show, :edit, :update]
-    resource :dst_lpa_result, only: [:new, :create, :show, :edit, :update]
-    resource :culture_result, only: [:new, :create, :show, :edit, :update]
-    resource :undefined_result, only: [:show]
-  end
-
-  resources :test_results , only: [:index, :show]
-  resources :test_orders , only: [:index]
+  resources :test_results, only: [:index, :show]
+  resources :test_orders, only: [:index]
+  resources :approvals, only: [:index]
   resources :filters, format: 'html'
   resources :subscribers
   resources :policies
@@ -126,8 +133,8 @@ Rails.application.routes.draw do
     resources :patient_logs, only: [:index, :show] do
       resources :audit_updates, only: [:index]
     end
-    resources :patient_test_results , only: [:index]
-    resources :patient_test_orders ,  only: [:index]
+    resources :patient_test_results, only: [:index]
+    resources :patient_test_orders,  only: [:index, :update]
     resources :episodes
   end
 
@@ -135,10 +142,9 @@ Rails.application.routes.draw do
 
   resources :ftp_settings, only: [:edit, :update]
 
-  resources :alerts, except: [:show]
-  resources :incidents, only: [:index]
-  resources :alert_messages, only: [:index]
-  resources :alert_groups, except: [:show]
+  resources :incidents, controller: 'notification_notices', only: [:index]
+  resources :alerts, only: [:index, :new]
+  resources :alert_groups, controller: 'notifications', except: [:show]
 
   scope :dashboards, controller: :dashboards do
     get :index, as: :dashboard

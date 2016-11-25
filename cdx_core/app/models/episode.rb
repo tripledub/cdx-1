@@ -5,8 +5,9 @@ class Episode < ActiveRecord::Base
 
   belongs_to :patient
 
-  validates_presence_of :diagnosis, :hiv_status, :drug_resistance, :initial_history
+  validates_presence_of :diagnosis, :hiv_status, :initial_history
   validates :previous_history, presence: true, if: Proc.new { |a| a.initial_history == 'previous' }
+  validates :drug_resistance, presence: true, if: Proc.new { |a| a.initial_history == 'previous' }
 
   before_save :check_closing
 
@@ -54,6 +55,7 @@ class Episode < ActiveRecord::Base
       OpenStruct.new(id: :multi, name: I18n.t('select.episode.drug_resistance.multi')),
       OpenStruct.new(id: :extensive, name: I18n.t('select.episode.drug_resistance.extensive')),
       OpenStruct.new(id: :rif, name: I18n.t('select.episode.drug_resistance.rif')),
+      OpenStruct.new(id: :prexdr, name: I18n.t('select.episode.drug_resistance.prexdr')),
       OpenStruct.new(id: :unknown, name: I18n.t('select.episode.drug_resistance.unknown'))
     ]
   end

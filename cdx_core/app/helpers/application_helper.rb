@@ -37,10 +37,6 @@ module ApplicationHelper
     has_access?(Institution, Policy::Actions::REGISTER_INSTITUTION_DEVICE_MODEL) || check_access(DeviceModel, Policy::Actions::READ_DEVICE_MODEL).exists?
   end
 
-  def has_access_to_test_results_index?
-    has_access?(TestResult, Policy::Actions::QUERY_TEST)
-  end
-
   def has_access_to_users_index?
     has_access?(Site, Policy::Actions::READ_SITE_USERS) || has_access?(Institution, Policy::Actions::READ_INSTITUTION_USERS)
   end
@@ -72,25 +68,17 @@ module ApplicationHelper
   end
 
   def flash_message
-    res = nil
-
-    keys = { :notice => 'flash_notice', :error => 'flash_error', :alert => 'flash_error' }
-
-    keys.each do |key, value|
-      if flash[key].present?
-        html_option = { :class => "flash #{value}" }
-        res = content_tag :div, html_option do
-          content_tag :div do
-            flash[key]
-          end
-        end
+    String.new.tap do |s|
+      {
+        :notice => 'flash_notice',
+        :error => 'flash_error',
+        :alert => 'flash_error'
+      }.each do |key, value|
+        next if flash[key].blank?
+        s << content_tag(:div, content_tag(:div, h(flash[key])), :class => "flash #{value}")
       end
-    end
-
-    res
+    end.html_safe
   end
-
-
 
   def test_results_table(attributes)
     options = { filter: {} }
@@ -132,6 +120,10 @@ module ApplicationHelper
     @navigation_context.try(:site).try(:name) || @navigation_context.institution.name
   end
 
+  def print_theme
+    @barcode_available ? 'barcode-print' : 'page-print'
+  end
+
   def institution_name
     institutions = check_access(Institution, READ_INSTITUTION) || []
     if institutions.one?
@@ -143,15 +135,40 @@ module ApplicationHelper
     end
   end
 
+  def default_order(new_order, default_order)
+    order_values = cookies['table_order'].present? ? JSON.parse(cookies['table_order']) : {}
+    if new_order.present?
+      order_values[default_order[:table]] = new_order
+    elsif !order_values[default_order[:table]]
+      order_values[default_order[:table]] = default_order[:field_name]
+    end
+    params['order_by'] = order_values[default_order[:table]]
+    cookies['table_order'] = { value: order_values.to_json, expires: 1.year.from_now }
+
+    if (params['order_by'][0] == '-')
+      "#{params['order_by'][1..-1]} DESC"
+    else
+      params['order_by']
+    end
+  end
+
+  def set_filter_from_params(filter_model)
+    filter_data = filter_model.new(params, cookies)
+    filter_data.update
+    params.merge(filter_data.params)
+    cookies[filter_data.name] = { value: filter_data.current_data.to_json, expires: 1.year.from_now }
+  end
+
   def filters_params
     filters_params = params
-    ['controller', 'action', 'page_size', 'page'].each do |param|
+    %w(controller action page_size page).each do |param|
       filters_params.delete(param)
     end
     filters_params
   end
 
   define_component :card, sections: [:top, :actions, :bottom], attributes: [:image]
+  define_component :patient_card, sections: [:top, :actions, :bottom], attributes: [:image]
   define_component :cdx_table, sections: [:columns, :thead, :tbody, :actions], attributes: [:title]
   define_component :empty_data, sections: [:body] ,attributes: [:icon, :title]
   define_component :setting_card, sections: [:body], attributes: [:title, :href, :icon]

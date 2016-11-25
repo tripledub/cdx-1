@@ -43,7 +43,7 @@ var Modal = React.createClass({
       return (<div className="modal-wrapper" onClick={this.hideOnOuterClick} onKeyDown={this.handleKeyDown}>
         <div className="modal">
           <div className="close-modal" onClick={this.hide} title="Close">
-            <Img src="/assets/ic-cross.png" />
+            <img src="/img/ic-cross.png" />
           </div>
           {this.props.children}
         </div>

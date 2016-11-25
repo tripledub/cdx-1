@@ -1,33 +1,41 @@
 require 'spec_helper'
 require 'policy_spec_helper'
 
-RSpec.describe EncountersController, type: :controller, elasticsearch: true do
+RSpec.describe EncountersController, type: :controller do
   let(:institution)    { Institution.make }
   let(:site)           { Site.make institution: institution }
   let(:user)           { institution.user }
   let(:patient)        { Patient.make institution: institution }
+  let!(:episode)       { Episode.make patient: patient }
   let(:default_params) { { context: institution.uuid } }
+  let(:encounter)      { Encounter.make institution: institution, site: site, patient: patient }
+  let(:test_results) do
+    XpertResult.make encounter: encounter
+    CultureResult.make encounter: encounter
+    MicroscopyResult.make encounter: encounter
+    DstLpaResult.make encounter: encounter
+    TestResult.make encounter: encounter
+  end
+  let(:clinician)      { User.make }
 
   before(:each) do
     grant nil, user, Encounter,  [DELETE_ENCOUNTER]
     sign_in user
   end
 
-  describe "destroy" do
+  describe 'destroy' do
     context 'an admin user' do
-      let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, status: 0 }
+      let(:encounter) { Encounter.make institution: institution, site: site, patient: patient }
 
-      it "should destroy an encounter if status is pending" do
+      it 'should delete an encounter only if status is new' do
         delete :destroy, id: encounter.id
 
-        expect(Encounter.count).to eq 0
+        expect(Encounter.where(id: encounter.id).first).to_not be
         expect(response).to be_redirect
       end
     end
 
     context 'a clinician' do
-      let(:clinician) { User.make }
-
       before(:each) do
         sign_out user
         clinician.institutions << institution
@@ -37,11 +45,13 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         grant clinician, user, Encounter,  [DELETE_ENCOUNTER]
 
         sign_in clinician
-        delete :destroy, id: encounter.id
       end
 
       context 'if encounter is in progress' do
-        let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, status: 1 }
+        before :each do
+          encounter.update_attribute(:status, 'in_progress')
+          delete :destroy, id: encounter.id
+        end
 
         it 'should not be able to destroy it' do
           expect(Encounter.count).to eq 1
@@ -53,7 +63,10 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       end
 
       context 'if encounter is completed' do
-        let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, status: 2 }
+        before :each do
+          encounter.update_attribute(:status, 'approved')
+          delete :destroy, id: encounter.id
+        end
 
         it 'should not be able to destroy it' do
           expect(Encounter.count).to eq 1
@@ -64,12 +77,13 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         end
       end
 
-      context 'if encounter status is pending' do
-        let(:encounter) { Encounter.make institution: institution, site: site, patient: patient, status: 0 }
-
+      context 'if encounter status is new' do
         it 'should be able to destroy it' do
           expect(Encounter.count).to eq 0
-          expect(response).to be_redirect
+        end
+
+        it 'should delete all related patient results' do
+          expect(PatientResult.count).to eq(0)
         end
       end
     end
@@ -88,19 +102,28 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
       expect(response).to redirect_to(test_orders_path)
     end
+
+    context 'if no episodes are available' do
+      before :each do
+        episode.update_attribute(:closed_at, Time.now)
+        get :new, patient_id: patient.id
+      end
+
+      it 'should redirect to test orders' do
+        expect(response).to redirect_to(test_orders_path)
+      end
+    end
   end
 
   describe "GET #show" do
     it "returns http success if allowed" do
-      i1      = Institution.make
-      patient = Patient.make institution: i1
-      grant i1.user, user, {site: i1}, CREATE_SITE_ENCOUNTER
-      grant i1.user, user, {encounter: i1}, READ_ENCOUNTER
-      encounter         = Encounter.make institution: i1, patient: patient
-      sample_identifier = SampleIdentifier.make(site: site, entity_id: "entity random", lab_sample_id: 'Random lab sample', sample: Sample.make(institution: i1, encounter: encounter, patient: patient))
+      patient = Patient.make institution: institution
+      encounter = Encounter.make institution: institution, patient: patient
+      #sample_identifier = SampleIdentifier.make(site: site, entity_id: "entity random", cpd_id_sample: '1030001', sample: Sample.make(institution: institution, encounter: encounter, patient: patient))
       get :show, id: encounter.id
 
       expect(response).to have_http_status(:success)
+      expect(assigns[:encounter_as_json]).to include('user' => user)
       expect(assigns[:can_update]).to be_falsy
       expect(assigns[:show_edit_encounter]).to be_truthy
       expect(assigns[:show_cancel_encounter]).to be_falsy
@@ -112,19 +135,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       encounter = Encounter.make institution: i1, patient: patient
       get :show, id: encounter.id
 
-      expect(response).to have_http_status(:forbidden)
-    end
-
-    it "redirects to edit if can edit" do
-      i1      = Institution.make
-      patient = Patient.make institution: i1
-      grant i1.user, user, {site: i1}, CREATE_SITE_ENCOUNTER
-      grant i1.user, user, {encounter: i1}, READ_ENCOUNTER
-      grant i1.user, user, {encounter: i1}, UPDATE_ENCOUNTER
-      encounter = Encounter.make institution: i1, patient: patient
-      get :show, id: encounter.id
-
-      expect(response).to have_http_status(:success)
+      expect(response).to redirect_to(encounters_path)
     end
 
     it "should load encounter by uuid" do
@@ -150,31 +161,44 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     context 'cancel encounter' do
+      let(:encounter) { Encounter.make institution: institution, patient: patient }
+
       before :each do
         request.env["HTTP_REFERER"] = patient_path(patient)
-        get :show, id: encounter.uuid
       end
 
-      context 'encounter status is pending' do
-        let(:encounter) { Encounter.make institution: institution, patient: patient, status: 0 }
-
+      context 'encounter status is new' do
         it 'can be deleted by the user' do
+          encounter.update_attribute(:status, 'new')
+          get :show, id: encounter.uuid
+
           expect(assigns(:show_cancel_encounter)).to eq(true)
         end
       end
 
-      context 'encounter status is completed' do
-        let(:encounter) { Encounter.make institution: institution, patient: patient, status: 2 }
-
+      context 'encounter status is in progress' do
         it 'can not be deleted by the user' do
+          encounter.update_attribute(:status, 'in_progress')
+          get :show, id: encounter.uuid
+
           expect(assigns(:show_cancel_encounter)).to eq(false)
         end
       end
 
-      context 'encounter status is in progress' do
-        let(:encounter) { Encounter.make institution: institution, patient: patient, status: 1 }
-
+      context 'encounter status is approved' do
         it 'can not be deleted by the user' do
+          encounter.update_attribute(:status, 'approved')
+          get :show, id: encounter.uuid
+
+          expect(assigns(:show_cancel_encounter)).to eq(false)
+        end
+      end
+
+      context 'encounter status is pending approval' do
+        it 'can not be deleted by the user' do
+          encounter.update_attribute(:status, 'pending approval')
+          get :show, id: encounter.uuid
+
           expect(assigns(:show_cancel_encounter)).to eq(false)
         end
       end
@@ -183,23 +207,20 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
   describe "GET #edit" do
     it "returns http success if allowed" do
-      i1      = Institution.make
-      patient = Patient.make institution: i1
-      grant i1.user, user, {site: i1}, CREATE_SITE_ENCOUNTER
-      grant i1.user, user, {encounter: i1}, UPDATE_ENCOUNTER
-
-      encounter = Encounter.make institution: i1, patient: patient
+      patient   = Patient.make institution: institution
+      encounter = Encounter.make institution: institution, patient: patient
       get :edit, id: encounter.id
+
       expect(response).to have_http_status(:success)
     end
 
-    it "returns http forbidden if not allowed" do
+    it "redirects to encounters list if not allowed" do
       i1        = Institution.make
       patient   = Patient.make institution: i1
       encounter = Encounter.make institution: i1, patient: patient
       get :edit, id: encounter.id
 
-      expect(response).to have_http_status(:forbidden)
+      expect(response).to redirect_to(encounters_path)
     end
   end
 
@@ -236,10 +257,11 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         site: { uuid: site.uuid },
         samples: [{ uuids: sample.uuids }],
         new_samples: [
-          { entity_id: 'eid:1001', lab_sample_id: 'Some laboratory Id' },
-          { entity_id: 'eid:1002', lab_sample_id: 'Some other laboratory Id' }
+          { entity_id: 'eid:1001', cpd_id_sample: 'Some laboratory Id' },
+          { entity_id: 'eid:1002', cpd_id_sample: 'Some other laboratory Id' }
         ],
         test_results: [],
+        tests_requested: 'microscopy|xpertmtb|culture_cformat_solid|drugsusceptibility1line_cformat_liquid|',
         culture_format: 'liquid',
         assays: [{condition: 'mtb', result: 'positive', quantitative_result: "3"}],
         observations: 'Lorem ipsum',
@@ -250,8 +272,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     }
 
     let(:json_response) { JSON.parse(response.body) }
-    let(:created_encounter) {
-      Encounter.find(json_response['encounter']['id']) }
+    let(:created_encounter) { Encounter.find(json_response['encounter']['id']) }
 
     it "succeed" do
       expect(response).to have_http_status(:success)
@@ -286,8 +307,8 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     end
 
     it "creates an encounter as non phantom" do
-      expect(Time.parse(created_encounter.core_fields["start_time"])).to eq(created_encounter.created_at)
-      expect(Time.parse(created_encounter.core_fields["end_time"])).to eq(created_encounter.created_at)
+      expect(Time.parse(created_encounter.core_fields["start_time"]).in_time_zone('UTC').strftime("%Y-%m-%d")).to eq(created_encounter.created_at.in_time_zone('UTC').strftime("%Y-%m-%d"))
+      expect(Time.parse(created_encounter.core_fields["end_time"]).in_time_zone('UTC').strftime("%Y-%m-%d")).to eq(created_encounter.created_at.in_time_zone('UTC').strftime("%Y-%m-%d"))
     end
 
     it "creates new_samples assigned to encounter" do
@@ -295,27 +316,33 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       sample_identifier2 = site.sample_identifiers.where(entity_id: 'eid:1002').first
 
       expect(sample_identifier1.sample.encounter).to eq(created_encounter)
-      expect(sample_identifier1.lab_sample_id).to eq('Some laboratory Id')
+      expect(sample_identifier1.cpd_id_sample).to eq('Some laboratory Id')
       expect(sample_identifier2.sample.encounter).to eq(created_encounter)
-      expect(sample_identifier2.lab_sample_id).to eq('Some other laboratory Id')
+      expect(sample_identifier2.cpd_id_sample).to eq('Some other laboratory Id')
     end
 
-    it "should move new samples in samples" do
-      expect(json_response['encounter']['samples'].detect {|h| h['entity_ids'].include?('eid:1001') }).to_not be_nil
-      expect(json_response['encounter']['samples'].detect {|h| h['entity_ids'].include?('eid:1002') }).to_not be_nil
+    it 'should move new samples in samples' do
+      expect(json_response['encounter']['samples'].detect { |h| h['entity_ids'].include?('eid:1001') }).to_not be_nil
+      expect(json_response['encounter']['samples'].detect { |h| h['entity_ids'].include?('eid:1002') }).to_not be_nil
     end
 
-    it "should leave new samples empty" do
+    it 'should leave new samples empty' do
       expect(json_response['encounter']['new_samples']).to eq([])
     end
 
-    it 'should log the changes' do
-      expect(EncounterAuditLog.count).to eq 1
-      expect(EncounterAuditLog.first.title).to eq "New Test order created"
+    context 'log changes' do
+      it 'should log the newly created test order' do
+        expect(AuditLog.count).to eq 2
+        expect(AuditLog.first.title).to include 't{encounters.create.test_order_created}'
+      end
     end
 
-    it 'should set the encounter status to pending' do
-      expect(created_encounter.status).to eq('pending')
+    it 'should add all requested results' do
+      expect(created_encounter.patient_results.count).to eq(5)
+    end
+
+    it 'should set the encounter status to new' do
+      expect(created_encounter.status).to eq('new')
     end
   end
 
@@ -345,8 +372,8 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         institution: { uuid: 'uuid-to-discard' },
         samples: [{ uuids: sample.uuid }, { uuids: empty_sample.uuid }],
         new_samples: [
-          { entity_id: 'eid:1001', lab_sample_id: 'Some updated laboratory Id' },
-          { entity_id: 'eid:1002', lab_sample_id: 'Some other updated laboratory Id' }
+          { entity_id: 'eid:1001', cpd_id_sample: 'Some updated laboratory Id' },
+          { entity_id: 'eid:1002', cpd_id_sample: 'Some other updated laboratory Id' }
         ],
         test_results: [],
         assays: [{condition: 'mtb', result: 'positive', quantitative_result: "3"}],
@@ -390,9 +417,9 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       sample_identifier2 = site.sample_identifiers.where(entity_id: 'eid:1002').first
 
       expect(sample_identifier1.sample.encounter).to eq(encounter)
-      expect(sample_identifier1.lab_sample_id).to eq('Some updated laboratory Id')
+      expect(sample_identifier1.cpd_id_sample).to eq('Some updated laboratory Id')
       expect(sample_identifier2.sample.encounter).to eq(encounter)
-      expect(sample_identifier2.lab_sample_id).to eq('Some other updated laboratory Id')
+      expect(sample_identifier2.cpd_id_sample).to eq('Some other updated laboratory Id')
     end
 
     it "should move new samples in samples" do
@@ -749,10 +776,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
     let(:samples) do
       3.times.map do |x|
-        test = TestResult.make \
-          institution: institution,
-          device: Device.make(site: site),
-          sample_identifier: SampleIdentifier.make(site: site, entity_id: "ID#{x+1}", sample: Sample.make(institution: institution))
+        test = TestResult.make institution: institution, device: Device.make(site: site), sample_identifier: SampleIdentifier.make(site: site, entity_id: "ID#{x+1}", sample: Sample.make(institution: institution))
         test.sample
       end
     end
@@ -761,11 +785,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     let!(:sample3) { samples[2] }
 
     let!(:sample2) do
-      test = TestResult.make \
-          institution: institution,
-          device: Device.make(site: site),
-          sample_identifier: SampleIdentifier.make(site: site, entity_id: "ID2B", sample: samples[1])
-
+      test = TestResult.make institution: institution, device: Device.make(site: site), sample_identifier: SampleIdentifier.make(site: site, entity_id: "ID2B", sample: samples[1])
       samples[1].reload
     end
 
@@ -972,7 +992,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         institution: { uuid: institution.uuid },
         site: { uuid: site.uuid },
         samples: [],
-        new_samples: [{ 'entity_id' => 'eid:1003', 'lab_sample_id' => 'Labs work' }],
+        new_samples: [{ 'entity_id' => 'eid:1003', 'cpd_id_sample' => 'Labs work' }],
         test_results: [],
         patient_id: patient.id
       }.to_json
@@ -981,7 +1001,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       json_response = JSON.parse(response.body).with_indifferent_access
 
       expect(json_response['status']).to eq('ok')
-      expect(json_response['encounter']['new_samples']).to eq([{ 'entity_id' => 'eid:1003', 'lab_sample_id' => 'Labs work' },{'entity_id' => new_entity_id}])
+      expect(json_response['encounter']['new_samples']).to eq([{ 'entity_id' => 'eid:1003', 'cpd_id_sample' => 'Labs work' },{'entity_id' => new_entity_id}])
       expect(json_response['sample']['entity_id']).to eq(new_entity_id)
     end
 
@@ -1009,7 +1029,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
   describe "PUT add_sample_manually" do
     it "renders json response of encounter with new sample and status ok" do
-      put :add_sample_manually, entity_id: '12345678', lab_sample_id: 'Custom lab id', encounter: {
+      put :add_sample_manually, entity_id: '12345678', cpd_id_sample: 'Custom lab id', encounter: {
         institution: { uuid: institution.uuid },
         site: { uuid: site.uuid },
         samples: [],
@@ -1023,16 +1043,14 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
 
       expect(json_response['status']).to eq('ok')
       expect(json_response['encounter']['new_samples'][0]).to include({entity_id:     '12345678'})
-      expect(json_response['encounter']['new_samples'][0]).to include({lab_sample_id: 'Custom lab id'})
+      expect(json_response['encounter']['new_samples'][0]).to include({cpd_id_sample: 'Custom lab id'})
       expect(json_response['encounter']['new_samples'].count).to eq(1)
     end
 
     it "return error if sample ID already exists for same patient" do
       patient = institution.patients.make
-      TestResult.make \
-        institution: institution,
-        device: Device.make(site: site),
-        sample_identifier: SampleIdentifier.make(site: site, entity_id: "12345678", sample: Sample.make(institution: institution))
+      TestResult.make institution: institution, device: Device.make(site: site),
+        sample_identifier: SampleIdentifier.make(site: site, entity_id: "12345678", sample: Sample.make(institution: institution, patient: patient))
 
       put :add_sample_manually, entity_id: '12345678', encounter: {
         institution: { uuid: institution.uuid },
@@ -1043,7 +1061,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
         patient_id: patient.id
       }.to_json
 
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:unprocessable_entity)
       json_response = JSON.parse(response.body).with_indifferent_access
       expect(json_response['status']).to eq('error')
       expect(json_response['message']).to eq('This sample ID has already been used for another patient')
@@ -1069,7 +1087,7 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
     return {
       uuids:          sample.uuids,
       entity_ids:     sample.entity_ids,
-      lab_sample_ids: sample.lab_sample_ids,
+      cpd_id_samples: sample.cpd_id_samples,
       uuid:           sample.uuids.first
     }
   end
@@ -1079,8 +1097,8 @@ RSpec.describe EncountersController, type: :controller, elasticsearch: true do
       uuid: test_result.uuid,
       test_id: test_result.test_id,
       name: test_result.core_fields[TestResult::NAME_FIELD],
-      start_time: test_result.core_fields[TestResult::START_TIME_FIELD].try { |d| d.strftime('%B %e, %Y') },
-      end_time: test_result.core_fields[TestResult::END_TIME_FIELD].try { |d| d.strftime('%B %e, %Y') },
+      start_time: Extras::Dates::Format.datetime_with_time_zone(test_result.core_fields[TestResult::START_TIME_FIELD], :full_time),
+      end_time: Extras::Dates::Format.datetime_with_time_zone(test_result.core_fields[TestResult::END_TIME_FIELD], :full_time),
       assays: test_result.core_fields[TestResult::ASSAYS_FIELD] || [],
       site: {
         name: test_result.device.site.name

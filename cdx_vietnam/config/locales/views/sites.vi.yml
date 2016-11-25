@@ -1,21 +1,28 @@
 vi:
   sites:
+    create:
+      success: 'Cơ sở đã được tạo thành công.'
+    update:
+      success: 'Cơ sở đã được cập nhật thành công.'
+      not_allowed: 'Bạn không được cho phép cập nhật %{site_name}.'
+    destroy:
+      success: 'Cơ sở đã được xóa thành công.'
     index:
       no_dependencies: '%{entity_name} này không phụ thuộc.'
-      create_sites: "tạo các trang ở đây để giữ cho các hệ thông phân cấp của các cơ quan của bạn được sắp xếp."
+      create_sites: "tạo các cơ sở ở đây để giữ cho các hệ thông phân cấp của các cơ quan của bạn được sắp xếp."
       site:
-        zero: 'Không có trang nào'
-        one: '1 trang'
-        other: '%{count} trang'
+        zero: 'Không có cơ sở nào'
+        one: '1 cơ sở'
+        other: '%{count} cơ sở'
     form:
-      site_details_header: 'Thông tin chi tiết trang'
+      site_details_header: 'Thông tin chi tiết cơ sở'
       yearly: 'Hàng năm'
       monthly: 'Hàng tháng'
       weekly: 'Hàng tuần'
       none: 'Không có'
-      delete_site: 'Xóa trang'
+      delete_site: 'Xóa cơ sở'
       delete: 'Xóa'
-      in_order_to_delete: 'Để xóa trang web này trước tiên bạn phải chuyển giao'
+      in_order_to_delete: 'Để xóa cơ sở này trước tiên bạn phải chuyển giao'
       device_count: 
         one: '1 thiết bị'
         other: '%{count} thiết bị'
@@ -25,25 +32,25 @@ vi:
       label:
         institution: 'Tổ chức'
         name: 'Tên'
-        parent: 'Trang cha'
+        parent: 'Tuyến trên'
         sample_id_reset_policy: 'Chính sách thiết lập mã mẫu thử'
         allows_manual_entry: 'Cho phép nhập bằng tay'
         main_phone_number: 'Số điện thoại chính'
         email_address: 'Địa chỉ email'
         comment:  'Bình luận'
       tooltip:
-        institution: 'Tổ chức trang này là một phần của'
-        name: 'Tên của trang'
-        parent: 'Trang này là con của'
+        institution: 'Tổ chức này là một phần của'
+        name: 'Tên cơ sở'
+        parent: 'cơ sở này là tuyến dưới của'
         sample_id_reset_policy: 'Chính sách thiết lập mã mẫu thử'
-        allows_manual_entry: 'Trang này cho phép nhập dữ liệu bằng tay không?'
-        main_phone_number: 'Số điện thoại chính của trang'
-        email_address: 'Địa chỉ email liên hệ của trang'
+        allows_manual_entry: 'Cơ sở này cho phép nhập dữ liệu bằng tay không?'
+        main_phone_number: 'Số điện thoại chính của cơ sở'
+        email_address: 'Địa chỉ email liên hệ của cơ sở'
         comment: 'Bình luận'
     filters:
-      sites_title: 'Trang'
-      add_site_btn: 'Thêm Trang'
-      add_site: 'Thêm Trang'
+      sites_title: 'Cơ sở'
+      add_site_btn: 'Thêm cơ sở'
+      add_site: 'Thêm cơ sở'
       name: 'Tên'
     side:
       creation_date: 'Ngày tạo'
@@ -53,8 +60,8 @@ vi:
     devices:
       name: 'Tên'
       model: 'Kiểu'
-      site: 'Trang'
+      site: 'cơ sở'
     new:
-      new_site: 'Trang mới'
+      new_site: 'Cơ sở mới'
     show:
       none: 'Không'

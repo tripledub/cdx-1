@@ -1,0 +1,7 @@
+en:
+  date:
+    formats:
+      etb_short: "%m/%d/%Y"
+      vtm_long: "%Y-%m-%dT10:10:10.000Z"
+      vtm_long2: "%d/%m/%Y %H:%M:%S"
+      

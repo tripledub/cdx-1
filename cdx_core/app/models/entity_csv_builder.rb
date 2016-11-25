@@ -54,17 +54,17 @@ class EntityCsvBuilder
   end
 
   def multi_headers_labels
-     @multi_headers.flat_map do |field, count|
-       if field.nested?
-         count.times.to_a.product(field.sub_fields).map do |i, sub_field|
-           "#{format_header(field.scope.name, field.name, sub_field.name)} #{i+1}"
-         end
-       else
-         count.times.map do |i|
-           "#{format_header(field.scope.name, field.name)} #{i+1}"
-         end
-       end
-     end
+    @multi_headers.flat_map do |field, count|
+      if field.nested?
+        count.times.to_a.product(field.sub_fields).map do |i, sub_field|
+          "#{format_header(field.scope.name, field.name, sub_field.name)} #{i + 1}"
+        end
+      else
+        count.times.map do |i|
+          "#{format_header(field.scope.name, field.name)} #{i + 1}"
+        end
+      end
+    end
   end
 
   def custom_headers_labels
@@ -73,8 +73,8 @@ class EntityCsvBuilder
     end
   end
 
-  def format_header(scope_name, field_name, sub_field_name=nil)
-    [scope_name, field_name, sub_field_name].compact.join(" ").humanize
+  def format_header(scope_name, field_name, sub_field_name = nil)
+    [scope_name, field_name, sub_field_name].compact.join(' ').humanize
   end
 
   def build_row(test)
