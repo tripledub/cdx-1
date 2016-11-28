@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161123095637) do
+ActiveRecord::Schema.define(version: 20161125154347) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -374,16 +374,6 @@ ActiveRecord::Schema.define(version: 20161123095637) do
   add_index "file_messages", ["device_id"], name: "index_file_messages_on_device_id", using: :btree
   add_index "file_messages", ["ftp_hostname", "ftp_port", "ftp_directory", "status"], name: "index_file_messages_on_ftp_and_status", using: :btree
 
-  create_table "filters", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.string   "name",       limit: 255
-    t.text     "query",      limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "filters", ["user_id"], name: "index_filters_on_user_id", using: :btree
-
   create_table "identities", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
     t.string   "provider",   limit: 255
@@ -422,8 +412,6 @@ ActiveRecord::Schema.define(version: 20161123095637) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "integration_logs", ["order_id"], name: "index_integration_logs_on_order_id", using: :btree
 
   create_table "manifests", force: :cascade do |t|
     t.string   "version",         limit: 255
@@ -727,6 +715,7 @@ ActiveRecord::Schema.define(version: 20161123095637) do
   end
 
   add_index "patient_results", ["completed_at"], name: "index_patient_results_on_completed_at", using: :btree
+  add_index "patient_results", ["deleted_at", "encounter_id"], name: "index_patient_results_on_deleted_at_and_encounter_id", using: :btree
   add_index "patient_results", ["deleted_at"], name: "index_patient_results_on_deleted_at", using: :btree
   add_index "patient_results", ["device_id"], name: "index_patient_results_on_device_id", using: :btree
   add_index "patient_results", ["feedback_message_id"], name: "index_patient_results_on_feedback_message_id", using: :btree
@@ -874,6 +863,7 @@ ActiveRecord::Schema.define(version: 20161123095637) do
     t.datetime "deleted_at"
   end
 
+  add_index "samples", ["deleted_at", "encounter_id"], name: "index_samples_on_deleted_at_and_encounter_id", using: :btree
   add_index "samples", ["deleted_at"], name: "index_samples_on_deleted_at", using: :btree
   add_index "samples", ["institution_id"], name: "index_samples_on_institution_id_and_entity_id", using: :btree
   add_index "samples", ["patient_id"], name: "index_samples_on_patient_id", using: :btree
@@ -929,23 +919,6 @@ ActiveRecord::Schema.define(version: 20161123095637) do
   end
 
   add_index "ssh_keys", ["device_id"], name: "index_ssh_keys_on_device_id", using: :btree
-
-  create_table "subscribers", force: :cascade do |t|
-    t.integer  "user_id",      limit: 4
-    t.string   "name",         limit: 255
-    t.string   "url",          limit: 255
-    t.text     "fields",       limit: 65535
-    t.datetime "last_run_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "url_user",     limit: 255
-    t.string   "url_password", limit: 255
-    t.integer  "filter_id",    limit: 4
-    t.string   "verb",         limit: 255,   default: "GET"
-  end
-
-  add_index "subscribers", ["filter_id"], name: "index_subscribers_on_filter_id", using: :btree
-  add_index "subscribers", ["user_id"], name: "index_subscribers_on_user_id", using: :btree
 
   create_table "test_result_parsed_data", force: :cascade do |t|
     t.integer  "test_result_id", limit: 4

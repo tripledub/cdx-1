@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "policy", elasticsearch: true do
+describe "policy"  do
 
   let(:institution) { Institution.make }
   let(:user) { institution.user }

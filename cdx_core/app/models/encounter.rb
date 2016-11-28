@@ -27,7 +27,7 @@ class Encounter < ActiveRecord::Base
   validates_presence_of :institution
   validates_presence_of :site, if: Proc.new { |encounter| encounter.institution }
   validates_inclusion_of :culture_format, allow_nil: true, in: %w(solid liquid), if: Proc.new { |encounter| encounter.testing_for == 'TB' }
-  validates_inclusion_of :status,  in: %w(new financed not_financed samples_received samples_collected pending in_progress closed)
+  validates_inclusion_of :status, in: %w(new financed not_financed samples_received samples_collected pending in_progress closed)
   validate :validate_patient
 
   before_save :ensure_entity_id
@@ -116,10 +116,6 @@ class Encounter < ActiveRecord::Base
     def find_by_entity_id(entity_id, opts)
       find_by(entity_id: entity_id.to_s, institution_id: opts.fetch(:institution_id))
     end
-
-    def query params, user
-      EncounterQuery.for params, user
-    end
   end
 
   attribute_field :start_time, copy: true
@@ -184,8 +180,7 @@ class Encounter < ActiveRecord::Base
   attribute_field OBSERVATIONS_FIELD
 
   def updated_diagnostic
-    assays_to_merge = test_results_not_in_diagnostic\
-      .map{|tr| tr.core_fields[TestResult::ASSAYS_FIELD]}
+    assays_to_merge = test_results_not_in_diagnostic.map { |tr| tr.core_fields[TestResult::ASSAYS_FIELD] }
 
     assays_to_merge.inject(diagnostic) do |merged, to_merge|
       Encounter.merge_assays_without_values(merged, to_merge)

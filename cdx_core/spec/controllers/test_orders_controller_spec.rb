@@ -1,12 +1,13 @@
 require 'spec_helper'
 require 'policy_spec_helper'
 
-describe TestOrdersController, elasticsearch: true do
+describe TestOrdersController  do
   let(:user)           { User.make }
   let!(:institution)   { user.institutions.make }
   let(:site)           { Site.make institution: institution }
   let(:site2)          { Site.make institution: institution }
   let(:patient)        { Patient.make institution: institution }
+
   let!(:encounters) do
     7.times { Encounter.make institution: institution, site: site, patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"), testdue_date: 1.day.from_now.strftime("%Y-%m-%d") }
     Encounter.make institution: institution, site: site, performing_site_id: site2.id, patient: patient, start_time: 3.days.ago.strftime("%Y-%m-%d"), testdue_date: 1.day.from_now.strftime("%Y-%m-%d")
@@ -62,7 +63,7 @@ describe TestOrdersController, elasticsearch: true do
         end
 
         it 'should be a csv response' do
-          expect(response.header["Content-Type"]).to eq('text/csv')
+          expect(response.header['Content-Type']).to eq('text/csv')
         end
       end
     end

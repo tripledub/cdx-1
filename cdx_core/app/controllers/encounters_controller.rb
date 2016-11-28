@@ -62,10 +62,6 @@ class EncountersController < ApplicationController
     render json: Samples::Finder.find_as_json(@institution, current_user, params[:sample_uuids], params[:q]).attributes!
   end
 
-  def search_test
-    render json: TestOrders::Persistence.new(params, current_user, @localization_helper).search_test(params[:q])
-  end
-
   def add_sample
     content, status = TestOrders::Persistence.new(params, current_user, @localization_helper).add_sample
     render json: content, status: status

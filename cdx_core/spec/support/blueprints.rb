@@ -24,10 +24,10 @@ Sham.define do
 end
 
 User.blueprint do
-  email
+  email { Faker::Internet.email  }
   password
-  first_name { Faker::Name.first_name }
-  last_name { Faker::Name.last_name }
+  first_name { Faker::StarWars.character }
+  last_name { Faker::StarWars.planet }
   password_confirmation { password }
   confirmed_at { Time.now - 1.day }
 end
@@ -41,7 +41,7 @@ Comment.blueprint do
   commented_on  { Faker::Date.between(60.days.ago, Date.today) }
   user          { User.make }
   description   { Faker::Lorem.sentence }
-  comment       { Faker::Lorem.paragraph }
+  comment       { Faker::ChuckNorris.fact }
 end
 
 FeedbackMessage.blueprint do
@@ -283,21 +283,9 @@ Role.blueprint do
   site { Site.make institution: object.institution }
 end
 
-Subscriber.blueprint do
-  user
-  name
-  url
-  last_run_at { Time.now }
-end
-
-Filter.blueprint do
-  user
-  name
-end
-
 Site.blueprint do
   institution
-  name
+  name { Faker::Space.planet }
   address { Faker::Address.street_address }
   city { Faker::Address.city }
   state { Faker::Address.state }

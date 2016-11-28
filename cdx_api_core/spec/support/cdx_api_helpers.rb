@@ -1,12 +1,4 @@
 RSpec.shared_context "cdx api helpers" do
-  def query(query)
-    Cdx::Api::Elasticsearch::Query.new(query, Cdx::Fields.test).execute
-  end
-
-  def query_tests(query_or_response)
-    query_or_response[:response] || query(query_or_response)["tests"]
-  end
-
   def time(year, month, day, hour = 12, minute = 0, second = 0)
     Time.local(year, month, day, hour, minute, second).iso8601
   end
@@ -53,8 +45,5 @@ RSpec.shared_context "cdx api helpers" do
     if (reported_time = test_result.core_fields["reported_time"])
       test_result.created_at = Time.parse(reported_time)
     end
-
-    TestResultIndexer.new(test_result).index(refresh = true)
   end
-
 end

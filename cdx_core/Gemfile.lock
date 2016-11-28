@@ -27,10 +27,6 @@ PATH
   specs:
     cdx (0.0.1)
       activesupport
-    cdx-api-elasticsearch (0.0.1)
-      activesupport
-      cdx
-      elasticsearch
 
 PATH
   remote: .
@@ -178,14 +174,6 @@ GEM
     dotiw (3.1.1)
       actionpack (>= 3)
       i18n
-    elasticsearch (2.0.0)
-      elasticsearch-api (= 2.0.0)
-      elasticsearch-transport (= 2.0.0)
-    elasticsearch-api (2.0.0)
-      multi_json
-    elasticsearch-transport (2.0.0)
-      faraday
-      multi_json
     encryptor (3.0.0)
     erubis (2.7.0)
     execjs (2.7.0)
@@ -513,7 +501,6 @@ DEPENDENCIES
   capybara-mechanize
   capybara-screenshot
   cdx!
-  cdx-api-elasticsearch!
   cdx-sync-server!
   cdx_core!
   chunky_png
@@ -528,7 +515,7 @@ DEPENDENCIES
   devise_security_extension!
   dotiw
   encryptor
-  faker
+  faker (~> 1.6.6)
   gon
   guid
   haml-rails

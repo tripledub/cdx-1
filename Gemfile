@@ -36,7 +36,6 @@ gem 'therubyracer'
 gem 'country_select'
 
 gem 'cdx', path: '.'
-gem 'cdx-api-elasticsearch', path: '.'
 gem 'cdx-sync-server', git: 'https://github.com/instedd/cdx-sync-server.git', branch: 'master'
 gem 'view_components', git: 'https://github.com/manastech/rails-view_components.git', branch: 'master'
 
@@ -64,7 +63,7 @@ gem "select2-rails"
 gem 'sidekiq'
 gem 'sinatra'
 gem 'sidekiq-cron'
-gem 'i18n-js',">= 3.0.0.rc13"
+gem 'i18n-js', '>= 3.0.0.rc13'
 group :development do
   gem 'letter_opener'
   gem 'letter_opener_web'
@@ -82,7 +81,6 @@ gem 'devise_security_extension', git: 'https://github.com/phatworx/devise_securi
 gem 'devise_invitable'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
-gem 'elasticsearch'
 
 gem 'oj'
 gem 'guid'
@@ -92,8 +90,6 @@ gem 'dotiw'
 gem 'rails-i18n', '~> 4.0.0'
 gem 'doorkeeper', '~> 4.2.0'
 gem 'bettertabs'
-
-gem 'faker'
 gem 'leaflet-rails'
 gem 'rake-progressbar'
 gem 'nuntium_api', '~> 0.21'
@@ -115,6 +111,7 @@ gem 'twilio-ruby', '~> 4.11.1'
 gem 'ar_transaction_changes'
 
 group :development, :test do
+  gem 'faker', '~> 1.6.6'
   gem 'pry-byebug'
   gem 'pry-rescue'
   gem 'pry-stack_explorer'

@@ -22,15 +22,10 @@ To start developing:
   * [Redis](http://redis.io/download) is [used](https://github.com/mperham/sidekiq/wiki/Using-Redis) by [sidekiq](http://sidekiq.org/). CDX uses sidekiq as [ActiveJob](http://guides.rubyonrails.org/active_job_basics.html#backends) backend
     * Install it in mac with: `brew install redis`
     * you can start it with `redis-server --daemonize yes`
-  * [Elasticsearch](https://www.elastic.co/) is used as the main index for test results.
-    * We support elasticsearch versions < 2.x
-    * Install it in mac with: `brew install elasticsearch17`
 
 3. Setup development database: `bundle exec rake db:setup`
 
 4. Setup test database: `bundle exec rake db:test:prepare`
-
-5. Setup elasticsearch index template: `bundle exec rake elasticsearch:setup`
 
 6. Run tests: `bundle exec rake` (this will run `rspec` and `cucumber`)
 
