@@ -65,6 +65,7 @@ gem 'sinatra'
 gem 'sidekiq-cron'
 gem 'i18n-js', '>= 3.0.0.rc13'
 group :development do
+  gem 'bullet'
   gem 'letter_opener'
   gem 'letter_opener_web'
   gem 'capistrano', '~> 3.1.0', require: false
