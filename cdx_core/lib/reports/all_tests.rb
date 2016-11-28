@@ -81,7 +81,7 @@ module Reports
       orphan_results.filter_query
                     .group(dates_filter)
                     .order('patient_results.result_at')
-                    .select('patient_results.result_at as date, COUNT(*) as total, 1 as uuid, "" as custom_fields, "" as core_fields ')
+                    .select('patient_results.result_at as date, COUNT(*) as total, 1 as uuid, "" as custom_fields, "" as core_fields, patient_results.site_id, patient_results.device_id, patient_results.sample_identifier_id ')
     end
 
     def merge_results(test_results, manual_results)

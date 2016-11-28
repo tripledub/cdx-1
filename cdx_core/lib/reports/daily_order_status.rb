@@ -23,16 +23,24 @@ module Reports
       patient_results.filter_query
                      .group('patient_results.result_status')
                      .order('patient_results.result_status')
-                     .select('patient_results.result_status as status, COUNT(*) as total, 1 as uuid').each do |result|
-        @data << { _label: I18n.t('select.patient_result.status_options.' + result.status), _value: result.total }
-      end
+                     .select('patient_results.result_status as status, COUNT(*) as total, 1 as uuid')
+                     .each do |result|
+                       @data << {
+                         _label: I18n.t('select.patient_result.status_options.' + result.status),
+                         _value: result.total
+                       }
+                     end
       orphan_results = TestResults::Finder.new(@context, @filter_options)
       orphan_results.filter_query
-                     .group('patient_results.result_status')
-                     .order('patient_results.result_status')
-                     .select('patient_results.result_status as status, COUNT(*) as total, 1 as uuid, 1 as custom_fields, 1 as core_fields').each do |result|
-        @data << { _label: I18n.t('select.patient_result.status_options.' + result.status), _value: result.total }
-      end
+                    .group('patient_results.result_status')
+                    .order('patient_results.result_status')
+                    .select('patient_results.result_status as status, COUNT(*) as total, 1 as uuid, 1 as custom_fields, 1 as core_fields, patient_results.site_id, patient_results.device_id, patient_results.sample_identifier_id')
+                    .each do |result|
+                      @data << {
+                        _label: I18n.t("select.patient_result.status_options.#{result.status}"),
+                        _value: result.total
+                      }
+                    end
     end
 
     def slice_colors
