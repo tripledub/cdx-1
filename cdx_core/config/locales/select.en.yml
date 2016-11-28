@@ -46,6 +46,8 @@ en:
         completed: 'Completed'
         error: 'Error'
         success: 'Success'
+        invalid: 'Invalid'
+        no_result: 'No result'
     microscopy:
       visual_appearance:
         blood: 'Blood-stained'
