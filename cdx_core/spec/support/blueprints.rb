@@ -107,12 +107,12 @@ DeviceCommand.blueprint do
 end
 
 DeviceModel.blueprint do
-  name { Faker::Space.planet }
+  name
   published_at { 1.day.ago }
 end
 
 DeviceModel.blueprint(:unpublished) do
-  name { Faker::Space.planet }
+  name
   published_at { nil }
 end
 
