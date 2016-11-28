@@ -286,7 +286,6 @@ module Integration
 
         check_key 'name', params
         check_key 'bdq_id', params
-        check_key 'national_id_number', params
         check_key 'gender', params
         check_key 'age', params
         check_key 'registration_address1', params
