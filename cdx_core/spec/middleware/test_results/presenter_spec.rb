@@ -46,8 +46,8 @@ describe TestResults::Presenter do
       expect(CSV.parse(described_class.csv_query(TestResult.all))[1]).to eq(
         [
           TestResult.first.test_id,
-          Extras::Dates::Format.datetime_with_time_zone(TestResult.first.sample_collected_at, :full_time),
-          Extras::Dates::Format.datetime_with_time_zone(TestResult.first.result_at, :full_time),
+          Extras::Dates::Format.datetime_with_time_zone(TestResult.first.sample_collected_at, :full_time_with_timezone),
+          Extras::Dates::Format.datetime_with_time_zone(TestResult.first.result_at, :full_time_with_timezone),
           PatientResult.first.result_name,
           Devices::Presenter.device_name_and_serial_number(TestResult.first.device),
           Sites::Presenter.site_name(TestResult.first.site),
