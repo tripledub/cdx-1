@@ -108,6 +108,8 @@ en:
       result_status:
         success: 'Success'
         error: 'Error'
+        invalid: 'Invalid'
+        no_result: 'No result'
     user:
       status_options:
         show_all: 'Show all'

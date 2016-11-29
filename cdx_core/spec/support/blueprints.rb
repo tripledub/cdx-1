@@ -207,6 +207,7 @@ TestResult.blueprint do
   patient { object.sample.try(:patient) || object.encounter.try(:patient) }
   sample_collected_at { Time.now }
   result_at { Time.now }
+  result_name { Faker::StarWars.character }
 end
 
 CultureResult.blueprint do
@@ -256,7 +257,7 @@ end
 
 AssayResult.blueprint do
   assayable { TestResult.make }
-  name      { Faker::Name.name }
+  name      { Faker::Space.galaxy }
   condition { ['mtb', 'rif'].sample }
   result    { ['positive', 'negative'].sample }
   quantitative_result { [nil, 'HIGH', 'LOW', 'MEDIUM', 'VERY LOW'].sample }
@@ -285,7 +286,7 @@ end
 
 Site.blueprint do
   institution
-  name { Faker::Space.planet }
+  name { Faker::Educator.university }
   address { Faker::Address.street_address }
   city { Faker::Address.city }
   state { Faker::Address.state }
