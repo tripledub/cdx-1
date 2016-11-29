@@ -7,7 +7,6 @@ class Notification::Condition < ActiveRecord::Base
     DstLpaResult
     MicroscopyResult
     XpertResult
-    AssayResult
   )
 
   # Relationships

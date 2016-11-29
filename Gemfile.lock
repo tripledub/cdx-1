@@ -27,10 +27,6 @@ PATH
   specs:
     cdx (0.0.1)
       activesupport
-    cdx-api-elasticsearch (0.0.1)
-      activesupport
-      cdx
-      elasticsearch
 
 PATH
   remote: cdx_api_core
@@ -99,6 +95,8 @@ GEM
       tzinfo (~> 1.1)
     activesupport-decorators (2.1.1)
       railties (>= 3.2.8)
+    acts_as_tree (2.6.0)
+      activerecord (>= 3.0.0)
     addressable (2.3.8)
     ansi (1.5.0)
     ar_transaction_changes (1.1.0)
@@ -215,6 +213,7 @@ GEM
       actionmailer (>= 3.2.6, < 5)
       devise (>= 3.2.0)
     diff-lcs (1.2.5)
+    docile (1.1.5)
     domain_name (0.5.24)
       unf (>= 0.0.5, < 1.0.0)
     doorkeeper (4.2.0)
@@ -222,18 +221,10 @@ GEM
     dotiw (3.0.1)
       actionpack (>= 3)
       i18n
-    elasticsearch (1.0.12)
-      elasticsearch-api (= 1.0.12)
-      elasticsearch-transport (= 1.0.12)
-    elasticsearch-api (1.0.12)
-      multi_json
-    elasticsearch-transport (1.0.12)
-      faraday
-      multi_json
     encryptor (1.3.0)
     erubis (2.7.0)
     execjs (2.6.0)
-    faker (1.5.0)
+    faker (1.6.6)
       i18n (~> 0.5)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
@@ -542,6 +533,11 @@ GEM
       redis-namespace (>= 1.5.2)
       rufus-scheduler (>= 2.0.24)
       sidekiq (>= 4.2.1)
+    simplecov (0.12.0)
+      docile (~> 1.1.0)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.0)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -621,6 +617,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport-decorators (~> 2.1)
+  acts_as_tree (~> 2.6)
   ar_transaction_changes
   awesome_nested_set (~> 3.0.0.rc.3)
   aws-sdk (~> 1.6)
@@ -637,7 +634,6 @@ DEPENDENCIES
   capybara-mechanize
   capybara-screenshot
   cdx!
-  cdx-api-elasticsearch!
   cdx-sync-server!
   cdx_api_core!
   cdx_api_vietnam!
@@ -655,9 +651,8 @@ DEPENDENCIES
   devise_security_extension!
   doorkeeper (~> 4.2.0)
   dotiw
-  elasticsearch
   encryptor
-  faker
+  faker (~> 1.6.6)
   foreman
   fudge
   gon
@@ -711,6 +706,7 @@ DEPENDENCIES
   shoulda
   sidekiq
   sidekiq-cron
+  simplecov
   sinatra
   site_prism
   spring
@@ -728,4 +724,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.13.1
+   1.13.6

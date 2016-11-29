@@ -6,7 +6,7 @@ describe MicroscopyResult do
   let(:result_status) { %w(new sample_collected allocated pending_approval rejected completed) }
 
 
-  context "validations" do
+  context 'validations' do
     it { should validate_inclusion_of(:appearance).in_array(visual_appearance_options) }
     it { should validate_inclusion_of(:test_result).in_array(test_result_options) }
     it { should validate_inclusion_of(:result_status).in_array(result_status) }

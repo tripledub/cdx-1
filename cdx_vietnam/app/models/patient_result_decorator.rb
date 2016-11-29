@@ -38,9 +38,6 @@ class PatientResult
       if self.result_name == 'xpertmtb'
         # check if xpert with 'detected' result
         if ( self.rifampicin.present? && self.rifampicin == "detected") || is_have_xpert_detected
-          #send xpert to etb
-          json = "CdxVietnam::Presenters::Etb".constantize.create_patient(self)
-          IntegrationJob.perform_later(json)
           # if this is first etb, change patient sync system to etb and make all microcopy test to not sync
           # after that call sync for all microcopy
           if PatientResult.joins(:encounter).where(encounters: { patient_id: self.patient.id}, result_name: "xpertmtb", rifampicin: "detected", result_status: 'completed',).count == 1

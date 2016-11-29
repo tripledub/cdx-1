@@ -7,6 +7,7 @@
             = link_to "javascript:history.back();", class: 'side-link', title: I18n.t('views.back') do
               = image_tag "arrow-left-white.png"
             = I18n.t('encounters.show.test_order')
+- @encounter_as_json['coll_sample_type'] = I18n.t("test_results.index.specimen_type.#{@encounter_as_json['coll_sample_type']}")
 = react_component('EncounterShow',
   encounter: @encounter_as_json,
   patientResults: PatientResults::Presenter.for_encounter(@encounter.patient_results),
@@ -15,11 +16,6 @@
   encounterRoutes: encounter_routes(@encounter),
   rejectReasons: FeedbackMessages::Presenter.reject_reasons(@encounter.institution),
   authenticityToken: form_authenticity_token)
-
-.row
-  .col-6
-    = link_to I18n.t('encounters.show.create_notification'), new_alert_group_path(encounter_id: @encounter.id), class: 'btn-primary addalertbut'
-
 
 - if @encounter.status == 'new'
   .row

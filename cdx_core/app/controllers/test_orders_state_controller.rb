@@ -12,7 +12,7 @@ class TestOrdersStateController < ApplicationController
     test_orders = TestOrders::Finder.new(@navigation_context, params)
     respond_to do |format|
       format.csv do
-        csv_file = TestOrders::AuditCsv.new(test_orders.filter_query)
+        csv_file = TestOrders::AuditCsv.new(test_orders.filter_query, get_hostname)
         headers['Content-Type']        = 'text/csv'
         headers['Content-disposition'] = "attachment; filename=#{csv_file.filename}"
         self.response_body = csv_file.export_all
@@ -23,7 +23,7 @@ class TestOrdersStateController < ApplicationController
   def show
     respond_to do |format|
       format.csv do
-        csv_file = TestOrders::AuditCsv.new(@test_order)
+        csv_file = TestOrders::AuditCsv.new(@test_order, get_hostname)
         headers['Content-Type']        = 'text/csv'
         headers['Content-disposition'] = "attachment; filename=#{csv_file.filename}"
         self.response_body = csv_file.export_one
@@ -39,5 +39,9 @@ class TestOrdersStateController < ApplicationController
 
   def check_permission
     authorize_resource(@navigation_context.institution, UPDATE_INSTITUTION)
+  end
+
+  def get_hostname
+    request.host || 'www.thecdx.org'
   end
 end

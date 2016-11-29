@@ -6,7 +6,7 @@ describe Sites::CsvGenerator do
   let!(:sites)      { 4.times { institution.sites.make } }
   let(:site)        { Site.first }
 
-  subject           { described_class.new(Site.all, 'my_custom_name') }
+  subject           { described_class.new(Site.all, 'test.example.com') }
 
   it 'should return a valid CSV with sites' do
     csv = CSV.parse(subject.build_csv)
@@ -14,7 +14,9 @@ describe Sites::CsvGenerator do
     expect(csv[1]).to eq([site.name, site.address, site.city, site.state, site.zip_code])
   end
 
-  it 'should return a file name' do
-    expect(subject.filename).to include('my_custom_name')
+  describe 'filename' do
+    it 'should include the hostname' do
+      expect(subject.filename).to include('test.example.com')
+    end
   end
 end

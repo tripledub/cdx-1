@@ -1,5 +1,5 @@
+# Shows test orders which state is Pending Approval
 class ApprovalsController < TestsController
-
   def index
     respond_to do |format|
       format.html do
@@ -7,7 +7,7 @@ class ApprovalsController < TestsController
       end
 
       format.csv do
-        csv_orders = TestOrders::ListCsv.new(TestOrders::Finder.new(@navigation_context, params).filter_query)
+        csv_orders = TestOrders::ListCsv.new(TestOrders::Finder.new(@navigation_context, params).filter_query, get_hostname)
         headers['Content-Type'] = 'text/csv'
         headers['Content-disposition'] = "attachment; filename=#{csv_orders.filename}"
         self.response_body = csv_orders.generate
@@ -31,7 +31,7 @@ class ApprovalsController < TestsController
 
   def create_filter_for_test_order
     filter = {}
-    filter["encounter.uuid"] = params['selectedItems'] if params['selectedItems'].present?
+    filter['encounter.uuid'] = params['selectedItems'] if params['selectedItems'].present?
     filter
   end
 end

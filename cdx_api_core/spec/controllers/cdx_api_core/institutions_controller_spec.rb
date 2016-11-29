@@ -32,26 +32,6 @@ describe CdxApiCore::InstitutionsController do
           new_sorted_institutions
         })
       end
-
-      context 'CSV' do
-        def check_institutions_csv(r)
-          expect(r.status).to eq(200)
-          expect(r.content_type).to eq("text/csv")
-          expect(r.headers["Content-Disposition"]).to eq("attachment; filename=\"Institutions-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv\"")
-          expect(r).to render_template("cdx_api_core/institutions/index")
-        end
-
-        render_views
-
-        before(:each) { Timecop.freeze }
-
-        it "should respond a csv" do
-          get :index, format: 'csv'
-
-          check_institutions_csv response
-          expect(response.body).to eq("uuid,name\n#{institution.uuid},#{institution.name}\n")
-        end
-      end
     end
   end
 

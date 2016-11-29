@@ -14,10 +14,5 @@ module Reports
     def failed_tests
       Reports::Failed.new(@navigation_context, @options.dup).generate_chart
     end
-
-    def error_codes_by_device
-      data = Reports::DeviceErrorCodes.process(@current_user, @navigation_context, @options)
-      data.get_device_location_details
-    end
   end
 end

@@ -44,6 +44,8 @@ en:
         pending_approval: 'Pending approval'
         rejected: 'Rejected'
         completed: 'Completed'
+        error: 'Error'
+        success: 'Success'
     microscopy:
       visual_appearance:
         blood: 'Blood-stained'

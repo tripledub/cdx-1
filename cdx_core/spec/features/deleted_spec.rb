@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'policy_spec_helper'
 
-describe "deleted entities should be accessible", elasticsearch: true do
+describe "deleted entities should be accessible"  do
   let(:institution) { Institution.make }
   let(:user) { institution.user }
   let(:site) { institution.sites.make }

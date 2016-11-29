@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
   has_many :sites, through: :institutions
   has_many :devices, through: :institutions
   has_many :filters
-  has_many :subscribers
   has_many :policies
   has_many :granted_policies, class_name: "Policy", foreign_key: "granter_id"
   has_many :computed_policies

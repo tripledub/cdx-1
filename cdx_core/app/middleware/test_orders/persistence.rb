@@ -36,7 +36,6 @@ module TestOrders
     def destroy(encounter)
       if encounter.status == 'new'
         begin
-          Cdx::Api.client.delete index: Cdx::Api.index_name, type: 'encounter', id: encounter.uuid, ignore: 404
           encounter.destroy_and_audit("#{encounter.uuid} t{encounters.destroy.log_action}")
           I18n.t('encounters.destroy.success')
         rescue => ex
@@ -93,15 +92,6 @@ module TestOrders
           }, :unprocessable_entity
         end
       end
-    end
-
-    def search_test(test_id)
-      institution = Institutions::Finder.find_by_uuid(params[:institution_uuid], current_user)
-      test_results = ::Finder::TestResults.find_by_institution(institution, current_user)
-        .joins("LEFT JOIN encounters ON encounters.id = patient_results.encounter_id")
-        .where("patient_results.encounter_id IS NULL OR encounters.is_phantom = TRUE")
-        .where("patient_results.test_id LIKE ?", "%#{test_id}%")
-      ::Finder::TestResults.as_json_list(test_results, @localization_helper).attributes!
     end
 
     def prepare_blender_and_json(encounter)
@@ -326,7 +316,7 @@ module TestOrders
     end
 
     def add_test_result_by_uuid(uuid)
-      test_result         = ::Finder::TestResults.find_by_institution(@institution, current_user).find_by!(uuid: uuid)
+      test_result         = ::TestResults::Finder.find_by_institution(@institution, current_user).find_by!(uuid: uuid)
       test_result_blender = @blender.load(test_result)
       @blender.merge_parent(test_result_blender, @encounter_blender)
       test_result_blender

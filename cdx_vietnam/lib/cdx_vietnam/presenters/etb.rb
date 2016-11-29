@@ -46,11 +46,11 @@ module CdxVietnam
             healthcare_unit_location: 'Miền Nam', # OK
             healthcare_unit_name: 'Quận 1', # OK
             healthcare_unit_registration_date: Extras::Dates::Format.datetime_with_time_zone(patient.created_at, I18n.t('date.formats.etb_short')), # ngày tạo patient
-            suspect_mdr_case_type: 'VN_SPT_FAILED_CAT_II',
+            suspect_mdr_case_type: suspect_mdr_case_type,
             diagnosis_date: diagnosis_date, 
             tb_drug_resistance_type: tb_drug_resistance_type, # LIST VALUE
             registration_group: 'VN_2015_OTHER', # @TODO
-            site_of_disease: 'PULMONARY', # @TODO
+            site_of_disease: site_of_disease, 
             number_of_previous_tb_treatment: '0',
             consulting_date: consulting_date, 
             consulting_professional: '[FROM CDP]',
@@ -174,7 +174,9 @@ module CdxVietnam
       end
 
       def site_of_disease
-        # @TODO
+        mapping_list = {'pulmonary_tuberculosis' => 'PULMONARY', 'extra_pulmonary_tuberculosis' => 'EXTRAPULMONARY'}
+        return mapping_list[@episode.anatomical_site_diagnosis] if mapping_list[@episode.anatomical_site_diagnosis].present?
+        return 'PULMONARY'
       end
 
       def registration_group
@@ -188,9 +190,9 @@ module CdxVietnam
       end
 
       def suspect_mdr_case_type
-        mapping_list = {'failcatii' => 'VN_SPT_FAILED_CAT_II', 'tbmdr' => 'VN_SPT_CONTACT_MDR_INDEX_CASE', 'failcati' => 'VN_SPT_FAILED_CAT_I', 'noncon' => 'VN_SPT_NON_CONVERTER_AFTER_2_OR_3_MONTH', 'relepsecat' => 'VN_SPT_RELAPSE_OF_CAT_I_OR_CAT_II', 'retreatcat' => 'VN_SPT_RETREATMENT_AFTER_LOST2FOLLOWUP', 'other' => 'VN_SPT_OTHERS', '' => 'VN_SPT_NEW_TB_CASES'}
+        mapping_list = {'failcatii' => 'VN_SPT_FAILED_CAT_II', 'tbmdr' => 'VN_SPT_CONTACT_MDR_INDEX_CASE', 'failcati' => 'VN_SPT_FAILED_CAT_I', 'noncon' => 'VN_SPT_NON_CONVERTER_AFTER_2_OR_3_MONTH', 'relepsecat' => 'VN_SPT_RELAPSE_OF_CAT_I_OR_CAT_II', 'retreatcat' => 'VN_SPT_RETREATMENT_AFTER_LOST2FOLLOWUP', 'other' => 'VN_SPT_OTHERS'}
         return mapping_list[@episode.previous_history] if mapping_list[@episode.previous_history].present?
-        return '' 
+        return mapping_list['other']
       end
 
       def age

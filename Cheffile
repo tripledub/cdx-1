@@ -14,4 +14,3 @@ cookbook 'rbenv', git: 'https://github.com/aminin/chef-rbenv'
 cookbook 'phantomjs'
 
 cookbook 'java'
-cookbook 'elasticsearch'

@@ -9,11 +9,24 @@ describe TestOrders::ListCsv do
   let(:default_params)    { { context: institution.uuid } }
 
   describe 'generate' do
-    subject { described_class.new(Encounter.all.order(:created_at)).generate }
+    subject { described_class.new(Encounter.all.order(:created_at), 'hostname').generate }
 
     it 'should return an array of test order status updates' do
       csv = CSV.parse(subject)
-      expect(csv[0]).to eq(['Batch', 'Site', 'Performing site', 'Sample', 'Testing for', 'User', 'Start time', 'Testdue date', 'Status'])
+      expect(csv[0]).to eq(
+        [
+          'Test order ID',
+          'Site',
+          'Performing site',
+          'Sample',
+          'Testing for',
+          'User',
+          'Start time',
+          'Test due date',
+          'Status'
+        ]
+      )
+
       expect(csv[1]).to eq(
         [
           test_order.batch_id,
@@ -22,12 +35,19 @@ describe TestOrders::ListCsv do
           SampleIdentifiers::Presenter.for_encounter(test_order),
           test_order.testing_for,
           test_order.user.full_name,
-          test_order.batch_id,
           Extras::Dates::Format.datetime_with_time_zone(test_order.start_time, :full_time),
           Extras::Dates::Format.datetime_with_time_zone(test_order.testdue_date, :full_date),
           TestOrders::Presenter.generate_status(test_order)
         ]
       )
+    end
+  end
+
+  describe 'filename' do
+    subject { described_class.new(Encounter.all.order(:created_at), 'test.example.com') }
+
+    it 'should include the hostname' do
+      expect(subject.filename).to include('test.example.com')
     end
   end
 end

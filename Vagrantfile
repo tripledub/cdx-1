@@ -33,7 +33,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe 'rbenv::user'
     chef.add_recipe 'phantomjs'
     chef.add_recipe 'java'
-    chef.add_recipe 'elasticsearch'
 
     # Install Ruby 2.1.5 and Bundler
     # Set an empty root password for MySQL to make things simple
@@ -78,11 +77,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         socket: '/var/run/mysqld/mysqld.sock',
         pid_file: '/var/run/mysqld/mysqld.pid',
         grants_path: '/etc/mysql/grants.sql'
-      },
-      elasticsearch: {
-        version: '1.7.5',
-        install: 'package',
-        service: 'start'
       }
     }
   end

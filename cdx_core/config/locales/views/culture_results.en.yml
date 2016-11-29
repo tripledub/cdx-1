@@ -21,4 +21,4 @@ en:
       serial_number: 'Serial number'
       test_result: 'Test result'
       examined_by: 'Examined by'
-      result_at: 'Result on'
+      result_at: 'Date of result'

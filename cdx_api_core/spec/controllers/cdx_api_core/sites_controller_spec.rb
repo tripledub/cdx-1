@@ -84,40 +84,5 @@ describe CdxApiCore::SitesController do
         expect(response_of(site_b_1)).to eq({'uuid' => site_b_1.uuid, 'name' => site_b_1.name, 'parent_uuid' => nil, 'institution_uuid' => site_b_1.institution.uuid})
       end
     end
-
-    context 'CSV' do
-      def check_sites_csv(r)
-        expect(r.status).to eq(200)
-        expect(r.content_type).to eq("text/csv")
-        expect(r.headers["Content-Disposition"]).to eq("attachment; filename=\"Sites-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv\"")
-        expect(r).to render_template("cdx_api_core/sites/index")
-      end
-
-      let(:institution) { Institution.make user: user }
-      let(:site) { Site.make(institution: institution) }
-
-      render_views
-
-      before(:each) { Timecop.freeze }
-
-      it "should respond a csv" do
-        institution
-        site
-
-        get :index, format: 'csv'
-
-        check_sites_csv response
-        expect(response.body).to eq("uuid,name,parent_uuid,institution_uuid\n#{site.uuid},#{site.name},\"#{site.parent.try(:uuid)}\",#{site.institution.uuid}\n")
-      end
-
-      it "renders column names even when there are no sites to render" do
-        institution
-
-        get :index, format: 'csv'
-
-        check_sites_csv response
-        expect(response.body).to eq("uuid,name,parent_uuid,institution_uuid\n")
-      end
-    end
   end
 end

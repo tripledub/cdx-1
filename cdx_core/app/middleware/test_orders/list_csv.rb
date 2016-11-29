@@ -3,12 +3,13 @@ module TestOrders
   class ListCsv
     attr_reader :filename
 
-    def initialize(test_orders)
+    def initialize(test_orders, hostname)
       @test_orders = test_orders
+      @hostname = hostname
     end
 
     def filename
-      @filename || "test_orders_list-#{DateTime.now.strftime('%Y-%m-%d-%H-%M')}.csv"
+      @filename || "#{@hostname}_test_orders_list-#{DateTime.now.strftime('%Y-%m-%d-%H-%M')}.csv"
     end
 
     def generate
@@ -22,7 +23,7 @@ module TestOrders
           Encounter.human_attribute_name(:user_id),
           Encounter.human_attribute_name(:start_time),
           Encounter.human_attribute_name(:testdue_date),
-          Encounter.human_attribute_name(:status),
+          Encounter.human_attribute_name(:status)
         ]
         @test_orders.map { |test_order| add_csv_row(csv, test_order) }
       end
@@ -38,7 +39,6 @@ module TestOrders
         SampleIdentifiers::Presenter.for_encounter(test_order),
         test_order.testing_for,
         test_order.user.full_name,
-        test_order.batch_id,
         Extras::Dates::Format.datetime_with_time_zone(test_order.start_time, :full_time),
         Extras::Dates::Format.datetime_with_time_zone(test_order.testdue_date, :full_date),
         TestOrders::Presenter.generate_status(test_order)

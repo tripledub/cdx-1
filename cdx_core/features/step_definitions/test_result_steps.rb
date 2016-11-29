@@ -15,7 +15,7 @@ And (/^test results exist$/) do
   site = @navigation_context.entity.sites.make
   device = site.devices.make
   
-  TestResult.create_and_index(
+  TestResult.make(
     core_fields: {
       'assays' => ['condition' => 'mtb', 'result' => :positive],
       'start_time' => Time.now,
@@ -26,7 +26,7 @@ And (/^test results exist$/) do
     device_messages:[DeviceMessage.make(device: device)]
   )
 
-  TestResult.create_and_index(
+  TestResult.make(
     core_fields: {
       'assays' => ['condition' => 'mtb', 'result' => :positive],
       'start_time' => Time.now - 1.day,

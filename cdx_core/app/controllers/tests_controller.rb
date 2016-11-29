@@ -15,4 +15,8 @@ class TestsController < ApplicationController
     @devices = @devices.within(@navigation_context.entity, @navigation_context.exclude_subsites)
     @localization_helper.devices_by_uuid = @devices_by_uuid = @devices.index_by &:uuid
   end
+
+  def get_hostname
+    request.host || 'www.thecdx.org'
+  end
 end

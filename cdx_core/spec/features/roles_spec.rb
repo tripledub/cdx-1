@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "roles", elasticsearch: true do
+describe "roles"  do
   let!(:institution) { Institution.make }
   let!(:user) { institution.user }
   let!(:site) { institution.sites.make }

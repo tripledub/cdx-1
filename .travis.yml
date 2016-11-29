@@ -6,7 +6,6 @@ addons:
     packages:
     - libzmq3-dev
 services:
-- elasticsearch
 - redis-server
 gemfile: cdx_core/Gemfile
 script:

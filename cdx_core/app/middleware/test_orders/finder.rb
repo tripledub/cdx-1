@@ -43,7 +43,9 @@ class TestOrders::Finder
     if @navigation_context.exclude_subsites && @navigation_context.site
       @filter_query = filter_query.where("sites.id = ? OR encounters.performing_site_id = ?", @navigation_context.site.id, @navigation_context.site.id)
     elsif !@navigation_context.exclude_subsites && @navigation_context.site
-      @filter_query = filter_query.where("sites.id = ? OR encounters.performing_site_id = ? OR sites.parent_id = ?", @navigation_context.site.id, @navigation_context.site.id, @navigation_context.site.id)
+      subsites = []
+      @navigation_context.site.walk_tree { |site, _level| subsites << site.id }
+      @filter_query = filter_query.where('sites.id = ? OR sites.id IN (?) OR encounters.performing_site_id = ?', @navigation_context.site.id, subsites, @navigation_context.site.id)
     end
   end
 

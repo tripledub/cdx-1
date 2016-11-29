@@ -15,12 +15,6 @@ sshd:
     - './data/sshd/user_keys:/home/cdx-sync/.ssh'
     - './data/sshd/sync:/home/cdx-sync/sync'
 
-elasticsearch:
-  restart: always
-  command: elasticsearch -Des.cluster.name=cdx
-  volumes:
-    - './data/elasticsearch:/usr/share/elasticsearch/data'
-
 web:
   image: finddx/cdx:latest
   restart: always
@@ -28,7 +22,6 @@ web:
     - db
     - sshd
     - redis
-    - elasticsearch
   env_file: docker.env
   ports:
     - 80:80
@@ -43,7 +36,6 @@ sidekiq:
   restart: always
   links:
     - db
-    - elasticsearch
     - redis
   env_file: docker.env
 
@@ -53,7 +45,6 @@ csv_watch:
   links:
     - db
     - sshd
-    - elasticsearch
   env_file: docker.env
   volumes_from:
     - sshd
@@ -64,5 +55,4 @@ ftp_monitor:
   links:
     - db
     - sshd
-    - elasticsearch
   env_file: docker.env

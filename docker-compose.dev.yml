@@ -1,7 +1,6 @@
 web:
   links:
     - db
-    - elasticsearch
     - smtp
     - sshd
     - redis
@@ -14,7 +13,6 @@ web:
 csv_watch:
   links:
     - db
-    - elasticsearch
     - sshd
   env_file: docker-dev.env
   volumes_from:
@@ -23,13 +21,11 @@ csv_watch:
 ftp_monitor:
   links:
     - db
-    - elasticsearch
   env_file: docker-dev.env
 
 sidekiq:
   links:
     - db
-    - elasticsearch
     - redis
   env_file: docker-dev.env
 

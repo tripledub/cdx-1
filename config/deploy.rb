@@ -100,17 +100,6 @@ namespace :deploy do
     end
   end
 
-  desc 'Initialize Elasticsearch template'
-  task :initialize_template do
-    on roles(:app) do
-      within current_path do
-        with rails_env: :production do
-          rake 'cdx_elasticserach:initialize_template'
-        end
-      end
-    end
-  end
-
   task :write_revision do
     on roles(:app) do
       within repo_path do

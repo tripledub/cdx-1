@@ -4,18 +4,16 @@
   %main
     = render partial: 'total_tests', locals: { total_tests: Extras::Charts::VerticalColumns.new(@dashboard_report.total_tests).render, failed_tests: Extras::Charts::Pie.new(@dashboard_report.failed_tests).render }
     -# = render partial: 'tests_by_site', locals: { query_site_tests: @dashboard_report.query_site_tests, average_test_per_site: @dashboard_report.average_test_per_site }
-    -# %section
-    -#   .row
-    -#     .small-6.columns.box
-    -#       %header
-    -#         = image_tag('img/test-tube.png')
-    -#         %h3
-    -#           = I18n.t('dashboard.index.drtb_percentage')
-    -#       .box-content.xpertChart
-    -#         %p.note
-    -#           = I18n.t('dashboard.index.chart_note')
-    -#         #chartDrtbPercentage{:style => "height: 200px; width: 100%;"}
-    -#           = react_component 'CanvasJsChart', chartDiv: 'chartDrtbPercentage', chartData: Extras::Charts::Pie.new(@dashboard_report.drtb_percentage).render
+    %section
+      .row
+        .small-12.columns.box
+          %header
+            = image_tag('img/test-tube.png')
+            %h3
+              = I18n.t('dashboard.index.daily_order_status')
+          .box-content.xpertChart
+            #chartDrtbPercentage{:style => "height: 200px; width: 100%;"}
+              = react_component 'CanvasJsChart', chartDiv: 'chartDrtbPercentage', chartData: Extras::Charts::Pie.new(@dashboard_report.daily_order_status).render
     -#     .small-6.columns.box
     -#       %header
     -#         = image_tag('img/test-tube.png')
