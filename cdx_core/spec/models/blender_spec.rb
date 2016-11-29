@@ -488,32 +488,4 @@ describe Blender do
       end
     end
   end
-
-  context "not merging" do
-    context "when the device was moved from one site to another" do
-      let(:message) do
-        {
-          test: { assays: [{ condition: "flu_a", name: "flu_a", result: "positive" }] },
-          patient: { id: 1 },
-          sample: { id: 2 }
-        }
-      end
-      let(:site1) { Site.make }
-      let(:site2) { Site.make institution: site1.institution }
-      let(:device) { Device.make institution: site1.institution, site: site1 }
-
-      it "should not link the samples" do
-        DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(message)
-        device.site = site2
-        device.save
-        DeviceMessage.create_and_process device: device, plain_text_data: Oj.dump(message)
-        first_test = TestResult.first
-        second_test = TestResult.last
-
-        expect(first_test.site).to eq(site1)
-        expect(second_test.site).to eq(site2)
-        expect(first_test.sample).to_not eq(second_test.sample)
-      end
-    end
-  end
 end

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe TestOrdersStateController do
   let(:institution)       { Institution.make }
   let(:user)              { institution.user }
-  let(:site)              { Site.make institution: institution }
+  let!(:site)             { Site.make institution: institution }
   let(:patient)           { Patient.make institution: institution, site: site }
   let(:test_order)        { Encounter.make patient: patient }
   let(:microscopy_result) { MicroscopyResult.make encounter: test_order, serial_number: 'AXP-998' }
