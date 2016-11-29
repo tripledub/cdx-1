@@ -53,7 +53,7 @@ describe TestResults::Presenter do
           Sites::Presenter.site_name(TestResult.first.site),
           SampleIdentifiers::Presenter.orphan_sample_id(TestResult.first),
           I18n.t('select.test_results.result_status.' + TestResult.first.result_status),
-          PatientResult.first.result_type
+          PatientResult.first.result_type.to_s
         ]
       )
     end

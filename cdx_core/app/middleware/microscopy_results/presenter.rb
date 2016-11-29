@@ -19,7 +19,7 @@ module MicroscopyResults
       end
 
       def csv_query(microscopy_results)
-        CSV.generate do |csv|
+        CSV.generate(force_quotes: true) do |csv|
           csv << [
             Encounter.human_attribute_name(:id),
             MicroscopyResult.human_attribute_name(:id),

@@ -20,7 +20,7 @@ module TestResults
       end
 
       def csv_query(test_results)
-        CSV.generate do |csv|
+        CSV.generate(force_quotes: true) do |csv|
           csv << [
             TestResult.human_attribute_name(:test_id),
             TestResult.human_attribute_name(:sample_collected_at),

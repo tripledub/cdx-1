@@ -13,7 +13,7 @@ module TestOrders
     end
 
     def generate
-      CSV.generate do |csv|
+      CSV.generate(force_quotes: true) do |csv|
         csv << [
           Encounter.human_attribute_name(:batch_id),
           Encounter.human_attribute_name(:site_id),

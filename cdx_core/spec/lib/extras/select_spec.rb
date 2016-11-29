@@ -15,8 +15,8 @@ describe Extras::Select do
       expect(described_class.find(select_options, 'second')).to eq('Second option')
     end
 
-    it 'should return nil if no match is found' do
-      expect(described_class.find(select_options, 'fifth')).to be nil
+    it 'should return an empty string if no match is found' do
+      expect(described_class.find(select_options, 'fifth')).to eq('')
     end
   end
 end

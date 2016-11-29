@@ -18,7 +18,7 @@ module XpertResults
       end
 
       def csv_query(xpert_results)
-        CSV.generate do |csv|
+        CSV.generate(force_quotes: true) do |csv|
           csv << [
             Encounter.human_attribute_name(:id),
             Encounter.human_attribute_name(:status),

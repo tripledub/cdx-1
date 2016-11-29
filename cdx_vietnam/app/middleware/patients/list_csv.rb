@@ -13,7 +13,7 @@ module Patients
     end
 
     def export
-      CSV.generate do |csv|
+      CSV.generate(force_quotes: true) do |csv|
         csv << [
           I18n.t('patients.csv_export.patient_id'),
           I18n.t('patients.csv_export.created_at'),
