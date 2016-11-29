@@ -35,8 +35,8 @@ describe TestOrders::ListCsv do
           SampleIdentifiers::Presenter.for_encounter(test_order),
           test_order.testing_for,
           test_order.user.full_name,
-          Extras::Dates::Format.datetime_with_time_zone(test_order.start_time, :full_time),
-          Extras::Dates::Format.datetime_with_time_zone(test_order.testdue_date, :full_date),
+          Extras::Dates::Format.datetime_with_time_zone(test_order.start_time, :full_time_with_timezone),
+          Extras::Dates::Format.datetime_with_time_zone(test_order.testdue_date, :full_time_with_timezone),
           TestOrders::Presenter.generate_status(test_order)
         ]
       )

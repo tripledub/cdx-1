@@ -47,7 +47,7 @@ module TestOrders
           test_order.batch_id,
           audit_update.old_value,
           audit_update.new_value,
-          Extras::Dates::Format.datetime_with_time_zone(audit_update.created_at, :full_time),
+          Extras::Dates::Format.datetime_with_time_zone(audit_update.created_at, :full_time_with_timezone),
           test_order.patient.id.to_s
         ] if audit_update.old_value != audit_update.new_value
       end
@@ -60,7 +60,7 @@ module TestOrders
           patient_result.serial_number,
           audit_update.old_value,
           audit_update.new_value,
-          Extras::Dates::Format.datetime_with_time_zone(audit_update.created_at, :full_time),
+          Extras::Dates::Format.datetime_with_time_zone(audit_update.created_at, :full_time_with_timezone),
           patient_result.encounter.patient.id.to_s
         ] if audit_update.old_value != audit_update.new_value
       end

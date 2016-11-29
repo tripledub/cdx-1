@@ -41,8 +41,8 @@ module TestResults
       def add_csv_row(csv, test_result)
         csv << [
           test_result.test_id,
-          Extras::Dates::Format.datetime_with_time_zone(test_result.sample_collected_at, :full_time),
-          Extras::Dates::Format.datetime_with_time_zone(test_result.result_at, :full_time),
+          Extras::Dates::Format.datetime_with_time_zone(test_result.sample_collected_at, :full_time_with_timezone),
+          Extras::Dates::Format.datetime_with_time_zone(test_result.result_at, :full_time_with_timezone),
           test_result.result_name,
           Devices::Presenter.device_name_and_serial_number(test_result.device),
           Sites::Presenter.site_name(test_result.site),

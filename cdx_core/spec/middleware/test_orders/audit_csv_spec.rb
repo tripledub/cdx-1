@@ -33,7 +33,7 @@ describe TestOrders::AuditCsv do
           test_order.batch_id,
           'new',
           'samples_collected',
-          Extras::Dates::Format.datetime_with_time_zone(test_order.created_at, :full_time),
+          Extras::Dates::Format.datetime_with_time_zone(test_order.created_at, :full_time_with_timezone),
           test_order.patient.id.to_s
         ]
       )
@@ -59,7 +59,7 @@ describe TestOrders::AuditCsv do
           microscopy_result.serial_number,
           'new',
           'pending_approval',
-          Extras::Dates::Format.datetime_with_time_zone(test_order.created_at, :full_time),
+          Extras::Dates::Format.datetime_with_time_zone(test_order.created_at, :full_time_with_timezone),
           test_order.patient.id.to_s
         ]
       )
