@@ -13,7 +13,7 @@ module TestOrders
     end
 
     def export_all
-      CSV.generate do |csv|
+      CSV.generate(force_quotes: true) do |csv|
         csv << [
           I18n.t('test_orders.state.order_id'),
           I18n.t('test_orders.state.old_state'),
@@ -26,7 +26,7 @@ module TestOrders
     end
 
     def export_one
-      CSV.generate do |csv|
+      CSV.generate(force_quotes: true) do |csv|
         csv << [
           I18n.t('test_orders.state.order_id'),
           I18n.t('test_orders.state.sample_id'),
