@@ -72,6 +72,16 @@
           var estimatedyear = currentyear - $(this).val();
           $('#patient_birth_date_on_1i').val(estimatedyear);
           });
+    
+    .fieldrow#pextid
+      .fieldlabel
+        %div.tooltip
+          = f.label :site_id
+          %div.tooltiptext_r
+            = I18n.t('patients.form.site_id_tooltip')
+      .fieldvalue
+        = f.collection_select :site_id, @sites, :id, :name, prompt:true
+
     - if ExternalSystem.any?
       .fieldrow#pextid
         .fieldlabel

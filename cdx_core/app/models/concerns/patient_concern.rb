@@ -21,8 +21,10 @@ module PatientConcern
     has_many :notifications, dependent: :destroy
 
     belongs_to :external_system
+    belongs_to :site
 
     validates_presence_of   :institution
+    validates_presence_of   :site
     validates_uniqueness_of :entity_id, scope: :institution_id, allow_nil: true
     validate                :entity_id_not_changed
 

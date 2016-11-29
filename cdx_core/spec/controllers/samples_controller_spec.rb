@@ -3,7 +3,8 @@ require 'spec_helper'
 describe SamplesController do
   let!(:institution)      { Institution.make }
   let!(:user)             { institution.user }
-  let(:patient)           { Patient.make institution: institution }
+  let!(:site) { Site.make institution: institution }
+  let(:patient)        { Patient.make institution: institution, site: site }
   let(:encounter)         { Encounter.make institution: institution, patient: patient }
   let(:default_params)    { { context: institution.uuid } }
   let(:samples_ids)       { ['sample-id', 'FX-3333-0'] }

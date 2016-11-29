@@ -2,6 +2,7 @@
 class PatientsController < ApplicationController
   before_filter :find_patient, only: %w(show edit update destroy)
   before_action :set_filter_params, only: [:index]
+  before_action :load_sites
 
   def search
     @patients = check_access(Patient.where(is_phantom: false)
@@ -32,7 +33,9 @@ class PatientsController < ApplicationController
   end
 
   def new
-    @patient = @navigation_context.institution.patients.new
+    institution = @navigation_context.institution
+    @patient = institution.patients.new
+    @patient.site_id = @navigation_context.site.id if @navigation_context.site
 
     add_two_addresses
 
@@ -44,7 +47,6 @@ class PatientsController < ApplicationController
     return unless authorize_resource(@institution, CREATE_INSTITUTION_PATIENT)
     parse_date_of_birth
     @patient      = @institution.patients.new(patient_params)
-    @patient.site = @navigation_context.site
     @patient.created_from_controller = true
     if validate_name_and_entity_id && @patient.save_and_audit("t{patients.create.audit_log}: #{@patient.name}")
       next_url = if params[:next_url].blank?
@@ -87,6 +89,10 @@ class PatientsController < ApplicationController
 
   protected
 
+  def load_sites
+    @sites = @navigation_context.institution.sites || []
+  end
+
   def find_patient
     @patient = Patient.find(params[:id])
   end
@@ -108,6 +114,7 @@ class PatientsController < ApplicationController
       :city,
       :state,
       :zip_code,
+      :site_id,
       :created_from_controller,
       addresses_attributes: [:id, :address, :city, :state, :country, :zip_code]
     )
