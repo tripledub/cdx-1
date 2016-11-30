@@ -1,6 +1,8 @@
 module CdxVietnam
   module Presenters
     class Etb
+      PERMANENT_ADDRESS_NUM = 0
+      CONTACT_ADDRESS_NUM = 1
       def self.create_patient(patient_result)
         new(patient_result).create_patient
       end
@@ -36,13 +38,13 @@ module CdxVietnam
             cellphone_number: '23711', # OK, just hard-code like this
             supervisor2_cellphone: '23711', # OK, just hard-code like this
             nationality: etb_nationality, 
-            registration_address1: cdp_address(patient.addresses[1].address), # line đầu tiên của Contact Address
+            registration_address1: cdp_address(CONTACT_ADDRESS_NUM), # line đầu tiên của Contact Address
             registration_address2: '', # OK
             registration_region: 'MIỀN BẮC', # OK hard-coded
             registration_province: 'Hà Nội', # OK hard-coded
             registraiton_district: 'Cầu Giấy', # OK hard-coded
             located_at_different_address: located_at_different_address, 
-            current_address: cdp_address(patient.addresses[0].address), # lấy dòng đầu tiên của PERMANENT ADDRESS
+            current_address: cdp_address(PERMANENT_ADDRESS_NUM), # lấy dòng đầu tiên của PERMANENT ADDRESS
             healthcare_unit_location: 'Miền Nam', # OK
             healthcare_unit_name: 'Quận 1', # OK
             healthcare_unit_registration_date: Extras::Dates::Format.datetime_with_time_zone(patient.created_at, I18n.t('date.formats.etb_short')), # ngày tạo patient
@@ -72,16 +74,16 @@ module CdxVietnam
         end
       end
 
-      def cdp_address(addresses)
-        if patient.addresses[1].address.blank?
+      def cdp_address(address_num = PERMANENT_ADDRESS_NUM)
+        if !patient.addresses || !patient.addresses[address_num].present? || patient.addresses[address_num].address.blank?
           return 'Missing in CDP'
         else
-          return patient.addresses[1].address
+          return patient.addresses[address_num].address
         end
       end
 
       def located_at_different_address
-        if patient.addresses[1].address ==  patient.addresses[0].address
+        if patient.addresses.present? && patient.addresses[1].address ==  patient.addresses[0].address
           'TRUE'
         else
           'FALSE'
@@ -166,7 +168,7 @@ module CdxVietnam
       end
 
       def specimen_type(test_order_to_send)
-        if test_order_to_send.encounter.coll_sample_type.upcase == 'SPUTUM'
+        if test_order_to_send.encounter.coll_sample_type.present? && test_order_to_send.encounter.coll_sample_type.upcase == 'SPUTUM'
           'SPUTUM'
         else
           'OTHER'
@@ -191,7 +193,7 @@ module CdxVietnam
 
       def suspect_mdr_case_type
         mapping_list = {'failcatii' => 'VN_SPT_FAILED_CAT_II', 'tbmdr' => 'VN_SPT_CONTACT_MDR_INDEX_CASE', 'failcati' => 'VN_SPT_FAILED_CAT_I', 'noncon' => 'VN_SPT_NON_CONVERTER_AFTER_2_OR_3_MONTH', 'relepsecat' => 'VN_SPT_RELAPSE_OF_CAT_I_OR_CAT_II', 'retreatcat' => 'VN_SPT_RETREATMENT_AFTER_LOST2FOLLOWUP', 'other' => 'VN_SPT_OTHERS'}
-        return mapping_list[@episode.previous_history] if mapping_list[@episode.previous_history].present?
+        return mapping_list[@episode.previous_history] if @episode.previous_history.present? && mapping_list[@episode.previous_history].present?
         return mapping_list['other']
       end
 
