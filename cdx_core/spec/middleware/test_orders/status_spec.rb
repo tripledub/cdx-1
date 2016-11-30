@@ -18,6 +18,27 @@ describe TestOrders::Status do
     }
   end
 
+  describe 'update_and_log' do
+    before :each do
+      User.current = user
+      described_class.update_and_log(encounter, 'samples_collected')
+    end
+
+    it 'should update the status' do
+      expect(encounter.status).to eq('samples_collected')
+    end
+
+    it 'should log the changes' do
+      expect(encounter.audit_logs.first.audit_updates.first.new_value).to eq('samples_collected')
+    end
+
+    it 'should not log any changes if new status is the same as current status' do
+      described_class.update_and_log(encounter, 'samples_collected')
+
+      expect(encounter.audit_logs.first.audit_updates.count).to eq(1)
+    end
+  end
+
   describe 'update_status' do
     before :each do
       User.current = user

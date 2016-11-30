@@ -24,7 +24,7 @@ module CdxVietnam
             case_type: 'patient', # OK, luôn là patient
             cdp_id: patient.id.to_s,
             target_system: 'vtm', # OK
-            patient_vtm_id: patient.vtm_patient_id, 
+            patient_vtm_id: patient.vtm_patient_id,
             registration_number: '', # OK
             ngayKhamBenh: exam_date1,
             strngayKhamBenh: exam_date2,
@@ -72,7 +72,7 @@ module CdxVietnam
           specimen_type: specimen_type(patient_result),
           specimen_type_other: specimen_type_other,
           requester: 'NGHI',
-          result: vtm_result(order_type) 
+          result: vtm_result(order_type)
         }
       end
 
@@ -173,7 +173,7 @@ module CdxVietnam
       end
 
       def gender
-        return '0' if patient.gender.upcase == 'FEMALE'
+        return '0' if patient.gender.to_s.upcase == 'FEMALE'
         return '1'
       end
     end
