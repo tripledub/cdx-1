@@ -2,12 +2,11 @@ require 'spec_helper'
 require 'policy_spec_helper'
 
 describe SitesController do
-
   let!(:institution)   { Institution.make }
   let!(:user)          { institution.user }
   let!(:institution2)  { Institution.make }
   let!(:site2)         { institution2.sites.make }
-  let(:default_params) { {context: institution.uuid} }
+  let(:default_params) { { context: institution.uuid } }
 
   before :each do
     sign_in user
@@ -41,7 +40,6 @@ describe SitesController do
       expect(response).to be_success
       expect(assigns(:sites)).to contain_exactly(site2)
     end
-
   end
 
   context 'new' do
@@ -66,42 +64,33 @@ describe SitesController do
   end
 
   context 'create' do
-
     it 'should create new site in context institution' do
-      expect {
-        post :create, site: Site.plan
-      }.to change(institution.sites, :count).by(1)
+      expect { post :create, site: Site.plan }.to change(institution.sites, :count).by(1)
       expect(response).to be_redirect
     end
 
     it 'should not create site in context institution despite params' do
-      expect {
-        post :create, site: Site.plan(institution: institution2)
-      }.to change(institution.sites, :count).by(1)
+      expect { post :create, site: Site.plan(institution: institution2) }.to change(institution.sites, :count).by(1)
       expect(response).to be_redirect
     end
 
     it 'should not create site in institution without permission to create site' do
       grant institution2.user, user, Institution, [READ_INSTITUTION]
-      expect {
-        post :create, context: institution2.uuid, site: Site.plan
-      }.to change(institution.sites, :count).by(0)
+      expect { post :create, context: institution2.uuid, site: Site.plan }.to change(institution.sites, :count).by(0)
       expect(response).to be_forbidden
     end
 
     it 'should create if no location geoid' do
-      expect {
+      expect do
         site = Site.plan(institution: institution)
         site.delete :location_geoid
         post :create, site: site
-      }.to change(institution.sites, :count).by(1)
+      end.to change(institution.sites, :count).by(1)
       expect(response).to be_redirect
     end
-
   end
 
   context 'edit' do
-
     let!(:site) { institution.sites.make }
     let!(:other_site) { Site.make }
 
@@ -115,20 +104,21 @@ describe SitesController do
       get :edit, id: site2.id
       expect(response).to be_forbidden
     end
-
   end
 
   context 'update' do
-
     let!(:site) { institution.sites.make }
 
     it 'should update site' do
-      patch :update, id: site.id, site: { name: 'newname', address: '1 street', city: 'london', state: 'aa', zip_code: 'sw11'}
+      patch :update, id: site.id, site: {
+        name: 'newname', address: '1 street', city: 'london', state: 'aa', zip_code: 'sw11', finance_approved: true
+      }
       expect(site.reload.name).to eq('newname')
       expect(site.address).to eq('1 street')
       expect(site.city).to eq('london')
       expect(site.state).to eq('aa')
       expect(site.zip_code).to eq('sw11')
+      expect(site.finance_approved).to be true
       expect(response).to be_redirect
     end
 
@@ -141,9 +131,7 @@ describe SitesController do
       grant user, other_user, "site?institution=#{institution.id}", [UPDATE_SITE]
 
       sign_in other_user
-      expect {
-        patch :update, id: site.id, site: { name: 'newname', parent_id: new_parent.id }
-      }.to change(Site, :count).by(0)
+      expect { patch :update, id: site.id, site: { name: 'newname', parent_id: new_parent.id } }.to change(Site, :count).by(0)
 
       expect(response).to redirect_to sites_path
     end
@@ -154,13 +142,12 @@ describe SitesController do
       let!(:device) { Device.make site: site }
       let!(:test) { TestResult.make device: device }
 
-      before(:each) {
-        patch :update, id: site.id, context: site.uuid, site: (
-          Site.plan(institution: institution).merge({ parent_id: parent.id, name: 'new-name' })
-        )
+      before(:each) do
+        patch :update, id: site.id, context: site.uuid, site:
+          Site.plan(institution: institution).merge(parent_id: parent.id, name: 'new-name')
 
         site.reload
-      }
+      end
 
       it 'should update existing site with the new name' do
         expect(site.parent_id).to eq(parent.id)
@@ -179,13 +166,11 @@ describe SitesController do
       let!(:device)     { Device.make site: site }
       let!(:test)       { TestResult.make device: device }
 
-      before(:each) {
-        patch :update, id: site.id, context: site.uuid, site: (
-          Site.plan(institution: institution).merge({ parent_id: new_parent.id, name: site.name })
-        )
-
+      before(:each) do
+        patch :update, id: site.id, context: site.uuid, site:
+          Site.plan(institution: institution).merge(parent_id: new_parent.id, name: site.name)
         site.reload
-      }
+      end
 
       it 'should redirect to sites_path' do
         expect(response).to redirect_to(sites_path(context: site.uuid))
@@ -198,30 +183,23 @@ describe SitesController do
   end
 
   context 'destroy' do
-
     let!(:site) { institution.sites.make }
 
     it 'should destroy a site' do
-      expect {
-        delete :destroy, id: site.id
-      }.to change(institution.sites, :count).by(-1)
+      expect { delete :destroy, id: site.id }.to change(institution.sites, :count).by(-1)
       expect(response).to be_redirect
     end
 
     it 'should not destroy site for another institution' do
-      expect {
-        delete :destroy, id: site2.id
-      }.to raise_exception(ActiveRecord::RecordNotFound)
+      expect { delete :destroy, id: site2.id }.to raise_exception(ActiveRecord::RecordNotFound)
     end
 
     it 'should not destroy site with associated devices' do
       site.devices.make
       expect(site.devices).not_to be_empty
-      expect {
-        expect {
-          delete :destroy, id: site.id
-        }.to raise_error(ActiveRecord::DeleteRestrictionError)
-      }.not_to change(institution.sites, :count)
+      expect do
+        expect { delete :destroy, id: site.id }.to raise_error(ActiveRecord::DeleteRestrictionError)
+      end.not_to change(institution.sites, :count)
     end
 
     it "should destroy a site after moving it's associated devices" do
@@ -232,14 +210,12 @@ describe SitesController do
         expect { delete :destroy, id: site.id }.to raise_error(ActiveRecord::DeleteRestrictionError)
       end.not_to change(institution.sites, :count)
 
-      site.devices.each { |dev|
+      site.devices.each do |dev|
         dev.site = site3
         dev.save!
-      }
+      end
 
       expect { delete :destroy, id: site.id }.to change(institution.sites, :count).by(-1)
     end
-
   end
-
 end
