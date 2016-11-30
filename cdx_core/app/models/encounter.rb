@@ -32,6 +32,8 @@ class Encounter < ActiveRecord::Base
 
   before_save :ensure_entity_id
   before_create :set_default_status
+  after_create :auto_finance_test_order
+
   notification_observe_field :status
 
   class << self
@@ -73,20 +75,20 @@ class Encounter < ActiveRecord::Base
 
       assays1.dup.tap do |res|
         assays2.each do |assay2|
-          assay = res.find { |a| a["condition"] == assay2["condition"] }
+          assay = res.find { |a| a['condition'] == assay2['condition'] }
           if assay.nil?
             res << assay2.dup
           else
             assay.merge! assay2 do |key, v1, v2|
-              if key == "result"
+              if key == 'result'
                 if v1 == v2
                   v1
-                elsif v1 == "indeterminate" || v1.blank? || (v1 == "n/a" && v2 != "indeterminate")
+                elsif v1 == 'indeterminate' || v1.blank? || (v1 == 'n/a' && v2 != 'indeterminate')
                   v2
-                elsif v2 == "indeterminate" || v2.blank? || (v2 == "n/a" && v1 != "indeterminate")
+                elsif v2 == 'indeterminate' || v2.blank? || (v2 == 'n/a' && v1 != 'indeterminate')
                   v1
                 else
-                  "indeterminate"
+                  'indeterminate'
                 end
               else
                 v1
@@ -103,10 +105,10 @@ class Encounter < ActiveRecord::Base
 
       assays1.dup.tap do |res|
         assays2.each do |assay2|
-          assay = res.find { |a| a["condition"] == assay2["condition"] }
+          assay = res.find { |a| a['condition'] == assay2['condition'] }
           if assay.nil?
             res << (assay2.dup.tap do |h|
-              h["result"] = nil
+              h['result'] = nil
             end)
           end
         end
@@ -123,7 +125,7 @@ class Encounter < ActiveRecord::Base
   attr_accessor :new_samples # Array({entity_id: String}) of new generated samples from UI.
 
   def entity_id
-    core_fields["id"]
+    core_fields['id']
   end
 
   def not_financed?
@@ -151,7 +153,7 @@ class Encounter < ActiveRecord::Base
   end
 
   def test_results_not_in_diagnostic
-    diagnostic.present? ? test_results.where("updated_at > ?", self.user_updated_at || self.created_at) : test_results
+    diagnostic.present? ? test_results.where('updated_at > ?', user_updated_at || created_at) : test_results
   end
 
   def diagnostic
@@ -161,18 +163,14 @@ class Encounter < ActiveRecord::Base
   def human_diagnose
     return unless diagnostic
 
-    positives = diagnostic.select {|a| a['result'] == 'positive'}.map { |a| a['condition'].try(:upcase) }.to_a
-    negatives = diagnostic.select {|a| a['result'] == 'negative'}.map { |a| a['condition'].try(:upcase) }.to_a
+    positives = diagnostic.select { |a| a['result'] == 'positive' }.map { |a| a['condition'].try(:upcase) }.to_a
+    negatives = diagnostic.select { |a| a['result'] == 'negative' }.map { |a| a['condition'].try(:upcase) }.to_a
 
-    res = ""
+    res = ''
     res << positives.join(', ')
-    unless positives.empty?
-      res << " detected. "
-    end
+    res << ' detected. ' unless positives.empty?
     res << negatives.join(', ')
-    unless negatives.empty?
-      res << " not detected. "
-    end
+    res << ' not detected. ' unless negatives.empty?
 
     res.strip
   end
@@ -192,17 +190,17 @@ class Encounter < ActiveRecord::Base
   end
 
   def self.as_json_from_query(json, encounter_query_result, localization_helper)
-    encounter = encounter_query_result["encounter"]
+    encounter = encounter_query_result['encounter']
 
     json.encounter do
-      json.uuid encounter["uuid"]
-      json.diagnosis encounter["diagnosis"] || []
-      json.start_time(localization_helper.format_datetime(encounter["start_time"]))
-      json.end_time(localization_helper.format_datetime(encounter["end_time"]))
+      json.uuid encounter['uuid']
+      json.diagnosis encounter['diagnosis'] || []
+      json.start_time(localization_helper.format_datetime(encounter['start_time']))
+      json.end_time(localization_helper.format_datetime(encounter['end_time']))
     end
 
     json.site do
-      json.name encounter_query_result["site"]["name"]
+      json.name encounter_query_result['site']['name']
     end
   end
 
@@ -222,5 +220,9 @@ class Encounter < ActiveRecord::Base
 
   def set_default_status
     self.status = 'new'
+  end
+
+  def auto_finance_test_order
+    TestOrders::Status.update_and_log(self, 'financed') if site.finance_approved == true
   end
 end

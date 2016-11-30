@@ -138,12 +138,12 @@ group :test do
   gem 'timecop'
   gem 'shoulda'
   gem 'hashdiff'
-  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'site_prism'
   gem 'poltergeist'
   gem 'capybara-screenshot'
-  gem 'simplecov', :require => false
+  gem 'simplecov', require: false
 
   source 'https://rails-assets.org' do
     gem 'rails-assets-es5-shim'
