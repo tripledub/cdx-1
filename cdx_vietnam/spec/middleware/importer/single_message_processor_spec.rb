@@ -126,7 +126,15 @@ describe Importer::SingleMessageProcessor do
     context 'it should generate an orphan result ' do
       before :each do
         xpert_result.update_attribute(:result_status, 'allocated')
+        parsed_message['test']['core']['status'] = 'success'
         Device.any_instance.stub(:model_is_gen_expert?).and_return(true)
+      end
+
+      it 'when parsed_message.status is not a success' do
+        parsed_message['test']['core']['status'] = 'no_result'
+        described_class.new(device_message_processor, parsed_message).process
+
+        expect(TestResult.first.sample_identifier.entity_id).to eq('12345')
       end
 
       it 'when notes field is empty' do

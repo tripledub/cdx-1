@@ -129,5 +129,13 @@ describe XpertResults::VietnamImporter do
         expect(described_class.valid_gene_xpert_result_and_sample?(device, parsed_message)).to be true
       end
     end
+
+    context 'valid device, xpert result, but no result from device' do
+      it 'should return false' do
+        parsed_message['test']['core']['status'] = 'no_result'
+        device.stub(:model_is_gen_expert?).and_return(true)
+        expect(described_class.valid_gene_xpert_result_and_sample?(device, parsed_message)).to be false
+      end
+    end
   end
 end
