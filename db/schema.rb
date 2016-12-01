@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161125154347) do
+ActiveRecord::Schema.define(version: 20161130093341) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "uuid",             limit: 255
@@ -904,6 +904,7 @@ ActiveRecord::Schema.define(version: 20161125154347) do
     t.date     "last_sample_identifier_date"
     t.boolean  "allows_manual_entry"
     t.text     "comment",                          limit: 65535
+    t.boolean  "finance_approved",                               default: false
   end
 
   add_index "sites", ["deleted_at"], name: "index_sites_on_deleted_at", using: :btree

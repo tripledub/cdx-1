@@ -4,7 +4,7 @@
   .row.labelHeader
     .col-6
       %h3
-        = I18n.t('sites.form.site_details_header') 
+        = I18n.t('sites.form.site_details_header')
     .col-6
   .panel.box-content
     .col.pe-6
@@ -13,7 +13,7 @@
           %div.tooltip
             = f.label I18n.t('sites.form.label.institution')
             %div.tooltiptext_r
-              = I18n.t('sites.form.tooltip.institution') 
+              = I18n.t('sites.form.tooltip.institution')
         .col
           .value= f.object.institution
 
@@ -21,7 +21,7 @@
         .col.pe-2
           %div.tooltip
             = f.label I18n.t('sites.form.label.name')
-            %div.tooltiptext_r 
+            %div.tooltiptext_r
               = I18n.t('sites.form.tooltip.name')
         .col
           = f.text_field :name, :class => 'input-large'
@@ -30,7 +30,7 @@
           .col.pe-2
             %div.tooltip
               = f.label I18n.t('sites.form.label.parent')
-              %div.tooltiptext_r 
+              %div.tooltiptext_r
                 = I18n.t('sites.form.tooltip.parent')
           .col
             = cdx_select form: f, name: :parent_id, class: 'input-large' do |select|
@@ -41,7 +41,7 @@
           .col.pe-2
             %div.tooltip
               = f.label I18n.t('sites.form.label.parent')
-              %div.tooltiptext_r 
+              %div.tooltiptext_r
                 = I18n.t('sites.form.tooltip.parent')
           .col
             = @site.parent.name
@@ -55,7 +55,7 @@
       .col.pe-2
         %div.tooltip
           = f.label I18n.t('sites.form.label.sample_id_reset_policy')
-          %div.tooltiptext_r 
+          %div.tooltiptext_r
             = I18n.t('sites.form.tooltip.sample_id_reset_policy')
       .col
         = cdx_select form: f, name: :sample_id_reset_policy, class: 'input-large sample-id-reset' do |select|
@@ -66,7 +66,7 @@
       .col.pe-2
         %div.tooltip
           = f.label I18n.t('sites.form.label.allows_manual_entry')
-          %div.tooltiptext_r 
+          %div.tooltiptext_r
             = I18n.t('sites.form.tooltip.allows_manual_entry')
       .col
         = f.check_box :allows_manual_entry
@@ -75,7 +75,7 @@
       .col.pe-2
         %div.tooltip
           = f.label I18n.t('sites.form.label.main_phone_number')
-          %div.tooltiptext_r 
+          %div.tooltiptext_r
             = I18n.t('sites.form.tooltip.main_phone_number')
       .col
         = f.text_field :main_phone_number, :class => 'input-large'
@@ -83,16 +83,25 @@
       .col.pe-2
         %div.tooltip
           = f.label I18n.t('sites.form.label.email_address')
-          %div.tooltiptext_r 
+          %div.tooltiptext_r
             = I18n.t('sites.form.tooltip.email_address')
       .col
         = f.email_field :email_address, :class => 'input-large'
+    .row
+      .col.pe-2
+        %div.tooltip
+          = f.label I18n.t('sites.form.label.finance_approved')
+          %div.tooltiptext_r
+            = I18n.t('sites.form.tooltip.finance_approved')
+      .col
+        = f.check_box :finance_approved
+        %label{ for: 'site_finance_approved' } &nbsp;
 
     .row
       .col.pe-2
         %div.tooltip
           = f.label I18n.t('sites.form.label.comment')
-          %div.tooltiptext_r 
+          %div.tooltiptext_r
             = I18n.t('sites.form.tooltip.comment')
       .col
         = f.text_area :comment, rows: 5, cols: 40
