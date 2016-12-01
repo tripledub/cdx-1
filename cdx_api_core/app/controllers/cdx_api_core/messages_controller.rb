@@ -1,9 +1,6 @@
-require 'faker'
-
 module CdxApiCore
+  # Import messages from external devices into app.
   class MessagesController < CdxApiCore::ApiController
-    include DemoData
-
     wrap_parameters false
     skip_before_action :doorkeeper_authorize!, only: :create
     skip_before_action :authenticate_user!, only: :create
@@ -16,25 +13,6 @@ module CdxApiCore
       else
         data = request.body.read rescue nil
         save_device_message(device, data, true)
-      end
-    end
-
-
-    def create_demo
-      device = Device.includes(:device_model, :manifest, :institution, :site).find_by_uuid(params[:device_id])
-      if !authenticate_create(device)
-        head :unauthorized
-      else
-        data = request.body.read rescue nil
-        saved_ok = true
-        repeat_demo = params['repeat_demo'].to_i
-        repeat_demo.times do |n|
-          changed_data = randomise_device_data(device, data.clone, params['start_datetime'], params['end_datetime'])
-          saved_ok = save_device_message(device, changed_data, false)
-          break if saved_ok == false
-        end
-
-        render :create, :json =>  {}, :status => :ok if saved_ok == true
       end
     end
 
