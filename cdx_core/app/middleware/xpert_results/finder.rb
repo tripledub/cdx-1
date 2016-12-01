@@ -7,6 +7,8 @@ module XpertResults
           xpert_result = sample_identifier.sample.encounter.xpert_results.where('patient_results.sample_identifier_id IS NULL').first
           return [xpert_result, sample_identifier] if xpert_result.present?
         end
+
+        nil
       end
     end
   end

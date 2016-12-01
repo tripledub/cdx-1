@@ -1,1 +1,1 @@
-= address_form.select :state, Address.regions.map(&:reverse)
+= address_form.select(:state, Address.regions.map(&:reverse), prompt: true)

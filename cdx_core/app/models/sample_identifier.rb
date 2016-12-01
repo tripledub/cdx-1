@@ -14,7 +14,7 @@ class SampleIdentifier < ActiveRecord::Base
   acts_as_paranoid
 
   def phantom?
-    entity_id.nil?
+    entity_id.nil? && cpd_id_sample.nil?
   end
 
   def not_phantom?
