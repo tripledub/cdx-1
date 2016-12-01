@@ -111,6 +111,7 @@ gem 'twilio-ruby', '~> 4.11.1'
 # Keep track of changes when multiple saves happen within a transaction
 gem 'ar_transaction_changes'
 
+gem 'machinist', '~> 1.0'
 group :development, :test do
   gem 'faker', '~> 1.6.6'
   gem 'pry-byebug'
@@ -128,7 +129,6 @@ group :test do
   gem 'test-unit'
   gem 'tire'
   # gem 'factory_girl_rails'
-  gem 'machinist', '~> 1.0'
   gem 'capybara'
   gem 'guard-rspec'
   gem 'rspec-collection_matchers'
