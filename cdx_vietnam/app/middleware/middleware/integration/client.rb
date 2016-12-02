@@ -11,12 +11,12 @@ module Integration
       if !json.is_a? Hash
         json = JSON.parse(json)
       end
-
+      
+      sleep 3
       patient = json['patient']
       test_order = patient['test_order']
       
       order = PatientResult.where(id: test_order["cdp_order_id"]).first
-      
       return if !order || order.is_sync
       
       order.update_attributes({is_sync: true})
