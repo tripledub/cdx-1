@@ -5,8 +5,8 @@ describe PatientTestOrdersController do
   render_views
   let(:user)             { User.make }
   let(:institution)      { user.institutions.make }
-  let(:site)             { Site.make institution: institution }
-  let(:patient)          { Patient.make institution: institution }
+  let!(:site) { Site.make institution: institution }
+  let(:patient)        { Patient.make institution: institution, site: site }
   let(:device)           { Device.make  institution: institution, site: site }
   let(:encounter)        { Encounter.make patient: patient, institution: institution }
   let(:default_params)   { { context: institution.uuid } }

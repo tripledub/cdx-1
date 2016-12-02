@@ -7,6 +7,10 @@ module XpertResults
         update_sample_identifier(@sample_identifier, parsed_message)
       end
 
+      def valid_gene_xpert_result_and_sample?(device, parsed_message)
+        super(device, parsed_message) && status_from_parsed_message(parsed_message['test']) == 'success'
+      end
+
       protected
 
       def update_sample_identifier(sample_identifier, parsed_message)
@@ -21,6 +25,11 @@ module XpertResults
         notes = sample_data['custom']['xpert_notes']
         any_match = notes.match(/CDPSAMPLE(.*)CDPSAMPLE/i)
         any_match ? any_match[1] : nil
+      end
+
+      def status_from_parsed_message(test_data)
+        return '' unless test_data['core'].present? && test_data['core']['status'].present?
+        test_data['core']['status']
       end
 
       def patient_number_from_parsed_message(test_data)

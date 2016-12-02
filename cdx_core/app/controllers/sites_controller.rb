@@ -136,6 +136,7 @@ class SitesController < ApplicationController
       :main_phone_number,
       :email_address,
       :allows_manual_entry,
+      :finance_approved,
       :comment
     ]
     params.require(:site).permit(*allowed_params)

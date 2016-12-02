@@ -17,6 +17,7 @@ module TestResults
                   .joins('LEFT OUTER JOIN sites ON sites.id = patient_results.site_id')
                   .joins('LEFT OUTER JOIN devices ON devices.id = patient_results.device_id')
                   .joins('LEFT OUTER JOIN sample_identifiers ON sample_identifiers.id = patient_results.sample_identifier_id')
+                  .includes(:site, :device, :assay_results, :sample_identifier)
     end
 
     def filter_by_failed

@@ -65,6 +65,7 @@ gem 'sinatra'
 gem 'sidekiq-cron'
 gem 'i18n-js', '>= 3.0.0.rc13'
 group :development do
+  gem 'bullet'
   gem 'letter_opener'
   gem 'letter_opener_web'
   gem 'capistrano', '~> 3.1.0', require: false
@@ -110,6 +111,7 @@ gem 'twilio-ruby', '~> 4.11.1'
 # Keep track of changes when multiple saves happen within a transaction
 gem 'ar_transaction_changes'
 
+gem 'machinist', '~> 1.0'
 group :development, :test do
   gem 'faker', '~> 1.6.6'
   gem 'pry-byebug'
@@ -127,7 +129,6 @@ group :test do
   gem 'test-unit'
   gem 'tire'
   # gem 'factory_girl_rails'
-  gem 'machinist', '~> 1.0'
   gem 'capybara'
   gem 'guard-rspec'
   gem 'rspec-collection_matchers'
@@ -137,12 +138,12 @@ group :test do
   gem 'timecop'
   gem 'shoulda'
   gem 'hashdiff'
-  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'site_prism'
   gem 'poltergeist'
   gem 'capybara-screenshot'
-  gem 'simplecov', :require => false
+  gem 'simplecov', require: false
 
   source 'https://rails-assets.org' do
     gem 'rails-assets-es5-shim'

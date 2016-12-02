@@ -68,6 +68,15 @@
     .fieldrow#pextid
       .fieldlabel
         %div.tooltip
+          = f.label :site_id
+          %div.tooltiptext_r
+            = I18n.t('patients.form.site_id_tooltip')
+      .fieldvalue
+        = f.collection_select :site_id, @sites, :id, :name, prompt:true
+
+    .fieldrow#pextid
+      .fieldlabel
+        %div.tooltip
           = f.label :external_id
           %div.tooltiptext_r
             = I18n.t('patients.form.external_id_tooltip')

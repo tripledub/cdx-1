@@ -4,6 +4,7 @@ require 'faker'
 Patient.blueprint do
   name Faker::Name.name
   institution
+  site  { Site.make(institution: object.institution) }
   is_phantom { false }
   social_security_code { Faker::Number.hexadecimal(11) }
   plain_sensitive_data {
@@ -28,5 +29,4 @@ IntegrationLog.blueprint do
 end
 
 PatientResult.blueprint do
-
 end

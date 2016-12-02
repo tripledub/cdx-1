@@ -44,7 +44,11 @@ module Importer
         entity_id_does_not_match = original_entity_id && new_entity_id && original_entity_id != new_entity_id
         new_entity = find_entity_by_id(klazz, new_entity_id)
         original_blender = test_blender.send(klazz.entity_scope)
-        new_entity ||= klazz.new(institution: institution) if entity_id_does_not_match || original_blender.nil?
+        if klazz.to_s == 'Patient'
+          new_entity ||= klazz.new(institution: institution, site: device.site) if entity_id_does_not_match || original_blender.nil?
+        else
+          new_entity ||= klazz.new(institution: institution) if entity_id_does_not_match || original_blender.nil?
+        end
 
         if new_entity && klazz.to_s == 'Encounter'
           is_there_an_encounter = false

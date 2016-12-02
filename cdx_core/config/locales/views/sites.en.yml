@@ -38,6 +38,7 @@ en:
         main_phone_number: 'Main Phone Number'
         email_address: 'Email Address'
         comment:  'Comment'
+        finance_approved: 'Finance approved?'
       tooltip:
         institution: 'Institution this Site is part of'
         name: 'Name of the Site'
@@ -47,6 +48,7 @@ en:
         main_phone_number: 'Site Main Phone Number'
         email_address: 'Site Email Contact Address'
         comment: 'Comment tooltip'
+        finance_approved: 'Test orders are automatically set as financially approved.'
     filters:
       sites_title: 'Sites'
       add_site_btn:  'Add Site'

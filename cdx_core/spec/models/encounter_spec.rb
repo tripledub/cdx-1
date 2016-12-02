@@ -16,11 +16,37 @@ describe Encounter do
   describe 'financed?' do
     it 'should return true if test orders has been financed' do
       encounter.update_attribute(:status, 'financed')
+
       expect(encounter.financed?).to be true
     end
 
     it 'should return true if test orders has been financed' do
       expect(encounter.financed?).to be false
+    end
+  end
+
+  describe 'auto_finance_test_order' do
+    context 'site has finance_approved set to true' do
+      let(:site)      { Site.make institution: patient.institution, finance_approved: true }
+      let(:encounter) { Encounter.make institution: patient.institution, patient: patient, site: site }
+
+      it 'should change the status to financed' do
+        expect(encounter.status).to eq('financed')
+      end
+
+      it 'financed? should be true' do
+        expect(encounter.financed?).to be true
+      end
+    end
+
+    context 'site has finance_approved set to false' do
+      it 'should not change the status to financed' do
+        expect(encounter.status).to eq('new')
+      end
+
+      it 'financed? should be false' do
+        expect(encounter.financed?).to be false
+      end
     end
   end
 

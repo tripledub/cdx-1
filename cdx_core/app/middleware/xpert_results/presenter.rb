@@ -18,7 +18,7 @@ module XpertResults
       end
 
       def csv_query(xpert_results)
-        CSV.generate do |csv|
+        CSV.generate(force_quotes: true) do |csv|
           csv << [
             Encounter.human_attribute_name(:id),
             Encounter.human_attribute_name(:status),
@@ -47,8 +47,8 @@ module XpertResults
           Extras::Select.find(Encounter.status_options, xpert_result.encounter.status),
           Extras::Select.find(Encounter.testing_for_options, xpert_result.encounter.testing_for),
           xpert_result.examined_by,
-          Extras::Dates::Format.datetime_with_time_zone(xpert_result.sample_collected_at, :full_time),
-          Extras::Dates::Format.datetime_with_time_zone(xpert_result.result_at, :full_time),
+          Extras::Dates::Format.datetime_with_time_zone(xpert_result.sample_collected_at, :full_time_with_timezone),
+          Extras::Dates::Format.datetime_with_time_zone(xpert_result.result_at, :full_time_with_timezone),
           Extras::Select.find(XpertResult.tuberculosis_options, xpert_result.tuberculosis).to_s,
           Extras::Select.find(XpertResult.rifampicin_options, xpert_result.rifampicin).to_s,
           Extras::Select.find(XpertResult.trace_options, xpert_result.trace),

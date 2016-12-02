@@ -46,6 +46,8 @@ en:
         completed: 'Completed'
         error: 'Error'
         success: 'Success'
+        invalid: 'Invalid'
+        no_result: 'No result'
     microscopy:
       visual_appearance:
         blood: 'Blood-stained'
@@ -108,6 +110,8 @@ en:
       result_status:
         success: 'Success'
         error: 'Error'
+        invalid: 'Invalid'
+        no_result: 'No result'
     user:
       status_options:
         show_all: 'Show all'

@@ -32,6 +32,7 @@ module Patients
         Policy::Actions::READ_PATIENT,
         Patient
           .joins("LEFT JOIN `addresses` ON `addresses`.`addressable_id` = `patients`.`id` AND `addresses`.`addressable_type` = 'Patient'")
+          .includes(:addresses)
           .where(is_phantom: false)
           .where(institution: @navigation_context.institution),
         @current_user

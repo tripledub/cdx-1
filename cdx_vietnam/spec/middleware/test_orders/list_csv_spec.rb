@@ -22,7 +22,6 @@ describe TestOrders::ListCsv do
           'Testing for',
           'User',
           'Start time',
-          'Test due date',
           'Status'
         ]
       )
@@ -35,19 +34,10 @@ describe TestOrders::ListCsv do
           SampleIdentifiers::Presenter.for_encounter(test_order),
           test_order.testing_for,
           test_order.user.full_name,
-          Extras::Dates::Format.datetime_with_time_zone(test_order.start_time, :full_time_with_timezone),
-          Extras::Dates::Format.datetime_with_time_zone(test_order.testdue_date, :full_time_with_timezone),
+          Extras::Dates::Format.datetime_with_time_zone(test_order.start_time, :full_time),
           TestOrders::Presenter.generate_status(test_order)
         ]
       )
-    end
-  end
-
-  describe 'filename' do
-    subject { described_class.new(Encounter.all.order(:created_at), 'test.example.com') }
-
-    it 'should include the hostname' do
-      expect(subject.filename).to include('test.example.com')
     end
   end
 end

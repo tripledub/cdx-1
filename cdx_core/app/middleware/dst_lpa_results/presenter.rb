@@ -25,7 +25,7 @@ module DstLpaResults
       end
 
       def csv_query(dst_lpa_results)
-        CSV.generate do |csv|
+        CSV.generate(force_quotes: true) do |csv|
           csv << [
             Encounter.human_attribute_name(:id),
             Encounter.human_attribute_name(:status),
@@ -60,9 +60,9 @@ module DstLpaResults
           Extras::Select.find(Encounter.status_options, dst_lpa_result.encounter.status),
           Extras::Select.find(Encounter.testing_for_options, dst_lpa_result.encounter.testing_for),
           dst_lpa_result.uuid,
-          Extras::Dates::Format.datetime_with_time_zone(dst_lpa_result.sample_collected_at, :full_time),
+          Extras::Dates::Format.datetime_with_time_zone(dst_lpa_result.sample_collected_at, :full_time_with_timezone),
           dst_lpa_result.examined_by,
-          Extras::Dates::Format.datetime_with_time_zone(dst_lpa_result.result_at, :full_time),
+          Extras::Dates::Format.datetime_with_time_zone(dst_lpa_result.result_at, :full_time_with_timezone),
           Extras::Select.find(DstLpaResult.method_options, dst_lpa_result.media_used),
           dst_lpa_result.serial_number,
           Extras::Select.find(DstLpaResult.dst_lpa_options, dst_lpa_result.results_h),

@@ -76,7 +76,7 @@ class TestResult < PatientResult
   end
 
   def sample_identifiers
-    sample.try(:sample_identifiers) || []
+    [sample_identifier]
   end
 
   def entity_id

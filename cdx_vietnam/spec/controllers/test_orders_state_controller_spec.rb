@@ -38,7 +38,7 @@ describe TestOrdersStateController do
       expect(csv[1]).to eq(
         [
           patient.id.to_s,
-          Extras::Dates::Format.datetime_with_time_zone(patient.created_at, :full_time),
+          Extras::Dates::Format.datetime_with_time_zone(patient.created_at, :full_time_with_timezone),
           site.id.to_s,
           patient.etb_patient_id.to_s,
           patient.vtm_patient_id.to_s,
