@@ -3,9 +3,9 @@ module CdxApiCore
   class SitesController < CdxApiCore::ApiController
     def index
       @sites = if params[:institution_uuid]
-                 Institution.find_by_uuid(params[:institution_uuid]).sites
+                 Institution.find_by_uuid(params[:institution_uuid]).sites.includes(:parent, :institution)
                else
-                 Site.all
+                 Site.includes(:parent, :institution).all
                end
 
       @uuids = Set.new
