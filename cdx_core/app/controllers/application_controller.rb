@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
   def set_locale
     I18n.locale = current_user.try(:locale) || I18n.default_locale
     I18n.locale = params[:language] if params[:language].present?
+    select_timezone
     @localization_helper = LocalizationHelper.new(
       current_user.try(:time_zone),
       I18n.locale,
@@ -143,5 +144,9 @@ class ApplicationController < ActionController::Base
   # Save current user to be able to use it in audit logs callbacks.
   def set_current_user
     User.current = current_user
+  end
+
+  def select_timezone
+    Time.zone = current_user ? current_user.time_zone : 'UTC'
   end
 end
