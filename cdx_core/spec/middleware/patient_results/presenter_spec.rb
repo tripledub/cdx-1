@@ -5,7 +5,9 @@ describe PatientResults::Presenter do
 
   describe 'for_encounter' do
     before :each do
-      MicroscopyResult.make encounter: encounter, feedback_message: FeedbackMessage.make(institution: encounter.institution), sample_identifier: SampleIdentifier.make
+      MicroscopyResult.make encounter: encounter, feedback_message: FeedbackMessage.make(
+        institution: encounter.institution
+      ), sample_identifier: SampleIdentifier.make
       CultureResult.make encounter: encounter
       DstLpaResult.make encounter: encounter
       encounter.reload
@@ -27,11 +29,11 @@ describe PatientResults::Presenter do
         examinedBy:  patient_result.examined_by.to_s,
         comment:     patient_result.comment.to_s,
         status:      patient_result.result_status,
-        completedAt: Extras::Dates::Format.datetime_with_time_zone(patient_result.completed_at),
-        createdAt:   Extras::Dates::Format.datetime_with_time_zone(patient_result.created_at),
+        completedAt: Extras::Dates::Format.datetime_with_time_zone(patient_result.completed_at, :full_time),
+        createdAt:   Extras::Dates::Format.datetime_with_time_zone(patient_result.created_at, :full_time),
         feedbackMessage: FeedbackMessages::Finder.find_text_from_patient_result(patient_result),
-        editUrl:         Rails.application.routes.url_helpers.edit_encounter_microscopy_result_path(patient_result.encounter, patient_result),
-        showResultUrl:   Rails.application.routes.url_helpers.encounter_microscopy_result_path(patient_result.encounter, patient_result)
+        editUrl: Rails.application.routes.url_helpers.edit_encounter_microscopy_result_path(patient_result.encounter, patient_result),
+        showResultUrl: Rails.application.routes.url_helpers.encounter_microscopy_result_path(patient_result.encounter, patient_result)
       )
     end
   end
