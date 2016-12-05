@@ -26,7 +26,7 @@ class DevicesController < ApplicationController
     respond_to do |format|
       format.html
       format.csv do
-        @filename = "Devices-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
+        @filename = "#{get_hostname}-devices-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
         @streaming = true
       end
     end
@@ -265,5 +265,9 @@ class DevicesController < ApplicationController
 
   def set_filter_params
     set_filter_from_params(FilterData::Devices)
+  end
+
+  def get_hostname
+    request.host || 'www.thecdx.org'
   end
 end
