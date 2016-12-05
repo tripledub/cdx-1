@@ -50,10 +50,10 @@ module Extras
           years = Date.today.year - birth_date_on.year
 
           if years > 1
-            "#{years}y/o."
+            "#{years} y/o."
           else
             months = (Date.today.year * 12 + Date.today.month) - (birth_date_on.year * 12 + birth_date_on.month)
-            "#{months}m/o."
+            "#{months} m/o."
           end
         end
       end
