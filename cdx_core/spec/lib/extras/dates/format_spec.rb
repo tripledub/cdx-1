@@ -8,13 +8,13 @@ describe Extras::Dates::Format do
 
     context 'if person is more than 1 year old' do
       it 'should return the date and the number of years' do
-        expect(described_class.patient_birth_date(Date.new(1972, 3, 26))).to eq('26/03/1972 - 44y/o.')
+        expect(described_class.patient_birth_date(Date.new(1972, 3, 26))).to eq('26/03/1972 - 44 y/o.')
       end
     end
 
     context 'if person is less than 1 year old' do
       it 'should return the date and the number of months' do
-        expect(described_class.patient_birth_date(Date.new(2015, 11, 26))).to eq('26/11/2015 - 7m/o.')
+        expect(described_class.patient_birth_date(Date.new(2015, 11, 26))).to eq('26/11/2015 - 7 m/o.')
       end
     end
 
