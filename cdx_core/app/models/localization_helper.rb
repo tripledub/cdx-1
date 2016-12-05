@@ -13,7 +13,7 @@ class LocalizationHelper
 
   # formats the value as the initialized time_zone (ie. the current_user time_zone)
   def format_datetime(value)
-    Extras::Dates::Format.datetime_with_time_zone(value, :long, @time_zone)
+    Extras::Dates::Format.datetime_with_time_zone(value, :full_time, @time_zone)
   end
 
   # formats the value as the device time_zone if timestamps_in_device_time_zone,
