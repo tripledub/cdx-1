@@ -101,8 +101,8 @@ describe Integration::Client do
   end
 
   context "in case scraper success sync with etb patient exited" do
+    let(:patient)             { Patient.make institution: institution, gender: 'male', etb_patient_id: "3456" }
     before(:example) do
-      patient = Patient.make institution: institution, gender: 'male', etb_patient_id: "3456"
       episode = patient.episodes.make
       client = Integration::Client.new
       x = double('x')
