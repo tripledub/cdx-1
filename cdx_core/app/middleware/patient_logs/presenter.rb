@@ -23,7 +23,7 @@ module PatientLogs
         patient_logs.map do |log|
           {
             id:       log.uuid,
-            date:     I18n.l(log.created_at, format: :short),
+            date:     Extras::Dates::Format.datetime_with_time_zone(log.created_at, :full_time),
             user:     logged_user(log),
             device:   logged_device(log),
             title:    Audit::TextTranslator.localise(log.title),
