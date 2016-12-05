@@ -14,12 +14,12 @@ describe CdxVietnam::Presenters::Etb do
     end
     
     it "responds with JSON string" do
-      json = CdxVietnam::Presenters::Etb.create_patient(xpert_result)
+      json = described_class.create_patient(xpert_result)
       expect(check_json_string(json)).to eq(true)
     end
 
     it "have patient field and test_order, target_system in patient field" do
-      json = CdxVietnam::Presenters::Etb.create_patient(xpert_result)
+      json = described_class.create_patient(xpert_result)
       json = JSON.parse(json)
       patient_field = json['patient']
       expect(patient_field.nil?).to eq(false)

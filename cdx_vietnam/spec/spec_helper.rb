@@ -21,7 +21,7 @@ Dir["#{CdxVietnam::Engine.root}/app/middleware/**/*.rb"].each { |f| require_depe
 require_dependency("#{CdxCore::Engine.root}/features/support/page_objects/cdx_page_helper.rb")
 require_dependency("#{CdxCore::Engine.root}/features/support/page_objects/tests_run.rb")
 require_dependency("#{CdxCore::Engine.root}/features/support/page_objects/file_input.rb")
-Dir["#{CdxCore::Engine.root}/features/support/page_objects/*.rb"].each {|f| require_dependency(f) }
+Dir["#{CdxCore::Engine.root}/features/support/page_objects/*.rb"].sort.each {|f| require_dependency(f) }
 Dir["#{CdxCore::Engine.root}/spec/support/**/*.rb"].each { |f| require_dependency(f) }
 Dir["#{CdxVietnam::Engine.root}/spec/support/**/*.rb"].each { |f| require_dependency(f) }
 

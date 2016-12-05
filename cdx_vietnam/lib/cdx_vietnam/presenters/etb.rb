@@ -168,7 +168,7 @@ module CdxVietnam
       end
 
       def specimen_type(test_order_to_send)
-        if test_order_to_send.encounter.coll_sample_type.present? && test_order_to_send.encounter.coll_sample_type.upcase == 'SPUTUM'
+        if test_order_to_send.encounter.coll_sample_type.to_s.upcase == 'SPUTUM'
           'SPUTUM'
         else
           'OTHER'

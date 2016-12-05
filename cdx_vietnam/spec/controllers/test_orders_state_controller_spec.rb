@@ -45,9 +45,9 @@ describe TestOrdersStateController do
           patient.social_security_code,
           patient.entity_id.to_s,
           patient.external_id.to_s,
-          patient.gender,
+          patient.gender.to_s,
           Patients::Presenter.show_full_address(patient.addresses[0]),
-          patient.nationality
+          patient.nationality.to_s
         ]
       )
     end
