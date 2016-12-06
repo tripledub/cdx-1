@@ -4,17 +4,16 @@ module Finder
     attr_reader :params, :filter, :page, :page_size
 
     class << self
-      def as_json_list(test_results, localization_helper)
+      def as_json_list(test_results)
         Jbuilder.new do |json|
           json.array! test_results do |test|
-            test.as_json(json, localization_helper)
+            test.as_json(json)
           end
         end
       end
     end
 
-    def initialize(params, current_user, navigation_context, localization_helper)
-      @localization_helper = localization_helper
+    def initialize(params, current_user, navigation_context)
       @params              = params
       @navigation_context  = navigation_context
       @current_user        = current_user
@@ -94,7 +93,7 @@ module Finder
     def build_json_array(entity_class, tests)
       json = Jbuilder.new do |json|
         json.array! tests do |test|
-          entity_class.as_json_from_query(json, test, @localization_helper)
+          entity_class.as_json_from_query(json, test)
         end
       end
       json.attributes!

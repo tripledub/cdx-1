@@ -49,7 +49,7 @@ class RegistrationsController < Devise::RegistrationsController
       :password_confirmation,
       :locale,
       :time_zone,
-      :timestamps_in_device_time_zone
+      :timestamps_in_site_time_zone
     )
   end
 end
