@@ -31,10 +31,16 @@ $(document).on("ready", function(){
 
 $(document).ready(function(){
 
-  $('.datetimepicker').datetimepicker({
-    dateFormat: 'dd.mm.yy',
-    firstDay: 1,
-  });
+  // Only configure if there are datetime
+  // pickers on page
+
+  var dtp = $('.datetimepicker');
+  if (dtp.length > 0) {
+    dtp.datetimepicker({
+      dateFormat: 'dd.mm.yy',
+      firstDay: 1,
+    });
+  }
 
   $('.select2').each(function() {
     var $select = $(this);
