@@ -137,7 +137,8 @@ class SitesController < ApplicationController
       :email_address,
       :allows_manual_entry,
       :finance_approved,
-      :comment
+      :comment,
+      :time_zone
     ]
     params.require(:site).permit(*allowed_params)
   end

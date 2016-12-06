@@ -296,6 +296,7 @@ Site.blueprint do
   region { Faker::Address.state }
   lat { rand(-180..180) }
   lng { rand(-90..90) }
+  time_zone { Faker::Address.time_zone }
 end
 
 Site.blueprint :child do

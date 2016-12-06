@@ -53,6 +53,12 @@
     = render partial: "shared/address", :locals => { :f => f , model_type: "site"}
     .row
       .col.pe-2
+        = f.label :time_zone, I18n.t('devices.form.lbl_time_zone')
+      .col
+        = cdx_select form: f, name: :time_zone, class: 'input-x-large' do |select|
+          - select.items(ActiveSupport::TimeZone.all, :name, :to_s)
+    .row
+      .col.pe-2
         %div.tooltip
           = f.label I18n.t('sites.form.label.sample_id_reset_policy')
           %div.tooltiptext_r

@@ -88,6 +88,13 @@ describe SitesController do
       end.to change(institution.sites, :count).by(1)
       expect(response).to be_redirect
     end
+
+    it 'should save a time_zone' do
+      post :create, site: Site.plan(institution: institution2, name: 'New site', time_zone: 'Tokyo')
+      new_site = Site.where(name: 'New site').first
+
+      expect(new_site.time_zone).to eq('Tokyo')
+    end
   end
 
   context 'edit' do
