@@ -197,10 +197,12 @@ $(document).ready(function(){
     $(".custom_filters").toggle();
   });
 
-  Mousetrap.bind('alt+p', function(e) {
-    window.location.pathname = '/patients/new';
-    Mousetrap.unbind('alt+p');
-  })
+  if(typeof Mousetrap != "undefined") {
+    Mousetrap.bind('alt+p', function(e) {
+      window.location.pathname = '/patients/new';
+      Mousetrap.unbind('alt+p');
+    })
+  }
 
   // Notifications#_form
   // Only show frequency_value when frequency == aggregated
