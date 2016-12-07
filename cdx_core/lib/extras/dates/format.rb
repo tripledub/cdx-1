@@ -21,7 +21,7 @@ module Extras
           end
         end
 
-        def datetime_with_time_zone(time_value, formatValue = :long, tz = nil)
+        def datetime_with_time_zone(time_value, formatValue = :full_time, tz = nil)
           return '' unless time_value
 
           time_value = parse_select(time_value['1'], time_value['2'], time_value['3']) if time_value.is_a? Hash
@@ -50,10 +50,10 @@ module Extras
           years = Date.today.year - birth_date_on.year
 
           if years > 1
-            "#{years}y/o."
+            "#{years} y/o."
           else
             months = (Date.today.year * 12 + Date.today.month) - (birth_date_on.year * 12 + birth_date_on.month)
-            "#{months}m/o."
+            "#{months} m/o."
           end
         end
       end

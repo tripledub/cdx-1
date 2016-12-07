@@ -12,10 +12,10 @@ describe Users::Presenter do
   describe 'index_table' do
     before :each do
       role.users << User.first
-      7.times {
+      7.times do
         User.make
         role.users << user
-      }
+      end
     end
 
     it 'should return an array of formated devices' do
@@ -23,30 +23,33 @@ describe Users::Presenter do
     end
 
     it 'should return elements formated' do
-      expect(described_class.index_table(User.all, navigation_context).first).to eq({
+      expect(described_class.index_table(User.all, navigation_context).first).to eq(
         id:           User.first.id,
         name:         User.first.full_name,
         roles:        role.name,
         isActive:     'Has access',
         lastActivity: 'Never logged in',
         viewLink:     Rails.application.routes.url_helpers.edit_user_path(User.first)
-      })
+      )
     end
   end
 
   describe '.last_activity' do
     describe 'last login time' do
-      let(:last_login) { 4.hours.ago }
-      let(:date_formatted) { last_login.to_formatted_s(:long) }
-      let(:user) { User.make(last_sign_in_at: last_login) }
+      let(:last_login)     { 4.hours.ago }
+      let(:date_formatted) { last_login.strftime('%d/%m/%Y %H:%M') }
+      let(:user)           { User.make(last_sign_in_at: last_login) }
+
       it 'returns formatted date' do
         expect(described_class.index_table(User.all, navigation_context).first[:lastActivity]).to eq(date_formatted)
       end
     end
+
     context 'when the user has an outstanding invitation' do
-      let(:date) { 1.month.ago }
-      let(:date_formatted) { date.to_formatted_s(:long) }
-      let(:user) { User.make(:invited_pending, invitation_created_at: date) }
+      let(:date)           { 1.month.ago }
+      let(:date_formatted) { date.strftime('%d/%m/%Y %H:%M') }
+      let(:user)           { User.make(:invited_pending, invitation_created_at: date) }
+
       it 'returns Invitation sent with a formatted date string' do
         expect(described_class.index_table(User.all, navigation_context).first[:lastActivity]).to eq("Invitation sent #{date_formatted}")
       end
@@ -54,6 +57,7 @@ describe Users::Presenter do
 
     context 'when the user has never logged in' do
       let(:user) { User.make(last_sign_in_at: nil) }
+
       it 'returns Never logged in' do
         expect(described_class.index_table(User.all, navigation_context).first[:lastActivity]).to eq('Never logged in')
       end

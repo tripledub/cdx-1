@@ -10,7 +10,7 @@ module Patients
             id:             patient.uuid,
             name:           patient_display_name(patient.name),
             entityId:       patient.entity_id,
-            dateOfBirth:    Extras::Dates::Format.datetime_with_time_zone(patient.birth_date_on),
+            dateOfBirth:    Extras::Dates::Format.patient_birth_date(patient.birth_date_on),
             addresses:      show_addresses(patient),
             viewLink:       Rails.application.routes.url_helpers.patient_path(patient)
           }

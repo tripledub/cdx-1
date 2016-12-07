@@ -26,7 +26,7 @@ class DevicesController < ApplicationController
     respond_to do |format|
       format.html
       format.csv do
-        @filename = "Devices-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
+        @filename = "#{get_hostname}-devices-#{DateTime.now.strftime('%Y-%m-%d-%H-%M-%S')}.csv"
         @streaming = true
       end
     end
@@ -35,7 +35,10 @@ class DevicesController < ApplicationController
   def new
     @device = Device.new
     @device.time_zone = 'UTC'
-    @device.site = check_access(@navigation_context.site, ASSIGN_DEVICE_SITE) if @navigation_context.site
+    if @navigation_context.site && check_access(@navigation_context.site, ASSIGN_DEVICE_SITE)
+      @device.site = @navigation_context.site
+      @device.time_zone = @device.site.time_zone
+    end
     @device.site = @sites[0] if !@allow_to_pick_site && @sites.count == 1
     return unless authorize_resource(@device, REGISTER_INSTITUTION_DEVICE)
   end
@@ -265,5 +268,9 @@ class DevicesController < ApplicationController
 
   def set_filter_params
     set_filter_from_params(FilterData::Devices)
+  end
+
+  def get_hostname
+    request.host || 'www.thecdx.org'
   end
 end

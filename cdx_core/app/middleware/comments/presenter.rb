@@ -23,7 +23,7 @@ module Comments
         comments.map do |comment|
           {
             id:          comment.uuid,
-            commentDate: I18n.l(comment.created_at, format: :short),
+            commentDate: Extras::Dates::Format.datetime_with_time_zone(comment.created_at, :full_time),
             commenter:   comment.user.full_name,
             title:       comment.description,
             viewLink:    Rails.application.routes.url_helpers.patient_comment_path(comment.patient, comment)

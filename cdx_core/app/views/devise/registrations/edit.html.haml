@@ -55,9 +55,9 @@
         - select.items(ActiveSupport::TimeZone.all, :name, :to_s)
   .row
     .col.pe-2
-      = f.label :timestamps_in_device_time_zone, I18n.t('devise.registrations.edit.lbl_test_timestamps')
+      = f.label :timestamps_in_site_time_zone, I18n.t('devise.registrations.edit.select_timestamps')
     .col
-      = cdx_select form: f, name: :timestamps_in_device_time_zone, class: 'input-xx-large' do |select|
+      = cdx_select form: f, name: :timestamps_in_site_time_zone, class: 'input-xx-large' do |select|
         - select.item false, I18n.t('devise.registrations.edit.select_my_timezone')
         - select.item true, I18n.t('devise.registrations.edit.select_device_timezone')
 

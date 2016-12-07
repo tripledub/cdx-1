@@ -2,12 +2,11 @@ module TestOrders
   # This huge class was extracted from encounters controller.
   # It needs more refactor. It's doing too many things and some of them related to samples not to test orders.
   class Persistence
-    attr_reader :params, :current_user, :localization_helper, :encounter_param
+    attr_reader :params, :current_user, :encounter_param
 
-    def initialize(params, current_user, localization_helper)
+    def initialize(params, current_user)
       @params = params
       @current_user = current_user
-      @localization_helper = localization_helper
     end
 
     def create
@@ -151,9 +150,8 @@ module TestOrders
         end
 
         json.(@encounter, :new_samples)
-        localization_helper.devices_by_uuid = @encounter_blender.test_results.map{|tr| tr.single_entity.device}.uniq.index_by &:uuid
         json.test_results @encounter_blender.test_results.uniq do |test_result|
-          test_result.single_entity.as_json(json, localization_helper)
+          test_result.single_entity.as_json(json)
         end
       end
     end

@@ -18,8 +18,9 @@ class Site < ActiveRecord::Base
   has_many :notifications,      through: :notification_sites
 
   validates_presence_of :institution
-  validate :same_institution_as_parent
   validates_presence_of :name
+  validates_presence_of :time_zone
+  validate :same_institution_as_parent
 
   after_create :compute_prefix
   after_create :create_predefined_roles
