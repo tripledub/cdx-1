@@ -3,7 +3,7 @@ class AddNewFinanceApprovalContentForVietnam < ActiveRecord::Migration
   def up
     Institution.all.each do |institution|
       nf004 = institution.feedback_messages.where(code: 'NF0004').first
-      nf004.custom_translations.create!(lang: 'vi', text: 'Patient not processed')
+      nf004.custom_translations.create!(lang: 'vi', text: 'Bệnh nhân không được xử lý')
     end
   end
 
