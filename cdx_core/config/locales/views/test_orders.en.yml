@@ -17,6 +17,7 @@ en:
       date: 'Date'
       test_order_id: 'Test order id'
       status: 'Status'
+      patient_name: 'Patient name'
     state:
       order_id: 'Order ID'
       sample_id: 'Sample ID'
