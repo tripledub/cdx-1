@@ -29,6 +29,7 @@ module TestOrders
       filter_by_testing_for
       filter_by_start_time
       filter_by_patient_result_status
+      filter_by_patient_name
       include_audit_logs
     end
 
@@ -100,6 +101,12 @@ module TestOrders
 
       @filter_query = filter_query.includes(:patient_results)
                                   .where(patient_results: { result_status: @params['patient_result_status'] })
+    end
+
+    def filter_by_patient_name
+      return unless @params['patient_name']
+
+      @filter_query = filter_query.where('patients.name like ?', "%#{@params['patient_name']}%")
     end
 
     def start_date
