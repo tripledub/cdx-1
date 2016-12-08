@@ -8,7 +8,7 @@
 default: &default
   adapter: mysql2
   encoding: utf8
-  pool: 5
+  pool: 10
   host: <%= ENV["MYSQL_HOST"] %>
   username: <%= ENV["MYSQL_USERNAME"] || "root" %>
   password: <%= ENV["MYSQL_PASSWORD"] || "" %>
