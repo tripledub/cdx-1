@@ -203,7 +203,6 @@ GEM
     currencies (0.4.2)
     database_cleaner (1.4.0)
     debug_inspector (0.0.2)
-    decent_exposure (2.3.2)
     deep_merge (1.0.1)
     devise (3.5.5)
       bcrypt (~> 3.0)
@@ -644,7 +643,6 @@ DEPENDENCIES
   csv_builder
   cucumber-rails
   database_cleaner
-  decent_exposure
   devise (~> 3.5.5)
   devise_invitable
   devise_security_extension!

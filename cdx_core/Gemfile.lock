@@ -155,7 +155,6 @@ GEM
     currencies (0.4.2)
     database_cleaner (1.5.3)
     debug_inspector (0.0.2)
-    decent_exposure (2.3.2)
     deep_merge (1.1.1)
     devise (3.5.10)
       bcrypt (~> 3.0)
@@ -503,7 +502,6 @@ DEPENDENCIES
   country_select
   csv_builder
   database_cleaner
-  decent_exposure (= 2.3.2)
   devise (~> 3.5.5)
   devise_invitable
   devise_security_extension!
