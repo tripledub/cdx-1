@@ -22,7 +22,7 @@ describe Patients::Presenter do
         id:             Patient.first.uuid,
         name:           patient_display_name(Patient.first.name),
         entityId:       Patient.first.entity_id,
-        dateOfBirth:    Extras::Dates::Format.datetime_with_time_zone(Patient.first.birth_date_on),
+        dateOfBirth:    Extras::Dates::Format.patient_birth_date(Patient.first.birth_date_on),
         addresses:      ["#{Patient.first.addresses.first.address}, #{Patient.first.addresses.first.city}, #{Address.regions.to_h[Patient.first.addresses.first.state]}, #{Patient.first.addresses.first.country}"],
         viewLink:       Rails.application.routes.url_helpers.patient_path(Patient.first)
       })
