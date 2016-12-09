@@ -24,7 +24,7 @@ require_dependency("#{CdxCore::Engine.root}/features/support/page_objects/cdx_pa
 require_dependency("#{CdxCore::Engine.root}/features/support/page_objects/tests_run.rb")
 require_dependency("#{CdxCore::Engine.root}/features/support/page_objects/file_input.rb")
 Dir["#{CdxCore::Engine.root}/features/support/page_objects/*.rb"].sort.each {|f| require_dependency(f) }
-Dir["#{CdxCore::Engine.root}/spec/support/**/*.rb"].each { |f| require_dependency(f) }
+Dir["#{CdxCore::Engine.root}/spec/support/**/*.rb"].sort.each { |f| require_dependency(f) }
 Dir["#{CdxVietnam::Engine.root}/spec/support/**/*.rb"].each { |f| require_dependency(f) }
 
 WebMock.disable_net_connect!(:allow_localhost => true, allow: [/fonts\.googleapis\.com/, /manastech\.testrail\.com/])

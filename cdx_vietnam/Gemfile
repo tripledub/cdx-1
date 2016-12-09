@@ -57,6 +57,7 @@ gem 'cdx_core', path: '../'
 gem 'activesupport-decorators', '~> 2.1'
 gem 'ar_transaction_changes'
 gem 'acts_as_tree', '~> 2.6'
+gem 'simplecov', :require => false, :group => :test
 
 group :development do
   gem 'letter_opener'
