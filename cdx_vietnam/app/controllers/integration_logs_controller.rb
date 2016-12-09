@@ -1,3 +1,5 @@
+require 'csv'
+
 class IntegrationLogsController < ApplicationController
   def index
     list_logs = IntegrationLog.all
@@ -13,6 +15,14 @@ class IntegrationLogsController < ApplicationController
 
   def show
     render json: { message: "Retry again with #{params[:id]}" }
+  end
+
+  def download
+    respond_to do |format|
+      format.csv { 
+        send_data(IntegrationLog::report.to_csv, filename: "integration-report-#{Date.today}.csv")
+      }
+    end
   end
 
   def retry

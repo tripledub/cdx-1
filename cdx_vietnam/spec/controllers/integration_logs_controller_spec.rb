@@ -38,4 +38,11 @@ describe IntegrationLogsController, type: :controller do
       expect(response.body).to eq @expected
     end
   end
+
+  describe "GET download" do
+    it 'should download the report' do 
+      get :download, format: :csv
+      expect(response).to be_success
+    end
+  end
 end
