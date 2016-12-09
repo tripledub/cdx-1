@@ -15,7 +15,7 @@ vi:
       api_tokens: 'Thẻ API'
       log_out: 'Đăng xuất'
       log_in: 'Đăng nhập'
-      integration_logs: 'Integration Logs'
+      integration_logs: 'Lịch sử tích hợp'
     mailer:
       copy_right: '©2015 Kết nối chẩn đoán'
       policy: 'Chính sách bảo mật'

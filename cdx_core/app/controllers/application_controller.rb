@@ -13,15 +13,11 @@ class ApplicationController < ActionController::Base
   before_action :ensure_context
   before_action :set_locale
   before_action :set_current_user
+  before_action :select_timezone
 
   def set_locale
     I18n.locale = current_user.try(:locale) || I18n.default_locale
     I18n.locale = params[:language] if params[:language].present?
-    @localization_helper = LocalizationHelper.new(
-      current_user.try(:time_zone),
-      I18n.locale,
-      current_user.try(:timestamps_in_device_time_zone)
-    )
   end
 
   decent_configuration do
@@ -143,5 +139,17 @@ class ApplicationController < ActionController::Base
   # Save current user to be able to use it in audit logs callbacks.
   def set_current_user
     User.current = current_user
+  end
+
+  def select_timezone
+    Time.zone = timezone_from_current_user if current_user
+  end
+
+  def timezone_from_current_user
+    current_user.timestamps_in_site_time_zone && site_context ? @navigation_context.site.time_zone : current_user.time_zone
+  end
+
+  def site_context
+    @navigation_context && @navigation_context.site
   end
 end

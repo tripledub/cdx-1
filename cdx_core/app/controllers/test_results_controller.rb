@@ -35,9 +35,9 @@ class TestResultsController < TestsController
 
       format.csv do
         csv_content = TestResults::CsvGenerator.new(@selected_tab, params, @navigation_context, get_hostname)
-        headers['Content-Type']        = 'text/csv'
+        headers['Content-Type'] = 'text/csv'
         headers['Content-disposition'] = "attachment; filename=#{csv_content.filename}"
-        self.response_body             = csv_content.create
+        self.response_body = csv_content.create
       end
     end
   end

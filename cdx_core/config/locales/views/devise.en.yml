@@ -49,9 +49,9 @@ en:
         lbl_retype_new_pass: 'Retype new password'
         lbl_locale: 'Locale'
         lbl_time_zone: 'Time zone'
-        lbl_test_timestamps: 'Test timestamps'
-        select_my_timezone: 'Relative to my time zone'
-        select_device_timezone: 'Relative to the device time zone'
+        select_timestamps: 'Dates displayed in:'
+        select_my_timezone: 'My time zone'
+        select_device_timezone: "The site's time zone"
 
       new:
         sign_up: 'Sign up'

@@ -18,7 +18,7 @@ module CultureResults
       end
 
       def csv_query(culture_results)
-        CSV.generate do |csv|
+        CSV.generate(force_quotes: true) do |csv|
           csv << [
             Encounter.human_attribute_name(:id),
             Encounter.human_attribute_name(:status),
@@ -46,9 +46,9 @@ module CultureResults
           Extras::Select.find(Encounter.status_options, culture_result.encounter.status),
           Extras::Select.find(Encounter.testing_for_options, culture_result.encounter.testing_for),
           culture_result.uuid,
-          Extras::Dates::Format.datetime_with_time_zone(culture_result.sample_collected_at, :full_time),
+          Extras::Dates::Format.datetime_with_time_zone(culture_result.sample_collected_at, :full_time_with_timezone),
           culture_result.examined_by,
-          Extras::Dates::Format.datetime_with_time_zone(culture_result.result_at, :full_time),
+          Extras::Dates::Format.datetime_with_time_zone(culture_result.result_at, :full_time_with_timezone),
           Extras::Select.find(CultureResult.media_options, culture_result.media_used),
           culture_result.serial_number,
           Extras::Select.find(CultureResult.test_result_options, culture_result.test_result),

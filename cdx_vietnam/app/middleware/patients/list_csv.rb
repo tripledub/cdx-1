@@ -13,7 +13,7 @@ module Patients
     end
 
     def export
-      CSV.generate do |csv|
+      CSV.generate(force_quotes: true) do |csv|
         csv << [
           I18n.t('patients.csv_export.patient_id'),
           I18n.t('patients.csv_export.created_at'),
@@ -37,7 +37,7 @@ module Patients
     def add_patient(csv, patient)
       csv << [
         patient.id.to_s,
-        Extras::Dates::Format.datetime_with_time_zone(patient.created_at, :full_time),
+        Extras::Dates::Format.datetime_with_time_zone(patient.created_at, :full_time_with_timezone),
         Sites::Presenter.site_id(patient.site),
         patient.etb_patient_id.to_s,
         patient.vtm_patient_id.to_s,

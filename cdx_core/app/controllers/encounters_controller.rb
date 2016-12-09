@@ -16,7 +16,7 @@ class EncountersController < ApplicationController
   end
 
   def create
-    content, status = TestOrders::Persistence.new(params, current_user, @localization_helper).create
+    content, status = TestOrders::Persistence.new(params, current_user).create
     render json: content, status: status
   end
 
@@ -63,27 +63,27 @@ class EncountersController < ApplicationController
   end
 
   def add_sample
-    content, status = TestOrders::Persistence.new(params, current_user, @localization_helper).add_sample
+    content, status = TestOrders::Persistence.new(params, current_user).add_sample
     render json: content, status: status
   end
 
   def add_test
-    content, status = TestOrders::Persistence.new(params, current_user, @localization_helper).add_test
+    content, status = TestOrders::Persistence.new(params, current_user).add_test
     render json: content, status: status
   end
 
   def merge_samples
-    content, status = TestOrders::Persistence.new(params, current_user, @localization_helper).merge_samples
+    content, status = TestOrders::Persistence.new(params, current_user).merge_samples
     render json: content, status: status
   end
 
   def new_sample
-    content, status = TestOrders::Persistence.new(params, current_user, @localization_helper).new_sample
+    content, status = TestOrders::Persistence.new(params, current_user).new_sample
     render json: content, status: status
   end
 
   def add_sample_manually
-    content, status = TestOrders::Persistence.new(params, current_user, @localization_helper).add_sample_manually
+    content, status = TestOrders::Persistence.new(params, current_user).add_sample_manually
     render json: content, status: status
   end
 
@@ -114,7 +114,7 @@ class EncountersController < ApplicationController
     redirect_to(encounters_path, notice: I18n.t('encounters.show.no_encounter')) and return unless @encounter.present?
 
     @encounter.new_samples = []
-    @test_order = TestOrders::Persistence.new(params, current_user, @localization_helper)
+    @test_order = TestOrders::Persistence.new(params, current_user)
   end
 
   def find_institution_and_patient

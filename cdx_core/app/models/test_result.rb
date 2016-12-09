@@ -76,7 +76,7 @@ class TestResult < PatientResult
   end
 
   def sample_identifiers
-    sample.try(:sample_identifiers) || []
+    [sample_identifier]
   end
 
   def entity_id
@@ -100,7 +100,7 @@ class TestResult < PatientResult
     entity_fields.detect { |f| f.name == 'assays' }.sub_fields.detect { |f| f.name == 'result' }.options
   end
 
-  def as_json(json, localization_helper)
+  def as_json(json)
     json.(self, :uuid, :test_id)
     json.name self.core_fields[TestResult::NAME_FIELD]
     if self.sample
@@ -108,8 +108,8 @@ class TestResult < PatientResult
     end
 
     device_uuid = self.device.uuid
-    json.start_time(localization_helper.format_datetime_device(self.core_fields[TestResult::START_TIME_FIELD], device_uuid))
-    json.end_time(localization_helper.format_datetime_device(self.core_fields[TestResult::END_TIME_FIELD], device_uuid))
+    json.start_time(Extras::Dates::Format.datetime_with_time_zone(self.core_fields[TestResult::START_TIME_FIELD]))
+    json.end_time(Extras::Dates::Format.datetime_with_time_zone(self.core_fields[TestResult::END_TIME_FIELD], device_uuid))
 
     json.assays (self.core_fields[TestResult::ASSAYS_FIELD] || [])
 
@@ -120,34 +120,33 @@ class TestResult < PatientResult
     end
 
     json.device do
-      json.name self.device.name
+      json.name device.name
     end
   end
 
-  def self.as_json_from_query(json, test_result_query_result, localization_helper)
-    test = test_result_query_result["test"]
-    json.uuid test["uuid"]
-    json.name test["name"]
-    json.assays test["assays"]
-    json.test_id test["id"]
+  def self.as_json_from_query(json, test_result_query_result)
+    test = test_result_query_result['test']
+    json.uuid test['uuid']
+    json.name test['name']
+    json.assays test['assays']
+    json.test_id test['id']
 
-    json.type test["type"]
-    json.status test["status"]
-    json.error_code test["error_code"]
+    json.type test['type']
+    json.status test['status']
+    json.error_code test['error_code']
 
-    json.sample_entity_ids test_result_query_result["sample"]["entity_id"]
+    json.sample_entity_ids test_result_query_result['sample']['entity_id']
 
-    device_uuid = test_result_query_result["device"]["uuid"]
-    json.start_time(localization_helper.format_datetime_device(test["start_time"], device_uuid))
-    json.end_time(localization_helper.format_datetime_device(test["end_time"], device_uuid))
+    json.start_time(Extras::Dates::Format.datetime_with_time_zone(test['start_time']))
+    json.end_time(Extras::Dates::Format.datetime_with_time_zone(test['end_time']))
 
     json.site do
-      json.name test_result_query_result["site"]["name"]
+      json.name test_result_query_result['site']['name']
     end
 
     json.device do
-      json.name test_result_query_result["device"]["name"]
-      json.serial_number test_result_query_result["device"]["serial_number"]
+      json.name test_result_query_result['device']['name']
+      json.serial_number test_result_query_result['device']['serial_number']
     end
   end
 

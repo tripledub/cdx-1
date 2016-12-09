@@ -22,6 +22,7 @@ class RegistrationsController < Devise::RegistrationsController
     # update with password does a cleanup internally.  Returns boolean
     if resource.update_with_password(params)
       ## automatically re-sign-in the user
+      Time.zone = resource.time_zone
       sign_in resource, bypass: true
       flash[:notice] = I18n.t('password_changed')
     end
@@ -48,7 +49,7 @@ class RegistrationsController < Devise::RegistrationsController
       :password_confirmation,
       :locale,
       :time_zone,
-      :timestamps_in_device_time_zone
+      :timestamps_in_site_time_zone
     )
   end
 end

@@ -97,7 +97,7 @@ module PatientConcern
 
     def as_json_card(json)
       json.(self, :id, :name, :age, :age_months, :gender, :address, :multi_address, :phone, :email, :entity_id, :city, :zip_code, :state)
-      json.birth_date_on Extras::Dates::Format.datetime_with_time_zone(birth_date_on)
+      json.birth_date_on Extras::Dates::Format.patient_birth_date(birth_date_on)
     end
 
     def external_patient_system_name

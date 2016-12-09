@@ -35,6 +35,10 @@
             %label.block
               = I18n.t('test_orders.filters.test_order_id')
             %input{type: "text", name: "batch_id", value: params["batch_id"]}
+          .filter
+            %label.block
+              = I18n.t('test_orders.filters.patient_name')
+            %input.input-block{ type: "text", name: "patient_name", value: params["patient_name"] }
 
 
 .row.paginationHeader

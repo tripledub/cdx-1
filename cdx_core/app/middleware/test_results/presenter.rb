@@ -10,7 +10,7 @@ module TestResults
             assays: Assays::Presenter.all_results(test_result),
             siteName: Sites::Presenter.site_name(test_result.site),
             deviceName: Devices::Presenter.device_name_and_serial_number(test_result.device),
-            sampleId: SampleIdentifiers::Presenter.orphan_sample_id(test_result),
+            sampleId: test_result.sample_identifiers.map(&:entity_id).join(' / '),
             status: localise_status(test_result),
             collectedAt: Extras::Dates::Format.datetime_with_time_zone(test_result.sample_collected_at, :full_time),
             resultAt: Extras::Dates::Format.datetime_with_time_zone(test_result.result_at, :full_time),
@@ -20,7 +20,7 @@ module TestResults
       end
 
       def csv_query(test_results)
-        CSV.generate do |csv|
+        CSV.generate(force_quotes: true) do |csv|
           csv << [
             TestResult.human_attribute_name(:test_id),
             TestResult.human_attribute_name(:sample_collected_at),
@@ -41,12 +41,12 @@ module TestResults
       def add_csv_row(csv, test_result)
         csv << [
           test_result.test_id,
-          Extras::Dates::Format.datetime_with_time_zone(test_result.sample_collected_at, :full_time),
-          Extras::Dates::Format.datetime_with_time_zone(test_result.result_at, :full_time),
+          Extras::Dates::Format.datetime_with_time_zone(test_result.sample_collected_at, :full_time_with_timezone),
+          Extras::Dates::Format.datetime_with_time_zone(test_result.result_at, :full_time_with_timezone),
           test_result.result_name,
           Devices::Presenter.device_name_and_serial_number(test_result.device),
           Sites::Presenter.site_name(test_result.site),
-          SampleIdentifiers::Presenter.orphan_sample_id(test_result),
+          test_result.sample_identifiers.map(&:entity_id).join(' / '),
           localise_status(test_result),
           test_result.result_type
         ]

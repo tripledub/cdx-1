@@ -19,7 +19,7 @@ describe PatientLogs::Presenter do
     it 'should return elements formated' do
       expect(described_class.patient_view(@logs, '')['rows'].first).to eq({
         id:       patient.audit_logs.first.uuid,
-        date:     I18n.l(patient.audit_logs.first.created_at, format: :short),
+        date:     Extras::Dates::Format.datetime_with_time_zone(patient.audit_logs.first.created_at, :full_time),
         user:     patient.audit_logs.first.user.full_name,
         device:   patient.audit_logs.first.device.full_name,
         title:    patient.audit_logs.first.title,

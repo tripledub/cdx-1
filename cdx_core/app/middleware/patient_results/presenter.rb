@@ -14,8 +14,8 @@ module PatientResults
             examinedBy:      patient_result.examined_by.to_s,
             comment:         patient_result.comment.to_s,
             status:          patient_result.result_status,
-            completedAt:     Extras::Dates::Format.datetime_with_time_zone(patient_result.completed_at),
-            createdAt:       Extras::Dates::Format.datetime_with_time_zone(patient_result.created_at),
+            completedAt:     Extras::Dates::Format.datetime_with_time_zone(patient_result.completed_at, :full_time),
+            createdAt:       Extras::Dates::Format.datetime_with_time_zone(patient_result.created_at, :full_time),
             feedbackMessage: FeedbackMessages::Finder.find_text_from_patient_result(patient_result),
             editUrl:         edit_polymorphic_path([patient_result.encounter, patient_result]),
             showResultUrl:   show_result_url(patient_result)

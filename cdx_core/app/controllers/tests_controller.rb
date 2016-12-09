@@ -13,7 +13,6 @@ class TestsController < ApplicationController
     _institutions, @sites, @devices = Policy.condition_resources_for(QUERY_TEST, TestResult, current_user).values
     @sites = @sites.within(@navigation_context.entity, @navigation_context.exclude_subsites)
     @devices = @devices.within(@navigation_context.entity, @navigation_context.exclude_subsites)
-    @localization_helper.devices_by_uuid = @devices_by_uuid = @devices.index_by &:uuid
   end
 
   def get_hostname

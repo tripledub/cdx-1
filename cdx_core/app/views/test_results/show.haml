@@ -29,7 +29,7 @@
               = @test_result.core_fields[TestResult::NAME_FIELD]
             %br
             %span
-              = @localization_helper.format_datetime(@test_result.core_fields[TestResult::START_TIME_FIELD]) # TODO should use device timezone (?)
+              = Extras::Dates::Format.datetime_with_time_zone(@test_result.created_at)
             - if @show_institution
               %div
                 = I18n.t('test_results.show.institution_name', institution_name: @test_result.institution.name)

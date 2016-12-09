@@ -243,6 +243,7 @@ vi:
       long: "%B %d, %Y %H:%M"
       short: "%d %b %H:%M"
       full_time: "%d/%m/%Y %H:%M"
+      full_time_with_timezone: "%d/%m/%Y %H:%M:%S %z"
       date_only: "%d/%m/%Y"
     pm: chiều
   user:

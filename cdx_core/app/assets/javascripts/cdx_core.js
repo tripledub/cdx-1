@@ -31,10 +31,16 @@ $(document).on("ready", function(){
 
 $(document).ready(function(){
 
-  $('.datetimepicker').datetimepicker({
-    dateFormat: 'dd.mm.yy',
-    firstDay: 1,
-  });
+  // Only configure if there are datetime
+  // pickers on page
+
+  var dtp = $('.datetimepicker');
+  if (dtp.length > 0) {
+    dtp.datetimepicker({
+      dateFormat: 'dd.mm.yy',
+      firstDay: 1,
+    });
+  }
 
   $('.select2').each(function() {
     var $select = $(this);
@@ -191,10 +197,12 @@ $(document).ready(function(){
     $(".custom_filters").toggle();
   });
 
-  Mousetrap.bind('alt+p', function(e) {
-    window.location.pathname = '/patients/new';
-    Mousetrap.unbind('alt+p');
-  })
+  if(typeof Mousetrap != "undefined") {
+    Mousetrap.bind('alt+p', function(e) {
+      window.location.pathname = '/patients/new';
+      Mousetrap.unbind('alt+p');
+    })
+  }
 
   // Notifications#_form
   // Only show frequency_value when frequency == aggregated

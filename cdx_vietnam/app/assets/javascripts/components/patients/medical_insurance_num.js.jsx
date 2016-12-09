@@ -17,7 +17,7 @@ var MedicalInsuranceNum = React.createClass({
     var inputValue = this.linkState('inputValue').value.trim();
     if(!inputValue.length) return true;
     var matches = inputValue.match(/^[a-zA-Z]{2}[0-9]{13}$/iug);
-    return matches && !matches.length;
+    return matches && matches.length ? false : true;
   },
 
   validateMedicalInsuranceNum: function() {

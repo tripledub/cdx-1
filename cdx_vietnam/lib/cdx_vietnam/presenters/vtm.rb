@@ -1,6 +1,8 @@
 module CdxVietnam
   module Presenters
     class Vtm
+      PERMANENT_ADDRESS_NUM = 0
+      CONTACT_ADDRESS_NUM = 1
       def self.create_patient(patient_result)
         new(patient_result).create_patient
       end
@@ -24,7 +26,7 @@ module CdxVietnam
             case_type: 'patient', # OK, luôn là patient
             cdp_id: patient.id.to_s,
             target_system: 'vtm', # OK
-            patient_vtm_id: patient.vtm_patient_id, 
+            patient_vtm_id: patient.vtm_patient_id,
             registration_number: '', # OK
             ngayKhamBenh: exam_date1,
             strngayKhamBenh: exam_date2,
@@ -36,10 +38,10 @@ module CdxVietnam
             health_insurance_number: patient.medical_insurance_num,
             healthcare_unit: map_vtm_site_id(patient.site),
             cellphone_number: '23711',
-            registration_address1: cdp_address(patient.addresses[1].address), # line đầu tiên của Contact Address
+            registration_address1: cdp_address(CONTACT_ADDRESS_NUM), # line đầu tiên của Contact Address
             registration_province: 'Hà Nội',
             registration_district: 'Quận Hoàng Mai',
-            current_address: cdp_address(patient.addresses[0].address), # lấy dòng đầu tiên của PERMANENT ADDRESS
+            current_address: cdp_address(PERMANENT_ADDRESS_NUM), # lấy dòng đầu tiên của PERMANENT ADDRESS
             symptoms: 'any',
             hiv_status: hiv_status_patient,
             test_order: test_order
@@ -49,11 +51,11 @@ module CdxVietnam
 
       private
 
-      def cdp_address(addresses)
-        if patient.addresses[1].address.blank?
+      def cdp_address(address_num = PERMANENT_ADDRESS_NUM)
+        if !patient.addresses || !patient.addresses[address_num].present? || patient.addresses[address_num].address.blank?
           return 'Missing in CDP'
         else
-          return patient.addresses[1].address
+          return patient.addresses[address_num].address
         end
       end
 
@@ -72,7 +74,7 @@ module CdxVietnam
           specimen_type: specimen_type(patient_result),
           specimen_type_other: specimen_type_other,
           requester: 'NGHI',
-          result: vtm_result(order_type) 
+          result: vtm_result(order_type)
         }
       end
 
@@ -147,7 +149,7 @@ module CdxVietnam
       end
 
       def specimen_type(test_order_to_send)
-        if test_order_to_send.encounter.coll_sample_type.upcase == 'SPUTUM'
+        if test_order_to_send.encounter.coll_sample_type.present? && test_order_to_send.encounter.coll_sample_type.upcase == 'SPUTUM'
           '1'
         else
           '2'
@@ -173,7 +175,7 @@ module CdxVietnam
       end
 
       def gender
-        return '0' if patient.gender.upcase == 'FEMALE'
+        return '0' if patient.gender.to_s.upcase == 'FEMALE'
         return '1'
       end
     end
