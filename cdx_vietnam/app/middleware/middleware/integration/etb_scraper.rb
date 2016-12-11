@@ -285,7 +285,6 @@ module Integration
         params = replace_empty 'number_of_previous_tb_treatment', params, '0'
 
         check_key 'name', params
-        check_key 'bdq_id', params
         check_key 'gender', params
         check_key 'age', params
         check_key 'registration_address1', params
@@ -392,9 +391,10 @@ module Integration
         _p_pattype_header = resp.parser.css('#main > div[2] > div > table > tr[2] > td > div')[4].css('select').first.attributes['name'].text
         _p_kobiet_header = resp.parser.css('#main > div[2] > div > table > tr[2] > td > div')[5].css('input').first.attributes['name'].text
         _p_infectsite_header = resp.parser.css('#main > div[2] > div > table > tr[2] > td > div')[6].css('select').first.attributes['name'].text
+        
+        _p_kobiet_c_header = resp.parser.css('#main > div[2] > div > table > tr[2] > td > div')[8].css('select').first.attributes['name'].text
         _p_kobiet_a_header = resp.parser.css('#main > div[2] > div > table > tr[2] > td > div')[7].css('select').first.attributes['name'].text
         _p_kobiet_b_header = resp.parser.css('#main > div[2] > div > table > tr[2] > td > div')[7].css('select').last.attributes['name'].text
-        _p_kobiet_c_header = resp.parser.css('#main > div[2] > div > table > tr[2] > td > div')[8].css('select').first.attributes['name'].text
 
         _p_previous_treatment_header = resp.parser.css('#main > div[3]').css('select').first.attributes['name'].text
         _p_date3_header = resp.parser.css('#main > div')[3].css('table > tr > td > div')[0].css('input').first.attributes['name'].text
@@ -415,8 +415,8 @@ module Integration
           _p_national_no_header => params['national_id_number'],
           _p_regno_header => params['registration_number'],
           _p_birth_header => params['date_of_birth'],
-          _p_gender_header => params['gender'],
           _p_current_date_header => _p_current_date_value,
+          _p_gender_header => params['gender'],
           _p_age_header => params['age'],
           _p_mother_name_header => params['mother_name'],
           _p_mobile2_header => params['supervisor2_cellphone'],
@@ -459,6 +459,12 @@ module Integration
           'javax.faces.ViewState' => _state_create,
           _main_create => _main_create
         }
+
+        # extra fields for "report health unit"
+        cbunit = resp.parser.css('span.value > select').select{|e| e.attributes['name'].to_s[/main:j_id[0-9]+:j_id[0-9]+:cbunits/]}[1]
+        if cbunit
+          post_data[cbunit.attributes['name'].value] = 63 # hard-coded for Ha Noi
+        end
 
         puts post_data.map{|k,v| "#{k}:#{v}"}
 
