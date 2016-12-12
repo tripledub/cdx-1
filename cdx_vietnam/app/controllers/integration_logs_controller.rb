@@ -20,7 +20,7 @@ class IntegrationLogsController < ApplicationController
   def download
     respond_to do |format|
       format.csv { 
-        send_data(IntegrationLog::report.to_csv, filename: "integration-report-#{Date.today}.csv")
+        send_data(IntegrationLog::report_to_csv, filename: "integration-report-#{Date.today}.csv")
       }
     end
   end
