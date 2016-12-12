@@ -16,5 +16,5 @@ TestBatchList.propTypes = {
   authenticityToken: React.PropTypes.string.isRequired,
   rejectReasons: React.PropTypes.object.isRequired,
   testOrderStatus: React.PropTypes.string.isRequired,
-  manualSampleId: React.PropTypes.bool.isRequired,
+  manualSampleId: React.PropTypes.bool,
 };

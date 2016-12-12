@@ -54,6 +54,21 @@ $(document).ready(function(){
     })
   });
 
+  $("form").submit(function () {
+    $(this).find(":submit").prop("value", 'Saving...');
+    $(this).find(":submit").prop("disabled", true);
+  });
+
+  function toggleCsvDownload(element) {
+    element.removeClass('fa-download');
+    element.addClass('fa-spinner');
+    element.text(' Downloading...');
+  };
+
+  $(".fa-download").click(function(){
+    toggleCsvDownload($(this));
+  });
+
   function setFilledClass(elem) {
     window.setTimeout(function(){
       if(elem.val().length > 0) {

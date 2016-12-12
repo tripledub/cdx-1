@@ -61,7 +61,7 @@ var Address = React.createClass({
     bounds = this.state.bounds;
     latlng = (this.state.latlng && this.state.latlng.lat && this.state.latlng.lng) ? [this.state.latlng.lat, this.state.latlng.lng] : null;
     revLatLng = this.state.addressSet ? this.state.latlng : null;
-    position = bounds ? null : (latlng || gon.location_default);
+    position = null;
     zoom = bounds ? null : (latlng ? (this.state.zoom || 12) : 2);
 
     if (latlng) {

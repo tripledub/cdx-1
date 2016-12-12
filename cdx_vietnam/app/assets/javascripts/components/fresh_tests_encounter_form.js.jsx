@@ -24,15 +24,32 @@ var FreshTestsEncounterForm = React.createClass(_.merge({
     this.setState({ encounter: encounter });
   },
 
-  validateThenSave: function(event)
-  {
-    if (this.state.encounter.performing_site == undefined) { alert(I18n.t("components.fresh_tests_encounter_form.alert_performing_site")); return; }
-    if (this.state.encounter.testing_for == undefined)     { alert(I18n.t("components.fresh_tests_encounter_form.alert_testing_for"));     return; }
-    if (this.state.encounter.exam_reason == undefined)     { alert(I18n.t("components.fresh_tests_encounter_form.alert_exam_reason"));     return; }
-    if (this.state.encounter.tests_requested == '')        { alert(I18n.t("components.fresh_tests_encounter_form.alert_tests_requested")); return; }
-    if (this.state.encounter.coll_sample_type == '')       { alert(I18n.t("components.fresh_tests_encounter_form.alert_col_sample_type"));  return; }
-    if ( (this.state.encounter.coll_sample_type == 'other') && (this.state.encounter.coll_sample_other == ''))       { alert(I18n.t("components.fresh_tests_encounter_form.alert_othercomment"));     return; }
-    this.save();
+  validateThenSave: function(event) {
+    if (this.state.encounter.performing_site == undefined) {
+      alert(I18n.t("components.fresh_tests_encounter_form.alert_performing_site"));
+      return false;
+    };
+    if (this.state.encounter.testing_for == undefined)     {
+      alert(I18n.t("components.fresh_tests_encounter_form.alert_testing_for"));
+      return false;
+    };
+    if (this.state.encounter.exam_reason == undefined)     {
+      alert(I18n.t("components.fresh_tests_encounter_form.alert_exam_reason"));
+      return false;
+    };
+    if (this.state.encounter.tests_requested == '')        {
+      alert(I18n.t("components.fresh_tests_encounter_form.alert_tests_requested"));
+      return false;
+    };
+    if (this.state.encounter.coll_sample_type == '')       {
+      alert(I18n.t("components.fresh_tests_encounter_form.alert_col_sample_type"));
+      return false;
+    };
+    if ( (this.state.encounter.coll_sample_type == 'other') && (this.state.encounter.coll_sample_other == '')) {
+      alert(I18n.t("components.fresh_tests_encounter_form.alert_othercomment"));
+      return false;
+    };
+    return this.save();
   },
 
   render: function() {

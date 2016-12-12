@@ -20,10 +20,6 @@ class ApplicationController < ActionController::Base
     I18n.locale = params[:language] if params[:language].present?
   end
 
-  decent_configuration do
-    strategy DecentExposure::StrongParametersStrategy
-  end
-
   def render_json(object, params = {})
     render params.merge(text: object.to_json_oj, content_type: 'text/json')
   end
