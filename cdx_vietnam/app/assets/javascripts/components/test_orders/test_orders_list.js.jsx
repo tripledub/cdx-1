@@ -16,9 +16,14 @@ var TestOrderRow = React.createClass({
       <td title={this.props.testOrder.requestedSiteName} onClick={this.visitLink}>{this.props.testOrder.requestedSiteName}</td>
       <td title={this.props.testOrder.performingSiteName} onClick={this.visitLink}>{this.props.testOrder.performingSiteName}</td>
       <td title={this.props.testOrder.testingFor} onClick={this.visitLink}>{this.props.testOrder.testingFor}</td>
-      <td title={this.props.testOrder.requestedBy} onClick={this.visitLink}>{this.props.testOrder.requestedBy}</td>
-      <td title={this.props.testOrder.requestDate} onClick={this.visitLink}>{this.props.testOrder.requestDate}</td>
-      <td title={this.props.testOrder.id} onClick={this.visitLink}>{this.props.testOrder.batchId}</td>
+      <td title={this.props.testOrder.patientName} onClick={this.visitLink}>
+        { this.props.searchTerm ?
+          <TextHighlight highlight={ this.props.searchTerm } text={ this.props.testOrder.patientName } />
+          : this.props.testOrder.patientName
+        }
+      </td>
+      <td title={ this.props.testOrder.requestDate } onClick={ this.visitLink }>{ this.props.testOrder.requestDate }</td>
+      <td title={ this.props.testOrder.id } onClick={ this.visitLink }>{ this.props.testOrder.batchId }</td>
     </tr>);
   }
 });
@@ -77,19 +82,24 @@ var TestOrdersIndexTable = React.createClass({
             <thead>
               <tr>
                 <CsvCheckboxColumnHeader columnId="test-orders-table" selectedTestOrders={this.selectedTestOrders} />
-                <th data-resizable-column-id="sample-id">{I18n.t("components.test_orders.col_sample_id")}</th>
-                {sortableHeader(I18n.t("components.test_orders.col_status"),        "encounters.status")}
-                {sortableHeader(I18n.t("components.test_orders.col_request_by"),    "sites.name")}
-                {sortableHeader(I18n.t("components.test_orders.col_request_to"),    "performing_sites.name")}
-                {sortableHeader(I18n.t("components.test_orders.col_testing_for"),   "patients.name")}
-                {sortableHeader(I18n.t("components.test_orders.col_order_by"), "users.first_name")}
-                {sortableHeader(I18n.t("components.test_orders.col_request_date"),  "encounters.start_time")}
-                {sortableHeader(I18n.t("components.patients.show.col_order_id"),      "encounters.id")}
+                <th data-resizable-column-id="sample-id">{ I18n.t("components.test_orders.col_sample_id") }</th>
+                { sortableHeader(I18n.t("components.test_orders.col_status"),        "encounters.status") }
+                { sortableHeader(I18n.t("components.test_orders.col_request_by"),    "sites.name") }
+                { sortableHeader(I18n.t("components.test_orders.col_request_to"),    "performing_sites.name") }
+                { sortableHeader(I18n.t("components.test_orders.col_testing_for"),   "encounters.testing_for") }
+                { sortableHeader(I18n.t("components.test_orders.col_patient_name"),  "patients.name") }
+                { sortableHeader(I18n.t("components.test_orders.col_request_date"),  "encounters.start_time") }
+                { sortableHeader(I18n.t("components.patients.show.col_order_id"),    "encounters.id") }
               </tr>
             </thead>
             <tbody>
               {this.props.testOrders.map(function(testOrder) {
-                 return <TestOrderRow key={testOrder.id} testOrder={testOrder} selectedTestOrders={this.selectedTestOrders} />;
+                 return <TestOrderRow
+                   key={ testOrder.id }
+                   testOrder={ testOrder }
+                   selectedTestOrders={ this.selectedTestOrders }
+                   searchTerm={ this.props.searchTerm }
+                 />;
               }.bind(this))}
             </tbody>
           </table>

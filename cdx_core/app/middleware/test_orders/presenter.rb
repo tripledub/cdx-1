@@ -44,7 +44,7 @@ module TestOrders
             performingSiteName: Sites::Presenter.site_name(encounter.performing_site),
             sampleId:           SampleIdentifiers::Presenter.for_encounter(encounter),
             testingFor:         encounter.testing_for,
-            requestedBy:        encounter.user.full_name,
+            patientName:        encounter.patient.name,
             batchId:            encounter.batch_id,
             requestDate:        Extras::Dates::Format.datetime_with_time_zone(encounter.created_at, :full_time),
             dueDate:            Extras::Dates::Format.datetime_with_time_zone(encounter.testdue_date, :full_date),

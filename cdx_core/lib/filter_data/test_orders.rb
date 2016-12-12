@@ -7,7 +7,8 @@ module FilterData
         'testing_for' => '',
         'status' => '',
         'since' => '',
-        'batch_id' => ''
+        'batch_id' => '',
+        'patient.name' => ''
       }
     end
   end

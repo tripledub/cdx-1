@@ -16,7 +16,7 @@ var TestOrderRow = React.createClass({
       <td title={ this.props.testOrder.requestedSiteName } onClick={ this.visitLink }>{ this.props.testOrder.requestedSiteName }</td>
       <td title={ this.props.testOrder.performingSiteName } onClick={ this.visitLink }>{ this.props.testOrder.performingSiteName }</td>
       <td title={ this.props.testOrder.testingFor } onClick={ this.visitLink }>{ this.props.testOrder.testingFor }</td>
-      <td title={ this.props.testOrder.requestedBy } onClick={ this.visitLink }>{ this.props.testOrder.requestedBy }</td>
+      <td title={ this.props.testOrder.patientName } onClick={ this.visitLink }>{ this.props.testOrder.patientName }</td>
       <td title={ this.props.testOrder.requestDate } onClick={ this.visitLink }>{ this.props.testOrder.requestDate }</td>
       <td title={ this.props.testOrder.dueDate } onClick={ this.visitLink }>{ this.props.testOrder.dueDate }</td>
       <td title={ this.props.testOrder.id } onClick={ this.visitLink }>{ this.props.testOrder.batchId }</td>
@@ -79,14 +79,14 @@ var TestOrdersIndexTable = React.createClass({
               <tr>
                 <CsvCheckboxColumnHeader columnId="test-orders-table" selectedTestOrders={ this.selectedTestOrders } />
                 <th data-resizable-column-id="sample-id">{ I18n.t("components.test_orders.col_sample_id") }</th>
-                { sortableHeader(I18n.t("components.test_orders.col_status"),        "encounters.status") }
-                { sortableHeader(I18n.t("components.test_orders.col_request_by"),    "sites.name") }
-                { sortableHeader(I18n.t("components.test_orders.col_request_to"),    "performing_sites.name") }
-                { sortableHeader(I18n.t("components.test_orders.col_testing_for"),   "patients.name") }
-                { sortableHeader(I18n.t("components.test_orders.col_order_by"), "users.first_name") }
-                { sortableHeader(I18n.t("components.test_orders.col_request_date"),  "encounters.start_time") }
-                { sortableHeader(I18n.t("components.test_orders.col_due_date"),      "encounters.testdue_date") }
-                { sortableHeader(I18n.t("components.test_orders.col_id"),      "encounters.id") }
+                { sortableHeader(I18n.t("components.test_orders.col_status"),       "encounters.status") }
+                { sortableHeader(I18n.t("components.test_orders.col_request_by"),   "sites.name") }
+                { sortableHeader(I18n.t("components.test_orders.col_request_to"),   "performing_sites.name") }
+                { sortableHeader(I18n.t("components.test_orders.col_testing_for"),  "encounters.testing_for") }
+                { sortableHeader(I18n.t("components.test_orders.col_patient_name"), "patients.name") }
+                { sortableHeader(I18n.t("components.test_orders.col_request_date"), "encounters.start_time") }
+                { sortableHeader(I18n.t("components.test_orders.col_due_date"),     "encounters.testdue_date") }
+                { sortableHeader(I18n.t("components.test_orders.col_id"),           "encounters.id") }
 
               </tr>
             </thead>

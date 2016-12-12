@@ -1,10 +1,10 @@
 module PatientsHelper
   def patient_diagnostic(encounter)
-    encounter.diagnostic.blank? ? "Pending" : encounter.human_diagnose
+    encounter.diagnostic.blank? ? 'Pending' : encounter.human_diagnose
   end
 
   def patient_observations(encounter)
-    encounter.observations.blank? ? "No comments" : encounter.observations
+    encounter.observations.blank? ? 'No comments' : encounter.observations
   end
 
   def patient_display_name(patient_name)

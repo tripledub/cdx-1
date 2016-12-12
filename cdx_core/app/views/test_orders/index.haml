@@ -38,7 +38,7 @@
           .filter
             %label.block
               = I18n.t('test_orders.filters.patient_name')
-            %input.input-block{ type: "text", name: "patient_name", value: params["patient_name"] }
+            %input.input-block{ type: "text", name: "patient_name", value: params['patient_name'] }
 
 
 .row.paginationHeader
@@ -52,6 +52,6 @@
       %section.row
         = react_component "TestOrdersIndexTable", testOrders: TestOrders::Presenter.index_view(@tests), orderBy: @order_by,
           imageUrl: image_url('img/test-tube.png'), headerTitle: I18n.t('test_orders.index.test_order', count: @total),
-          csvUrl: test_orders_path, csvTitle: I18n.t('devices.index.download_csv')
+          csvUrl: test_orders_path, csvTitle: I18n.t('devices.index.download_csv'), searchTerm: params['patient_name'].to_s
         .pagination
           = render 'shared/pagination'
