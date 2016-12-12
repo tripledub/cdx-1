@@ -18,5 +18,5 @@ TestBatchActions.propTypes = {
   encounter: React.PropTypes.object.isRequired,
   authenticityToken: React.PropTypes.string.isRequired,
   testOrderStatus: React.PropTypes.string.isRequired,
-  manualSampleId: React.PropTypes.bool.isRequired,
+  manualSampleId: React.PropTypes.bool,
 };
