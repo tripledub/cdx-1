@@ -111,7 +111,7 @@ class EncountersController < ApplicationController
 
   def load_encounter
     @encounter = @navigation_context.institution.encounters.where('uuid = :id', params).first || @navigation_context.institution.encounters.where('id = :id', params).first
-    redirect_to(encounters_path, notice: I18n.t('encounters.show.no_encounter')) and return unless @encounter.present?
+    redirect_to(encounters_path, notice: I18n.t('encounters.show.no_encounter')) && return unless @encounter.present?
 
     @encounter.new_samples = []
     @test_order = TestOrders::Persistence.new(params, current_user)

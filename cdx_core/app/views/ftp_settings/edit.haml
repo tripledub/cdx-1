@@ -4,10 +4,10 @@
       .row
         .col
           %h2
-            = "#{I18n.t('ftp_settings.edit.setting_msg')} #{institution.name}"
+            = "#{I18n.t('ftp_settings.edit.setting_msg')} #{@navigation_context.institution.name}"
 
-= form_for institution, url: ftp_setting_path(institution) do |f|
-  = validation_errors institution
+= form_for @navigation_context.institution, url: ftp_setting_path(@navigation_context.institution) do |f|
+  = validation_errors @navigation_context.institution
 
   .row
     .col.pe-2= f.label :ftp_hostname, 'FTP'
@@ -26,7 +26,7 @@
   .row
     .col.pe-2= f.label :ftp_username, I18n.t('ftp_settings.edit.lbl_login')
     .col.pe-2= f.text_field :ftp_username, placeholder: I18n.t('ftp_settings.edit.username'), autocomplete: 'off'
-    .col.pe-2= f.password_field :ftp_password, value: institution.ftp_password, placeholder: I18n.t('ftp_settings.edit.password'), autocomplete: 'off'
+    .col.pe-2= f.password_field :ftp_password, value: @navigation_context.institution.ftp_password, placeholder: I18n.t('ftp_settings.edit.password'), autocomplete: 'off'
 
   .row.button-actions
     .col

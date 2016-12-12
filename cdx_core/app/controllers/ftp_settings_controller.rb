@@ -1,7 +1,6 @@
+# FTP info for institutions
 class FtpSettingsController < ApplicationController
   respond_to :html
-
-  expose(:institution)
 
   before_action :check_permissions
 
@@ -9,7 +8,7 @@ class FtpSettingsController < ApplicationController
   end
 
   def update
-    if institution.update(institution_params)
+    if @navigation_context.institution.update(institution_params)
       redirect_to settings_path, notice: I18n.t('ftp_settings_controller.setting_updated')
     else
       render action: 'edit'
@@ -23,6 +22,6 @@ class FtpSettingsController < ApplicationController
   end
 
   def check_permissions
-    redirect_to(settings_path, error: I18n.t('ftp_settings_controller.dont_have_permission')) unless has_access?(institution, UPDATE_INSTITUTION)
+    redirect_to(settings_path, error: I18n.t('ftp_settings_controller.dont_have_permission')) unless has_access?(@navigation_context.institution, UPDATE_INSTITUTION)
   end
 end
