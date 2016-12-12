@@ -6,10 +6,21 @@ describe CdxVietnam::Presenters::Etb do
   let(:site)                { Site.make(institution: institution) }
   let(:patient)             { Patient.make institution: institution, gender: 'male' }
   let(:encounter)           { Encounter.make institution: institution, user: current_user, patient: patient }
-  let(:xpert_result)        { XpertResult.make encounter: encounter, tuberculosis: 'indeterminate', result_at: 3.days.ago }
+  let(:xpert_result)        { XpertResult.make encounter: encounter, tuberculosis: 'indeterminate', result_at: 3.days.ago, result_name: 'xpertmtb' }
   let(:patient2)            { Patient.make institution: institution, gender: 'male', nationality: 'native' }
-  let(:encounter2)          { Encounter.make institution: institution, user: current_user, patient: patient2 }
+  let(:encounter2)          { Encounter.make institution: institution, user: current_user, patient: patient2, coll_sample_type: 'SPUTUM' }
   let(:microscopy_result)   { MicroscopyResult.make encounter: encounter2, result_at: 1.day.ago }
+  let(:address1)            { patient2.addresses.make(address: '1 street', city: 'london', country: "asd", zip_code: 'sw11') }
+  let(:address2)            { patient2.addresses.make(address: '2 street', city: 'london', country: "asd", zip_code: 'sw11') }
+
+  def check_json_string(json_string)
+    begin
+      JSON.parse(json_string)
+    rescue
+      return false
+    end
+    return true
+  end
 
   context "xpert result must" do
     before(:example) do
@@ -28,11 +39,31 @@ describe CdxVietnam::Presenters::Etb do
       expect(patient_field['test_order'].nil?).to eq(false)
       expect(patient_field['target_system'].nil?).to eq(false)
     end
+
+    it "return right xpert result with rifampicin detected" do
+      xpert_result.tuberculosis = 'detected'
+      xpert_result.rifampicin = 'detected'
+      xpert_result.save
+      json = CdxVietnam::Presenters::Etb.create_patient(xpert_result)
+      json = JSON.parse(json)
+      expect(json['patient']['test_order']['result']).to eq(2)
+    end
+
+    it "return right xpert result with rifampicin not detected" do
+      xpert_result.tuberculosis = 'detected'
+      xpert_result.rifampicin = 'not_detected'
+      xpert_result.save
+      json = CdxVietnam::Presenters::Etb.create_patient(xpert_result)
+      json = JSON.parse(json)
+      expect(json['patient']['test_order']['result']).to eq(1)
+    end
   end
 
   context "microscopy result must" do
     before(:example) do
       episode = patient2.episodes.make
+      address1.reload
+      address2.reload
       @json = CdxVietnam::Presenters::Etb.create_patient(microscopy_result)
     end
     
@@ -41,6 +72,7 @@ describe CdxVietnam::Presenters::Etb do
     end
 
     context "have" do
+      let(:encounter2)          { Encounter.make institution: institution, user: current_user, patient: patient2, coll_sample_type: 'OTHER' }
       before(:example) do
         json = JSON.parse(@json)
         @patient_field = json['patient']
@@ -58,16 +90,5 @@ describe CdxVietnam::Presenters::Etb do
         expect(@patient_field['target_system'].nil?).to eq(false)
       end
     end
-    
   end
-
-end
-
-def check_json_string(json_string)
-  begin
-    JSON.parse(json_string)
-  rescue
-    return false
-  end
-  return true
 end

@@ -7,9 +7,57 @@ describe Integration::Client do
   let(:patient)             { Patient.make institution: institution, gender: 'male' }
   let(:encounter)           { Encounter.make institution: institution, user: current_user, patient: patient }
   let(:xpert_result)        { XpertResult.make encounter: encounter, tuberculosis: 'indeterminate', result_at: 3.days.ago }
+  let(:microscopy_result)   { MicroscopyResult.make encounter: encounter, result_at: 1.day.ago }
   let(:json)                { CdxVietnam::Presenters::Etb.create_patient(xpert_result) }
+  let(:json2)               { CdxVietnam::Presenters::Vtm.create_patient(microscopy_result) }
 
-  context "in case scraper success sync" do
+  context "in case retry" do
+    let(:integration_log) { IntegrationLog.make(json: JSON.parse(json), system: 'etb')}
+    before(:example) do
+      episode = patient.episodes.make
+      @client = Integration::Client.new
+      x = double('x')
+      allow(Integration::CdpScraper::EtbScraper).to receive(:new).and_return(x)
+      allow(x).to receive(:login)
+      allow(x).to receive(:create_patient).and_return({:success => false, :patient_etb_id => '123456', :error => ""})
+      allow(x).to receive(:create_test_order).and_return({:success => true, :error => ""})
+      allow(CdxVietnam::Presenters::Etb).to receive(:create_patient).with(xpert_result).and_return(json)
+    end
+
+    it 'must call client integration' do
+      expect(@client).to receive(:integration).with(json, integration_log)
+      @client.retry(integration_log.id)
+    end
+  end
+
+  context "in case scraper success sync to vtm" do
+    before(:example) do
+      episode = patient.episodes.make
+      client = Integration::Client.new
+      x = double('x')
+      allow(Integration::CdpScraper::VitimesScraper).to receive(:new).and_return(x)
+      allow(x).to receive(:login)
+      allow(x).to receive(:create_patient).and_return({:success => true, :patient_vtm_id => '123456', :error => ""})
+      allow(x).to receive(:create_test_order).and_return({:success => true, :error => ""})
+      allow(CdxVietnam::Presenters::Vtm).to receive(:create_patient).with(microscopy_result).and_return(json2)
+      client.integration(json2)
+    end
+
+    it 'should update external system id after integrating' do
+      expect(patient.reload.vtm_patient_id).to eq('123456')
+    end
+
+    it 'should insert log after each integration' do
+      expect(IntegrationLog.all.size).to eq(1)
+      expect(IntegrationLog.first.status).to eq('Finished')
+    end
+
+    it 'should mark patient result as is_synced after integration' do
+      expect(microscopy_result.reload.is_sync).to eq(true)
+    end
+  end
+
+  context "in case scraper success sync to etb" do
     before(:example) do
       episode = patient.episodes.make
       client = Integration::Client.new

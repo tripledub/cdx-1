@@ -120,6 +120,7 @@ RSpec.describe PatientResult do
 
     before(:example) do
       pre_xpert_result.result_status = 'completed'
+      pre_xpert_result.is_sync = true
       pre_xpert_result.save
     end
 
@@ -140,10 +141,9 @@ RSpec.describe PatientResult do
     end
 
     it " microscopy result with completed status must sync to etb" do
-      puts "======#{pre_xpert_result.inspect}"
       microscopy_result.result_status = 'completed'
-      expect(CdxVietnam::Presenters::Vtm).to receive(:create_patient).with(microscopy_result)
-      expect(CdxVietnam::Presenters::Etb).to receive(:create_patient).with(microscopy_result)
+      expect(CdxVietnam::Presenters::Vtm).to receive(:create_patient).with(microscopy_result).exactly(0).times
+      expect(CdxVietnam::Presenters::Etb).to receive(:create_patient).with(microscopy_result).exactly(1).times
       microscopy_result.save
     end
   end
